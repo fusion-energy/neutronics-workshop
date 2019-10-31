@@ -1,16 +1,20 @@
 # Fusion Neutronics workshop with OpenMC
 A selection of resources for learning OpenMC with particular focus on simulations relevant for fusion energy.
 
-There are a few slides introducing the workshop https://slides.com/shimwell/neutronics_workshop
+There are a few slides introducing the workshop https://slides.com/openmc_workshop/neutronics_workshop.
 
+The use of OpenMC for neutronics analysis requires several software packages and nuclear data. These have been installed inside a Docker container.
+It is recommended that this workshop be completed using the Docker container.
 
+The majority of the workshop can also be completed using Google Colab Notebooks which do not require the Docker container. The links to these notebooks are provided below. (NOTE. Not all tasks can be completed in Colab as it lacks some dependencies such as Paraview).
+To use Google Colab Notebooks you will need your own Google account. You can edit and save your own copies of each notebook to your Google Drive.
 
-### Installation
+### Docker Installation
 
-The use of OpenMC for neutronics analysis requires several software packages and nuclear data. These have been installed in a Docker container. Therefore the installation process consists of two steps.
+The installation process consists of two steps.
 
-1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier?tab=instructions) ,[linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac)
-2. Pull the Docker images from the store by typing  the following command in a terminal window
+1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier?tab=instructions), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac)
+2. Pull the Docker images from the store by typing the following command in a terminal window
 
 ```docker pull shimwell/openmc```
 
@@ -31,16 +35,18 @@ The local directory that you run docker from will be mapped to the ```/openmc_wo
 
 ### Getting started on the tasks
 
-- [Task 1 - Cross section plotting](#task1)
-- [Task 2 - Building and visualizing the model geometry](#task2)
-- [Task 3 - Visualizing neutron tracks](#task3)
-- [Task 4 - Finding the neutron flux](#task4)
-- [Task 5 - Finding the neutron and photon spectra](#task5)
-- [Task 6 - Finding the tritium production](#task6)
-- [Task 7 - Finding the neutron damage](#task7)
-- [Task 8 - Survey breeder blanket designs for tritium production](#task8)
-- [Task 9 - Optimize a breeder blanket for tritium production](#task9)
-- [Task 10 - Using CAD geometry](#task10)
+If using Colab, follow the Colab links provided. Instructions for each task are provided in each notebook.
+
+- [Task 1 - Cross section plotting](#task1) : [Colab Link](https://colab.research.google.com/drive/1Z5C7bxX-1iPjBfhDrgIzGVaTyfI2CdFa)
+- [Task 2 - Building and visualizing the model geometry](#task2) : [Colab Link](https://colab.research.google.com/drive/17o94Go2_pQLHrrkcM_2K-asvKrSsMbtx)
+- [Task 3 - Visualizing neutron tracks](#task3) : Unavailable in Colab
+- [Task 4 - Finding the neutron flux](#task4) : [Colab Link](https://colab.research.google.com/drive/1TVgCaEU_GAnJziNuyDFEvDfFYLU-fQaJ)
+- [Task 5 - Finding the neutron and photon spectra](#task5) : Unavailable in Colab
+- [Task 6 - Finding the tritium production](#task6) : [Colab Link](https://colab.research.google.com/drive/188lPNZP_3clN1kC-nlJgI4HBMaSXKu5t)
+- [Task 7 - Finding the neutron damage](#task7) : [Colab Link](https://colab.research.google.com/drive/1wH1Y4I2UHewk2BS6DQpkMGBuLHwtGg6B)
+- [Task 8 - Survey breeder blanket designs for tritium production](#task8) : [Colab Link](https://colab.research.google.com/drive/1fDOBm2YMojXVtucPQQ9XSjFqtzMibvjD)
+- [Task 9 - Optimize a breeder blanket for tritium production](#task9) : [Colab Link](https://colab.research.google.com/drive/1Zak3lrQH6x2-As1vKskXtNmYs6mdRUgj)
+- [Task 10 - Using CAD geometry](#task10) : Unavailable in Colab
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -50,7 +56,7 @@ The local directory that you run docker from will be mapped to the ```/openmc_wo
 
 Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/shimwell/neutronics_workshop/#/13)
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/13)
 
 Knowing the interaction probabilities of the isotopes and materials within your model can help understand the simulation results. There are several online tools for plotting nuclear cross sections such as [ShimPlotWell](http://www.cross-section-plotter.com). However OpenMC is also able to plot cross sections for isotopes and materials.
 
@@ -68,13 +74,13 @@ You should see an interactive plot of the n,2n cross section for isotopes of lea
 
 - Try adding the other lead isotopes to the plot.
 
-- Try adding tritium production in Li6 and Li7 to the same plot. You may need to change the axis scale to log
+- Try adding tritium production in Li6 and Li7 to the same plot. You may need to change the axis scale to log.
 
 The plot should now show fusion relevant interactions. These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
 
 - Try editing ```1_example_isotope_plot.py``` so that it plots tritium production or neutron multiplication for all the stable isotopes.
 
-Elemental properties can also be found with OpenMC. Try opening the script and then plotting tritium production and neutron multiplication using the ```2_example_element_plot.py``` script
+Elemental properties can also be found with OpenMC. Try opening the script and then plotting tritium production and neutron multiplication using the ```2_example_element_plot.py``` script.
 
 ```coder 2_example_element_plot.py```
 
@@ -102,10 +108,10 @@ This file shows us how to plot tritium production in Li4SiO4 which is a candidat
 
 Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/shimwell/neutronics_workshop/#/14)
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14)
 
 OpenMC can provide both 2D and 3D visualizations of the Constructive Solid Geometry ([CSG](https://en.wikipedia.org/wiki/Constructive_solid_geometry)).
-There are two methods of producing 2D slice views of the geometry
+There are two methods of producing 2D slice views of the geometry.
 
 The first example 2D slice plot can be opened and produced by running ...
 
@@ -129,7 +135,7 @@ Now try adding a first wall and shielded central column to the model using the O
 
 - Try adding a 20cm thick first wall to the hollow sphere.
 
-- Try adding a centre column with a 100cm radius and a 40 cm shield.
+- Try adding a centre column with a 100cm radius and a 40cm shield.
 
 - Try creating a material from pure copper and assign it to the central column
 
@@ -143,13 +149,13 @@ By the time you have added you extra geometry components your solution should lo
 
 ```python3 3_example_geometry_viewer_2d_tokamak.py```
 
-The next example script shows a simple geometry that can be viewed in 3D using paraview. This converts the geometry into a block
+The next example script shows a simple geometry that can be viewed in 3D using paraview. This converts the geometry into a block.
 
 ```coder 4_example_geometry_viewer_3d.py ```
 
 ```python3 4_example_geometry_viewer_3d.py ```
 
-Paraview should load up when this script completes. To make the geometry visible click the "Apply" button and also the small eye ball icon on the left hand side. Then select "id" and "surface" in the dropdown menus to view the geometry. Then use the threshold and slice operations to view the geometry.
+Paraview should load up when this script completes. To make the geometry visible click the "Apply" button and also the small eyeball icon on the left hand side. Then select "id" and "surface" in the dropdown menus to view the geometry. The threshold and slice operations can then be used to view specific parts of the geometry we are interested in.
 
 - Try using the paraview threshold operation to remove the vacuum cell. Set the threshold to 0 then click the "Apply" button.
 
@@ -169,20 +175,20 @@ Paraview should load up when this script completes. To make the geometry visible
 
 Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/shimwell/neutronics_workshop/#/15)
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15)
 
-When OpenMC runs a statepoint (output) file is produced which contains information on the neutron source, tally results and additional information. This task focuses on information on extracting neutron source information from the statepoint file, while tasks 4, 5 and 6 focus on extracting other information from the statepoint file.
+When OpenMC runs a statepoint (output) file is produced which contains information about the neutron source, tally results and additional information. This task focuses on extracting neutron source information from the statepoint file, while tasks 4, 5 and 6 focus on extracting other information from the statepoint file.
 
 The ```1_plot_neutron_birth_energy.py``` file shows you how to access the statepoint file created by a simulation. In this example the birth energy of all the simulated neutrons is extracted. A plot of the energy distribution and
 run the ```1_plot_neutron_birth_energy.py``` script to produce the plot.
 
 ```python3 1_plot_neutron_birth_energy.py```
 
-As you can see there is a mono-energetic energy source of 14MeV neutrons. There are three other source energy distributions available in the ```1_plot_neutron_birth_energy.py``` script.
+As you can see there is a mono-energetic energy source of 14 MeV neutrons. There are three other source energy distributions available in the ```1_plot_neutron_birth_energy.py``` script.
 
-- Try plotting the Watt and Muir neutron spectra and compare them to the mono energetic source.
+- Try plotting the Watt and Muir neutron spectra and compare them to the mono-energetic source.
 
-- Try changing the Muir plasma temperature from 20KeV to 40KeV.
+- Try changing the Muir plasma temperature from 20 KeV to 40 KeV.
 
 
 In the next example the initial neutron trajectory and birth location is plotted. Again this information is accessed from the statepoint file.
@@ -193,7 +199,7 @@ Now open the next example source plotting script with the command ```coder 3_plo
 
 Run ```python3 3_plot_neutron_birth_locations_plasma.py``` to produce the plot of a more realisitc plasma neutron source point.
 
-The ```4_example_neutron_tracks.py``` file contains a hollow sphere made of two materials and a 14MeV point source in the centre of the geometry. The objective of this task is to create some 3D particle tracks and visualize them with the geometry.
+The ```4_example_neutron_tracks.py``` file contains a hollow sphere made of two materials and a 14 MeV point source in the centre of the geometry. The objective of this task is to create some 3D particle tracks and visualize them with the geometry.
 
 Open up ```coder 3_example_neutron_tracks.py``` and take a look at the ```model.run(tracks=True)``` method. This argument results in the creation of a h5 file for each neutron simulated.
 
@@ -214,7 +220,7 @@ Use Paraview to load the geometry file and then open the track files (.vtp files
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/shimwell/neutronics_workshop/#/16)
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/16)
 
 In this task mesh tallies will be produced and visualized.
 
@@ -224,7 +230,7 @@ The ```example_neutron_flux.py``` file contains a single material, simple hollow
 
 You should see the isotropic point source appearing along with the simple sphere geometry. The colour map shows the neutron flux reducing as one moves away from the point source.
 
-- Try changing the "flux" tally for an "absorption" tally and rerun the simulation with the same command.
+- Try changing the "flux" tally for an "absorption" tally and re-run the simulation with the same command.
 
 - Try changing the Li6 enrichment of the material and compare the absorption of neutrons with the natural Li6 enrichment.
 
@@ -250,7 +256,7 @@ The model still has a point source but now it is located at x=150 y=0 z=0 and ce
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/shimwell/neutronics_workshop/#/18)
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/18)
 
 In this task the neutron spectra at two different locations will be found and visualized.
 
@@ -264,7 +270,7 @@ You might notce that OpenMC has energy group structures such as VITAMIN-J-175 an
 
 - Try plotting the neutron spectra within the first wall cell on the same axis and compare it to the breeder blanket cell.
 
-Open ```2_example_photon_spectra_tokamak.py``` to see how the photon spectra is obtained for the breeder blanket cell. An additional setting is required to enable photon transport (wich is disabled by default). Then run ```2_example_photon_spectra_tokamak.py``` to plot the photon spectra within the breeder blanket.
+Open ```2_example_photon_spectra_tokamak.py``` to see how the photon spectra is obtained for the breeder blanket cell. An additional setting is required to enable photon transport (which is disabled by default). Then run ```2_example_photon_spectra_tokamak.py``` to plot the photon spectra within the breeder blanket.
 
 ```coder 2_example_photon_spectra_tokamak.py```
 
@@ -280,7 +286,7 @@ Open ```2_example_photon_spectra_tokamak.py``` to see how the photon spectra is 
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/shimwell/neutronics_workshop/#/19)
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/19)
 
 In this task you will find the tritium breeding ratio (TBR) for a single tokamak model using ```example_tritium_production.py``` and then the TBR values for a range of tokamak models with different Li6 enrichment values with the ```example_tritium_production_study.py``` script.
 
@@ -292,7 +298,7 @@ Open and run the ```example_tritium_production.py``` script with the following c
 
 The example script prints the TBR and the associated error. As you can see the error is high.
 
-- Try increasing the number of ```batches``` and the ```sett.particles``` and rerun the simulation. You should observe an improved estimate of TBR.
+- Try increasing the number of ```batches``` and the ```sett.particles``` and re-run the simulation. You should observe an improved estimate of TBR.
 
 Your should find that the TBR value obtained from the improved simulation is below 1.0 so this design will not be self sufficient in fuel.
 
@@ -315,7 +321,7 @@ One option for increasing the TBR is to increase the Li6 content within the blan
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/shimwell/neutronics_workshop/#/20)
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/20)
 
 Displacements per atom or DPA is one measure of damage within materials exposed to neutron irradiation. The MT reaction number for DPA is 444.
 
@@ -334,7 +340,7 @@ In the case of DPA a tally multiplier is needed to account for the material and 
 
 Please allow 25 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/shimwell/neutronics_workshop/#/21)
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/21)
 
 This task is more open ended and the aim is to find the minimum thickness of breeder material needed to obtain a TBR of 1.2.
 
@@ -354,7 +360,7 @@ There are two scripts to help you analysis the simulation results.
 
 - ```plot_simulation_results_2d.py``` will allow you to see the impact of changing either the lithium 6 enrichment or the blanket thickness.
 
-- ```plot_simulation_results_3d.py``` will allow you to see the combined impact of changing  the lithium 6 enrichment and the blanket thickness.
+- ```plot_simulation_results_3d.py``` will allow you to see the combined impact of changing the lithium 6 enrichment and the blanket thickness.
 
 Ultimately you should come up with the minimal thickness needed for each candidate blanket material and the lithium 6 enrichment required at that thickness. Feel free to share simulation data with other groups and interpolate between the data points.
 
@@ -365,13 +371,17 @@ Ultimately you should come up with the minimal thickness needed for each candida
 
 ### <a name="task9"></a>Task 9 - Optimize a breeder blanket for tritium production
 
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/22)
+
 The previous task sampled from the available parameters and used a brute force method of finding the optimal blanket composition. This task uses Gaussian processing to home in on the optimal solution and steer the sampling.
 
-This task is not yet finished as I am having some trouble using the aqustion function with noisy data.
+This task is incomplete, however, its python scripts can be viewed.
 
-However if you would like to try a beta version of this code then navigate to the task_9 folder and run ```python simulate_tokamak_model.py``` 
+- ```lithium_enrichment_optimisation.py```
 
-The examples uses a [Gaussian process tool](https://github.com/C-bowman/inference_tools/blob/master/inference/gp_tools.py) developed by Chris Bowman
+- ```lithium_enrichment_and_thickness_optimisation.py```
+
+The examples uses a [Gaussian process tool](https://github.com/C-bowman/inference_tools/blob/master/inference/gp_tools.py) developed by Chris Bowman.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -380,7 +390,9 @@ The examples uses a [Gaussian process tool](https://github.com/C-bowman/inferenc
 
 ### <a name="task10"></a>Task 10 - Using CAD geometry
 
-Constructive solid geometry (CSG) has been used in all the previous tasks. This task  task demonstrates the use of CAD geometry usage within openmc.
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/23)
+
+Constructive solid geometry (CSG) has been used in all the previous tasks. This task demonstrates the use of CAD geometry usage within openmc.
 
 The use of CAD geometry has several advantages compared to CSG.
 
