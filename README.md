@@ -116,13 +116,15 @@ There are two methods of producing 2D slice views of the geometry.
 
 The first example 2D slice plot can be opened and produced by running ...
 
-```cd tasks/task_2```
-
 ```coder 1_example_geometry_viewer_2d_fortran_version.py```
 
 ```python3 1_example_geometry_viewer_2d_fortran_version.py```
 
-Views of the simple model from different planes (xy, xz, zy) should appear. The second method of producing 2D slice plots works better for large models.
+from inside the task_2 folder.
+
+Views of the simple model from different planes (xy, xz, zy) should appear.
+
+The second method of producing 2D slice plots works better for large models.
 
 ```coder 2_example_geometry_viewer_2d.py```
 
@@ -130,19 +132,19 @@ Views of the simple model from different planes (xy, xz, zy) should appear. The 
 
 Now try adding a first wall and shielded central column to the model using the OpenMC [simple examples](https://openmc.readthedocs.io/en/stable/examples/pincell.html#Defining-Geometry) and the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/geometry.html) for CSG operations.
 
-- Change the inner radius of the blanket to 500cm
+- Change the inner radius of the blanket to 500cm.
 
-- Change the thickness of the blanket to 100cm
+- Change the thickness of the blanket to 100cm.
 
 - Try adding a 20cm thick first wall to the hollow sphere.
 
 - Try adding a centre column with a 100cm radius and a 40cm shield.
 
-- Try creating a material from pure copper and assign it to the central column
+- Try creating a material from pure copper and assign it to the central column.
 
 - Try creating a homogenized material from 10% water and 90% tungsten and assign it to the first wall and the shield.
 
-- Colour the geometry plots by material see the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/plots.html) for an example
+- Colour the geometry plots by material - see the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/plots.html) for an example.
 
 By the time you have added you extra geometry components your solution should look similar to the geometry contained in the next example script.
 
