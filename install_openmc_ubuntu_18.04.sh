@@ -125,11 +125,13 @@ python3 setup.py install --user
 
 echo 'export PYTHONPATH=$PYTHONPATH:~/openmc/scripts/ ' >> ~/.bashrc 
 PYTHONPATH=$PYTHONPATH:~/openmc/openmc/scripts/ 
-cp ~/openmc/scripts/openmc-ace-to-hdf5 ~/data
-cp ~/openmc/scripts/openmc-get-photon-data ~/data
+
+mv data data.py
 
 cd ~
 git clone https://github.com/openmc-dev/data.git
+cp ~/openmc/scripts/openmc-ace-to-hdf5 ~/data
+cp ~/openmc/scripts/openmc-get-photon-data ~/data
 cd data
 python3 convert_tendl.py -b
 #other nuclear data libraries are available here.
