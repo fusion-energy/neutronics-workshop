@@ -6,7 +6,7 @@ There are a few [slides](https://slides.com/openmc_workshop/neutronics_workshop)
 The use of OpenMC for neutronics analysis requires several software packages and nuclear data. These have been installed inside a Docker container.
 It is recommended that this workshop be completed using the Docker container.
 
-The majority of the workshop can also be completed using Google Colab Notebooks which do not require the Docker container. The links to these notebooks are provided below. (NOTE. Not all tasks can be completed in Colab as it lacks some dependencies such as Paraview).
+The majority of the workshop can also be completed using Google Colab Notebooks which do not require the Docker container. The links to these notebooks are provided below. (NOTE - Not all tasks can be completed in Colab as it lacks some dependencies such as Paraview).
 To use Google Colab Notebooks you will need your own Google account. You can edit and save your own copies of each notebook to your Google Drive.
 
 ### Docker Installation
@@ -37,16 +37,16 @@ The local directory that you run docker from will be mapped to the ```/openmc_wo
 
 If using Colab, follow the Colab links provided. Instructions for each task are provided in each notebook.
 
-- [Task 1 - Cross section plotting](#task1) : [Colab Link](https://colab.research.google.com/drive/1Z5C7bxX-1iPjBfhDrgIzGVaTyfI2CdFa)
-- [Task 2 - Building and visualizing the model geometry](#task2) : [Colab Link](https://colab.research.google.com/drive/17o94Go2_pQLHrrkcM_2K-asvKrSsMbtx)
-- [Task 3 - Visualizing neutron tracks](#task3) : Unavailable in Colab
-- [Task 4 - Finding the neutron flux](#task4) : [Colab Link](https://colab.research.google.com/drive/1TVgCaEU_GAnJziNuyDFEvDfFYLU-fQaJ)
-- [Task 5 - Finding the neutron and photon spectra](#task5) : Unavailable in Colab
-- [Task 6 - Finding the tritium production](#task6) : [Colab Link](https://colab.research.google.com/drive/188lPNZP_3clN1kC-nlJgI4HBMaSXKu5t)
-- [Task 7 - Finding the neutron damage](#task7) : [Colab Link](https://colab.research.google.com/drive/1wH1Y4I2UHewk2BS6DQpkMGBuLHwtGg6B)
-- [Task 8 - Survey breeder blanket designs for tritium production](#task8) : [Colab Link](https://colab.research.google.com/drive/1fDOBm2YMojXVtucPQQ9XSjFqtzMibvjD)
-- [Task 9 - Optimize a breeder blanket for tritium production](#task9) : [Colab Link](https://colab.research.google.com/drive/1Zak3lrQH6x2-As1vKskXtNmYs6mdRUgj)
-- [Task 10 - Using CAD geometry](#task10) : Unavailable in Colab
+- [Task 1 - Cross section plotting](#task1)
+- [Task 2 - Building and visualizing the model geometry](#task2)
+- [Task 3 - Visualizing neutron tracks](#task3)
+- [Task 4 - Finding the neutron flux](#task4)
+- [Task 5 - Finding the neutron and photon spectra](#task5)
+- [Task 6 - Finding the tritium production](#task6)
+- [Task 7 - Finding the neutron damage](#task7)
+- [Task 8 - Survey breeder blanket designs for tritium production](#task8)
+- [Task 9 - Optimize a breeder blanket for tritium production](#task9)
+- [Task 10 - Using CAD geometry](#task10)
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
