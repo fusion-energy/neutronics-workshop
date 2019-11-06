@@ -62,13 +62,13 @@ Expected outputs from this task are in the [presentation](https://slides.com/ope
 
 Knowing the interaction probabilities of isotopes and materials within your model can help you understand the simulation results. There are several online tools for plotting nuclear cross sections such as [XSPlot](http://xsplot.com). However OpenMC is also able to plot cross sections for isotopes and materials.
 
-From inside the docker container navigate to the task_1 directory and open the first example python script
+From inside the docker container navigate to the task_1 directory and open the first example python script.
 
 ```cd tasks/task_1```
 
 ```coder 1_example_isotope_plot.py```
 
-OpenMC is well documented so if the script does not make sense take a look at the relevant [documentation](https://openmc.readthedocs.io/en/v0.10.0/examples/nuclear-data.html). This script will plot a selection of isotopes and certain reactions.
+OpenMC is well documented so if the script does not make sense take a look at the relevant [documentation](https://openmc.readthedocs.io/en/v0.10.0/examples/nuclear-data.html). This script will plot the cross sections of certain reactions for a selection of isotopes.
 
 ```python3 1_example_isotope_plot.py```
 
@@ -82,7 +82,7 @@ The plot should now show fusion relevant interactions. These are important react
 
 - Try editing ```1_example_isotope_plot.py``` so that it plots tritium production or neutron multiplication for all the stable isotopes.
 
-Elemental properties can also be found with OpenMC. Try opening the script and then plotting tritium production and neutron multiplication using the ```2_example_element_plot.py``` script.
+Elemental properties can also be found with OpenMC. Try plotting tritium production and neutron multiplication using the ```2_example_element_plot.py``` script.
 
 ```coder 2_example_element_plot.py```
 
@@ -90,14 +90,11 @@ Elemental properties can also be found with OpenMC. Try opening the script and t
 
 A nice feature of OpenMC is that it can plot cross sections for more complete materials made from combinations of isotopes. Open the next example python script and edit the script so that it can plot the tritium production and use this to identify the best elements for tritium production and neutron production. Why we might want to avoid some of these elements?
 
-```coder 3_example_material_plot.py```
+```3_example_material_plot.py```
 
 This file shows us how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material.
 
  - Try editing ```3_example_material_plot.py``` so that other candidate breeder materials are added to the plot.
-
- - Produce the plot with the command
-```python3 3_example_material_plot.py```
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
