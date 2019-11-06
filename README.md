@@ -338,8 +338,7 @@ Expected outputs from this task are in the [presentation](https://slides.com/ope
 
 Displacements per atom or DPA is one measure of damage within materials exposed to neutron irradiation. The MT reaction number for DPA is 444.
 
-In the case of DPA a tally multiplier is needed to account for the material and recombination effects. For example different atoms require different amounts of energy to [displace](https://fispact.ukaea.uk/wiki/Output_interpretation#DPA_and_KERMA).
- Without going into detail assume this is already incorporated into the tally result. The only multiplier needed is to multiply the result by the source intensity (in neutrons per second) and the irradiation duration (in seconds).
+In the case of DPA a tally multiplier is needed to account for the material and recombination effects. For example different atoms require different amounts of energy to [displace](https://fispact.ukaea.uk/wiki/Output_interpretation#DPA_and_KERMA). Without going into detail assume this is already incorporated into the tally result. The only multiplier needed is to multiply the result by the source intensity (in neutrons per second) and the irradiation duration (in seconds).
 
 - Find the number of neutrons emitted over a 5 year period assuming 80% availability for a 3GW (fusion energy) reactor. Recall that each reaction emmits 17.6MeV of energy. 
 
@@ -387,17 +386,27 @@ Ultimately you should come up with the minimal thickness needed for each candida
 
 If using Colab, use the following link : [Task_9](https://colab.research.google.com/drive/1Zak3lrQH6x2-As1vKskXtNmYs6mdRUgj)
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/22)
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/22).
 
 The previous task sampled from the available parameters and used a brute force method of finding the optimal blanket composition. This task uses Gaussian processing to home in on the optimal solution and steer the sampling.
 
-This task is incomplete, however, its python scripts can be viewed.
+Open the following script which describes functions for constructing materials for use in simulations.
+
+- ```material_maker_functions.py```
+
+This task uses a [Gaussian process tool](https://github.com/C-bowman/inference_tools/blob/master/inference/gp_tools.py) developed by Chris Bowman to guide the simulations performed and optimize breeder blanket parameters for maximum TBR.
+
+Take a look at the scripts below and try to understand how this works. Also try to understand how they use the material maker script to construct the model.
 
 - ```lithium_enrichment_optimisation.py```
 
-- ```lithium_enrichment_and_thickness_optimisation.py```
+- ```lithium_enrichment_and_thickness_optimisation.py```. Note - This script does not currently work.
 
-The examples uses a [Gaussian process tool](https://github.com/C-bowman/inference_tools/blob/master/inference/gp_tools.py) developed by Chris Bowman.
+Initially, simulations are performed by 'Halton sampling' the parameter space of interest and the results fitted using Gaussian Regression. A further simulation is then performed using the parameters corresponding to max TBR as determined by the Gaussian fit. The simulation results are then fitted again, including this new point, and the process repeated. 
+
+This iterative approach efficiently and accurately determines the point across the parameter space where TBR is maximum.
+
+The output .gif shows how Halton sampling is initially used to perform simulations before further simulations are informed by Gaussian interpolation.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
