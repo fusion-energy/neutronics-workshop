@@ -54,11 +54,13 @@ If using Colab, follow the Colab links provided. Instructions for each task are 
 
 ### <a name="task1"></a>Task 1 - Cross section plotting
 
+If using Colab, use the following link: [Task_1](https://colab.research.google.com/drive/1Z5C7bxX-1iPjBfhDrgIzGVaTyfI2CdFa)
+
 Please allow 20 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/13)
 
-Knowing the interaction probabilities of the isotopes and materials within your model can help understand the simulation results. There are several online tools for plotting nuclear cross sections such as [ShimPlotWell](http://www.cross-section-plotter.com). However OpenMC is also able to plot cross sections for isotopes and materials.
+Knowing the interaction probabilities of isotopes and materials within your model can help you understand the simulation results. There are several online tools for plotting nuclear cross sections such as [XSPlot](http://xsplot.com). However OpenMC is also able to plot cross sections for isotopes and materials.
 
 From inside the docker container navigate to the task_1 directory and open the first example python script
 
@@ -105,6 +107,8 @@ This file shows us how to plot tritium production in Li4SiO4 which is a candidat
 
 
 ### <a name="task2"></a>Task 2 - Building and visualizing the model geometry.
+
+If using Colab, use the following link : [Task_2](https://colab.research.google.com/drive/17o94Go2_pQLHrrkcM_2K-asvKrSsMbtx)
 
 Please allow 20 minutes for this task.
 
@@ -173,6 +177,8 @@ Paraview should load up when this script completes. To make the geometry visible
 
 ### <a name="task3"></a>Task 3 - Visualizing neutron tracks
 
+**This task is unavailable in Colab.**
+
 Please allow 20 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15)
@@ -218,6 +224,8 @@ Use Paraview to load the geometry file and then open the track files (.vtp files
 
 ### <a name="task4"></a>Task 4 - Finding the neutron flux
 
+If using Colab, use the following link : [Task_4](https://colab.research.google.com/drive/1TVgCaEU_GAnJziNuyDFEvDfFYLU-fQaJ)
+
 Please allow 15 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/16)
@@ -254,6 +262,8 @@ The model still has a point source but now it is located at x=150 y=0 z=0 and ce
 
 ### <a name="task5"></a>Task 5 - Finding the neutron and photon spectra
 
+If using Colab, use the following link : [Task_5](https://colab.research.google.com/drive/1piuEmG09E9kfkFTw2WZV6TdX_xovqmVj)
+
 Please allow 15 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/18)
@@ -283,6 +293,8 @@ Open ```2_example_photon_spectra_tokamak.py``` to see how the photon spectra is 
 
 
 ### <a name="task6"></a>Task 6 - Finding the tritium production
+
+If using Colab, use the following link : [Task_6](https://colab.research.google.com/drive/188lPNZP_3clN1kC-nlJgI4HBMaSXKu5t)
 
 Please allow 15 minutes for this task.
 
@@ -319,6 +331,8 @@ One option for increasing the TBR is to increase the Li6 content within the blan
 
 ### <a name="task7"></a>Task 7 - Finding the neutron damage
 
+If using Colab, use the following link : [Task_7](https://colab.research.google.com/drive/1wH1Y4I2UHewk2BS6DQpkMGBuLHwtGg6B)
+
 Please allow 15 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/20)
@@ -337,6 +351,7 @@ In the case of DPA a tally multiplier is needed to account for the material and 
 
 ### <a name="task8"></a>Task 8 - Survey breeder blanket designs for tritium production
 
+If using Colab, use the following link : [Task_8](https://colab.research.google.com/drive/1fDOBm2YMojXVtucPQQ9XSjFqtzMibvjD)
 
 Please allow 25 minutes for this task.
 
@@ -371,6 +386,8 @@ Ultimately you should come up with the minimal thickness needed for each candida
 
 ### <a name="task9"></a>Task 9 - Optimize a breeder blanket for tritium production
 
+If using Colab, use the following link : [Task_9](https://colab.research.google.com/drive/1Zak3lrQH6x2-As1vKskXtNmYs6mdRUgj)
+
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/22)
 
 The previous task sampled from the available parameters and used a brute force method of finding the optimal blanket composition. This task uses Gaussian processing to home in on the optimal solution and steer the sampling.
@@ -389,6 +406,8 @@ The examples uses a [Gaussian process tool](https://github.com/C-bowman/inferenc
 
 
 ### <a name="task10"></a>Task 10 - Using CAD geometry
+
+**This task is unavailable in Colab.**
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/23)
 
