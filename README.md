@@ -14,9 +14,9 @@ To use Google Colab Notebooks you will need your own Google account. You can edi
 The installation process consists of two steps.
 
 1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier?tab=instructions), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac)
-2. Pull the Docker images from the store by typing the following command in a terminal window
+2. Pull the Docker images from the store by typing the following command in a terminal window.
 
-```docker pull shimwell/openmc```
+```docker pull openmcworkshop/openmc_workshop_image_repository:full```
 
 ### Running OpenMC with docker
 
@@ -24,7 +24,7 @@ Now that you have the Docker image you can enable graphics linking between your 
 
 ```xhost local:root```
 
-```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/openmc_workshop -e DISPLAY=unix$DISPLAY --privileged shimwell/openmc```
+```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_workshop_image_repository:full```
 
 This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries.
 
