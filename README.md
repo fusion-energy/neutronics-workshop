@@ -32,8 +32,6 @@ You can quickly test the graphics options worked by typing ```paraview``` in the
 
 The local directory that you run docker from will be mapped to the ```/openmc_workshop folder``` within the docker container. This can be useful for transfering files from your docker to your local machine.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
 ### Getting started on the tasks
 
 - [Task 1 - Cross section plotting](#task1)
@@ -47,7 +45,6 @@ The local directory that you run docker from will be mapped to the ```/openmc_wo
 - [Task 9 - Optimize a breeder blanket for tritium production](#task9)
 - [Task 10 - Using CAD geometry](#task10)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 
 ### <a name="task1"></a>Task 1 - Cross section plotting
@@ -78,7 +75,7 @@ To add different reactions to the plot we would need their ENDF reaction numbers
 
 - Try adding the other lead isotopes to the plot.
 
-- Try adding tritium production in Li6 and Li7 to the same plot. You may need to change the axis scale to log.
+- Try adding tritium production in Li6 and Li7 to the same plot.
 
 The plot should now be similar to the plot below showing fusion relevant interactions. These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
 
@@ -118,13 +115,11 @@ Expected outputs from this task are also in the [presentation](https://slides.co
 OpenMC can provide both 2D and 3D visualizations of the Constructive Solid Geometry ([CSG](https://en.wikipedia.org/wiki/Constructive_solid_geometry)).
 There are two methods of producing 2D slice views of the geometry.
 
-The first example 2D slice plot can be opened and produced using the following commands
+The first example 2D slice plot can be opened and produced using the following commands inside the task_2 folder.
 
 ```coder 1_example_geometry_viewer_2d_fortran_version.py```
 
 ```python3 1_example_geometry_viewer_2d_fortran_version.py```
-
-inside the task_2 folder.
 
 Views of the simple model from different planes (xy, xz, zy) should appear, AS SHOWN BELOW.
 
@@ -164,6 +159,8 @@ By the time you have added you extra geometry components your solution should lo
 tHE OUTPUT OF THIS SCRIPT IS SHOWN BELOW.
 
 <img src="tasks/task_2/images/xy_tokamak.png" height="210"> <img src="tasks/task_2/images/xz_tokamak.png" height="210"> <img src="tasks/task_2/images/yz_tokamak.png" height="210">
+
+LEFT: XY PLANE, MIDDLE: XZ PLANE, RIGHT: YZ PLANE
 
 The next example script shows a simple geometry that can be viewed in 3D using paraview. This converts the geometry into a block.
 
@@ -253,7 +250,9 @@ The ```example_neutron_flux.py``` file contains a single material, simple hollow
 
 You should see the isotropic point source appearing along with the simple sphere geometry, as shown below. The colour map shows the neutron flux reducing as one moves away from the point source.
 
-<img src="tasks/task_4/images/universe_point.png" height="250"> <img src="tasks/task_4/images/flux_point.png" height="250">
+<img src="tasks/task_4/images/universe_point.png" height="300"> <img src="tasks/task_4/images/flux_point.png" height="300">
+
+LEFT: GEOMETRY, RIGHT: FLUX
 
 - Try changing the "flux" tally for an "absorption" tally and re-run the simulation with the same command.
 
@@ -263,19 +262,16 @@ There is another example neutron flux file with the simple tokamak geometry. Tak
 
 ```python3 example_neutron_flux_tokamak.py```
 
-The model still has a point source but now it is located at x=150 y=0 z=0 and central column shielding is noticeable on the flux, absorption and tritium production mesh tallies.
+The model still has a point source but now it is located at x=150 y=0 z=0 and central column shielding is noticeable on the flux, absorption and tritium production mesh tallies. AS SHOWN BELOW
 
-MAYBE ADD ANOTHER IMAGE HERE
+<img src="tasks/task_4/images/universe_tokamak.png" height="300"> <img src="tasks/task_4/images/flux_tokamak.png" height="300">
+
+LEFT: GEOMETRY, RIGHT: FLUX
 
 - Try changing the mesh tally from (n,t) to flux and absorption.
 
-
-
-
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-
-
 
 ### <a name="task5"></a>Task 5 - Finding the neutron and photon spectra
 
@@ -295,7 +291,7 @@ Run ```1_example_neutron_spectra_tokamak.py``` to plot the neutron spectra withi
 
 ```python3 1_example_neutron_spectra_tokamak.py```
 
-INSERT IMAGE HERE?
+<img src="tasks/task_5/images/1_example_neutron_spectra_tokamak.png" height="500">
 
 - Try plotting the neutron spectra within the first wall cell on the same axis and compare it to the breeder blanket cell.
 
@@ -305,11 +301,10 @@ Open ```2_example_photon_spectra_tokamak.py``` to see how the photon spectra is 
 
 ```python3 2_example_photon_spectra_tokamak.py```
 
+<img src="tasks/task_5/images/2_example_photon_spectra_tokamak.png" height="500">
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-
-
 
 ### <a name="task6"></a>Task 6 - Finding the tritium production
 
@@ -339,14 +334,12 @@ One option for increasing the TBR is to increase the Li6 content within the blan
 
 ```python3 example_tritium_production_study.py```
 
-- Try changing '(n,t)' to 205 and you should get the same result as this is the equivalent  [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf)
+<img src="tasks/task_6/images/tbr_study.png" height="600">
 
-
+- Try changing '(n,t)' to 205 and you should get the same result as this is the equivalent [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-
-
 
 ### <a name="task7"></a>Task 7 - Finding the neutron damage
 
@@ -379,7 +372,7 @@ This task is more open ended and the aim is to find the minimum thickness of bre
 
 There are several candidate breeder materials including a lithium ceramic (Li4SiO4), Flibe, Lithium lead (eutectic) and pure lithium.
 
-Each material can have it's lithium 6 content enriched and this has an impact on the TBR.
+Each material can have it's Li6 content enriched and this has an impact on the TBR.
 
 Examine the ```simulate_tokamak_model.py``` file and try to understand how the model is created and particularly how the simulation parameters are saved in a .json file.
 
@@ -391,11 +384,11 @@ First you will also need to change the surface definitions so that the geometry 
 
 There are two scripts to help you analysis the simulation results.
 
-- ```plot_simulation_results_2d.py``` will allow you to see the impact of changing either the lithium 6 enrichment or the blanket thickness.
+- ```plot_simulation_results_2d.py``` will allow you to see the impact of changing either the Li6 enrichment or the blanket thickness.
 
-- ```plot_simulation_results_3d.py``` will allow you to see the combined impact of changing the lithium 6 enrichment and the blanket thickness.
+- ```plot_simulation_results_3d.py``` will allow you to see the combined impact of changing the Li6 enrichment and the blanket thickness.
 
-Ultimately you should come up with the minimal thickness needed for each candidate blanket material and the lithium 6 enrichment required at that thickness. Feel free to share simulation data with other groups and interpolate between the data points.
+Ultimately you should come up with the minimal thickness needed for each candidate blanket material and the Li6 enrichment required at that thickness. Feel free to share simulation data with other groups and interpolate between the data points.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -427,6 +420,8 @@ Initially, simulations are performed by 'Halton sampling' the parameter space of
 This iterative approach efficiently and accurately determines the point across the parameter space where TBR is maximum.
 
 The output .gif shows how Halton sampling is initially used to perform simulations before further simulations are informed by Gaussian interpolation.
+
+<img src="tasks/task_9/images/output.gif" height="600">
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
