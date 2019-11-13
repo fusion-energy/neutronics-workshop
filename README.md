@@ -121,12 +121,12 @@ The first example 2D slice plot can be opened and produced using the following c
 
 ```python3 1_example_geometry_viewer_2d_fortran_version.py```
 
-Views of the simple model from different planes (xy, xz, zy) should appear, AS SHOWN BELOW.
+Views of the simple model from different planes (xy, xz, zy) should appear, as shown below.
 
 <img src="tasks/task_2/images/xy_sphere.png" height="210"> <img src="tasks/task_2/images/xz_sphere.png" height="210"> <img src="tasks/task_2/images/yz_sphere.png" height="210">
-*LEFT: XY PLANE, MIDDLE: XZ PLANE, RIGHT: YZ PLANE.*
+<p align="center">*Left = xy plane, Middle = xz plane, Right = yz plane*</p>
 
-GEOMETRY IS A SIMPLE SPHERICAL SHELL CENTRED AT THE ORIGIN, HENCE, WHY THE VIEW OF THE GEOMETRY IN EACH PLANE LOOKS IDENTICAL.
+As the geometry is a simple spherical shell centred at the origin, its views in each plane are identical.
 
 The second method of producing 2D slice plots works better for large models.
 
@@ -156,11 +156,12 @@ By the time you have added you extra geometry components your solution should lo
 
 ```python3 3_example_geometry_viewer_2d_tokamak.py```
 
-tHE OUTPUT OF THIS SCRIPT IS SHOWN BELOW.
+Running this script, views of the tokamak model from different planes (xy, xz, yz) should appear, as shown below.
 
 <img src="tasks/task_2/images/xy_tokamak.png" height="210"> <img src="tasks/task_2/images/xz_tokamak.png" height="210"> <img src="tasks/task_2/images/yz_tokamak.png" height="210">
+<p align="center">*Left = xy plane, Middle = xz plane, Right = yz plane*</p>
 
-LEFT: XY PLANE, MIDDLE: XZ PLANE, RIGHT: YZ PLANE
+THIS IS A MORE SOPHISTICATED MODEL OF A REAL TOKAMAK SYSTEM CONTAINING A CENTRE COLUMN.
 
 The next example script shows a simple geometry that can be viewed in 3D using paraview. This converts the geometry into a block.
 
@@ -178,10 +179,10 @@ Paraview should load up when this script completes. To make the geometry visible
 
 ```python3 5_example_geometry_viewer_3d_tokamak.py```
 
-**Paraview video tutorial**
+**Paraview Video Tutorial**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
-" target="_blank"><img src="http://img.youtube.com/vi/VWjQ-iHcaxA/0.jpg" height="340" border="10" /></a>
+" target="_blank"><img src="http://img.youtube.com/vi/VWjQ-iHcaxA/0.jpg" height="340" border="1" /></a>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -334,7 +335,7 @@ One option for increasing the TBR is to increase the Li6 content within the blan
 
 ```python3 example_tritium_production_study.py```
 
-<img src="tasks/task_6/images/tbr_study.png" height="600">
+<img src="tasks/task_6/images/tbr_study.png" height="400">
 
 - Try changing '(n,t)' to 205 and you should get the same result as this is the equivalent [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf)
 
@@ -390,10 +391,14 @@ There are two scripts to help you analysis the simulation results.
 
 Ultimately you should come up with the minimal thickness needed for each candidate blanket material and the Li6 enrichment required at that thickness. Feel free to share simulation data with other groups and interpolate between the data points.
 
+FOR 200 SIMULATIONS, THE 2D PLOTS PRODUCED SHOULD LOOK SIMILAR TO...
+
+<img src="tasks/task_8/images/TBR_vs_enrichment_fraction.png" height="400">
+
+<img src="tasks/task_8/images/TBR_vs_thickness.png" height="400">
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-
 
 ### <a name="task9"></a>Task 9 - Optimize a breeder blanket for tritium production
 
@@ -421,7 +426,7 @@ This iterative approach efficiently and accurately determines the point across t
 
 The output .gif shows how Halton sampling is initially used to perform simulations before further simulations are informed by Gaussian interpolation.
 
-<img src="tasks/task_9/images/output.gif" height="600">
+<img src="tasks/task_9/images/output.gif" height="400">
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
