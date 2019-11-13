@@ -121,10 +121,10 @@ The first example 2D slice plot can be opened and produced using the following c
 
 ```python3 1_example_geometry_viewer_2d_fortran_version.py```
 
-Views of the simple model from different planes (xy, xz, zy) should appear, as shown below.
+Views of the simple model from different planes (XY, XZ, YZ) should appear, as shown below.
 
 <img src="tasks/task_2/images/xy_sphere.png" height="210"> <img src="tasks/task_2/images/xz_sphere.png" height="210"> <img src="tasks/task_2/images/yz_sphere.png" height="210">
-<p align="center">*Left = xy plane, Middle = xz plane, Right = yz plane*</p>
+<p align="center"><i>Left = XY plane, Middle = XZ plane, Right = YZ plane*</i></p>
 
 As the geometry is a simple spherical shell centred at the origin, its views in each plane are identical.
 
@@ -156,12 +156,10 @@ By the time you have added you extra geometry components your solution should lo
 
 ```python3 3_example_geometry_viewer_2d_tokamak.py```
 
-Running this script, views of the tokamak model from different planes (xy, xz, yz) should appear, as shown below.
+Running this script, views of the tokamak model from different planes (XY, XZ, YZ) should appear, as shown below.
 
 <img src="tasks/task_2/images/xy_tokamak.png" height="210"> <img src="tasks/task_2/images/xz_tokamak.png" height="210"> <img src="tasks/task_2/images/yz_tokamak.png" height="210">
-<p align="center">*Left = xy plane, Middle = xz plane, Right = yz plane*</p>
-
-THIS IS A MORE SOPHISTICATED MODEL OF A REAL TOKAMAK SYSTEM CONTAINING A CENTRE COLUMN.
+<p align="center"><i>Left = XY plane, Middle = XZ plane, Right = YZ plane</i></p>
 
 The next example script shows a simple geometry that can be viewed in 3D using paraview. This converts the geometry into a block.
 
@@ -182,7 +180,7 @@ Paraview should load up when this script completes. To make the geometry visible
 **Paraview Video Tutorial**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
-" target="_blank"><img src="http://img.youtube.com/vi/VWjQ-iHcaxA/0.jpg" height="340" border="1" /></a>
+" target="_blank"><img src="http://img.youtube.com/vi/VWjQ-iHcaxA/0.jpg" height="340" /></a>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -241,7 +239,7 @@ If using Colab, use the following link : [Task_4](https://colab.research.google.
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/16).
+Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/16).
 
 In this task mesh tallies will be produced and visualized.
 
@@ -253,7 +251,7 @@ You should see the isotropic point source appearing along with the simple sphere
 
 <img src="tasks/task_4/images/universe_point.png" height="300"> <img src="tasks/task_4/images/flux_point.png" height="300">
 
-LEFT: GEOMETRY, RIGHT: FLUX
+<p align="center"><i>Left = Geometry Plot, Right = Flux Plot</i></p>
 
 - Try changing the "flux" tally for an "absorption" tally and re-run the simulation with the same command.
 
@@ -263,11 +261,11 @@ There is another example neutron flux file with the simple tokamak geometry. Tak
 
 ```python3 example_neutron_flux_tokamak.py```
 
-The model still has a point source but now it is located at x=150 y=0 z=0 and central column shielding is noticeable on the flux, absorption and tritium production mesh tallies. AS SHOWN BELOW
+The model still has a point source but now it is located at x=150 y=0 z=0 and central column shielding is noticeable on the flux, absorption and tritium production mesh tallies, as shown below.
 
 <img src="tasks/task_4/images/universe_tokamak.png" height="300"> <img src="tasks/task_4/images/flux_tokamak.png" height="300">
 
-LEFT: GEOMETRY, RIGHT: FLUX
+<p align="center"><i>Left = Tokamak Geometry Plot, Right = Tokamak Flux Plot</i></p>
 
 - Try changing the mesh tally from (n,t) to flux and absorption.
 
@@ -292,15 +290,19 @@ Run ```1_example_neutron_spectra_tokamak.py``` to plot the neutron spectra withi
 
 ```python3 1_example_neutron_spectra_tokamak.py```
 
+The plot should look similar to the plot shown below.
+
 <img src="tasks/task_5/images/1_example_neutron_spectra_tokamak.png" height="500">
 
 - Try plotting the neutron spectra within the first wall cell on the same axis and compare it to the breeder blanket cell.
 
-Open ```2_example_photon_spectra_tokamak.py``` to see how the photon spectra is obtained for the breeder blanket cell. An additional setting is required to enable photon transport (which is disabled by default). Then run ```2_example_photon_spectra_tokamak.py``` to plot the photon spectra within the breeder blanket.
+Open ```2_example_photon_spectra_tokamak.py``` to see how the photon spectra is obtained for the breeder blanket cell. An additional setting is required to enable photon transport (which is disabled by default). Then run the script to plot the photon spectra within the breeder blanket.
 
 ```coder 2_example_photon_spectra_tokamak.py```
 
 ```python3 2_example_photon_spectra_tokamak.py```
+
+The plot should look similar to the plot below.
 
 <img src="tasks/task_5/images/2_example_photon_spectra_tokamak.png" height="500">
 
@@ -334,6 +336,8 @@ One option for increasing the TBR is to increase the Li6 content within the blan
 ```coder example_tritium_production_study.py```
 
 ```python3 example_tritium_production_study.py```
+
+The script should produce a plot of TBR as a function of Li6 enrichment, as shown below.
 
 <img src="tasks/task_6/images/tbr_study.png" height="400">
 
@@ -391,7 +395,7 @@ There are two scripts to help you analysis the simulation results.
 
 Ultimately you should come up with the minimal thickness needed for each candidate blanket material and the Li6 enrichment required at that thickness. Feel free to share simulation data with other groups and interpolate between the data points.
 
-FOR 200 SIMULATIONS, THE 2D PLOTS PRODUCED SHOULD LOOK SIMILAR TO...
+For 200 simulations, the 2D plots should look similar to the plots below.
 
 <img src="tasks/task_8/images/TBR_vs_enrichment_fraction.png" height="400">
 
@@ -428,10 +432,8 @@ The output .gif shows how Halton sampling is initially used to perform simulatio
 
 <img src="tasks/task_9/images/output.gif" height="400">
 
-
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-
 
 ### <a name="task10"></a>Task 10 - Using CAD geometry
 
@@ -455,16 +457,16 @@ This taks depends on [DAGMC](https://svalinn.github.io/DAGMC/) and [FreeCAD](htt
 
 The geometry can be viewed in FreeCAD. Open up FreeCAD by typing ```freecad``` in the command line.
 
-Once loaded select file open and select blanket.stp, firstwall.stp and poloidal_magnets.stp. This should show the 3D model within the FreeCAD viewer.
+Once loaded select file open and select blanket.stp, firstwall.stp and poloidal_magnets.stp. This should show the 3D model within the FreeCAD viewer. A tutorial of this is provided below.
 
-A TUTORIAL OF THIS IS PROVIDED BELOW
+**FreeCAD Video Tutorial**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=pyZXQg0AsJ4
-" target="_blank"><img src="http://img.youtube.com/vi/pyZXQg0AsJ4/0.jpg" height="340" border="10" /></a>
+" target="_blank"><img src="http://img.youtube.com/vi/pyZXQg0AsJ4/0.jpg" height="340" /></a>
 
 If you have Trelis or Cubit installed (they can't be included on this Docker image) then try creating the DAGMC neutronics geometry using the command ```trelis make_faceted_geometry_with_materials```.
 
-The trelis / cubit script will load up the stp files and combine them to create a faceted geometry that can be used in neutronics simulations. Feel free to explore the script and the coresponding json congif file.
+The trelis / cubit script will load up the stp files and combine them to create a faceted geometry that can be used in neutronics simulations. Feel free to explore the script and the coresponding json config file.
 
 The next step is to open the OpenMC python script with the command ```coder example_CAD_simulation.py```.
 
@@ -474,7 +476,8 @@ The material assignment is not required as this is perfomed when combining the s
 
 Try running the script using the command ```python3 example_CAD_simulation.py```. This will run the simulation using the CAD geometry and produce the output results.
 
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 
 ### Acknowledgments
 Fred Thomas for providing examples from previous years Serpent workshop,
