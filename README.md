@@ -1,20 +1,20 @@
 # Fusion Neutronics workshop with OpenMC
-A selection of resources for learning OpenMC with particular focus on simulations relevant for fusion energy.
+A selection of resources for learning OpenMC with particular focus on simulations relevant to fusion energy.
 
-There are a few [slides](https://slides.com/openmc_workshop/neutronics_workshop) introducing the workshop and showing the results of each task.
+There are a few [slides](https://slides.com/openmc_workshop/neutronics_workshop) that introduce the workshop and show the expected outputs of each task.
 
 The use of OpenMC for neutronics analysis requires several software packages and nuclear data. These have been installed inside a Docker container.
-It is recommended that this workshop be completed using the Docker container.
+**It is recommended that this workshop be completed using the Docker container.**
 
-The majority of the workshop can also be completed using Google Colab Notebooks which do not require the Docker container. The links to these notebooks are provided below. (NOTE - Not all tasks can be completed in Colab as it lacks some dependencies such as Paraview).
-To use Google Colab Notebooks you will need your own Google account. You can edit and save your own copies of each notebook to your Google Drive.
+The majority of the workshop can also be completed using Google Colab Notebooks which do not require the Docker container. The links to these notebooks are provided below. (NOTE - Not all tasks can be completed in Colab as it lacks some dependencies).
+To use Google Colab you will need your own Google account. You can edit and save your own copies of each notebook to your Google Drive.
 
 ### Docker Installation
 
 The installation process consists of two steps.
 
-1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier?tab=instructions), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac)
-2. Pull the Docker images from the store by typing the following command in a terminal window.
+1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier?tab=instructions), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac).
+2. Pull the Docker image from the store by typing the following command in a terminal window.
 
 ```docker pull openmcworkshop/openmc_workshop_image_repository:full```
 
@@ -28,14 +28,13 @@ Now that you have the Docker image you can enable graphics linking between your 
 
 This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries.
 
-You can quickly test the graphics options worked by typing ```paraview``` in the docker container enviroment.
-
+You can quickly test the graphics options worked by typing ```paraview``` in the docker container enviroment. This should open the paraview program.
 
 The local directory that you run docker from will be mapped to the ```/openmc_workshop folder``` within the docker container. This can be useful for transfering files from your docker to your local machine.
 
-### Getting started on the tasks
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-If using Colab, follow the Colab links provided. Instructions for each task are provided in each notebook.
+### Getting started on the tasks
 
 - [Task 1 - Cross section plotting](#task1)
 - [Task 2 - Building and visualizing the model geometry](#task2)
@@ -48,7 +47,6 @@ If using Colab, follow the Colab links provided. Instructions for each task are 
 - [Task 9 - Optimize a breeder blanket for tritium production](#task9)
 - [Task 10 - Using CAD geometry](#task10)
 
-
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 
@@ -58,7 +56,7 @@ If using Colab, use the following link: [Task_1](https://colab.research.google.c
 
 Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/13).
+Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/13).
 
 Knowing the interaction probabilities of isotopes and materials within your model can help you understand the simulation results. There are several online tools for plotting nuclear cross sections such as [XSPlot](http://xsplot.com). However OpenMC is also able to plot cross sections for isotopes and materials.
 
@@ -82,13 +80,13 @@ To add different reactions to the plot we would need their ENDF reaction numbers
 
 - Try adding tritium production in Li6 and Li7 to the same plot. You may need to change the axis scale to log.
 
-The plot should now show fusion relevant interactions, as shown below. These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
+The plot should now be similar to the plot below showing fusion relevant interactions. These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
 
-<img src="tasks/task_1/images/1_example_isotope_plot_2.png>
+<img src="tasks/task_1/images/1_example_isotope_plot_2.png" height="500">
 
 - Try editing ```1_example_isotope_plot.py``` so that it plots tritium production or neutron multiplication for all the stable isotopes.
 
-Elemental properties can also be found with OpenMC. Try plotting tritium production and neutron multiplication using the ```2_example_element_plot.py``` script.
+Elemental properties can also be found with OpenMC. Try plotting tritium production and neutron multiplication using the ```2_example_element_plot.py``` script and the following commands.
 
 ```coder 2_example_element_plot.py```
 
@@ -96,24 +94,18 @@ Elemental properties can also be found with OpenMC. Try plotting tritium product
 
 This should produce a plot similar to as shown below.
 
-<img src="tasks/task_1/image/2_example_element_plot.png" height="220">
+<img src="tasks/task_1/images/2_example_element_plot.png" height="500">
 
-A nice feature of OpenMC is that it can plot cross sections for more complete materials made from combinations of isotopes. Open the next example python script and edit the script so that it can plot the tritium production and use this to identify the best elements for tritium production and neutron production. Why we might want to avoid some of these elements?
+A nice feature of OpenMC is that it can plot cross sections for more complete materials made from combinations of isotopes. Open the ```3_example_material_plot.py``` script and edit it so that it can plot the tritium production and use this to identify the best elements for tritium production and neutron production. Why might we want to avoid some of these elements?
 
-```3_example_material_plot.py```
+The script shows us how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material. Running this script should produce a plot as shown below.
 
-This file shows us how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material. Running this script should produce a plot as shown below.
-
-<img src="tasks/task_1/images/3_example_material_plot.png" height="220">
+<img src="tasks/task_1/images/3_example_material_plot.png" height="500">
 
  - Try editing ```3_example_material_plot.py``` so that other candidate breeder materials are added to the plot.
 
-
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-
-
-
 
 ### <a name="task2"></a>Task 2 - Building and visualizing the model geometry.
 
@@ -121,24 +113,25 @@ If using Colab, use the following link : [Task_2](https://colab.research.google.
 
 Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14).
+Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14).
 
 OpenMC can provide both 2D and 3D visualizations of the Constructive Solid Geometry ([CSG](https://en.wikipedia.org/wiki/Constructive_solid_geometry)).
 There are two methods of producing 2D slice views of the geometry.
 
-The first example 2D slice plot can be opened and produced by running ...
+The first example 2D slice plot can be opened and produced using the following commands
 
 ```coder 1_example_geometry_viewer_2d_fortran_version.py```
 
 ```python3 1_example_geometry_viewer_2d_fortran_version.py```
 
-from inside the task_2 folder.
+inside the task_2 folder.
 
-Views of the simple model from different planes (xy, xz, zy) should appear.
-
-AS SHOWN BELOW
+Views of the simple model from different planes (xy, xz, zy) should appear, AS SHOWN BELOW.
 
 <img src="tasks/task_2/images/xy_sphere.png" height="210"> <img src="tasks/task_2/images/xz_sphere.png" height="210"> <img src="tasks/task_2/images/yz_sphere.png" height="210">
+*LEFT: XY PLANE, MIDDLE: XZ PLANE, RIGHT: YZ PLANE.*
+
+GEOMETRY IS A SIMPLE SPHERICAL SHELL CENTRED AT THE ORIGIN, HENCE, WHY THE VIEW OF THE GEOMETRY IN EACH PLANE LOOKS IDENTICAL.
 
 The second method of producing 2D slice plots works better for large models.
 
@@ -146,7 +139,7 @@ The second method of producing 2D slice plots works better for large models.
 
 ```python3 2_example_geometry_viewer_2d.py```
 
-Now try adding a first wall and shielded central column to the model using the OpenMC [simple examples](https://openmc.readthedocs.io/en/stable/examples/pincell.html#Defining-Geometry) and the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/geometry.html) for CSG operations.
+Edit the script and try adding a first wall and shielded central column to the model using the OpenMC [simple examples](https://openmc.readthedocs.io/en/stable/examples/pincell.html#Defining-Geometry) and the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/geometry.html) for CSG operations.
 
 - Change the inner radius of the blanket to 500cm.
 
@@ -168,7 +161,7 @@ By the time you have added you extra geometry components your solution should lo
 
 ```python3 3_example_geometry_viewer_2d_tokamak.py```
 
-AS SHOWN IN IMAGES
+tHE OUTPUT OF THIS SCRIPT IS SHOWN BELOW.
 
 <img src="tasks/task_2/images/xy_tokamak.png" height="210"> <img src="tasks/task_2/images/xz_tokamak.png" height="210"> <img src="tasks/task_2/images/yz_tokamak.png" height="210">
 
@@ -188,13 +181,10 @@ Paraview should load up when this script completes. To make the geometry visible
 
 ```python3 5_example_geometry_viewer_3d_tokamak.py```
 
-PARAVIEW VIDEO TUTORIAL
+**Paraview video tutorial**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
 " target="_blank"><img src="http://img.youtube.com/vi/VWjQ-iHcaxA/0.jpg" height="340" border="10" /></a>
-
-
-
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -205,7 +195,7 @@ PARAVIEW VIDEO TUTORIAL
 
 Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15).
+Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15).
 
 When OpenMC runs a statepoint (output) file is produced which contains information about the neutron source, tally results and additional information. This task focuses on extracting neutron source information from the statepoint file, while tasks 4, 5 and 6 focus on extracting other information from the statepoint file.
 
@@ -215,7 +205,7 @@ The ```1_plot_neutron_birth_energy.py``` file shows you how to access the statep
 
 The script will produce a plot of a mono-energetic energy source of 14 MeV neutrons, as shown below.
 
-<img src="tasks/task_3/images/particle_energy_histogram_monoenergetic.png" height="300">
+<img src="tasks/task_3/images/particle_energy_histogram_monoenergetic.png" height="500">
 
 There are actually three source energy distributions available in the ```1_plot_neutron_birth_energy.py``` script.
 
@@ -244,13 +234,8 @@ Use Paraview to load the geometry file and then open the track files (.vtp files
 
 ## --------------------------------------------------------------------------
 
-
-
-
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-
-
 
 ### <a name="task4"></a>Task 4 - Finding the neutron flux
 
