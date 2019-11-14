@@ -183,7 +183,7 @@ Paraview should load up when this script completes. To make the geometry visible
 **Paraview Video Tutorial**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
-" target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="500" /></a>
+" target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="400" /></a>
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -469,7 +469,7 @@ Once loaded select file open and select blanket.stp, firstwall.stp and poloidal_
 **FreeCAD Video Tutorial**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=pyZXQg0AsJ4
-" target="_blank"><img src="tasks/task_10/images/task10thumbnail.png" height="500" /></a>
+" target="_blank"><img src="tasks/task_10/images/task10thumbnail.png" height="400" /></a>
 
 If you have Trelis or Cubit installed (they can't be included on this Docker image) then try creating the DAGMC neutronics geometry using the command ```trelis make_faceted_geometry_with_materials```.
 
