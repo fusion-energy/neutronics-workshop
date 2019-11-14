@@ -33,7 +33,7 @@ You can quickly test the graphics options worked by typing ```paraview``` in the
 The local directory that you run docker from will be mapped to the ```/openmc_workshop folder``` within the docker container. This can be useful for transfering files from your docker to your local machine.
 
 &ensp; 
-## -------------------------------------------------------------------------------
+## --------------------------------------------------------------------------------------------------------
 &ensp; 
 
 ### Getting started on the tasks
