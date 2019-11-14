@@ -33,6 +33,8 @@ You can quickly test the graphics options worked by typing ```paraview``` in the
 The local directory that you run docker from will be mapped to the ```/openmc_workshop folder``` within the docker container. This can be useful for transfering files from your docker to your local machine.
 
 &ensp; 
+## -------------------------------------------------------------------------------
+&ensp; 
 
 ### Getting started on the tasks
 
@@ -47,7 +49,9 @@ The local directory that you run docker from will be mapped to the ```/openmc_wo
 - [Task 9 - Optimize a breeder blanket for tritium production](#task9)
 - [Task 10 - Using CAD geometry](#task10)
 
-&emsp; 
+&ensp; 
+## --------------------------------------------------------------------------------
+&ensp; 
 
 ### <a name="task1"></a>Task 1 - Cross section plotting
 
@@ -103,8 +107,7 @@ The script shows us how to plot tritium production in Li4SiO4 which is a candida
 
  - Try editing ```3_example_material_plot.py``` so that other candidate breeder materials are added to the plot.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&ensp; 
 
 ### <a name="task2"></a>Task 2 - Building and visualizing the model geometry.
 
@@ -184,8 +187,7 @@ Paraview should load up when this script completes. To make the geometry visible
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
 " target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="340" /></a>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&ensp; 
 
 ### <a name="task3"></a>Task 3 - Visualizing neutron tracks
 
@@ -232,8 +234,7 @@ Use Paraview to load the geometry file and then open the track files (.vtp files
 
 ## --------------------------------------------------------------------------
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&ensp;
 
 ### <a name="task4"></a>Task 4 - Finding the neutron flux
 
@@ -271,8 +272,7 @@ The model still has a point source but now it is located at x=150 y=0 z=0 and ce
 
 - Try changing the mesh tally from (n,t) to flux and absorption.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&ensp; 
 
 ### <a name="task5"></a>Task 5 - Finding the neutron and photon spectra
 
@@ -308,8 +308,7 @@ The plot should look similar to the plot below.
 
 <img src="tasks/task_5/images/2_example_photon_spectra_tokamak.png" height="500">
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&ensp; 
 
 ### <a name="task6"></a>Task 6 - Finding the tritium production
 
@@ -345,8 +344,7 @@ The script should produce a plot of TBR as a function of Li6 enrichment, as show
 
 - Try changing '(n,t)' to 205 and you should get the same result as this is the equivalent [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&ensp; 
 
 ### <a name="task7"></a>Task 7 - Finding the neutron damage
 
@@ -364,8 +362,7 @@ In the case of DPA a tally multiplier is needed to account for the material and 
 
 - Using this information find the DPA on the first wall for a 2GW (fusion power) reactor over a 5 year period. Does this exceed the Eurofer DPA limit of 70 DPA?
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&ensp; 
 
 ### <a name="task8"></a>Task 8 - Survey breeder blanket designs for tritium production
 
@@ -403,8 +400,7 @@ For 200 simulations, the 2D plots should look similar to the plots below.
 
 <img src="tasks/task_8/images/TBR_vs_thickness.png" height="400">
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&ensp; 
 
 ### <a name="task9"></a>Task 9 - Optimize a breeder blanket for tritium production
 
@@ -434,8 +430,7 @@ The output .gif shows how Halton sampling is initially used to perform simulatio
 
 <img src="tasks/task_9/images/output.gif" height="400">
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+& ensp;  
 
 ### <a name="task10"></a>Task 10 - Using CAD geometry
 
@@ -478,8 +473,7 @@ The material assignment is not required as this is perfomed when combining the s
 
 Try running the script using the command ```python3 example_CAD_simulation.py```. This will run the simulation using the CAD geometry and produce the output results.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&ensp; 
 
 ### Acknowledgments
 Fred Thomas for providing examples from previous years Serpent workshop,
