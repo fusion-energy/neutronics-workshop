@@ -32,6 +32,8 @@ You can quickly test the graphics options worked by typing ```paraview``` in the
 
 The local directory that you run docker from will be mapped to the ```/openmc_workshop folder``` within the docker container. This can be useful for transfering files from your docker to your local machine.
 
+&ensp; 
+
 ### Getting started on the tasks
 
 - [Task 1 - Cross section plotting](#task1)
@@ -45,7 +47,7 @@ The local directory that you run docker from will be mapped to the ```/openmc_wo
 - [Task 9 - Optimize a breeder blanket for tritium production](#task9)
 - [Task 10 - Using CAD geometry](#task10)
 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&emsp; 
 
 ### <a name="task1"></a>Task 1 - Cross section plotting
 
