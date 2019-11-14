@@ -183,7 +183,7 @@ Paraview should load up when this script completes. To make the geometry visible
 **Paraview Video Tutorial**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
-" target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="340" /></a>
+" target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="500" /></a>
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -213,8 +213,6 @@ There are actually three source energy distributions available in the ```1_plot_
 
 - Try changing the Muir plasma temperature from 20 KeV to 40 KeV.
 
-## ------------------ Still under work -----------------------------
-
 In the next example the initial neutron trajectory and birth location is plotted. Again this information is accessed from the statepoint file.
 
 Run ```python3 2_plot_neutron_birth_location.py``` to produce the plot of a basic point source with the directions.
@@ -231,8 +229,6 @@ Run the script with the command
 ```python3 3_example_neutron_tracks.py```
 
 Use Paraview to load the geometry file and then open the track files (.vtp files). Parview can also be used to slice (slice this model on the z plane) and threshold the geometry. Looking at the tracks can you tell which material is water and which is zirconium?
-
-## --------------------------------------------------------------------------
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -346,7 +342,7 @@ One option for increasing the TBR is to increase the Li6 content within the blan
 
 The script should produce a plot of TBR as a function of Li6 enrichment, as shown below.
 
-<img src="tasks/task_6/images/tbr_study.png" height="400">
+<img src="tasks/task_6/images/tbr_study.png" height="500">
 
 - Try changing '(n,t)' to 205 and you should get the same result as this is the equivalent [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf)
 
@@ -406,9 +402,9 @@ Ultimately you should come up with the minimal thickness needed for each candida
 
 For 200 simulations, the 2D plots should look similar to the plots below.
 
-<img src="tasks/task_8/images/TBR_vs_enrichment_fraction.png" height="400">
+<img src="tasks/task_8/images/TBR_vs_enrichment_fraction.png" height="500">
 
-<img src="tasks/task_8/images/TBR_vs_thickness.png" height="400">
+<img src="tasks/task_8/images/TBR_vs_thickness.png" height="500">
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -440,7 +436,7 @@ This iterative approach efficiently and accurately determines the point across t
 
 The output .gif shows how Halton sampling is initially used to perform simulations before further simulations are informed by Gaussian interpolation.
 
-<img src="tasks/task_9/images/output.gif" height="400">
+<img src="tasks/task_9/images/output.gif" height="500">
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -473,7 +469,7 @@ Once loaded select file open and select blanket.stp, firstwall.stp and poloidal_
 **FreeCAD Video Tutorial**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=pyZXQg0AsJ4
-" target="_blank"><img src="tasks/task_10/images/task10thumbnail.png" height="340" /></a>
+" target="_blank"><img src="tasks/task_10/images/task10thumbnail.png" height="500" /></a>
 
 If you have Trelis or Cubit installed (they can't be included on this Docker image) then try creating the DAGMC neutronics geometry using the command ```trelis make_faceted_geometry_with_materials```.
 
