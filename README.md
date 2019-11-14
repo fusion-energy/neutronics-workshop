@@ -45,7 +45,7 @@ The local directory that you run docker from will be mapped to the ```/openmc_wo
 - [Task 9 - Optimize a breeder blanket for tritium production](#task9)
 - [Task 10 - Using CAD geometry](#task10)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
 
 ### <a name="task1"></a>Task 1 - Cross section plotting
 
