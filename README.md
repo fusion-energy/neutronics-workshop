@@ -124,7 +124,7 @@ The first example 2D slice plot can be opened and produced using the following c
 Views of the simple model from different planes (XY, XZ, YZ) should appear, as shown below.
 
 <img src="tasks/task_2/images/xy_sphere.png" height="210"> <img src="tasks/task_2/images/xz_sphere.png" height="210"> <img src="tasks/task_2/images/yz_sphere.png" height="210">
-<p align="center"><i>Left = XY plane, Middle = XZ plane, Right = YZ plane*</i></p>
+<p align="center"><i>Left = XY plane, Middle = XZ plane, Right = YZ plane</i></p>
 
 As the geometry is a simple spherical shell centred at the origin, its views in each plane are identical.
 
@@ -180,7 +180,7 @@ Paraview should load up when this script completes. To make the geometry visible
 **Paraview Video Tutorial**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
-" target="_blank"><img src="http://img.youtube.com/vi/VWjQ-iHcaxA/0.jpg" height="340" /></a>
+" target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="340" /></a>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -462,7 +462,7 @@ Once loaded select file open and select blanket.stp, firstwall.stp and poloidal_
 **FreeCAD Video Tutorial**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=pyZXQg0AsJ4
-" target="_blank"><img src="http://img.youtube.com/vi/pyZXQg0AsJ4/0.jpg" height="340" /></a>
+" target="_blank"><img src="tasks/task_10/images/task10thumbnail.png" height="340" /></a>
 
 If you have Trelis or Cubit installed (they can't be included on this Docker image) then try creating the DAGMC neutronics geometry using the command ```trelis make_faceted_geometry_with_materials```.
 
