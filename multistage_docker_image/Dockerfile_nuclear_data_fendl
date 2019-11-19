@@ -1,0 +1,16 @@
+FROM jbillingsley/multistage:latest
+
+# install fendl nuclear data
+
+# clone data repository
+RUN git clone https://github.com/openmc-dev/data.git
+
+# run script that converts ACE data to hdf5 data
+RUN python3 data/convert_fendl.py -b
+
+
+ENV OPENMC_CROSS_SECTIONS='/fendl-3.1d-hdf5/cross_sections.xml'   # doesn't seem to recognise filepath
+
+
+
+
