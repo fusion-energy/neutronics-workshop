@@ -95,7 +95,7 @@ source.space = openmc.stats.Point((150,0,0))
 sett.source = source
 
 # Create mesh which will be used for tally
-mesh = openmc.Mesh()
+mesh = openmc.RegularMesh.()
 mesh_height=400
 mesh_width = mesh_height
 mesh.dimension = [mesh_width, mesh_height]
