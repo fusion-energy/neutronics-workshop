@@ -25,7 +25,7 @@ FFLAGS = $(OPT_LEVEL) -fPIC
 C_FLAGS = -fPIC
 CXX_FLAGS = -fPIC
 
-OPENMC_DIR = /home/shimwell/openmc
+OPENMC_DIR = ~/openmc
 OPENMC_INC_DIR = $(OPENMC_DIR)/include
 OPENMC_LIB_DIR = $(OPENMC_DIR)/lib
 # setting the so name is important
