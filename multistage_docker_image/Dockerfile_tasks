@@ -1,4 +1,7 @@
-FROM jbillingsley/multistage:latest
+
+FROM openmcworkshop/openmc:latest
+FROM openmcworkshop/nuclear_data_tendl:latest
+
 
 # Python libraries used in the workshop
 RUN pip3 install plotly
@@ -24,10 +27,8 @@ RUN add-apt-repository ppa:freecad-maintainers/freecad-stable
 RUN apt-get update 
 RUN apt-get --yes install freecad 
 RUN ln -s /usr/lib/freecad/Mod /usr/lib/freecad-python3/Mod
-
-# RUN git clone https://github.com/ukaea/openmc_workshop.git
-
-WORKDIR /openmc_workshop
+RUN echo redown3
+RUN git clone https://github.com/ukaea/openmc_workshop.git
 
 # Compile parametric plasma source
 RUN cd /openmc_workshop/parametric_plasma_source && bash compile.sh
@@ -38,3 +39,7 @@ RUN cp /openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_work
 RUN cp /openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_6
 RUN cp /openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_7
 RUN cp /openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_8
+
+
+WORKDIR /openmc_workshop
+
