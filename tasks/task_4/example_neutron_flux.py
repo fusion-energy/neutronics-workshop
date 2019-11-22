@@ -59,7 +59,7 @@ sett.source = source
 
 
 # Create mesh which will be used for tally
-mesh = openmc.Mesh()
+mesh = openmc.RegularMesh()
 mesh_height=200
 mesh_width = mesh_height
 mesh.dimension = [mesh_width, mesh_height]

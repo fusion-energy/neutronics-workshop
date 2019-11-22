@@ -1,4 +1,3 @@
-
 trelis -batch -nographics make_faceted_geometry_with_materials.py 
 
 make_watertight dagmc_notwatertight.h5m -o dagmc_watertight.h5m
