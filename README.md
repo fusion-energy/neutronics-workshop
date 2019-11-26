@@ -402,9 +402,9 @@ Ultimately you should come up with the minimal thickness needed for each candida
 
 For 200 simulations, the 2D plots should look similar to the plots below.
 
-<p align="center"><img src="tasks/task_8/images/TBR_vs_enrichment_fraction.png" height="500">
+<p align="center"><img src="tasks/task_8/images/TBR_vs_enrichment_fraction.png" height="500"></p>
 
-<img src="tasks/task_8/images/TBR_vs_thickness.png" height="500"></p>
+<p align="center"><img src="tasks/task_8/images/TBR_vs_thickness.png" height="500"></p>
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
