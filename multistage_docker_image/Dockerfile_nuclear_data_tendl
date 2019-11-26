@@ -1,0 +1,11 @@
+FROM openmcworkshop/openmc:latest
+
+# install tendl nuclear data
+
+# clone data repository
+RUN git clone https://github.com/openmc-dev/data.git
+
+# run script that converts ACE data to hdf5 data
+RUN python3 data/convert_tendl.py -b
+
+ENV OPENMC_CROSS_SECTIONS=/tendl-2017-hdf5/cross_sections.xml
