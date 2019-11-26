@@ -81,7 +81,7 @@ To add different reactions to the plot we would need their ENDF reaction numbers
 
 The plot should now be similar to the plot below showing fusion relevant interactions. These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
 
-<img src="tasks/task_1/images/1_example_isotope_plot_2.png" height="500">
+<p align="center"><img src="tasks/task_1/images/1_example_isotope_plot_2.png" height="500"></p>
 
 - Try editing ```1_example_isotope_plot.py``` so that it plots tritium production or neutron multiplication for all the stable isotopes.
 
@@ -93,13 +93,13 @@ Elemental properties can also be found with OpenMC. Try plotting tritium product
 
 This should produce a plot similar to as shown below.
 
-<img src="tasks/task_1/images/2_example_element_plot.png" height="500">
+<p align="center"><img src="tasks/task_1/images/2_example_element_plot.png" height="500"></p>
 
 A nice feature of OpenMC is that it can plot cross sections for more complete materials made from combinations of isotopes. Open the ```3_example_material_plot.py``` script and edit it so that it can plot the tritium production and use this to identify the best elements for tritium production and neutron production. Why might we want to avoid some of these elements?
 
 The script shows us how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material. Running this script should produce a plot as shown below.
 
-<img src="tasks/task_1/images/3_example_material_plot.png" height="500">
+<p align="center"><img src="tasks/task_1/images/3_example_material_plot.png" height="500"></p>
 
  - Try editing ```3_example_material_plot.py``` so that other candidate breeder materials are added to the plot.
 
@@ -205,7 +205,7 @@ The ```1_plot_neutron_birth_energy.py``` file shows you how to access the statep
 
 The script will produce a plot of a mono-energetic energy source of 14 MeV neutrons, as shown below.
 
-<img src="tasks/task_3/images/particle_energy_histogram_monoenergetic.png" height="500">
+<p align="center"><img src="tasks/task_3/images/particle_energy_histogram_monoenergetic.png" height="500"></p>
 
 There are actually three source energy distributions available in the ```1_plot_neutron_birth_energy.py``` script.
 
@@ -294,7 +294,7 @@ Run ```1_example_neutron_spectra_tokamak.py``` to plot the neutron spectra withi
 
 The plot should look similar to the plot shown below.
 
-<img src="tasks/task_5/images/1_example_neutron_spectra_tokamak.png" height="500">
+<p align="center"><img src="tasks/task_5/images/1_example_neutron_spectra_tokamak.png" height="500"></p>
 
 - Try plotting the neutron spectra within the first wall cell on the same axis and compare it to the breeder blanket cell.
 
@@ -306,7 +306,7 @@ Open ```2_example_photon_spectra_tokamak.py``` to see how the photon spectra is 
 
 The plot should look similar to the plot below.
 
-<img src="tasks/task_5/images/2_example_photon_spectra_tokamak.png" height="500">
+<p align="center"><img src="tasks/task_5/images/2_example_photon_spectra_tokamak.png" height="500"></p>
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -342,7 +342,7 @@ One option for increasing the TBR is to increase the Li6 content within the blan
 
 The script should produce a plot of TBR as a function of Li6 enrichment, as shown below.
 
-<img src="tasks/task_6/images/tbr_study.png" height="500">
+<p align="center"><img src="tasks/task_6/images/tbr_study.png" height="500"></p>
 
 - Try changing '(n,t)' to 205 and you should get the same result as this is the equivalent [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf)
 
@@ -402,9 +402,9 @@ Ultimately you should come up with the minimal thickness needed for each candida
 
 For 200 simulations, the 2D plots should look similar to the plots below.
 
-<img src="tasks/task_8/images/TBR_vs_enrichment_fraction.png" height="500">
+<p align="center"><img src="tasks/task_8/images/TBR_vs_enrichment_fraction.png" height="500">
 
-<img src="tasks/task_8/images/TBR_vs_thickness.png" height="500">
+<img src="tasks/task_8/images/TBR_vs_thickness.png" height="500"></p>
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -436,7 +436,7 @@ This iterative approach efficiently and accurately determines the point across t
 
 The output .gif shows how Halton sampling is initially used to perform simulations before further simulations are informed by Gaussian interpolation.
 
-<img src="tasks/task_9/images/output.gif" height="500">
+<p align="center"><img src="tasks/task_9/images/output.gif" height="500"></p>
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
