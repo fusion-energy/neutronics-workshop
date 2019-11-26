@@ -1,0 +1,11 @@
+FROM openmcworkshop/openmc:latest
+
+# install endf nuclear data
+
+# clone data repository
+RUN git clone https://github.com/openmc-dev/data.git
+
+# run script that converts ACE data to hdf5 data
+RUN python3 data/convert_nndc71.py
+
+ENV OPENMC_CROSS_SECTIONS=/nndc-7.1-hdf5/cross_sections.xml
