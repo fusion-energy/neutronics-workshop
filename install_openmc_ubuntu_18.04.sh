@@ -23,8 +23,8 @@ sudo apt-get install --yes git
 sudo apt-get --yes install dpkg
 sudo apt-get --yes install libxkbfile1
 sudo apt-get --yes install -f
-sudo apt-get install libblas-dev 
-sudo apt-get install liblapack-dev
+sudo apt-get --yes install libblas-dev 
+sudo apt-get --yes install liblapack-dev
 
 pip3 install numpy --user
 pip3 install pandas --user
@@ -52,6 +52,7 @@ cd build
 cmake -Dstatic=on .. && make 2>/dev/null
 sudo make install
 
+
 sudo rm /usr/bin/python
 sudo ln -s /usr/bin/python3 /usr/bin/python
 
@@ -72,6 +73,7 @@ echo 'export LD_LIBRARY_PATH=$MOAB_INSTALL_DIR/lib:$LD_LIBRARY_PATH' >> ~/.bashr
 echo 'export LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH' >> ~/.bashrc 
 # echo '$PATH:/openmc/build/bin/' >> ~/.bashrc 
 
+
 # MOAB Install
 cd ~
 mkdir MOAB
@@ -80,8 +82,10 @@ git clone -b $MOAB_BRANCH $MOAB_REPO
 mkdir build 
 cd build
 cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
-make && make test install
-cd pymoab && python3 setup.py install --user
+make
+make test install
+cd pymoab
+python3 setup.py install --user
 # rm -rf /MOAB/moab
 #needs setting in bashrc
 LD_LIBRARY_PATH=$MOAB_INSTALL_DIR/lib:$LD_LIBRARY_PATH
@@ -102,45 +106,37 @@ make install
 #needs setting in bashrc
 LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH
 
-FC=mpif90
-CC=mpicc
 
+# OpenMC Install
 cd ~
-git clone https://github.com/mit-crpg/openmc 
+# git clone https://github.com/mit-crpg/openmc 
+git clone https://github.com/makeclean/openmc.git
 cd openmc
+git checkout dlopen_source
 mkdir build
 cd build 
 cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 # cmake -Ddagmc=ON -Ddebug=on -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 make 
 sudo make install
-
-sudo cp ~/openmc/build/bin/openmc /usr/local/bin
-
 cd ~/openmc/ 
 python3 setup.py install --user
 
-# the download script from the CI
-# /openmc/tools/ci/download-xs.sh
 
-echo 'export PYTHONPATH=$PYTHONPATH:~/openmc/scripts/ ' >> ~/.bashrc 
-PYTHONPATH=$PYTHONPATH:~/openmc/openmc/scripts/ 
-
-mv data data.py
-
+# Nuclear data install
 cd ~
 git clone https://github.com/openmc-dev/data.git
-cp ~/openmc/scripts/openmc-ace-to-hdf5 ~/data
-cp ~/openmc/scripts/openmc-get-photon-data ~/data
 cd data
 python3 convert_tendl.py -b
-#other nuclear data libraries are available here.
+python3 convert_nndc71.py
 
 
+
+OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-7.1-hdf5/cross_sections.xml
+echo 'export OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-7.1-hdf5/cross_sections.xml' >> ~/.bashrc
 OPENMC_CROSS_SECTIONS_TENDL=~/data/tendl-2017-hdf5/cross_sections.xml
-OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml
 echo 'export OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml' >> ~/.bashrc
 
-
-
+OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml
+echo 'export OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml' >> ~/.bashrc
 
