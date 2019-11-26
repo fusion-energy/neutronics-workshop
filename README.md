@@ -71,7 +71,7 @@ OpenMC is well documented so if the script does not make sense take a look at th
 
 You should see a plot of the n,2n cross sections for isotopes of lead and beryllium, as shown below.
 
-<img src="tasks/task_1/images/1_example_isotope_plot.png" height="500">
+<p align="center"><img src="tasks/task_1/images/1_example_isotope_plot.png" height="500"></p>
 
 To add different reactions to the plot we would need their ENDF reaction numbers (MT number) which are available [here](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf).
 
