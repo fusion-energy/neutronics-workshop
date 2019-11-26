@@ -20,7 +20,7 @@ The installation process consists of two steps.
 
 ### Running OpenMC with docker
 
-Now that you have the Docker image you can enable graphics linking between your os and docker then run the image by typing the following commands in a terminal window.
+Now that you have the Docker image you can enable graphics linking between your os and docker and then run the image by typing the following commands in a terminal window.
 
 ```xhost local:root```
 
@@ -31,8 +31,6 @@ This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Parav
 You can quickly test the graphics options worked by typing ```paraview``` in the docker container enviroment. This should open the paraview program.
 
 The local directory that you run docker from will be mapped to the ```/openmc_workshop folder``` within the docker container. This can be useful for transfering files from your docker to your local machine.
-
-&ensp; 
 
 ### Getting started on the tasks
 
@@ -48,6 +46,8 @@ The local directory that you run docker from will be mapped to the ```/openmc_wo
 - [Task 10 - Using CAD geometry](#task10)
 
 &ensp; 
+## --------------------------------------------------------------------------------------------------------------
+&ensp;
 
 ### <a name="task1"></a>Task 1 - Cross section plotting
 
@@ -57,7 +57,7 @@ Please allow 20 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/13).
 
-Knowing the interaction probabilities of isotopes and materials within your model can help you understand the simulation results. There are several online tools for plotting nuclear cross sections such as [XSPlot](http://xsplot.com). However OpenMC is also able to plot cross sections for isotopes and materials.
+Knowing the interaction probabilities of isotopes and materials within your model can help you understand the simulation results. There are several online tools for plotting nuclear cross sections such as [XSPlot](http://xsplot.com). However, OpenMC is also able to plot cross sections for isotopes and materials.
 
 From inside the docker container navigate to the task_1 directory and open the first example python script.
 
