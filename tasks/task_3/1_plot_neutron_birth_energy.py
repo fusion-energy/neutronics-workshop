@@ -75,7 +75,6 @@ print('energy_bins',energy_bins)
 # Calculate pdf for source energies
 probability, bin_edges = np.histogram(sp.source['E'], energy_bins, density=True)
 
-
 # Plot source energy histogram
 traces=[Scatter(x=energy_bins[:-1], 
                        y=probability*np.diff(energy_bins),
@@ -101,9 +100,9 @@ plot({'data':traces,
 text = ['Energy = '+str(i)+' eV' for i in sp.source['E']]
 
 # plots 3d poisitons of particles coloured by energy
-traces=[Scatter3d(x=sp.source['xyz'][:,0], 
-                  y=sp.source['xyz'][:,1],
-                  z=sp.source['xyz'][:,2],
+traces=[Scatter3d(x=sp.source['r']['x'], 
+                  y=sp.source['r']['y'],
+                  z=sp.source['r']['z'],
                   hovertext= text,
                   text=text,
                   mode = 'markers',
