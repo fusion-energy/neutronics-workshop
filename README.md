@@ -217,13 +217,13 @@ In the next example the initial neutron trajectory and birth location is plotted
 
 Run ```python3 2_plot_neutron_birth_location.py``` to produce plots of a basic point source showing neutron birth locations and initial directions. The output of which should look similar to the plots shown below.
 
-<img src="tasks/task_3/images/3d_scatter_plot.png" height="250"> <img src="tasks/task_3/images/3d_scatter_cones.png" height="250">
+<img src="tasks/task_3/images/3d_scatter_plot.png" height="250"> <img src="tasks/task_3/images/3d_plot_cones.png" height="250">
 
 Now open the next example source plotting script ```3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined. You should notice that an external source library is used. This is a precompiled parametric plasma source that produces neutron positions, enrgies and directions for a given plasma source.
 
 Run ```python3 3_plot_neutron_birth_locations_plasma.py``` to produce the plot of a more realisitc plasma neutron source point. The output of which should look similar to the plots shown below.
 
-<img src="tasks/task_3/images/3d_plasma_scatter.png" height="250"> <img src="tasks/task_3/3d_plasma_cones.png" height="250">
+<img src="tasks/task_3/images/3d_plasma_scatter.png" height="250"> <img src="tasks/task_3/images/3d_plasma_cones.png" height="250">
 
 The ```4_example_neutron_tracks.py``` file contains a hollow sphere made of two materials and a 14 MeV point source in the centre of the geometry. The objective of this task is to create some 3D particle tracks and visualize them with the geometry.
 
