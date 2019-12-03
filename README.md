@@ -191,13 +191,13 @@ Paraview should load up when this script completes. To make the geometry visible
 
 ### <a name="task3"></a>Task 3 - Visualizing neutron tracks
 
-**This task is unavailable in Colab.**
+If using Colab, use the following link : [Task_3](https://colab.research.google.com/drive/1kOFp9s3utX0o2D7llXXJ6pyyrvK_V-Nz)
 
 Please allow 20 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15).
 
-When OpenMC runs a statepoint (output) file is produced which contains information about the neutron source, tally results and additional information. This task focuses on extracting neutron source information from the statepoint file, while tasks 4, 5 and 6 focus on extracting other information from the statepoint file.
+When OpenMC runs, a statepoint (output) file is produced which contains information about the neutron source, tally results and additional information. This task focuses on extracting neutron source information from the statepoint file, while tasks 4, 5 and 6 focus on extracting other information from the statepoint file.
 
 The ```1_plot_neutron_birth_energy.py``` file shows you how to access the statepoint file created by a simulation. In this example the birth energy of all the simulated neutrons is extracted. A plot of the energy distribution can be produced by running the script.
 
@@ -213,13 +213,17 @@ There are actually three source energy distributions available in the ```1_plot_
 
 - Try changing the Muir plasma temperature from 20 KeV to 40 KeV.
 
-In the next example the initial neutron trajectory and birth location is plotted. Again this information is accessed from the statepoint file.
+In the next example the initial neutron trajectory and birth location is plotted. Again, this information is accessed from the statepoint file.
 
-Run ```python3 2_plot_neutron_birth_location.py``` to produce the plot of a basic point source with the directions.
+Run ```python3 2_plot_neutron_birth_location.py``` to produce plots of a basic point source showing neutron birth locations and initial directions. The output of which should look similar to the plots shown below.
 
-Now open the next example source plotting script with the command ```coder 3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined. You should notice that an external source library is used. This is a precompiled parametric plasma source that produces neutron positions, energies and directions for a given plasma source.
+<img src="tasks/task_3/images/3d_scatter_plot.png" height="250"><img src="tasks/task_3/images/3d_scatter_cones.png" height="250">
 
-Run ```python3 3_plot_neutron_birth_locations_plasma.py``` to produce the plot of a more realisitc plasma neutron source point.
+Now open the next example source plotting script ```3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined. You should notice that an external source library is used. This is a precompiled parametric plasma source that produces neutron positions, enrgies and directions for a given plasma source.
+
+Run ```python3 3_plot_neutron_birth_locations_plasma.py``` to produce the plot of a more realisitc plasma neutron source point. The output of which should look similar to the plots shown below.
+
+<img src="tasks/task_3/images/3d_plasma_scatter.png" height="250"><img src="tasks/task_3/3d_plasma_cones.png" height="250">
 
 The ```4_example_neutron_tracks.py``` file contains a hollow sphere made of two materials and a 14 MeV point source in the centre of the geometry. The objective of this task is to create some 3D particle tracks and visualize them with the geometry.
 
