@@ -20,17 +20,21 @@ The installation process consists of two steps.
 
 ### Running OpenMC with docker
 
-Now that you have the Docker image you can enable graphics linking between your os and docker and then run the image by typing the following commands in a terminal window.
+Now that you have the Docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands in a terminal window.
 
 ```xhost local:root```
 
-```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_workshop_image_repository:full```
+```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_workshop_image_repository:full```
 
 This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries.
 
 You can quickly test the graphics options worked by typing ```paraview``` in the docker container enviroment. This should open the paraview program.
 
-The local directory that you run docker from will be mapped to the ```/openmc_workshop folder``` within the docker container. This can be useful for transfering files from your docker to your local machine.
+Running the docker container places you in the ```/openmc_workshop``` directory which contains all of the files required to complete the workshop.
+
+The docker container also contains a folder called ```/my_openmc_workshop``` which is mapped to the local directory from which you ran the container. Placing files into this directory allows you to tranfer files from your docker container to your local machine.
+
+**IMPORTANT:** The docker container is built from an image at a particular moment in time. Any changes you make will be lost as soon as you exit the container. **Make sure you copy any files you want to keep into the ```my_openmc_workshop``` folder before exiting the docker container**. This places those files into the directory from which the docker container was run on your local machine.
 
 ### Getting started on the tasks
 
@@ -191,13 +195,13 @@ Paraview should load up when this script completes. To make the geometry visible
 
 ### <a name="task3"></a>Task 3 - Visualizing neutron tracks
 
-**This task is unavailable in Colab.**
+If using Colab, use the following link : [Task_3](https://colab.research.google.com/drive/1kOFp9s3utX0o2D7llXXJ6pyyrvK_V-Nz)
 
 Please allow 20 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15).
 
-When OpenMC runs a statepoint (output) file is produced which contains information about the neutron source, tally results and additional information. This task focuses on extracting neutron source information from the statepoint file, while tasks 4, 5 and 6 focus on extracting other information from the statepoint file.
+When OpenMC runs, a statepoint (output) file is produced which contains information about the neutron source, tally results and additional information. This task focuses on extracting neutron source information from the statepoint file, while tasks 4, 5 and 6 focus on extracting other information from the statepoint file.
 
 The ```1_plot_neutron_birth_energy.py``` file shows you how to access the statepoint file created by a simulation. In this example the birth energy of all the simulated neutrons is extracted. A plot of the energy distribution can be produced by running the script.
 
@@ -213,13 +217,21 @@ There are actually three source energy distributions available in the ```1_plot_
 
 - Try changing the Muir plasma temperature from 20 KeV to 40 KeV.
 
-In the next example the initial neutron trajectory and birth location is plotted. Again this information is accessed from the statepoint file.
+In the next example the initial neutron trajectory and birth location is plotted. Again, this information is accessed from the statepoint file.
 
-Run ```python3 2_plot_neutron_birth_location.py``` to produce the plot of a basic point source with the directions.
+Run ```python3 2_plot_neutron_birth_location.py``` to produce plots of a basic point source showing neutron birth locations and initial directions. The output of which should look similar to the plots shown below.
 
-Now open the next example source plotting script with the command ```coder 3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined. You should notice that an external source library is used. This is a precompiled parametric plasma source that produces neutron positions, energies and directions for a given plasma source.
+<p align="center"><img src="tasks/task_3/images/3d_scatter_plot.png" height="300"> <img src="tasks/task_3/images/3d_plot_cones.png" height="300"></p>
 
-Run ```python3 3_plot_neutron_birth_locations_plasma.py``` to produce the plot of a more realisitc plasma neutron source point.
+<p align="center"><i>Left = Neutron birth locations, Right = Neutron initial directions</i></p>
+
+Now open the next example source plotting script ```3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined - you should notice that an external source library is used. The ```source_sampling.so``` file is a precompiled plasma source file containing neutron positions, energies and directions for a given plasma source. This file is in task_3 directory.
+
+Run ```python3 3_plot_neutron_birth_locations_plasma.py``` to produce the plot of a more realisitc plasma neutron source point. The output of which should look similar to the plots shown below.
+
+<p align="center"><img src="tasks/task_3/images/3d_plasma_scatter.png" height="300"> <img src="tasks/task_3/images/3d_plasma_cones.png" height="300"></p>
+
+<p align="center"><i>Left = Neutron birth locations, Right = Neutron initial directions</i></p>
 
 The ```4_example_neutron_tracks.py``` file contains a hollow sphere made of two materials and a 14 MeV point source in the centre of the geometry. The objective of this task is to create some 3D particle tracks and visualize them with the geometry.
 
