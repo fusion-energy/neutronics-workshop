@@ -20,7 +20,7 @@ The installation process consists of two steps.
 
 ### Running OpenMC with docker
 
-Now that you have the Docker image you can enable graphics linking between your os and docker and then run the image by typing the following commands in a terminal window.
+Now that you have the Docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands in a terminal window.
 
 ```xhost local:root```
 
@@ -30,9 +30,11 @@ This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Parav
 
 You can quickly test the graphics options worked by typing ```paraview``` in the docker container enviroment. This should open the paraview program.
 
-Running the docker image places you in the ```/openmc_workshop``` directory which contains all of the files required to complete this workshop.
+Running the docker container places you in the ```/openmc_workshop``` directory which contains all of the files required to complete the workshop.
 
-The local directory that you run docker from will be mapped to the ```/my_openmc_workshop``` within the docker container. This can be useful for transfering files from your docker to your local machine.
+The docker container also contains a folder called ```/my_openmc_workshop``` which is mapped to the local directory from which you ran the container. Placing files into this directory allows you to tranfer files from your docker container to your local machine.
+
+**IMPORTANT:** The docker container is built from an image at a particular moment in time. Any changes you make will be lost as soon as you exit the container. **Make sure you copy any files you want to keep into the ```my_openmc_workshop``` folder before exiting the docker container**. This places those files into the directory from which the docker container was run on your local machine.
 
 ### Getting started on the tasks
 
