@@ -31,7 +31,7 @@ enriched_Li4SiO4.set_density('g/cm3',1.844) # this density is lower as there is 
 #natural_Li2ZrO3 density 2.5288596326567134 g/cm3
 #natural_Li2TiO3 density 2.8994147653592983 g/cm3
 
-Endf_MT_number = [205] # MT number 205 is (n,t) reaction
+Endf_MT_number = [205] # MT number 205 is (n,Xt) reaction
 
 Energy_natural_Li4SiO4_MT16, data = openmc.calculate_cexs(natural_Li4SiO4, 'material', Endf_MT_number )
 cross_section_natural_Li4SiO4_MT16 = data[0]
