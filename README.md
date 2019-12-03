@@ -225,7 +225,7 @@ Run ```python3 2_plot_neutron_birth_location.py``` to produce plots of a basic p
 
 <p align="center"><i>Left = Neutron birth locations, Right = Neutron initial directions</i></p>
 
-Now open the next example source plotting script ```3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined. You should notice that an external source library is used. This is a precompiled parametric plasma source that produces neutron positions, enrgies and directions for a given plasma source.
+Now open the next example source plotting script ```3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined - you should notice that an external source library is used. The ```source_sampling.so``` file is a precompiled plasma source file containing neutron positions, energies and directions for a given plasma source. This file is in task_3 directory.
 
 Run ```python3 3_plot_neutron_birth_locations_plasma.py``` to produce the plot of a more realisitc plasma neutron source point. The output of which should look similar to the plots shown below.
 
