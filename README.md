@@ -24,13 +24,15 @@ Now that you have the Docker image you can enable graphics linking between your 
 
 ```xhost local:root```
 
-```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_workshop_image_repository:full```
+```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_workshop_image_repository:full```
 
 This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries.
 
 You can quickly test the graphics options worked by typing ```paraview``` in the docker container enviroment. This should open the paraview program.
 
-The local directory that you run docker from will be mapped to the ```/openmc_workshop folder``` within the docker container. This can be useful for transfering files from your docker to your local machine.
+Running the docker image places you in the ```/openmc_workshop``` directory which contains all of the files required to complete this workshop.
+
+The local directory that you run docker from will be mapped to the ```/my_openmc_workshop``` within the docker container. This can be useful for transfering files from your docker to your local machine.
 
 ### Getting started on the tasks
 
