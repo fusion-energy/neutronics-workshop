@@ -46,7 +46,7 @@ sett.run_mode = 'fixed source'
 source = openmc.Source()
 
 #sets the source poition, direction and energy with predefined plasma parameters (see source_sampling.cpp)
-source._source_library = 'source_sampling.so'
+source.library = './source_sampling.so'
 
 sett.source = source
 
