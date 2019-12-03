@@ -67,7 +67,7 @@ tallies = openmc.Tallies()
 cell_filter = openmc.CellFilter(1) #breeder_material is in cell number 1
 tbr_tally = openmc.Tally(2,name='TBR')
 tbr_tally.filters = [cell_filter]
-tbr_tally.scores = ['(n,t)'] #or 205
+tbr_tally.scores = ['205'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
 tallies.append(tbr_tally)
 
 
