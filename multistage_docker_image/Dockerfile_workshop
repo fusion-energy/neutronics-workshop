@@ -3,7 +3,7 @@ FROM openmcworkshop/openmc_workshop_image_repository:latest
 # Python libraries used in the workshop
 RUN pip3 install plotly
 RUN pip3 install tqdm
-#RUN pip3 install ghalton
+RUN pip3 install ghalton==0.6.1
 RUN pip3 install noisyopt
 RUN pip3 install inference-tools
 
