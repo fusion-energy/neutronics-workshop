@@ -289,7 +289,7 @@ for i in range(number_of_samples,number_of_samples+10):
     example_plot_1d(GP)
 
     # request the proposed evaluation
-    new_x = GP.search_for_maximum()[0]
+    new_x = GP.search_for_maximum()
 
     # evaluate the new point
     new_result = make_materials_geometry_tallies(enrichment_fraction_list = new_x ,batches = 2, inner_radius = 500, thickness = 100, breeder_material_name = 'Li', temperature_in_C = 500)
