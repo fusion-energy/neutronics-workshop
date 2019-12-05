@@ -143,10 +143,6 @@ The second method of producing 2D slice plots works better for large models.
 
 Edit the script and try adding a first wall and central column to the model using the OpenMC [simple examples](https://openmc.readthedocs.io/en/stable/examples/pincell.html#Defining-Geometry) and the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/geometry.html) for CSG operations.
 
-- Change the inner radius of the blanket to 500cm.
-
-- Change the thickness of the blanket to 100cm.
-
 - Try adding a 20cm thick first wall to the hollow sphere.
 
 - Try adding a centre column with a 100cm radius.
