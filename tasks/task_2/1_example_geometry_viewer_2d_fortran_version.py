@@ -17,8 +17,8 @@ mats.export_to_xml()
 
 
 #example surfaces
-surface_sph1 = openmc.Sphere(r=100) #hint, change the radius of this shpere to 500
-surface_sph2 = openmc.Sphere(r=200) #hint, change the radius of this shpere to 500+100
+surface_sph1 = openmc.Sphere(r=500)
+surface_sph2 = openmc.Sphere(r=600)
 
 volume_sph1 = +surface_sph1 & -surface_sph2 # above (+) surface_sph and below (-) surface_sph2
 
