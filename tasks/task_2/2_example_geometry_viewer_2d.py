@@ -32,8 +32,8 @@ mats.export_to_xml()
 
 
 #example surfaces
-surface_sph1 = openmc.Sphere(r=100) #hint, change the radius of this shpere to 500
-surface_sph2 = openmc.Sphere(r=200) #hint, change the radius of this shpere to 500+100
+surface_sph1 = openmc.Sphere(r=100) #hint, change the radius of this sphere to 500
+surface_sph2 = openmc.Sphere(r=200) #hint, change the radius of this sphre to 500+100
 
 #add more surfaces here using https://openmc.readthedocs.io/en/stable/usersguide/geometry.html#surfaces-and-regions
 
@@ -52,9 +52,9 @@ plt.show(universe.plot(width=(400,400),basis='xz',colors={cell_1: 'blue'})) #hin
 plt.show(universe.plot(width=(400,400),basis='xy',colors={cell_1: 'blue'}))
 plt.show(universe.plot(width=(400,400),basis='yz',colors={cell_1: 'blue'}))
 
-universe.plot(width=(400,400),basis='xz',colors={cell_1: 'blue'}).get_figure().savefig('xz_shpere.png')
-universe.plot(width=(400,400),basis='xy',colors={cell_1: 'blue'}).get_figure().savefig('xy_shpere.png')
-universe.plot(width=(400,400),basis='yz',colors={cell_1: 'blue'}).get_figure().savefig('yz_shpere.png')
+universe.plot(width=(400,400),basis='xz',colors={cell_1: 'blue'}).get_figure().savefig('xz_sphere.png')
+universe.plot(width=(400,400),basis='xy',colors={cell_1: 'blue'}).get_figure().savefig('xy_sphere.png')
+universe.plot(width=(400,400),basis='yz',colors={cell_1: 'blue'}).get_figure().savefig('yz_sphere.png')
 
 geom = openmc.Geometry(universe)
 
