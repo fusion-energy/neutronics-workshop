@@ -141,7 +141,7 @@ The second method of producing 2D slice plots works better for large models.
 
 ```python3 2_example_geometry_viewer_2d.py```
 
-Edit the script and try adding a first wall and shielded central column to the model using the OpenMC [simple examples](https://openmc.readthedocs.io/en/stable/examples/pincell.html#Defining-Geometry) and the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/geometry.html) for CSG operations.
+Edit the script and try adding a first wall and central column to the model using the OpenMC [simple examples](https://openmc.readthedocs.io/en/stable/examples/pincell.html#Defining-Geometry) and the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/geometry.html) for CSG operations.
 
 - Change the inner radius of the blanket to 500cm.
 
@@ -149,7 +149,7 @@ Edit the script and try adding a first wall and shielded central column to the m
 
 - Try adding a 20cm thick first wall to the hollow sphere.
 
-- Try adding a centre column with a 100cm radius and a 40cm shield.
+- Try adding a centre column with a 100cm radius.
 
 - Try creating a material from pure copper and assign it to the central column.
 
