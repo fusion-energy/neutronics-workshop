@@ -30,34 +30,29 @@ mats.append(eurofer)
 
 #GEOMETRY#
 
-central_sol_surface = openmc.ZCylinder(r=100)
-central_shield_outer_surface = openmc.ZCylinder(r=110,boundary_type='vacuum')
-vessel_inner = openmc.Sphere(r=500,boundary_type='vacuum')
+central_sol_surface = openmc.ZCylinder(r=100, boundary_type='vacuum')
+vessel_inner = openmc.Sphere(r=500, boundary_type='vacuum')
 first_wall_outer_surface = openmc.Sphere(r=510)
 breeder_blanket_outer_surface = openmc.Sphere(r=610)
 
 central_sol_region = -central_sol_surface & -breeder_blanket_outer_surface
-central_sol_cell = openmc.Cell(region=central_sol_region) 
+central_sol_cell = openmc.Cell(region=central_sol_region)
 central_sol_cell.fill = copper
 
-central_shield_region = +central_sol_surface & -central_shield_outer_surface & -breeder_blanket_outer_surface
-central_shield_cell = openmc.Cell(region=central_shield_region) 
-central_shield_cell.fill = eurofer
-
-first_wall_region = -first_wall_outer_surface & +vessel_inner & +central_shield_outer_surface
+first_wall_region = -first_wall_outer_surface & +vessel_inner & +central_sol_surface
 first_wall_cell = openmc.Cell(region=first_wall_region) 
 first_wall_cell.fill = eurofer
 
-breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surface & +central_shield_outer_surface
+breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surface & +central_sol_surface
 breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
 breeder_blanket_cell.fill = eurofer
 
 #this is a void and hence has no material fill
-inner_vessel_region = +central_shield_outer_surface & -vessel_inner
+inner_vessel_region = +central_sol_surface & -vessel_inner
 inner_vessel_cell = openmc.Cell(region=inner_vessel_region) 
 inner_vessel_cell.name = 'inner_vessel'
 
-universe = openmc.Universe(cells=[central_sol_cell, central_shield_cell ,first_wall_cell , breeder_blanket_cell])
+universe = openmc.Universe(cells=[central_sol_cell, first_wall_cell, breeder_blanket_cell])
 
 # VISULISATION
 
