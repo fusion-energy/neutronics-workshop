@@ -25,7 +25,7 @@ MT_number = 16 # MT number 16 is (n,2n) reaction others can be found https://www
 # MT 205 is the (n,Xt) reaction where X is a wildcard
 # MT 444 is DPA damage
 
-nuclear_data_path = "/nndc-b7.1-hdf5/neutron"
+nuclear_data_path = os.path.dirname(os.environ["OPENMC_CROSS_SECTIONS"]) + '/neutron'
 
 traces=[]
 for isotope_name in tqdm(candiate_fusion_neutron_multipiers_list):
