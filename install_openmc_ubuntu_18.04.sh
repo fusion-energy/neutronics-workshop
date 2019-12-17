@@ -132,8 +132,8 @@ python3 convert_nndc71.py
 
 
 
-OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-7.1-hdf5/cross_sections.xml
-echo 'export OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-7.1-hdf5/cross_sections.xml' >> ~/.bashrc
+OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-b7.1-hdf5/cross_sections.xml
+echo 'export OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-b7.1-hdf5/cross_sections.xml' >> ~/.bashrc
 OPENMC_CROSS_SECTIONS_TENDL=~/data/tendl-2017-hdf5/cross_sections.xml
 echo 'export OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml' >> ~/.bashrc
 
