@@ -105,7 +105,7 @@ make install
 # rm -rf $HOME/DAGMC/dagmc
 #needs setting in bashrc
 LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH
-
+echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc 
 
 # OpenMC Install
 cd ~
