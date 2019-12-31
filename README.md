@@ -107,6 +107,10 @@ The script shows us how to plot tritium production in Li4SiO4 which is a candida
 
  - Try editing ```3_example_material_plot.py``` so that other candidate breeder materials are added to the plot.
 
+**Learning Outcome**
+
+ **Overall, Task 1 has shown how OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). This can be done for specific isotopes, elements, or even full materials, and is a very useful tool, helping to inform material choices based on desired neutron behaviour.**
+
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
 &ensp; 
@@ -185,6 +189,10 @@ Paraview should load up when this script completes. To make the geometry visible
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
 " target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="400" /></a>
 
+**Learning Outcome**
+
+**Overall, Task 2 has shown how CSG can be used to build simple model geometries in OpenMC. These models can be visualised in a variety of ways; either in 2D slices or 3D models, providing assurance that the model created is sufficiently representative of the model desired.**
+
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
 &ensp; 
@@ -238,6 +246,10 @@ Run the script with the command
 
 Use Paraview to load the geometry file and then open the track files (.vtp files). Parview can also be used to slice (slice this model on the z plane) and threshold the geometry. Looking at the tracks can you tell which material is water and which is zirconium?
 
+**Learning Outcome**
+
+**Overall, Task 3 has shown how statepoint files contain information about the neutronics simulation performed and can be accessed to obtain source information. It has shown how different source types can be defined in OpenMC and how externally defined sources can also be used. It has also shown how neutron paths can be tracked by OpenMC and visualised using a geometry viewer.**
+
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
 &ensp; 
@@ -278,6 +290,10 @@ The model still has a point source but now it is located at x=150 y=0 z=0 and ce
 
 - Try changing the mesh tally from (n,t) to flux and absorption.
 
+**Learning Outcomes**
+
+**Overall, Task 4 has shown how mesh tallies can be used in neutronics simulations to measure a variety of different parameters such as neutron flux, absorption and tritium production. It also shows how tally data can be manipulated and displayed in a variety of different ways.**
+
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
 &ensp; 
@@ -315,6 +331,10 @@ Open ```2_example_photon_spectra_tokamak.py``` to see how the photon spectra is 
 The plot should look similar to the plot below.
 
 <p align="center"><img src="tasks/task_5/images/2_example_photon_spectra_tokamak.png" height="500"></p>
+
+**Learning Outcomes**
+
+**Overall, Task 5 has shown how tallies can be manipulated to obtain neutron and photon spectra. Spectra tallies do not exist by default in OpenMC meaning flux or current tallies must be energy-binned in order to obtain energy spectra. It also shows how tallies can be measured on different surfaces or cells in the geometry.**
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -354,6 +374,10 @@ The script should produce a plot of TBR as a function of Li6 enrichment, as show
 
 - Try changing '(n,t)' to 205 and you should get the same result as this is the equivalent [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf)
 
+**Learning Outcomes**
+
+**Overall, Task 6 has shown how TBR can be tallied using OpenMC and highlights the importance of simulating a sufficient number of particle histories such that tally results are accurately obtained.**
+
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
 &ensp; 
@@ -373,6 +397,10 @@ In the case of DPA a tally multiplier is needed to account for the material and 
 - Find the number of neutrons emitted over a 5 year period assuming 80% availability for a 3GW (fusion energy) reactor. Recall that each reaction emmits 17.6MeV of energy. 
 
 - Using this information find the DPA on the first wall for a 2GW (fusion power) reactor over a 5 year period. Does this exceed the Eurofer DPA limit of 70 DPA?
+
+**Learning Outcomes**
+
+**Overall, Task 7 has shown how DPA can be tallied using OpenMC.**
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -414,6 +442,10 @@ For 200 simulations, the 2D plots should look similar to the plots below.
 
 <p align="center"><img src="tasks/task_8/images/TBR_vs_thickness.png" height="500"></p>
 
+**Learning Outcomes**
+
+**Overall, Task 8 has shown how simulations can be performed to measure the impact of varying different model variables by measuring tallies. For example, TBR was tallied as a function of blanket thickness and enrichment. The same principle can be applied to any tally and any model parameter.**
+
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
 &ensp; 
@@ -445,6 +477,10 @@ This iterative approach efficiently and accurately determines the point across t
 The output .gif shows how Halton sampling is initially used to perform simulations before further simulations are informed by Gaussian interpolation.
 
 <p align="center"><img src="tasks/task_9/images/output.gif" height="500"></p>
+
+**Learning Outcomes**
+
+**Overall, Task 9 has shown how Halton Sampling can be used to perform non-biased simulations over a parameter space of interest, from which Gaussian interpolation can be used to performed informed simulations. This demonstrates a method of performing highly optimised neutronics simulations.**
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -490,6 +526,10 @@ Read throught the script and try to spot the differences between a CSG and CAD s
 The material assignment is not required as this is perfomed when combining the stp files within the Trelis step. Trelis produces the dagmc.h5m file which contains geometry and each geometry is taged with a material name. These material names must be defined in the openmc script by it is not nessecary to assign them as this is taken care of by DAGMC.
 
 Try running the script using the command ```python3 example_CAD_simulation.py```. This will run the simulation using the CAD geometry and produce the output results.
+
+**Learning Outcomes**
+
+**Overall, Task 10 shows how CAD geometry can be used to build complex models for use in OpenMC neutronics simulations.**
 
 &ensp; 
 
