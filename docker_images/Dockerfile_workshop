@@ -1,4 +1,7 @@
-FROM openmcworkshop/openmc_workshop_image_repository:latest
+# build with the following command
+# sudo docker build -f Dockerfile_workshop -t openmcworkshop/workshop
+
+FROM openmcworkshop/openmc_nndc
 
 # Python libraries used in the workshop
 RUN pip3 install plotly
@@ -24,7 +27,6 @@ RUN add-apt-repository ppa:freecad-maintainers/freecad-stable
 RUN apt-get update 
 RUN apt-get --yes install freecad 
 RUN ln -s /usr/lib/freecad/Mod /usr/lib/freecad-python3/Mod
-RUN echo redown3
 
 RUN git clone https://github.com/openmc-dev/plotter.git
 
@@ -34,3 +36,5 @@ RUN git clone https://github.com/ukaea/openmc_workshop
 RUN cd /openmc_workshop/parametric_plasma_source && bash compile.sh
 # source_sampling.so is the compiled plasma source so this copies it to various task folders for later use
 RUN cp /openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_3
+
+WORKDIR /openmc_workshop
