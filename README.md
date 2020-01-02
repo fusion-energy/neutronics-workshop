@@ -37,16 +37,16 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 
 ### Getting started on the tasks
 
-- [Task 1 - Cross section plotting](#task1)
-- [Task 2 - Building and visualizing the model geometry](#task2)
-- [Task 3 - Visualizing neutron tracks](#task3)
-- [Task 4 - Finding the neutron flux](#task4)
-- [Task 5 - Finding the neutron and photon spectra](#task5)
-- [Task 6 - Finding the tritium production](#task6)
-- [Task 7 - Finding the neutron damage](#task7)
-- [Task 8 - Survey breeder blanket designs for tritium production](#task8)
-- [Task 9 - Optimize a breeder blanket for tritium production](#task9)
-- [Task 10 - Using CAD geometry](#task10)
+- [Task 1 - Cross section plotting - 20 minutes](#task1)
+- [Task 2 - Building and visualizing the model geometry - 20 minutes](#task2)
+- [Task 3 - Visualizing neutron tracks - 20 minutes](#task3)
+- [Task 4 - Finding the neutron flux - 15 minutes](#task4)
+- [Task 5 - Finding the neutron and photon spectra - 15 minutes](#task5)
+- [Task 6 - Finding the tritium production - 15 minutes](#task6)
+- [Task 7 - Finding the neutron damage - 15 minutes](#task7)
+- [Task 8 - Survey breeder blanket designs for tritium production - 25 minutes (optional)](#task8)
+- [Task 9 - Optimize a breeder blanket for tritium production - 25 minutes (optional)](#task9)
+- [Task 10 - Using CAD geometry - 30 minutes (optional)](#task10)
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -108,7 +108,9 @@ The tritium production should produce a plot similar to the plot shown below.
 
 A nice feature of OpenMC is that it can plot cross sections for complete materials made from combinations of isotopes and elements. The ```3_example_material_plot.py``` script shows how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material. 
 
-Run this script and use the output to identify the best elements for tritium production and neutron production. Why might we want to avoid some of these elements? The plot produced should look similar to the plot shown below.
+```python 3_example_material_plot.py``
+
+The plot produced should look similar to the plot shown below. As you can see lithium enrichment only increases tritium prodcution at lower neutron energies.
 
 <p align="center"><img src="tasks/task_1/images/3_example_material_plot.png" height="500"></p>
 
@@ -121,6 +123,8 @@ Run this script and use the output to identify the best elements for tritium pro
 - Cross sections can be plotted for specific isotopes, elements and full materials. 
 - Beryllium 9 has the lowest threshold energy for neutron multiplication reactions. 
 - Lithium 6 has the highest probability of producing tritium at low neutron energies.
+- Lithium 6 enrichment has the highest probability of producing tritium at low neutron energies.
+- Understand that lithium enrichment increases tritium production from low energy neutrons.
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -463,6 +467,8 @@ For 200 simulations, the 2D plots should look similar to the plots below.
 
 Google Colab Link: [Task_9](https://colab.research.google.com/drive/1Zak3lrQH6x2-As1vKskXtNmYs6mdRUgj)
 
+Please allow 25 minutes for this task.
+
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/22).
 
 The previous task sampled from the available parameters and used a brute force method of finding the optimal blanket composition. This task uses Gaussian processing to home in on the optimal solution and steer the sampling.
@@ -498,6 +504,8 @@ The output .gif shows how Halton sampling is initially used to perform simulatio
 ### <a name="task10"></a>Task 10 - Using CAD geometry
 
 **This task is unavailable in Colab.**
+
+Please allow 30 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/23).
 
@@ -544,4 +552,4 @@ Try running the script using the command ```python example_CAD_simulation.py```.
 
 ### Acknowledgments
 Fred Thomas for providing examples from previous years Serpent workshop,
-Enrique Miralles Dolz for providing the CSG tokamak model, Andrew Davis for his work on the fusion neutron source, Chris Bowman for his Gaussian process software and the OpenMC team for their software.
+Enrique Miralles Dolz for providing the CSG tokamak model, Andrew Davis for his work on the fusion neutron source, Chris Bowman for his Gaussian process software, John Billingsley for the CoLab tasks and the OpenMC team for their software.
