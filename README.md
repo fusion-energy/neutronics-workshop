@@ -111,13 +111,13 @@ The tritium production should produce a plot similar to the plot shown below.
 
 A nice feature of OpenMC is that it can plot cross sections for complete materials made from combinations of isotopes and elements. The ```3_example_material_plot.py``` script shows how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material. 
 
-```python 3_example_material_plot.py``
+- Try running the script and producing the material cross section plot ```python 3_example_material_plot.py```
 
 The plot produced should look similar to the plot shown below. As you can see lithium enrichment only increases tritium prodcution at lower neutron energies.
 
 <p align="center"><img src="tasks/task_1/images/3_example_material_plot.png" height="500"></p>
 
- - Try editing the ```3_example_material_plot.py``` script so that other candidate breeder materials are added to the plot.
+ - Try editing the script so that other candidate breeder materials are added to the plot. ```coder 3_example_material_plot.py```
 
 **Learning Outcomes Task 1**
 
@@ -143,34 +143,26 @@ Expected outputs from this task are also in the [presentation](https://slides.co
 
 OpenMC can provide both 2D and 3D visualizations of the Constructive Solid Geometry ([CSG](https://en.wikipedia.org/wiki/Constructive_solid_geometry)) of a model.
 
-There are two methods for producing 2D slice views of model geometries. The first method is shown in the ```1_example_geometry_viewer_2d_fortran_version.py``` script. 
+There are two methods for producing 2D slice views of model geometries. This can be done via an xml script (```1_example_geometry_viewer_2d_xml_version.py```) or with Python Matplotlib commands (```1_example_geometry_viewer_2d.py```). The first option is slightly faster for large geometries but the second option is simpler to understand and use, we will use the simpler option in this workshop.
 
-- Try understanding the example code ```coder 1_example_geometry_viewer_2d_fortran_version.py```
+- Try understanding the example code ```coder 1_example_geometry_viewer_2d.py```
 
-- Try running the example code ```python 1_example_geometry_viewer_2d_fortran_version.py```
+- Try running the example code ```python 1_example_geometry_viewer_2d.py```
 
-Views of the model geometry from XY plane should appear, as shown below.
+Views of the model geometry from XY, YZ and XZ planes should appear one after the other.
 
 <img src="tasks/task_2/images/xy_sphere.png" height="210">
-<p align="center"><i>Left = XY plane, Middle = XZ plane, Right = YZ plane</i></p>
+<p align="center"></p>
 
 As the geometry is a spherical shell centred at the origin, its views in each plane are identical.
-
-The second method for producing 2D slice plots, shown in the ```2_example_geometry_viewer_2d.py``` script, works better for large models.
-
-```coder 2_example_geometry_viewer_2d.py```
-
-```python 2_example_geometry_viewer_2d.py```
 
 Edit the script and try adding a first wall and centre column to the model using the OpenMC [simple examples](https://openmc.readthedocs.io/en/stable/examples/pincell.html#Defining-Geometry) and the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/geometry.html) for CSG operations.
 
 - Try adding a 20cm thick first wall to the hollow sphere.
 
-- Try adding a centre column with a 100cm radius.
+- Try adding a centre column with a 100cm radius. This would be cut at the top and bottom by the firstwall
 
 - Try creating a material from pure copper and assign it to the centre column.
-
-- Try creating a homogenized material from 10% water and 90% tungsten and assign it to the first wall and the shield.
 
 - Colour the geometry plots by material - see the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/plots.html) for an example.
 
