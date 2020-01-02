@@ -35,7 +35,7 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 
 **IMPORTANT:** Any changes you make to files in the docker container will be lost as soon as you exit the container. **Make sure you copy any files you want to keep into the ```my_openmc_workshop``` folder before exiting the docker container**.
 
-### Getting started on the tasks
+### Core workshop tasks
 
 - [Task 1 - Cross section plotting - 20 minutes](#task1)
 - [Task 2 - Building and visualizing the model geometry - 20 minutes](#task2)
@@ -44,6 +44,9 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 - [Task 5 - Finding the neutron and photon spectra - 15 minutes](#task5)
 - [Task 6 - Finding the tritium production - 15 minutes](#task6)
 - [Task 7 - Finding the neutron damage - 15 minutes](#task7)
+
+### Optional workshop tasks
+
 - [Task 8 - Survey breeder blanket designs for tritium production - 25 minutes (optional)](#task8)
 - [Task 9 - Optimize a breeder blanket for tritium production - 25 minutes (optional)](#task9)
 - [Task 10 - Using CAD geometry - 30 minutes (optional)](#task10)
