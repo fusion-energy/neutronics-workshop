@@ -51,7 +51,8 @@ layout = {'title':'Isotope cross sections MT '+ str(MT_number),
                   },
           'yaxis':{'title':'Cross section (barns)',
                    #'type':'log'
-                   }}
+                   }
+          }
 
 plot({'data':traces,
       'layout':layout},
