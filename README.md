@@ -35,18 +35,21 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 
 **IMPORTANT:** Any changes you make to files in the docker container will be lost as soon as you exit the container. **Make sure you copy any files you want to keep into the ```my_openmc_workshop``` folder before exiting the docker container**.
 
-### Getting started on the tasks
+### Core workshop tasks
 
-- [Task 1 - Cross section plotting](#task1)
-- [Task 2 - Building and visualizing the model geometry](#task2)
-- [Task 3 - Visualizing neutron tracks](#task3)
-- [Task 4 - Finding the neutron flux](#task4)
-- [Task 5 - Finding the neutron and photon spectra](#task5)
-- [Task 6 - Finding the tritium production](#task6)
-- [Task 7 - Finding the neutron damage](#task7)
-- [Task 8 - Survey breeder blanket designs for tritium production](#task8)
-- [Task 9 - Optimize a breeder blanket for tritium production](#task9)
-- [Task 10 - Using CAD geometry](#task10)
+- [Task 1 - Cross section plotting - 20 minutes](#task1)
+- [Task 2 - Building and visualizing the model geometry - 20 minutes](#task2)
+- [Task 3 - Visualizing neutron tracks - 20 minutes](#task3)
+- [Task 4 - Finding the neutron flux - 15 minutes](#task4)
+- [Task 5 - Finding the neutron and photon spectra - 15 minutes](#task5)
+- [Task 6 - Finding the tritium production - 15 minutes](#task6)
+- [Task 7 - Finding the neutron damage - 15 minutes](#task7)
+
+### Optional workshop tasks
+
+- [Task 8 - Survey breeder blanket designs for tritium production - 25 minutes](#task8)
+- [Task 9 - Optimize a breeder blanket for tritium production - 25 minutes](#task9)
+- [Task 10 - Using CAD geometry - 30 minutes](#task10)
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -60,7 +63,7 @@ Please allow 20 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/13).
 
-Knowing the interaction probabilities of isotopes and materials in your model can help you understand simulation results. There are several online tools for plotting nuclear cross sections such as [XSPlot](http://xsplot.com), however, OpenMC is also able to plot cross sections.
+Knowing the interaction probabilities of isotopes and materials in your model can help you understand simulation results. There are several online tools for plotting nuclear cross sections such as [www.xsplot.com](http://xsplot.com), however, OpenMC is also able to plot cross sections.
 
 From inside the docker container navigate to the task_1 directory and open the first example python script using the commands below.
 
@@ -72,7 +75,7 @@ This script plots the cross sections of certain reactions for a selection of iso
 
 Run the script using the following command.
 
-```python3 1_example_isotope_plot.py```
+```python 1_example_isotope_plot.py```
 
 You should see a plot of the n,2n cross sections for isotopes of lead and beryllium, as shown below.
 
@@ -80,9 +83,9 @@ You should see a plot of the n,2n cross sections for isotopes of lead and beryll
 
 To add different reactions to the plot we need their ENDF reaction numbers (MT numbers) which are available [here](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf).
 
-- Try adding the other lead isotopes to the plot.
+- Try adding the other lead isotopes to the plot (Pb207 and Pb208).
 
-- Try adding tritium production in Li6 and Li7 to the same plot.
+- Try adding tritium production (n,Xt) in Li6 and Li7 to the same plot.
 
 The plot should now be similar to the plot below showing fusion relevant interactions. These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
 
@@ -90,27 +93,41 @@ The plot should now be similar to the plot below showing fusion relevant interac
 
 - Try editing ```1_example_isotope_plot.py``` so that it plots tritium production or neutron multiplication for all stable isotopes.
 
-Elemental properties can also be found with OpenMC. Try plotting tritium production and neutron multiplication using the ```2_example_element_plot.py``` script.
+Elemental properties can also be found with OpenMC. 
 
-```coder 2_example_element_plot.py```
+- Try to understand the example code ```coder 2_example_element_plot.py```
 
-```python3 2_example_element_plot.py```
+- Try plotting neutron multiplication using the ```python 2_example_element_plot.py``` script.
 
 This should produce a plot similar to the plot shown below.
 
-<p align="center"><img src="tasks/task_1/images/2_example_element_plot.png" height="500"></p>
+<p align="center"><img src="tasks/task_1/images/2_example_element_plot_16.png" height="500"></p>
+
+-  Try changing the ```2_example_element_plot.py``` script so that it plots tritium production for all elements. Once produced you can change the axis scale (to log log) using the dropdown menu.
+
+The tritium production should produce a plot similar to the plot shown below.
+
+<p align="center"><img src="tasks/task_1/images/2_example_element_plot_205.png" height="500"></p>
 
 A nice feature of OpenMC is that it can plot cross sections for complete materials made from combinations of isotopes and elements. The ```3_example_material_plot.py``` script shows how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material. 
 
-Run this script and use the output to identify the best elements for tritium production and neutron production. Why might we want to avoid some of these elements? The plot produced should look similar to the plot shown below.
+```python 3_example_material_plot.py``
+
+The plot produced should look similar to the plot shown below. As you can see lithium enrichment only increases tritium prodcution at lower neutron energies.
 
 <p align="center"><img src="tasks/task_1/images/3_example_material_plot.png" height="500"></p>
 
  - Try editing the ```3_example_material_plot.py``` script so that other candidate breeder materials are added to the plot.
 
-**Learning Outcomes**
+**Learning Outcomes Task 1**
 
- **Overall, Task 1 has shown how OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). This can be done for specific isotopes, elements, or even full materials, and is a very useful tool, helping to inform material choices based on desired neutron behaviour.**
+- How OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). 
+- Reaction probabilities vary for each isotope depending on the energy of the neutron. 
+- Cross sections can be plotted for specific isotopes, elements and full materials. 
+- Beryllium 9 has the lowest threshold energy for neutron multiplication reactions. 
+- Lithium 6 has the highest probability of producing tritium at low neutron energies.
+- Lithium 6 enrichment has the highest probability of producing tritium at low neutron energies.
+- Understand that lithium enrichment increases tritium production from low energy neutrons.
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -130,7 +147,7 @@ There are two methods for producing 2D slice views of model geometries. The firs
 
 ```coder 1_example_geometry_viewer_2d_fortran_version.py```
 
-```python3 1_example_geometry_viewer_2d_fortran_version.py```
+```python 1_example_geometry_viewer_2d_fortran_version.py```
 
 Views of the model geometry from different planes (XY, XZ, YZ) should appear, as shown below.
 
@@ -143,7 +160,7 @@ The second method for producing 2D slice plots, shown in the ```2_example_geomet
 
 ```coder 2_example_geometry_viewer_2d.py```
 
-```python3 2_example_geometry_viewer_2d.py```
+```python 2_example_geometry_viewer_2d.py```
 
 Edit the script and try adding a first wall and centre column to the model using the OpenMC [simple examples](https://openmc.readthedocs.io/en/stable/examples/pincell.html#Defining-Geometry) and the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/geometry.html) for CSG operations.
 
@@ -161,7 +178,7 @@ By the time you have added the extra components, your geometry should look simil
 
 ```coder 3_example_geometry_viewer_2d_tokamak.py```
 
-```python3 3_example_geometry_viewer_2d_tokamak.py```
+```python 3_example_geometry_viewer_2d_tokamak.py```
 
 Run this script to produce views of the tokamak model from different planes, as shown below, and compare these to the geometry produced by your edited script.
 
@@ -172,7 +189,7 @@ The next script shows how a simple geometry can be viewed in 3D using paraview. 
 
 ```coder 4_example_geometry_viewer_3d.py```
 
-```python3 4_example_geometry_viewer_3d.py```
+```python 4_example_geometry_viewer_3d.py```
 
 Paraview should load up when the script completes. To make the geometry visible click the "Apply" button and also the small eyeball icon on the left hand side. Then select "id" and "surface" in the dropdown menus to view the geometry. The threshold and slice operations can then be used to view specific parts of the geometry. (More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14/1). A video tutorial is also provided below).
 
@@ -182,7 +199,7 @@ Paraview should load up when the script completes. To make the geometry visible 
 
 ```coder 5_example_geometry_viewer_3d_tokamak.py```
 
-```python3 5_example_geometry_viewer_3d_tokamak.py```
+```python 5_example_geometry_viewer_3d_tokamak.py```
 
 **Paraview Video Tutorial**
 
@@ -191,7 +208,7 @@ Paraview should load up when the script completes. To make the geometry visible 
 
 **Learning Outcomes**
 
-**Overall, Task 2 has shown how CSG can be used to build simple model geometries in OpenMC. These models can be visualised in a variety of ways; either in 2D slices or 3D models, providing assurance that the model created is sufficiently representative of the model desired.**
+**Overall, Task 2 has shown how Constructive Solid Geometry (CSG) can be used to build simple model geometries in OpenMC. These models can be visualized in a variety of ways; either in 2D slices or 3D models, providing assurance that the model created is sufficiently representative of the model desired.**
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -209,7 +226,7 @@ When OpenMC runs, a statepoint (output) file is produced which contains informat
 
 The ```1_plot_neutron_birth_energy.py``` file shows you how to access the statepoint file created during the simulation. In this example the birth energy of all the simulated neutrons is extracted. A plot of the energy distribution can be produced by running the script.
 
-```python3 1_plot_neutron_birth_energy.py```
+```python 1_plot_neutron_birth_energy.py```
 
 The script will produce a plot of a mono-energetic energy source of 14 MeV neutrons, as shown below.
 
@@ -223,7 +240,7 @@ There are actually three source energy distributions available in the ```1_plot_
 
 In the next example the initial neutron trajectory and birth location are plotted. Again, this information is accessed from the statepoint file.
 
-Run ```python3 2_plot_neutron_birth_location.py``` to produce plots of a basic point source showing neutron birth locations and initial trajectories. The output should look similar to the plots shown below.
+Run ```python 2_plot_neutron_birth_location.py``` to produce plots of a basic point source showing neutron birth locations and initial trajectories. The output should look similar to the plots shown below.
 
 <p align="center"><img src="tasks/task_3/images/3d_scatter_plot.png" height="300"> <img src="tasks/task_3/images/3d_plot_cones.png" height="300"></p>
 
@@ -231,7 +248,7 @@ Run ```python3 2_plot_neutron_birth_location.py``` to produce plots of a basic p
 
 Now open the next example source plotting script ```3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined - you should notice that an external source library is used. The ```source_sampling.so``` file is a precompiled plasma source file containing neutron positions, energies and directions for a given plasma source. This file is in the task_3 directory.
 
-Run ```python3 3_plot_neutron_birth_locations_plasma.py``` to produce a plot of a more realistic plasma source. The output should look similar to the plots shown below.
+Run ```python 3_plot_neutron_birth_locations_plasma.py``` to produce a plot of a more realistic plasma source. The output should look similar to the plots shown below.
 
 <p align="center"><img src="tasks/task_3/images/3d_plasma_scatter.png" height="300"> <img src="tasks/task_3/images/3d_plasma_cones.png" height="300"></p>
 
@@ -239,7 +256,7 @@ Run ```python3 3_plot_neutron_birth_locations_plasma.py``` to produce a plot of 
 
 OpenMC is also able to track particles as they pass through model geometries. Open the ```4_example_neutron_tracks.py``` script and notice that it contains ```model.run(tracks=True)```. This argument results in the creation of a h5 file for each neutron simulated which contains particle track information.
 
-Run ```python3 4_example_neutron_tracks.py``` which simulates neutron histories and produces particle h5 files from which neutron tracks can be visualised with the geometry. The script defines a model of a hollow sphere made of two materials and a 14 MeV point source at the geometry centre.
+Run ```python 4_example_neutron_tracks.py``` which simulates neutron histories and produces particle h5 files from which neutron tracks can be visualised with the geometry. The script defines a model of a hollow sphere made of two materials and a 14 MeV point source at the geometry centre.
 
 Use Paraview to load the geometry file and then open the track files (.vtp files). Parview can also be used to slice (slice this model on the z plane) and threshold the geometry. More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15/4).
 
@@ -265,7 +282,7 @@ OpenMC uses 'tallies' to measure parameters such as particle flux, absorption an
 
 Take a look at the ```example_neutron_flux.py``` file which contains a simple hollow sphere geometry of a single material, a 14 MeV point source and a mesh tally which measures neutron flux. Try running this file.
 
-```python3 example_neutron_flux.py```
+```python example_neutron_flux.py```
 
 You should see plots of the simple sphere geometry and the isotropic point source, as shown below. The colour map shows the neutron flux, as tallied by the mesh, which is seen to reduce as one moves away from the point source.
 
@@ -279,7 +296,7 @@ You should see plots of the simple sphere geometry and the isotropic point sourc
 
 The next example script is the ```example_neutron_flux_tomakak.py``` file which measures neutron flux in a simple tokamak geometry. Run the script with the following command.
 
-```python3 example_neutron_flux_tokamak.py```
+```python example_neutron_flux_tokamak.py```
 
 The model still has a point source but now it is located at x=150 y=0 z=0 and central column shielding is noticeable on the flux, absorption and tritium production mesh tallies, as shown below.
 
@@ -311,7 +328,7 @@ Open the ```1_example_neutron_spectra_tokamak.py``` script to see how the neutro
 
 Run the script to plot the neutron spectra within the breeder blanket.
 
-```python3 1_example_neutron_spectra_tokamak.py```
+```python 1_example_neutron_spectra_tokamak.py```
 
 The plot should look similar to the plot shown below.
 
@@ -323,7 +340,7 @@ Open the ```2_example_photon_spectra_tokamak.py``` script to see how the photon 
 
 ```coder 2_example_photon_spectra_tokamak.py```
 
-```python3 2_example_photon_spectra_tokamak.py```
+```python 2_example_photon_spectra_tokamak.py```
 
 The plot should look similar to the plot below.
 
@@ -351,7 +368,7 @@ Open and run the ```example_tritium_production.py``` script using the following 
 
 ```coder example_tritium_production.py```
 
-```python3 example_tritium_production.py```
+```python example_tritium_production.py```
 
 You should see that TBR is printed along with its associated error. As you can see the error is large.
 
@@ -363,7 +380,7 @@ One option for increasing the TBR is to increase the Li6 content within the blan
 
 ```coder example_tritium_production_study.py```
 
-```python3 example_tritium_production_study.py```
+```python example_tritium_production_study.py```
 
 The script should produce a plot of TBR as a function of Li6 enrichment, as shown below.
 
@@ -453,6 +470,8 @@ For 200 simulations, the 2D plots should look similar to the plots below.
 
 Google Colab Link: [Task_9](https://colab.research.google.com/drive/1Zak3lrQH6x2-As1vKskXtNmYs6mdRUgj)
 
+Please allow 25 minutes for this task.
+
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/22).
 
 The previous task sampled from the available parameters and used a brute force method of finding the optimal blanket composition. This task uses Gaussian processing to home in on the optimal solution and steer the sampling.
@@ -489,6 +508,8 @@ The output .gif shows how Halton sampling is initially used to perform simulatio
 
 **This task is unavailable in Colab.**
 
+Please allow 30 minutes for this task.
+
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/23).
 
 Constructive solid geometry (CSG) has been used in all the previous tasks. This task demonstrates the use of CAD geometry usage within openmc.
@@ -524,7 +545,7 @@ Read throught the script and try to spot the differences between a CSG and CAD s
 
 The material assignment is not required as this is perfomed when combining the stp files within the Trelis step. Trelis produces the dagmc.h5m file which contains geometry and each geometry is taged with a material name. These material names must be defined in the openmc script by it is not nessecary to assign them as this is taken care of by DAGMC.
 
-Try running the script using the command ```python3 example_CAD_simulation.py```. This will run the simulation using the CAD geometry and produce the output results.
+Try running the script using the command ```python example_CAD_simulation.py```. This will run the simulation using the CAD geometry and produce the output results.
 
 **Learning Outcomes**
 
@@ -534,4 +555,4 @@ Try running the script using the command ```python3 example_CAD_simulation.py```
 
 ### Acknowledgments
 Fred Thomas for providing examples from previous years Serpent workshop,
-Enrique Miralles Dolz for providing the CSG tokamak model, Andrew Davis for his work on the fusion neutron source, Chris Bowman for his Gaussian process software and the OpenMC team for their software.
+Enrique Miralles Dolz for providing the CSG tokamak model, Andrew Davis for his work on the fusion neutron source, Chris Bowman for his Gaussian process software, John Billingsley for the CoLab tasks and the OpenMC team for their software.
