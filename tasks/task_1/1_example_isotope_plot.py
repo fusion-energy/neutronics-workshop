@@ -2,12 +2,8 @@
 
 """example_isotope_plot.py: plots cross sections for a couple of isotopes."""
 
-__author__      = "Jonathan Shimwell"
-
 import openmc
-from plotly.offline import download_plotlyjs, plot
-from plotly.graph_objs import Scatter, Layout
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 import openmc.data
 from tqdm import tqdm
 import os
@@ -27,14 +23,14 @@ MT_number = 16 # MT number 16 is (n,2n) reaction others can be found https://www
 
 nuclear_data_path = os.path.dirname(os.environ["OPENMC_CROSS_SECTIONS"]) + '/neutron'
 
-traces=[]
+fig = go.Figure()
 # this loop extracts the cross section data for each isotope in the list
 for isotope_name in tqdm(candiate_fusion_neutron_multipiers_list):
       isotope_object = openmc.data.IncidentNeutron.from_hdf5(os.path.join(nuclear_data_path,isotope_name+'.h5')) # you may have to change this directory
       energy = isotope_object.energy['294K'] # 294K is the temperature for endf, others use 293K
       if MT_number in isotope_object.reactions.keys():
             cross_section = isotope_object[MT_number].xs['294K'](energy)
-            traces.append(Scatter(x=energy,
+            fig.add_trace(go.Scatter(x=energy,
                               y=cross_section,
                               mode = 'lines',
                               name=isotope_name+' MT '+ str(MT_number)
@@ -44,16 +40,16 @@ for isotope_name in tqdm(candiate_fusion_neutron_multipiers_list):
             print('isotope ', isotope_name , ' does not have the MT reaction number ',MT_number)
 
 
-layout = {'title':'Isotope cross sections MT '+ str(MT_number),
-          'xaxis':{'title':'Energy (eV)',
-                   'range':(0,14.1e6),
-                   #'type':'log'
-                  },
-          'yaxis':{'title':'Cross section (barns)',
-                   #'type':'log'
-                   }
-          }
+fig.update_layout(
+      title = 'Isotope cross sections MT '+ str(MT_number),
+      xaxis = {'title':'Energy (eV)',
+               'range':(0,14.1e6)
+               #'type':'log'
+               },
+      yaxis = {'title':'Cross section (barns)'
+               #'type':'log'
+              }
+)
 
-plot({'data':traces,
-      'layout':layout},
-      filename='1_example_isotope_plot.html')
+fig.write_html("1_example_isotope_plot.html")
+fig.show()
