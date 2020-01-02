@@ -98,9 +98,13 @@ Elemental properties can also be found with OpenMC.
 
 This should produce a plot similar to the plot shown below.
 
-<p align="center"><img src="tasks/task_1/images/2_example_element_plot.png" height="500"></p>
+<p align="center"><img src="tasks/task_1/images/2_example_element_plot_16.png" height="500"></p>
 
--  Try changing the ```2_example_element_plot.py``` script so that it plots tritium production for all elements.
+-  Try changing the ```2_example_element_plot.py``` script so that it plots tritium production for all elements. Once produced you can change the axis scale (to log log) using the dropdown menu.
+
+The tritium production should produce a plot similar to the plot shown below.
+
+<p align="center"><img src="tasks/task_1/images/2_example_element_plot_205.png" height="500"></p>
 
 A nice feature of OpenMC is that it can plot cross sections for complete materials made from combinations of isotopes and elements. The ```3_example_material_plot.py``` script shows how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material. 
 
