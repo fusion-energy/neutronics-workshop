@@ -47,9 +47,9 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 
 ### Optional workshop tasks
 
-- [Task 8 - Survey breeder blanket designs for tritium production - 25 minutes (optional)](#task8)
-- [Task 9 - Optimize a breeder blanket for tritium production - 25 minutes (optional)](#task9)
-- [Task 10 - Using CAD geometry - 30 minutes (optional)](#task10)
+- [Task 8 - Survey breeder blanket designs for tritium production - 25 minutes](#task8)
+- [Task 9 - Optimize a breeder blanket for tritium production - 25 minutes](#task9)
+- [Task 10 - Using CAD geometry - 30 minutes](#task10)
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
