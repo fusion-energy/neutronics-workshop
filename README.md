@@ -60,7 +60,7 @@ Please allow 20 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/13).
 
-Knowing the interaction probabilities of isotopes and materials in your model can help you understand simulation results. There are several online tools for plotting nuclear cross sections such as [XSPlot.com](http://xsplot.com), however, OpenMC is also able to plot cross sections.
+Knowing the interaction probabilities of isotopes and materials in your model can help you understand simulation results. There are several online tools for plotting nuclear cross sections such as [www.xsplot.com](http://xsplot.com), however, OpenMC is also able to plot cross sections.
 
 From inside the docker container navigate to the task_1 directory and open the first example python script using the commands below.
 
