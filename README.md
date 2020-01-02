@@ -143,15 +143,15 @@ Expected outputs from this task are also in the [presentation](https://slides.co
 
 OpenMC can provide both 2D and 3D visualizations of the Constructive Solid Geometry ([CSG](https://en.wikipedia.org/wiki/Constructive_solid_geometry)) of a model.
 
-There are two methods for producing 2D slice views of model geometries. The first method is shown in the ```1_example_geometry_viewer_2d_fortran_version.py``` script, which produces the first example 2D slice plots using the following commands inside the task_2 folder.
+There are two methods for producing 2D slice views of model geometries. The first method is shown in the ```1_example_geometry_viewer_2d_fortran_version.py``` script. 
 
-```coder 1_example_geometry_viewer_2d_fortran_version.py```
+- Try understanding the example code ```coder 1_example_geometry_viewer_2d_fortran_version.py```
 
-```python 1_example_geometry_viewer_2d_fortran_version.py```
+- Try running the example code ```python 1_example_geometry_viewer_2d_fortran_version.py```
 
-Views of the model geometry from different planes (XY, XZ, YZ) should appear, as shown below.
+Views of the model geometry from XY plane should appear, as shown below.
 
-<img src="tasks/task_2/images/xy_sphere.png" height="210"> <img src="tasks/task_2/images/xz_sphere.png" height="210"> <img src="tasks/task_2/images/yz_sphere.png" height="210">
+<img src="tasks/task_2/images/xy_sphere.png" height="210">
 <p align="center"><i>Left = XY plane, Middle = XZ plane, Right = YZ plane</i></p>
 
 As the geometry is a spherical shell centred at the origin, its views in each plane are identical.
