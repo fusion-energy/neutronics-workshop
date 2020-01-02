@@ -5,10 +5,7 @@
 __author__      = "Jonathan Shimwell"
 
 import openmc
-from plotly import __version__
-from plotly.offline import download_plotlyjs, plot
-from plotly.graph_objs import Scatter, Layout
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 
 natural_Li4SiO4 = openmc.Material()
 natural_Li4SiO4.add_element('Li',4.0,percent_type='ao')
@@ -39,32 +36,26 @@ cross_section_natural_Li4SiO4_MT16 = data[0]
 Energy_enriched_Li4SiO4_MT16, data = openmc.calculate_cexs(enriched_Li4SiO4, 'material', Endf_MT_number )
 cross_section_enriched_Li4SiO4_MT16 = data[0]
 
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=Energy_natural_Li4SiO4_MT16, 
+              y=cross_section_natural_Li4SiO4_MT16, 
+              mode = 'lines', 
+              name='natural Li4SiO4 (n,t)')
+             )
+
+fig.add_trace(go.Scatter(x=Energy_enriched_Li4SiO4_MT16, 
+              y=cross_section_enriched_Li4SiO4_MT16, 
+              mode = 'lines', 
+              name='enriched Li4SiO4 (n,t)')
+             )
 
 
-trace1= Scatter(x=Energy_natural_Li4SiO4_MT16, 
-                y=cross_section_natural_Li4SiO4_MT16, 
-                mode = 'lines', 
-                name='natural Li4SiO4 (n,t)')
+fig.update_layout(
+      title = 'Material cross sections',
+      xaxis = {'title':'Energy (eV)', 'type':'log'},
+      yaxis = {'title':'Macroscopic Cross Section (1/cm)', 'type':'log'}
+)
 
-trace2= Scatter(x=Energy_enriched_Li4SiO4_MT16, 
-                y=cross_section_enriched_Li4SiO4_MT16, 
-                mode = 'lines', 
-                name='enriched Li4SiO4 (n,t)')
-
-layout = {'title':'Material cross sections',
-          'xaxis':{'title':'Energy (eV)',
-                   #'range':(1e-10,14.1e6), 
-                   'type':'log'
-                  },
-          'yaxis':{'title':'Macroscopic Cross Section (1/cm)',
-                   'type':'log'
-                  },
-         }
-
-plot({'data':[trace1,trace2],
-      'layout':layout},
-      filename='3_example_material_plot.html')
-
-
-
-
+fig.show()
+fig.write_html("3_example_material_plot.html")
