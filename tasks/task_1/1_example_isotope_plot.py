@@ -28,8 +28,8 @@ MT_number = 16 # MT number 16 is (n,2n) reaction others can be found https://www
 nuclear_data_path = os.path.dirname(os.environ["OPENMC_CROSS_SECTIONS"]) + '/neutron'
 
 traces=[]
+# this loop extracts the cross section data for each isotope in the list
 for isotope_name in tqdm(candiate_fusion_neutron_multipiers_list):
-
       isotope_object = openmc.data.IncidentNeutron.from_hdf5(os.path.join(nuclear_data_path,isotope_name+'.h5')) # you may have to change this directory
       energy = isotope_object.energy['294K'] # 294K is the temperature for endf, others use 293K
       if MT_number in isotope_object.reactions.keys():
