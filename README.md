@@ -114,9 +114,13 @@ Run this script and use the output to identify the best elements for tritium pro
 
  - Try editing the ```3_example_material_plot.py``` script so that other candidate breeder materials are added to the plot.
 
-**Learning Outcomes**
+**Learning Outcomes Task 1**
 
-**Overall, Task 1 has shown how OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). This can be done for specific isotopes, elements and full materials. You should now know that reaction probabilities vary for each isotope depending on the energy of the neutron. Beryllium 9 has the lowest threshold energy for neutron multiplication reactions. Lithium  **
+- How OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). 
+- Cross sections can be plotted for specific isotopes, elements and full materials. 
+- Reaction probabilities vary for each isotope depending on the energy of the neutron. 
+- Beryllium 9 has the lowest threshold energy for neutron multiplication reactions. 
+- Lithium 6 has the highest probability of producing tritium at low neutron energies **
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
