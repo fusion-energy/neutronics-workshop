@@ -90,15 +90,17 @@ The plot should now be similar to the plot below showing fusion relevant interac
 
 - Try editing ```1_example_isotope_plot.py``` so that it plots tritium production or neutron multiplication for all stable isotopes.
 
-Elemental properties can also be found with OpenMC. Try plotting tritium production and neutron multiplication using the ```2_example_element_plot.py``` script.
+Elemental properties can also be found with OpenMC. 
 
-```coder 2_example_element_plot.py```
+- Try to understand the example code ```coder 2_example_element_plot.py```
 
-```python 2_example_element_plot.py```
+- Try plotting neutron multiplication using the ```python 2_example_element_plot.py``` script.
 
 This should produce a plot similar to the plot shown below.
 
 <p align="center"><img src="tasks/task_1/images/2_example_element_plot.png" height="500"></p>
+
+-  Try changing the ```2_example_element_plot.py``` script so that it plots tritium production for all elements.
 
 A nice feature of OpenMC is that it can plot cross sections for complete materials made from combinations of isotopes and elements. The ```3_example_material_plot.py``` script shows how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material. 
 
@@ -110,7 +112,7 @@ Run this script and use the output to identify the best elements for tritium pro
 
 **Learning Outcomes**
 
-**Overall, Task 1 has shown how OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). This can be done for specific isotopes, elements and full materials. Reaction probabilities vary for each isotope depending on the energy of the neutron. Beryllium 9 has the lowest threshold energy for neutron multiplication reactions.**
+**Overall, Task 1 has shown how OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). This can be done for specific isotopes, elements and full materials. You should now know that reaction probabilities vary for each isotope depending on the energy of the neutron. Beryllium 9 has the lowest threshold energy for neutron multiplication reactions. Lithium  **
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
