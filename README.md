@@ -305,6 +305,11 @@ The model still has a point source but now it is located at x=150 y=150 z=0. The
 
 <p align="center"><i>Left = Tritium production, Right = Neutron absorption</i></p>
 
+**Paraview Video Tutorial**
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=be3G3ceQSWU
+" target="_blank"><img src="tasks/task_4/images/task4thumbnail.png" height="400" /></a>
+
 
 **Learning Outcomes**
 
