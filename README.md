@@ -256,6 +256,11 @@ Use Paraview to load the geometry file and then open the track files (.vtp files
 
 Looking at the tracks can you tell which material is water and which is zirconium?
 
+**Paraview Video Tutorial**
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=uHTXw6Dza-Y
+" target="_blank"><img src="tasks/task_3/images/task3thumbnail.png" height="400" /></a>
+
 **Learning Outcomes**
 
 - How to access information on the particle positions, energy and direction from the simulation
