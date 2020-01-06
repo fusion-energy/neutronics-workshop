@@ -298,7 +298,7 @@ The model still has a point source but now it is located at x=150 y=150 z=0. The
 
 <img src="tasks/task_4/images/tritium_production_tokamak.png" height="300">   <img src="tasks/task_4/images/absorption_on_mesh.png" height="300">
 
-<p align="center"><i>Left = Tokamak Geometry Plot, Right = Tokamak Flux Plot</i></p>
+<p align="center"><i>Left = Tritium production, Right = Neutron absorption</i></p>
 
 
 **Learning Outcomes**
