@@ -392,11 +392,10 @@ The script should produce a plot of TBR as a function of Li6 enrichment, as show
 
 **Learning Outcomes**
 
+- Finding TBR with OpenMC
+- Introduction to MT reaction numbers (n,Xt) = 205
+- Simple methods of increasing the TBR using lithium enrichment
 - Improving the uncertainty on the result is possible with more computation
-
-- Imp
-
-**Overall, Task 6 has shown how TBR can be tallied using OpenMC and highlights the importance of simulating a sufficient number of particle histories such that tally results are accurately obtained.**
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -415,6 +414,12 @@ Displacements per atom or DPA is one measure of damage within materials exposed 
 In the case of DPA a tally multiplier is needed to account for the material and recombination effects. For example different atoms require different amounts of energy to [displace](https://fispact.ukaea.uk/wiki/Output_interpretation#DPA_and_KERMA). Without going into detail assume this is already incorporated into the tally result. The only multiplier needed is to multiply the result by the source intensity (in neutrons per second) and the irradiation duration (in seconds).
 
 - Find the number of neutrons emitted over a 5 year period assuming 80% availability for a 3GW (fusion energy) reactor. Recall that each reaction emmits 17.6MeV of energy. 
+
+- Find the volume of the Eurofer firstwall
+
+- Find the number of atoms in the Eurofer firstwall
+
+- Find the number of displacements 
 
 - Using this information find the DPA on the first wall for a 2GW (fusion power) reactor over a 5 year period. Does this exceed the Eurofer DPA limit of 70 DPA?
 
