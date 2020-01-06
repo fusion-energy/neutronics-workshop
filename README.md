@@ -230,9 +230,9 @@ There are actually three different energy distributions available in the ```1_pl
 
 In the next example the initial neutron birth direction / initial trajectories for a very basic neutron point source is plotted. Again, this information is accessed from the statepoint file.
 
-- Try running ```python 2_plot_neutron_birth_direction.py``` the output should look similar to the plots shown below.
+- Try running ```python 2_plot_neutron_birth_direction.py``` to produce a plot of neutron directions, the output should look similar to the plots shown below.
 
-- Try running ```python 3_plot_neutron_birth_location.py``` the output should look similar to the plots shown below.
+- Try running ```python 3_plot_neutron_birth_location.py``` to produce a plot of neutron locations, the output should look similar to the plots shown below.
 
 <p align="center"><img src="tasks/task_3/images/3d_scatter_plot.png" height="300"> <img src="tasks/task_3/images/3d_plot_cones.png" height="300"></p>
 
@@ -240,9 +240,9 @@ In the next example the initial neutron birth direction / initial trajectories f
 
 Now open the next example source plotting script ```3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined - you should notice that an external source library is used. The ```source_sampling.so``` file is a precompiled plasma source file containing neutron positions, energies and directions for a given plasma source. This file is in the task_3 directory.
 
-- Try running ```python 4_plot_neutron_birth_direction_plasma.py``` to produce a plot of a more realistic plasma source. The output should look similar to the plots shown below.
+- Try running ```python 4_plot_neutron_birth_direction_plasma.py``` to produce a plot of birth neutron direction from a more realistic plasma source. The output should look similar to the plots shown below.
 
-- Try running ```python 5_plot_neutron_birth_location_plasma.py``` to produce a plot of a more realistic plasma source. The output should look similar to the plots shown below.
+- Try running ```python 5_plot_neutron_birth_location_plasma.py``` to produce a plot of neutron birth location from a more realistic plasma source. The output should look similar to the plots shown below.
 
 <p align="center"><img src="tasks/task_3/images/3d_plasma_scatter.png" height="300"> <img src="tasks/task_3/images/3d_plasma_cones.png" height="300"></p>
 
