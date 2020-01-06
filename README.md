@@ -40,7 +40,7 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 - [Task 1 - Cross section plotting - 20 minutes](#task1)
 - [Task 2 - Building and visualizing the model geometry - 20 minutes](#task2)
 - [Task 3 - Visualizing neutron tracks - 20 minutes](#task3)
-- [Task 4 - Finding the neutron flux - 15 minutes](#task4)
+- [Task 4 - Finding neutron interactions with mesh tallies - 15 minutes](#task4)
 - [Task 5 - Finding the neutron and photon spectra - 15 minutes](#task5)
 - [Task 6 - Finding the tritium production - 15 minutes](#task6)
 - [Task 7 - Finding the neutron damage - 15 minutes](#task7)
@@ -270,7 +270,7 @@ Looking at the tracks can you tell which material is water and which is zirconiu
 ## --------------------------------------------------------------------------------------------------------------
 &ensp; 
 
-### <a name="task4"></a>Task 4 - Finding the neutron flux
+### <a name="task4"></a>Task 4 - Finding neutron interactions with mesh tallies
 
 Google Colab link: [Task_4](https://colab.research.google.com/drive/1TVgCaEU_GAnJziNuyDFEvDfFYLU-fQaJ)
 
@@ -278,11 +278,11 @@ Please allow 15 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/16).
 
-OpenMC uses 'tallies' to measure parameters such as particle flux, absorption and other interactions, to obtain useful information from the simulation. In this task mesh tallies will be produced and visualized.
+OpenMC uses 'tallies' to measure parameters such as particle flux, absorption and other interactions, to obtain useful information from the simulation. Tallies can be recorded on the cells, surfaces or on a superimposed mesh. In this task mesh tallies will be produced and visualized.  The example script contains a simple hollow sphere geometry of a single material, a 14 MeV point source.
 
-Take a look at the ```example_neutron_flux.py``` file which contains a simple hollow sphere geometry of a single material, a 14 MeV point source and a mesh tally which measures neutron flux. Try running this file.
+- Try opening the example script ```coder 1_example_neutron_flux.py```and identify the mesh tally which measures neutron flux. 
 
-```python example_neutron_flux.py```
+- Try running the example script ```python 1_example_neutron_flux.py```
 
 You should see plots of the simple sphere geometry and the isotropic point source, as shown below. The colour map shows the neutron flux, as tallied by the mesh, which is seen to reduce as one moves away from the point source.
 
@@ -292,23 +292,24 @@ You should see plots of the simple sphere geometry and the isotropic point sourc
 
 - Try changing the "flux" tally to an "absorption" tally and re-run the simulation.
 
-- Try changing the Li6 enrichment of the material and compare the absorption of neutrons with the natural Li6 enrichment.
 
-The next example script is the ```example_neutron_flux_tomakak.py``` file which measures neutron flux in a simple tokamak geometry. Run the script with the following command.
+The next example script is the ```2_example_neutron_flux_tomakak.py``` file which measures tritium production on a mesh in a simple tokamak geometry. 
 
-```python example_neutron_flux_tokamak.py```
+The model still has a point source but now it is located at x=150 y=150 z=0. The tritium production mesh tally is now 3D and is displayed in 3D using paraview. Use the log scale within Paraview to show the tiritum production more clearnly.
 
-The model still has a point source but now it is located at x=150 y=0 z=0 and central column shielding is noticeable on the flux, absorption and tritium production mesh tallies, as shown below.
+- Try running the script with the following command ```python 2_example_neutron_flux_tomakak.py```
 
-<img src="tasks/task_4/images/universe_tokamak.png" height="300"> <img src="tasks/task_4/images/flux_tokamak.png" height="300">
+- Try changing the mesh tally from (n,Xt) to absorption to see the impact of the center column.
 
-<p align="center"><i>Left = Tokamak Geometry Plot, Right = Tokamak Flux Plot</i></p>
+<img src="tasks/task_4/images/tritium_production_tokamak.png" height="300">   <img src="tasks/task_4/images/absorption_on_mesh.png" height="300">
 
-- Try changing the mesh tally from (n,t) to flux and absorption.
+<p align="center"><i>Left = Tritium production, Right = Neutron absorption</i></p>
+
 
 **Learning Outcomes**
 
-**Overall, Task 4 has shown how mesh tallies can be used in neutronics simulations to measure a variety of different parameters such as neutron flux, absorption and tritium production. It also shows how tally data can be manipulated and displayed in a variety of different ways.**
+- How mesh tallies can be used in neutronics simulations to measure a variety of different reactions such as neutron absorption, tritium production and flux. 
+- How neutron are dissipated around the reactor
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
