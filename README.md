@@ -419,7 +419,7 @@ In the case of DPA a tally multiplier is needed to account for the material and 
 
 - Find the number of atoms in the Eurofer firstwall
 
-- Find the number of displacements 
+- Find the number of displacements (from the find_dpa script)
 
 - Using this information find the DPA on the first wall for a 2GW (fusion power) reactor over a 5 year period. Does this exceed the Eurofer DPA limit of 70 DPA?
 
