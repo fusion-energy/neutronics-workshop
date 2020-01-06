@@ -162,7 +162,7 @@ Edit the script and try adding a first wall and centre column to the model using
 
 - Try assigning the eurofer material to the first wall.
 
-- Try adding a centre column with a 100cm radius. This would be cut at the top and bottom by the firstwall
+- Try adding a centre column with a 100cm radius. This would be cut at the top and bottom by a sphere surface
 
 - Try creating a material from pure copper and assign it to the centre column.
 
@@ -181,19 +181,13 @@ Run this script to produce views of the tokamak model from different planes, as 
 
 The next script shows how a simple geometry can be viewed in 3D using paraview. This converts the geometry into a block.
 
-```coder 4_example_geometry_viewer_3d.py```
+```coder 4_example_geometry_viewer_3d_tokamak.py```
 
-```python 4_example_geometry_viewer_3d.py```
+```python 4_example_geometry_viewer_3d_tokamak.py```
 
 Paraview should load up when the script completes. To make the geometry visible click the "Apply" button and also the small eyeball icon on the left hand side. Then select "id" and "surface" in the dropdown menus to view the geometry. The threshold and slice operations can then be used to view specific parts of the geometry. (More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14/1). A video tutorial is also provided below).
 
 - Try using the threshold operation to remove the vacuum cell. Set the threshold to 0 then click the "Apply" button.
-
-- Try combining the last two scripts so that you can visualize the tokamak model in 3D.
-
-```coder 5_example_geometry_viewer_3d_tokamak.py```
-
-```python 5_example_geometry_viewer_3d_tokamak.py```
 
 **Paraview Video Tutorial**
 
@@ -202,7 +196,9 @@ Paraview should load up when the script completes. To make the geometry visible 
 
 **Learning Outcomes**
 
-**Overall, Task 2 has shown how Constructive Solid Geometry (CSG) can be used to build simple model geometries in OpenMC. These models can be visualized in a variety of ways; either in 2D slices or 3D models, providing assurance that the model created is sufficiently representative of the model desired.**
+- Construction of simple Constructive Solid Geometry (CSG) geometry.
+- Visualizion of models using 2D slices.
+- Visualizion of models using 3D cube geometry.
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
