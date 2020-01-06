@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots few 2D views of a simple tokamak geometry with neutron flux."""
+"""2_example_neutron_flux_tokamak.py: plots few 2D views of a simple tokamak geometry with neutron flux."""
 
-__author__      = "Jonathan Shimwell"
 
 import openmc
 import matplotlib.pyplot as plt
@@ -45,7 +44,6 @@ first_wall_outer_surface = openmc.Sphere(r=510)
 breeder_blanket_outer_surface = openmc.Sphere(r=610,boundary_type='vacuum')
 
 #cells
-
 central_sol_region = -central_sol_surface & -breeder_blanket_outer_surface
 central_sol_cell = openmc.Cell(region=central_sol_region) 
 central_sol_cell.fill = copper
@@ -56,7 +54,7 @@ central_shield_cell.fill = eurofer
 
 inner_vessel_region = -vessel_inner_surface & +central_shield_outer_surface
 inner_vessel_cell = openmc.Cell(region=inner_vessel_region)
-# not material set as default is vacuum
+# no material set as default is vacuum
 
 first_wall_region = -first_wall_outer_surface & +vessel_inner_surface
 first_wall_cell = openmc.Cell(region=first_wall_region) 
@@ -76,10 +74,10 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-batches = 2
+batches = 4
 sett.batches = batches
 sett.inactive = 0
-sett.particles = 7000
+sett.particles = 10000
 sett.run_mode = 'fixed source'
 
 # Create a DT point source
@@ -87,33 +85,26 @@ source = openmc.Source()
 mcnpsource = openmc.Source()
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1])
-source.space = openmc.stats.Point((150,0,0))
-
-# source.file = 'source_7000_particles.h5' # not working with (n,t) for some reason
-# source.module = 'source_7000_particles.cpp' # not working with (n,t) for some reason
+source.space = openmc.stats.Point((150,150,0))
 
 sett.source = source
 
-# Create mesh which will be used for tally
-mesh = openmc.RegularMesh.()
-mesh_height=400
-mesh_width = mesh_height
-mesh.dimension = [mesh_width, mesh_height]
-mesh.lower_left = [-750, -750]
-mesh.upper_right = [750, 750]
+# Create 3d mesh which will be used for tally
+mesh = openmc.RegularMesh()
+mesh.dimension = [200, 100, 200] #width, depth, height
+mesh.lower_left = [-750, 0, -750] #x,y,z coordinates
+mesh.upper_right = [750, 750, 750] #x,y,z coordinates
 
 
 tallies = openmc.Tallies()
 # Create mesh filter for tally
 mesh_filter = openmc.MeshFilter(mesh)
-# Create mesh tally to score flux
-mesh_tally = openmc.Tally(1,name='tallies_on_mesh')
+
+
+# Create flux mesh tally to score flux
+mesh_tally = openmc.Tally(name='tally_on_mesh')
 mesh_tally.filters = [mesh_filter]
-
-# works with 'flux', does not work with absorption or '(n,t)'
-tally_to_plot = 'absorption'
-
-mesh_tally.scores = [tally_to_plot] 
+mesh_tally.scores = ['(n,Xt)'] # this can be changed to 'absorption' to show the impact of the center column
 tallies.append(mesh_tally)
 
 
@@ -121,18 +112,6 @@ tallies.append(mesh_tally)
 model = openmc.model.Model(geom, mats, sett, tallies)
 model.run()
 
-# open the results file
-sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+os.system('python openmc-statepoint-3d.py -i statepoint.'+str(batches)+'.h5 -t 1 -n tally_on_mesh -m 1 -o tally_on_mesh.vtk')
 
-
-# access the flux tally
-flux_tally = sp.get_tally(scores=[tally_to_plot])
-flux_slice = flux_tally.get_slice(scores=[tally_to_plot])
-flux_slice.mean.shape = (mesh_width, mesh_height)
-
-
-
-fig = plt.subplot()
-plt.show(fig.imshow(flux_slice.mean))
-
-plt.show(universe.plot(width=(1500,1500),basis='xy'))
+os.system('paraview tally_on_mesh.vtk')

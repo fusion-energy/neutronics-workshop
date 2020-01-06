@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots few 2D views of a simple tokamak geometry with neutron flux."""
+"""1_example_neutron_flux.py: plots few 2D views of a simple tokamak geometry with neutron flux."""
 
-__author__      = "Jonathan Shimwell"
 
 import openmc
 import matplotlib.pyplot as plt
@@ -16,16 +15,15 @@ enrichment_fraction = 0.07 #change the enrichment upto 1.0
 breeder_material.add_element('Pb', 84.2,'ao')
 breeder_material.add_nuclide('Li6', enrichment_fraction*15.8, 'ao')
 breeder_material.add_nuclide('Li7', (1.0-enrichment_fraction)*15.8, 'ao')
-breeder_material.set_density('atom/b-cm',3.2720171e-2)
-#breeder_material.set_density('g/cm3',11.0)
+breeder_material.set_density('g/cm3',11.0)
 mats.append(breeder_material)
 
 
 #GEOMETRY#
 
 
-sph1 = openmc.Sphere(r=600)
-sph2 = openmc.Sphere(r=700, boundary_type = 'vacuum')
+sph1 = openmc.Sphere(r=50)
+sph2 = openmc.Sphere(r=80, boundary_type = 'vacuum')
 sph3 = +sph1 & -sph2 
 
 breeder_blanket_cell = openmc.Cell(region=sph3)
@@ -93,4 +91,4 @@ flux_slice.mean.shape = (mesh_width, mesh_height)
 fig = plt.subplot()
 plt.show(fig.imshow(flux_slice.mean))
 
-plt.show(universe.plot(width=(400,400),basis='xz'))
+plt.show(universe.plot(width=(200,200),basis='xz'))
