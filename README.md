@@ -143,7 +143,7 @@ Expected outputs from this task are also in the [presentation](https://slides.co
 
 OpenMC can provide both 2D and 3D visualizations of the Constructive Solid Geometry ([CSG](https://en.wikipedia.org/wiki/Constructive_solid_geometry)) of a model.
 
-There are two methods for producing 2D slice views of model geometries. This can be done via an xml script (```2_example_geometry_viewer_2d_xml_version.py```) or with Python Matplotlib commands (```1_example_geometry_viewer_2d.py```). The first option is slightly faster for large geometries but the second option is simpler to understand and use, we will use the simpler option in this workshop.
+There are two methods for producing 2D slice views of model geometries. This can be done via a Python Matplotlib (```1_example_geometry_viewer_2d.py```) or via the production of xml files again with Python (```2_example_geometry_viewer_2d_xml_version.py```). The first option is simpler to understand and use while the second option is slightly faster for complex geometries, we will use the simpler option in this workshop.
 
 - Try understanding the example code ```coder 1_example_geometry_viewer_2d.py```
 
@@ -159,6 +159,8 @@ As the geometry is a spherical shell centred at the origin, its views in each pl
 Edit the script and try adding a first wall and centre column to the model using the OpenMC [simple examples](https://openmc.readthedocs.io/en/stable/examples/pincell.html#Defining-Geometry) and the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/geometry.html) for CSG operations.
 
 - Try adding a 20cm thick first wall to the hollow sphere.
+
+- Try assigning the eurofer material to the first wall.
 
 - Try adding a centre column with a 100cm radius. This would be cut at the top and bottom by the firstwall
 
