@@ -57,9 +57,7 @@ model.run()
 
 sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
-print('birth location of first neutron =',sp.source['r'][0]) # these neutrons are all created
 print('direction of first neutron =',sp.source['u'][0]) # these neutrons are all created
-
 
 # plot the neutron birth locations and trajectory
 traces =[{
@@ -85,25 +83,6 @@ layout = {'title':'Neutron initial directions coloured by direction',
 
 plot({'data':traces,
     'layout':layout},
-    filename='3d_plasma_cones.html')
+    filename='plasma_particle_location.html')
 
 
-traces =[{
-    'type': 'scatter3d',
-    # 'cauto' : False,
-    'x':sp.source['r']['x'],
-    'y':sp.source['r']['y'],
-    'z':sp.source['r']['z'],
-    'mode':'markers',
-    'marker':{'size':1,
-              'color':sp.source['E'],
-              'colorscale':'Viridis',
-              'colorbar':{'title':'Neutron energy in eV'}}
-    }]
-
-layout = {'title':'Neutron initial birth location coloured by energy',
-        'hovermode':'closest'}
-
-plot({'data':traces,
-    'layout':layout},
-    filename='3d_plasma_scatter.html')
