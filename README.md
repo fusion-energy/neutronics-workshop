@@ -372,6 +372,8 @@ You should see that TBR is printed along with its associated error. As you can s
 
 - Try increasing the number of ```batches``` to 10 and ```sett.particles``` to 500 and re-run the simulation. You should observe an improved estimate of TBR with better statsitical uncertainty. 
 
+- Try changing '(n,Xt)' to '205' and you should get the same result as this is the equivalent [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf) for tritium production.
+
 There remains uncertainty in the nuclear interaction data and elsewhere but the statisitcal uncertainty can be decreased with more computing.
 
 Your should find that the TBR value obtained from the simulation is below 1.0 so this design will not be self sufficient in fuel.
@@ -386,11 +388,13 @@ The script should produce a plot of TBR as a function of Li6 enrichment, as show
 
 <p align="center"><img src="tasks/task_6/images/tbr_study.png" height="500"></p>
 
-- Try changing '(n,Xt)' to '205' and you should get the same result as this is the equivalent [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf) for tritium production.
+
 
 **Learning Outcomes**
 
-- 
+- Improving the uncertainty on the result is possible with more computation
+
+- Imp
 
 **Overall, Task 6 has shown how TBR can be tallied using OpenMC and highlights the importance of simulating a sufficient number of particle histories such that tally results are accurately obtained.**
 
