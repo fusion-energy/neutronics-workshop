@@ -2,8 +2,6 @@
 
 """1_example_neutron_spectra_tokamak.py: plots neutron spectra."""
 
-__author__      = "Jonathan Shimwell"
-
 import openmc
 import plotly.graph_objects as go
 
@@ -116,8 +114,9 @@ sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
 
 spectra_tally = sp.get_tally(name='breeder_blanket_spectra') # add another tally for first_wall_spectra
-spectra_tally_result = [entry[0][0] for entry in spectra_tally.mean] 
-spectra_tally_std_dev = [entry[0][0] for entry in spectra_tally.std_dev] 
+df = spectra_tally.get_pandas_dataframe()
+spectra_tally_result = df['mean']
+
 
 fig = go.Figure()
 
@@ -129,10 +128,10 @@ fig.add_trace(go.Scatter(x=energy_bins,
                      )
               )
 
-
+# this will need to be uncommented to add the spectra to the plot
 # spectra_tally = sp.get_tally(name='first_wall_spectra') # add another tally for first_wall_spectra
-# spectra_tally_result = [entry[0][0] for entry in spectra_tally.mean] 
-# spectra_tally_std_dev = [entry[0][0] for entry in spectra_tally.std_dev] 
+# df = spectra_tally.get_pandas_dataframe()
+# spectra_tally_result = df['mean']
 
 # fig.add_trace(go.Scatter(x=energy_bins, 
 #                       y=spectra_tally_result,
@@ -147,7 +146,7 @@ fig.update_layout(
       xaxis = {'title':'Energy (eV)'},
       yaxis = {'title':'Neutrons per cm2 per source neutron',
                'type':'log'
-            }
+              }
 )
 
 fig.write_html("tokamak_spectra.html")
