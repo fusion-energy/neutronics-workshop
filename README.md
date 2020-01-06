@@ -333,11 +333,11 @@ In this task the neutron spectra at two different locations will be measured and
 
 - Try adding the neutron spectra within the first wall cell to the same plot and compare it to the breeder blanket cell. Why might they be different?
 
-Open the ```2_example_photon_spectra_tokamak.py``` script to see how the photon spectra is obtained for the breeder blanket cell. An additional setting is required to enable photon transport (which is disabled by default). Then run the script to plot the photon spectra within the breeder blanket.
+The task now starts to look at secondary photons created from neutron interactions. These photons are often created in neutron scattering interactions where the nucleus is left excited and de-excites via photon production. To run OpenMC in coupled neutron, photon mode an additional setting is required to enable photon transport (which is disabled by default).
 
-```coder 2_example_photon_spectra_tokamak.py```
+Try opening the example script ```coder 2_example_photon_spectra_tokamak.py``` script to see how the photon spectra is obtained for the breeder blanket cell and photon transport is enabled.
 
-```python 2_example_photon_spectra_tokamak.py```
+Try running the script to plot the photon spectra within the breeder blanket. ```python 2_example_photon_spectra_tokamak.py``` . Why do you think the photons generated are of lower energy.
 
 The plot should look similar to the plot below.
 
@@ -345,7 +345,10 @@ The plot should look similar to the plot below.
 
 **Learning Outcomes**
 
-**Overall, Task 5 has shown how tallies can be manipulated to obtain neutron and photon spectra. Spectra tallies do not exist by default in OpenMC meaning flux or current tallies must be energy-binned in order to obtain energy spectra. It also shows how tallies can be measured on different surfaces or cells in the geometry.**
+**Overall, 
+- Plotting neutron / photon spectra and observing the changing neutron energy at different locations in the reactor.
+- Performing coupled neutron photon simulations where photon are created from neutron interations.
+
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
