@@ -248,9 +248,9 @@ Now open the next example source plotting script ```3_plot_neutron_birth_locatio
 
 <p align="center"><i>Left = Neutron birth locations, Right = Neutron initial directions</i></p>
 
-OpenMC is also able to track particles as they pass through model geometries. Open the ```5_example_neutron_tracks.py``` script and notice that it contains ```model.run(tracks=True)```. This argument results in the creation of a h5 file for each neutron simulated which contains particle track information. The next example script defines a model of a hollow sphere made of two materials and a 14 MeV point source at the geometry centre.
+OpenMC is also able to track particles as they pass through model geometries. Open the ```6_example_neutron_tracks.py``` script and notice that it contains ```model.run(tracks=True)```. This argument results in the creation of a h5 file for each neutron simulated which contains particle track information. The next example script defines a model of a hollow sphere made of two materials and a 14 MeV point source at the geometry centre.
 
-- Try running ```python 5_example_neutron_tracks.py``` which simulates neutron movement through the geometry and produces particle h5 files from which neutron tracks can be visualised with the geometry. 
+- Try running ```python 6_example_neutron_tracks.py``` which simulates neutron movement through the geometry and produces particle h5 files from which neutron tracks can be visualised with the geometry. 
 
 Use Paraview to load the geometry file and then open the track files (.vtp files). Parview can also be used to slice (slice this model on the z plane) and threshold the geometry. More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15/4).
 
