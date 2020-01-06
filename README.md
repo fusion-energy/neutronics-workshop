@@ -40,7 +40,7 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 - [Task 1 - Cross section plotting - 20 minutes](#task1)
 - [Task 2 - Building and visualizing the model geometry - 20 minutes](#task2)
 - [Task 3 - Visualizing neutron tracks - 20 minutes](#task3)
-- [Task 4 - Finding the neutron flux - 15 minutes](#task4)
+- [Task 4 - Finding neutron interactions with mesh tallies - 15 minutes](#task4)
 - [Task 5 - Finding the neutron and photon spectra - 15 minutes](#task5)
 - [Task 6 - Finding the tritium production - 15 minutes](#task6)
 - [Task 7 - Finding the neutron damage - 15 minutes](#task7)
@@ -265,7 +265,7 @@ Looking at the tracks can you tell which material is water and which is zirconiu
 ## --------------------------------------------------------------------------------------------------------------
 &ensp; 
 
-### <a name="task4"></a>Task 4 - Finding the neutron flux
+### <a name="task4"></a>Task 4 - Finding neutron interactions with mesh tallies
 
 Google Colab link: [Task_4](https://colab.research.google.com/drive/1TVgCaEU_GAnJziNuyDFEvDfFYLU-fQaJ)
 
@@ -290,15 +290,16 @@ You should see plots of the simple sphere geometry and the isotropic point sourc
 
 The next example script is the ```2_example_neutron_flux_tomakak.py``` file which measures tritium production on a mesh in a simple tokamak geometry. 
 
-Try run the script with the following command ```python 2_example_neutron_flux_tomakak.py```
-
 The model still has a point source but now it is located at x=150 y=150 z=0. The tritium production mesh tally is displayed in 3D using paraview. Use the log scale within Paraview to show the tiritum production more clearnly.
 
-<img src="tasks/task_4/images/tritium_production_tokamak.png" height="300"> <img src="tasks/task_4/images/absorption_on_mesh.png" height="300">
+- Try running the script with the following command ```python 2_example_neutron_flux_tomakak.py```
+
+- Try changing the mesh tally from (n,Xt) to absorption to see the impact of the center column.
+
+<img src="tasks/task_4/images/tritium_production_tokamak.png" height="300">   <img src="tasks/task_4/images/absorption_on_mesh.png" height="300">
 
 <p align="center"><i>Left = Tokamak Geometry Plot, Right = Tokamak Flux Plot</i></p>
 
-- Try changing the mesh tally from (n,Xt) to absorption to see the impact of the .
 
 **Learning Outcomes**
 
