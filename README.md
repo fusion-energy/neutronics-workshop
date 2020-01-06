@@ -293,15 +293,15 @@ You should see plots of the simple sphere geometry and the isotropic point sourc
 - Try changing the "flux" tally to an "absorption" tally and re-run the simulation.
 
 
-The next example script is the ```2_example_neutron_flux_tomakak.py``` file which measures tritium production on a mesh in a simple tokamak geometry. 
+The next example script is the ```2_example_neutron_flux_tokamak.py``` file which measures tritium production on a mesh in a simple tokamak geometry. 
 
 The model still has a point source but now it is located at x=150 y=150 z=0. The tritium production mesh tally is now 3D and is displayed in 3D using paraview. Use the log scale within Paraview to show the tiritum production more clearnly.
 
-- Try running the script with the following command ```python 2_example_neutron_flux_tomakak.py```
+- Try running the script with the following command ```python 2_example_neutron_flux_tokamak.py```
 
 - Try changing the mesh tally from (n,Xt) to absorption to see the impact of the center column.
 
-<img src="tasks/task_4/images/tritium_production_tokamak.png" height="300">   <img src="tasks/task_4/images/absorption_on_mesh.png" height="300">
+<p align="center"><img src="tasks/task_4/images/tritium_production_tokamak.png" height="300">   <img src="tasks/task_4/images/absorption_on_mesh.png" height="300"></p>
 
 <p align="center"><i>Left = Tritium production, Right = Neutron absorption</i></p>
 
@@ -323,19 +323,15 @@ Please allow 15 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/18).
 
-In this task the neutron spectra at two different locations will be measured and visualized.
+In this task the neutron spectra at two different locations will be measured and visualized. OpenMC has several energy group structures such as VITAMIN-J-175 and [others](https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py) built in which makes the energy grid easy to define.
 
-Open the ```1_example_neutron_spectra_tokamak.py``` script to see how the neutron spectra is obtained for the breeder blanket cell. You might notice that OpenMC has energy group structures such as VITAMIN-J-175 and [others](https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py) built in which makes the energy grid easy to define.
+- Try opening the ```1_example_neutron_spectra_tokamak.py``` script to see how the neutron spectra is obtained for the breeder blanket cell.
 
-Run the script to plot the neutron spectra within the breeder blanket.
-
-```python 1_example_neutron_spectra_tokamak.py```
-
-The plot should look similar to the plot shown below.
+- Try running the example script which plot the neutron spectra within the breeder blanket. ```python 1_example_neutron_spectra_tokamak.py``` , the plot should look similar to the plot shown below.
 
 <p align="center"><img src="tasks/task_5/images/1_example_neutron_spectra_tokamak.png" height="500"></p>
 
-- Try plotting the neutron spectra within the first wall cell on the same axis and compare it to the breeder blanket cell.
+- Try adding the neutron spectra within the first wall cell to the same plot and compare it to the breeder blanket cell. Why might they be different?
 
 Open the ```2_example_photon_spectra_tokamak.py``` script to see how the photon spectra is obtained for the breeder blanket cell. An additional setting is required to enable photon transport (which is disabled by default). Then run the script to plot the photon spectra within the breeder blanket.
 
