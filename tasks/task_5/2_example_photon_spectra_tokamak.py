@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots photon spectra."""
-
-__author__      = "Jonathan Shimwell"
+"""2_example_photon_spectra_tokamak.py: plots photon spectra."""
 
 import openmc
-import matplotlib.pyplot as plt
-import os
-from plotly.offline import download_plotlyjs, plot
-from plotly.graph_objs import Scatter, Layout
+import plotly.graph_objects as go
 
 #MATERIALS#
 
@@ -77,7 +72,7 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-batches = 1
+batches = 2
 sett.batches = batches
 sett.inactive = 0
 sett.particles = 7000
@@ -120,12 +115,15 @@ model.run()
 sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
 
-spectra_tally = sp.get_tally(name='breeder_blanket_neutron_spectra') # add another tally for first_wall_spectra
-spectra_tally_result = [entry[0][0] for entry in spectra_tally.mean] 
-spectra_tally_std_dev = [entry[0][0] for entry in spectra_tally.std_dev] 
+spectra_tally = sp.get_tally(name='breeder_blanket_neutron_spectra') 
+df = spectra_tally.get_pandas_dataframe()
+spectra_tally_result = df['mean']
 
-traces=[]
-traces.append(Scatter(x=energy_bins, 
+
+fig = go.Figure()
+
+
+fig.add_trace(go.Scatter(x=energy_bins, 
                       y=spectra_tally_result,
                       name='breeder_blanket_neutron_spectra',
                       line=dict(shape='hv')
@@ -133,11 +131,12 @@ traces.append(Scatter(x=energy_bins,
               )
 
 
-spectra_tally = sp.get_tally(name='breeder_blanket_photon_spectra') # add another tally for first_wall_spectra
-spectra_tally_result = [entry[0][0] for entry in spectra_tally.mean] 
-spectra_tally_std_dev = [entry[0][0] for entry in spectra_tally.std_dev] 
+spectra_tally = sp.get_tally(name='breeder_blanket_photon_spectra') 
+df = spectra_tally.get_pandas_dataframe()
+spectra_tally_result = df['mean']
 
-traces.append(Scatter(x=energy_bins, 
+
+fig.add_trace(go.Scatter(x=energy_bins, 
                       y=spectra_tally_result,
                       name='breeder_blanket_photon_spectra',
                       line=dict(shape='hv')
@@ -145,18 +144,14 @@ traces.append(Scatter(x=energy_bins,
               )
 
 
+fig.update_layout(
+      title = 'Photon and neutron energy spectra',
+      xaxis = {'title':'Energy (eV)'},
+      yaxis = {'title':'Photons / neutrons per cm2 per source neutron',
+               'type':'log'
+              }
+)
 
 
-layout = {'title':'photon energy spectra',
-            'hovermode':'closest',
-            'xaxis':{'title':'Energy eV',
-                        'type':'linear'},
-            'yaxis':{'title':'photons per cm2 per source photon',
-                        'type':'log'},
-            }     
-
-plot({'data':traces,
-      'layout':layout
-     },
-       filename='tokamak_spectra.html'
-    )
+fig.write_html("tokamak_photon_spectra.html")
+fig.show()

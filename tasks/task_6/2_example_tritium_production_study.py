@@ -5,10 +5,7 @@
 __author__      = "Jonathan Shimwell"
 
 import openmc
-import matplotlib.pyplot as plt
-import os
-from plotly.offline import download_plotlyjs, plot
-from plotly.graph_objs import Scatter, Layout
+import plotly.graph_objects as go
 from tqdm import tqdm
 
 
@@ -16,7 +13,7 @@ def make_materials_geometry_tallies(enrichment_fraction):
 
     #MATERIALS#
 
-    breeder_material =     openmc.Material(1, "breeder_material") #Pb84.2Li15.8 with natural enrichment of Li6
+    breeder_material = openmc.Material(name = "breeder_material") #Pb84.2Li15.8 with natural enrichment of Li6
     breeder_material.add_element('Pb', 84.2,'ao')
     breeder_material.add_nuclide('Li6', enrichment_fraction*15.8, 'ao')
     breeder_material.add_nuclide('Li7', (1.0-enrichment_fraction)*15.8, 'ao')
@@ -94,7 +91,7 @@ def make_materials_geometry_tallies(enrichment_fraction):
     cell_filter = openmc.CellFilter(breeder_blanket_cell)
     tbr_tally = openmc.Tally(2,name='TBR')
     tbr_tally.filters = [cell_filter]
-    tbr_tally.scores = ['205'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
+    tbr_tally.scores = ['(n,Xt)'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
     tallies.append(tbr_tally)
 
     #RUN OPENMC #
@@ -118,19 +115,23 @@ results=[]
 for enrichment_fraction in tqdm([0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]):
     results.append(make_materials_geometry_tallies(enrichment_fraction))
 
-print(results)
+print('results',results)
+
+fig = go.Figure()
 
 # PLOTS RESULTS #
-trace1= Scatter(x=[entry['enrichment_fraction'] for entry in results], 
+fig.add_trace(go.Scatter(x=[entry['enrichment_fraction'] for entry in results], 
                 y=[entry['tbr_tally_result'] for entry in results],
                 mode = 'lines',
                 error_y= {'array':[entry['tbr_tally_std_dev'] for entry in results]},
                 )
+             )
 
-layout = {'title':'Tritium production as a function of Li6 enrichment',
-          'xaxis':{'title':'Li6 enrichment fraction'},
-          'yaxis':{'title':'TBR'}
-         }
-plot({'data':[trace1],
-      'layout':layout},
-      filename='tbr_study.html')
+fig.update_layout(
+      title = 'Tritium production as a function of Li6 enrichment',
+      xaxis = {'title':'Li6 enrichment fraction'},
+      yaxis = {'title':'TBR'}
+)
+
+fig.write_html("tbr_study.html")
+fig.show()

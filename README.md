@@ -293,15 +293,15 @@ You should see plots of the simple sphere geometry and the isotropic point sourc
 - Try changing the "flux" tally to an "absorption" tally and re-run the simulation.
 
 
-The next example script is the ```2_example_neutron_flux_tomakak.py``` file which measures tritium production on a mesh in a simple tokamak geometry. 
+The next example script is the ```2_example_neutron_flux_tokamak.py``` file which measures tritium production on a mesh in a simple tokamak geometry. 
 
 The model still has a point source but now it is located at x=150 y=150 z=0. The tritium production mesh tally is now 3D and is displayed in 3D using paraview. Use the log scale within Paraview to show the tiritum production more clearnly.
 
-- Try running the script with the following command ```python 2_example_neutron_flux_tomakak.py```
+- Try running the script with the following command ```python 2_example_neutron_flux_tokamak.py```
 
 - Try changing the mesh tally from (n,Xt) to absorption to see the impact of the center column.
 
-<img src="tasks/task_4/images/tritium_production_tokamak.png" height="300">   <img src="tasks/task_4/images/absorption_on_mesh.png" height="300">
+<p align="center"><img src="tasks/task_4/images/tritium_production_tokamak.png" height="300">   <img src="tasks/task_4/images/absorption_on_mesh.png" height="300"></p>
 
 <p align="center"><i>Left = Tritium production, Right = Neutron absorption</i></p>
 
@@ -323,25 +323,21 @@ Please allow 15 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/18).
 
-In this task the neutron spectra at two different locations will be measured and visualized.
+In this task the neutron spectra at two different locations will be measured and visualized. OpenMC has several energy group structures such as VITAMIN-J-175 and [others](https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py) built in which makes the energy grid easy to define.
 
-Open the ```1_example_neutron_spectra_tokamak.py``` script to see how the neutron spectra is obtained for the breeder blanket cell. You might notice that OpenMC has energy group structures such as VITAMIN-J-175 and [others](https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py) built in which makes the energy grid easy to define.
+- Try opening the ```1_example_neutron_spectra_tokamak.py``` script to see how the neutron spectra is obtained for the breeder blanket cell.
 
-Run the script to plot the neutron spectra within the breeder blanket.
-
-```python 1_example_neutron_spectra_tokamak.py```
-
-The plot should look similar to the plot shown below.
+- Try running the example script which plot the neutron spectra within the breeder blanket. ```python 1_example_neutron_spectra_tokamak.py``` , the plot should look similar to the plot shown below.
 
 <p align="center"><img src="tasks/task_5/images/1_example_neutron_spectra_tokamak.png" height="500"></p>
 
-- Try plotting the neutron spectra within the first wall cell on the same axis and compare it to the breeder blanket cell.
+- Try adding the neutron spectra within the first wall cell to the same plot and compare it to the breeder blanket cell. Why might they be different?
 
-Open the ```2_example_photon_spectra_tokamak.py``` script to see how the photon spectra is obtained for the breeder blanket cell. An additional setting is required to enable photon transport (which is disabled by default). Then run the script to plot the photon spectra within the breeder blanket.
+The task now starts to look at secondary photons created from neutron interactions. These photons are often created in neutron scattering interactions where the nucleus is left excited and de-excites via photon production. To run OpenMC in coupled neutron, photon mode an additional setting is required to enable photon transport (which is disabled by default).
 
-```coder 2_example_photon_spectra_tokamak.py```
+Try opening the example script ```coder 2_example_photon_spectra_tokamak.py``` script to see how the photon spectra is obtained for the breeder blanket cell and photon transport is enabled.
 
-```python 2_example_photon_spectra_tokamak.py```
+Try running the script to plot the photon spectra within the breeder blanket. ```python 2_example_photon_spectra_tokamak.py``` . Why do you think the photons generated are of lower energy.
 
 The plot should look similar to the plot below.
 
@@ -349,7 +345,10 @@ The plot should look similar to the plot below.
 
 **Learning Outcomes**
 
-**Overall, Task 5 has shown how tallies can be manipulated to obtain neutron and photon spectra. Spectra tallies do not exist by default in OpenMC meaning flux or current tallies must be energy-binned in order to obtain energy spectra. It also shows how tallies can be measured on different surfaces or cells in the geometry.**
+**Overall, 
+- Plotting neutron / photon spectra and observing the changing neutron energy at different locations in the reactor.
+- Performing coupled neutron photon simulations where photon are created from neutron interations.
+
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -363,35 +362,40 @@ Please allow 15 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/19).
 
-In this task you will find the tritium breeding ratio (TBR) for a single tokamak model using the ```example_tritium_production.py``` script. You will then find TBR values for several tokamak models with a range of different Li6 enrichment values using the ```example_tritium_production_study.py``` script.
+In this task you will find the tritium breeding ratio (TBR) for a single tokamak model using the ```1_example_tritium_production.py``` script. You will then find TBR values for several tokamak models with a range of different Li6 enrichment values using the ```1_example_tritium_production_study.py``` script.
 
-Open and run the ```example_tritium_production.py``` script using the following commands.
+- Try open the example scripts and understanding how the TBR is found ```coder 1_example_tritium_production.py```
 
-```coder example_tritium_production.py```
-
-```python example_tritium_production.py```
+- Try running the example script and finding the TBR ```python 1_example_tritium_production.py```
 
 You should see that TBR is printed along with its associated error. As you can see the error is large.
 
-- Try increasing the number of ```batches``` and ```sett.particles``` and re-run the simulation. You should observe an improved estimate of TBR.
+- Try increasing the number of ```batches``` to 10 and ```sett.particles``` to 500 and re-run the simulation. You should observe an improved estimate of TBR with better statsitical uncertainty. 
 
-Your should find that the TBR value obtained from the improved simulation is below 1.0 so this design will not be self sufficient in fuel.
+- Try changing '(n,Xt)' to '205' and you should get the same result as this is the equivalent [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf) for tritium production.
+
+There remains uncertainty in the nuclear interaction data and elsewhere but the statisitcal uncertainty can be decreased with more computing.
+
+Your should find that the TBR value obtained from the simulation is below 1.0 so this design will not be self sufficient in fuel.
 
 One option for increasing the TBR is to increase the Li6 content within the blanket. Open and run the next script and see how TBR changes as the Li6 enrichment is increased.
 
-```coder example_tritium_production_study.py```
+- Try opening and understanding how the next script changes the lithium 6 enrichment```coder 2_example_tritium_production_study.py```
 
-```python example_tritium_production_study.py```
+- Try running the example script and observing the plot produced ```python 2_example_tritium_production_study.py```
 
 The script should produce a plot of TBR as a function of Li6 enrichment, as shown below.
 
 <p align="center"><img src="tasks/task_6/images/tbr_study.png" height="500"></p>
 
-- Try changing '(n,t)' to '205' and you should get the same result as this is the equivalent [ENDF MT reaction number](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf) for tritium production.
+
 
 **Learning Outcomes**
 
-**Overall, Task 6 has shown how TBR can be tallied using OpenMC and highlights the importance of simulating a sufficient number of particle histories such that tally results are accurately obtained.**
+- Finding TBR with OpenMC
+- Introduction to MT reaction numbers (n,Xt) = 205
+- Simple methods of increasing the TBR using lithium enrichment
+- Improving the uncertainty on the result is possible with more computation
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------
@@ -410,6 +414,12 @@ Displacements per atom or DPA is one measure of damage within materials exposed 
 In the case of DPA a tally multiplier is needed to account for the material and recombination effects. For example different atoms require different amounts of energy to [displace](https://fispact.ukaea.uk/wiki/Output_interpretation#DPA_and_KERMA). Without going into detail assume this is already incorporated into the tally result. The only multiplier needed is to multiply the result by the source intensity (in neutrons per second) and the irradiation duration (in seconds).
 
 - Find the number of neutrons emitted over a 5 year period assuming 80% availability for a 3GW (fusion energy) reactor. Recall that each reaction emmits 17.6MeV of energy. 
+
+- Find the volume of the Eurofer firstwall
+
+- Find the number of atoms in the Eurofer firstwall
+
+- Find the number of displacements (from the find_dpa script)
 
 - Using this information find the DPA on the first wall for a 2GW (fusion power) reactor over a 5 year period. Does this exceed the Eurofer DPA limit of 70 DPA?
 
