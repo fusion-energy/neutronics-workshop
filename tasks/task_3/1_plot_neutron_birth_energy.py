@@ -1,16 +1,11 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots 3D model with neutron tracks."""
+"""1_plot_neutron_birth_energy.py: plots 3D model with neutron tracks."""
 
 __author__      = "Jonathan Shimwell"
 
 import openmc
-# import matplotlib.pyplot as plt
-from plotly.offline import download_plotlyjs, plot
-from plotly.graph_objs import Scatter, Layout, Histogram , Bar, Scatter3d
-from plotly.figure_factory import create_quiver
-
-import os
+import plotly.graph_objects as go
 import numpy as np
 
 #MATERIALS#
@@ -75,45 +70,24 @@ print('energy_bins',energy_bins)
 # Calculate pdf for source energies
 probability, bin_edges = np.histogram(sp.source['E'], energy_bins, density=True)
 
+fig_energy = go.Figure()
+
 # Plot source energy histogram
-traces=[Scatter(x=energy_bins[:-1], 
+fig_energy.add_trace(go.Scatter(x=energy_bins[:-1], 
                        y=probability*np.diff(energy_bins),
                        line={'shape':'hv'},
                        hoverinfo='text' ,                       
                        name = 'neutron direction',                
                       )
-              ] 
-
-layout = {'title':'neutron energy',
-             'hovermode':'closest',
-             'xaxis':{'title':'Energy (eV)'},
-             'yaxis':{'title':'Probability'},
-            }
-
-plot({'data':traces,
-      'layout':layout},
-      filename='particle_energy_histogram.html'
-      )
+              ) 
 
 
-
-text = ['Energy = '+str(i)+' eV' for i in sp.source['E']]
-
-# plots 3d poisitons of particles coloured by energy
-traces=[Scatter3d(x=sp.source['r']['x'], 
-                  y=sp.source['r']['y'],
-                  z=sp.source['r']['z'],
-                  hovertext= text,
-                  text=text,
-                  mode = 'markers',
-                  marker={'size':2,'color':sp.source['E'],},
-                  )]
-
-layout = {'title':'Neutron production coordinates, coloured by energy',
-            'hovermode':'closest'}
-
-plot({'data':traces,
-      'layout':layout},
-      filename='3d_scatter_plot.html')
+fig_energy.update_layout(
+      title = 'neutron energy',
+      xaxis = {'title':'Energy (eV)'},
+      yaxis = {'title':'Probability'}
+)
 
 
+fig_energy.write_html("particle_energy_histogram.html")
+fig_energy.show()
