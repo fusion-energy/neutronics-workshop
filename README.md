@@ -290,7 +290,7 @@ You should see plots of the simple sphere geometry and the isotropic point sourc
 
 The next example script is the ```2_example_neutron_flux_tomakak.py``` file which measures tritium production on a mesh in a simple tokamak geometry. 
 
-The model still has a point source but now it is located at x=150 y=150 z=0. The tritium production mesh tally is displayed in 3D using paraview. Use the log scale within Paraview to show the tiritum production more clearnly.
+The model still has a point source but now it is located at x=150 y=150 z=0. The tritium production mesh tally is now 3D and is displayed in 3D using paraview. Use the log scale within Paraview to show the tiritum production more clearnly.
 
 - Try running the script with the following command ```python 2_example_neutron_flux_tomakak.py```
 
@@ -303,7 +303,7 @@ The model still has a point source but now it is located at x=150 y=150 z=0. The
 
 **Learning Outcomes**
 
-- How mesh tallies can be used in neutronics simulations to measure a variety of different reactions such as neutron flux, absorption and tritium production. 
+- How mesh tallies can be used in neutronics simulations to measure a variety of different reactions such as neutron absorption, tritium production and flux. 
 - How neutron are dissipated around the reactor
 
 &ensp; 
