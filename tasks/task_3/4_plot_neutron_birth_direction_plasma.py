@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots neutron birth locations and directions."""
-
-__author__      = "Jonathan Shimwell"
+"""4_plot_neutron_birth_direction_plasma.py: plots neutron birth direction."""
 
 import openmc
 from plotly.offline import plot
