@@ -2,13 +2,8 @@
 
 """1_example_neutron_spectra_tokamak.py: plots neutron spectra."""
 
-__author__      = "Jonathan Shimwell"
-
 import openmc
-import matplotlib.pyplot as plt
-import os
-from plotly.offline import download_plotlyjs, plot
-from plotly.graph_objs import Scatter, Layout
+import plotly.graph_objects as go
 
 #MATERIALS#
 
@@ -77,7 +72,7 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-batches = 1
+batches = 2
 sett.batches = batches
 sett.inactive = 0
 sett.particles = 7000
@@ -119,23 +114,26 @@ sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
 
 spectra_tally = sp.get_tally(name='breeder_blanket_spectra') # add another tally for first_wall_spectra
-spectra_tally_result = [entry[0][0] for entry in spectra_tally.mean] 
-spectra_tally_std_dev = [entry[0][0] for entry in spectra_tally.std_dev] 
+df = spectra_tally.get_pandas_dataframe()
+spectra_tally_result = df['mean']
 
-traces=[]
-traces.append(Scatter(x=energy_bins, 
+
+fig = go.Figure()
+
+
+fig.add_trace(go.Scatter(x=energy_bins, 
                       y=spectra_tally_result,
                       name='breeder_blanket_spectra',
                       line=dict(shape='hv')
                      )
               )
 
-
+# this will need to be uncommented to add the first wall spectra to the plot
 # spectra_tally = sp.get_tally(name='first_wall_spectra') # add another tally for first_wall_spectra
-# spectra_tally_result = [entry[0][0] for entry in spectra_tally.mean] 
-# spectra_tally_std_dev = [entry[0][0] for entry in spectra_tally.std_dev] 
+# df = spectra_tally.get_pandas_dataframe()
+# spectra_tally_result = df['mean']
 
-# traces.append(Scatter(x=energy_bins, 
+# fig.add_trace(go.Scatter(x=energy_bins, 
 #                       y=spectra_tally_result,
 #                       name='first_wall_spectra',
 #                       line=dict(shape='hv')
@@ -143,18 +141,13 @@ traces.append(Scatter(x=energy_bins,
 #               )
 
 
+fig.update_layout(
+      title = 'Neutron energy spectra',
+      xaxis = {'title':'Energy (eV)'},
+      yaxis = {'title':'Neutrons per cm2 per source neutron',
+               'type':'log'
+              }
+)
 
-
-layout = {'title':'Neutron energy spectra',
-            'hovermode':'closest',
-            'xaxis':{'title':'Energy eV',
-                        'type':'linear'},
-            'yaxis':{'title':'Neutrons per cm2 per source neutron',
-                        'type':'log'},
-            }     
-
-plot({'data':traces,
-      'layout':layout
-     },
-       filename='tokamak_spectra.html'
-    )
+fig.write_html("tokamak_spectra.html")
+fig.show()

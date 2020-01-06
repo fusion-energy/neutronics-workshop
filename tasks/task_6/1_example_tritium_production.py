@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots few 2D views of a simple tokamak geometry with neutron flux."""
+"""example_tritium_production.py: plots few 2D views of a simple tokamak geometry with neutron flux."""
 
 __author__      = "Jonathan Shimwell"
 
 import openmc
-import matplotlib.pyplot as plt
-import os
+
 
 #MATERIALS#
 
@@ -44,8 +43,8 @@ vessel_inner = openmc.Sphere(r=500)
 first_wall_outer_surface = openmc.Sphere(r=510)
 breeder_blanket_outer_surface = openmc.Sphere(r=610,boundary_type='vacuum')
 
-#cells
 
+#cells
 central_sol_region = -central_sol_surface & -breeder_blanket_outer_surface
 central_sol_cell = openmc.Cell(region=central_sol_region) 
 central_sol_cell.fill = copper
@@ -93,9 +92,9 @@ tallies = openmc.Tallies()
 
 #added a cell tally for tritium production
 cell_filter = openmc.CellFilter(breeder_blanket_cell)
-tbr_tally = openmc.Tally(2,name='TBR')
+tbr_tally = openmc.Tally(name='TBR')
 tbr_tally.filters = [cell_filter]
-tbr_tally.scores = ['205'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
+tbr_tally.scores = ['(n,Xt)'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
 tallies.append(tbr_tally)
 
 
@@ -106,7 +105,7 @@ model.run()
 # open the results file
 sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
-# access the tally
+# access the tally using pandas dataframes
 tbr_tally = sp.get_tally(name='TBR')
 df = tbr_tally.get_pandas_dataframe()
 
