@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots neutron spectra."""
+"""1_example_neutron_spectra_tokamak.py: plots neutron spectra."""
 
 __author__      = "Jonathan Shimwell"
 

@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots neutron birth locations and directions."""
-
-__author__      = "Jonathan Shimwell"
+"""4_plot_neutron_birth_direction_plasma.py: plots neutron birth direction."""
 
 import openmc
-# import matplotlib.pyplot as plt
-from plotly.offline import download_plotlyjs, plot
-from plotly.graph_objs import Scatter, Layout, Histogram , Bar
+from plotly.offline import plot
 from plotly.figure_factory import create_quiver
 
 import os
@@ -83,6 +79,6 @@ layout = {'title':'Neutron initial directions coloured by direction',
 
 plot({'data':traces,
     'layout':layout},
-    filename='plasma_particle_location.html')
+    filename='plasma_particle_direction.html')
 
 
