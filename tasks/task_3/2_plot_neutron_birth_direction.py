@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots neutron birth locations and directions."""
+"""2_plot_neutron_birth_direction.py: plots neutron birth energy."""
 
 __author__      = "Jonathan Shimwell"
 
@@ -69,9 +69,9 @@ print('direction of first neutron =',sp.source['u'][0]) # these neutrons are all
 traces =[{
     'type': 'cone',
     'cauto' : False,
-    'x':sp.source['u']['x'], #these should really be 'r' instead of 'u' but the cone plot fails
-    'y':sp.source['u']['y'], #these should really be 'r' instead of 'u' but the cone plot fails
-    'z':sp.source['u']['z'], #these should really be 'r' instead of 'u' but the cone plot fails
+    'x':sp.source['r']['x'],
+    'y':sp.source['r']['y'],
+    'z':sp.source['r']['z'],
     'u':sp.source['u']['x'],
     'v':sp.source['u']['y'],
     'w':sp.source['u']['z'],
