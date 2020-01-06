@@ -5,13 +5,8 @@
 __author__      = "Jonathan Shimwell"
 
 import openmc
-# import matplotlib.pyplot as plt
-from plotly.offline import download_plotlyjs, plot
-from plotly.graph_objs import Scatter, Layout, Histogram , Bar
+from plotly.offline import plot
 from plotly.figure_factory import create_quiver
-
-import os
-import numpy as np
 
 #MATERIALS#
 

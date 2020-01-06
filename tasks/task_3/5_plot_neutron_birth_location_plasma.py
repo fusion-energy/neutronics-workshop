@@ -5,11 +5,7 @@
 __author__      = "Jonathan Shimwell"
 
 import openmc
-from plotly.offline import plot
-from plotly.figure_factory import create_quiver
-
-import os
-import numpy as np
+import plotly.graph_objects as go
 
 #MATERIALS#
 
@@ -55,32 +51,25 @@ model.run()
 
 sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
-print('direction of first neutron =',sp.source['u'][0]) # these neutrons are all created
+print('birth location of first neutron =',sp.source['r'][0]) # these neutrons are all created
 
-# plot the neutron birth locations and trajectory
-traces =[{
-    'type': 'cone',
-    'cauto' : False,
-    'x':sp.source['r']['x'],
-    'y':sp.source['r']['y'],
-    'z':sp.source['r']['z'],
-    'u':sp.source['u']['x'],
-    'v':sp.source['u']['y'],
-    'w':sp.source['u']['z'],
-    'cmin':0,'cmax':1,
-    "anchor": "tail",
-    "colorscale": 'Viridis',
-    "hoverinfo": "u+v+w+norm",
-    "sizemode":"absolute",
-    "sizeref":3,
-    "showscale":False,
-    }]
+fig_coords = go.Figure()
 
-layout = {'title':'Neutron initial directions coloured by direction',
-        'hovermode':'closest'}
+text = ['Energy = '+str(i)+' eV' for i in sp.source['E']]
 
-plot({'data':traces,
-    'layout':layout},
-    filename='plasma_particle_direction.html')
+# plots 3d poisitons of particles coloured by energy
 
+fig_coords.add_trace(go.Scatter3d(x=sp.source['r']['x'], 
+                     y=sp.source['r']['y'],
+                     z=sp.source['r']['z'],
+                     hovertext= text,
+                     text=text,
+                     mode = 'markers',
+                     marker={'size':1.,'color':sp.source['E'],},
+                    )
+                  )
+              
+fig_coords.update_layout(title = 'Neutron production coordinates, coloured by energy')
 
+fig_coords.write_html("plasma_particle_location.html")
+fig_coords.show()
