@@ -111,13 +111,13 @@ The tritium production should produce a plot similar to the plot shown below.
 
 A nice feature of OpenMC is that it can plot cross sections for complete materials made from combinations of isotopes and elements. The ```3_example_material_plot.py``` script shows how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material. 
 
-```python 3_example_material_plot.py``
+- Try running the script and producing the material cross section plot ```python 3_example_material_plot.py```
 
 The plot produced should look similar to the plot shown below. As you can see lithium enrichment only increases tritium prodcution at lower neutron energies.
 
 <p align="center"><img src="tasks/task_1/images/3_example_material_plot.png" height="500"></p>
 
- - Try editing the ```3_example_material_plot.py``` script so that other candidate breeder materials are added to the plot.
+ - Try editing the script so that other candidate breeder materials are added to the plot. ```coder 3_example_material_plot.py```
 
 **Learning Outcomes Task 1**
 
@@ -143,34 +143,28 @@ Expected outputs from this task are also in the [presentation](https://slides.co
 
 OpenMC can provide both 2D and 3D visualizations of the Constructive Solid Geometry ([CSG](https://en.wikipedia.org/wiki/Constructive_solid_geometry)) of a model.
 
-There are two methods for producing 2D slice views of model geometries. The first method is shown in the ```1_example_geometry_viewer_2d_fortran_version.py``` script, which produces the first example 2D slice plots using the following commands inside the task_2 folder.
+There are two methods for producing 2D slice views of model geometries. This can be done via a Python Matplotlib (```1_example_geometry_viewer_2d.py```) or via the production of xml files again with Python (```2_example_geometry_viewer_2d_xml_version.py```). The first option is simpler to understand and use while the second option is slightly faster for complex geometries, we will use the simpler option in this workshop.
 
-```coder 1_example_geometry_viewer_2d_fortran_version.py```
+- Try understanding the example code ```coder 1_example_geometry_viewer_2d.py```
 
-```python 1_example_geometry_viewer_2d_fortran_version.py```
+- Try running the example code ```python 1_example_geometry_viewer_2d.py```
 
-Views of the model geometry from different planes (XY, XZ, YZ) should appear, as shown below.
+Views of the model geometry from XY, YZ and XZ planes should appear one after the other.
 
-<img src="tasks/task_2/images/xy_sphere.png" height="210"> <img src="tasks/task_2/images/xz_sphere.png" height="210"> <img src="tasks/task_2/images/yz_sphere.png" height="210">
-<p align="center"><i>Left = XY plane, Middle = XZ plane, Right = YZ plane</i></p>
+<img src="tasks/task_2/images/xy_sphere.png" height="210">
+<p align="center"></p>
 
 As the geometry is a spherical shell centred at the origin, its views in each plane are identical.
-
-The second method for producing 2D slice plots, shown in the ```2_example_geometry_viewer_2d.py``` script, works better for large models.
-
-```coder 2_example_geometry_viewer_2d.py```
-
-```python 2_example_geometry_viewer_2d.py```
 
 Edit the script and try adding a first wall and centre column to the model using the OpenMC [simple examples](https://openmc.readthedocs.io/en/stable/examples/pincell.html#Defining-Geometry) and the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/geometry.html) for CSG operations.
 
 - Try adding a 20cm thick first wall to the hollow sphere.
 
-- Try adding a centre column with a 100cm radius.
+- Try assigning the eurofer material to the first wall.
+
+- Try adding a centre column with a 100cm radius. This would be cut at the top and bottom by a sphere surface
 
 - Try creating a material from pure copper and assign it to the centre column.
-
-- Try creating a homogenized material from 10% water and 90% tungsten and assign it to the first wall and the shield.
 
 - Colour the geometry plots by material - see the [documentation](https://openmc.readthedocs.io/en/stable/usersguide/plots.html) for an example.
 
@@ -187,19 +181,13 @@ Run this script to produce views of the tokamak model from different planes, as 
 
 The next script shows how a simple geometry can be viewed in 3D using paraview. This converts the geometry into a block.
 
-```coder 4_example_geometry_viewer_3d.py```
+```coder 4_example_geometry_viewer_3d_tokamak.py```
 
-```python 4_example_geometry_viewer_3d.py```
+```python 4_example_geometry_viewer_3d_tokamak.py```
 
 Paraview should load up when the script completes. To make the geometry visible click the "Apply" button and also the small eyeball icon on the left hand side. Then select "id" and "surface" in the dropdown menus to view the geometry. The threshold and slice operations can then be used to view specific parts of the geometry. (More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14/1). A video tutorial is also provided below).
 
 - Try using the threshold operation to remove the vacuum cell. Set the threshold to 0 then click the "Apply" button.
-
-- Try combining the last two scripts so that you can visualize the tokamak model in 3D.
-
-```coder 5_example_geometry_viewer_3d_tokamak.py```
-
-```python 5_example_geometry_viewer_3d_tokamak.py```
 
 **Paraview Video Tutorial**
 
@@ -208,7 +196,9 @@ Paraview should load up when the script completes. To make the geometry visible 
 
 **Learning Outcomes**
 
-**Overall, Task 2 has shown how Constructive Solid Geometry (CSG) can be used to build simple model geometries in OpenMC. These models can be visualized in a variety of ways; either in 2D slices or 3D models, providing assurance that the model created is sufficiently representative of the model desired.**
+- Construction of simple Constructive Solid Geometry (CSG) geometry.
+- Visualizion of models using 2D slices.
+- Visualizion of models using 3D cube geometry.
 
 &ensp; 
 ## --------------------------------------------------------------------------------------------------------------

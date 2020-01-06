@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots few 2D views of a simple geometry ."""
-
-__author__      = "Jonathan Shimwell"
+"""1_example_geometry_viewer_2d_xml_version.py: plots few 2D views of a simple geometry ."""
 
 import openmc
 import matplotlib.pyplot as plt
@@ -10,22 +8,22 @@ import os
 
 mats = openmc.Materials()
 
-natural_lead = openmc.Material(1, "natural_lead")
-natural_lead.add_element('Pb', 1,'ao')
+natural_lead = openmc.Material(name="natural_lead")
+natural_lead.add_element('Pb', 1.0 ,'ao')
 mats.append(natural_lead)
 mats.export_to_xml()
 
 
 #example surfaces
-surface_sph1 = openmc.Sphere(r=500)
+surface_sph1 = openmc.Sphere(r=500) # where r stands for radius
 surface_sph2 = openmc.Sphere(r=600)
-
-volume_sph1 = +surface_sph1 & -surface_sph2 # above (+) surface_sph and below (-) surface_sph2
-
 #add surfaces here using https://openmc.readthedocs.io/en/stable/usersguide/geometry.html#surfaces-and-regions
 
+#example region
+region = +surface_sph1 & -surface_sph2 # above (+) surface_sph and below (-) surface_sph2
+
 #example cell
-cell1 = openmc.Cell(region=volume_sph1)
+cell1 = openmc.Cell(region=region)
 cell1.fill = natural_lead
 
 #add another cell here
@@ -39,7 +37,7 @@ geom.export_to_xml()
 p = openmc.Plot()
 p.basis='xz'
 p.filename = 'plot'
-p.width = (850, 850) #hint, this might need to be increased to see the new large geometry
+p.width = (1200, 1200) #hint, this might need to be increased to see larger geometry
 p.pixels = (400, 400) 
 p.color_by = 'material'
 p.colors = {natural_lead: 'blue'}
@@ -49,5 +47,4 @@ plots.export_to_xml()
 openmc.plot_geometry()
 
 os.system('convert plot.ppm plot.png')
-#os.system('eog plot.png')
-os.system('xdg-open plot.png')
+os.system('eog plot.png')
