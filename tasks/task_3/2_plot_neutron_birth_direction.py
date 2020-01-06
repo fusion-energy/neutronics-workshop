@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""2_plot_neutron_birth_direction.py: plots neutron birth energy."""
+"""2_plot_neutron_birth_direction.py: plots neutron birth direction."""
 
 __author__      = "Jonathan Shimwell"
 
