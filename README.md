@@ -52,7 +52,9 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 - [Task 10 - Using CAD geometry - 30 minutes](#task10)
 
 &ensp; 
-## --------------------------------------------------------------------------------------------------------------
+<p align="center"><b>
+------------------------------------------------------------------------------------------
+</b></p>
 &ensp;
 
 ### <a name="task1"></a>Task 1 - Cross section plotting
@@ -130,7 +132,9 @@ The plot produced should look similar to the plot shown below. As you can see li
 - Understand that lithium enrichment increases tritium production from low energy neutrons.
 
 &ensp; 
-## --------------------------------------------------------------------------------------------------------------
+<p align="center"><b>
+------------------------------------------------------------------------------------------
+</b></p>
 &ensp; 
 
 ### <a name="task2"></a>Task 2 - Building and visualizing the model geometry.
@@ -151,8 +155,7 @@ There are two methods for producing 2D slice views of model geometries. This can
 
 Views of the model geometry from XY, YZ and XZ planes should appear one after the other.
 
-<img src="tasks/task_2/images/xy_sphere.png" height="210">
-<p align="center"></p>
+<p align="center"<img src="tasks/task_2/images/xy_sphere.png" height="210"></p>
 
 As the geometry is a spherical shell centred at the origin, its views in each plane are identical.
 
@@ -201,7 +204,9 @@ Paraview should load up when the script completes. To make the geometry visible 
 - Visualizion of models using 3D cube geometry.
 
 &ensp; 
-## --------------------------------------------------------------------------------------------------------------
+<p align="center"><b>
+------------------------------------------------------------------------------------------
+</b></p>
 &ensp; 
 
 ### <a name="task3"></a>Task 3 - Visualizing neutron tracks
@@ -263,11 +268,13 @@ Looking at the tracks can you tell which material is water and which is zirconiu
 
 **Learning Outcomes**
 
-- How to access information on the particle positions, energy and direction from the simulation
-- How to visulise particle tracks through the geometry
+- How to access information on the particle positions, energy and direction from the simulation.
+- How to visualise particle tracks through the geometry.
 
 &ensp; 
-## --------------------------------------------------------------------------------------------------------------
+<p align="center"><b>
+------------------------------------------------------------------------------------------
+</b></p>
 &ensp; 
 
 ### <a name="task4"></a>Task 4 - Finding neutron interactions with mesh tallies
@@ -317,10 +324,12 @@ This should produce a 3D view of the mesh tally similar to the plots shown below
 **Learning Outcomes**
 
 - How mesh tallies can be used in neutronics simulations to measure a variety of different reactions such as neutron absorption, tritium production and flux. 
-- How neutron are dissipated around the reactor
+- How neutrons are dissipated around the reactor.
 
 &ensp; 
-## --------------------------------------------------------------------------------------------------------------
+<p align="center"><b>
+------------------------------------------------------------------------------------------
+</b></p>
 &ensp; 
 
 ### <a name="task5"></a>Task 5 - Finding the neutron and photon spectra
@@ -345,21 +354,22 @@ The task now starts to look at secondary photons created from neutron interactio
 
 Try opening the example script ```coder 2_example_photon_spectra_tokamak.py``` script to see how the photon spectra is obtained for the breeder blanket cell and photon transport is enabled.
 
-Try running the script to plot the photon spectra within the breeder blanket. ```python 2_example_photon_spectra_tokamak.py``` . Why do you think the photons generated are of lower energy.
+Try running the script to plot the photon spectra within the breeder blanket. ```python 2_example_photon_spectra_tokamak.py```. The output should look similar to the plot shown below.
 
-The plot should look similar to the plot below.
+Why do you think the photons generated are of lower energy?
 
 <p align="center"><img src="tasks/task_5/images/2_example_photon_spectra_tokamak.png" height="500"></p>
 
 **Learning Outcomes**
 
-**Overall, 
 - Plotting neutron / photon spectra and observing the changing neutron energy at different locations in the reactor.
 - Performing coupled neutron photon simulations where photon are created from neutron interations.
 
 
 &ensp; 
-## --------------------------------------------------------------------------------------------------------------
+<p align="center"><b>
+------------------------------------------------------------------------------------------
+</b></p>
 &ensp; 
 
 ### <a name="task6"></a>Task 6 - Finding the tritium production
@@ -406,7 +416,9 @@ The script should produce a plot of TBR as a function of Li6 enrichment, as show
 - Improving the uncertainty on the result is possible with more computation
 
 &ensp; 
-## --------------------------------------------------------------------------------------------------------------
+<p align="center"><b>
+------------------------------------------------------------------------------------------
+</b></p>
 &ensp; 
 
 ### <a name="task7"></a>Task 7 - Finding the neutron damage
@@ -438,7 +450,9 @@ Open the ```find_dpa.py``` script to see how DPA is tallied in the shield around
 **Overall, Task 7 has shown how DPA can be tallied using OpenMC.**
 
 &ensp; 
-## --------------------------------------------------------------------------------------------------------------
+<p align="center"><b>
+------------------------------------------------------------------------------------------
+</b></p>
 &ensp; 
 
 ### <a name="task8"></a>Task 8 - Survey breeder blanket designs for tritium production
@@ -482,7 +496,9 @@ For 200 simulations, the 2D plots should look similar to the plots below.
 **Overall, Task 8 has shown how simulations can be performed to measure the impact of varying different model variables by measuring tallies. For example, TBR was tallied as a function of blanket thickness and enrichment. The same principle can be applied to any tally and any model parameter.**
 
 &ensp; 
-## --------------------------------------------------------------------------------------------------------------
+<p align="center"><b>
+------------------------------------------------------------------------------------------
+</b></p>
 &ensp; 
 
 ### <a name="task9"></a>Task 9 - Optimize a breeder blanket for tritium production
@@ -520,7 +536,9 @@ The output .gif shows how Halton sampling is initially used to perform simulatio
 **Overall, Task 9 has shown how Halton Sampling can be used to perform non-biased simulations over a parameter space of interest, from which Gaussian interpolation can be used to performed informed simulations. This demonstrates a method of performing highly optimised neutronics simulations.**
 
 &ensp; 
-## --------------------------------------------------------------------------------------------------------------
+<p align="center"><b>
+------------------------------------------------------------------------------------------
+</b></p>
 &ensp; 
 
 ### <a name="task10"></a>Task 10 - Using CAD geometry
