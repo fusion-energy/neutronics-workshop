@@ -150,4 +150,9 @@ fig.update_layout(
 )
 
 fig.write_html("tokamak_spectra.html")
+try:
+      fig.write_html("/my_openmc_workshop/tokamak_spectra.html")
+except NotADirectoryError:
+      pass
+
 fig.show()
