@@ -5,7 +5,7 @@
 __author__      = "Jonathan Shimwell"
 
 import openmc
-from plotly.offline import plot
+import plotly.graph_objects as go
 from plotly.figure_factory import create_quiver
 
 #MATERIALS#
@@ -59,9 +59,11 @@ sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 print('birth location of first neutron =',sp.source['r'][0]) # these neutrons are all created
 print('direction of first neutron =',sp.source['u'][0]) # these neutrons are all created
 
+# plot the neutron birth locations and trajectory using a cone plot
 
-# plot the neutron birth locations and trajectory using a cone plot 
-traces =[{
+fig_directions = go.Figure()
+
+fig_directions.add_trace({
     'type': 'cone',
     'cauto' : False,
     'x':sp.source['r']['x'],
@@ -77,13 +79,15 @@ traces =[{
     "sizemode":"absolute",
     "sizeref":30,
     "showscale":False,
-    }]
+})
 
+fig_directions.update_layout(title = 'Neutron initial directions coloured by direction',
+                                hovermode = 'closest')
 
-layout = {'title':'Neutron initial directions coloured by direction',
-        'hovermode':'closest'}
+fig_directions.write_html("3d_plot_cones.html")
+try:
+    fig_directions.write_html("/my_openmc_workshop/3d_plot_cones.html")
+except FileNotFoundError:
+    pass
 
-plot({'data':traces,
-    'layout':layout},
-    filename='3d_plot_cones.html')
-
+fig_directions.show()

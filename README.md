@@ -192,10 +192,8 @@ Paraview should load up when the script completes. To make the geometry visible 
 
 - Try using the threshold operation to remove the vacuum cell. Set the threshold to 0 then click the "Apply" button.
 
-**Paraview Video Tutorial**
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
-" target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="400" /></a>
+<p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
+" target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="400" /></a></p>
 
 **Learning Outcomes**
 
@@ -261,10 +259,8 @@ Use Paraview to load the geometry file and then open the track files (.vtp files
 
 Looking at the tracks can you tell which material is water and which is zirconium?
 
-**Paraview Video Tutorial**
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=uHTXw6Dza-Y
-" target="_blank"><img src="tasks/task_3/images/task3thumbnail.png" height="400" /></a>
+<p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=uHTXw6Dza-Y
+" target="_blank"><img src="tasks/task_3/images/task3thumbnail.png" height="400" /></a></p>
 
 **Learning Outcomes**
 
@@ -315,10 +311,8 @@ This should produce a 3D view of the mesh tally similar to the plots shown below
 
 <p align="center"><i>Left = Tritium production, Right = Neutron absorption</i></p>
 
-**Paraview Video Tutorial**
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=be3G3ceQSWU
-" target="_blank"><img src="tasks/task_4/images/task4thumbnail.png" height="400" /></a>
+<p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=be3G3ceQSWU
+" target="_blank"><img src="tasks/task_4/images/task4thumbnail.png" height="400" /></a></p>
 
 
 **Learning Outcomes**
@@ -338,7 +332,7 @@ Google Colab Link: [Task_5](https://colab.research.google.com/drive/1piuEmG09E9k
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/18).
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/17).
 
 In this task the neutron spectra at two different locations will be measured and visualized. OpenMC has several energy group structures such as VITAMIN-J-175 and [others](https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py) built in which makes the energy grid easy to define.
 
@@ -378,7 +372,7 @@ Google Colab Link: [Task_6](https://colab.research.google.com/drive/188lPNZP_3cl
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/19).
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/18).
 
 In this task you will find the tritium breeding ratio (TBR) for a single tokamak model using the ```1_example_tritium_production.py``` script. You will then find TBR values for several tokamak models with a range of different Li6 enrichment values using the ```1_example_tritium_production_study.py``` script.
 
@@ -406,8 +400,6 @@ The script should produce a plot of TBR as a function of Li6 enrichment, as show
 
 <p align="center"><img src="tasks/task_6/images/tbr_study.png" height="500"></p>
 
-
-
 **Learning Outcomes**
 
 - Finding TBR with OpenMC
@@ -427,7 +419,7 @@ Google Colab Link: [Task_7](https://colab.research.google.com/drive/1wH1Y4I2UHew
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/20).
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/19).
 
 Displacements per atom or DPA is one measure of damage within materials exposed to neutron irradiation. DPA can be tallied in OpenMC with MT reaction number 444.
 
@@ -507,7 +499,7 @@ Google Colab Link: [Task_9](https://colab.research.google.com/drive/1Zak3lrQH6x2
 
 Please allow 25 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/22).
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/21).
 
 The previous task sampled from the available parameters and used a brute force method of finding the optimal blanket composition. This task uses Gaussian processing to home in on the optimal solution and steer the sampling.
 
@@ -547,7 +539,7 @@ The output .gif shows how Halton sampling is initially used to perform simulatio
 
 Please allow 30 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/23).
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/22).
 
 Constructive solid geometry (CSG) has been used in all the previous tasks. This task demonstrates the use of CAD geometry usage within openmc.
 
@@ -567,10 +559,8 @@ The geometry can be viewed in FreeCAD. Open up FreeCAD by typing ```freecad``` i
 
 Once loaded select file open and select blanket.stp, firstwall.stp and poloidal_magnets.stp. This should show the 3D model within the FreeCAD viewer. A tutorial of this is provided below.
 
-**FreeCAD Video Tutorial**
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=pyZXQg0AsJ4
-" target="_blank"><img src="tasks/task_10/images/task10thumbnail.png" height="400" /></a>
+<p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=pyZXQg0AsJ4
+" target="_blank"><img src="tasks/task_10/images/task10thumbnail.png" height="400" /></a></p>
 
 If you have Trelis or Cubit installed (they can't be included on this Docker image) then try creating the DAGMC neutronics geometry using the command ```trelis make_faceted_geometry_with_materials```.
 

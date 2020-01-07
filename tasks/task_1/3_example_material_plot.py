@@ -56,5 +56,11 @@ fig.update_layout(
       yaxis = {'title':'Macroscopic Cross Section (1/cm)', 'type':'log'}
 )
 
-fig.show()
+
 fig.write_html("3_example_material_plot.html")
+try:
+      fig.write_html("/my_openmc_workshop/3_example_material_plot.html")
+except FileNotFoundError:
+      pass
+
+fig.show()
