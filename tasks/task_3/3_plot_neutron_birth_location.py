@@ -72,4 +72,9 @@ fig_coords.add_trace(go.Scatter3d(x=sp.source['r']['x'],
 fig_coords.update_layout(title = 'Neutron production coordinates, coloured by energy')
 
 fig_coords.write_html("particle_location.html")
+try:
+  fig_coords.write_html("/my_openmc_workshop/particle_location.html")
+except FileNotFoundError:
+  pass
+  
 fig_coords.show()

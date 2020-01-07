@@ -82,4 +82,5 @@ openmc.plot_geometry()
 
 # this converts the h5 file to a vti
 os.system('openmc-voxel-to-vtk plot_3d_tokamak.h5 -o plot_3d_tokamak.vti')
+os.system('cp plot_3d_tokamak.vti /my_openmc_workshop')
 os.system('paraview plot_3d_tokamak.vti')  # or visit might work better

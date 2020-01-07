@@ -63,3 +63,7 @@ plt.show(universe.plot(width=(1500,1500),basis='yz'))
 universe.plot(width=(1500,1500),basis='xz').get_figure().savefig('xz_tokamak.png')
 universe.plot(width=(1500,1500),basis='xy').get_figure().savefig('xy_tokamak.png')
 universe.plot(width=(1500,1500),basis='yz').get_figure().savefig('yz_tokamak.png')
+
+os.system('cp xz_tokamak.png /my_openmc_workshop')
+os.system('cp xy_tokamak.png /my_openmc_workshop')
+os.system('cp yz_tokamak.png /my_openmc_workshop')
