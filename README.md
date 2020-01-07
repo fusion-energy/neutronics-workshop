@@ -185,7 +185,7 @@ The next script shows how a simple geometry can be viewed in 3D using paraview. 
 
 ```python 4_example_geometry_viewer_3d_tokamak.py```
 
-Paraview should load up when the script completes. To make the geometry visible click the "Apply" button and also the small eyeball icon on the left hand side. Then select "id" and "surface" in the dropdown menus to view the geometry. The threshold and slice operations can then be used to view specific parts of the geometry. (More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14/1). A video tutorial is also provided below).
+Paraview should load up when the script completes. To make the geometry visible click the "Apply" button and also the small eyeball icon on the left hand side. Then select "id" and "surface" in the dropdown menus to view the geometry. The threshold and slice operations can then be used to view specific parts of the geometry. **(More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14/1). A video tutorial is also provided below).**
 
 - Try using the threshold operation to remove the vacuum cell. Set the threshold to 0 then click the "Apply" button.
 
@@ -252,7 +252,7 @@ OpenMC is also able to track particles as they pass through model geometries. Op
 
 - Try running ```python 6_example_neutron_tracks.py``` which simulates neutron movement through the geometry and produces particle h5 files from which neutron tracks can be visualised with the geometry. 
 
-Use Paraview to load the geometry file and then open the track files (.vtp files). Parview can also be used to slice (slice this model on the z plane) and threshold the geometry. More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15/4).
+Use Paraview to load the geometry file and then open the track files (.vtp files). Parview can also be used to slice (slice this model on the z plane) and threshold the geometry. **More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15/4) and also in the video tutorial below.**
 
 Looking at the tracks can you tell which material is water and which is zirconium?
 
@@ -292,14 +292,17 @@ You should see plots of the simple sphere geometry and the isotropic point sourc
 
 - Try changing the "flux" tally to an "absorption" tally and re-run the simulation.
 
-
 The next example script is the ```2_example_neutron_flux_tokamak.py``` file which measures tritium production on a mesh in a simple tokamak geometry. 
 
-The model still has a point source but now it is located at x=150 y=150 z=0. The tritium production mesh tally is now 3D and is displayed in 3D using paraview. Use the log scale within Paraview to show the tiritum production more clearnly.
+The model still has a point source but now it is located at x=150 y=150 z=0. The tritium production mesh tally is now 3D and is displayed in 3D using paraview.
 
-- Try running the script with the following command ```python 2_example_neutron_flux_tokamak.py```
+- Try running the script with the following command ```python 2_example_neutron_flux_tokamak.py``` and use the log scale within Paraview to show the tritium production more clearly.
 
 - Try changing the mesh tally from (n,Xt) to absorption to see the impact of the center column.
+
+**Note. More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/16/1), and in the video tutorial provided below**
+
+This should produce a 3D view of the mesh tally similar to the plots shown below.
 
 <p align="center"><img src="tasks/task_4/images/tritium_production_tokamak.png" height="300">   <img src="tasks/task_4/images/absorption_on_mesh.png" height="300"></p>
 
