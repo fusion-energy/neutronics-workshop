@@ -155,7 +155,7 @@ There are two methods for producing 2D slice views of model geometries. This can
 
 Views of the model geometry from XY, YZ and XZ planes should appear one after the other.
 
-<p align="center"<img src="tasks/task_2/images/xy_sphere.png" height="210"></p>
+<p align="center"><img src="tasks/task_2/images/xy_sphere.png" height="210"></p>
 
 As the geometry is a spherical shell centred at the origin, its views in each plane are identical.
 
