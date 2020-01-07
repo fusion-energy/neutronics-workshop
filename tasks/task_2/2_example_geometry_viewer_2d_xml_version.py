@@ -47,4 +47,6 @@ plots.export_to_xml()
 openmc.plot_geometry()
 
 os.system('convert plot.ppm plot.png')
+os.system('cp plot.png /my_openmc_workshop')
+
 os.system('eog plot.png')

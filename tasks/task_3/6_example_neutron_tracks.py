@@ -91,4 +91,6 @@ plots.export_to_xml()
 openmc.plot_geometry()
 
 os.system('openmc-voxel-to-vtk plot_3d.h5 -o plot_3d.vti')
+os.system('cp plot_3d.vti /my_openmc_workshop')
+os.system('cp *.vtp /my_openmc_workshop')
 os.system('paraview plot_3d.vti') # visit might be preffered

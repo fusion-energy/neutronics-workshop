@@ -90,4 +90,9 @@ fig_energy.update_layout(
 
 
 fig_energy.write_html("particle_energy_histogram.html")
+try:
+      fig_energy.write_html("/my_openmc_workshop/particle_energy_histogram.html")
+except FileNotFoundError:
+      pass
+      
 fig_energy.show()

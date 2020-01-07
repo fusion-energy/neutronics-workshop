@@ -3,8 +3,8 @@
 """4_plot_neutron_birth_direction_plasma.py: plots neutron birth direction."""
 
 import openmc
-from plotly.offline import plot
 from plotly.figure_factory import create_quiver
+import plotly.graph_objects as go
 
 import os
 import numpy as np
@@ -55,8 +55,10 @@ sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
 print('direction of first neutron =',sp.source['u'][0]) # these neutrons are all created
 
+fig_directions = go.Figure()
+
 # plot the neutron birth locations and trajectory
-traces =[{
+fig_directions.add_trace({
     'type': 'cone',
     'cauto' : False,
     'x':sp.source['r']['x'],
@@ -72,13 +74,17 @@ traces =[{
     "sizemode":"absolute",
     "sizeref":3,
     "showscale":False,
-    }]
+})
 
-layout = {'title':'Neutron initial directions coloured by direction',
-        'hovermode':'closest'}
+fig_directions.update_layout(title = 'Neutron initial directions coloured by direction', 
+                                hovermode = 'closest')
 
-plot({'data':traces,
-    'layout':layout},
-    filename='plasma_particle_direction.html')
 
+fig_directions.write_html("plasma_particle_direction.html")
+try:
+    fig_directions.write_html("/my_openmc_workshop/plasma_particle_direction.html")
+except FileNotFoundError:
+    pass
+
+fig_directions.show()
 

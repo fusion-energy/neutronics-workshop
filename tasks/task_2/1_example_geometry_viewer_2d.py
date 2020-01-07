@@ -2,6 +2,7 @@
 
 """1_example_geometry_viewer_2d.py: plots few 2D views of a simple geometry ."""
 
+import os
 import openmc
 import matplotlib.pyplot as plt
 
@@ -51,5 +52,9 @@ plt.show(universe.plot(width=(1200,1200),basis='yz',colors={cell_1: 'blue'}))
 universe.plot(width=(1200,1200),basis='xz',colors={cell_1: 'blue'}).get_figure().savefig('xz_sphere.png')
 universe.plot(width=(1200,1200),basis='xy',colors={cell_1: 'blue'}).get_figure().savefig('xy_sphere.png')
 universe.plot(width=(1200,1200),basis='yz',colors={cell_1: 'blue'}).get_figure().savefig('yz_sphere.png')
+
+os.system('cp xz_sphere.png /my_openmc_workshop')
+os.system('cp xy_sphere.png /my_openmc_workshop')
+os.system('cp yz_sphere.png /my_openmc_workshop')
 
 geom = openmc.Geometry(universe)
