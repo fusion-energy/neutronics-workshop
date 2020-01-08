@@ -114,7 +114,7 @@ def make_materials_geometry_tallies(batches,enrichment_fraction,inner_radius,thi
     # define filters
     cell_filter_breeder = openmc.CellFilter(breeder_blanket_cell)
     cell_filter_vessel = openmc.CellFilter(vessel_cell)
-    particle_filter = openmc.ParticleFilter([1]) #1 is neutron, 2 is photon
+    particle_filter = openmc.ParticleFilter('neutron')
     surface_filter_rear_blanket = openmc.SurfaceFilter(breeder_blanket_outer_surface)
     surface_filter_rear_vessel = openmc.SurfaceFilter(vessel_outer_surface)
     energy_bins = openmc.mgxs.GROUP_STRUCTURES['VITAMIN-J-175']
