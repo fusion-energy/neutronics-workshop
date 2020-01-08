@@ -5,8 +5,9 @@
 __author__      = "Jonathan Shimwell"
 
 
-from plotly.offline import download_plotlyjs, plot
-from plotly.graph_objs import Scatter, Layout
+# from plotly.offline import download_plotlyjs, plot
+# from plotly.graph_objs import Scatter, Layout
+import plotly.graph_objects as go
 import json
 import pandas as pd
 from pandas.io.json import json_normalize 
@@ -57,7 +58,7 @@ for tally_name in ['TBR']: #other tallies such as DPA or leakage can be added he
 
                   
                   
-                  traces[x_axis_name].append(Scatter(x=df_filtered_by_mat[x_axis_name], 
+                  traces[x_axis_name].append(go.Scatter(x=df_filtered_by_mat[x_axis_name], 
                                           y= tally,
                                           mode = 'markers',
                                           hoverinfo='text' ,
@@ -66,16 +67,26 @@ for tally_name in ['TBR']: #other tallies such as DPA or leakage can be added he
                                           error_y= {'array':tally_std_dev},
                                           )
                                     )
+      fig = go.Figure()
       # if len(text_value)>0:
       for x_axis_name in ['enrichment_fraction','thickness']:
 
-            layout_ef = {'title':tally_name+' and '+x_axis_name,
-                        'hovermode':'closest',
-                  'xaxis':{'title':x_axis_name},
-                  'yaxis':{'title':tally_name},
-                  }
-            plot({'data':traces[x_axis_name],
-                  'layout':layout_ef},
-                  filename=tally_name+'_vs_'+x_axis_name+'.html'
-                  )
+            fig.update_layout(
+                  title = tally_name+' and '+x_axis_name,
+                  hovermode = 'closest',
+                  xaxis = {'title':x_axis_name},
+                  yaxis = {'title':tally_name}
+            )
+
+            for trace in traces[x_axis_name]:
+                  fig.add_trace(trace)
+
+            fig.write_html(tally_name+'_vs_'+x_axis_name+'.html')
+            try:
+                  fig.write_html('/my_openmc_workshop/'+tally_name+'_vs_'+x_axis_name+'.html')
+            except NotADirectoryError:
+                  pass
+
+            fig.show()
+
 

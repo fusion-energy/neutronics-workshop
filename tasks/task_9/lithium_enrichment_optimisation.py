@@ -313,6 +313,8 @@ os.system('convert *.png output.gif')
 
 os.system('eog -f output.gif')
 
+os.system('cp output.gif /my_openmc_workshop')
+
 
 
 with open('simulation_results.json', 'w') as file_object:
