@@ -84,9 +84,9 @@ fig_directions.add_trace({
 fig_directions.update_layout(title = 'Neutron initial directions coloured by direction',
                                 hovermode = 'closest')
 
-fig_directions.write_html("3d_plot_cones.html")
+fig_directions.write_html("particle_direction.html")
 try:
-    fig_directions.write_html("/my_openmc_workshop/3d_plot_cones.html")
+    fig_directions.write_html("/my_openmc_workshop/particle_direction.html")
 except FileNotFoundError:
     pass
 
