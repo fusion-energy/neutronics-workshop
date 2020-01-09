@@ -5,7 +5,8 @@
 __author__      = "Jonathan Shimwell"
 
 import openmc
-
+import json
+import os
 
 #MATERIALS#
 
@@ -84,5 +85,12 @@ df = tbr_tally.get_pandas_dataframe()
 
 tbr_tally_result = df['mean'].sum()
 
+# print result
 print('The tritium breeding ratio was found, TBR = ',tbr_tally_result)
+
+# output result in json file
+json_output = {'TBR' : tbr_tally_result}
+with open('cad_simulation_results.json', 'w') as file_object:
+    json.dump(json_output, file_object, indent=2)
+os.system('cp cad_simulation_results.json /my_openmc_workshop')
 
