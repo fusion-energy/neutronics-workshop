@@ -168,11 +168,11 @@ class test_task_3(unittest.TestCase):
         
 
 
-class test_task_4(unittest.TestCase):   # this test currently fails until the output has been sorted
+class test_task_4(unittest.TestCase):
     def test_task_4_part_1(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_3'))
+        os.chdir(Path('tasks/task_4'))
         output_filenames = ['universe_plot.png', 'flux_plot.png']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
@@ -222,10 +222,105 @@ class test_task_6(unittest.TestCase):
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_6'))
+        output_filename = 'simulation_results.json'
+        os.system('rm '+output_filename)
+        os.system('python 1_example_tritium_production.py')
+        assert Path(output_filename).exists() == True
+        os.system('rm '+output_filename)
+
+    def test_task_6_part_2(self):
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_6'))
         output_filename = 'tbr_study.html'
         os.system('rm '+output_filename)
         os.system('python 2_example_tritium_production_study.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
-        os.chdir(Path(cwd))
 
+
+
+class test_task_7(unittest.TestCase):
+    def test_task_7_part_1(self):
+        # test calculated volume
+        pass
+
+    def test_task_7_part_2(self):
+        # test calculated volume (part 2)
+        pass
+
+    def test_task_7_part_3(self):
+        # test calculated dpa
+        pass 
+
+
+class test_task_8(unittest.TestCase):
+    def test_task_8_part_1(self):
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_8'))
+        output_filename = 'simulation_rsults.json'
+        os.system('rm '+output_filename)
+        os.system('python simulate_sphere_model.py')
+        assert Path(output_filename).exists() == True
+        os.system('rm '+output_filename)
+
+    def test_task_8_part_2(self):
+        
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_8'))
+        output_filename = 'simulation_rsults.json'
+        os.system('rm '+output_filename)
+        os.system('python simulate_tokamak_model.py')
+        assert Path(output_filename).exists() == True
+        os.system('rm '+output_filename)
+
+    def test_task_8_part_3(self):
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_8'))
+        output_filenames = ['TBR_vs_thickness.html', 'TBR_vs_enrichment_fraction.html']
+        for output_filename in output_filenames:
+            os.system('rm '+output_filename)
+        os.system('python plot_simulation_results_2d')
+        for output_filename in output_filenames:
+            assert Path(output_filename).exists == True
+            os.system('rm '+output_filename)
+
+    def test_task_8_part_4(self):
+        # plot_simulation_results_3d.py
+        # test html images are output (output not actually working yet)
+        pass
+
+
+
+class test_task_9(unittest.TestCase):
+    def test_task_9_part_1(self):
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_9'))
+        output_filenames = ['simulation_results.json', 'output.gif']
+        for output_filename in output_filenames:
+            os.system('rm '+output_filename)
+        os.system('python lithium_enrichment_optimisation.py')
+        for output_filename in output_filenames:
+            assert Path(output_filename).exists() == True
+            os.system('rm '+output_filename)
+
+    def test_task_9_part_2(self):
+        # lithium_enrichment_and_thickness_optimisation.py
+        # test output (output not actually working yet)
+        pass
+
+
+
+class test_task_10(unittest.TestCase):
+    def test_task_10_part_1(self):
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_10'))
+        output_filename = 'cad_simulation_results.json'
+        os.system('rm '+output_filename)
+        os.system('python example_CAD_simulation.py')
+        assert Path(output_filename).exists() == True
+        os.system('rm '+output_filename)
