@@ -139,6 +139,10 @@ RUN git clone https://github.com/makeclean/openmc.git && \
     make && \
     make install
 
+RUN git clone https://github.com/openmc-dev/plotter.git
+
+
+RUN PATH="$PATH:/plotter/"
 RUN PATH="$PATH:/openmc/build/bin/"
 RUN cp /openmc/build/bin/openmc /usr/local/bin
 
