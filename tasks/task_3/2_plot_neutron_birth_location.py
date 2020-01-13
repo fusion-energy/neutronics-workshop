@@ -74,7 +74,7 @@ fig_coords.update_layout(title = 'Neutron production coordinates, coloured by en
 fig_coords.write_html("particle_location.html")
 try:
   fig_coords.write_html("/my_openmc_workshop/particle_location.html")
-except FileNotFoundError:
+except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
   pass
   
 fig_coords.show()
