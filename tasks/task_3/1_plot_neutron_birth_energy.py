@@ -92,7 +92,7 @@ fig_energy.update_layout(
 fig_energy.write_html("particle_energy_histogram.html")
 try:
       fig_energy.write_html("/my_openmc_workshop/particle_energy_histogram.html")
-except FileNotFoundError:
+except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
       pass
       
 fig_energy.show()
