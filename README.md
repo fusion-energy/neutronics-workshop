@@ -223,7 +223,7 @@ The ```1_plot_neutron_birth_energy.py``` file shows you how to access the statep
 
 The script will produce a plot of a mono-energetic energy source of 14 MeV neutrons, as shown below.
 
-<p align="center"><img src="tasks/task_3/images/particle_energy_histogram_monoenergetic.png" height="500"></p>
+<p align="center"><img src="tasks/task_3/images/particle_energy_histogram.png" height="500"></p>
 
 There are actually three different energy distributions available in the ```1_plot_neutron_birth_energy.py``` script (14MeV monenergetic, Watt fission distribution, Muir fusion distribution).
 
@@ -231,23 +231,23 @@ There are actually three different energy distributions available in the ```1_pl
 
 - Try changing the Muir plasma temperature from 20 KeV to 40 KeV.
 
-In the next example the initial neutron birth direction / initial trajectories for a very basic neutron point source is plotted. Again, this information is accessed from the statepoint file.
+In the next example the initial neutron birth locations and neutron trajectories for a very basic neutron point source are plotted. Again, this information is accessed from the statepoint file.
 
-- Try running ```python 2_plot_neutron_birth_direction.py``` to produce a plot of neutron directions, the output should look similar to the plots shown below.
+- Try running ```python 2_plot_neutron_birth_location.py``` to produce a plot of neutron birth  locations, the output should look similar to the plot shown below.
 
-- Try running ```python 3_plot_neutron_birth_location.py``` to produce a plot of neutron locations, the output should look similar to the plots shown below.
+- Try running ```python 3_plot_neutron_birth_direction.py``` to produce a plot of neutron directions, the output should look similar to the plot shown below.
 
-<p align="center"><img src="tasks/task_3/images/3d_scatter_plot.png" height="300"> <img src="tasks/task_3/images/3d_plot_cones.png" height="300"></p>
+<p align="center"><img src="tasks/task_3/images/particle_location.png" height="300"> <img src="tasks/task_3/images/particle_direction.png" height="300"></p>
 
 <p align="center"><i>Left = Neutron birth locations, Right = Neutron initial directions</i></p>
 
-Now open the next example source plotting script ```3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined - you should notice that an external source library is used. The ```source_sampling.so``` file is a precompiled plasma source file containing neutron positions, energies and directions for a given plasma source. This file is in the task_3 directory.
+Now open the next example source plotting script ```4_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined - you should notice that an external source library is used. The ```source_sampling.so``` file is a precompiled plasma source file containing neutron positions, energies and directions for a given plasma source. This file is in the task_3 directory.
 
-- Try running ```python 4_plot_neutron_birth_direction_plasma.py``` to produce a plot of birth neutron direction from a more realistic plasma source. The output should look similar to the plots shown below.
+- Try running ```python 4_plot_neutron_birth_location_plasma.py``` to produce a plot of neutron birth locations for a more realistic plasma source. The output should look similar to the plot shown below.
 
-- Try running ```python 5_plot_neutron_birth_location_plasma.py``` to produce a plot of neutron birth location from a more realistic plasma source. The output should look similar to the plots shown below.
+- Try running ```python 5_plot_neutron_birth_direction_plasma.py``` to produce a plot of birth neutron directions for a more realistic plasma source. The output should look similar to the plot shown below.
 
-<p align="center"><img src="tasks/task_3/images/3d_plasma_scatter.png" height="300"> <img src="tasks/task_3/images/3d_plasma_cones.png" height="300"></p>
+<p align="center"><img src="tasks/task_3/images/plasma_particle_location.png" height="300"> <img src="tasks/task_3/images/plasma_particle_direction.png" height="300"></p>
 
 <p align="center"><i>Left = Neutron birth locations, Right = Neutron initial directions</i></p>
 
