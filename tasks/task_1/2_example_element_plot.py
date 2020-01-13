@@ -92,7 +92,7 @@ fig.update_layout(
 fig.write_html("2_example_element_plot_"+str(Endf_MT_number)+".html")
 try:
     fig.write_html("/my_openmc_workshop/2_example_element_plot_"+str(Endf_MT_number)+".html")
-except FileNotFoundError:
+except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
     pass
     
 fig.show()

@@ -87,7 +87,7 @@ fig_directions.update_layout(title = 'Neutron initial directions coloured by dir
 fig_directions.write_html("particle_direction.html")
 try:
     fig_directions.write_html("/my_openmc_workshop/particle_direction.html")
-except FileNotFoundError:
+except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
     pass
 
 fig_directions.show()
