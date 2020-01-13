@@ -192,6 +192,11 @@ Paraview should load up when the script completes. To make the geometry visible 
 
 - Try using the threshold operation to remove the vacuum cell. Set the threshold to 0 then click the "Apply" button.
 
+OpenMC has a plotter which can also be used for viewing 3D geometry and tallies. This has been preinstalled on the Docker image. To use the OpenMC plotter it must be run from the folder containing the xml files which are created by the Python API. The OpenMC plotter repository has [more details](https://github.com/openmc-dev/plotter) on how to use the application.
+
+- Try running the OpenMC plotter using the ```openmc-plotter``` command and visulise the geometry.
+
+
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
 " target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="400" /></a></p>
 
@@ -314,6 +319,11 @@ This should produce a 3D view of the mesh tally similar to the plots shown below
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=be3G3ceQSWU
 " target="_blank"><img src="tasks/task_4/images/task4thumbnail.png" height="400" /></a></p>
 
+OpenMC has a plotter which was first introduced in task 2 to view geometry can also be used for viewing tallies. 
+
+- Try running the OpenMC plotter using the ```openmc-plotter``` command and visulise the geometry.
+
+- Try visulising the mesh tally within the openmc-plotter by using the menus. Select data -> open statepoint and then select the "tally_on_mesh" tally within the tally dock.
 
 **Learning Outcomes**
 

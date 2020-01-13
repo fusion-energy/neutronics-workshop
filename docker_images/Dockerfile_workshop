@@ -22,7 +22,8 @@ RUN code "$1" --user-data-dir  --install-extension ms-azuretools.vscode-docker
 RUN code "$1" --user-data-dir  --install-extension ms-vscode.sublime-keybindings
 
 #installs FreeCAD
-RUN apt-get install -y software-properties-common 
+RUN apt-get -y update
+RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:freecad-maintainers/freecad-stable
 RUN apt-get update 
 RUN apt-get --yes install freecad 
