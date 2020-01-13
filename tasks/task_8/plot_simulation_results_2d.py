@@ -84,7 +84,7 @@ for tally_name in ['TBR']: #other tallies such as DPA or leakage can be added he
             fig.write_html(tally_name+'_vs_'+x_axis_name+'.html')
             try:
                   fig.write_html('/my_openmc_workshop/'+tally_name+'_vs_'+x_axis_name+'.html')
-            except NotADirectoryError:
+            except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
                   pass
 
             fig.show()
