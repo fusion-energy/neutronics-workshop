@@ -83,8 +83,29 @@ tally = sp.get_tally(name='DPA')
 
 df = tally.get_pandas_dataframe()
 
-tally_result = df['mean'].sum()
-tally_std_dev = df['std. dev.'].sum()
+damage_energy_in_ev = df['mean'].sum()
 
-print('Displacement damage = ',tally_result)
-print('error on the DPA tally is ',tally_std_dev)
+
+print('Damage energy depositied per source neutron = ',damage_energy_in_ev, 'eV\n')
+
+print('Two times the threshold energy of 40eV is needed to displace an atom')
+displacements_per_source_neutron = damage_energy_in_ev / (2*40)
+print('Displacements per source neutron = ', displacements_per_source_neutron, '\n')
+
+print('Assuming about 80% remains after 20% recombine to original lattice locations')
+displacements_per_source_neutron_with_recombination = displacements_per_source_neutron*0.8
+print('Displacements per source neutron after recombination = ', displacements_per_source_neutron_with_recombination, '\n')
+
+fusion_power = 3e9 # units GW
+energy_per_fusion_reaction = 17.6e6 # units eV
+eV_to_Joules = 1.60218e-19 # multiplication factor to convert eV to Joules
+number_of_neutrons_per_second = fusion_power/ (energy_per_fusion_reaction*eV_to_Joules)
+print('Number of neutrons per second', number_of_neutrons_per_second, '\n')
+
+number_of_neutrons_per_year = number_of_neutrons_per_second * 60*60*24*365.25
+print('Number of neutrons per full power year ', number_of_neutrons_per_year)
+
+displacements_for_all_atoms = number_of_neutrons_per_year * displacements_per_source_neutron_with_recombination
+print('displacements for all atoms in the volume ', displacements_for_all_atoms, '\n')
+
+print('Now the number of atoms in the volume must be found to find displacements per atom (DPA)')
