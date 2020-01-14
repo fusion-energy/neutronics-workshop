@@ -5,12 +5,11 @@
 __author__      = "Jonathan Shimwell"
 
 
-from plotly.offline import download_plotlyjs, plot
-from plotly.graph_objs import Scatter3d, Layout, Scatter
 import json
 import pandas as pd
 from pandas.io.json import json_normalize 
 import numpy as np
+import plotly.graph_objects as go
 
 with open('simulation_results.json') as f:
     results = json.load(f)
@@ -23,7 +22,7 @@ results_df = json_normalize(data=results)
 
 all_materials = ['F2Li2BeF2','Li','Pb84.2Li15.8','Li4SiO4']
 
-
+'TBR with'
 
 for tally_name in ['TBR']:
     #tally_name_error = tally_name+'_st_dev'
@@ -57,7 +56,7 @@ for tally_name in ['TBR']:
 
         df_filtered_by_mat = results_df[results_df['breeder_material_name']==material_name]
 
-        traces.append(Scatter3d(x=list(df_filtered_by_mat[x_axis_name]), 
+        traces.append(go.Scatter3d(x=list(df_filtered_by_mat[x_axis_name]), 
                                 y=list(df_filtered_by_mat[y_axis_name]),
                                 z=list(df_filtered_by_mat[z_axis_name]),
                                 mode = 'markers',
@@ -68,23 +67,23 @@ for tally_name in ['TBR']:
                                 marker={'color':list(df_filtered_by_mat[tally_name+'.value']),
                                         'colorscale':'Viridis',
                                         'size':2,
-                                        #'colorbar':{'title':tally_name,
-                                        #            'tickvals':np.linspace(start=min(list(df_filtered_by_mat[tally_name+'.value'])),stop=max(list(df_filtered_by_mat[tally_name+'.value'])),num=10)
-                                        #                }
+                                        'colorbar':{'title':tally_name,
+                                                   'tickvals':np.linspace(start=min(list(df_filtered_by_mat[tally_name+'.value'])),stop=max(list(df_filtered_by_mat[tally_name+'.value'])),num=10)
+                                                       }
                                         }
         ))
+
+    fig = go.Figure()
+
+    fig.update_layout(
+        title = 'Select a breeder material:',
+        hovermode = 'closest',
+        scene = {'xaxis':{'title':" ".join(x_axis_name.title().split('_'))},
+                 'yaxis':{'title':" ".join(y_axis_name.title().split('_'))},
+                 'zaxis':{'title':" ".join(z_axis_name.title().split('_'))}
+                 }
+    )
                     
-
-
-
-    layout = {'title':'Select a material',
-            'hovermode':'closest',
-            'scene':{'xaxis':{'title':" ".join(x_axis_name.title().split('_'))},
-                    'yaxis':{'title':" ".join(y_axis_name.title().split('_'))},
-                    'zaxis':{'title':" ".join(z_axis_name.title().split('_'))}
-            }
-            }
-
 
     buttons_list_of_dicts = []
 
@@ -112,20 +111,27 @@ for tally_name in ['TBR']:
             direction = 'down',
             pad = {'r': 10, 't': 10},
             showactive = True,
-            x = 0.1,
+            x = 0.14,
             xanchor = 'left',
             y = 1.1,
             yanchor = 'top' 
         ),
     ])
 
-    annotations = list([
-        dict(text='Breeder material:', x=0, y=1.085, yref='paper', align='left', showarrow=False)
-    ])
-    layout['updatemenus'] = updatemenus
-    layout['annotations'] = annotations
+    # annotations = list([
+    #     dict(text='Breeder material:', x=0, y=3, yref='paper', align='left', showarrow=False)
+    # ])
+    fig.update_layout(updatemenus=updatemenus)
+                    #   annotations=annotations)
 
+    for trace in traces:
+        fig.add_trace(trace)
 
-    plot({'data':traces,
-        'layout':layout},
-        filename=tally_name+'_for_different_materials.html')
+    fig.write_html(tally_name+'_for_different_materials.html')
+    try:
+        fig.write_html('/my_openmc_workshop/'+tally_name+'_for_different_materials.html')
+    except (FileNotFoundError, NotADirectoryError):
+        pass
+
+    fig.show()
+
