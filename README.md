@@ -421,21 +421,20 @@ Please allow 15 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/19).
 
-Displacements per atom or DPA is one measure of damage within materials exposed to neutron irradiation. DPA can be tallied in OpenMC with MT reaction number 444.
+Displacements per atom (DPA) is one measure of damage within materials exposed to neutron irradiation. DPA can be tallied in OpenMC with MT reaction number 444.
 
-In the case of DPA a tally multiplier is needed to account for the material and recombination effects. For example different atoms require different amounts of energy to [displace](https://fispact.ukaea.uk/wiki/Output_interpretation#DPA_and_KERMA). Without going into detail assume this is already incorporated into the tally result. The only multiplier needed is to multiply the result by the source intensity (in neutrons per second) and the irradiation duration (in seconds).
+In the case of DPA a neutronics along can't calculate the value and material science techniques are needed to account for the material and recombination effects. For example after a displacement there is a chance that the atom relocates to it's original latic position (recombination) and different atoms require different amounts of energy to [displace](https://fispact.ukaea.uk/wiki/Output_interpretation#DPA_and_KERMA). The DPA tally from neutronics is therefore overestimating the true DPA. However for this task we can calculate a quanity and see how it varies for different components. The resulting DPA tally is in units of per source particle. Therefore the result needs scaling by the source intensity (in neutrons per second) and the irradiation duration (in seconds) and the number of atoms in the volume.
 
-- Find the number of neutrons emitted over a 5 year period assuming 80% availability for a 3GW (fusion energy) reactor. Recall that each reaction emmits 17.6MeV of energy. 
+- Find the number of displacements per source neutron using the example script ```python 1_find_dpa.py```
 
-- Find the volume of the Eurofer firstwall
+- Find the number of neutrons emitted over a 5 year period assuming 80% availability for a 3GW (fusion energy) reactor. Recall that each reaction emmits 17.6MeV of energy and that 1MeV = 1.60218e-13 Joules. 
 
-- Find the number of atoms in the Eurofer firstwall
+- Find the volume of the iron firstwall using the python script ```python 2_find_cell_volume.py```
 
-- Find the number of displacements (from the find_dpa script)
+- Calculate the number of atoms in the iron firstwall (hint density is within the scripts and mass of iron atom is 55.845 u where u is 1.66054e-24 grams)
 
-- Using this information find the DPA on the first wall for a 2GW (fusion power) reactor over a 5 year period. Does this exceed the Eurofer DPA limit of 70 DPA?
+- Using this information find the DPA on the first wall for a 3GW (fusion energy) reactor over a 5 year period. Does this exceed the Eurofer DPA limit of 70 DPA?
 
-Open the ```find_dpa.py``` script to see how DPA is tallied in the shield around the centre solenoid in the tokamak model. Running this script should output DPA and its associated error.
 
 **Learning Outcomes**
 
