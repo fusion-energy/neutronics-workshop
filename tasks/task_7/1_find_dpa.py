@@ -1,24 +1,21 @@
 #!/usr/bin/env python3
 
-"""example_isotope_plot.py: plots few 2D views of a simple tokamak geometry with neutron flux."""
-
-__author__      = "Jonathan Shimwell"
+"""1_find_dpa.py: Calculates the neutron damage via a 444 MT reaction tally."""
 
 import openmc
-import matplotlib.pyplot as plt
-import os
+
 
 #MATERIALS#
-
-breeder_material = openmc.Material(1, "Lithium") 
-breeder_material.set_density('g/cm3', 2.)
-breeder_material.add_element('Li', 1., 'ao')
 
 firstwall_material = openmc.Material(name='Iron')
 firstwall_material.set_density('g/cm3', 7.75)
 firstwall_material.add_element('Fe', 1., percent_type='wo')
 
-mats = openmc.Materials([breeder_material, firstwall_material])
+breeder_material = openmc.Material(name="Lithium") 
+breeder_material.set_density('g/cm3', 2.)
+breeder_material.add_element('Li', 1., 'ao')
+
+mats = openmc.Materials([firstwall_material, breeder_material])
 
 
 #GEOMETRY#
@@ -46,20 +43,19 @@ geom = openmc.Geometry(universe)
 
 
 
-
 #SIMULATION SETTINGS#
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-batches = 2
+batches = 10
 sett.batches = batches
 sett.inactive = 0
-sett.particles = 5000
+sett.particles = 10000
 sett.run_mode = 'fixed source'
 
 # Create a DT point source
 source = openmc.Source()
-source.space = openmc.stats.Point((300,0,0))
+source.space = openmc.stats.Point((0,0,0))
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1])
 sett.source = source
@@ -89,7 +85,6 @@ df = tally.get_pandas_dataframe()
 
 tally_result = df['mean'].sum()
 tally_std_dev = df['std. dev.'].sum()
-
 
 print('Displacement damage = ',tally_result)
 print('error on the DPA tally is ',tally_std_dev)
