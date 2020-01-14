@@ -435,10 +435,13 @@ In the case of DPA a neutronics along can't calculate the value and material sci
 
 - Using this information find the DPA on the first wall for a 3GW (fusion energy) reactor over a 5 year period. Does this exceed the Eurofer DPA limit of 70 DPA?
 
+- Assuming this is an inertial confinement fusion reactor model then the distance between the firstwall and the neutron point source could be increased. Try increasing the radius of the model to decrease the DPA to below 70 over the 5 year lifetime.
 
 **Learning Outcomes**
 
-**Overall, Task 7 has shown how DPA can be tallied using OpenMC.**
+- Finding DPA with OpenMC
+- Find the volume of a cell using stochastic volume method
+- Perform post tally calculations to convert the neutronics numbers into something more useful
 
 &ensp; 
 <p align="center"><b>
