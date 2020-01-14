@@ -2,13 +2,13 @@ import openmc
 
 #MATERIALS#
 
-breeder_material = openmc.Material(name="lithium")
-breeder_material.set_density('g/cm3', 8.5)
-breeder_material.add_element('Li', 1.0)
-
 firstwall_material = openmc.Material(name='iron')
 firstwall_material.set_density('g/cm3', 7.75)
 firstwall_material.add_element('Fe', 1., percent_type='wo')
+
+breeder_material = openmc.Material(name="lithium")
+breeder_material.set_density('g/cm3', 8.5)
+breeder_material.add_element('Li', 1.0)
 
 mats = openmc.Materials([breeder_material, firstwall_material])
 mats.export_to_xml()
