@@ -89,7 +89,7 @@ fig.update_layout(
 fig.write_html("1_example_isotope_plot.html")
 try:
     fig.write_html("/my_openmc_workshop/1_example_isotope_plot.html")
-except FileNotFoundError:
+except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
     pass
 
 fig.show()
