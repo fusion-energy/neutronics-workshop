@@ -291,7 +291,7 @@ class test_task_8(unittest.TestCase):
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_8'))
-        output_filename = ['TBR_for_different_materials.html']
+        output_filename = 'TBR_for_different_materials.html'
         os.system('rm '+output_filename)
         os.system('python plot_simulation_results_3d.py')
         assert Path(output_filename).exists() == True
