@@ -483,6 +483,10 @@ For 200 simulations, the 2D plots should look similar to the plots below.
 
 <p align="center"><img src="tasks/task_8/images/TBR_vs_thickness.png" height="500"></p>
 
+For 500 simulations, the 3D plots should look similar to the example plot shown below.
+
+<p align="center"><img src="tasks/task_8/images/TBR_vs_thickness_vs_enrichment_fraction_lithium.png" height="500"></p>
+
 **Learning Outcomes**
 
 - Simulations can be performed iteratively over a parameter space of interest.
