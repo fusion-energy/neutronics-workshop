@@ -46,7 +46,7 @@ material_vol_calc = openmc.VolumeCalculation([firstwall_material, breeder_materi
                                               lower_left, upper_right)
 
 
-cell_vol_calc = openmc.VolumeCalculation([inner_vessel_cell, first_wall_cell, breeder_blanket_cell], 1000000)
+cell_vol_calc = openmc.VolumeCalculation([inner_vessel_cell, first_wall_cell, breeder_blanket_cell], 10000)
 
 settings = openmc.Settings()
 settings.volume_calculations = [cell_vol_calc, material_vol_calc]
@@ -59,10 +59,12 @@ cell_vol_calc_results = openmc.VolumeCalculation.from_hdf5('volume_1.h5')
 # the cell_vol_calc_results are combined with errors, you can access the
 # result using the .nominal_value method
 
+print()
 print('inner_vessel_cell volume', cell_vol_calc_results.volumes[1], 'cm3')
 print('first_wall_cell volume', cell_vol_calc_results.volumes[2], 'cm3')
 print('breeder_blanket_cell volume', cell_vol_calc_results.volumes[3], 'cm3')
 
+print()
 material_vol_calc_results = openmc.VolumeCalculation.from_hdf5('volume_2.h5')
 print('firstwall_material volume', material_vol_calc_results.volumes[1], 'cm3')
 print('breeder_material volume', material_vol_calc_results.volumes[2], 'cm3')
