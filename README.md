@@ -471,9 +471,9 @@ Examine the ```simulate_tokamak_model.py``` file and try to understand how the m
 
 Run the script to perform simulations. There are two scripts to help you analyse the results.
 
-- ```plot_simulation_results_2d.py``` will allow you to see the impact of changing either the Li6 enrichment or the blanket thickness.
+- ```plot_simulation_results_2d.py``` will allow you to see the impact of changing either the Li6 enrichment or the blanket thickness on TBR.
 
-- ```plot_simulation_results_3d.py``` will allow you to see the combined impact of changing the Li6 enrichment and the blanket thickness.
+- ```plot_simulation_results_3d.py``` will allow you to see the combined impact of changing the Li6 enrichment and the blanket thickness on TBR.
 
 Ultimately you should come up with the minimum thickness needed for each candidate blanket material and the Li6 enrichment required at that thickness. Feel free to share simulation data with other groups and interpolate between the data points.
 
@@ -519,17 +519,19 @@ Take a look at the scripts below and try to understand how this works. Also try 
 
 - ```lithium_enrichment_and_thickness_optimisation.py```. Note - This script does not currently work.
 
-Initially, simulations are performed by 'Halton sampling' the parameter space of interest and the results fitted using Gaussian Regression. A further simulation is then performed using the parameters corresponding to max TBR as determined by the Gaussian fit. The simulation results are then fitted again, including this new point, and the process repeated. 
+Initially, simulations are performed by sampling the parameter space of interest (according to the halton sequence) and the results fitted using Gaussian Regression. A further simulation is then performed using the parameters corresponding to max TBR as determined by the Gaussian fit. The simulation results are then fitted again, including this new point, and the process repeated. 
 
-This iterative approach efficiently and accurately determines the point across the parameter space where TBR is maximum.
+This iterative approach efficiently and accurately determines the point in the parameter space where TBR is maximum.
 
-The output .gif shows how Halton sampling is initially used to perform simulations before further simulations are informed by Gaussian interpolation.
+The output .gif shows how halton sampling is used to perform initial simulations before further simulations are informed by Gaussian interpolation.
 
 <p align="center"><img src="tasks/task_9/images/output.gif" height="500"></p>
 
 **Learning Outcomes**
 
-**Overall, Task 9 has shown how Halton Sampling can be used to perform non-biased simulations over a parameter space of interest, from which Gaussian interpolation can be used to performed informed simulations. This demonstrates a method of performing highly optimised neutronics simulations.**
+- Halton sampling allows non-biased simulations to be performed over a parameter space.
+
+- Data fitting can be used to optimise neutronics simulations.
 
 &ensp; 
 <p align="center"><b>
