@@ -96,7 +96,7 @@ universe.plot(width=(200,200),basis='xz').get_figure().savefig('universe_plot.pn
 try:
     fig.imshow(flux_slice.mean).get_figure().savefig('/my_openmc_workshop/flux_plot.png')
     universe.plot(width=(200,200),basis='xz').get_figure().savefig('/my_openmc_workshop/universe_plot.png')
-except NotADirectoryError:
+except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
     pass
 
 

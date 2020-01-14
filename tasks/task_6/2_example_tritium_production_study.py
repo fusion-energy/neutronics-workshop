@@ -136,7 +136,7 @@ fig.update_layout(
 fig.write_html("tbr_study.html")
 try:
     fig.write_html("/my_openmc_workshop/tbr_study.html")
-except NotADirectoryError:
+except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
     pass
 
 fig.show()
