@@ -7,8 +7,9 @@ import openmc
 
 #MATERIALS#
 
+density_of_iron_in_g_per_cm3 = 7.75
 firstwall_material = openmc.Material(name='iron')
-firstwall_material.set_density('g/cm3', 7.75)
+firstwall_material.set_density('g/cm3', density_of_iron_in_g_per_cm3)
 firstwall_material.add_element('Fe', 1., percent_type='wo')
 
 breeder_material = openmc.Material(name="lithium")
@@ -59,16 +60,24 @@ openmc.run()
 
 cell_vol_calc_results = openmc.VolumeCalculation.from_hdf5('volume_1.h5')
 
+
+
+
+print('\ninner_vessel_cell volume', cell_vol_calc_results.volumes[1], 'cm3')
+print('first_wall_cell volume', cell_vol_calc_results.volumes[2], 'cm3')
+print('breeder_blanket_cell volume', cell_vol_calc_results.volumes[3], 'cm3\n')
+
+
+material_vol_calc_results = openmc.VolumeCalculation.from_hdf5('volume_2.h5')
+print('firstwall_material volume', material_vol_calc_results.volumes[1], 'cm3')
+print('breeder_material volume', material_vol_calc_results.volumes[2], 'cm3')
+
 # the cell_vol_calc_results are combined with errors, you can access the
 # result using the .nominal_value method
 
-print()
-print('inner_vessel_cell volume', cell_vol_calc_results.volumes[1].nominal_value, 'cm3')
-print('first_wall_cell volume', cell_vol_calc_results.volumes[2].nominal_value, 'cm3')
-print('breeder_blanket_cell volume', cell_vol_calc_results.volumes[3].nominal_value, 'cm3')
+volume_of_firstwall_cell = cell_vol_calc_results.volumes[2].nominal_value
 
-print()
-material_vol_calc_results = openmc.VolumeCalculation.from_hdf5('volume_2.h5')
-print('firstwall_material volume', material_vol_calc_results.volumes[1].nominal_value, 'cm3')
-print('breeder_material volume', material_vol_calc_results.volumes[2].nominal_value, 'cm3')
+iron_atomic_mass_in_g = 55.845*1.66054E-24 # molar mass multiplier by the atomic mass unit (u)
+number_of_iron_atoms = volume_of_firstwall_cell * density_of_iron_in_g_per_cm3 / (iron_atomic_mass_in_g)
 
+print('Number of iron atoms in the firstwall ',number_of_iron_atoms)
