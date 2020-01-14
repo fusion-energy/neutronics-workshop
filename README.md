@@ -43,7 +43,7 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 - [Task 4 - Finding neutron interactions with mesh tallies - 15 minutes](#task4)
 - [Task 5 - Finding the neutron and photon spectra - 15 minutes](#task5)
 - [Task 6 - Finding the tritium production - 15 minutes](#task6)
-- [Task 7 - Finding the neutron damage - 15 minutes](#task7)
+- [Task 7 - Finding the neutron damage and stochastic volume calculation - 15 minutes](#task7)
 
 ### Optional workshop tasks
 
@@ -441,10 +441,10 @@ The MT 444 / damage energy tally is in units of eV per source particle. Therefor
 
 **Learning Outcomes**
 
-- Finding damage energy deposited with OpenMC 444 tally
-- Find the volume of a cell using stochastic volume method
+- Finding damage energy deposited with the OpenMC MT 444 tally
+- Find the volume of a cell using the stochastic volume method
 - Perform post tally calculations to convert the neutronics numbers into something more useful
-- An appreciation of how neutronics resutls can influence the design (e.g. radius of reactor must be increased to prevent critical material damage)
+- Gain an appreciation of how neutronics results can influence the design (e.g. radius of reactor must be increased to prevent critical material damage)
 
 &ensp; 
 <p align="center"><b>
