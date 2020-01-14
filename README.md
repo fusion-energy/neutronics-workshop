@@ -455,7 +455,7 @@ Google Colab Link: [Task_8](https://colab.research.google.com/drive/1fDOBm2YMojX
 
 Please allow 25 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/21).
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/20).
 
 This task is more open ended - the aim is to find the minimum thickness of breeder material needed to obtain a TBR of 1.2.
 
