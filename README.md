@@ -89,7 +89,7 @@ To add different reactions to the plot we need their ENDF reaction numbers (MT n
 
 - Try adding tritium production (n,Xt) in Li6 and Li7 to the same plot.
 
-The plot should now be similar to the plot below showing fusion relevant interactions. These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
+The plot should now be similar to the plot below, showing fusion relevant interactions (change scale to log log). These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
 
 <p align="center"><img src="tasks/task_1/images/1_example_isotope_plot_2.png" height="500"></p>
 
@@ -115,20 +115,19 @@ A nice feature of OpenMC is that it can plot cross sections for complete materia
 
 - Try running the script and producing the material cross section plot ```python 3_example_material_plot.py```
 
-The plot produced should look similar to the plot shown below. As you can see lithium enrichment only increases tritium prodcution at lower neutron energies.
+The plot produced should look similar to the plot shown below. As you can see lithium enrichment only increases tritium production at lower neutron energies.
 
 <p align="center"><img src="tasks/task_1/images/3_example_material_plot.png" height="500"></p>
 
  - Try editing the script so that other candidate breeder materials are added to the plot. ```coder 3_example_material_plot.py```
 
-**Learning Outcomes Task 1**
+**Learning Outcomes**
 
 - How OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). 
 - Reaction probabilities vary for each isotope depending on the energy of the neutron. 
 - Cross sections can be plotted for specific isotopes, elements and full materials. 
 - Beryllium 9 has the lowest threshold energy for neutron multiplication reactions. 
 - Lithium 6 has the highest probability of producing tritium at low neutron energies.
-- Lithium 6 enrichment has the highest probability of producing tritium at low neutron energies.
 - Understand that lithium enrichment increases tritium production from low energy neutrons.
 
 &ensp; 
@@ -147,7 +146,7 @@ Expected outputs from this task are also in the [presentation](https://slides.co
 
 OpenMC can provide both 2D and 3D visualizations of the Constructive Solid Geometry ([CSG](https://en.wikipedia.org/wiki/Constructive_solid_geometry)) of a model.
 
-There are two methods for producing 2D slice views of model geometries. This can be done via a Python Matplotlib (```1_example_geometry_viewer_2d.py```) or via the production of xml files again with Python (```2_example_geometry_viewer_2d_xml_version.py```). The first option is simpler to understand and use while the second option is slightly faster for complex geometries, we will use the simpler option in this workshop.
+There are two methods for producing 2D slice views of model geometries. This can be done via a Python Matplotlib (```1_example_geometry_viewer_2d.py```) or via the production of xml files, again with Python (```2_example_geometry_viewer_2d_xml_version.py```). The first option is simpler to understand and use while the second option is slightly faster for complex geometries, we will use the simpler option in this workshop.
 
 - Try understanding the example code ```coder 1_example_geometry_viewer_2d.py```
 
