@@ -46,7 +46,7 @@ def make_plot(x_axis_name,y_axis_name, y_axis_error_name):
                               )
 
       fig.update_layout(
-            title = y_axis_name+' vs '+x_axis_name,
+            title = y_axis_name+' vs '+x_axis_name + ', number of simulations = ' +str(len(results_df)),
             hovermode = 'closest',
             xaxis = {'title':x_axis_name},
             yaxis = {'title':y_axis_name}
