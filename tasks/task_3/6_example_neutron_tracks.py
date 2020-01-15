@@ -26,7 +26,7 @@ mats.append(transparent_material)
 
 #GEOMETRY#
 
-sph0 = openmc.Sphere(r=50)
+sph0 = openmc.Sphere(r=400)
 sph1 = openmc.Sphere(r=600, boundary_type = 'vacuum')
 flat_surf = openmc.YPlane(y0=0)
 
@@ -80,7 +80,7 @@ for i in range(1,11):
 
 vox_plot = openmc.Plot()
 vox_plot.type = 'voxel'
-vox_plot.width = (200., 200., 200.)
+vox_plot.width = (1300., 1300., 1300.)
 vox_plot.pixels = (100, 100, 100)
 vox_plot.filename = 'plot_3d'
 vox_plot.color_by = 'material'
@@ -93,4 +93,4 @@ openmc.plot_geometry()
 os.system('openmc-voxel-to-vtk plot_3d.h5 -o plot_3d.vti')
 os.system('cp plot_3d.vti /my_openmc_workshop')
 os.system('cp *.vtp /my_openmc_workshop')
-os.system('paraview plot_3d.vti') # visit might be preffered
+os.system('paraview plot_3d.vti') # visit might be preferred
