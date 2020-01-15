@@ -135,14 +135,14 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
 
 
 
-number_of_simulations = 10 # this value will need to be changed
+number_of_simulations = 20 # this value will need to be changed
 
 for i in tqdm(range(number_of_simulations)):
     breeder_material_name = np.random.choice(['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8'])
     enrichment_fraction = np.random.uniform(0, 1)
     thickness = np.random.uniform(1, 500)
-    result = make_geometry_tallies(batches=2,
-                                   nps=1000,  # this value will need to be increased to decrease error
+    result = make_geometry_tallies(batches=2, # this value can be increased to decrease error
+                                   nps=1000,  
                                    enrichment_fraction=enrichment_fraction,
                                    inner_radius=500,
                                    thickness=thickness,

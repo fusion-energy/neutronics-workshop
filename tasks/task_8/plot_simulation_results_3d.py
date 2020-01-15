@@ -59,7 +59,7 @@ def make_3d_plot(x_axis_name, y_axis_name, z_axis_name):
             ))
 
         fig.update_layout(
-            title = y_axis_name+' vs '+x_axis_name,
+            title = y_axis_name+' vs '+x_axis_name + ', number of simulations = ' +str(len(results_df)),
             hovermode = 'closest',
             scene ={
             'xaxis':{'title':x_axis_name},
