@@ -464,15 +464,11 @@ Expected outputs from this task are in the [presentation](https://slides.com/ope
 
 This task is more open ended - the aim is to find the minimum thickness of breeder material needed to obtain a TBR of 1.2.
 
-There are several candidate breeder materials including a lithium ceramic (Li4SiO4), Flibe, Lithium lead (eutectic) and pure lithium. Each material can have it's Li6 content enriched and this has an impact on the TBR.
+There are several candidate breeder materials including a lithium ceramic (Li4SiO4), Flibe, Lithium lead (eutectic) and pure lithium. Each material can have it's Li6 content enriched and the blanket thickness varied and these have an impact on the TBR.
 
-Examine the ```simulate_tokamak_model.py``` file and try to understand how the model is created and particularly how the simulation parameters are saved in a .json file.
+Examine the ```simulate_tokamak_model.py``` file and try to understand how the model is created and particularly how the simulation parameters are saved in a json file with a unique ID.
 
-- You will need to adjust some of the simulation settings (nps and batches) to make sure that the error on the final TBR values are acceptable.
-
-- Currently the input parameters for Li6 enrichment and blanket thickness are randomly sampled so you might want to change this as well.
-
-- You will also need to change the surface definitions so that the geometry changes as thickness is varied when a new thickness is passed to the geometry making function.
+- Currently the input parameters for Li6 enrichment and blanket thickness are randomly sampled so you might want to change this to speed up the search.
 
 Run the script to perform simulations. There are two scripts to help you analyse the results.
 
@@ -494,7 +490,9 @@ For 500 simulations, the 3D plots should look similar to the example plot shown 
 
 **Learning Outcomes**
 
-- Simulations can be performed iteratively over a parameter space of interest.
+- A simple parameter study that makes use of unique ID's for each simulation.
+- Some candiate breeder materials can meet the TBR requirment with a thinner blanket.
+- Increasing the thickness of blanket or lthium 6 enrichment tend to increase the TBR
 
 &ensp; 
 <p align="center"><b>
