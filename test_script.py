@@ -282,15 +282,20 @@ class test_task_8(unittest.TestCase):
         output_filenames = ['TBR_vs_thickness.html', 'TBR_vs_enrichment_fraction.html']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
-        os.system('python plot_simulation_results_2d')
+        os.system('python plot_simulation_results_2d.py')
         for output_filename in output_filenames:
             assert Path(output_filename).exists == True
             os.system('rm '+output_filename)
 
     def test_task_8_part_4(self):
-        # plot_simulation_results_3d.py
-        # test html images are output (output not actually working yet)
-        pass
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_8'))
+        output_filename = 'TBR_for_different_materials.html'
+        os.system('rm '+output_filename)
+        os.system('python plot_simulation_results_3d.py')
+        assert Path(output_filename).exists() == True
+        os.system('rm '+output_filename)
 
 
 

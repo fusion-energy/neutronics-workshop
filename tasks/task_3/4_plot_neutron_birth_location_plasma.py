@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-"""3_plot_neutron_birth_location.py: plots neutron birth locations."""
+"""5_plot_neutron_birth_location_plasma.py: plots neutron birth locations."""
+
 
 import openmc
 import plotly.graph_objects as go
@@ -29,7 +30,7 @@ sett = openmc.Settings()
 batches = 2
 sett.batches = batches
 sett.inactive = 0
-sett.particles = 1000
+sett.particles = 3000
 sett.particle = "neutron"
 sett.run_mode = 'fixed source'
 
@@ -37,12 +38,11 @@ sett.run_mode = 'fixed source'
 # creates a source object
 source = openmc.Source()
 
-#sets the source poition, direction and energy
-source.space = openmc.stats.Point((0,0,0))
-source.angle = openmc.stats.Isotropic()
-source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0) #neutron energy = 14.08MeV, AMU for D + T = 5, temperature is 20KeV
+#sets the source poition, direction and energy with predefined plasma parameters (see source_sampling.cpp)
+source.library = './source_sampling.so'
 
 sett.source = source
+
 
 # Run OpenMC!
 model = openmc.model.Model(geom, mats, sett)
@@ -64,17 +64,16 @@ fig_coords.add_trace(go.Scatter3d(x=sp.source['r']['x'],
                      hovertext= text,
                      text=text,
                      mode = 'markers',
-                     marker={'size':2,'color':sp.source['E'],},
+                     marker={'size':1.,'color':sp.source['E'],},
                     )
                   )
               
-
 fig_coords.update_layout(title = 'Neutron production coordinates, coloured by energy')
 
-fig_coords.write_html("particle_location.html")
+fig_coords.write_html("plasma_particle_location.html")
 try:
-  fig_coords.write_html("/my_openmc_workshop/particle_location.html")
-except FileNotFoundError:
+  fig_coords.write_html("/my_openmc_workshop/plasma_particle_location.html")
+except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
   pass
   
 fig_coords.show()
