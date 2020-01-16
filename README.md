@@ -12,14 +12,16 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 The installation process consists of two steps.
 
-1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac). Complete the installation including the part where you enable docker use as a non-root user.
+1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac). Complete the installation including the part where you enable docker use as a non-root user. I would recommend using Linux as it comes with a visualization system (X11) built in whereas Windows requires [Xming](https://sourceforge.net/projects/xming/) or [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and Mac requires [XQuartz](https://www.xquartz.org/) to be installed.
 2. Pull the docker image from the store by typing the following command in a terminal window.
 
 ```docker pull openmcworkshop/openmc_nndc_workshop```
 
 ### Running OpenMC with docker
 
-Now that you have the docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands in a terminal window.
+Now that you have the docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands two in a terminal window. 
+
+From the Linux command terminal type ...
 
 ```xhost local:root```
 
