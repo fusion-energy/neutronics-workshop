@@ -166,6 +166,10 @@ Edit the script and try adding a first wall and centre column to the model using
 
 - Try assigning the eurofer material to the first wall.
 
+<p align="center">
+<img src="tasks/task_2/images/eurofer_table.png"> 
+</p>
+
 - Try adding a centre column using a [ZCylinder](https://openmc.readthedocs.io/en/stable/pythonapi/generated/openmc.ZCylinder.html) surface with a 100cm radius. This must also be cut at the top and bottom by the firstwall sphere surface.
 
 - Try creating a material from pure copper and assign it to the centre column.
