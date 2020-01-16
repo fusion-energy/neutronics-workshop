@@ -197,6 +197,11 @@ Paraview should load up when the script completes. To make the geometry visible 
 
 - Try using the threshold operation to remove the vacuum cell. Set the threshold to 0 then click the "Apply" button.
 
+OpenMC has a plotter which can also be used for viewing 3D geometry. This has been preinstalled on the Docker image. To use the OpenMC plotter it must be run from the folder containing the xml files which are created by the Python API. The OpenMC plotter repository has [more details](https://github.com/openmc-dev/plotter) on how to use the application.
+
+- Try running the OpenMC plotter using the ```openmc-plotter``` command and visulise the geometry.
+
+
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
 " target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="400" /></a></p>
 
@@ -321,6 +326,11 @@ This should produce a 3D view of the mesh tally similar to the plots shown below
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=be3G3ceQSWU
 " target="_blank"><img src="tasks/task_4/images/task4thumbnail.png" height="400" /></a></p>
 
+OpenMC has a plotter which was first introduced in task 2 to view geometry can also be used for viewing mesh tallies. 
+
+- Try running the OpenMC plotter using the ```openmc-plotter``` command and visualize the geometry.
+
+- Try visualizing the mesh tally within the openmc-plotter by using the menus. Select data -> open statepoint and then select the "tally_on_mesh" tally within the tally dock.
 
 **Learning Outcomes**
 
@@ -433,6 +443,7 @@ Displacements per atom (DPA) is one measure of damage within materials exposed t
 In the case of DPA a neutronics code alone can't fully calculate the value as material science techniques are needed to account for the material and recombination effects. For example after a displacement there is a chance that the atom relocates to it's original latic position (recombination) and different atoms require different amounts of energy to [displace](https://fispact.ukaea.uk/wiki/Output_interpretation#DPA_and_KERMA). The DPA tally from neutronics is therefore only an estimate of the DPA.
 
 The MT 444 / damage energy tally is in units of eV per source particle. Therefore the result needs scaling by the source intensity (in neutrons per second) and the irradiation duration (in seconds) and the number of atoms in the volume.
+
 
 - Try to understand the post proccessing steps involved in converting a neutronics damage tally into displacements by reading the relevant section at the end of the example script ```coder 1_find_dpa.py```
 
