@@ -8,6 +8,7 @@ RUN pip3 install plotly
 RUN pip3 install tqdm
 RUN pip3 install ghalton==0.6.1
 RUN pip3 install noisyopt
+RUN pip3 install scikit-optimize
 RUN pip3 install inference-tools
 
 #installs VS code which is an IDE (Integrated development environment) for code
