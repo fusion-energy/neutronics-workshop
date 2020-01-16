@@ -12,7 +12,7 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 The installation process consists of two steps.
 
-1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier?tab=instructions), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac).
+1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier?tab=instructions), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac). Complete the installation including the part where you enable docker use as a non-root user.
 2. Pull the docker image from the store by typing the following command in a terminal window.
 
 ```docker pull openmcworkshop/openmc_nndc_workshop```
