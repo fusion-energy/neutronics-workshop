@@ -6,20 +6,22 @@ There are a few [slides](https://slides.com/openmc_workshop/neutronics_workshop)
 The use of OpenMC for neutronics analysis requires several software packages and nuclear data. These have been installed inside a Docker container.
 **It is recommended that this workshop be completed using the Docker container.**
 
-The majority of the workshop can also be completed using Google Colab Notebooks which do not require Docker. The links to these notebooks are provided below. (Note - not all tasks can be completed in Colab as it lacks some dependencies).
+The majority of the workshop can also be completed using Google Colab Notebooks which do not require Docker. The links to these notebooks are provided below. (Note - not all tasks can be completed in Colab as it lacks some required dependencies).
 
 ### Docker Container Installation
 
 The installation process consists of two steps.
 
-1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier?tab=instructions), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac).
+1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac). Complete the installation including the part where you enable docker use as a non-root user. I would recommend using Linux as it comes with a visualization system (X11) built in whereas Windows requires [Xming](https://sourceforge.net/projects/xming/) or [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and Mac requires [XQuartz](https://www.xquartz.org/) to be installed.
 2. Pull the docker image from the store by typing the following command in a terminal window.
 
 ```docker pull openmcworkshop/openmc_nndc_workshop```
 
 ### Running OpenMC with docker
 
-Now that you have the docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands in a terminal window.
+Now that you have the docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands two in a terminal window. 
+
+From the Linux command terminal type ...
 
 ```xhost local:root```
 
@@ -27,7 +29,7 @@ Now that you have the docker image you can enable graphics linking between your 
 
 This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries.
 
-You can quickly test the graphics options worked by typing ```paraview``` in the container enviroment. This should open the paraview program.
+You can quickly test the graphics options worked by typing ```paraview``` in the container environment. This should open the paraview program.
 
 Running the docker image places you in the ```/openmc_workshop``` directory which contains all of the files required to complete the workshop.
 
@@ -43,7 +45,7 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 - [Task 4 - Finding neutron interactions with mesh tallies - 15 minutes](#task4)
 - [Task 5 - Finding the neutron and photon spectra - 15 minutes](#task5)
 - [Task 6 - Finding the tritium production - 15 minutes](#task6)
-- [Task 7 - Finding the neutron damage - 15 minutes](#task7)
+- [Task 7 - Finding the neutron damage and stochastic volume calculation - 15 minutes](#task7)
 
 ### Optional workshop tasks
 
@@ -73,7 +75,7 @@ From inside the docker container navigate to the task_1 directory and open the f
 
 ```coder 1_example_isotope_plot.py```
 
-This script plots the cross sections of certain reactions for a selection of isotopes. OpenMC is well documented so if the script does not make sense take a look at the relevant [documentation](https://openmc.readthedocs.io/en/v0.10.0/examples/nuclear-data.html)
+This script plots the cross sections of certain reactions for a selection of isotopes. OpenMC is well documented so if the script does not make sense take a look at the relevant [documentation](https://openmc.readthedocs.io/en/v0.10.0/examples/nuclear-data.html).
 
 Run the script using the following command.
 
@@ -89,7 +91,7 @@ To add different reactions to the plot we need their ENDF reaction numbers (MT n
 
 - Try adding tritium production (n,Xt) in Li6 and Li7 to the same plot.
 
-The plot should now be similar to the plot below showing fusion relevant interactions. These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
+The plot should now be similar to the plot below, showing fusion relevant interactions (change scale to log log). These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
 
 <p align="center"><img src="tasks/task_1/images/1_example_isotope_plot_2.png" height="500"></p>
 
@@ -115,20 +117,19 @@ A nice feature of OpenMC is that it can plot cross sections for complete materia
 
 - Try running the script and producing the material cross section plot ```python 3_example_material_plot.py```
 
-The plot produced should look similar to the plot shown below. As you can see lithium enrichment only increases tritium prodcution at lower neutron energies.
+The plot produced should look similar to the plot shown below. As you can see lithium enrichment only increases tritium production at lower neutron energies.
 
 <p align="center"><img src="tasks/task_1/images/3_example_material_plot.png" height="500"></p>
 
  - Try editing the script so that other candidate breeder materials are added to the plot. ```coder 3_example_material_plot.py```
 
-**Learning Outcomes Task 1**
+**Learning Outcomes**
 
 - How OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). 
 - Reaction probabilities vary for each isotope depending on the energy of the neutron. 
 - Cross sections can be plotted for specific isotopes, elements and full materials. 
 - Beryllium 9 has the lowest threshold energy for neutron multiplication reactions. 
 - Lithium 6 has the highest probability of producing tritium at low neutron energies.
-- Lithium 6 enrichment has the highest probability of producing tritium at low neutron energies.
 - Understand that lithium enrichment increases tritium production from low energy neutrons.
 
 &ensp; 
@@ -147,7 +148,7 @@ Expected outputs from this task are also in the [presentation](https://slides.co
 
 OpenMC can provide both 2D and 3D visualizations of the Constructive Solid Geometry ([CSG](https://en.wikipedia.org/wiki/Constructive_solid_geometry)) of a model.
 
-There are two methods for producing 2D slice views of model geometries. This can be done via a Python Matplotlib (```1_example_geometry_viewer_2d.py```) or via the production of xml files again with Python (```2_example_geometry_viewer_2d_xml_version.py```). The first option is simpler to understand and use while the second option is slightly faster for complex geometries, we will use the simpler option in this workshop.
+There are two methods for producing 2D slice views of model geometries. This can be done via a Python Matplotlib (```1_example_geometry_viewer_2d.py```) or via the production of xml files, again with Python (```2_example_geometry_viewer_2d_xml_version.py```). The first option is simpler to understand and use while the second option is slightly faster for complex geometries, we will use the simpler option in this workshop.
 
 - Try understanding the example code ```coder 1_example_geometry_viewer_2d.py```
 
@@ -165,7 +166,11 @@ Edit the script and try adding a first wall and centre column to the model using
 
 - Try assigning the eurofer material to the first wall.
 
-- Try adding a centre column with a 100cm radius. This would be cut at the top and bottom by a sphere surface
+<p align="center">
+<img src="tasks/task_2/images/eurofer_table.png"> 
+</p>
+
+- Try adding a centre column using a [ZCylinder](https://openmc.readthedocs.io/en/stable/pythonapi/generated/openmc.ZCylinder.html) surface with a 100cm radius. This must also be cut at the top and bottom by the firstwall sphere surface.
 
 - Try creating a material from pure copper and assign it to the centre column.
 
@@ -203,8 +208,8 @@ OpenMC has a plotter which can also be used for viewing 3D geometry. This has be
 **Learning Outcomes**
 
 - Construction of simple Constructive Solid Geometry (CSG) geometry.
-- Visualizion of models using 2D slices.
-- Visualizion of models using 3D cube geometry.
+- Visualisation of models using 2D slices.
+- Visualisation of models using 3D cube geometry.
 
 &ensp; 
 <p align="center"><b>
@@ -228,39 +233,41 @@ The ```1_plot_neutron_birth_energy.py``` file shows you how to access the statep
 
 The script will produce a plot of a mono-energetic energy source of 14 MeV neutrons, as shown below.
 
-<p align="center"><img src="tasks/task_3/images/particle_energy_histogram_monoenergetic.png" height="500"></p>
+<p align="center"><img src="tasks/task_3/images/particle_energy_histogram.png" height="500"></p>
 
-There are actually three different energy distributions available in the ```1_plot_neutron_birth_energy.py``` script (14MeV monenergetic, Watt fission distribution, Muir fusion distribution).
+There are actually three different energy distributions available in the ```1_plot_neutron_birth_energy.py``` script (14 MeV monenergetic, Watt fission distribution, Muir fusion distribution).
 
 - Try plotting the Watt and Muir spectra and compare them to the mono-energetic neutron source.
 
 - Try changing the Muir plasma temperature from 20 KeV to 40 KeV.
 
-In the next example the initial neutron birth direction / initial trajectories for a very basic neutron point source is plotted. Again, this information is accessed from the statepoint file.
+In the next example the initial neutron birth locations and neutron trajectories for a very basic neutron point source are plotted. Again, this information is accessed from the statepoint file.
 
-- Try running ```python 2_plot_neutron_birth_direction.py``` to produce a plot of neutron directions, the output should look similar to the plots shown below.
+- Try running ```python 2_plot_neutron_birth_location.py``` to produce a plot of neutron birth  locations, the output should look similar to the plot shown below.
 
-- Try running ```python 3_plot_neutron_birth_location.py``` to produce a plot of neutron locations, the output should look similar to the plots shown below.
+- Try running ```python 3_plot_neutron_birth_direction.py``` to produce a plot of neutron directions, the output should look similar to the plot shown below.
 
-<p align="center"><img src="tasks/task_3/images/3d_scatter_plot.png" height="300"> <img src="tasks/task_3/images/3d_plot_cones.png" height="300"></p>
-
-<p align="center"><i>Left = Neutron birth locations, Right = Neutron initial directions</i></p>
-
-Now open the next example source plotting script ```3_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined - you should notice that an external source library is used. The ```source_sampling.so``` file is a precompiled plasma source file containing neutron positions, energies and directions for a given plasma source. This file is in the task_3 directory.
-
-- Try running ```python 4_plot_neutron_birth_direction_plasma.py``` to produce a plot of birth neutron direction from a more realistic plasma source. The output should look similar to the plots shown below.
-
-- Try running ```python 5_plot_neutron_birth_location_plasma.py``` to produce a plot of neutron birth location from a more realistic plasma source. The output should look similar to the plots shown below.
-
-<p align="center"><img src="tasks/task_3/images/3d_plasma_scatter.png" height="300"> <img src="tasks/task_3/images/3d_plasma_cones.png" height="300"></p>
+<p align="center"><img src="tasks/task_3/images/particle_location.png" height="300"> <img src="tasks/task_3/images/particle_direction.png" height="300"></p>
 
 <p align="center"><i>Left = Neutron birth locations, Right = Neutron initial directions</i></p>
 
-OpenMC is also able to track particles as they pass through model geometries. Open the ```6_example_neutron_tracks.py``` script and notice that it contains ```model.run(tracks=True)```. This argument results in the creation of a h5 file for each neutron simulated which contains particle track information. The next example script defines a model of a hollow sphere made of two materials and a 14 MeV point source at the geometry centre.
+Now open the next example source plotting script ```4_plot_neutron_birth_locations_plasma.py```. Look for the part in the script where the source is defined - you should notice that an external source library is used. The ```source_sampling.so``` file is a precompiled plasma source file containing neutron positions, energies and directions for a given plasma source. This file is in the task_3 directory.
 
-- Try running ```python 6_example_neutron_tracks.py``` which simulates neutron movement through the geometry and produces particle h5 files from which neutron tracks can be visualised with the geometry. 
+- Try running ```python 4_plot_neutron_birth_location_plasma.py``` to produce a plot of neutron birth locations for a more realistic plasma source. The output should look similar to the plot shown below.
 
-Use Paraview to load the geometry file and then open the track files (.vtp files). Parview can also be used to slice (slice this model on the z plane) and threshold the geometry. **More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15/4) and also in the video tutorial below.**
+- Try running ```python 5_plot_neutron_birth_direction_plasma.py``` to produce a plot of birth neutron directions for a more realistic plasma source. The output should look similar to the plot shown below.
+
+<p align="center"><img src="tasks/task_3/images/plasma_particle_location.png" height="300"> <img src="tasks/task_3/images/plasma_particle_direction.png" height="300"></p>
+
+<p align="center"><i>Left = Neutron birth locations, Right = Neutron initial directions</i></p>
+
+OpenMC is also able to track particles as they pass through model geometries. Open the ```6_example_neutron_tracks.py``` script and notice that it contains ```model.run(tracks=True)```. This argument results in the creation of a h5 file for each neutron simulated which contains particle track information. 
+
+The next example script defines a model of a hollow sphere made of two materials and a 14 MeV point source at the geometry centre.
+
+- Try running ```python 6_example_neutron_tracks.py``` which simulates neutron movement through the geometry and produces particle h5 files from which neutron tracks can be visualized with the geometry. 
+
+Use Paraview to load the geometry file and then open the track files (.vtp files). Paraview can also be used to threshold and slice the geometry - slice this model on the z plane. **More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15/4) and also in the video tutorial below.**
 
 Looking at the tracks can you tell which material is water and which is zirconium?
 
@@ -270,7 +277,7 @@ Looking at the tracks can you tell which material is water and which is zirconiu
 **Learning Outcomes**
 
 - How to access information on the particle positions, energy and direction from the simulation.
-- How to visualise particle tracks through the geometry.
+- How to visualize particle tracks through the geometry.
 
 &ensp; 
 <p align="center"><b>
@@ -286,7 +293,7 @@ Please allow 15 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/16).
 
-OpenMC uses 'tallies' to measure parameters such as particle flux, absorption and other interactions, to obtain useful information from the simulation. Tallies can be recorded on the cells, surfaces or on a superimposed mesh. In this task mesh tallies will be produced and visualized.  The example script contains a simple hollow sphere geometry of a single material, a 14 MeV point source.
+OpenMC uses 'tallies' to measure parameters such as particle flux, absorption and other interactions, to obtain useful information from the simulation. Tallies can be recorded on model cells, surfaces or on a superimposed mesh. In this task mesh tallies will be produced and visualized.  The example script contains a simple hollow sphere geometry of a single material, a 14 MeV point source.
 
 - Try opening the example script ```coder 1_example_neutron_flux.py```and identify the mesh tally which measures neutron flux. 
 
@@ -308,7 +315,7 @@ The model still has a point source but now it is located at x=150 y=150 z=0. The
 
 - Try changing the mesh tally from (n,Xt) to absorption to see the impact of the center column.
 
-**Note. More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/16/1), and in the video tutorial provided below**
+**Note. More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/16/1), and in the video tutorial provided below.**
 
 This should produce a 3D view of the mesh tally similar to the plots shown below.
 
@@ -348,7 +355,7 @@ In this task the neutron spectra at two different locations will be measured and
 
 - Try opening the ```1_example_neutron_spectra_tokamak.py``` script to see how the neutron spectra is obtained for the breeder blanket cell.
 
-- Try running the example script which plot the neutron spectra within the breeder blanket. ```python 1_example_neutron_spectra_tokamak.py``` , the plot should look similar to the plot shown below.
+- Try running the example script which plot the neutron spectra within the breeder blanket. ```python 1_example_neutron_spectra_tokamak.py```, the plot should look similar to the plot shown below.
 
 <p align="center"><img src="tasks/task_5/images/1_example_neutron_spectra_tokamak.png" height="500"></p>
 
@@ -356,9 +363,9 @@ In this task the neutron spectra at two different locations will be measured and
 
 The task now starts to look at secondary photons created from neutron interactions. These photons are often created in neutron scattering interactions where the nucleus is left excited and de-excites via photon production. To run OpenMC in coupled neutron, photon mode an additional setting is required to enable photon transport (which is disabled by default).
 
-Try opening the example script ```coder 2_example_photon_spectra_tokamak.py``` script to see how the photon spectra is obtained for the breeder blanket cell and photon transport is enabled.
+- Try opening the example script ```coder 2_example_photon_spectra_tokamak.py``` script to see how the photon spectra is obtained for the breeder blanket cell and photon transport is enabled.
 
-Try running the script to plot the photon spectra within the breeder blanket. ```python 2_example_photon_spectra_tokamak.py```. The output should look similar to the plot shown below.
+- Try running the script to plot the photon spectra within the breeder blanket. ```python 2_example_photon_spectra_tokamak.py```. The output should look similar to the plot shown below.
 
 Why do you think the photons generated are of lower energy?
 
@@ -367,7 +374,7 @@ Why do you think the photons generated are of lower energy?
 **Learning Outcomes**
 
 - Plotting neutron / photon spectra and observing the changing neutron energy at different locations in the reactor.
-- Performing coupled neutron photon simulations where photon are created from neutron interations.
+- Performing coupled neutron photon simulations where photons are created from neutron interactions.
 
 
 &ensp; 
@@ -386,7 +393,7 @@ Expected outputs from this task are in the [presentation](https://slides.com/ope
 
 In this task you will find the tritium breeding ratio (TBR) for a single tokamak model using the ```1_example_tritium_production.py``` script. You will then find TBR values for several tokamak models with a range of different Li6 enrichment values using the ```1_example_tritium_production_study.py``` script.
 
-- Try open the example scripts and understanding how the TBR is found ```coder 1_example_tritium_production.py```
+- Try opening the example scripts and understanding how the TBR is found ```coder 1_example_tritium_production.py```
 
 - Try running the example script and finding the TBR ```python 1_example_tritium_production.py```
 
@@ -412,10 +419,10 @@ The script should produce a plot of TBR as a function of Li6 enrichment, as show
 
 **Learning Outcomes**
 
-- Finding TBR with OpenMC
-- Introduction to MT reaction numbers (n,Xt) = 205
-- Simple methods of increasing the TBR using lithium enrichment
-- Improving the uncertainty on the result is possible with more computation
+- Finding TBR with OpenMC.
+- Introduction to MT reaction numbers. e.g. (n,Xt) = 205.
+- Simple methods of increasing the TBR using lithium enrichment.
+- Improving the uncertainty on the result is possible with more computation.
 
 &ensp; 
 <p align="center"><b>
@@ -423,7 +430,7 @@ The script should produce a plot of TBR as a function of Li6 enrichment, as show
 </b></p>
 &ensp; 
 
-### <a name="task7"></a>Task 7 - Finding the neutron damage
+### <a name="task7"></a>Task 7 - Finding the neutron damage and stochastic volume calculation
 
 Google Colab Link: [Task_7](https://colab.research.google.com/drive/1wH1Y4I2UHewk2BS6DQpkMGBuLHwtGg6B)
 
@@ -431,25 +438,32 @@ Please allow 15 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/19).
 
-Displacements per atom (DPA) is one measure of damage within materials exposed to neutron irradiation. DPA can be tallied in OpenMC with MT reaction number 444.
+Displacements per atom (DPA) is one measure of damage within materials exposed to neutron irradiation. Damage energy can be tallied in OpenMC with MT reaction number 444 and DPA can be estimated.
 
-In the case of DPA a neutronics along can't calculate the value and material science techniques are needed to account for the material and recombination effects. For example after a displacement there is a chance that the atom relocates to it's original latic position (recombination) and different atoms require different amounts of energy to [displace](https://fispact.ukaea.uk/wiki/Output_interpretation#DPA_and_KERMA). The DPA tally from neutronics is therefore overestimating the true DPA. However for this task we can calculate a quanity and see how it varies for different components. The resulting DPA tally is in units of per source particle. Therefore the result needs scaling by the source intensity (in neutrons per second) and the irradiation duration (in seconds) and the number of atoms in the volume.
+In the case of DPA a neutronics code alone can't fully calculate the value as material science techniques are needed to account for the material and recombination effects. For example after a displacement there is a chance that the atom relocates to it's original latic position (recombination) and different atoms require different amounts of energy to [displace](https://fispact.ukaea.uk/wiki/Output_interpretation#DPA_and_KERMA). The DPA tally from neutronics is therefore only an estimate of the DPA.
 
-- Find the number of neutrons emitted over a 5 year period assuming 80% availability for a 3GW (fusion energy) reactor. Recall that each reaction emmits 17.6MeV of energy. 
+The MT 444 / damage energy tally is in units of eV per source particle. Therefore the result needs scaling by the source intensity (in neutrons per second) and the irradiation duration (in seconds) and the number of atoms in the volume.
 
-- Find the volume of the Eurofer firstwall
 
-- Find the number of atoms in the Eurofer firstwall
+- Try to understand the post proccessing steps involved in converting a neutronics damage tally into displacements by reading the relevant section at the end of the example script ```coder 1_find_dpa.py```
 
-- Find the number of displacements (from the find_dpa script)
+- Find the total number of displacements in the firstwall by running the example script ```python 1_find_dpa.py```. This script assume a threshold displacement energy of 40eV is required and that 20% of the displaced atoms recombine.
 
-- Using this information find the DPA on the first wall for a 2GW (fusion power) reactor over a 5 year period. Does this exceed the Eurofer DPA limit of 70 DPA?
+- Open the example script and see how a stochastic volume calculation can be performed using OpenMC ```coder 2_find_cell_volume.py```
 
-Open the ```find_dpa.py``` script to see how DPA is tallied in the shield around the centre solenoid in the tokamak model. Running this script should output DPA and its associated error.
+- Find the volume and number of iron atoms in the firstwall using the python script ```python 2_find_cell_volume.py```
+
+- Calculate the displacements per atoms for a full power year by using the outputs of both scripts
+
+- Using this information find the DPA on the first wall for the 3GW (fusion energy) reactor over a 5 year period. Does this exceed the Eurofer DPA limit of 70 DPA? If so what could be changed about the design to ensure this limit is now reached?
 
 **Learning Outcomes**
 
-**Overall, Task 7 has shown how DPA can be tallied using OpenMC.**
+- Finding damage energy deposited with the OpenMC MT 444 tally
+- Find the volume of a cell using the stochastic volume method
+- Perform post tally calculations to convert the neutronics numbers into something more useful
+- Gain an appreciation of how neutronics results can influence the design (e.g. radius of reactor must be increased to prevent critical material damage)
+
 
 &ensp; 
 <p align="center"><b>
@@ -463,27 +477,21 @@ Google Colab Link: [Task_8](https://colab.research.google.com/drive/1fDOBm2YMojX
 
 Please allow 25 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/21).
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/20).
 
-This task is more open ended - the aim is to find the minimum thickness of breeder material needed to obtain a TBR of 1.2.
+This task is more open ended - the aim is to find the minimum thickness of breeder material needed to obtain a TBR of 1.2. The scripts will need changing to make the serach more efficient as currently it just selects random points.
 
-There are several candidate breeder materials including a lithium ceramic (Li4SiO4), Flibe, Lithium lead (eutectic) and pure lithium.
+There are several candidate breeder materials including a lithium ceramic (Li4SiO4), Flibe, Lithium lead (eutectic) and pure lithium. Each material can have it's Li6 content enriched and the blanket thickness varied and these have an impact on the TBR.
 
-Each material can have it's Li6 content enriched and this has an impact on the TBR.
+Examine the ```simulate_tokamak_model.py``` file and try to understand how the model is created and particularly how the simulation parameters are saved in a json file with a unique ID.
 
-Examine the ```simulate_tokamak_model.py``` file and try to understand how the model is created and particularly how the simulation parameters are saved in a .json file.
+- Currently the input parameters for Li6 enrichment and blanket thickness are randomly sampled so you might want to change this to speed up the search.
 
-You will need to adjust some of the simulation settings (nps and batches) to make sure that the error on the final TBR values are acceptable.
+Run the script to perform simulations. There are two scripts to help you analyse the results.
 
-Currently the input parameters for lithium 6 enrichment and blanket thickness are randomly sampled so you might want to change this as well.
+- ```plot_simulation_results_2d.py``` will allow you to see the impact of changing either the Li6 enrichment or the blanket thickness on TBR.
 
-First you will also need to change the surface definitions so that the geometry changes as thickness is varied when a new thickness is passed to the geometry making function.
-
-Run the script to produce simulation results. There are two scripts to help you analyse these.
-
-- ```plot_simulation_results_2d.py``` will allow you to see the impact of changing either the Li6 enrichment or the blanket thickness.
-
-- ```plot_simulation_results_3d.py``` will allow you to see the combined impact of changing the Li6 enrichment and the blanket thickness.
+- ```plot_simulation_results_3d.py``` will allow you to see the combined impact of changing the Li6 enrichment and the blanket thickness on TBR.
 
 Ultimately you should come up with the minimum thickness needed for each candidate blanket material and the Li6 enrichment required at that thickness. Feel free to share simulation data with other groups and interpolate between the data points.
 
@@ -493,9 +501,15 @@ For 200 simulations, the 2D plots should look similar to the plots below.
 
 <p align="center"><img src="tasks/task_8/images/TBR_vs_thickness.png" height="500"></p>
 
+For 525 simulations, the 3D plots should look similar to the example plot shown below.
+
+<p align="center"><img src="tasks/task_8/images/TBR_vs_thickness_vs_enrichment_fraction_lithium.png" height="500"></p>
+
 **Learning Outcomes**
 
-**Overall, Task 8 has shown how simulations can be performed to measure the impact of varying different model variables by measuring tallies. For example, TBR was tallied as a function of blanket thickness and enrichment. The same principle can be applied to any tally and any model parameter.**
+- A simple parameter study that makes use of unique ID's for each simulation.
+- Some candiate breeder materials can meet the TBR requirment with a thinner blanket.
+- Increasing the thickness of blanket or lthium 6 enrichment tend to increase the TBR but not for all materials.
 
 &ensp; 
 <p align="center"><b>
@@ -525,17 +539,19 @@ Take a look at the scripts below and try to understand how this works. Also try 
 
 - ```lithium_enrichment_and_thickness_optimisation.py```. Note - This script does not currently work.
 
-Initially, simulations are performed by 'Halton sampling' the parameter space of interest and the results fitted using Gaussian Regression. A further simulation is then performed using the parameters corresponding to max TBR as determined by the Gaussian fit. The simulation results are then fitted again, including this new point, and the process repeated. 
+Initially, simulations are performed by sampling the parameter space of interest (according to the halton sequence) and the results fitted using Gaussian Regression. A further simulation is then performed using the parameters corresponding to max TBR as determined by the Gaussian fit. The simulation results are then fitted again, including this new point, and the process repeated. 
 
-This iterative approach efficiently and accurately determines the point across the parameter space where TBR is maximum.
+This iterative approach efficiently and accurately determines the point in the parameter space where TBR is maximum.
 
-The output .gif shows how Halton sampling is initially used to perform simulations before further simulations are informed by Gaussian interpolation.
+The output .gif shows how halton sampling is used to perform initial simulations before further simulations are informed by Gaussian interpolation.
 
 <p align="center"><img src="tasks/task_9/images/output.gif" height="500"></p>
 
 **Learning Outcomes**
 
-**Overall, Task 9 has shown how Halton Sampling can be used to perform non-biased simulations over a parameter space of interest, from which Gaussian interpolation can be used to performed informed simulations. This demonstrates a method of performing highly optimised neutronics simulations.**
+- Halton sampling allows non-biased simulations to be performed over a parameter space.
+
+- Data fitting can be used to optimise neutronics simulations.
 
 &ensp; 
 <p align="center"><b>
@@ -545,7 +561,7 @@ The output .gif shows how Halton sampling is initially used to perform simulatio
 
 ### <a name="task10"></a>Task 10 - Using CAD geometry
 
-**This task is unavailable in Colab.**
+Google Colab Link: [Task_10](https://drive.google.com/open?id=1EM5xd9yC4JariHRQ2ftzY2v_HRHoTp9u)
 
 Please allow 30 minutes for this task.
 
@@ -559,7 +575,7 @@ The use of CAD geometry has several advantages compared to CSG.
 
 - Geometry created outside of neutronics (e.g. design offices) is created in a CAD format. Using the CAD geometry directly avoids the manual process of converting CAD geometry into CSG geometry which is a bottleneck in the design cycle.
 
-- Simulation reults such as heating can be mapped directly into engineering models which also use CAD geometry. This is benifitial when integrating neutronics into the design cycle or coupling neutronics with thermal
+- Simulation reults such as heating can be mapped directly into engineering models which also use CAD geometry. This is benifitial when integrating neutronics into the design cycle or coupling neutronics with thermal analysis.
 
 - Visulisation of neutronics models can be performed with CAD software which is mature and feature rich.
 
@@ -586,7 +602,7 @@ Try running the script using the command ```python example_CAD_simulation.py```.
 
 **Learning Outcomes**
 
-**Overall, Task 10 shows how CAD geometry can be used to build complex models for use in OpenMC neutronics simulations.**
+- CAD geometry can be used to build complex models for use in neutronics simulations.
 
 &ensp; 
 

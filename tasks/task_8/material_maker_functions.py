@@ -7,6 +7,38 @@ __author__      = "Jonathan Shimwell"
 import re
 import openmc
 
+
+
+def make_breeder_materials(enrichment_fraction, breeder_material_name, temperature_in_C):
+
+    #density data from http://aries.ucsd.edu/LIB/PROPS/PANOS/matintro.html
+
+    natural_breeder_material = openmc.Material(name = "natural_breeder_material")
+    breeder_material = openmc.Material(name = "breeder_material")
+
+    element_numbers = get_element_numbers(breeder_material_name)
+    elements = get_elements(breeder_material_name)
+
+    for e, en in zip(elements, element_numbers):
+        natural_breeder_material.add_element(e, en,'ao')
+
+    for e, en in zip(elements, element_numbers):
+        if e == 'Li':
+            breeder_material.add_nuclide('Li6', en * enrichment_fraction, 'ao')
+            breeder_material.add_nuclide('Li7', en * (1.0-enrichment_fraction), 'ao')  
+        else:
+            breeder_material.add_element(e, en,'ao')    
+
+    density_of_natural_material_at_temperature = find_density_of_natural_material_at_temperature(breeder_material_name,temperature_in_C,natural_breeder_material)
+
+    natural_breeder_material.set_density('g/cm3', density_of_natural_material_at_temperature)
+    atom_densities_dict = natural_breeder_material.get_nuclide_atom_densities()
+    atoms_per_barn_cm = sum([i[1] for i in atom_densities_dict.values()])
+
+    breeder_material.set_density('atom/b-cm',atoms_per_barn_cm) 
+
+    return breeder_material
+    
 def calculate_crystal_structure_density(material,atoms_per_unit_cell,volume_of_unit_cell_cm3):
       molar_mass = material.average_molar_mass*len(material.nuclides)
       atomic_mass_unit_in_g = 1.660539040e-24

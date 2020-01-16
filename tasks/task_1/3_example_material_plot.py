@@ -60,7 +60,7 @@ fig.update_layout(
 fig.write_html("3_example_material_plot.html")
 try:
       fig.write_html("/my_openmc_workshop/3_example_material_plot.html")
-except FileNotFoundError:
+except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
       pass
 
 fig.show()
