@@ -462,7 +462,7 @@ Please allow 25 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/20).
 
-This task is more open ended - the aim is to find the minimum thickness of breeder material needed to obtain a TBR of 1.2.
+This task is more open ended - the aim is to find the minimum thickness of breeder material needed to obtain a TBR of 1.2. The scripts will need changing to make the serach more efficient as currently it just selects random points.
 
 There are several candidate breeder materials including a lithium ceramic (Li4SiO4), Flibe, Lithium lead (eutectic) and pure lithium. Each material can have it's Li6 content enriched and the blanket thickness varied and these have an impact on the TBR.
 
@@ -484,7 +484,7 @@ For 200 simulations, the 2D plots should look similar to the plots below.
 
 <p align="center"><img src="tasks/task_8/images/TBR_vs_thickness.png" height="500"></p>
 
-For 500 simulations, the 3D plots should look similar to the example plot shown below.
+For 525 simulations, the 3D plots should look similar to the example plot shown below.
 
 <p align="center"><img src="tasks/task_8/images/TBR_vs_thickness_vs_enrichment_fraction_lithium.png" height="500"></p>
 
@@ -492,7 +492,7 @@ For 500 simulations, the 3D plots should look similar to the example plot shown 
 
 - A simple parameter study that makes use of unique ID's for each simulation.
 - Some candiate breeder materials can meet the TBR requirment with a thinner blanket.
-- Increasing the thickness of blanket or lthium 6 enrichment tend to increase the TBR
+- Increasing the thickness of blanket or lthium 6 enrichment tend to increase the TBR but not for all materials.
 
 &ensp; 
 <p align="center"><b>
