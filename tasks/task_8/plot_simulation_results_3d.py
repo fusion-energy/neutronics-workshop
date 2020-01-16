@@ -1,137 +1,90 @@
 #!/usr/bin/env python3
 
-"""simulation_results_plot.py: plots few 2D views of TBR and leakage."""
-
-__author__      = "Jonathan Shimwell"
+"""plot_simulation_results_3d.py: plots few 3d views of TBR for different materials."""
 
 
-import json
-import pandas as pd
-from pandas.io.json import json_normalize 
-import numpy as np
 import plotly.graph_objects as go
-
-with open('simulation_results.json') as f:
-    results = json.load(f)
-
-# PLOTS RESULTS #
-
-# results_df = pd.DataFrame(results)
-
-results_df = json_normalize(data=results)
-
-all_materials = ['F2Li2BeF2','Li','Pb84.2Li15.8','Li4SiO4']
-
-'TBR with'
-
-for tally_name in ['TBR']:
-    #tally_name_error = tally_name+'_st_dev'
-
-    text_values = {}
-
-    for material_name in all_materials:
-
-        df_filtered_by_mat = results_df[results_df['breeder_material_name']==material_name]
-
-        text_value = []
-        for e,t,i,tbr, leak in zip(df_filtered_by_mat['enrichment_fraction'],
-                            df_filtered_by_mat['thickness'],
-                            df_filtered_by_mat['inner_radius'],
-                            df_filtered_by_mat['TBR.value'],
-                            df_filtered_by_mat['vessel_leakage.value']):
-                text_value.append('TBR =' +str(tbr)+'<br>'+
-                                'Vessel leakage =' +str(leak)+'<br>'+
-                                'enrichment fraction ='+str(e) +'<br>'+
-                                'thickness ='+str(t) +'<br>'+
-                                'inner radius ='+str(i)                                            
-                                )
-        text_values[material_name] = text_value             
-
-    x_axis_name = 'enrichment_fraction'
-    y_axis_name = 'thickness'
-    z_axis_name = 'TBR.value'
-
-    traces=[]
-    for material_name in all_materials:
-
-        df_filtered_by_mat = results_df[results_df['breeder_material_name']==material_name]
-
-        traces.append(go.Scatter3d(x=list(df_filtered_by_mat[x_axis_name]), 
-                                y=list(df_filtered_by_mat[y_axis_name]),
-                                z=list(df_filtered_by_mat[z_axis_name]),
-                                mode = 'markers',
-                                name = material_name,
-                                hoverinfo='text' ,
-                                text=text_values[material_name],
-                                visible=False,
-                                marker={'color':list(df_filtered_by_mat[tally_name+'.value']),
-                                        'colorscale':'Viridis',
-                                        'size':2,
-                                        'colorbar':{'title':tally_name,
-                                                   'tickvals':np.linspace(start=min(list(df_filtered_by_mat[tally_name+'.value'])),stop=max(list(df_filtered_by_mat[tally_name+'.value'])),num=10)
-                                                       }
-                                        }
-        ))
-
-    fig = go.Figure()
-
-    fig.update_layout(
-        title = 'Select a breeder material:',
-        hovermode = 'closest',
-        scene = {'xaxis':{'title':" ".join(x_axis_name.title().split('_'))},
-                 'yaxis':{'title':" ".join(y_axis_name.title().split('_'))},
-                 'zaxis':{'title':" ".join(z_axis_name.title().split('_'))}
-                 }
-    )
-                    
-
-    buttons_list_of_dicts = []
-
-    for v, material in enumerate(all_materials):
-        vis_list = []
-        for i in range(len(all_materials)):
-            if i == v:
-                vis_list.append(True)    
-            else:
-                vis_list.append(False)
-
-        buttons_list_of_dicts.append(dict(
-                                        args=[{'visible': vis_list},
-                                                {'title':tally_name+' with '+material}
-                                                ],
-                                        label=material,
-                                        method='update'
-                                    ))  
-    print(buttons_list_of_dicts)   
+import json
+import os
+import pandas as pd
+import numpy as np
 
 
-    updatemenus=list([
-        dict(
-            buttons=list(buttons_list_of_dicts),
-            direction = 'down',
-            pad = {'r': 10, 't': 10},
-            showactive = True,
-            x = 0.14,
-            xanchor = 'left',
-            y = 1.1,
-            yanchor = 'top' 
-        ),
-    ])
 
-    # annotations = list([
-    #     dict(text='Breeder material:', x=0, y=3, yref='paper', align='left', showarrow=False)
-    # ])
-    fig.update_layout(updatemenus=updatemenus)
-                    #   annotations=annotations)
+def make_3d_plot(x_axis_name, y_axis_name, z_axis_name):
 
-    for trace in traces:
-        fig.add_trace(trace)
+    colours = {'F2Li2BeF2': 'red', 'Li': 'blue', 'Pb84.2Li15.8': 'green','Li4SiO4': 'black'}
 
-    fig.write_html(tally_name+'_for_different_materials.html')
-    try:
-        fig.write_html('/my_openmc_workshop/'+tally_name+'_for_different_materials.html')
-    except (FileNotFoundError, NotADirectoryError):
-        pass
+    for tally_name in [z_axis_name]:
 
-    fig.show()
+        fig = go.Figure()
 
+        text_values = {}
+
+        for material_name in results_df['breeder_material_name'].unique():
+
+            df_filtered_by_mat = results_df[results_df['breeder_material_name']==material_name]
+
+            text_value = []
+            for e,t,i,tbr in zip(df_filtered_by_mat['enrichment_fraction'],
+                                          df_filtered_by_mat['thickness'],
+                                          df_filtered_by_mat['inner_radius'],
+                                          df_filtered_by_mat['TBR']):
+                  text_value.append('TBR =' +str(tbr)+'<br>'+
+                                    'enrichment fraction ='+str(e) +'<br>'+
+                                    'thickness ='+str(t) +'<br>'+
+                                    'inner radius ='+str(i)
+                                    )
+
+            text_values[material_name] = text_value
+
+
+
+        for material_name in results_df['breeder_material_name'].unique():
+
+            df_filtered_by_mat = results_df[results_df['breeder_material_name']==material_name]
+
+            fig.add_trace(go.Scatter3d(x=list(df_filtered_by_mat[x_axis_name]), 
+                                    y=list(df_filtered_by_mat[y_axis_name]),
+                                    z=list(df_filtered_by_mat[z_axis_name]),
+                                    mode = 'markers',
+                                    name = material_name,
+                                    hoverinfo='text' ,
+                                    text=text_values[material_name],
+                                    # visible=False,
+                                    marker={'color':colours[material_name],
+                                            'colorscale':'Viridis',
+                                            'size':2,
+                                            }
+            ))
+
+        fig.update_layout(
+            title = y_axis_name+' vs '+x_axis_name + ', number of simulations = ' +str(len(results_df)),
+            hovermode = 'closest',
+            scene ={
+            'xaxis':{'title':x_axis_name},
+            'yaxis':{'title':y_axis_name},
+            'zaxis':{'title':z_axis_name}
+            }
+        )
+
+        fig.write_html(z_axis_name + '_vs_' + y_axis_name+'_vs_'+x_axis_name+'.html')
+        try:
+            fig.write_html('/my_openmc_workshop/'+y_axis_name+'_vs_'+x_axis_name+'.html')
+        except FileNotFoundError:
+            pass
+
+        fig.show()
+
+
+#reads all json files into pandas dataframe
+path_to_json = "outputs"
+list_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
+resultdict = []
+for filename in list_files:
+    with open(os.path.join(path_to_json, filename), "r") as inputjson:
+        resultdict.append(json.load(inputjson))
+results_df = pd.DataFrame(resultdict)
+
+
+make_3d_plot(x_axis_name= 'enrichment_fraction', y_axis_name = 'thickness', z_axis_name = 'TBR')
