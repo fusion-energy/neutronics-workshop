@@ -3,6 +3,7 @@
 """1_find_dpa.py: Calculates the neutron damage via a 444 MT reaction tally."""
 
 import openmc
+import json
 
 
 #MATERIALS#
@@ -109,3 +110,9 @@ displacements_for_all_atoms = number_of_neutrons_per_year * displacements_per_so
 print('displacements for all atoms in the volume ', displacements_for_all_atoms, '\n')
 
 print('Now the number of atoms in the volume must be found to find displacements per atom (DPA)')
+
+json_output = {'Damage energy in eV': damage_energy_in_ev,
+               'Total number of displacements': displacements_for_all_atoms}
+
+with open('1_find_dpa_results.json', 'w') as file_object:
+    json.dump(json_output, file_object, indent=2)
