@@ -137,6 +137,8 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
 
 number_of_simulations = 20 # this value will need to be changed
 
+results = []
+
 for i in tqdm(range(number_of_simulations)):
     breeder_material_name = np.random.choice(['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8'])
     enrichment_fraction = np.random.uniform(0, 1)
@@ -149,3 +151,7 @@ for i in tqdm(range(number_of_simulations)):
                                    breeder_material_name=breeder_material_name,
                                    temperature_in_C=500
                                    )
+    results.append(result)
+
+with open('simulation_results.json', 'w') as file_object:
+    json.dump(results, file_object, indent=4)
