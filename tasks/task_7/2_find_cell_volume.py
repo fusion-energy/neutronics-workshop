@@ -3,7 +3,7 @@
 """2_find_cell_volume.py: Calculates the volume of cells and materials."""
 
 import openmc
-
+import json
 
 #MATERIALS#
 
@@ -81,3 +81,9 @@ iron_atomic_mass_in_g = 55.845*1.66054E-24 # molar mass multiplier by the atomic
 number_of_iron_atoms = volume_of_firstwall_cell * density_of_iron_in_g_per_cm3 / (iron_atomic_mass_in_g)
 
 print('Number of iron atoms in the firstwall ',number_of_iron_atoms)
+
+json_output = {'Firstwall cell volume': volume_of_firstwall_cell,
+               'Number of iron atoms in firstwall': number_of_iron_atoms}
+
+with open('2_find_cell_volume_results.json', 'w') as file_object:
+    json.dump(json_output, file_object, indent=2)
