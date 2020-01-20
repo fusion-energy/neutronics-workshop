@@ -6,6 +6,10 @@
     pytest test_scripts.py
 """
 
+# at the moment, we are only testing to see whether the outputs are created
+# we are NOT testing to see whether the outputs are also saved locally
+# this will have to be implemented
+
 from pathlib import Path 
 import os
 import pytest
@@ -25,15 +29,15 @@ class test_task_1(unittest.TestCase):
         os.system('rm '+output_filename)
 
 
-    # def test_task_1_part_2(self): #  this test is slow so it has been commented out for the time being
+    def test_task_1_part_2(self): #  this test is slow so it has been commented out for the time being
 
-    #     os.chdir(Path(cwd))
-    #     os.chdir(Path('tasks/task_1'))
-    #     output_filename = '2_example_element_plot_16.html'
-    #     os.system('rm '+output_filename)
-    #     os.system('python 2_example_element_plot.py')
-    #     assert Path(output_filename).exists() == True
-    #     os.system('rm '+output_filename)
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_1'))
+        output_filename = '2_example_element_plot_16.html'
+        os.system('rm '+output_filename)
+        os.system('python 2_example_element_plot.py')
+        assert Path(output_filename).exists() == True
+        os.system('rm '+output_filename)
 
 
     def test_task_1_part_3(self):
@@ -114,9 +118,9 @@ class test_task_3(unittest.TestCase):
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_3'))
-        output_filename = 'particle_direction.html'
+        output_filename = 'particle_location.html'
         os.system('rm '+output_filename)
-        os.system('python 2_plot_neutron_birth_direction.py')
+        os.system('python 2_plot_neutron_birth_location.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
     
@@ -125,9 +129,9 @@ class test_task_3(unittest.TestCase):
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_3'))
-        output_filename = 'particle_location.html'
+        output_filename = 'particle_direction.html'
         os.system('rm '+output_filename)
-        os.system('python 3_plot_neutron_birth_location.py')
+        os.system('python 3_plot_neutron_birth_direction.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
     
@@ -136,9 +140,9 @@ class test_task_3(unittest.TestCase):
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_3'))
-        output_filename = 'plasma_particle_direction.html'
+        output_filename = 'plasma_particle_location.html'
         os.system('rm '+output_filename)
-        os.system('python 4_plot_neutron_birth_direction_plasma.py')
+        os.system('python 4_plot_neutron_birth_location_plasma.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
  
@@ -147,9 +151,9 @@ class test_task_3(unittest.TestCase):
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_3'))
-        output_filename = 'plasma_particle_location.html'
+        output_filename = 'plasma_particle_direction.html'
         os.system('rm '+output_filename)
-        os.system('python 5_plot_neutron_birth_location_plasma.py')
+        os.system('python 5_plot_neutron_birth_direction_plasma.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
         
@@ -242,60 +246,62 @@ class test_task_6(unittest.TestCase):
 
 class test_task_7(unittest.TestCase):
     def test_task_7_part_1(self):
-        # test calculated volume
-        pass
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_7'))
+        output_filename = '1_find_dpa_results.json'
+        os.system('rm '+output_filename)
+        os.system('python 1_find_dpa.py')
+        assert Path(output_filename).exists() == True
+        os.system('rm '+output_filename)
 
     def test_task_7_part_2(self):
-        # test calculated volume (part 2)
-        pass
 
-    def test_task_7_part_3(self):
-        # test calculated dpa
-        pass 
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_7'))
+        output_filename = '2_find_cell_volume_results.json'
+        os.system('rm '+output_filename)
+        os.system('python 2_find_cell_volume.py')
+        assert Path(output_filename).exists() == True
+        os.system('rm '+output_filename)
+
 
 
 class test_task_8(unittest.TestCase):
+
     def test_task_8_part_1(self):
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_8'))
-        output_filename = 'simulation_rsults.json'
-        os.system('rm '+output_filename)
-        os.system('python simulate_sphere_model.py')
-        assert Path(output_filename).exists() == True
-        os.system('rm '+output_filename)
+        os.system('rm outputs/*.json')
+        os.system('rmdir outputs')
+        os.system('python simulate_tokamak_model.py')
+        assert Path('outputs').exists() == True
+        assert len(os.listdir('outputs')) != 0
 
     def test_task_8_part_2(self):
-        
+
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_8'))
-        output_filename = 'simulation_rsults.json'
-        os.system('rm '+output_filename)
-        os.system('python simulate_tokamak_model.py')
-        assert Path(output_filename).exists() == True
-        os.system('rm '+output_filename)
+        output_filenames = ['TBR_vs_enrichment_fraction.html', 'TBR_vs_thickness.html']
+        for output_filename in output_filenames:
+            os.system('rm '+output_filename)
+        os.system('python plot_simulation_results_2d.py')
+        for output_filename in output_filenames:
+            assert Path(output_filename).exists() == True
+            os.system('rm '+output_filename)
 
     def test_task_8_part_3(self):
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_8'))
-        output_filenames = ['TBR_vs_thickness.html', 'TBR_vs_enrichment_fraction.html']
-        for output_filename in output_filenames:
-            os.system('rm '+output_filename)
-        os.system('python plot_simulation_results_2d.py')
-        for output_filename in output_filenames:
-            assert Path(output_filename).exists == True
-            os.system('rm '+output_filename)
-
-    def test_task_8_part_4(self):
-
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_8'))
-        output_filename = 'TBR_for_different_materials.html'
+        output_filename = 'TBR_vs_thickness_vs_enrichment_fraction.html'
         os.system('rm '+output_filename)
         os.system('python plot_simulation_results_3d.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
+        os.system('rm outputs/*.json')
+        os.system('rmdir outputs)
 
 
 
