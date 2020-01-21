@@ -55,7 +55,7 @@ def make_plot(x_axis_name,y_axis_name, y_axis_error_name):
       fig.write_html(y_axis_name+'_vs_'+x_axis_name+'.html')
       try:
             fig.write_html('/my_openmc_workshop/'+y_axis_name+'_vs_'+x_axis_name+'.html')
-      except FileNotFoundError:
+      except (FileNotFoundError, NotADirectoryError):
             pass
 
       fig.show()
