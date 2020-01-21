@@ -91,14 +91,14 @@ flux_slice.mean.shape = (mesh_width, mesh_height)
 fig = plt.subplot()
 
 fig.imshow(flux_slice.mean).get_figure().savefig('flux_plot.png')
-universe.plot(width=(200,200),basis='xz').get_figure().savefig('universe_plot.png')
+universe.plot(width=(180,180),basis='xz').get_figure().savefig('universe_plot.png')
 
 try:
     fig.imshow(flux_slice.mean).get_figure().savefig('/my_openmc_workshop/flux_plot.png')
-    universe.plot(width=(200,200),basis='xz').get_figure().savefig('/my_openmc_workshop/universe_plot.png')
+    universe.plot(width=(180,180),basis='xz').get_figure().savefig('/my_openmc_workshop/universe_plot.png')
 except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
     pass
 
 
 plt.show(fig.imshow(flux_slice.mean))
-plt.show(universe.plot(width=(200,200),basis='xz'))
+plt.show(universe.plot(width=(180,180),basis='xz'))
