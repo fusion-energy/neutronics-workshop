@@ -13,7 +13,7 @@ mats = openmc.Materials()
 
 copper = openmc.Material(name='Copper')
 copper.set_density('g/cm3', 8.5)
-copper.add_element('Cu', 1.0)
+copper.add_element('Cu', 1.0)   # Note, percent_type does not have to be specified as material is 100% copper
 mats.append(copper)
 
 eurofer = openmc.Material(name='EUROFER97')
