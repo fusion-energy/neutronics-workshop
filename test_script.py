@@ -301,7 +301,7 @@ class test_task_8(unittest.TestCase):
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
         os.system('rm outputs/*.json')
-        os.system('rmdir outputs)
+        os.system('rmdir outputs')
 
 
 
