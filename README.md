@@ -306,7 +306,7 @@ OpenMC uses 'tallies' to measure parameters such as particle flux, absorption an
 
 You should see plots of the simple sphere geometry and the isotropic point source, as shown below. The colour map shows the neutron flux, as tallied by the mesh, which is seen to reduce as one moves away from the point source.
 
-<img src="tasks/task_4/images/universe_point.png" height="300"> <img src="tasks/task_4/images/flux_point.png" height="300">
+<img src="tasks/task_4/images/new_universe_point.png" height="300"> <img src="tasks/task_4/images/flux_point.png" height="300">
 
 <p align="center"><i>Left = Geometry Plot, Right = Flux Plot</i></p>
 
