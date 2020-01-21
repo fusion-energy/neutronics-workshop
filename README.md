@@ -35,12 +35,12 @@ Running the docker image places you in the ```/openmc_workshop``` directory whic
 
 The docker container also contains a folder called ```/my_openmc_workshop``` which is mapped to the local directory from which you ran the image. Placing files into this directory allows you to tranfer files from your docker container to your local machine.
 
-**IMPORTANT:** Any changes you make to files in the docker container will be lost as soon as you exit the container. **Make sure you copy any files you want to keep into the ```my_openmc_workshop``` folder before exiting the docker container**.
+**IMPORTANT:** Any changes you make to scripts in the docker container will be lost when you exit the container. Make sure you copy any files you want to keep into the ```my_openmc_workshop``` folder before exiting the container. **Note:** The output files created by the task scripts are automatically copied to this folder.
 
 ### Core workshop tasks
 
-- [Task 1 - Cross section plotting - 20 minutes](#task1)
-- [Task 2 - Building and visualizing the model geometry - 20 minutes](#task2)
+- [Task 1 - Cross section plotting - 25 minutes](#task1)
+- [Task 2 - Building and visualizing the model geometry - 25 minutes](#task2)
 - [Task 3 - Visualizing neutron tracks - 20 minutes](#task3)
 - [Task 4 - Finding neutron interactions with mesh tallies - 15 minutes](#task4)
 - [Task 5 - Finding the neutron and photon spectra - 15 minutes](#task5)
@@ -63,7 +63,7 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 
 Google Colab Link: [Task_1](https://colab.research.google.com/drive/1Z5C7bxX-1iPjBfhDrgIzGVaTyfI2CdFa)
 
-Please allow 20 minutes for this task.
+Please allow 25 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/13).
 
@@ -113,7 +113,11 @@ The tritium production should produce a plot similar to the plot shown below.
 
 <p align="center"><img src="tasks/task_1/images/2_example_element_plot_205.png" height="500"></p>
 
-A nice feature of OpenMC is that it can plot cross sections for complete materials made from combinations of isotopes and elements. The ```3_example_material_plot.py``` script shows how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material. 
+A nice feature of OpenMC is that it can plot cross sections for complete materials made from combinations of isotopes and elements. The ```3_example_material_plot.py``` script shows how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material.
+
+Materials are created in OpenMC by combining isotopes and elements either by 'atom percent' or 'weight percent'.
+- Atom percent (percent_type='ao') - Proportion of total number of atoms in material of a particular type.
+- Weight percent (percent_type='wo') - Proportion of material of a particular isotope or element by weight.
 
 - Try running the script and producing the material cross section plot ```python 3_example_material_plot.py```
 
@@ -142,7 +146,7 @@ The plot produced should look similar to the plot shown below. As you can see li
 
 Google Colab Link: [Task_2](https://colab.research.google.com/drive/17o94Go2_pQLHrrkcM_2K-asvKrSsMbtx)
 
-Please allow 20 minutes for this task.
+Please allow 25 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14).
 
@@ -164,7 +168,7 @@ Edit the script and try adding a first wall and centre column to the model using
 
 - Try adding a 20cm thick first wall to the hollow sphere.
 
-- Try assigning the eurofer material to the first wall.
+- Try assigning the eurofer material to the first wall - specification provided below. (Eurofer density = 7.75 g/cm3)
 
 <p align="center">
 <img src="tasks/task_2/images/eurofer_table.png"> 
@@ -193,17 +197,18 @@ The next script shows how a simple geometry can be viewed in 3D using paraview. 
 
 ```python 4_example_geometry_viewer_3d_tokamak.py```
 
-Paraview should load up when the script completes. To make the geometry visible click the "Apply" button and also the small eyeball icon on the left hand side. Then select "id" and "surface" in the dropdown menus to view the geometry. The threshold and slice operations can then be used to view specific parts of the geometry. **(More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14/1). A video tutorial is also provided below).**
-
-- Try using the threshold operation to remove the vacuum cell. Set the threshold to 0 then click the "Apply" button.
-
-OpenMC has a plotter which can also be used for viewing 3D geometry. This has been preinstalled on the Docker image. To use the OpenMC plotter it must be run from the folder containing the xml files which are created by the Python API. The OpenMC plotter repository has [more details](https://github.com/openmc-dev/plotter) on how to use the application.
-
-- Try running the OpenMC plotter using the ```openmc-plotter``` command and visulise the geometry.
-
+Paraview should load up when the script completes, however, no geometry will be visible. Watch the video below to learn how to view geometry in Paraview.
 
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
 " target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="400" /></a></p>
+
+**Instructions:** To make the geometry visible click the "Apply" button and also the small eyeball icon on the left hand side. Then select "id" and "surface" in the dropdown menus to view the geometry. The threshold and slice operations can then be used to view specific parts of the geometry. (Instructions with screenshots are also provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14/1)).
+
+- Try using the threshold operation to remove the vacuum cell. Set the threshold to 0 then click the "Apply" button.
+
+OpenMC has a plotter which can also be used for viewing 3D geometry. This has been pre-installed in the Docker image. To use the OpenMC plotter it must be run from the folder containing the xml files which are created by the Python API. The OpenMC plotter repository has [more details](https://github.com/openmc-dev/plotter) on how to use the application.
+
+- Try running the OpenMC plotter using the ```openmc-plotter``` command and visualize the geometry.
 
 **Learning Outcomes**
 
@@ -265,14 +270,14 @@ OpenMC is also able to track particles as they pass through model geometries. Op
 
 The next example script defines a model of a hollow sphere made of two materials and a 14 MeV point source at the geometry centre.
 
-- Try running ```python 6_example_neutron_tracks.py``` which simulates neutron movement through the geometry and produces particle h5 files from which neutron tracks can be visualized with the geometry. 
+- Try running ```python 6_example_neutron_tracks.py``` which simulates neutron movement through the geometry and produces particle h5 files from which neutron tracks can be visualized with the geometry.
 
-Use Paraview to load the geometry file and then open the track files (.vtp files). Paraview can also be used to threshold and slice the geometry - slice this model on the z plane. **More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15/4) and also in the video tutorial below.**
-
-Looking at the tracks can you tell which material is water and which is zirconium?
+**Instructions:** Watch the video below to learn how to load the geometry file, open the track files and slice the geometry such that the neutron tracks can be visualised. (Instructions with screenshots can also be found in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/15/4)).
 
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=uHTXw6Dza-Y
 " target="_blank"><img src="tasks/task_3/images/task3thumbnail.png" height="400" /></a></p>
+
+- Looking at the tracks can you tell which material is water and which is zirconium?
 
 **Learning Outcomes**
 
@@ -311,20 +316,20 @@ The next example script is the ```2_example_neutron_flux_tokamak.py``` file whic
 
 The model still has a point source but now it is located at x=150 y=150 z=0. The tritium production mesh tally is now 3D and is displayed in 3D using paraview.
 
-- Try running the script with the following command ```python 2_example_neutron_flux_tokamak.py``` and use the log scale within Paraview to show the tritium production more clearly.
+- Try running the script with the following command ```python 2_example_neutron_flux_tokamak.py``` and use the log scale within Paraview to show the tritium production more clearly. Watch the video below to learn how to do this.
+
+<p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=be3G3ceQSWU
+" target="_blank"><img src="tasks/task_4/images/task4thumbnail.png" height="400" /></a></p>
+
+Further instructions can also be found in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/16/1).
 
 - Try changing the mesh tally from (n,Xt) to absorption to see the impact of the center column.
-
-**Note. More detailed instructions are provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/16/1), and in the video tutorial provided below.**
 
 This should produce a 3D view of the mesh tally similar to the plots shown below.
 
 <p align="center"><img src="tasks/task_4/images/tritium_production_tokamak.png" height="300">   <img src="tasks/task_4/images/absorption_on_mesh.png" height="300"></p>
 
 <p align="center"><i>Left = Tritium production, Right = Neutron absorption</i></p>
-
-<p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=be3G3ceQSWU
-" target="_blank"><img src="tasks/task_4/images/task4thumbnail.png" height="400" /></a></p>
 
 OpenMC has a plotter which was first introduced in task 2 to view geometry can also be used for viewing mesh tallies. 
 
@@ -550,7 +555,6 @@ The output .gif shows how halton sampling is used to perform initial simulations
 **Learning Outcomes**
 
 - Halton sampling allows non-biased simulations to be performed over a parameter space.
-
 - Data fitting can be used to optimise neutronics simulations.
 
 &ensp; 
@@ -583,7 +587,7 @@ This taks depends on [DAGMC](https://svalinn.github.io/DAGMC/) and [FreeCAD](htt
 
 The geometry can be viewed in FreeCAD. Open up FreeCAD by typing ```freecad``` in the command line.
 
-Once loaded select file open and select blanket.stp, firstwall.stp and poloidal_magnets.stp. This should show the 3D model within the FreeCAD viewer. A tutorial of this is provided below.
+Once loaded select file open and select blanket.stp, firstwall.stp and poloidal_magnets.stp. This should show the 3D model within the FreeCAD viewer. Watch the video tutorial below to learn how to do this.
 
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=pyZXQg0AsJ4
 " target="_blank"><img src="tasks/task_10/images/task10thumbnail.png" height="400" /></a></p>

@@ -71,7 +71,7 @@ def make_3d_plot(x_axis_name, y_axis_name, z_axis_name):
         fig.write_html(z_axis_name + '_vs_' + y_axis_name+'_vs_'+x_axis_name+'.html')
         try:
             fig.write_html('/my_openmc_workshop/'+y_axis_name+'_vs_'+x_axis_name+'.html')
-        except FileNotFoundError:
+        except (FileNotFoundError, NotADirectoryError):
             pass
 
         fig.show()
