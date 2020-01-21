@@ -39,8 +39,8 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 
 ### Core workshop tasks
 
-- [Task 1 - Cross section plotting - 20 minutes](#task1)
-- [Task 2 - Building and visualizing the model geometry - 20 minutes](#task2)
+- [Task 1 - Cross section plotting - 25 minutes](#task1)
+- [Task 2 - Building and visualizing the model geometry - 25 minutes](#task2)
 - [Task 3 - Visualizing neutron tracks - 20 minutes](#task3)
 - [Task 4 - Finding neutron interactions with mesh tallies - 15 minutes](#task4)
 - [Task 5 - Finding the neutron and photon spectra - 15 minutes](#task5)
