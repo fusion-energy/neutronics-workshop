@@ -66,6 +66,10 @@ geom = openmc.Geometry(universe)
 
 geom.export_to_xml()
 
+# A blank settings.xml is exported to allow the openmc plotter to work
+sett = openmc.Settings()
+sett.export_to_xml()
+
 
 # makes the 3d "cube" style geometry 
 vox_plot = openmc.Plot()
