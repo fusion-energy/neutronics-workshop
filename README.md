@@ -17,17 +17,20 @@ The installation process consists of two steps.
 
 ```docker pull openmcworkshop/openmc_nndc_workshop```
 
+**Permission Denied Error (on Linux)**
+- If a permission denied error is returned when pulling the image, add ```sudo``` to the front of the command. This runs the command with administrative priviledges. You may be required to enter your password.
+
 ### Running OpenMC with docker
 
 Now that you have the docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands two in a terminal window. 
 
-From the Linux command terminal type ...
+From the Linux command terminal type...
 
 ```xhost local:root```
 
 ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
 
-This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries.
+This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries (add ```sudo``` to the docker run command if permission denied error is returned).
 
 You can quickly test the graphics options worked by typing ```paraview``` in the container environment. This should open the paraview program.
 
