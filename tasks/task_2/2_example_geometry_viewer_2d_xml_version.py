@@ -9,7 +9,7 @@ import os
 mats = openmc.Materials()
 
 natural_lead = openmc.Material(name="natural_lead")
-natural_lead.add_element('Pb', 1.0 ,'ao')
+natural_lead.add_element('Pb', 1.0 , percent_type='ao')
 mats.append(natural_lead)
 mats.export_to_xml()
 

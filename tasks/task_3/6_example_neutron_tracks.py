@@ -12,14 +12,14 @@ import os
 mats = openmc.Materials()
 
 moderating_material = openmc.Material(1, "water") # water contains hydrogen which is a good neutron moderator
-moderating_material.add_element('H', 2,'ao')
-moderating_material.add_element('O', 1,'ao')
-moderating_material.set_density('g/cm3',1.0)
+moderating_material.add_element('H', 2, 'ao') # Note, 'percent_type=' does not have to be written to specify 'ao' or 'wo'
+moderating_material.add_element('O', 1, 'ao')
+moderating_material.set_density('g/cm3', 1.0)
 mats.append(moderating_material)
 
 transparent_material = openmc.Material(2, "zirconium") # one of the more transparent materials
-transparent_material.add_element('Zr', 1,'ao')
-transparent_material.set_density('g/cm3',6.49)
+transparent_material.add_element('Zr', 1, 'ao')
+transparent_material.set_density('g/cm3', 6.49)
 mats.append(transparent_material)
 
 

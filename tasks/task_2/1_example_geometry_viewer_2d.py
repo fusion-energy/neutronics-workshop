@@ -9,14 +9,14 @@ import matplotlib.pyplot as plt
 mats = openmc.Materials()
 
 natural_lead = openmc.Material(1, "natural_lead")
-natural_lead.add_element('Pb', 1,'ao')
+natural_lead.add_element('Pb', 1, percent_type='ao')
 natural_lead.set_density('g/cm3', 11.34)
 mats.append(natural_lead)
 
 
  #hint this is an example material made from copper
 # natural_copper = openmc.Material(2, "natural_copper")
-# natural_copper.add_element('Cu', 1,'ao')
+# natural_copper.add_element('Cu', 1, percent_type='ao')
 # natural_copper.set_density('g/cm3', 8.96)
 # mats.append(natural_copper)
 
