@@ -75,6 +75,3 @@ The plot produced should look similar to the plot shown below. As you can see li
 - Beryllium 9 has the lowest threshold energy for neutron multiplication reactions. 
 - Lithium 6 has the highest probability of producing tritium at low neutron energies.
 - Understand that lithium enrichment increases tritium production from low energy neutrons.
-
-&ensp; 
-<p align="center"><b>
