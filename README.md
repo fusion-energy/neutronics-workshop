@@ -41,19 +41,15 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 4. Add your local machine network IP address to a variable called IP. You can use the commands:
 
-```IP=$(ipconfig getifadd en0)```
-
-or
-
-```IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')```
+    ```IP=$(ipconfig getifadd en0)``` or ```IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')```
 
 5. Add your IP address to xhost. XQuartz should launch when this command is run (unless application is already open).
 
-```xhost + $IP```
+    ```xhost + $IP```
 
 6. Run the docker container using the command:
 
-```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=$IP:0 --privileged openmcworkshop/openmc_nndc_workshop```
+    ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=$IP:0 --privileged openmcworkshop/openmc_nndc_workshop```
 
 ### Windows (not yet implemented)
 
