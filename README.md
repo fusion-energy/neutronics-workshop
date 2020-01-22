@@ -10,27 +10,59 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 ### Docker Container Installation
 
-The installation process consists of two steps.
+## Linux (Recommended)
 
-1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac). Complete the installation including the part where you enable docker use as a non-root user. I would recommend using Linux as it comes with a visualization system (X11) built in whereas Windows requires [Xming](https://sourceforge.net/projects/xming/) or [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and Mac requires [XQuartz](https://www.xquartz.org/) to be installed.
+1. Install Docker CE for [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/). Complete the installation including the part where you enable docker use as a non-root user.
+
 2. Pull the docker image from the store by typing the following command in a terminal window.
 
 ```docker pull openmcworkshop/openmc_nndc_workshop```
 
-**Permission Denied Error (on Linux)**
-- If a permission denied error is returned when pulling the image, add ```sudo``` to the front of the command. This runs the command with administrative priviledges. You may be required to enter your password.
-
-### Running OpenMC with docker
-
-Now that you have the docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands two in a terminal window. 
-
-From the Linux command terminal type...
+3. Now that you have the docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands in a terminal window.
 
 ```xhost local:root```
 
 ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
 
-This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries (add ```sudo``` to the docker run command if permission denied error is returned).
+**Permission Denied Error**
+- If a permission denied error is returned when running docker commands, add ```sudo``` to the front of the command. This runs the command with administrative priviledges. You may be required to enter your password.
+
+## Mac
+
+1. Install Docker Desktop for [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac).
+
+2. Ensure Docker Desktop is running and pull the docker image from the store by typing the following command in a terminal window.
+
+```docker pull openmcworkshop/openmc_nndc_workshop```
+
+2. Install [XQuartz Version: 2.7.8](https://www.xquartz.org/releases/XQuartz-2.7.8.html) which is a visualization system for mac, allowing you to run GUI applications. Restart your computer once install has completed - this updates your DISPLAY environment variable to point to XQuartz.app rather than X11.app (the previous visualization system for mac).
+
+3. Open XQuartz using the command ```open -a XQuartz``` in a terminal window. Go to Preferences -> Security and select *Allow connections from network clients*. Close the XQuartz application to implement the selection.
+
+4. Add your local machine network IP address to a variable called IP. You can use the commands:
+
+```IP=$(ipconfig getifadd en0)```
+
+or
+
+```IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')```
+
+5. Add your IP address to xhost. XQuartz should launch when this command is run (unless application is already open).
+
+```xhost + $IP```
+
+6. Run the docker container using the command:
+
+```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=$IP:0 --privileged openmcworkshop/openmc_nndc_workshop```
+
+## Windows (not yet implemented)
+
+1. Install Docker Desktop for [windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows).
+
+2. REST OF INSTRUCTIONS TO COME
+
+
+Running the docker image should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries.
 
 You can quickly test the graphics options worked by typing ```paraview``` in the container environment. This should open the paraview program.
 
