@@ -12,17 +12,17 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 ### Linux (Recommended)
 
-1. Install Docker CE for [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/). Complete the installation including the part where you enable docker use as a non-root user.
+1. Install Docker CE for [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), including the part where you enable docker use as a non-root user.
 
 2. Pull the docker image from the store by typing the following command in a terminal window.
 
-```docker pull openmcworkshop/openmc_nndc_workshop```
+    ```docker pull openmcworkshop/openmc_nndc_workshop```
 
-3. Now that you have the docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands in a terminal window.
+3. Now that you have the docker image you can enable graphics linking between your os and docker, and then run the docker container by typing the following commands in a terminal window.
 
-```xhost local:root```
+    ```xhost local:root```
 
-```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
+    ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
 
 **Permission Denied Error**
 - If a permission denied error is returned when running docker commands, add ```sudo``` to the front of the command. This runs the command with administrative priviledges. You may be required to enter your password.
@@ -33,9 +33,9 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 2. Ensure Docker Desktop is running and pull the docker image from the store by typing the following command in a terminal window.
 
-```docker pull openmcworkshop/openmc_nndc_workshop```
+    ```docker pull openmcworkshop/openmc_nndc_workshop```
 
-2. Install [XQuartz Version: 2.7.8](https://www.xquartz.org/releases/XQuartz-2.7.8.html) which is a visualization system for mac, allowing you to run GUI applications. Restart your computer once install has completed - this updates your DISPLAY environment variable to point to XQuartz.app rather than X11.app (the previous visualization system for mac).
+2. Install [XQuartz Version: 2.7.8](https://www.xquartz.org/releases/XQuartz-2.7.8.html) which is a visualization system for mac allowing you to run GUI applications. Restart your computer once install has completed - this updates your DISPLAY environment variable to point to XQuartz.app rather than X11.app (the previous visualization system for mac).
 
 3. Open XQuartz using the command ```open -a XQuartz``` in a terminal window. Go to Preferences -> Security and select *Allow connections from network clients*. Close the XQuartz application to implement the selection.
 
