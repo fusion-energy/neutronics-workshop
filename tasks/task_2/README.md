@@ -57,7 +57,7 @@ The next script shows how a simple geometry can be viewed in 3D using paraview. 
 Paraview should load up when the script completes, however, no geometry will be visible. Watch the video below to learn how to view geometry in Paraview.
 
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=VWjQ-iHcaxA
-" target="_blank"><img src="tasks/task_2/images/task2thumbnail.png" height="400" /></a></p>
+" target="_blank"><img src="images/task2thumbnail.png" height="400" /></a></p>
 
 **Instructions:** To make the geometry visible click the "Apply" button and also the small eyeball icon on the left hand side. Then select "id" and "surface" in the dropdown menus to view the geometry. The threshold and slice operations can then be used to view specific parts of the geometry. (Instructions with screenshots are also provided in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/14/1)).
 
