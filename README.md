@@ -41,7 +41,7 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 4. Add your local machine network IP address to *IP* variable using the command:
 
-    ```IP=$(ipconfig getifadd en0)``` or ```IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')```
+    ```IP=$(ipconfig getifaddr en0)```
 
 5. Add IP address to xhost. XQuartz should launch when this command is run (unless XQuartz is already open).
 
