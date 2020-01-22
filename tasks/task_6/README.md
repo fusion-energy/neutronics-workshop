@@ -31,7 +31,7 @@ One option for increasing the TBR is to increase the Li6 content within the blan
 
 The script should produce a plot of TBR as a function of Li6 enrichment, as shown below.
 
-<p align="center"><img src="tasks/task_6/images/tbr_study.png" height="500"></p>
+<p align="center"><img src="images/tbr_study.png" height="500"></p>
 
 **Learning Outcomes**
 

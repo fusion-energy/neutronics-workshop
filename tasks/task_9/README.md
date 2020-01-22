@@ -27,7 +27,7 @@ This iterative approach efficiently and accurately determines the point in the p
 
 The output .gif shows how halton sampling is used to perform initial simulations before further simulations are informed by Gaussian interpolation.
 
-<p align="center"><img src="tasks/task_9/images/output.gif" height="500"></p>
+<p align="center"><img src="images/output.gif" height="500"></p>
 
 **Learning Outcomes**
 

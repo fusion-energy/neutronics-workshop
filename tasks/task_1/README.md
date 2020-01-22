@@ -23,7 +23,7 @@ Run the script using the following command.
 
 You should see a plot of the n,2n cross sections for isotopes of lead and beryllium, as shown below.
 
-<p align="center"><img src="tasks/task_1/images/1_example_isotope_plot.png" height="500"></p>
+<p align="center"><img src="images/1_example_isotope_plot.png" height="500"></p>
 
 To add different reactions to the plot we need their ENDF reaction numbers (MT numbers) which are available [here](https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf).
 
@@ -33,7 +33,7 @@ To add different reactions to the plot we need their ENDF reaction numbers (MT n
 
 The plot should now be similar to the plot below, showing fusion relevant interactions (change scale to log log). These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
 
-<p align="center"><img src="tasks/task_1/images/1_example_isotope_plot_2.png" height="500"></p>
+<p align="center"><img src="images/1_example_isotope_plot_2.png" height="500"></p>
 
 - Try editing ```1_example_isotope_plot.py``` so that it plots tritium production or neutron multiplication for all stable isotopes.
 
@@ -45,13 +45,13 @@ Elemental properties can also be found with OpenMC.
 
 This should produce a plot similar to the plot shown below.
 
-<p align="center"><img src="tasks/task_1/images/2_example_element_plot_16.png" height="500"></p>
+<p align="center"><img src="images/2_example_element_plot_16.png" height="500"></p>
 
 -  Try changing the ```2_example_element_plot.py``` script so that it plots tritium production for all elements. Once produced you can change the axis scale (to log log) using the dropdown menu.
 
 The tritium production should produce a plot similar to the plot shown below.
 
-<p align="center"><img src="tasks/task_1/images/2_example_element_plot_205.png" height="500"></p>
+<p align="center"><img src="images/2_example_element_plot_205.png" height="500"></p>
 
 A nice feature of OpenMC is that it can plot cross sections for complete materials made from combinations of isotopes and elements. The ```3_example_material_plot.py``` script shows how to plot tritium production in Li4SiO4 which is a candidate ceramic breeder blanket material.
 
@@ -63,7 +63,7 @@ Materials are created in OpenMC by combining isotopes and elements either by 'at
 
 The plot produced should look similar to the plot shown below. As you can see lithium enrichment only increases tritium production at lower neutron energies.
 
-<p align="center"><img src="tasks/task_1/images/3_example_material_plot.png" height="500"></p>
+<p align="center"><img src="images/3_example_material_plot.png" height="500"></p>
 
  - Try editing the script so that other candidate breeder materials are added to the plot. ```coder 3_example_material_plot.py```
 

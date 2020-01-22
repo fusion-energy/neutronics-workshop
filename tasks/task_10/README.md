@@ -26,7 +26,7 @@ The geometry can be viewed in FreeCAD. Open up FreeCAD by typing ```freecad``` i
 Once loaded select file open and select blanket.stp, firstwall.stp and poloidal_magnets.stp. This should show the 3D model within the FreeCAD viewer. Watch the video tutorial below to learn how to do this.
 
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=pyZXQg0AsJ4
-" target="_blank"><img src="tasks/task_10/images/task10thumbnail.png" height="400" /></a></p>
+" target="_blank"><img src="images/task10thumbnail.png" height="400" /></a></p>
 
 If you have Trelis or Cubit installed (they can't be included on this Docker image) then try creating the DAGMC neutronics geometry using the command ```trelis make_faceted_geometry_with_materials```.
 
