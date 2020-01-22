@@ -8,29 +8,54 @@ The use of OpenMC for neutronics analysis requires several software packages and
 
 The majority of the workshop can also be completed using Google Colab Notebooks which do not require Docker. The links to these notebooks are provided below. (Note - not all tasks can be completed in Colab as it lacks some required dependencies).
 
-### Docker Container Installation
+## Docker Container Installation
 
-The installation process consists of two steps.
+### Linux (Recommended)
 
-1. Install Docker CE [windows](https://store.docker.com/editions/community/docker-ce-desktop-windows/plans/docker-ce-desktop-windows-tier), [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac). Complete the installation including the part where you enable docker use as a non-root user. I would recommend using Linux as it comes with a visualization system (X11) built in whereas Windows requires [Xming](https://sourceforge.net/projects/xming/) or [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and Mac requires [XQuartz](https://www.xquartz.org/) to be installed.
+1. Install Docker CE for [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), including the part where you enable docker use as a non-root user.
+
 2. Pull the docker image from the store by typing the following command in a terminal window.
 
-```docker pull openmcworkshop/openmc_nndc_workshop```
+    ```docker pull openmcworkshop/openmc_nndc_workshop```
 
-**Permission Denied Error (on Linux)**
-- If a permission denied error is returned when pulling the image, add ```sudo``` to the front of the command. This runs the command with administrative priviledges. You may be required to enter your password.
+3. Now that you have the docker image you can enable graphics linking between your os and docker, and then run the docker container by typing the following commands in a terminal window.
 
-### Running OpenMC with docker
+    ```xhost local:root```
 
-Now that you have the docker image you can enable graphics linking between your os and docker and then run the docker container by typing the following commands two in a terminal window. 
+    ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
 
-From the Linux command terminal type...
+**Permission Denied Error**
+- If a *permission denied* error is returned when running docker commands, add ```sudo``` to the front of the command. This runs the command with administrative priviledges (you may be required to enter your password).
 
-```xhost local:root```
+### Mac
 
-```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
+1. Install Docker Desktop for [mac](https://store.docker.com/editions/community/docker-ce-desktop-mac).
 
-This should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries (add ```sudo``` to the docker run command if permission denied error is returned).
+2. Ensure Docker Desktop is running and pull the docker image from the store by typing the following command in a terminal window.
+
+    ```docker pull openmcworkshop/openmc_nndc_workshop```
+
+2. Install [XQuartz Version: 2.7.8](https://www.xquartz.org/releases/XQuartz-2.7.8.html) which is a visualization system for mac allowing you to run GUI applications. Restart your computer once install has completed - this updates your DISPLAY environment variable to point to XQuartz.app rather than X11.app (the previous visualization system for mac).
+
+3. Open XQuartz using the command ```open -a XQuartz``` in a terminal window. Go to Preferences -> Security and select *Allow connections from network clients*. Close the XQuartz application to implement the selection.
+
+4. Add your local machine network IP address to *IP* variable using the command:
+
+    ```IP=$(ipconfig getifadd en0)``` or ```IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')```
+
+5. Add IP address to xhost. XQuartz should launch when this command is run (unless XQuartz is already open).
+
+    ```xhost + $IP```
+
+6. Run the docker container using the command:
+
+    ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=$IP:0 --privileged openmcworkshop/openmc_nndc_workshop```
+
+### Windows (not yet implemented)
+
+1. Install Docker Desktop for [windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows).
+
+Running the docker image should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries.
 
 You can quickly test the graphics options worked by typing ```paraview``` in the container environment. This should open the paraview program.
 
@@ -40,7 +65,7 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 
 **IMPORTANT:** Any changes you make to scripts in the docker container will be lost when you exit the container. Make sure you copy any files you want to keep into the ```my_openmc_workshop``` folder before exiting the container. **Note:** The output files created by the task scripts are automatically copied to this folder.
 
-### Core workshop tasks
+## Core workshop tasks
 
 - [Task 1 - Cross section plotting - 25 minutes](#task1)
 - [Task 2 - Building and visualizing the model geometry - 25 minutes](#task2)
@@ -50,7 +75,7 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 - [Task 6 - Finding the tritium production - 15 minutes](#task6)
 - [Task 7 - Finding the neutron damage and stochastic volume calculation - 15 minutes](#task7)
 
-### Optional workshop tasks
+## Optional workshop tasks
 
 - [Task 8 - Survey breeder blanket designs for tritium production - 25 minutes](#task8)
 - [Task 9 - Optimize a breeder blanket for tritium production - 25 minutes](#task9)
@@ -62,7 +87,7 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 </b></p>
 &ensp;
 
-### <a name="task1"></a>Task 1 - Cross section plotting
+## <a name="task1"></a>Task 1 - Cross section plotting
 
 Google Colab Link: [Task_1](https://colab.research.google.com/drive/1Z5C7bxX-1iPjBfhDrgIzGVaTyfI2CdFa)
 
@@ -145,7 +170,7 @@ The plot produced should look similar to the plot shown below. As you can see li
 </b></p>
 &ensp; 
 
-### <a name="task2"></a>Task 2 - Building and visualizing the model geometry.
+## <a name="task2"></a>Task 2 - Building and visualizing the model geometry.
 
 Google Colab Link: [Task_2](https://colab.research.google.com/drive/17o94Go2_pQLHrrkcM_2K-asvKrSsMbtx)
 
@@ -225,7 +250,7 @@ OpenMC has a plotter which can also be used for viewing 3D geometry. This has be
 </b></p>
 &ensp; 
 
-### <a name="task3"></a>Task 3 - Visualizing neutron tracks
+## <a name="task3"></a>Task 3 - Visualizing neutron tracks
 
 Google Colab Link: [Task_3](https://colab.research.google.com/drive/1kOFp9s3utX0o2D7llXXJ6pyyrvK_V-Nz)
 
@@ -293,7 +318,7 @@ The next example script defines a model of a hollow sphere made of two materials
 </b></p>
 &ensp; 
 
-### <a name="task4"></a>Task 4 - Finding neutron interactions with mesh tallies
+## <a name="task4"></a>Task 4 - Finding neutron interactions with mesh tallies
 
 Google Colab link: [Task_4](https://colab.research.google.com/drive/1TVgCaEU_GAnJziNuyDFEvDfFYLU-fQaJ)
 
@@ -351,7 +376,7 @@ OpenMC has a plotter which was first introduced in task 2 to view geometry can a
 </b></p>
 &ensp; 
 
-### <a name="task5"></a>Task 5 - Finding the neutron and photon spectra
+## <a name="task5"></a>Task 5 - Finding the neutron and photon spectra
 
 Google Colab Link: [Task_5](https://colab.research.google.com/drive/1piuEmG09E9kfkFTw2WZV6TdX_xovqmVj)
 
@@ -391,7 +416,7 @@ Why do you think the photons generated are of lower energy?
 </b></p>
 &ensp; 
 
-### <a name="task6"></a>Task 6 - Finding the tritium production
+## <a name="task6"></a>Task 6 - Finding the tritium production
 
 Google Colab Link: [Task_6](https://colab.research.google.com/drive/188lPNZP_3clN1kC-nlJgI4HBMaSXKu5t)
 
@@ -438,7 +463,7 @@ The script should produce a plot of TBR as a function of Li6 enrichment, as show
 </b></p>
 &ensp; 
 
-### <a name="task7"></a>Task 7 - Finding the neutron damage and stochastic volume calculation
+## <a name="task7"></a>Task 7 - Finding the neutron damage and stochastic volume calculation
 
 Google Colab Link: [Task_7](https://colab.research.google.com/drive/1wH1Y4I2UHewk2BS6DQpkMGBuLHwtGg6B)
 
@@ -479,7 +504,7 @@ The MT 444 / damage energy tally is in units of eV per source particle. Therefor
 </b></p>
 &ensp; 
 
-### <a name="task8"></a>Task 8 - Survey breeder blanket designs for tritium production
+## <a name="task8"></a>Task 8 - Survey breeder blanket designs for tritium production
 
 Google Colab Link: [Task_8](https://colab.research.google.com/drive/1fDOBm2YMojXVtucPQQ9XSjFqtzMibvjD)
 
@@ -525,7 +550,7 @@ For 525 simulations, the 3D plots should look similar to the example plot shown 
 </b></p>
 &ensp; 
 
-### <a name="task9"></a>Task 9 - Optimize a breeder blanket for tritium production
+## <a name="task9"></a>Task 9 - Optimize a breeder blanket for tritium production
 
 Google Colab Link: [Task_9](https://colab.research.google.com/drive/1Zak3lrQH6x2-As1vKskXtNmYs6mdRUgj)
 
@@ -566,7 +591,7 @@ The output .gif shows how halton sampling is used to perform initial simulations
 </b></p>
 &ensp; 
 
-### <a name="task10"></a>Task 10 - Using CAD geometry
+## <a name="task10"></a>Task 10 - Using CAD geometry
 
 Google Colab Link: [Task_10](https://drive.google.com/open?id=1EM5xd9yC4JariHRQ2ftzY2v_HRHoTp9u)
 
@@ -613,6 +638,6 @@ Try running the script using the command ```python example_CAD_simulation.py```.
 
 &ensp; 
 
-### Acknowledgments
+## Acknowledgments
 Fred Thomas for providing examples from previous years Serpent workshop,
 Enrique Miralles Dolz for providing the CSG tokamak model, Andrew Davis for his work on the fusion neutron source, Chris Bowman for his Gaussian process software, John Billingsley for the CoLab tasks and the OpenMC team for their software.
