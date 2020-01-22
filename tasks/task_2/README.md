@@ -17,7 +17,7 @@ There are two methods for producing 2D slice views of model geometries. This can
 
 Views of the model geometry from XY, YZ and XZ planes should appear one after the other.
 
-<p align="center"><img src="tasks/task_2/images/xy_sphere.png" height="210"></p>
+<p align="center"><img src="images/xy_sphere.png" height="210"></p>
 
 As the geometry is a spherical shell centred at the origin, its views in each plane are identical.
 
@@ -28,7 +28,7 @@ Edit the script and try adding a first wall and centre column to the model using
 - Try assigning the eurofer material to the first wall - specification provided below. (Eurofer density = 7.75 g/cm3)
 
 <p align="center">
-<img src="tasks/task_2/images/eurofer_table.png"> 
+<img src="images/eurofer_table.png"> 
 </p>
 
 - Try adding a centre column using a [ZCylinder](https://openmc.readthedocs.io/en/stable/pythonapi/generated/openmc.ZCylinder.html) surface with a 100cm radius. This must also be cut at the top and bottom by the firstwall sphere surface.
@@ -45,7 +45,7 @@ By the time you have added the extra components, your geometry should look simil
 
 Run this script to produce views of the tokamak model from different planes, as shown below, and compare these to the geometry produced by your edited script.
 
-<img src="tasks/task_2/images/xy_tokamak.png" height="210"> <img src="tasks/task_2/images/xz_tokamak.png" height="210"> <img src="tasks/task_2/images/yz_tokamak.png" height="210">
+<img src="images/xy_tokamak.png" height="210"> <img src="images/xz_tokamak.png" height="210"> <img src="images/yz_tokamak.png" height="210">
 <p align="center"><i>Left = XY plane, Middle = XZ plane, Right = YZ plane</i></p>
 
 The next script shows how a simple geometry can be viewed in 3D using paraview. This converts the geometry into a block.

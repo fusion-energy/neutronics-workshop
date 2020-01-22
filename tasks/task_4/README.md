@@ -14,7 +14,7 @@ OpenMC uses 'tallies' to measure parameters such as particle flux, absorption an
 
 You should see plots of the simple sphere geometry and the isotropic point source, as shown below. The colour map shows the neutron flux, as tallied by the mesh, which is seen to reduce as one moves away from the point source.
 
-<img src="tasks/task_4/images/universe_point.png" height="300"> <img src="tasks/task_4/images/flux_point.png" height="300">
+<img src="images/universe_point.png" height="300"> <img src="images/flux_point.png" height="300">
 
 <p align="center"><i>Left = Geometry Plot, Right = Flux Plot</i></p>
 
@@ -27,7 +27,7 @@ The model still has a point source but now it is located at x=150 y=150 z=0. The
 - Try running the script with the following command ```python 2_example_neutron_flux_tokamak.py``` and use the log scale within Paraview to show the tritium production more clearly. Watch the video below to learn how to do this.
 
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=be3G3ceQSWU
-" target="_blank"><img src="tasks/task_4/images/task4thumbnail.png" height="400" /></a></p>
+" target="_blank"><img src="images/task4thumbnail.png" height="400" /></a></p>
 
 Further instructions can also be found in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/16/1).
 
@@ -35,7 +35,7 @@ Further instructions can also be found in the [presentation](https://slides.com/
 
 This should produce a 3D view of the mesh tally similar to the plots shown below.
 
-<p align="center"><img src="tasks/task_4/images/tritium_production_tokamak.png" height="300">   <img src="tasks/task_4/images/absorption_on_mesh.png" height="300"></p>
+<p align="center"><img src="images/tritium_production_tokamak.png" height="300">   <img src="images/absorption_on_mesh.png" height="300"></p>
 
 <p align="center"><i>Left = Tritium production, Right = Neutron absorption</i></p>
 
