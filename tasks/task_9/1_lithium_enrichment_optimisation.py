@@ -13,9 +13,9 @@ import numpy as np
 from numpy import random
 import re 
 from tqdm import tqdm
-from gp_tools import GpOptimiser
+from inference.gp_tools import GpOptimiser
 # from inference.gp_tools import GpOptimiser
-from material_maker_functions import *
+from neutronics_material_maker import Material
 from numpy import sin, cos, linspace, array, meshgrid
 import matplotlib.pyplot as plt
 import matplotlib as mpl
@@ -23,57 +23,22 @@ import ghalton
 
 
 
-def make_breeder_material(enrichment_fraction, breeder_material_name, temperature_in_C):
 
-    #density data from http://aries.ucsd.edu/LIB/PROPS/PANOS/matintro.html
-
-    natural_breeder_material = openmc.Material(2, "natural_breeder_material")
-    breeder_material = openmc.Material(1, breeder_material_name) # this is for enrichmed Li6 
-
-    element_numbers = get_element_numbers(breeder_material_name)
-    elements = get_elements(breeder_material_name)
-
-    for e, en in zip(elements, element_numbers):
-        natural_breeder_material.add_element(e, en,'ao')
-
-    for e, en in zip(elements, element_numbers):
-        if e == 'Li':
-            breeder_material.add_nuclide('Li6', en * enrichment_fraction, 'ao')
-            breeder_material.add_nuclide('Li7', en * (1.0-enrichment_fraction), 'ao')  
-        else:
-            breeder_material.add_element(e, en,'ao')    
-
-    density_of_natural_material_at_temperature = find_density_of_natural_material_at_temperature(breeder_material_name,temperature_in_C,natural_breeder_material)
-
-    natural_breeder_material.set_density('g/cm3', density_of_natural_material_at_temperature)
-    atom_densities_dict = natural_breeder_material.get_nuclide_atom_densities()
-    atoms_per_barn_cm = sum([i[1] for i in atom_densities_dict.values()])
-
-    breeder_material.set_density('atom/b-cm',atoms_per_barn_cm) 
-
-    return breeder_material
-
-
-
-def make_materials_geometry_tallies(v):
-    enrichment_fraction_list,thickness = v
-    batches = 2
-    inner_radius = 500
-    breeder_material_name = 'Li'
-    temperature_in_C = 500
-
+def make_materials_geometry_tallies(enrichment_fraction_list,batches = 2, inner_radius = 500, thickness = 100, breeder_material_name = 'Li', temperature_in_C = 500):
     if isinstance(enrichment_fraction_list,list):
         enrichment_fraction = enrichment_fraction_list[0]
     else:
         enrichment_fraction = enrichment_fraction_list
     print('simulating ',batches,enrichment_fraction,inner_radius,thickness,breeder_material_name)
     
-    #MATERIALS#
+    #MATERIALS from library of materials in neutronics_material_maker package
+    breeder_material = Material(material_name = breeder_material_name,
+                                enrichment_fraction = enrichment_fraction,
+                                temperature_in_C = temperature_in_C).neutronics_material
 
-    breeder_material = make_breeder_material(enrichment_fraction,breeder_material_name,temperature_in_C)
-    eurofer = make_eurofer()
+    eurofer = Material(material_name = 'eurofer').neutronics_material
+
     mats = openmc.Materials([breeder_material, eurofer])
-
 
     #GEOMETRY#
 
@@ -113,8 +78,8 @@ def make_materials_geometry_tallies(v):
     sett = openmc.Settings()
     # batches = 3 # this is parsed as an argument
     sett.batches = batches
-    sett.inactive = 10
-    sett.particles = 500
+    sett.inactive = 20
+    sett.particles = 5000
     sett.run_mode = 'fixed source'
 
     source = openmc.Source()
@@ -130,39 +95,39 @@ def make_materials_geometry_tallies(v):
     # define filters
     cell_filter_breeder = openmc.CellFilter(breeder_blanket_cell)
     cell_filter_vessel = openmc.CellFilter(vessel_cell)
-    particle_filter = openmc.ParticleFilter([1]) #1 is neutron, 2 is photon
+    particle_filter = openmc.ParticleFilter('neutron') #1 is neutron, 2 is photon
     surface_filter_rear_blanket = openmc.SurfaceFilter(breeder_blanket_outer_surface)
     surface_filter_rear_vessel = openmc.SurfaceFilter(vessel_outer_surface)
     energy_bins = openmc.mgxs.GROUP_STRUCTURES['VITAMIN-J-175']
     energy_filter = openmc.EnergyFilter(energy_bins)
     
     tally = openmc.Tally(name='TBR')
-    tally.filters = [cell_filter_breeder, particle_filter]
+    tally.filters = [cell_filter_breeder]
     tally.scores = ['205'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
     tallies.append(tally)
 
     tally = openmc.Tally(name='blanket_leakage')
-    tally.filters = [surface_filter_rear_blanket, particle_filter]
+    tally.filters = [surface_filter_rear_blanket]
     tally.scores = ['current']
     tallies.append(tally)
 
     tally = openmc.Tally(name='vessel_leakage')
-    tally.filters = [surface_filter_rear_vessel, particle_filter]
+    tally.filters = [surface_filter_rear_vessel]
     tally.scores = ['current']
     tallies.append(tally)
 
     tally = openmc.Tally(name='breeder_blanket_spectra')
-    tally.filters = [cell_filter_breeder, particle_filter, energy_filter]
+    tally.filters = [cell_filter_breeder, energy_filter]
     tally.scores = ['flux']
     tallies.append(tally)
 
     tally = openmc.Tally(name='vacuum_vessel_spectra')
-    tally.filters = [cell_filter_vessel, particle_filter, energy_filter]
+    tally.filters = [cell_filter_vessel, energy_filter]
     tally.scores = ['flux']
     tallies.append(tally)
 
     tally = openmc.Tally(name='DPA')
-    tally.filters = [cell_filter_vessel, particle_filter]
+    tally.filters = [cell_filter_vessel]
     tally.scores = ['444']
     tallies.append(tally)
  
@@ -182,7 +147,7 @@ def make_materials_geometry_tallies(v):
     tallies_to_retrieve = ['TBR', 'DPA', 'blanket_leakage', 'vessel_leakage']
     for tally_name in tallies_to_retrieve:
         tally = sp.get_tally(name=tally_name)
-
+        
         df = tally.get_pandas_dataframe()
     
         tally_result = df['mean'].sum()
@@ -195,8 +160,7 @@ def make_materials_geometry_tallies(v):
     for spectra_name in spectra_tallies_to_retrieve:
         spectra_tally = sp.get_tally(name=spectra_name)
         spectra_tally_result = [entry[0][0] for entry in spectra_tally.mean]
-        spectra_tally_std_dev = [entry[0][0]
-                                 for entry in spectra_tally.std_dev]
+        spectra_tally_std_dev = [entry[0][0] for entry in spectra_tally.std_dev]
 
         json_output[spectra_name] = {'value': spectra_tally_result,
                                      'std_dev': spectra_tally_std_dev,
@@ -251,40 +215,14 @@ def example_plot_1d(GP):
     plt.savefig(str(len(GP.y)).zfill(4)+'.png')
 
 
-def example_plot_2d(GP):
-    fig, (ax1, ax2) = plt.subplots(2, 1, gridspec_kw={'height_ratios': [1, 3]}, figsize=(10, 8))
-    plt.subplots_adjust(hspace=0)
-
-    ax1.plot(evaluations, max_values, marker='o', ls='solid', c='orange', label='optimum value', zorder=5)
-    ax1.plot([5, 30], [z_func.max(), z_func.max()], ls='dashed', label='actual max', c='black')
-    ax1.set_xlabel('function evaluations')
-    #ax1.set_xlim([5, 30])
-    #ax1.set_ylim([max(y) - 0.3, z_func.max() + 0.3])
-    #ax1.xaxis.set_label_position('top')
-    #ax1.yaxis.set_label_position('right')
-    #ax1.xaxis.tick_top()
-    #ax1.set_yticks([])
-    #ax1.legend(loc=4)
-
-    ax2.contour(*mesh, z_func, 40)
-    ax2.plot([i[0] for i in GP.x], [i[1] for i in GP.x], 'D', c='red', markeredgecolor='black')
-    plt.show()
-
-
 os.system('rm *.png')
-sequencer = ghalton.Halton(2)
+sequencer = ghalton.Halton(1)
 number_of_samples = 10
 x = sequencer.get(number_of_samples)
-x = [[i[0],i[1] * 100] for i in x]
+x = [item for sublist in x for item in sublist]
 
-bounds = [(0.0,1.0),(0,100)]
-
-N = 80
-x = linspace(*bounds[0], N)
-y = linspace(*bounds[1], N)
-mesh = meshgrid(x, y)
-
-
+bounds = [(0.0,1.0)]
+#x = array([])
 y = []
 y_errors = []
 
@@ -295,37 +233,37 @@ all_results = []
 
 for filename_counter, coords in enumerate(x):
     
-    results = make_materials_geometry_tallies(coords[0],coords[1])
+    results = make_materials_geometry_tallies(enrichment_fraction_list=coords ,batches = 2, inner_radius = 500, thickness = 100, breeder_material_name = 'Li', temperature_in_C = 500)
     
     all_results.append(results)     
 
     y.append(results['TBR']['value'])
     
-    y_errors.append(results['TBR']['std_dev'] * 2)
+    y_errors.append(0.1)#results['TBR']['std_dev'] * 2)
 
     print('x from HS',x[0:filename_counter+1])
     print('y from HS',y)
     print('y_errors  from HS',y_errors)
-    print(bounds)
+    print('bounds',bounds)
     
 
     if filename_counter >0:
         GP = GpOptimiser(x[0:filename_counter+1],y,y_err=y_errors,bounds=bounds)
         max_values.append(max(GP.y))
         evaluations.append(len(GP.y))
-        example_plot_2d(GP)
+        example_plot_1d(GP)
 
 
 
 for i in range(number_of_samples,number_of_samples+10):
     # plot the current state of the optimisation
-    
+    example_plot_1d(GP)
 
     # request the proposed evaluation
-    new_x = GP.search_for_maximum()[0]
+    new_x = GP.search_for_maximum()
 
     # evaluate the new point
-    new_result = make_materials_geometry_tallies(new_x)
+    new_result = make_materials_geometry_tallies(enrichment_fraction_list = new_x ,batches = 2, inner_radius = 500, thickness = 100, breeder_material_name = 'Li', temperature_in_C = 500)
     all_results.append(results)  
     
     new_y = new_result['TBR']['value']
@@ -342,11 +280,11 @@ for i in range(number_of_samples,number_of_samples+10):
     max_values.append(max(GP.y))
     evaluations.append(len(GP.y))
 
-    example_plot_2d(GP)
-
 os.system('convert *.png output.gif')
 
 os.system('eog -f output.gif')
+
+os.system('cp output.gif /my_openmc_workshop')
 
 
 
