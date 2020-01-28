@@ -145,6 +145,22 @@ RUN git clone https://github.com/openmc-dev/plotter.git
 RUN pip3 install pyside2
 
 
+# dependancies for the occ_faceter
+RUN apt-get --yes install libcgal-dev
+RUN apt-get --yes install libocc*-dev
+RUN apt-get --yes install occ*
+RUN apt-get --yes install libtbb-dev
+
+# install the occ_faceter
+RUN git clone https://github.com/johnnonweiler/occ_faceter.git && \
+    cd occ_faceter && \
+    git checkout refactor_faceting && \
+    mkdir build && cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=.. && \
+    make && \
+    make install && \
+    cp /occ_faceter/bin/steps2h5m /bin
+
 #this python install method allows openmc source code changes to be trialed
 RUN cd openmc && python3 setup.py develop
 #this alternative install method makes changing source code and testing is a little harder 
