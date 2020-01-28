@@ -146,8 +146,11 @@ RUN pip3 install pyside2
 
 
 # dependancies for the occ_faceter
+RUN apt-get --yes update && apt-get --yes upgrade
 RUN apt-get --yes install libcgal-dev
-RUN apt-get --yes install libocc*-dev
+RUN apt-get --yes install software-properties-common
+RUN add-apt-repository ppa:freecad-maintainers/freecad-stable
+RUN apt-get --yes install libocc*dev
 RUN apt-get --yes install occ*
 RUN apt-get --yes install libtbb-dev
 
