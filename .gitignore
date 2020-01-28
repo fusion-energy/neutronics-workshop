@@ -5,6 +5,8 @@ tallies.out
 
 *.h5
 
+*.h5m
+
 *.trelis
 
 *.cub
