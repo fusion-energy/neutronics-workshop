@@ -18,3 +18,7 @@ tallies.out
 *.vtk
 
 *.vti
+
+*.ppm
+
+__pycache__/
