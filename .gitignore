@@ -1,0 +1,16 @@
+
+*.xml
+
+tallies.out
+
+*.h5
+
+*.trelis
+
+*.cub
+
+*.ipynb
+
+*.vtk
+
+*.vti
