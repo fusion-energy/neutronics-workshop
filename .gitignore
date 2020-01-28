@@ -9,6 +9,8 @@ tallies.out
 
 *.trelis
 
+*.jou
+
 *.cub
 
 *.ipynb
