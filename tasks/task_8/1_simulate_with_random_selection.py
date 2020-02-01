@@ -137,8 +137,6 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
     return json_output
 
 
-
-
 number_of_simulations = 5 # this value can be changed to perform more simulation
 
 for i in tqdm(range(number_of_simulations)):
