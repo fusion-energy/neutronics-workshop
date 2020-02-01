@@ -17,11 +17,7 @@
     },
     {
         "material": "copper",
-        "filename": "upper_divertor.stp"
-    },
-    {
-        "material": "copper",
-        "filename": "lower_divertor.stp"
+        "filename": "divertor.stp"
     },
     {
         "material": "Graveyard",
