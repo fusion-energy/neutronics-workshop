@@ -13,6 +13,10 @@
     },
     {
         "material": "copper",
+        "filename": "poloidal_magnets.stp"
+    },
+    {
+        "material": "copper",
         "filename": "upper_divertor.stp"
     },
     {
