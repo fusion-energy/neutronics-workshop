@@ -29,13 +29,11 @@ To add different reactions to the plot we need their ENDF reaction numbers (MT n
 
 - Try adding the other lead isotopes to the plot (Pb207 and Pb208).
 
-- Try adding tritium production (n,Xt) in Li6 and Li7 to the same plot.
+- Try adding tritium production (n,Xt) in Li6 and Li7 to the same plot using the loops in the python script.
 
 The plot should now be similar to the plot below, showing fusion relevant interactions (change scale to log log). These are important reactions for breeder blankets as they offer high probability of neutron multiplication and tritium production.
 
 <p align="center"><img src="images/1_example_isotope_plot_2.png" height="500"></p>
-
-- Try editing ```1_example_isotope_plot.py``` so that it plots tritium production or neutron multiplication for all stable isotopes.
 
 Elemental properties can also be found with OpenMC. 
 
