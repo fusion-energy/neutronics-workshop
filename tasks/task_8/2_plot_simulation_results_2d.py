@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import json
 import pandas as pd
 import os
-
+import argparse
 
 def make_plot(x_axis_name,y_axis_name, y_axis_error_name):
 
@@ -61,6 +61,14 @@ def make_plot(x_axis_name,y_axis_name, y_axis_error_name):
       fig.show()
 
 
+parser = argparse.ArgumentParser()
+parser.add_argument('-s', 
+                    '--samples', 
+                    required=True,
+                    choices=['random', 'halton'],
+                    help='Chose the type of sampling to plot'
+                    )
+args = parser.parse_args()
 
 #reads all json files into pandas dataframe
 path_to_json = "outputs"
@@ -69,7 +77,9 @@ resultdict = []
 for filename in list_files:
     with open(os.path.join(path_to_json, filename), "r") as inputjson:
         resultdict.append(json.load(inputjson))
+
 results_df = pd.DataFrame(resultdict)
+results_df = results_df[results_df['sample'] == args.samples]
 
 make_plot(x_axis_name='enrichment_fraction',y_axis_name='TBR', y_axis_error_name='TBR_std_dev')
 make_plot(x_axis_name='thickness',y_axis_name='TBR', y_axis_error_name='TBR_std_dev')
