@@ -23,7 +23,7 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
                                 enrichment_fraction = enrichment_fraction,
                                 temperature_in_C = temperature_in_C).neutronics_material
 
-    eurofer = Material(material_name = 'eurofer').neutronics_material
+    eurofer = Material(material_name='eurofer').neutronics_material
     copper = Material(material_name = 'copper').neutronics_material
 
     mats = openmc.Materials([breeder_material, eurofer, copper])
@@ -131,8 +131,6 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
 
 
 
-
-
 #reads all json files into pandas dataframe
 path_to_json = "outputs"
 Path('outputs/').mkdir(parents=True, exist_ok=True)
@@ -146,36 +144,35 @@ for filename in list_files:
         print('no files created yet')
 results_df = pd.DataFrame(resultdict)
 
-number_of_new_simulations = 5 # this value will need to be changed
+number_of_new_simulations = 7 # this value will need to be changed to cover the space better
 
 
-for i in tqdm(range(number_of_new_simulations)):
-    for breeder_material_name in ['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8']:
+for breeder_material_name in ['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8']:
+ 
+    sequencer = ghalton.Halton(2)
 
-        sequencer = ghalton.Halton(2)
+    if len(results_df) > 0:
+        existing_simulations_for_this_material = results_df[results_df['breeder_material_name']==breeder_material_name]
 
-        if len(results_df) > 0:
-            existing_simulations_for_this_material = results_df[results_df['breeder_material_name']==breeder_material_name]
+        coords = sequencer.get(number_of_new_simulations+len(existing_simulations_for_this_material))
 
-            coords = sequencer.get(number_of_new_simulations+len(existing_simulations_for_this_material))
+    else:
+        coords = sequencer.get(number_of_new_simulations)
 
-        else:
-            coords = sequencer.get(number_of_new_simulations)
+    # x = [item for sublist in x for item in sublist]
+    for i, coord in enumerate(coords):
 
-        # x = [item for sublist in x for item in sublist]
-        for i, coord in enumerate(coords):
+        enrichment_fraction = coord[0]
+        thickness = coord[1]*500
 
-            enrichment_fraction = coord[0]
-            thickness = coord[1]*500
-
-            inputs = {'batches':2,
-                      'nps':1000,  
-                      'enrichment_fraction':enrichment_fraction,
-                      'inner_radius':500,
-                      'thickness':thickness,
-                      'breeder_material_name':breeder_material_name,
-                      'temperature_in_C':500,
-                      }
+        inputs = {'batches':2,
+                    'nps':1000,  
+                    'enrichment_fraction':enrichment_fraction,
+                    'inner_radius':500,
+                    'thickness':thickness,
+                    'breeder_material_name':breeder_material_name,
+                    'temperature_in_C':500,
+                    }
 
         result = make_geometry_tallies(**inputs)
 
