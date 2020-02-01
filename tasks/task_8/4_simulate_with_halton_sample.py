@@ -169,7 +169,7 @@ for i in tqdm(range(number_of_new_simulations)):
             thickness = coord[1]*500
 
             inputs = {'batches':2,
-                      'nps':10,  
+                      'nps':1000,  
                       'enrichment_fraction':enrichment_fraction,
                       'inner_radius':500,
                       'thickness':thickness,
