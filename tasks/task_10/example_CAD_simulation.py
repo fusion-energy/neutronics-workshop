@@ -7,39 +7,23 @@ __author__      = "Jonathan Shimwell"
 import openmc
 import json
 import os
+from neutronics_material_maker import Material
 
-#MATERIALS#
+#MATERIALS using the neutronics material maker
 
-breeder_material = openmc.Material(name="breeder_material") #Pb84.2Li15.8 with enrichment of Li6
-enrichment_fraction = 0.90
-breeder_material.add_element('Pb', 84.2,'ao')
-breeder_material.add_nuclide('Li6', enrichment_fraction*15.8, 'ao')
-breeder_material.add_nuclide('Li7', (1.0-enrichment_fraction)*15.8, 'ao')
-breeder_material.set_density('g/cm3', 11.)
+breeder_material = Material(material_name='Li4SiO4', enrichment_fraction=0.9).neutronics_material
 
-copper = openmc.Material(name='magnet_material')
-copper.set_density('g/cm3', 8.5)
-copper.add_element('Cu', 1.0)
+copper = Material(material_name="copper").neutronics_material
 
-eurofer = openmc.Material(name='eurofer')
-eurofer.set_density('g/cm3', 7.75)
-eurofer.add_element('Fe', 89.067, percent_type='wo')
-eurofer.add_element('C', 0.11, percent_type='wo')
-eurofer.add_element('Mn', 0.4, percent_type='wo')
-eurofer.add_element('Cr', 9.0, percent_type='wo')
-eurofer.add_element('Ta', 0.12, percent_type='wo')
-eurofer.add_element('W', 1.1, percent_type='wo')
-eurofer.add_element('N', 0.003, percent_type='wo')
-eurofer.add_element('V', 0.2, percent_type='wo')
+eurofer = Material(material_name='eurofer').neutronics_material
 
 mats = openmc.Materials([breeder_material, eurofer, copper])
 
 
-#GEOMETRY#
+#GEOMETRY using dagmc doesn't contain any CSG geometry
 
 universe = openmc.Universe()
-geom = openmc.Geometry(universe) # do i need this with DAGMC?
-
+geom = openmc.Geometry(universe) 
 
 
 
@@ -50,13 +34,13 @@ sett = openmc.Settings()
 batches = 10
 sett.batches = batches
 sett.inactive = 0
-sett.particles = 500
+sett.particles = 1000
 sett.run_mode = 'fixed source'
 sett.dagmc = True
 
 # Create a DT point source
 source = openmc.Source()
-source.space = openmc.stats.Point((0,0,0))
+source.space = openmc.stats.Point((650,0,0))
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1])
 sett.source = source
@@ -64,11 +48,8 @@ sett.source = source
 
 tallies = openmc.Tallies()
 
-#added a cell tally for tritium production
-cell_filter = openmc.CellFilter(1) #breeder_material is in cell number 1
-tbr_tally = openmc.Tally(2,name='TBR')
-tbr_tally.filters = [cell_filter]
-tbr_tally.scores = ['205'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
+tbr_tally = openmc.Tally(name='TBR')
+tbr_tally.scores = ['(n,Xt)'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
 tallies.append(tbr_tally)
 
 
@@ -82,7 +63,6 @@ sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 # access the tally
 tbr_tally = sp.get_tally(name='TBR')
 df = tbr_tally.get_pandas_dataframe()
-
 tbr_tally_result = df['mean'].sum()
 
 # print result
