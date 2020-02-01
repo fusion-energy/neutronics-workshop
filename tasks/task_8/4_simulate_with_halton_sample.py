@@ -146,7 +146,7 @@ for filename in list_files:
         print('no files created yet')
 results_df = pd.DataFrame(resultdict)
 
-number_of_new_simulations = 10 # this value will need to be changed
+number_of_new_simulations = 5 # this value will need to be changed
 
 
 for i in tqdm(range(number_of_new_simulations)):
@@ -155,7 +155,7 @@ for i in tqdm(range(number_of_new_simulations)):
         sequencer = ghalton.Halton(2)
 
         if len(results_df) > 0:
-            existing_simulations_for_this_material = results_df[results_df['breeder_material_name']=='Li']
+            existing_simulations_for_this_material = results_df[results_df['breeder_material_name']==breeder_material_name]
 
             coords = sequencer.get(number_of_new_simulations+len(existing_simulations_for_this_material))
 
@@ -169,18 +169,20 @@ for i in tqdm(range(number_of_new_simulations)):
             thickness = coord[1]*500
 
             inputs = {'batches':2,
-                    'nps':1000,  
-                    'enrichment_fraction':enrichment_fraction,
-                    'inner_radius':500,
-                    'thickness':thickness,
-                    'breeder_material_name':breeder_material_name,
-                    'temperature_in_C':500,
-                    }
+                      'nps':10,  
+                      'enrichment_fraction':enrichment_fraction,
+                      'inner_radius':500,
+                      'thickness':thickness,
+                      'breeder_material_name':breeder_material_name,
+                      'temperature_in_C':500,
+                      }
 
         result = make_geometry_tallies(**inputs)
 
-        result['sample'] : 'halton'
+        result['sample'] = 'halton'
 
-    filename = 'outputs/'+str(uuid.uuid4())+'.json'
-    with open(filename, mode='w', encoding='utf-8') as f:
-        json.dump(json_output, f, indent=4)
+        result.update(inputs)
+
+        filename = 'outputs/'+str(uuid.uuid4())+'.json'
+        with open(filename, mode='w', encoding='utf-8') as f:
+            json.dump(result, f, indent=4)

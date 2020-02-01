@@ -7,7 +7,7 @@ Please allow 25 minutes for this task.
 
 Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop/#/20).
 
-This task is more open ended - the aim is to find the minimum thickness of breeder material needed to obtain a TBR of 1.2. The scripts will need changing to make the serach more efficient as currently it just selects random points.
+This task is more open ended - the aim is to find the impact of lithium 6 enrichment and blanket thickness on the TBR for different breeder materials.
 
 There are several candidate breeder materials including a lithium ceramic (Li4SiO4), Flibe, Lithium lead (eutectic) and pure lithium. Each material can have it's Li6 content enriched and the blanket thickness varied and these have an impact on the TBR.
 
@@ -17,11 +17,9 @@ Examine the ```1_simulate_with_random_selection.py``` file and try to understand
 
 Run the script to perform simulations. There are two scripts to help you analyse the results.
 
-- ```2_plot_simulation_results_2d.py``` will allow you to see the impact of changing either the Li6 enrichment or the blanket thickness on TBR.
+- ```2_plot_simulation_results_2d.py``` will allow you to see the impact of changing either the Li6 enrichment or the blanket thickness on TBR. This will need running with an argument which is used to filter the simulation data. ```python 2_plot_simulation_results_2d.py --sample random```
 
-- ```3_plot_simulation_results_3d.py``` will allow you to see the combined impact of changing the Li6 enrichment and the blanket thickness on TBR.
-
-Ultimately you should come up with the minimum thickness needed for each candidate blanket material and the Li6 enrichment required at that thickness. Feel free to share simulation data with other groups and interpolate between the data points.
+- ```3_plot_simulation_results_3d.py``` will allow you to see the combined impact of changing the Li6 enrichment and the blanket thickness on TBR. This will need running with an argument which is used to filter the simulation data. ```python 3_plot_simulation_results_3d.py --sample random```
 
 For 200 simulations, the 2D plots should look similar to the plots below.
 
@@ -32,6 +30,12 @@ For 200 simulations, the 2D plots should look similar to the plots below.
 For 525 simulations, the 3D plots should look similar to the example plot shown below.
 
 <p align="center"><img src="images/TBR_vs_thickness_vs_enrichment_fraction_lithium.png" height="500"></p>
+
+Using random sampling to cover the parameter space is inefficient. Halton sampling is one method that is able to cover the parameter space more effiicently.
+
+- Try using Halton sampling to explore the parameter space with the following command ```python 4_simulate_with_halton_sample.py```
+
+- Try replotting the graphs to see how the parameter space has been more efficiently covered. ```python 2_plot_simulation_results_2d.py --sample halton``` and ```python 3_plot_simulation_results_3d.py --sample halton```
 
 **Learning Outcomes**
 
