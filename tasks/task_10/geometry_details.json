@@ -1,6 +1,6 @@
 [
     {
-        "material": "breeder_material",
+        "material": "Li4SiO4",
         "filename": "blanket.stp"
     },
     {
@@ -8,7 +8,19 @@
         "filename": "firstwall.stp"
     },
     {
-        "material": "magnet_material",
-        "filename": "poloidal_magnet.stp"
+        "material": "copper",
+        "filename": "centre_column.stp"
+    },
+    {
+        "material": "copper",
+        "filename": "upper_divertor.stp"
+    },
+    {
+        "material": "copper",
+        "filename": "lower_divertor.stp"
+    },
+    {
+        "material": "Graveyard",
+        "filename": "Graveyard.stp"
     }
 ]
