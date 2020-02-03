@@ -129,7 +129,8 @@ ENV CC=mpicc
 
 # installs OpenMc from source
 # RUN git clone https://github.com/openmc-dev/openmc.git && \  
-RUN git clone https://github.com/makeclean/openmc.git && \
+RUN cd opt && \
+    git clone https://github.com/makeclean/openmc.git && \
     cd openmc && \
 #     git checkout develop && \
     git checkout dlopen_source && \
@@ -165,12 +166,12 @@ RUN git clone https://github.com/johnnonweiler/occ_faceter.git && \
     cp /occ_faceter/bin/steps2h5m /bin
 
 #this python install method allows openmc source code changes to be trialed
-RUN cd openmc && python3 setup.py develop
+RUN cd /opt/openmc && python3 setup.py develop
 #this alternative install method makes changing source code and testing is a little harder 
-#RUN cd openmc && pip3 install .
+#RUN cd /opt/openmc && pip3 install .
 
 RUN echo 'alias python="python3"' >> ~/.bashrc
 
 
 ENV PATH=$PATH:/plotter/
-ENV PATH=$PATH:/openmc/build/bin/
+ENV PATH=$PATH:/opt/openmc/build/bin/
