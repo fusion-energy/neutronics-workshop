@@ -38,13 +38,11 @@ sett.particles = 1000
 sett.run_mode = 'fixed source'
 sett.dagmc = True
 
-# Create a DT point source
 source = openmc.Source()
-source.space = openmc.stats.Point((650,0,0))
-source.angle = openmc.stats.Isotropic()
-source.energy = openmc.stats.Discrete([14e6], [1])
-sett.source = source
+#sets the source poition, direction and energy with predefined plasma parameters (see source_sampling.cpp)
+source.library = './source_sampling.so'
 
+sett.source = source
 
 tallies = openmc.Tallies()
 
