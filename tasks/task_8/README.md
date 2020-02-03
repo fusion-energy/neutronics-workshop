@@ -31,7 +31,7 @@ For 128 random simulations, the 2D plots should look similar to the plots below.
 
 For 128 random simulations, the 3D plot should look similar to the example plot shown below.
 
-<p align="center"><img src="images/TBR_vs_thickness_vs_enrichment_fraction_random.png" height="500"></p>
+<p align="center"><img src="images/TBR_vs_thickness_vs_enrichment_fraction_random.png" height="400"></p>
 
 Using random sampling to cover the parameter space is inefficient. Halton sampling is one method that is able to cover the parameter space more effiicently.
 
