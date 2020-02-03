@@ -31,31 +31,31 @@ class test_task_8(unittest.TestCase):
         assert Path('outputs').exists() == True
         assert len(os.listdir('outputs')) != 0
 
-    def test_task_8_part_2(self):
+    def test_task_8_part_1_graph_1(self):
 
         os.chdir(Path(cwd))
         os.chdir(Path('../tasks/task_8'))
-        output_filenames = ['TBR_vs_enrichment_fraction.html', 'TBR_vs_thickness.html']
+        output_filenames = ['TBR_vs_enrichment_fraction_random.html', 'TBR_vs_thickness_random.html']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
-        os.system('python plot_simulation_results_2d.py')
+        os.system('python plot_simulation_results_2d.py --sample random')
         for output_filename in output_filenames:
             assert Path(output_filename).exists() == True
             os.system('rm '+output_filename)
 
-    def test_task_8_part_3(self):
+    def test_task_8_part_1_graph_2(self):
 
         os.chdir(Path(cwd))
         os.chdir(Path('../tasks/task_8'))
-        output_filename = 'TBR_vs_thickness_vs_enrichment_fraction.html'
+        output_filename = 'TBR_vs_thickness_vs_enrichment_fraction_random.html'
         os.system('rm '+output_filename)
-        os.system('python plot_simulation_results_3d.py')
+        os.system('python plot_simulation_results_3d.py --sample random')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
         os.system('rm outputs/*.json')
         os.system('rmdir outputs')
 
-    def test_task_8_part_4(self):
+    def test_task_8_part_2(self):
 
         os.chdir(Path(cwd))
         os.chdir(Path('../tasks/task_8'))
@@ -64,3 +64,29 @@ class test_task_8(unittest.TestCase):
         os.system('python 1_simulate_with_halton_sample.py')
         assert Path('outputs').exists() == True
         assert len(os.listdir('outputs')) != 0
+
+
+    def test_task_8_part_2_graph_1(self):
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('../tasks/task_8'))
+        output_filenames = ['TBR_vs_enrichment_fraction_halton.html', 'TBR_vs_thickness_halton.html']
+        for output_filename in output_filenames:
+            os.system('rm '+output_filename)
+        os.system('python plot_simulation_results_2d.py --sample halton')
+        for output_filename in output_filenames:
+            assert Path(output_filename).exists() == True
+            os.system('rm '+output_filename)
+
+
+    def test_task_8_part_2_graph_2(self):
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('../tasks/task_8'))
+        output_filename = 'TBR_vs_thickness_vs_enrichment_fraction_halton.html'
+        os.system('rm '+output_filename)
+        os.system('python plot_simulation_results_3d.py --sample halton')
+        assert Path(output_filename).exists() == True
+        os.system('rm '+output_filename)
+        os.system('rm outputs/*.json')
+        os.system('rmdir outputs')
