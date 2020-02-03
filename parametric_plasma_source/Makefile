@@ -26,7 +26,7 @@ C_FLAGS = -fPIC
 CXX_FLAGS = -fPIC
 
  #this directory will need changing if your openmc path is different
-OPENMC_DIR = /openmc
+OPENMC_DIR = /opt/openmc
 OPENMC_INC_DIR = $(OPENMC_DIR)/include
 OPENMC_LIB_DIR = $(OPENMC_DIR)/lib
 # setting the so name is important
