@@ -108,16 +108,16 @@ LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH
 echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc 
 
 # OpenMC Install
-cd ~
+cd /opt
 # git clone https://github.com/mit-crpg/openmc 
-git clone https://github.com/makeclean/openmc.git
-cd openmc
-git checkout dlopen_source
-mkdir build
+sudo git clone https://github.com/makeclean/openmc.git
+cd /opt/openmc
+sudo git checkout dlopen_source
+sudo mkdir build
 cd build 
-cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
+sudo cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 # cmake -Ddagmc=ON -Ddebug=on -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
-make 
+sudo make 
 sudo make install
 cd ~/openmc/ 
 python3 setup.py install --user
