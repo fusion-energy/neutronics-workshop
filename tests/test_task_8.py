@@ -38,7 +38,7 @@ class test_task_8(unittest.TestCase):
         output_filenames = ['TBR_vs_enrichment_fraction_random.html', 'TBR_vs_thickness_random.html']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
-        os.system('python plot_simulation_results_2d.py --sample random')
+        os.system('python 2_plot_simulation_results_2d.py --sample random')
         for output_filename in output_filenames:
             assert Path(output_filename).exists() == True
             os.system('rm '+output_filename)
@@ -49,7 +49,7 @@ class test_task_8(unittest.TestCase):
         os.chdir(Path('../tasks/task_8'))
         output_filename = 'TBR_vs_thickness_vs_enrichment_fraction_random.html'
         os.system('rm '+output_filename)
-        os.system('python plot_simulation_results_3d.py --sample random')
+        os.system('python 3_plot_simulation_results_3d.py --sample random')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
         os.system('rm outputs/*.json')
@@ -61,7 +61,7 @@ class test_task_8(unittest.TestCase):
         os.chdir(Path('../tasks/task_8'))
         os.system('rm outputs/*.json')
         os.system('rmdir outputs')
-        os.system('python 1_simulate_with_halton_sample.py')
+        os.system('python 4_simulate_with_halton_sample.py')
         assert Path('outputs').exists() == True
         assert len(os.listdir('outputs')) != 0
 
@@ -73,7 +73,7 @@ class test_task_8(unittest.TestCase):
         output_filenames = ['TBR_vs_enrichment_fraction_halton.html', 'TBR_vs_thickness_halton.html']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
-        os.system('python plot_simulation_results_2d.py --sample halton')
+        os.system('python 2_plot_simulation_results_2d.py --sample halton')
         for output_filename in output_filenames:
             assert Path(output_filename).exists() == True
             os.system('rm '+output_filename)
@@ -85,7 +85,7 @@ class test_task_8(unittest.TestCase):
         os.chdir(Path('../tasks/task_8'))
         output_filename = 'TBR_vs_thickness_vs_enrichment_fraction_halton.html'
         os.system('rm '+output_filename)
-        os.system('python plot_simulation_results_3d.py --sample halton')
+        os.system('python 3_plot_simulation_results_3d.py --sample halton')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
         os.system('rm outputs/*.json')
