@@ -140,3 +140,32 @@ echo 'export OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml' >>
 OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml
 echo 'export OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml' >> ~/.bashrc
 
+
+
+
+RUN git clone https://github.com/openmc-dev/plotter.git
+echo 'export PATH=$PATH:/plotter/' >> ~/.bashrc
+
+
+# plotter requirments
+RUN pip3 install pyside2
+
+
+# dependancies for the occ_faceter
+sudo apt-get --yes update && apt-get --yes upgrade
+sudo apt-get --yes install libcgal-dev
+sudo apt-get --yes install software-properties-common
+sudo add-apt-repository ppa:freecad-maintainers/freecad-stable
+sudo apt-get --yes install libocc*dev
+sudo apt-get --yes install occ*
+sudo apt-get --yes install libtbb-dev
+
+# install the occ_faceter
+git clone https://github.com/johnnonweiler/occ_faceter.git
+cd occ_faceter
+git checkout refactor_faceting
+mkdir build && cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=..
+make
+make install
+sudo cp /occ_faceter/bin/steps2h5m /bin
