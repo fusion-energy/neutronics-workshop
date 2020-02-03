@@ -19,6 +19,7 @@ cwd = os.getcwd()
 
 
 class test_task_6(unittest.TestCase):
+    
     def test_task_6_part_1(self):
 
         os.chdir(Path(cwd))

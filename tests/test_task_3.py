@@ -27,8 +27,8 @@ class test_task_3(unittest.TestCase):
         os.system('python 1_plot_neutron_birth_energy.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
-    
-    
+
+
     def test_task_3_part_2(self):
 
         os.chdir(Path(cwd))
@@ -38,7 +38,7 @@ class test_task_3(unittest.TestCase):
         os.system('python 2_plot_neutron_birth_location.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
-    
+
 
     def test_task_3_part_3(self):
 
@@ -49,7 +49,7 @@ class test_task_3(unittest.TestCase):
         os.system('python 3_plot_neutron_birth_direction.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
-    
+
 
     def test_task_3_part_4(self):
 
@@ -71,7 +71,7 @@ class test_task_3(unittest.TestCase):
         os.system('python 5_plot_neutron_birth_direction_plasma.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
-        
+
 
     def test_task_3_part_6(self):
 
@@ -84,4 +84,3 @@ class test_task_3(unittest.TestCase):
         for output_filename in output_filenames:
             assert Path(output_filename).exists() == True
             os.system('rm '+output_filename)
-        

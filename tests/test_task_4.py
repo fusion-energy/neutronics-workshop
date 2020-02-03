@@ -39,4 +39,4 @@ class test_task_4(unittest.TestCase):
         os.system('python 2_example_neutron_flux_tokamak.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
-        
+
