@@ -11,7 +11,7 @@ This task is more open ended - the aim is to find the impact of lithium 6 enrich
 
 There are several candidate breeder materials including a lithium ceramic (Li4SiO4), Flibe, Lithium lead (eutectic) and pure lithium. Each material can have it's Li6 content enriched and the blanket thickness varied and these have an impact on the TBR.
 
-Examine the ```1_simulate_with_random_selection.py``` file and try to understand how the model is created and particularly how the simulation parameters are saved in a .json file with a unique ID.
+Examine the ```1_simulate_with_random_sample.py``` file and try to understand how the model is created and particularly how the simulation parameters are saved in a .json file with a unique ID.
 
 Run the script to perform simulations.
 
