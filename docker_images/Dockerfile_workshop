@@ -31,11 +31,12 @@ RUN apt-get update
 RUN apt-get --yes install freecad 
 RUN ln -s /usr/lib/freecad/Mod /usr/lib/freecad-python3/Mod
 
+RUN echo downloading
 RUN git clone https://github.com/ukaea/openmc_workshop
 
 # Compile parametric plasma source
 RUN cd /openmc_workshop/parametric_plasma_source && bash compile.sh
 # source_sampling.so is the compiled plasma source so this copies it to various task folders for later use
-RUN cp /openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_3
+RUN cp /opt/openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_3 /openmc_workshop/tasks/task_10
 
 WORKDIR /openmc_workshop

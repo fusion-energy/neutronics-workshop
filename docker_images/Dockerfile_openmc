@@ -175,3 +175,4 @@ RUN echo 'alias python="python3"' >> ~/.bashrc
 
 ENV PATH=$PATH:/plotter/
 ENV PATH=$PATH:/opt/openmc/build/bin/
+ENV PATH=$PATH:/DAGMC/bin/
