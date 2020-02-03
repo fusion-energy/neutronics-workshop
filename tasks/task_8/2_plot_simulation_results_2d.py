@@ -39,8 +39,8 @@ def make_plot(x_axis_name,y_axis_name, y_axis_error_name):
                                     y= tally,
                                     mode = 'markers',
                                     hoverinfo='text' ,
-                                    text=text_values[material_name],                       
-                                    name = material_name,                
+                                    text=text_values[material_name],
+                                    name = material_name,
                                     error_y= {'array':tally_std_dev},
                                     )
                               )

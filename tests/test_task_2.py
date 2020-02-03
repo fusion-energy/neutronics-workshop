@@ -19,6 +19,7 @@ cwd = os.getcwd()
 
 class test_task_2(unittest.TestCase):
 
+
     def test_task_2_part_1(self): #  This test launches matplotlib that pauses the running of the script
 
         os.chdir(Path(cwd))

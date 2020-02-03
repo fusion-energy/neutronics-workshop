@@ -19,8 +19,9 @@ cwd = os.getcwd()
 
 
 class test_task_5(unittest.TestCase):
+
     def test_task_5_part_1(self):
- 
+
         os.chdir(Path(cwd))
         os.chdir(Path('../tasks/task_5'))
         output_filename = 'tokamak_spectra.html'
@@ -28,7 +29,6 @@ class test_task_5(unittest.TestCase):
         os.system('python 1_example_neutron_spectra_tokamak.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
-      
 
     def test_task_5_part_2(self):
 
@@ -39,4 +39,3 @@ class test_task_5(unittest.TestCase):
         os.system('python 2_example_photon_spectra_tokamak.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
-   
