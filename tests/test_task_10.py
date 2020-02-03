@@ -21,12 +21,34 @@ cwd = os.getcwd()
 
 
 class test_task_10(unittest.TestCase):
+
+
     def test_task_10_part_1(self):
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('../tasks/task_10'))
+        output_filename = 'dagmc_notwatertight.h5m'
+        os.system('rm '+output_filename)
+        os.system('steps2h5m geometry_details.json 1. dagmc_notwatertight.h5m')
+        assert Path(output_filename).exists() == True
+
+
+    def test_task_10_part_2(self):
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('../tasks/task_10'))
+        output_filename = 'dagmc.h5m'
+        os.system('rm '+output_filename)
+        os.system('make_watertight dagmc_notwatertight.h5m -o dagmc.h5m')
+        assert Path(output_filename).exists() == True
+
+
+    def test_task_10_part_3(self):
 
         os.chdir(Path(cwd))
         os.chdir(Path('../tasks/task_10'))
         output_filename = 'cad_simulation_results.json'
         os.system('rm '+output_filename)
-        os.system('python example_CAD_simulation.py')
+        os.system('python3 example_CAD_simulation.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)

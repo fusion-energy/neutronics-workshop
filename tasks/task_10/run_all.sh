@@ -6,4 +6,4 @@ make_watertight dagmc_notwatertight.h5m -o dagmc.h5m
 mbconvert dagmc.h5m dagmc.stl
 mbconvert dagmc.h5m dagmc.vtk
 
-python3 example_CAD_simulation.py
+python example_CAD_simulation.py
