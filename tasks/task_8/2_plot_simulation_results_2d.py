@@ -66,7 +66,7 @@ parser.add_argument('-s',
                     '--samples', 
                     required=True,
                     choices=['random', 'halton'],
-                    help='Chose the type of sampling to plot'
+                    help='Choose the type of sampling to plot'
                     )
 args = parser.parse_args()
 

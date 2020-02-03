@@ -8,7 +8,7 @@ import json
 import os
 import pandas as pd
 import numpy as np
-
+import argparse
 
 
 def make_3d_plot(x_axis_name, y_axis_name, z_axis_name):
@@ -68,14 +68,23 @@ def make_3d_plot(x_axis_name, y_axis_name, z_axis_name):
             }
         )
 
-        fig.write_html(z_axis_name + '_vs_' + y_axis_name+'_vs_'+x_axis_name+'.html')
+        fig.write_html(z_axis_name + '_vs_' + y_axis_name+'_vs_'+x_axis_name+'_'+args.samples+'.html')
         try:
-            fig.write_html('/my_openmc_workshop/'+y_axis_name+'_vs_'+x_axis_name+'.html')
+            fig.write_html('/my_openmc_workshop/'+y_axis_name+'_vs_'+x_axis_name+'_'+args.samples+'.html')
         except (FileNotFoundError, NotADirectoryError):
             pass
 
         fig.show()
 
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-s', 
+                    '--samples', 
+                    required=True,
+                    choices=['random', 'halton'],
+                    help='Choose the type of sampling to plot'
+                    )
+args = parser.parse_args()
 
 #reads all json files into pandas dataframe
 path_to_json = "outputs"
@@ -84,7 +93,8 @@ resultdict = []
 for filename in list_files:
     with open(os.path.join(path_to_json, filename), "r") as inputjson:
         resultdict.append(json.load(inputjson))
-results_df = pd.DataFrame(resultdict)
 
+results_df = pd.DataFrame(resultdict)
+results_df = results_df[results_df['sample'] == args.samples]
 
 make_3d_plot(x_axis_name= 'enrichment_fraction', y_axis_name = 'thickness', z_axis_name = 'TBR')
