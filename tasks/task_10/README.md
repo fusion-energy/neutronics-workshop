@@ -33,7 +33,7 @@ Once loaded select file open and select CAD files (blanket.stp, firstwall.stp an
 These CAD files can be converted into a neutronics geometry using the command ```steps2h5m```. This command also attaches material names to the geometry. The material names will need to have matching OpenMC material objects at the simulation stage. The ```steps2h5m``` requires three agruments, these are a json input file which lists the CAD files (stp files), the tolerance on the faceting and the output name of the resulting neutronics model (h5m format).
 
 
-- Try opening the geometry_description.json file to see the CAD files used in this geometry and the material names assigned to them ```coder geometry_description.json```
+- Try opening the geometry_details.json file to see the CAD files used in this geometry and the material names assigned to them ```coder geometry_details.json```
 
 - Try converting the STEP geometry into h5m files using the ```steps2h5m geometry_details.json 10 dagmc_notwatertight.h5m``` command.
 
