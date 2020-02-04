@@ -35,11 +35,11 @@ These CAD files can be converted into a neutronics geometry using the command ``
 
 - Try opening the geometry_description.json file to see the CAD files used in this geometry and the material names assigned to them ```coder geometry_description.json```
 
-- Try converting the STEP geometry into h5m files using the ```steps2h5m geometry_details.json 0.01 dagmc_notwatertight.h5m``` command.
+- Try converting the STEP geometry into h5m files using the ```steps2h5m geometry_details.json 10 dagmc_notwatertight.h5m``` command.
 
 The next command checks the geometry is watertight and that all the volumes are closed. This is required to prevent neutrons getting lost during the neutron transport stage.
 
-- Try making the geometry watertight with the command ```makewatertight dagmc_notwatertight.h5m dagmc.h5m```
+- Try making the geometry watertight with the command ```make_watertight dagmc_notwatertight.h5m -o dagmc.h5m```
 
 The example_CAD_simulation.py script is different to the previous CSG based OpenMC simulation scripts. Try to spot the differences between a CSG and CAD simulation scripts. You might notice that the materials are defined in the script but not assigned to volumes. Also the settings object has an additional dagmc property. Also notice there are no CSG surfaces or cells defined in the model.
 
