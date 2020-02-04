@@ -36,7 +36,7 @@ sett.batches = batches
 sett.inactive = 0
 sett.particles = 1000
 sett.run_mode = 'fixed source'
-sett.dagmc = True
+sett.dagmc = True # this is the openmc command enables use of the dagmc.h5m file as the geometry
 
 source = openmc.Source()
 #sets the source poition, direction and energy with predefined plasma parameters (see source_sampling.cpp)
@@ -71,4 +71,3 @@ json_output = {'TBR' : tbr_tally_result}
 with open('cad_simulation_results.json', 'w') as file_object:
     json.dump(json_output, file_object, indent=2)
 os.system('cp cad_simulation_results.json /my_openmc_workshop')
-
