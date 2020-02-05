@@ -51,17 +51,35 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
     ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=$IP:0 --privileged openmcworkshop/openmc_nndc_workshop```
 
-### Windows (not yet implemented)
+### Windows
 
-1. Install Docker Desktop for [windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows).
+1. Install Docker Desktop for [windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows). During this install make sure to check the box that adds your user account to the docker-users account otherwise you will require admin writes to launch docker-desktop.
 
-Running the docker image should load up an Ubuntu 18.04 Docker container with OpenMC, Python3, Paraview, nuclear data and other libraries.
+2. Next is to install an X server to allow a visual connection to docker. The options here are [VcXsrv](https://sourceforge.net/projects/vcxsrv/) (recommended) or [Xming](https://sourceforge.net/projects/xming/). Install VcXsrv and be sure to check the "Disable access control" check box during installation,  [detailed instructions](https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde) are avaiable.
 
-You can quickly test the graphics options worked by typing ```paraview``` in the container environment. This should open the paraview program.
+3. Run VcXsrv which now should be found in the start menu
+
+4. Open Windows PowerShell, this can be found by searching the start menu.
+
+5. Within Windows PowerShell type ```ipconfig``` and find your IP address
+
+6. Within Windows PowerShell type ```set-variable -name DISPLAY -value yourip:0.0``` and replace ```yourip``` with your IP address found in the previous step. The full command should look something like this ```set-variable -name DISPLAY -value 10.11.128.118:0.0```
+
+7. Within Windows PowerShell type ```docker run --net=host -it --rm -v $PWD:/my_openmc_workshop -e DISPLAY=$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
+
+
+### Checking that everything works
+
+Running the docker image with the ```docker run``` command should load up an Ubuntu 18.04 Docker container with OpenMC, DAGMC, Python3, Paraview, nuclear data and other libraries.
 
 Running the docker image places you in the ```/openmc_workshop``` directory which contains all of the files required to complete the workshop.
 
+You can quickly test the graphics options worked by typing ```paraview``` in the container environment. This should open the paraview program after a short wait.
+
+If the graphics options still don't work there is another way of visulising the outputs of the simulations. All the images, html graphs and paraview vtk files produced during the workshop are copied across to the directory where you performed the docker run command from. This is ensured by the ```-v $PWD:/my_openmc_workshop``` part of the command.
+
 The docker container also contains a folder called ```/my_openmc_workshop``` which is mapped to the local directory from which you ran the image. Placing files into this directory allows you to tranfer files from your docker container to your local machine.
+
 
 **IMPORTANT:** Any changes you make to scripts in the docker container will be lost when you exit the container. Make sure you copy any files you want to keep into the ```my_openmc_workshop``` folder before exiting the container. **Note:** The output files created by the task scripts are automatically copied to this folder.
 
