@@ -55,15 +55,15 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 1. Install Docker Desktop for [windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows). During this install make sure to check the box that adds your user account to the docker-users account otherwise you will require admin writes to launch docker-desktop.
 
-2. Next is to install an X server to allow a visual connection to docker. The options here are [VcXsrv](https://sourceforge.net/projects/vcxsrv/) (recommended) or [Xming](https://sourceforge.net/projects/xming/). Install VcXsrv and be sure to check the "Disable access control" check box during installation,  [detailed instructions](https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde) are avaiable.
+2. The next step is to install an X server to allow a visual connection between your display and docker. The options here are [VcXsrv](https://sourceforge.net/projects/vcxsrv/) (recommended) or [Xming](https://sourceforge.net/projects/xming/). Install VcXsrv and be sure to check the "Disable access control" check box during installation,  detailed instructions are avaiable [here](https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde).
 
-3. Run VcXsrv which now should be found in the start menu
+3. Run VcXsrv which should now be found in the start menu.
 
 4. Open Windows PowerShell, this can be found by searching the start menu.
 
 5. Within Windows PowerShell type ```ipconfig``` and find your IP address
 
-6. Within Windows PowerShell type ```set-variable -name DISPLAY -value yourip:0.0``` and replace ```yourip``` with your IP address found in the previous step. The full command should look something like this ```set-variable -name DISPLAY -value 10.11.128.118:0.0```
+6. Within Windows PowerShell type ```set-variable -name DISPLAY -value yourip:0.0``` and replace ```yourip``` with your IP address found in the previous step. The full command should look something like this ```set-variable -name DISPLAY -value 10.11.128.118:0.0``` but with different numbers.
 
 7. Within Windows PowerShell type ```docker run --net=host -it --rm -v $PWD:/my_openmc_workshop -e DISPLAY=$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
 
@@ -103,4 +103,4 @@ The docker container also contains a folder called ```/my_openmc_workshop``` whi
 
 ## Acknowledgments
 Fred Thomas for providing examples from previous years Serpent workshop,
-Enrique Miralles Dolz for providing the CSG tokamak model, Andrew Davis for his work on the fusion neutron source, Chris Bowman for his Gaussian process software, John Billingsley for the CoLab tasks and the OpenMC team for their software.
+Enrique Miralles Dolz for providing the CSG tokamak model, Andrew Davis for his work on the fusion neutron source, Chris Bowman for his Gaussian process software, John Nonweiler for his work on the OCC faceter, John Billingsley for improving most tasks and in particular creating the CoLab tasks and the OpenMC team for their software.
