@@ -69,7 +69,7 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 4. Run VcXsrv which should now be found in the start menu.
 
-5. Within Windows PowerShell type ```ipconfig```. You will notice that there are several IP address avaiable and the correct IP address to use will be slightly different for different computers. When plugged in the Ethernet IP address Ethernet IPv4 Address can be used, or alternativly the Wireles LAN adapter WiFi IPv4 Address can also be used.
+5. Within Windows PowerShell type ```Get-NetIPAddress -AddressState Preferred -AddressFamily IPv4 | Select-Object IPAddress,InterfaceAlias```. You will notice that there are several IP address avaiable, we should use the Ethernet, vEthernet (default switch) or WiFi Ip address.
 
 6. Within Windows PowerShell type ```set-variable -name DISPLAY -value yourip:0.0``` and replace ```yourip``` with your IP address found in the previous step. The full command should look something like this ```set-variable -name DISPLAY -value 10.11.128.118:0.0``` but with different numbers.
 
