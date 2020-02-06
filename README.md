@@ -65,17 +65,17 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
     ```docker pull openmcworkshop/openmc_nndc_workshop```
 
-3. The next step is to install an X server to allow a visual connection between your display and docker. The options here are [VcXsrv](https://sourceforge.net/projects/vcxsrv/) (recommended) or [Xming](https://sourceforge.net/projects/xming/). Install VcXsrv and be sure to check the "Disable access control" check box during installation,  detailed instructions are avaiable [here](https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde).
+4. The next step is to install an X server to allow a visual connection between your display and docker. The options here are [VcXsrv](https://sourceforge.net/projects/vcxsrv/) (recommended) or [Xming](https://sourceforge.net/projects/xming/). Install VcXsrv and be sure to check the "Disable access control" check box during installation,  detailed instructions are avaiable [here](https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde).
 
-4. Run VcXsrv which should now be found in the start menu.
+5. Run VcXsrv which should now be found in the start menu.
 
-5. Within Windows PowerShell type ```Get-NetIPAddress -AddressState Preferred -AddressFamily IPv4 | Select-Object IPAddress,InterfaceAlias```. You will notice that there are several IP address avaiable, we should use the Ethernet, vEthernet (default switch) or WiFi Ip address.
+6. Within Windows PowerShell type ```Get-NetIPAddress -AddressState Preferred -AddressFamily IPv4 | Select-Object IPAddress,InterfaceAlias```. You will notice that there are several IP address avaiable, we should use the Ethernet, vEthernet (default switch) or WiFi Ip address.
 
-6. Within Windows PowerShell type ```set-variable -name DISPLAY -value yourip:0.0``` and replace ```yourip``` with your IP address found in the previous step. The full command should look something like this ```set-variable -name DISPLAY -value 10.11.128.118:0.0``` but with different numbers.
+7. Within Windows PowerShell type ```set-variable -name DISPLAY -value yourip:0.0``` and replace ```yourip``` with your IP address found in the previous step. The full command should look something like this ```set-variable -name DISPLAY -value 10.11.128.118:0.0``` but with different numbers.
 
-7. Within the PowerShell type ```docker run --net=host -it --rm -v ${HOME}:/my_openmc_workshop -e DISPLAY=$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
+8. Within the PowerShell type ```docker run --net=host -it --rm -v ${HOME}:/my_openmc_workshop -e DISPLAY=$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
 
-8. Now check that the display works as described in the next section. It might be a case of repeating step 5,6,7 with different IP address if the display forwarding does not work.
+9. Now check that the display works as described in the next section. It might be a case of repeating step 6,7,8 with different IP address if the display forwarding does not work.
 
 
 ### Checking that the display works
