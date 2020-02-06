@@ -78,7 +78,7 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
 
     sett = openmc.Settings()
     sett.batches = batches
-    sett.inactive = 1
+    sett.inactive = 0
     sett.particles = nps
     sett.run_mode = 'fixed source'
 
