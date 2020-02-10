@@ -26,7 +26,6 @@ universe = openmc.Universe()
 geom = openmc.Geometry(universe) 
 
 
-
 #SIMULATION SETTINGS#
 
 # Instantiate a Settings object
