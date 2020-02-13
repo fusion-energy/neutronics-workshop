@@ -34,12 +34,3 @@ Using isotopes to create natural materials requires a number of lines of code be
 Therefore, this method is not the most efficient for creating materials with isotopes at natural abundances.
 Where the use of isotopes is needed is when we need to specify specific material compositions that are not equivalent to natural.
 or we have to deal with things like material enrichments.
-
-
-
-
-OpenMC offers the ability to create materials from elements or isotopes. 
-
-- Creating Materials from elements
-
-- Creating 
