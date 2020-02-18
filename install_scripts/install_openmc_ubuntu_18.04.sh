@@ -43,6 +43,9 @@ pip3 install pylint --user
 pip3 install plotly --user
 pip3 install tqdm --user
 
+# needed for workshop tasks
+pip3 install neutronics_material_maker --user
+
 # Clone and install NJOY2016
 cd ~
 git clone https://github.com/njoy/NJOY2016 #/opt/NJOY2016
