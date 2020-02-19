@@ -28,7 +28,7 @@ Look through the script and try to understand how this is done.
 
 Running the script shows that neutronics materials have been made and their parameters.
 
-~~~~~
+
 Don't know whether to add an explanation of the process here? Something like this -
 
 First, the openmc.Material class is instantiated with a name.
@@ -36,7 +36,7 @@ We then add our isotopes to the material with a percentage type. 'wo' or 'ao'.
 We can then set the material density.
 We are creating a natural material, meaning because we are using isotopes, we have to include all of the natural isotopes and weight them by their natural abundance.
 For this, we are using the NATURAL_ABUNDANCE dictionary as part of openmc.data to obtain the natural abundances of each isotope.
-~~~~~
+
 
 Try adding another material made out of isotopes.
 
