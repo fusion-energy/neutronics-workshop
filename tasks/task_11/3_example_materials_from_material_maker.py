@@ -47,6 +47,6 @@ print(enriched_and_packed_Li4SiO4)
 # Neutronics materials can be inspected to extract material properties
 # Densities are calculated for some materials using the CoolProp package
 
-print('Water density = ' + water_openmc_material_object.density)
-print('Default Li4SiO4 density = ' + default_Li4SiO4.density)
-print('Enriched and Packed Li4SiO4 density = ' + enriched_and_packed_Li4SiO4.density)
+print('Water density = ' + str(water_openmc_material_object.density))
+print('Default Li4SiO4 density = ' + str(default_Li4SiO4.density))
+print('Enriched and Packed Li4SiO4 density = ' + str(enriched_and_packed_Li4SiO4.density))
