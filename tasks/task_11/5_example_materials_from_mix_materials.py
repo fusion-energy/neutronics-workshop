@@ -30,30 +30,32 @@ print(mixed_helium_Li4SiO4)
 
 # we can show how changing the fractions of each material varies the properties of the homogenised material
 
-# water density 
+# We will use a combined material of tungsten carbide and water
+
+# Tungsten carbide density
+print(Material('WC').neutronics_material.density)
+# Water density
 print(Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).neutronics_material.density)
-# Li4SiO4 density
-print(Material('Li4SiO4').neutronics_material.density)
 
 water_fractions = np.linspace(0., 1., 20)
 
-mixed_material_densities = [openmc.Material.mix_materials(name = 'mixed_material',
-                                                        materials = [
-                                                            Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).neutronics_material,
-                                                            Material('WC').neutronics_material
-                                                        ],
-                                                        fracs = [
-                                                            water_fraction,
-                                                            (1 - water_fraction)
-                                                        ],
-                                                        percent_type='vo').density for water_fraction in water_fractions]
+mixed_water_WC_densities = [openmc.Material.mix_materials(name = 'mixed_water_WC',
+                                                          materials = [
+                                                              Material('WC').neutronics_material,
+                                                              Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).neutronics_material
+                                                          ],
+                                                          fracs = [
+                                                              water_fraction,
+                                                              (1-water_fraction)
+                                                          ],
+                                                          percent_type = 'vo').density for water_fraction in water_fractions]
 
-fig = go.Figure()
+fig = go.Figure() 
 fig.add_trace(go.Scatter(x=water_fractions,
-                         y=mixed_material_densities,
+                         y=mixed_water_WC_densities,
                          mode='lines+markers'))
 fig.update_layout(
-    title='Mixed material density as a function of water fraction',
+    title='Mixed water and tungsten carbide material density as a function of water fraction',
     xaxis={'title': 'Water fraction'},
     yaxis={'title': 'Density (g/cm3)'}
 )
