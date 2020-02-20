@@ -25,8 +25,8 @@ fig.add_trace(go.Scatter(x=temperatures,
                          mode='lines+markers')
                          ,row=1, col=1)
 
-fig.update_xaxes({'title': 'Temperature in C'}, row=3, col=1)
-fig.update_yaxes({'title': 'Density (g/cm3)'}, row=3, col=1)
+fig.update_xaxes({'title': 'Temperature in C'}, row=1, col=1)
+fig.update_yaxes({'title': 'Density (g/cm3)'}, row=1, col=1)
 
 fig.show()
 
