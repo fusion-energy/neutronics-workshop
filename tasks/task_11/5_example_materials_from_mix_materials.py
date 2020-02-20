@@ -16,14 +16,14 @@ from neutronics_material_maker import Material
 mixed_helium_Li4SiO4 = openmc.Material.mix_materials(name = 'mixed_water_Li4SiO4',
                                                     materials = [
                                                         Material('He', temperature_in_C=500, pressure_in_Pa=100000).neutronics_material,
-                                                        Material('Li4SiO4', enriched_fraction = 0.6).neutronics_material
+                                                        Material('Li4SiO4', enrichment_fraction = 0.6).neutronics_material
                                                     ],
                                                     fracs = [
                                                         0.36,
                                                         0.64
                                                     ],
                                                     percent_type='vo')
-
+print(mixed_helium_Li4SiO4)
 # fracs specifies the proportion of each material in the mixed material
 # percent_type specifies the proportion type. vo = volume percent, wo = weight percent, ao = atom percent
 
