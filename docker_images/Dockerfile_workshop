@@ -1,7 +1,7 @@
 # build with the following command
 # sudo docker build -f Dockerfile_workshop -t openmcworkshop/workshop
 
-FROM openmcworkshop/openmc_nndc
+FROM openmcworkshop/openmc_dagmc_nndc
 
 # Python libraries used in the workshop
 RUN pip3 install plotly

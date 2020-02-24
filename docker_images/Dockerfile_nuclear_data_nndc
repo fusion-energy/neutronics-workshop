@@ -1,7 +1,7 @@
 # build with the following command
 # sudo docker build -f Dockerfile_nuclear_data_nndc -t openmcworkshop/openmc_nndc
 
-FROM openmcworkshop/openmc
+FROM openmcworkshop/openmc_dagmc
 
 # install endf nuclear data
 
