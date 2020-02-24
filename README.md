@@ -16,13 +16,13 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 2. Pull the docker image from the store by typing the following command in a terminal window.
 
-    ```docker pull openmcworkshop/openmc_nndc_workshop```
+    ```docker pull openmcworkshop/workshop```
 
 3. Now that you have the docker image you can enable graphics linking between your os and docker, and then run the docker container by typing the following commands in a terminal window.
 
     ```xhost local:root```
 
-    ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
+    ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=unix$DISPLAY --privileged openmcworkshop/workshop```
 
 4. Now check that the display works as described in the next section.
 
@@ -35,7 +35,7 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 2. Ensure Docker Desktop is running and pull the docker image from the store by typing the following command in a terminal window.
 
-    ```docker pull openmcworkshop/openmc_nndc_workshop```
+    ```docker pull openmcworkshop/workshop```
 
 2. Install [XQuartz Version: 2.7.8](https://www.xquartz.org/releases/XQuartz-2.7.8.html) which is a visualization system for mac allowing you to run GUI applications. Restart your computer once install has completed - this updates your DISPLAY environment variable to point to XQuartz.app rather than X11.app (the previous visualization system for mac).
 
@@ -51,7 +51,7 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 6. Run the docker container using the command:
 
-    ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=$IP:0 --privileged openmcworkshop/openmc_nndc_workshop```
+    ```docker run --net=host -it --rm -v /tmp/.X11-unix:/tmp/.X11-unix  -v $PWD:/my_openmc_workshop -e DISPLAY=$IP:0 --privileged openmcworkshop/workshop```
 
 7. Now check that the display works as described in the next section.
 
@@ -63,7 +63,7 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 3. Ensure Docker Desktop is running and pull the docker image from the store and then type the following command in the PowerShell terminal.
 
-    ```docker pull openmcworkshop/openmc_nndc_workshop```
+    ```docker pull openmcworkshop/workshop```
 
 4. The next step is to install an X server to allow a visual connection between your display and docker. The options here are [VcXsrv](https://sourceforge.net/projects/vcxsrv/) (recommended) or [Xming](https://sourceforge.net/projects/xming/). Install VcXsrv and be sure to check the "Disable access control" check box during installation,  detailed instructions are avaiable [here](https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde).
 
@@ -73,7 +73,7 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 7. Within Windows PowerShell type ```set-variable -name DISPLAY -value yourip:0.0``` and replace ```yourip``` with your IP address found in the previous step. The full command should look something like this ```set-variable -name DISPLAY -value 10.11.128.118:0.0``` but with different numbers.
 
-8. Within the PowerShell type ```docker run --net=host -it --rm -v ${HOME}:/my_openmc_workshop -e DISPLAY=$DISPLAY --privileged openmcworkshop/openmc_nndc_workshop```
+8. Within the PowerShell type ```docker run --net=host -it --rm -v ${HOME}:/my_openmc_workshop -e DISPLAY=$DISPLAY --privileged openmcworkshop/workshop```
 
 9. Now check that the display works as described in the next section. It might be a case of repeating step 6,7,8 with different IP address if the display forwarding does not work.
 
