@@ -11,19 +11,19 @@ water_from_elements.set_density('g/cm3', 0.99821)
 print(water_from_elements)
 
 
+
 # Making Li4SiO4 from elements
 
-Li4SiO4_from_elelmets = openmc.Material(name='Li4SiO4_from_elelmets')
-Li4SiO4_from_elelmets.add_element('Li', 4.0, percent_type='ao')
-Li4SiO4_from_elelmets.add_element('Si', 1.0, percent_type='ao')
-Li4SiO4_from_elelmets.add_element('O', 4.0, percent_type='ao')
-Li4SiO4_from_elelmets.set_density('g/cm3', 2.32)
+# add Li4SiO4 here
 
-print(Li4SiO4_from_elelmets)
+# Li4SiO4_from_elements = openmc.Material(name='Li4SiO4_from_elements')
+# Li4SiO4_from_elements.add_element.....
+# Li4SiO4_from_elements.set_density.....
+# print(Li4SiO4_from_elements)
 
 
-# Making Li4SiO4 from isotopes and elements
-# Remember, to make enriched Li4SiO4, we must still specify the Li isotopes
+
+# Making enriched Li4SiO4 from isotopes and elements
 
 enrichment_fraction = 0.6
 
