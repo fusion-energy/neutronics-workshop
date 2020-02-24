@@ -3,6 +3,8 @@ import openmc
 
 from neutronics_material_maker import Material
 
+# Some material
+
 # Some materials require arguments to correctly calculate material properties
 
 # Water requires 'temperature' and 'pressure' arguments to be passed
@@ -50,3 +52,5 @@ print(enriched_and_packed_Li4SiO4)
 print('Water density = ' + str(water_openmc_material_object.density))
 print('Default Li4SiO4 density = ' + str(default_Li4SiO4.density))
 print('Enriched and Packed Li4SiO4 density = ' + str(enriched_and_packed_Li4SiO4.density))
+
+
