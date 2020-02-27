@@ -2,30 +2,22 @@
 import openmc
 import numpy as np
 import plotly.graph_objs as go
-from neutronics_material_maker import Material
-
-# Materials can also be made by combining other materials
-
-# Passing neutronics materials to the mix_materials function produces materials according to specified fractions
-
-# for ease, the following example uses the neutronics_material_maker to produce the neutronics materials
+from neutronics_material_maker import Material, MultiMaterial
 
 
-# Here is am example of enriched Li4SiO4 with Helium pruge gas at atmospheric pressure, this is a typical material for the HCPB blanket design
+helium = Material('He', temperature_in_C=500, pressure_in_Pa=100000)
+Li4SiO4 = Material('Li4SiO4', enrichment_fraction=0.6)
 
-mixed_helium_Li4SiO4 = openmc.Material.mix_materials(name = 'mixed_water_Li4SiO4',
-                                                    materials = [
-                                                        Material('He', temperature_in_C=500, pressure_in_Pa=100000).neutronics_material,
-                                                        Material('Li4SiO4', enrichment_fraction = 0.6).neutronics_material
-                                                    ],
-                                                    fracs = [
-                                                        0.36,
-                                                        0.64
-                                                    ],
-                                                    percent_type='vo')
-print(mixed_helium_Li4SiO4)
-# fracs specifies the proportion of each material in the mixed material
-# percent_type specifies the proportion type. vo = volume percent, wo = weight percent, ao = atom percent
+mixed_helium_Li4SiO4 = MultiMaterial(material_name='mixed_helium_Li4SiO4',   # name of homogeneous material
+                                     materials=[helium, Li4SiO4],   # list of material objects (NOT neutronics materials)
+                                     fracs=[0.36, 0.64],   # list of combination fractions for each material object
+                                     percent_type='vo')   # combination fraction type
+print(mixed_helium_Li4SiO4.neutronics_material)
+
+
+
+
+
 
 
 # we can show how changing the fractions of each material varies the properties of the homogenised material
