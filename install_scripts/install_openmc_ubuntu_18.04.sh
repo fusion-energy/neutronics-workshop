@@ -26,6 +26,10 @@ sudo apt-get --yes install -f
 sudo apt-get --yes install libblas-dev 
 sudo apt-get --yes install liblapack-dev
 
+# needed for newest version of openmc with dagmc
+sudo apt remove -y cmake
+pip3 install cmake==3.12.0
+
 pip3 install numpy --user
 pip3 install pandas --user
 pip3 install six --user
@@ -42,6 +46,7 @@ pip3 install pytest-cov --user
 pip3 install pylint --user
 pip3 install plotly --user
 pip3 install tqdm --user
+pip3 install pyside2 --user # required by openmc plotter
 
 # Clone and install NJOY2016
 cd ~
@@ -107,6 +112,7 @@ make install
 LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH
 echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc 
 
+
 # OpenMC Install
 cd /opt
 # git clone https://github.com/mit-crpg/openmc 
@@ -131,7 +137,6 @@ python3 convert_tendl.py -b
 python3 convert_nndc71.py
 
 
-
 OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-b7.1-hdf5/cross_sections.xml
 echo 'export OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-b7.1-hdf5/cross_sections.xml' >> ~/.bashrc
 OPENMC_CROSS_SECTIONS_TENDL=~/data/tendl-2017-hdf5/cross_sections.xml
@@ -142,13 +147,10 @@ echo 'export OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml' >>
 
 
 
-
 RUN git clone https://github.com/openmc-dev/plotter.git
 echo 'export PATH=$PATH:/plotter/' >> ~/.bashrc
 
 
-# plotter requirments
-RUN pip3 install pyside2
 
 
 # dependancies for the occ_faceter
@@ -160,10 +162,10 @@ sudo apt-get --yes install libocc*dev
 sudo apt-get --yes install occ*
 sudo apt-get --yes install libtbb-dev
 
-# install the occ_faceter
+# install the occ_faceter, this currently uses a branch that could be merged
 git clone https://github.com/johnnonweiler/occ_faceter.git
 cd occ_faceter
-git checkout refactor_faceting
+git checkout add-sense2-tag-and-materials
 mkdir build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=..
 make
