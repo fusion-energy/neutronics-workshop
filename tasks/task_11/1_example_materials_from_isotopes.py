@@ -2,14 +2,20 @@
 import openmc
 from openmc.data import *  # this imports the NATURAL_ABUNDANCE dictionary
 
+
 # Making water from isotopes
 
+# specify material object
 water_from_isotopes = openmc.Material(name='water_from_isotopes')
+
+# add isotopes to material object
 water_from_isotopes.add_nuclide('H1', 2.0*NATURAL_ABUNDANCE['H1'], percent_type='ao')
 water_from_isotopes.add_nuclide('H2', 2.0*NATURAL_ABUNDANCE['H2'], percent_type='ao')
 water_from_isotopes.add_nuclide('O16', NATURAL_ABUNDANCE['O16'], percent_type='ao')
 water_from_isotopes.add_nuclide('O17', NATURAL_ABUNDANCE['O17'], percent_type='ao')
 water_from_isotopes.add_nuclide('O18', NATURAL_ABUNDANCE['O18'], percent_type='ao')
+
+# set material density
 water_from_isotopes.set_density('g/cm3', 0.99821)
 
 print(water_from_isotopes)
@@ -18,18 +24,13 @@ print(water_from_isotopes)
 
 # Making Li4SiO4 from isotopes
 
-Li4SiO4_from_isotopes = openmc.Material(name='Li4SiO4_from_isotopes')
-Li4SiO4_from_isotopes.add_nuclide('Li6', 4.0*NATURAL_ABUNDANCE['Li6'], percent_type='ao')
-Li4SiO4_from_isotopes.add_nuclide('Li7', 4.0*NATURAL_ABUNDANCE['Li7'], percent_type='ao')
-Li4SiO4_from_isotopes.add_nuclide('Si28', NATURAL_ABUNDANCE['Si28'], percent_type='ao')
-Li4SiO4_from_isotopes.add_nuclide('Si29', NATURAL_ABUNDANCE['Si29'], percent_type='ao')
-Li4SiO4_from_isotopes.add_nuclide('Si30', NATURAL_ABUNDANCE['Si30'], percent_type='ao')
-Li4SiO4_from_isotopes.add_nuclide('O16', 4.0*NATURAL_ABUNDANCE['O16'], percent_type='ao')
-Li4SiO4_from_isotopes.add_nuclide('O17', 4.0*NATURAL_ABUNDANCE['O17'], percent_type='ao')
-Li4SiO4_from_isotopes.add_nuclide('O18', 4.0*NATURAL_ABUNDANCE['O18'], percent_type='ao')
-Li4SiO4_from_isotopes.set_density('g/cm3', 2.32)
+# add Li4SiO4 here
 
-print(Li4SiO4_from_isotopes)
+# Li4SiO4_from_isotopes = openmc.Material(name='Li4SiO4_from_isotopes')
+# Li4SiO4_from_isotopes.add_nuclide......
+# Li4SiO4_from_isotopes.set_density......
+# print(Li4SiO4_from_isotopes)
+
 
 
 # Making enriched Li4SiO4 from isotopes
