@@ -125,15 +125,16 @@ sudo cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 # cmake -Ddagmc=ON -Ddebug=on -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 sudo make 
 sudo make install
-cd ~/openmc/ 
-python3 setup.py install --user
+cd /opt/openmc/ 
+sudo python3 setup.py install --user
 
 
 # Nuclear data install
 cd ~
 git clone https://github.com/openmc-dev/data.git
 cd data
-python3 convert_tendl.py -b
+python3 convert_fendl
+python3 convert_tendl.py
 python3 convert_nndc71.py
 
 
