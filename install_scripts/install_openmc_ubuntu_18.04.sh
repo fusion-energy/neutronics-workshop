@@ -158,7 +158,7 @@ echo 'export PATH=$PATH:/plotter/' >> ~/.bashrc
 sudo apt-get --yes update && apt-get --yes upgrade
 sudo apt-get --yes install libcgal-dev
 sudo apt-get --yes install software-properties-common
-sudo add-apt-repository ppa:freecad-maintainers/freecad-stable
+sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable
 sudo apt-get --yes install libocc*dev
 sudo apt-get --yes install occ*
 sudo apt-get --yes install libtbb-dev
