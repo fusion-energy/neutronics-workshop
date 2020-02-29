@@ -13,7 +13,12 @@ RUN pip3 install inference-tools
 RUN pip3 install neutronics_material_maker
 
 # dependancies used in the workshop
+RUN apt-get --yes install imagemagick
+RUN apt-get --yes install hdf5-tools
+RUN apt-get --yes install paraview
 RUN apt-get --yes install eog
+RUN apt-get --yes install wget
+RUN apt-get --yes install firefox
 
 # dependancies for vscode
 RUN apt-get --yes install libnotify4
@@ -52,3 +57,6 @@ RUN cp /openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_work
 RUN cp /openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_10
 
 WORKDIR /openmc_workshop
+
+RUN rm /usr/bin/python
+RUN cp /usr/bin/python3 /usr/bin/python
