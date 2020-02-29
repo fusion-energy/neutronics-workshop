@@ -3,7 +3,7 @@
 
 Google Colab Link: [Task_11](https://colab.research.google.com/drive/1pY3dcsHu7nC3Mv3WmqUWLSCzr0gaeuvE)
 
-Please allow XXX minutes for this task.
+Please allow 20 minutes for this task.
 
 Expected outputs from this task are in the [presentation](insert link for specific slides)
 
