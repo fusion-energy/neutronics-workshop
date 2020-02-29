@@ -12,6 +12,9 @@ RUN pip3 install scikit-optimize
 RUN pip3 install inference-tools
 RUN pip3 install neutronics_material_maker
 
+# dependancies used in the workshop
+RUN apt-get --yes install eog
+
 # dependancies for vscode
 RUN apt-get --yes install libnotify4
 RUN apt-get --yes install libnss3
