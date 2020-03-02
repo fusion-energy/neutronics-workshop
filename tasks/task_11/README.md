@@ -95,9 +95,9 @@ Run the script to produce graphs of:
 
 as shown below.
 
-<p align="center"><img src="images/water_density_vs_temperature.png" height="500"></p>
-<p align="center"><img src="images/helium_density_vs_temperature.png" height="500"></p>
-<p align="center"><img src="images/helium_density_vs_pressure.png" height="500"></p>
+<p align="center"><img src="images/water_density_vs_temperature.png" height="400"></p>
+<p align="center"><img src="images/helium_density_vs_temperature.png" height="400"></p>
+<p align="center"><img src="images/helium_density_vs_pressure.png" height="400"></p>
 
 Examine the script to understand how the Material class is used to iteratively construct neutronics materials and how material density is extracted.
 
