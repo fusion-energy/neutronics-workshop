@@ -31,7 +31,7 @@ mixed_water_WC = openmc.Material.mix_materials(name = 'mixed_water_WC',      # n
 # Demonstration of changing combination fractions of each material
 
 print('Tungsten carbide density = ' + str(Material('WC').neutronics_material.density))
-print('Water density = ' + str(Material(H2O).neutronics_material.density))
+print('Water density = ' + str(Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).neutronics_material.density))
 
 water_fractions = np.linspace(0., 1., 20)
 
