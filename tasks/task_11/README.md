@@ -127,7 +127,7 @@ The main difference between the two functions is that the MultiMaterial function
 
 - Run the script to see how changing the fraction of each material in a two-material multimaterial changes its density. The script should produce a graph similar to below.
 
-<p align="center"><img src="images/density_vs_volume_fraction.png" height="500"></p>
+<p align="center"><img src="images/density_vs_volume_fraction.png" height="400"></p>
 
 As expected, when the combination fraction of one material is zero, the multimaterial density is equal to the density of the other material. When the combination fraction of one material is one, the multimaterial density is equal to the density of that material.
 
