@@ -48,6 +48,9 @@ pip3 install plotly --user
 pip3 install tqdm --user
 pip3 install pyside2 --user # required by openmc plotter
 
+# needed for workshop tasks
+pip3 install neutronics_material_maker --user
+
 # Clone and install NJOY2016
 cd ~
 git clone https://github.com/njoy/NJOY2016 #/opt/NJOY2016
@@ -64,16 +67,16 @@ sudo ln -s /usr/bin/python3 /usr/bin/python
 # MOAB Variables
 MOAB_BRANCH='Version5.1.0'
 MOAB_REPO='https://bitbucket.org/fathomteam/moab/'
-MOAB_INSTALL_DIR=$HOME/MOAB/
+MOAB_INSTALL_DIR=$HOME/MOAB
 
 # DAGMC Variables
 DAGMC_BRANCH='develop'
 DAGMC_REPO='https://github.com/svalinn/dagmc'
-DAGMC_INSTALL_DIR=$HOME/DAGMC/
+DAGMC_INSTALL_DIR=$HOME/DAGMC
 set -ex
 
-echo 'export MOAB_INSTALL_DIR=$HOME/MOAB/' >> ~/.bashrc 
-echo 'export DAGMC_INSTALL_DIR=$HOME/DAGMC/' >> ~/.bashrc 
+echo 'export MOAB_INSTALL_DIR=$HOME/MOAB' >> ~/.bashrc 
+echo 'export DAGMC_INSTALL_DIR=$HOME/DAGMC' >> ~/.bashrc 
 echo 'export LD_LIBRARY_PATH=$MOAB_INSTALL_DIR/lib:$LD_LIBRARY_PATH' >> ~/.bashrc 
 echo 'export LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH' >> ~/.bashrc 
 # echo '$PATH:/openmc/build/bin/' >> ~/.bashrc 
@@ -115,7 +118,8 @@ echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc
 
 # OpenMC Install
 cd /opt
-sudo git clone https://github.com/mit-crpg/openmc
+# git clone https://github.com/mit-crpg/openmc 
+sudo git clone https://github.com/makeclean/openmc.git --recursive
 cd /opt/openmc
 sudo git checkout develop
 sudo mkdir build

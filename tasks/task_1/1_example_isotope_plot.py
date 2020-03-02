@@ -14,7 +14,7 @@ all_stable_isotope_list = ['Ag107', 'Ag109', 'Al27', 'Ar36', 'Ar38', 'Ar40', 'As
 
 
 #therefore we use this list instead
-candidate_fusion_neutron_multipliers_list = ['Be9', 'Pb204', 'Pb206', 'Pb207','Pb208']
+candidate_fusion_neutron_multipliers_list = ['Be9', 'Pb204', 'Pb206'] # , 'Pb207', 'Pb208']
 
 
 MT_number = 16   # MT number for the (n,2n) reaction. Other reactions can be found at https://www.oecd-nea.org/dbdata/data/manual-endf/endf102_MT.pdf
