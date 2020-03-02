@@ -89,9 +89,15 @@ The script shows how the tool can be used to perform three parameter studies of 
 
 Run the script to produce graphs of:
 
-- Water density as a function of temperature (at constant pressure)
-- Helium density as a function of temperature (at constant pressure)
-- Helium density as a function of pressure (at constant temperature)
+- water density as a function of temperature (at constant pressure)
+- helium density as a function of temperature (at constant pressure)
+- helium density as a function of pressure (at constant temperature)
+
+as shown below.
+
+<p align="center"><img src="images/water_density_vs_temperature.png" height="500"></p>
+<p align="center"><img src="images/helium_density_vs_temperature.png" height="500"></p>
+<p align="center"><img src="images/helium_density_vs_pressure.png" height="500"></p>
 
 Examine the script to understand how the Material class is used to iteratively construct neutronics materials and how material density is extracted.
 
