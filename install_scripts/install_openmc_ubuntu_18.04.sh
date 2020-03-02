@@ -132,7 +132,7 @@ sudo python3 setup.py install --user
 cd ~
 git clone https://github.com/openmc-dev/data.git
 cd data
-python3 convert_fendl
+python3 convert_fendl.py
 python3 convert_tendl.py
 python3 convert_nndc71.py
 
