@@ -10,7 +10,7 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
 ## Docker Container Installation
 
-### Linux (Recommended)
+### Ubuntu (Recommended)
 
 1. Install Docker CE for [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), including the part where you enable docker use as a non-root user.
 
