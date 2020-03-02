@@ -117,7 +117,7 @@ echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc
 cd /opt
 sudo git clone https://github.com/mit-crpg/openmc
 cd /opt/openmc
-sudo git checkout dlopen_source
+sudo git checkout develop
 sudo mkdir build
 cd build 
 sudo cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
