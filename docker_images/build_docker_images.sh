@@ -1,3 +1,6 @@
 docker build -f Dockerfile_openmc -t openmcworkshop/openmc .
-docker build -f Dockerfile_nuclear_data_nndc -t openmcworkshop/openmc_nndc .
-docker build -f Dockerfile_workshop -t openmcworkshop/openmc_nndc_workshop .
+docker build -f Dockerfile_openmc_nndc -t openmcworkshop/openmc_nndc .
+
+docker build -f Dockerfile_openmc_dagmc -t openmcworkshop/openmc_dagmc .
+docker build -f Dockerfile_openmc_dagmc_nndc -t openmcworkshop/openmc_dagmc_nndc .
+docker build -f Dockerfile_workshop -t openmcworkshop/workshop .

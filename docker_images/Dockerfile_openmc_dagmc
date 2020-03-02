@@ -1,0 +1,112 @@
+# build with the following command
+# sudo docker build -t openmc_with_dagmc .
+
+FROM ubuntu:18.04
+
+
+RUN apt-get --yes update && apt-get --yes upgrade
+
+RUN apt-get -y install locales
+RUN locale-gen en_US.UTF-8
+ENV LC_CTYPE en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+
+RUN apt-get --yes update && apt-get --yes upgrade
+
+# Python installation
+RUN apt-get install -y python3-pip
+RUN apt-get install -y python3-dev
+RUN apt-get install -y python3-setuptools
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get install -y ipython3
+RUN apt-get update
+RUN apt-get install -y python3-tk
+
+
+# required pacakges identified from openmc travis.yml
+RUN apt-get --yes install mpich
+RUN apt-get --yes install libmpich-dev
+RUN apt-get --yes install libhdf5-serial-dev
+RUN apt-get --yes install libhdf5-mpich-dev
+RUN apt-get --yes install libblas-dev
+RUN apt-get --yes install liblapack-dev
+
+RUN apt-get -y install sudo #  needed as the install NJOY script has a sudo make install command
+RUN apt-get -y install git
+RUN apt-get -y install cmake
+
+#RUN rm /usr/bin/python
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+# global enviromental varibles set in th travis.yml
+ENV HOME=/root
+ENV MPI_DIR=/usr
+ENV HDF5_ROOT=/usr
+#ENV OMP_NUM_THREADS=2 #commented out for users with more than 2 threads
+ENV OPENMC_CROSS_SECTIONS=$HOME/nndc_hdf5/cross_sections.xml
+ENV OPENMC_ENDF_DATA=$HOME/endf-b-vii.1
+ENV LD_LIBRARY_PATH=$HOME/MOAB/lib:$HOME/DAGMC/lib
+ENV PATH=$PATH:$HOME/NJOY2016/build
+ENV COVERALLS_PARALLEL=true
+ENV NUMPY_EXPERIMENTAL_ARRAY_FUNCTION=0
+
+#these are used in the travis install scripts to decide what to install
+ENV OMP=y
+ENV MPI=n
+ENV PHDF5=n
+ENV DAGMC=y
+
+# installs OpenMc from source
+RUN cd /opt && \
+    git clone https://github.com/openmc-dev/openmc.git && \
+    cd openmc && \
+    git checkout develop
+
+# pip install is used in some of the travis scripts but pip3 is installed, this alias makes pip and pip3 the same
+RUN ln -s /usr/bin/pip3 /usr/bin/pip
+
+# newer CMake version allows us to set libraries, includes of the
+# imported DAGMC target in CMake
+RUN apt remove -y cmake
+RUN pip install cmake==3.12.0
+RUN apt install wget
+
+# these travis scripts include NJOY, DAGMC, MOAB
+
+RUN cd /opt/openmc && \
+   ./tools/ci/travis-install.sh
+
+# this script downloads the nndc (ENDF) nuclear data which is done in a later docker image
+# RUN cd /opt/openmc && \
+   #./tools/ci/travis-before-script.sh 
+
+# this script perform tests
+# RUN cd /opt/openmc && \
+ #    ./tools/ci/travis-script.sh
+
+RUN git clone https://github.com/openmc-dev/plotter.git
+
+
+# dependancies for the occ_faceter
+RUN apt-get --yes update && apt-get --yes upgrade
+RUN apt-get --yes install libcgal-dev
+RUN apt-get --yes install software-properties-common
+RUN add-apt-repository ppa:freecad-maintainers/freecad-stable
+RUN apt-get --yes install libocc*dev
+RUN apt-get --yes install occ*
+RUN apt-get --yes install libtbb-dev
+
+# install the occ_faceter, this currently uses a branch that could be merged
+RUN git clone https://github.com/johnnonweiler/occ_faceter.git && \
+    cd occ_faceter && \
+    git checkout add-sense2-tag-and-materials && \
+    mkdir build && cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=.. && \
+    make && \
+    make install && \
+    cp /occ_faceter/bin/occ_faceter /bin
+
+# there can be only one
+RUN echo 'alias python="python3"' >> ~/.bashrc

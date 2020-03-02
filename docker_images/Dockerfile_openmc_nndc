@@ -1,5 +1,5 @@
 # build with the following command
-# sudo docker build -f Dockerfile_nuclear_data_nndc -t openmcworkshop/openmc_nndc
+# sudo docker build -f Dockerfile_openmc_nndc -t openmcworkshop/openmc_nndc
 
 FROM openmcworkshop/openmc
 
