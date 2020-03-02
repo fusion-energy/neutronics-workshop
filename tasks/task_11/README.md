@@ -85,7 +85,7 @@ Take a look at the next example script.
 
 ```4_example_materials_parameter_study.py```
 
-The script shows how the tool can be used to perform three parameter studies of different materials by calculating their density as a function of different parameters. (Note: Only possible for materials which use CoolProp package to calculate density.)
+The script shows how the tool can be used to perform three parameter studies of different materials by calculating their density as a function of different parameters. (Note: Only possible with materials which use CoolProp package to calculate density.)
 
 Run the script to produce graphs of:
 
