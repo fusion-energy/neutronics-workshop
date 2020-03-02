@@ -5,7 +5,7 @@ Google Colab Link: [Task_11](https://colab.research.google.com/drive/1pY3dcsHu7n
 
 Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/23)
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/23).
 
 Material construction is a fundamental part of creating neutronics models. This task aims to demonstrate material construction in greater depth than previously seen.
 
@@ -60,7 +60,7 @@ Look at the script to see how enriched Li4SiO4 can be constructed using isotopes
 Notice how materials constructed from a combination of isotopes and elements have the same properties as materials created from isotopes only as long as specific features such as enrichment or exact compositions are considered appropriately.
 
 
-### Creating materials using the neutronics_material_maker tool
+### Creating materials using the 'neutronics_material_maker' tool
 
 Constructing materials using in-build OpenMC functions makes it difficult to account for material properties such as enrichment, packing fraction, temperature, pressure etc. The *neutronics_material_maker* aims to simplify material construction and make it easier to account for these properties.
 
@@ -74,7 +74,7 @@ Take a look at the script below.
 
 The script shows how water and Li4SiO4 can be constructed using the Material class and their properties changed via arguments. These Material objects are then converted to neutronics materials (which can be used in OpenMC) using the *.neutronics_material* function.
 
-- Take some time to go through this script and understand how to construct Material objects. Further guidance on usage can be found in the neutronics_material_maker [GitHub repository](https://github.com/ukaea/neutronics_material_maker/tree/openmc_version.)
+- Take some time to go through this script and understand how to construct Material objects. Further guidance on usage can be found in the neutronics_material_maker [GitHub repository](https://github.com/ukaea/neutronics_material_maker/tree/openmc_version).
 
 
 ### Parameter Studies
@@ -98,7 +98,7 @@ Examine the script to understand how the Material class is used to iteratively c
 (Note: A density parameter study like this is not possible using in-built OpenMC functions as material densities must be specified explicitly.)
 
 
-### Creating multimaterials using the neutronics_material_maker tool
+### Creating multimaterials using the 'neutronics_material_maker' tool
 
 The neutronics_material_maker also allows materials to be combined to create homogenised MultiMaterial objects. Like Material objects, MultiMaterial objects can be converted to neutronics materials for use in OpenMC.
 
