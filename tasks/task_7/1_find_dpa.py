@@ -97,7 +97,7 @@ print('Assuming about 80% remains after 20% recombine to original lattice locati
 displacements_per_source_neutron_with_recombination = displacements_per_source_neutron*0.8
 print('Displacements per source neutron after recombination = ', displacements_per_source_neutron_with_recombination, '\n')
 
-fusion_power = 3e9 # units GW
+fusion_power = 3e9 # units Watts
 energy_per_fusion_reaction = 17.6e6 # units eV
 eV_to_Joules = 1.60218e-19 # multiplication factor to convert eV to Joules
 number_of_neutrons_per_second = fusion_power/ (energy_per_fusion_reaction*eV_to_Joules)
