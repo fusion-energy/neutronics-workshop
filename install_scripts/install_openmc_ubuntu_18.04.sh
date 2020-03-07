@@ -70,8 +70,6 @@ MOAB_REPO='https://bitbucket.org/fathomteam/moab/'
 MOAB_INSTALL_DIR=$HOME/MOAB
 
 # DAGMC Variables
-DAGMC_BRANCH='develop'
-DAGMC_REPO='https://github.com/svalinn/dagmc'
 DAGMC_INSTALL_DIR=$HOME/DAGMC
 set -ex
 
@@ -104,7 +102,7 @@ echo 'export PATH=$PATH:~/MOAB/bin' >> ~/.bashrc
 cd ~
 mkdir DAGMC
 cd DAGMC
-git clone -b $DAGMC_BRANCH $DAGMC_REPO
+git clone -b develop https://github.com/svalinn/dagmc
 mkdir build
 cd build
 # cmake ../dagmc -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$DAGMC_INSTALL_DIR -DMOAB_DIR=$MOAB_INSTALL_DIR -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_EXE=ON
