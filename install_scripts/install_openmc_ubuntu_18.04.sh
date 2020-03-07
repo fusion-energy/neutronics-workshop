@@ -65,8 +65,6 @@ sudo rm /usr/bin/python
 sudo ln -s /usr/bin/python3 /usr/bin/python
 
 # MOAB Variables
-MOAB_BRANCH='Version5.1.0'
-MOAB_REPO='https://bitbucket.org/fathomteam/moab/'
 MOAB_INSTALL_DIR=$HOME/MOAB
 
 # DAGMC Variables
@@ -84,7 +82,7 @@ echo 'export LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH' >> ~/.bash
 cd ~
 mkdir MOAB
 cd MOAB
-git clone -b $MOAB_BRANCH $MOAB_REPO
+git clone -b Version5.1.0 https://bitbucket.org/fathomteam/moab/
 mkdir build 
 cd build
 cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
