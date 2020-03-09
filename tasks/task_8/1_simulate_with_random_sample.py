@@ -14,7 +14,7 @@ from pathlib import Path
 from neutronics_material_maker import Material
 
 def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thickness, breeder_material_name, temperature_in_C):
-    # print('simulating ',batches,enrichment_fraction,inner_radius,thickness,breeder_material_name)
+    # print('simulating ', batches, enrichment, inner_radius, thickness, breeder_material_name)
 
     #MATERIALS from library of materials in neutronics_material_maker package
     breeder_material = Material(material_name = breeder_material_name,

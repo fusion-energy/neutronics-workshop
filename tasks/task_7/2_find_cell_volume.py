@@ -10,7 +10,7 @@ import json
 density_of_iron_in_g_per_cm3 = 7.75
 firstwall_material = openmc.Material(name='iron')
 firstwall_material.set_density('g/cm3', density_of_iron_in_g_per_cm3)
-firstwall_material.add_element('Fe', 1., percent_type='wo')
+firstwall_material.add_element('Fe', 1.0, percent_type='wo')
 
 breeder_material = openmc.Material(name="lithium")
 breeder_material.set_density('g/cm3', 8.5)
