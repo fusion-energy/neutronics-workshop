@@ -10,17 +10,18 @@ natural_Li4SiO4.add_element('Li',4.0,percent_type='ao')
 natural_Li4SiO4.add_element('Si',1.0,percent_type='ao')
 natural_Li4SiO4.add_element('O',4.0,percent_type='ao')
 natural_Li4SiO4.set_density('g/cm3',1.877)
-#Li4SiO4 density 1.8770150075137564 g/cm3 
+#Li4SiO4 density 1.8770150075137564 g/cm3
 
-
-enrichment_fraction=0.6
+# we can enrich the material directly by enriching the element
+# removes the need to specify isotopes
+enrichment = 60    # percentage enrichment
 enriched_Li4SiO4 = openmc.Material()
-enriched_Li4SiO4.add_nuclide('Li6',4.0*enrichment_fraction,percent_type='ao')
-enriched_Li4SiO4.add_nuclide('Li7',4.0*(1-enrichment_fraction),percent_type='ao')
+enriched_Li4SiO4.add_element('Li', 4.0, percent_type='ao', enrichment=enrichment, enrichment_target='Li6', enrichment_type='ao')
 enriched_Li4SiO4.add_element('Si',1.0,percent_type='ao')
 enriched_Li4SiO4.add_element('O',4.0,percent_type='ao')
 enriched_Li4SiO4.set_density('g/cm3',1.844) # this density is lower as there is more Li6 and less Li7
 #Li4SiO4 density 1.8441466011318948 g/cm3 with 60% Li6
+
 
 # Try adding another candidate breeder material (e.g. Li2SiO3, Li2ZrO3 or Li2TiO3) to the plot
 #Li2SiO3 density 2.619497078021483 g/cm3

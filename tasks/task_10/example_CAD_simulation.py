@@ -13,7 +13,7 @@ from neutronics_material_maker import Material
 
 breeder_material = Material(material_name='Li4SiO4', enrichment_fraction=0.9).neutronics_material
 
-copper = Material(material_name="copper").neutronics_material
+copper = Material(material_name='copper').neutronics_material
 
 eurofer = Material(material_name='eurofer').neutronics_material
 
