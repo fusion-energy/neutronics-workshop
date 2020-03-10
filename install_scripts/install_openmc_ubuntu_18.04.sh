@@ -114,8 +114,7 @@ echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc
 
 # OpenMC Install
 cd /opt
-# git clone https://github.com/mit-crpg/openmc 
-sudo git clone https://github.com/makeclean/openmc.git --recursive
+sudo git clone https://github.com/mit-crpg/openmc.git --recursive
 cd /opt/openmc
 sudo git checkout develop
 sudo mkdir build
