@@ -119,7 +119,8 @@ cd /opt/openmc
 sudo git checkout develop
 sudo mkdir build
 cd build 
-sudo cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
+sudo chmod 777 build
+cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 # cmake -Ddagmc=ON -Ddebug=on -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 sudo make 
 sudo make install
