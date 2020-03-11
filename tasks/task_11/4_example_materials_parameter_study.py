@@ -18,11 +18,12 @@ temperatures = np.linspace(0.1, 600., 200)
 water_densities = [Material('H2O', temperature_in_C=temperature, pressure_in_Pa=15500000).neutronics_material.density for temperature in temperatures]
 
 fig = make_subplots(rows=2, cols=2, 
-                    subplot_titles=("Water density as a function of temperature (at constant pressure)","Helium density as a function of temperature (at constant pressure)","Helium density as a function of pressure (at constant temperature)","title4"))
+                    subplot_titles=("Water density as a function of temperature (at constant pressure)","Helium density as a function of temperature (at constant pressure)","Helium density as a function of pressure (at constant temperature)",""))
 
 fig.add_trace(go.Scatter(x=temperatures,
                          y=water_densities,
-                         mode='lines+markers'),
+                         mode='lines+markers',
+                         showlegend=False),
                          row=1, col=1)
 
 fig.update_xaxes({'title': 'Temperature in C'}, row=1, col=1)
@@ -38,7 +39,8 @@ helium_densities = [Material('He', temperature_in_C=temperature, pressure_in_Pa=
 
 fig.add_trace(go.Scatter(x=temperatures,
                          y=helium_densities,
-                         mode='lines+markers'),
+                         mode='lines+markers',
+                         showlegend=False),
                          row=1, col=2)
 
 fig.update_xaxes({'title': 'Temperature in C'}, row=1, col=2)
@@ -54,7 +56,8 @@ helium_densities = [Material('He', temperature_in_C=400, pressure_in_Pa=pressure
 
 fig.add_trace(go.Scatter(x=pressures,
                          y=helium_densities,
-                         mode='lines+markers'),
+                         mode='lines+markers',
+                         showlegend=False),
                          row=2, col=1)
 
 fig.update_xaxes({'title': 'Pressure in Pa'}, row=2, col=1)

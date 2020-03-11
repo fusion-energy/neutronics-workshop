@@ -10,11 +10,11 @@ import json
 
 firstwall_material = openmc.Material(name='Iron')
 firstwall_material.set_density('g/cm3', 7.75)
-firstwall_material.add_element('Fe', 1., percent_type='wo')
+firstwall_material.add_element('Fe', 1.0, percent_type='wo')
 
 breeder_material = openmc.Material(name="Lithium") 
-breeder_material.set_density('g/cm3', 2.)
-breeder_material.add_element('Li', 1., 'ao')
+breeder_material.set_density('g/cm3', 2.0)
+breeder_material.add_element('Li', 1.0, percent_type='ao')
 
 mats = openmc.Materials([firstwall_material, breeder_material])
 
@@ -64,7 +64,7 @@ sett.source = source
 
 tallies = openmc.Tallies()
 
-#added a cell tally for tritium production
+# added a cell tally for tritium production
 cell_filter = openmc.CellFilter(first_wall_cell)
 reaction_tally = openmc.Tally(name='DPA')
 reaction_tally.filters = [cell_filter]
@@ -97,7 +97,7 @@ print('Assuming about 80% remains after 20% recombine to original lattice locati
 displacements_per_source_neutron_with_recombination = displacements_per_source_neutron*0.8
 print('Displacements per source neutron after recombination = ', displacements_per_source_neutron_with_recombination, '\n')
 
-fusion_power = 3e9 # units GW
+fusion_power = 3e9 # units Watts
 energy_per_fusion_reaction = 17.6e6 # units eV
 eV_to_Joules = 1.60218e-19 # multiplication factor to convert eV to Joules
 number_of_neutrons_per_second = fusion_power/ (energy_per_fusion_reaction*eV_to_Joules)

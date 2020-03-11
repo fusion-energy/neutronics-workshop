@@ -65,9 +65,9 @@ The majority of the workshop can also be completed using Google Colab Notebooks 
 
     ```docker pull openmcworkshop/workshop```
 
-4. The next step is to install an X server to allow a visual connection between your display and docker. The options here are [VcXsrv](https://sourceforge.net/projects/vcxsrv/) (recommended) or [Xming](https://sourceforge.net/projects/xming/). Install VcXsrv and be sure to check the "Disable access control" check box during installation,  detailed instructions are avaiable [here](https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde).
+4. The next step is to install an X server to allow a visual connection between your display and docker. The recommended option is [VcXsrv](https://sourceforge.net/projects/vcxsrv/).
 
-5. Run VcXsrv which should now be found in the start menu.
+5. Run VcXsrv which can be found found in the start menu (called XLaunch). Be sure to check the "Disable access control" check box when you first run the XLauch app. More detailed instructions are avaiable [here](https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde).
 
 6. Within Windows PowerShell type ```Get-NetIPAddress -AddressState Preferred -AddressFamily IPv4 | Select-Object IPAddress,InterfaceAlias```. You will notice that there are several IP address avaiable, we should use the Ethernet, vEthernet (default switch) or WiFi Ip address.
 

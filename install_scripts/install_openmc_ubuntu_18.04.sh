@@ -65,13 +65,9 @@ sudo rm /usr/bin/python
 sudo ln -s /usr/bin/python3 /usr/bin/python
 
 # MOAB Variables
-MOAB_BRANCH='Version5.1.0'
-MOAB_REPO='https://bitbucket.org/fathomteam/moab/'
 MOAB_INSTALL_DIR=$HOME/MOAB
 
 # DAGMC Variables
-DAGMC_BRANCH='develop'
-DAGMC_REPO='https://github.com/svalinn/dagmc'
 DAGMC_INSTALL_DIR=$HOME/DAGMC
 set -ex
 
@@ -86,7 +82,7 @@ echo 'export LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH' >> ~/.bash
 cd ~
 mkdir MOAB
 cd MOAB
-git clone -b $MOAB_BRANCH $MOAB_REPO
+git clone -b Version5.1.0 https://bitbucket.org/fathomteam/moab/
 mkdir build 
 cd build
 cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
@@ -104,7 +100,7 @@ echo 'export PATH=$PATH:~/MOAB/bin' >> ~/.bashrc
 cd ~
 mkdir DAGMC
 cd DAGMC
-git clone -b $DAGMC_BRANCH $DAGMC_REPO
+git clone -b develop https://github.com/svalinn/dagmc
 mkdir build
 cd build
 # cmake ../dagmc -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$DAGMC_INSTALL_DIR -DMOAB_DIR=$MOAB_INSTALL_DIR -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_EXE=ON
@@ -118,12 +114,13 @@ echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc
 
 # OpenMC Install
 cd /opt
-sudo git clone https://github.com/mit-crpg/openmc  --recursive
+sudo git clone https://github.com/mit-crpg/openmc.git --recursive
 cd /opt/openmc
 sudo git checkout develop
 sudo mkdir build
 cd build 
-sudo cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
+sudo chmod 777 build
+cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 # cmake -Ddagmc=ON -Ddebug=on -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 sudo make 
 sudo make install
