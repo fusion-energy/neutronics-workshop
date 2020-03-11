@@ -10,11 +10,11 @@ import json
 
 firstwall_material = openmc.Material(name='Iron')
 firstwall_material.set_density('g/cm3', 7.75)
-firstwall_material.add_element('Fe', 1., percent_type='wo')
+firstwall_material.add_element('Fe', 1.0, percent_type='wo')
 
 breeder_material = openmc.Material(name="Lithium") 
-breeder_material.set_density('g/cm3', 2.)
-breeder_material.add_element('Li', 1., 'ao')
+breeder_material.set_density('g/cm3', 2.0)
+breeder_material.add_element('Li', 1.0, percent_type='ao')
 
 mats = openmc.Materials([firstwall_material, breeder_material])
 
@@ -64,7 +64,7 @@ sett.source = source
 
 tallies = openmc.Tallies()
 
-#added a cell tally for tritium production
+# added a cell tally for tritium production
 cell_filter = openmc.CellFilter(first_wall_cell)
 reaction_tally = openmc.Tally(name='DPA')
 reaction_tally.filters = [cell_filter]

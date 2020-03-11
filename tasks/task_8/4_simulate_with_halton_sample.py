@@ -15,12 +15,14 @@ from neutronics_material_maker import Material
 import ghalton
 import pandas as pd
 
-def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thickness, breeder_material_name, temperature_in_C):
+def make_geometry_tallies(batches, nps, enrichment, inner_radius, thickness, breeder_material_name, temperature_in_C):
     # print('simulating ',batches,enrichment_fraction,inner_radius,thickness,breeder_material_name)
 
     #MATERIALS from library of materials in neutronics_material_maker package
     breeder_material = Material(material_name = breeder_material_name,
-                                enrichment_fraction = enrichment_fraction,
+                                enrichment = enrichment,
+                                enrichment_target = 'Li6',
+                                enrichment_type = 'ao',
                                 temperature_in_C = temperature_in_C).neutronics_material
 
     eurofer = Material(material_name='eurofer').neutronics_material
@@ -107,12 +109,12 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
     tallies.append(tally)
 
 
-    #RUN OPENMC #
+    #RUN OPENMC#
     model = openmc.model.Model(geom, mats, sett, tallies)
     model.run()
 
 
-    #RETRIEVING TALLY RESULTS
+    #RETRIEVING TALLY RESULTS#
 
     sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
@@ -129,8 +131,6 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
     return json_output
 
 
-
-
 #reads all json files into pandas dataframe
 path_to_json = "outputs"
 Path('outputs/').mkdir(parents=True, exist_ok=True)
@@ -144,8 +144,9 @@ for filename in list_files:
         print('no files created yet')
 results_df = pd.DataFrame(resultdict)
 
-number_of_new_simulations = 7 # this value will need to be changed to cover the space better
 
+
+number_of_new_simulations = 7 # this value will need to be changed to cover the space better
 
 for breeder_material_name in ['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8']:
  
@@ -162,12 +163,12 @@ for breeder_material_name in ['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8']:
     # x = [item for sublist in x for item in sublist]
     for i, coord in enumerate(coords):
 
-        enrichment_fraction = coord[0]
+        enrichment = coord[0]*100
         thickness = coord[1]*500
 
         inputs = {'batches':2,
                     'nps':1000,  
-                    'enrichment_fraction':enrichment_fraction,
+                    'enrichment':enrichment,
                     'inner_radius':500,
                     'thickness':thickness,
                     'breeder_material_name':breeder_material_name,
