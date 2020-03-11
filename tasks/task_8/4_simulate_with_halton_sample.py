@@ -16,8 +16,6 @@ import pandas as pd
 
 from openmc_model import simulate_model
 
-
-
 #reads all json files into pandas dataframe to check if the simulations have been previously performed
 path_to_json = "outputs"
 Path('outputs/').mkdir(parents=True, exist_ok=True)
@@ -31,8 +29,9 @@ for filename in list_files:
         print('no files created yet')
 results_df = pd.DataFrame(resultdict)
 
-number_of_new_simulations = 7 # this value will need to be changed to cover the space better
 
+
+number_of_new_simulations = 7 # this value will need to be changed to cover the space better
 
 for breeder_material_name in ['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8']:
 
@@ -48,7 +47,6 @@ for breeder_material_name in ['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8']:
 
     # x = [item for sublist in x for item in sublist]
     for i, coord in enumerate(coords):
-
         enrichment = coord[0]
         thickness = coord[1]*500
 

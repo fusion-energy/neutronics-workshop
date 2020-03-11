@@ -9,15 +9,14 @@ import plotly.graph_objects as go
 from tqdm import tqdm
 
 
-def make_materials_geometry_tallies(enrichment_fraction):
+def make_materials_geometry_tallies(enrichment):
 
     #MATERIALS#
 
-    breeder_material = openmc.Material(name = "breeder_material") #Pb84.2Li15.8 with natural enrichment of Li6
-    breeder_material.add_element('Pb', 84.2,'ao')
-    breeder_material.add_nuclide('Li6', enrichment_fraction*15.8, 'ao')
-    breeder_material.add_nuclide('Li7', (1.0-enrichment_fraction)*15.8, 'ao')
-    breeder_material.set_density('atom/b-cm',3.2720171e-2) # around 11 g/cm3
+    breeder_material = openmc.Material(name = "breeder_material") # Pb84.2Li15.8
+    breeder_material.add_element('Pb', 84.2, percent_type='ao')
+    breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=enrichment, enrichment_target='Li6', enrichment_type='ao')   # enrichment defined by function call
+    breeder_material.set_density('atom/b-cm', 3.2720171e-2) # around 11 g/cm3
 
     copper = openmc.Material(name='copper')
     copper.set_density('g/cm3', 8.5)
@@ -94,7 +93,7 @@ def make_materials_geometry_tallies(enrichment_fraction):
     tbr_tally.scores = ['(n,Xt)'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
     tallies.append(tbr_tally)
 
-    #RUN OPENMC #
+    #RUN OPENMC#
     model = openmc.model.Model(geom, mats, sett, tallies)
     model.run()
     sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
@@ -106,21 +105,21 @@ def make_materials_geometry_tallies(enrichment_fraction):
     tbr_tally_result = df['mean'].sum()
     tbr_tally_std_dev = df['std. dev.'].sum()
 
-    return {'enrichment_fraction':enrichment_fraction,
+    return {'enrichment':enrichment,
             'tbr_tally_result':tbr_tally_result, 
             'tbr_tally_std_dev':tbr_tally_std_dev}
 
 
 results=[]
-for enrichment_fraction in tqdm([0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]):
-    results.append(make_materials_geometry_tallies(enrichment_fraction))
+for enrichment in tqdm([10, 20, 30, 40, 50, 60, 70, 80, 90, 100]):  # percentage enrichment from 10% Li6 to 100% Li6
+    results.append(make_materials_geometry_tallies(enrichment))
 
-print('results',results)
+print('results', results)
 
 fig = go.Figure()
 
 # PLOTS RESULTS #
-fig.add_trace(go.Scatter(x=[entry['enrichment_fraction'] for entry in results], 
+fig.add_trace(go.Scatter(x=[entry['enrichment'] for entry in results], 
                 y=[entry['tbr_tally_result'] for entry in results],
                 mode = 'lines',
                 error_y= {'array':[entry['tbr_tally_std_dev'] for entry in results]},
@@ -129,7 +128,7 @@ fig.add_trace(go.Scatter(x=[entry['enrichment_fraction'] for entry in results],
 
 fig.update_layout(
       title = 'Tritium production as a function of Li6 enrichment',
-      xaxis = {'title':'Li6 enrichment fraction'},
+      xaxis = {'title':'Li6 enrichment (%)'},
       yaxis = {'title':'TBR'}
 )
 

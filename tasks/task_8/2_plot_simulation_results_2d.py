@@ -20,12 +20,12 @@ def make_plot(x_axis_name,y_axis_name, y_axis_error_name):
             df_filtered_by_mat = results_df[results_df['breeder_material_name']==material_name]
 
             text_value = []
-            for e,t,i,tbr in zip(df_filtered_by_mat['enrichment_fraction'],
+            for e,t,i,tbr in zip(df_filtered_by_mat['enrichment'],
                                           df_filtered_by_mat['thickness'],
                                           df_filtered_by_mat['inner_radius'],
                                           df_filtered_by_mat['TBR']):
                   text_value.append('TBR =' +str(tbr)+'<br>'+
-                                    'enrichment fraction ='+str(e) +'<br>'+
+                                    'enrichment ='+str(e) +'<br>'+
                                     'thickness ='+str(t) +'<br>'+
                                     'inner radius ='+str(i)
                                     )
@@ -81,5 +81,5 @@ for filename in list_files:
 results_df = pd.DataFrame(resultdict)
 results_df = results_df[results_df['sample'] == args.samples]
 
-make_plot(x_axis_name='enrichment_fraction',y_axis_name='TBR', y_axis_error_name='TBR_std_dev')
+make_plot(x_axis_name='enrichment',y_axis_name='TBR', y_axis_error_name='TBR_std_dev')
 make_plot(x_axis_name='thickness',y_axis_name='TBR', y_axis_error_name='TBR_std_dev')

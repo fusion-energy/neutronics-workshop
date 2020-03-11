@@ -15,7 +15,6 @@ from pathlib import Path
 
 from openmc_model import simulate_model
 
-
 number_of_simulations = 5 # this value can be changed to perform more simulation
 
 for i in tqdm(range(number_of_simulations)):
@@ -34,12 +33,13 @@ for i in tqdm(range(number_of_simulations)):
                   'temperature_in_C':500
                   }
 
+
         result = simulate_model(**inputs)
 
         inputs['sample'] = 'random'
 
         result.update(inputs)
-
+        
         filename = 'outputs/'+str(uuid.uuid4())+'.json'
         with open(filename, mode='w', encoding='utf-8') as f:
             json.dump(result, f, indent=4)

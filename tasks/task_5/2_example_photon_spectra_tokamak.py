@@ -7,12 +7,10 @@ import plotly.graph_objects as go
 
 #MATERIALS#
 
-breeder_material = openmc.Material(1, "PbLi") #Pb84.2Li15.8 with natural enrichment of Li6
-enrichment_fraction = 0.97
-breeder_material.add_element('Pb', 84.2,'ao')
-breeder_material.add_nuclide('Li6', enrichment_fraction*15.8, 'ao')
-breeder_material.add_nuclide('Li7', (1.0-enrichment_fraction)*15.8, 'ao')
-breeder_material.set_density('atom/b-cm',3.2720171e-2) # around 11 g/cm3
+breeder_material = openmc.Material(1, "PbLi")   # Pb84.2Li15.8 with natural enrichment of Li6
+breeder_material.add_element('Pb', 84.2, percent_type='ao')
+breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=7.0, enrichment_target='Li6', enrichment_type='ao')   # natural enrichment = 7% Li6
+breeder_material.set_density('atom/b-cm',3.2720171e-2)   # around 11 g/cm3
 
 copper = openmc.Material(name='Copper')
 copper.set_density('g/cm3', 8.5)
@@ -34,14 +32,14 @@ mats = openmc.Materials([breeder_material, eurofer, copper])
 
 #GEOMETRY#
 
-#surfaces
+# surfaces
 central_sol_surface = openmc.ZCylinder(r=100)
 central_shield_outer_surface = openmc.ZCylinder(r=110)
 vessel_inner = openmc.Sphere(r=500)
 first_wall_outer_surface = openmc.Sphere(r=510)
 breeder_blanket_outer_surface = openmc.Sphere(r=610,boundary_type='vacuum')
 
-#cells
+# cells
 
 central_sol_region = -central_sol_surface & -breeder_blanket_outer_surface
 central_sol_cell = openmc.Cell(region=central_sol_region) 
@@ -84,9 +82,9 @@ source.space = openmc.stats.Point((150,0,0))
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1])
 sett.source = source
-sett.photon_transport = True # This line is required to switch on photons tracking
+sett.photon_transport = True   # This line is required to switch on photons tracking
 
-#setup the tallies
+# setup the tallies
 tallies = openmc.Tallies()
 
 photon_particle_filter = openmc.ParticleFilter(['photon']) # This line adds a particle filter for photons
