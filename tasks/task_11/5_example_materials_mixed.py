@@ -4,30 +4,34 @@ import numpy as np
 import plotly.graph_objs as go
 from neutronics_material_maker import Material, MultiMaterial
 
+# Homogeneous mixture of helium and Li4SiO4 using MultiMaterial class
 
+# MultiMaterial class requires list of Material objects to be passed
 helium = Material('He', temperature_in_C=500, pressure_in_Pa=100000)
 Li4SiO4 = Material('Li4SiO4', enrichment_fraction=0.6)
 
 mixed_helium_Li4SiO4 = MultiMaterial(material_name='mixed_helium_Li4SiO4',   # name of homogeneous material
-                                     materials=[helium, Li4SiO4],   # list of material objects (NOT neutronics materials)
-                                     fracs=[0.36, 0.64],   # list of combination fractions for each material object
-                                     percent_type='vo')   # combination fraction type
-print(mixed_helium_Li4SiO4.neutronics_material)
+                                     materials=[helium, Li4SiO4],            # list of material objects (NOT neutronics materials)
+                                     fracs=[0.36, 0.64],                     # list of combination fractions for each material object
+                                     percent_type='vo')                      # combination fraction type
+# print(mixed_helium_Li4SiO4.neutronics_material)
 
 
+# Homogenous mixture of tungsten carbide and water using mix_materials function
+
+mixed_water_WC = openmc.Material.mix_materials(name = 'mixed_water_WC',      # name of homogeneous material
+                                               materials = [                 # list of neutronics materials
+                                                   Material('WC').neutronics_material,
+                                                   Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).neutronics_material
+                                               ],
+                                               fracs = [0.8, 0.2],           # list of combination fractions for each neutronics material
+                                               percent_type='vo')            # combination fraction type
 
 
+# Demonstration of changing combination fractions of each material
 
-
-
-# we can show how changing the fractions of each material varies the properties of the homogenised material
-
-# We will use a combined material of tungsten carbide and water
-
-# Tungsten carbide density
-print(Material('WC').neutronics_material.density)
-# Water density
-print(Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).neutronics_material.density)
+print('Tungsten carbide density = ' + str(Material('WC').neutronics_material.density))
+print('Water density = ' + str(Material(H2O).neutronics_material.density))
 
 water_fractions = np.linspace(0., 1., 20)
 

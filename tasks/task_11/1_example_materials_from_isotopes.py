@@ -48,4 +48,4 @@ enriched_Li4SiO4_isotope.add_nuclide('O17', 4.0*NATURAL_ABUNDANCE['O17'], percen
 enriched_Li4SiO4_isotope.add_nuclide('O18', 4.0*NATURAL_ABUNDANCE['O18'], percent_type='ao')
 enriched_Li4SiO4_isotope.set_density('g/cm3', 2.32) # this would be lower than 2.32 but this would need calculating
 
-print(enriched_Li4SiO4_isotope)
+# print(enriched_Li4SiO4_isotope)
