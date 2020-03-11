@@ -10,11 +10,9 @@ import os
 
 #MATERIALS#
 
-breeder_material = openmc.Material(1, "PbLi") #Pb84.2Li15.8 with natural enrichment of Li6
-enrichment_fraction = 0.50
-breeder_material.add_element('Pb', 84.2,'ao')
-breeder_material.add_nuclide('Li6', enrichment_fraction*15.8, 'ao')
-breeder_material.add_nuclide('Li7', (1.0-enrichment_fraction)*15.8, 'ao')
+breeder_material = openmc.Material(1, "PbLi") # Pb84.2Li15.8
+breeder_material.add_element('Pb', 84.2, percent_type='ao')
+breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=50.0, enrichment_target='Li6', enrichment_type='ao') # 50% enriched
 breeder_material.set_density('atom/b-cm',3.2720171e-2) # around 11 g/cm3
 
 copper = openmc.Material(name='Copper')
@@ -37,7 +35,7 @@ mats = openmc.Materials([breeder_material, eurofer, copper])
 
 #GEOMETRY#
 
-#surfaces
+# surfaces
 central_sol_surface = openmc.ZCylinder(r=100)
 central_shield_outer_surface = openmc.ZCylinder(r=110)
 vessel_inner = openmc.Sphere(r=500)
@@ -45,7 +43,7 @@ first_wall_outer_surface = openmc.Sphere(r=510)
 breeder_blanket_outer_surface = openmc.Sphere(r=610,boundary_type='vacuum')
 
 
-#cells
+# cells
 central_sol_region = -central_sol_surface & -breeder_blanket_outer_surface
 central_sol_cell = openmc.Cell(region=central_sol_region) 
 central_sol_cell.fill = copper
@@ -91,7 +89,7 @@ sett.source = source
 
 tallies = openmc.Tallies()
 
-#added a cell tally for tritium production
+# added a cell tally for tritium production
 cell_filter = openmc.CellFilter(breeder_blanket_cell)
 tbr_tally = openmc.Tally(name='TBR')
 tbr_tally.filters = [cell_filter]

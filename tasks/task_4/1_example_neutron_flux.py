@@ -10,18 +10,14 @@ import os
 #MATERIALS#
 mats = openmc.Materials()
 
-breeder_material = openmc.Material(1, "PbLi") #Pb84.2Li15.8 with natural enrichment of Li6
-enrichment_fraction = 0.07 #change the enrichment upto 1.0
-breeder_material.add_element('Pb', 84.2,'ao')
-breeder_material.add_nuclide('Li6', enrichment_fraction*15.8, 'ao')
-breeder_material.add_nuclide('Li7', (1.0-enrichment_fraction)*15.8, 'ao')
-breeder_material.set_density('g/cm3',11.0)
+breeder_material = openmc.Material(1, "PbLi") # Pb84.2Li15.8
+breeder_material.add_element('Pb', 84.2, percent_type='ao')
+breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=7.0, enrichment_target='Li6', enrichment_type='ao')   # natural enrichment = 7% Li6. Change enrichment here.
+breeder_material.set_density('g/cm3', 11.0)
 mats.append(breeder_material)
 
 
 #GEOMETRY#
-
-
 sph1 = openmc.Sphere(r=50)
 sph2 = openmc.Sphere(r=80, boundary_type = 'vacuum')
 sph3 = +sph1 & -sph2 
@@ -58,7 +54,7 @@ sett.source = source
 
 # Create mesh which will be used for tally
 mesh = openmc.RegularMesh()
-mesh_height=200
+mesh_height = 200
 mesh_width = mesh_height
 mesh.dimension = [mesh_width, mesh_height]
 mesh.lower_left = [-200, -200]
