@@ -9,11 +9,10 @@ import os
 
 #MATERIALS#
 
-breeder_material = openmc.Material(1, "PbLi") # Pb84.2Li15.8 with natural enrichment of Li6
-enrichment = 7.0 # percentage enrichment
+breeder_material = openmc.Material(1, "PbLi")   # Pb84.2Li15.8
 breeder_material.add_element('Pb', 84.2, percent_type='ao')
-breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=enrichment, enrichment_target='Li6', enrichment_type='ao')
-breeder_material.set_density('atom/b-cm', 3.2720171e-2) # around 11 g/cm3
+breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=7.0, enrichment_target='Li6', enrichment_type='ao')   # natural enrichment = 7% Li6
+breeder_material.set_density('atom/b-cm', 3.2720171e-2)   # around 11 g/cm3
 
 copper = openmc.Material(name='Copper')
 copper.set_density('g/cm3', 8.5)

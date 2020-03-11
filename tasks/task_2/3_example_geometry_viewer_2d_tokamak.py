@@ -47,7 +47,7 @@ breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surf
 breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
 breeder_blanket_cell.fill = eurofer
 
-#this is a void and hence has no material fill
+# this is a void and hence has no material fill
 inner_vessel_region = +central_sol_surface & -vessel_inner
 inner_vessel_cell = openmc.Cell(region=inner_vessel_region) 
 inner_vessel_cell.name = 'inner_vessel'

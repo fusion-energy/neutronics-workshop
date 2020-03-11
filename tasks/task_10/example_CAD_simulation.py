@@ -11,7 +11,7 @@ from neutronics_material_maker import Material
 
 #MATERIALS using the neutronics material maker
 
-breeder_material = Material(material_name='Li4SiO4', enrichment_fraction=0.9).neutronics_material
+breeder_material = Material(material_name='Li4SiO4', enrichment=90).neutronics_material   # enrichment_target and enrichment_type defined by default in neutronics material maker material dictionary
 
 copper = Material(material_name='copper').neutronics_material
 
