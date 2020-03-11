@@ -13,12 +13,14 @@ import openmc
 from pathlib import Path
 from neutronics_material_maker import Material
 
-def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thickness, breeder_material_name, temperature_in_C):
+def make_geometry_tallies(batches, nps, enrichment, inner_radius, thickness, breeder_material_name, temperature_in_C):
     # print('simulating ', batches, enrichment, inner_radius, thickness, breeder_material_name)
 
-    #MATERIALS from library of materials in neutronics_material_maker package
+    # MATERIALS from library of materials in neutronics_material_maker package
     breeder_material = Material(material_name = breeder_material_name,
-                                enrichment_fraction = enrichment_fraction,
+                                enrichment = enrichment,
+                                enrichment_target = 'Li6',
+                                enrichment_type = 'ao',
                                 temperature_in_C = temperature_in_C).neutronics_material
 
     eurofer = Material(material_name = 'eurofer').neutronics_material
@@ -69,7 +71,7 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
                                       breeder_blanket_cell,
                                       vessel_cell])
 
-    #plt.show(universe.plot(width=(1500,1500),basis='xz'))
+    # plt.show(universe.plot(width=(1500,1500),basis='xz'))
 
     geom = openmc.Geometry(universe)
 
@@ -91,7 +93,7 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
     sett.export_to_xml()
 
 
-    #tally filters
+    # tally filters
     particle_filter = openmc.ParticleFilter('neutron')
     cell_filter_breeder = openmc.CellFilter(breeder_blanket_cell)
 
@@ -105,16 +107,16 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
     tallies.append(tally)
 
 
-    #RUN OPENMC #
+    #RUN OPENMC#
     model = openmc.model.Model(geom, mats, sett, tallies)
     model.run()
 
 
-    #RETRIEVING TALLY RESULTS
+    #RETRIEVING TALLY RESULTS#
 
     sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
-    json_output = {'enrichment_fraction': enrichment_fraction,
+    json_output = {'enrichment': enrichment,
                    'inner_radius': inner_radius,
                    'thickness': thickness,
                    'breeder_material_name': breeder_material_name,
@@ -137,17 +139,17 @@ def make_geometry_tallies(batches, nps, enrichment_fraction, inner_radius, thick
     return json_output
 
 
-number_of_simulations = 7 # this value can be changed to perform more simulation
+number_of_simulations = 7 # this value can be changed to perform more simulations
 
 for i in tqdm(range(number_of_simulations)):
 
     for breeder_material_name in ['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8']:
 
-        enrichment_fraction = np.random.uniform(0, 1)
+        enrichment = np.random.uniform(0, 100)
         thickness = np.random.uniform(1, 500)
         result = make_geometry_tallies(batches=2, # this value can be increased to decrease error
-                                       nps=1000,  
-                                       enrichment_fraction=enrichment_fraction,
+                                       nps=1000,
+                                       enrichment=enrichment,
                                        inner_radius=500,
                                        thickness=thickness,
                                        breeder_material_name=breeder_material_name,

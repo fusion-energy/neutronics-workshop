@@ -64,7 +64,7 @@ sett.source = source
 
 tallies = openmc.Tallies()
 
-#added a cell tally for tritium production
+# added a cell tally for tritium production
 cell_filter = openmc.CellFilter(first_wall_cell)
 reaction_tally = openmc.Tally(name='DPA')
 reaction_tally.filters = [cell_filter]

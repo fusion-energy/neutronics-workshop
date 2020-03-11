@@ -35,7 +35,7 @@ mats.append(breeder_material)
 
 mats.export_to_xml()
 
-#define all the surfaces
+# define all the surfaces
 central_sol_surface = openmc.ZCylinder(r=100)
 central_shield_outer_surface = openmc.ZCylinder(r=110,boundary_type='vacuum')
 vessel_inner = openmc.Sphere(r=500,boundary_type='vacuum')
@@ -43,7 +43,7 @@ first_wall_outer_surface = openmc.Sphere(r=510)
 breeder_blanket_outer_surface = openmc.Sphere(r=610)
 
 
-#define the cells
+# define the cells
 central_sol_region = -central_sol_surface & -breeder_blanket_outer_surface
 central_sol_cell = openmc.Cell(region=central_sol_region) 
 central_sol_cell.fill = copper
@@ -78,7 +78,7 @@ vox_plot.width = (1500., 1500., 1500.)
 vox_plot.pixels = (200, 200, 200)
 vox_plot.filename = 'plot_3d_tokamak'
 vox_plot.color_by = 'material'
-#vox_plot.colors = {copper: 'blue'}  # materials can be coloured using this command
+# vox_plot.colors = {copper: 'blue'}  # materials can be coloured using this command
 plots = openmc.Plots([vox_plot])
 plots.export_to_xml()
 
@@ -87,4 +87,4 @@ openmc.plot_geometry()
 # this converts the h5 file to a vti
 os.system('openmc-voxel-to-vtk plot_3d_tokamak.h5 -o plot_3d_tokamak.vti')
 os.system('cp plot_3d_tokamak.vti /my_openmc_workshop')
-os.system('paraview plot_3d_tokamak.vti')  # or visit might work better
+os.system('paraview plot_3d_tokamak.vti')   # or visit might work better

@@ -13,10 +13,10 @@ def make_materials_geometry_tallies(enrichment):
 
     #MATERIALS#
 
-    breeder_material = openmc.Material(name = "breeder_material") #Pb84.2Li15.8 with natural enrichment of Li6
+    breeder_material = openmc.Material(name = "breeder_material") # Pb84.2Li15.8
     breeder_material.add_element('Pb', 84.2, percent_type='ao')
-    breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=enrichment, enrichment_target='Li6', enrichment_type='ao')
-    breeder_material.set_density('atom/b-cm',3.2720171e-2) # around 11 g/cm3
+    breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=enrichment, enrichment_target='Li6', enrichment_type='ao')   # enrichment defined by function call
+    breeder_material.set_density('atom/b-cm', 3.2720171e-2) # around 11 g/cm3
 
     copper = openmc.Material(name='copper')
     copper.set_density('g/cm3', 8.5)
@@ -93,7 +93,7 @@ def make_materials_geometry_tallies(enrichment):
     tbr_tally.scores = ['(n,Xt)'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
     tallies.append(tbr_tally)
 
-    #RUN OPENMC #
+    #RUN OPENMC#
     model = openmc.model.Model(geom, mats, sett, tallies)
     model.run()
     sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
@@ -111,10 +111,10 @@ def make_materials_geometry_tallies(enrichment):
 
 
 results=[]
-for enrichment in tqdm([10, 20, 30, 40, 50, 60, 70, 80, 90, 100]):
+for enrichment in tqdm([10, 20, 30, 40, 50, 60, 70, 80, 90, 100]):  # percentage enrichment from 10% Li6 to 100% Li6
     results.append(make_materials_geometry_tallies(enrichment))
 
-print('results',results)
+print('results', results)
 
 fig = go.Figure()
 
