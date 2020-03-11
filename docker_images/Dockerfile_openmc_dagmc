@@ -99,14 +99,18 @@ RUN apt-get --yes install occ*
 RUN apt-get --yes install libtbb-dev
 
 # install the occ_faceter, this currently uses a branch that could be merged
-RUN git clone https://github.com/johnnonweiler/occ_faceter.git && \
+RUN git clone https://github.com/makeclean/occ_faceter.git && \
     cd occ_faceter && \
-    git checkout add-sense2-tag-and-materials && \
     mkdir build && cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=.. && \
     make && \
-    make install && \
-    cp /occ_faceter/bin/occ_faceter /bin
+    make install
+
 
 # there can be only one
 RUN echo 'alias python="python3"' >> ~/.bashrc
+
+RUN echo 'export PATH=$PATH:~/MOAB/bin' >> ~/.bashrc
+RUN echo 'export PATH=$PATH:/plotter/' >> ~/.bashrc
+RUN echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc
+RUN echo 'export PATH=$PATH:/occ_faceter/bin/' >> ~/.bashrc

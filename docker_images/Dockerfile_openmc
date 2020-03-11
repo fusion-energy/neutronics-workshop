@@ -108,5 +108,8 @@ RUN cd /opt/openmc && python3 setup.py develop
 #this alternative install method makes changing source code and testing is a little harder 
 #RUN cd /opt/openmc && pip3 install .
 
+RUN git clone https://github.com/openmc-dev/plotter.git
+RUN echo 'export PATH=$PATH:/plotter/' >> ~/.bashrc
+
 RUN echo 'alias python="python3"' >> ~/.bashrc
 
