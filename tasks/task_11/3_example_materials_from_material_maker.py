@@ -3,8 +3,6 @@ import openmc
 
 from neutronics_material_maker import Material
 
-# Some material
-
 # Some materials require arguments to correctly calculate material properties
 
 # Water requires 'temperature' and 'pressure' arguments to be passed

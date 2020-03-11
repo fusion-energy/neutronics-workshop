@@ -84,21 +84,21 @@ plasma_source::PlasmaSource source = plasma_source::PlasmaSource(ion_density_ped
   
 // you must have external C linkage here otherwise 
 // dlopen will not find the file
-extern "C" openmc::Particle::Bank sample_source() {
+extern "C" openmc::Particle::Bank sample_source(uint64_t* seed) {
     openmc::Particle::Bank particle;
     // wgt
     particle.particle = openmc::Particle::Type::neutron;
     particle.wgt = 1.0;
     // position 
 
-    std::array<double,8> randoms = {openmc::prn(),
-                            openmc::prn(),
-                            openmc::prn(),
-                            openmc::prn(),
-                            openmc::prn(),
-                            openmc::prn(),
-                            openmc::prn(),
-                            openmc::prn()};
+    std::array<double,8> randoms = {openmc::prn(seed),
+                                    openmc::prn(seed),
+                                    openmc::prn(seed),
+                                    openmc::prn(seed),
+                                    openmc::prn(seed),
+                                    openmc::prn(seed),
+                                    openmc::prn(seed),
+                                    openmc::prn(seed)};
 
     double u,v,w,E;
     source.SampleSource(randoms,particle.r.x,particle.r.y,particle.r.z,

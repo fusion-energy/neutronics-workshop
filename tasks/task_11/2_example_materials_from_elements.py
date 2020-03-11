@@ -34,4 +34,4 @@ enriched_Li4SiO4_isotope_element.add_element('Si', 1.0, percent_type='ao')
 enriched_Li4SiO4_isotope_element.add_element('O', 4.0, percent_type='ao')
 enriched_Li4SiO4_isotope_element.set_density('g/cm3', 2.32) # this would be lower than 2.32 but this would need calculating
 
-print(enriched_Li4SiO4_isotope_element)
+# print(enriched_Li4SiO4_isotope_element)
