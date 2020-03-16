@@ -17,38 +17,37 @@ fig = go.Figure()
 # this loop extracts the cross section and energy of reactions when they exist
 for element_name in tqdm(all_stable_elements):
 
-      element_object = openmc.Material() # this material defaults to a density of 1g/cm3
+    element_object = openmc.Material() # this material defaults to a density of 1g/cm3
 
-      try:
-            element_object.add_element(element_name,1.0,percent_type='ao')
-      except ValueError:
-            print("The cross section files for the isotopes of ",element_name," don't exist")
-            continue
-      
-      try:
-            atomic_weight(element_name) 
-      except ValueError:
-            print('There are no natural isotopes of ',element_name)
-            continue
+    try:
+        element_object.add_element(element_name,1.0,percent_type='ao')
+    except ValueError:
+        print("The cross section files for the isotopes of ",element_name," don't exist")
+        continue
 
-      energy, cross_sections = openmc.calculate_cexs(element_object, 'material', [Endf_MT_number] )
-      cross_section = cross_sections[0]
-      if cross_section.sum() != 0.0:
-            fig.add_trace(go.Scatter(x=energy, 
-                              y=cross_section, 
-                              mode = 'lines', 
-                              name=element_name+' MT '+str(Endf_MT_number))
-                        )
-      else:
-            print('Element ',element_name, ' has no cross section data for MT number', Endf_MT_number)
+    try:
+        atomic_weight(element_name) 
+    except ValueError:
+        print('There are no natural isotopes of ',element_name)
+        continue
 
+    energy, cross_sections = openmc.calculate_cexs(element_object, 'material', [Endf_MT_number])
+    cross_section = cross_sections[0]
+    if cross_section.sum() != 0.0:
+        fig.add_trace(go.Scatter(x=energy,
+                                 y=cross_section,
+                                 mode='lines',
+                                 name=element_name+' MT '+str(Endf_MT_number))
+                    )
+    else:
+        print('Element ',element_name, ' has no cross section data for MT number', Endf_MT_number)
 
 
 fig.update_layout(
-      title = 'Element cross sections '+ str(Endf_MT_number),
-      xaxis = {'title':'Energy (eV)',
-               'range':(0,14.1e6)},
-      yaxis = {'title':'Cross section (barns)'}
+      title='Element cross sections ' + str(Endf_MT_number),
+      xaxis={'title': 'Energy (eV)',
+             'range': (0, 14.1e6)},
+      yaxis={'title': 'Cross section (barns)'}
 )
 
 
@@ -58,7 +57,7 @@ fig.update_layout(
         go.layout.Updatemenu(
             buttons=list([
                 dict(
-                    args=[{"xaxis.type":'lin', "yaxis.type":'lin', 'yaxis.range':(0,14.1e6)}],
+                    args=[{"xaxis.type":'lin', "yaxis.type":'lin', 'yaxis.range':(0, 14.1e6)}],
                     label="linear(x) , linear(y)",
                     method="relayout"
                 ),
@@ -68,7 +67,7 @@ fig.update_layout(
                     method="relayout"
                 ),
                 dict(
-                    args=[{"xaxis.type":'log', "yaxis.type":'lin', 'yaxis.range':(0,14.1e6)}],
+                    args=[{"xaxis.type":'log', "yaxis.type":'lin', 'yaxis.range':(0, 14.1e6)}],
                     label="log(x) , linear(y)",
                     method="relayout"
                 ),
@@ -91,8 +90,9 @@ fig.update_layout(
 
 fig.write_html("2_example_element_plot_"+str(Endf_MT_number)+".html")
 try:
-    fig.write_html("/my_openmc_workshop/2_example_element_plot_"+str(Endf_MT_number)+".html")
-except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
+    fig.write_html("/my_openmc_workshop/2_example_element_plot_" + str(Endf_MT_number) + ".html")
+# ensures script works for both inside and outside docker container enviroment
+except (FileNotFoundError, NotADirectoryError):
     pass
-    
+
 fig.show()
