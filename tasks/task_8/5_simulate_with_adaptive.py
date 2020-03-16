@@ -44,6 +44,8 @@ def find_tbr(x):
 
 learner = adaptive.Learner2D(find_tbr, bounds=[(0, 100), (1, 500)])
 
-runner = Runner(learner, goal=stop_after(minutes=5))
+runner = adaptive.Runner(learner, ntasks=1, goal=lambda l: l.npoints > 40)
 # runner.start()
 # find_tbr((50,50))
+# runner.live_info()
+runner.ioloop.run_until_complete(runner.task)
