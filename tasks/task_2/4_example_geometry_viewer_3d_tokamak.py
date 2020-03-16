@@ -2,17 +2,16 @@
 
 """example_isotope_plot.py: plots few 2D views of a simple tokamak geometry ."""
 
-__author__      = "Jonathan Shimwell"
+__author__ = "Jonathan Shimwell"
 
 import openmc
-import matplotlib.pyplot as plt
 import os
 
 mats = openmc.Materials()
 
 copper = openmc.Material(name='Copper')
 copper.set_density('g/cm3', 8.5)
-copper.add_element('Cu', 1.0)   # Note, percent_type does not have to be specified as material is 100% copper
+copper.add_element('Cu', 1.0)  # Note, percent_type does not have to be specified as material is 100% copper
 mats.append(copper)
 
 eurofer = openmc.Material(name='EUROFER97')
@@ -37,27 +36,27 @@ mats.export_to_xml()
 
 # define all the surfaces
 central_sol_surface = openmc.ZCylinder(r=100)
-central_shield_outer_surface = openmc.ZCylinder(r=110,boundary_type='vacuum')
-vessel_inner = openmc.Sphere(r=500,boundary_type='vacuum')
+central_shield_outer_surface = openmc.ZCylinder(r=110, boundary_type='vacuum')
+vessel_inner = openmc.Sphere(r=500, boundary_type='vacuum')
 first_wall_outer_surface = openmc.Sphere(r=510)
 breeder_blanket_outer_surface = openmc.Sphere(r=610)
 
 
 # define the cells
 central_sol_region = -central_sol_surface & -breeder_blanket_outer_surface
-central_sol_cell = openmc.Cell(region=central_sol_region) 
+central_sol_cell = openmc.Cell(region=central_sol_region)
 central_sol_cell.fill = copper
 
 central_shield_region = +central_sol_surface & -central_shield_outer_surface & -breeder_blanket_outer_surface
-central_shield_cell = openmc.Cell(region=central_shield_region) 
+central_shield_cell = openmc.Cell(region=central_shield_region)
 central_shield_cell.fill = eurofer
 
 first_wall_region = -first_wall_outer_surface & +vessel_inner & +central_shield_outer_surface
-first_wall_cell = openmc.Cell(region=first_wall_region) 
+first_wall_cell = openmc.Cell(region=first_wall_region)
 first_wall_cell.fill = eurofer
 
 breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surface & +central_shield_outer_surface
-breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
+breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region)
 breeder_blanket_cell.fill = breeder_material
 
 universe = openmc.Universe(cells=[central_sol_cell,central_shield_cell,first_wall_cell, breeder_blanket_cell])
@@ -71,7 +70,7 @@ sett = openmc.Settings()
 sett.export_to_xml()
 
 
-# makes the 3d "cube" style geometry 
+# makes the 3d "cube" style geometry
 vox_plot = openmc.Plot()
 vox_plot.type = 'voxel'
 vox_plot.width = (1500., 1500., 1500.)
@@ -87,4 +86,4 @@ openmc.plot_geometry()
 # this converts the h5 file to a vti
 os.system('openmc-voxel-to-vtk plot_3d_tokamak.h5 -o plot_3d_tokamak.vti')
 os.system('cp plot_3d_tokamak.vti /my_openmc_workshop')
-os.system('paraview plot_3d_tokamak.vti')   # or visit might work better
+os.system('paraview plot_3d_tokamak.vti')  # or visit might work better

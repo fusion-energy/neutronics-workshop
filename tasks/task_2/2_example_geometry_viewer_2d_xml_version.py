@@ -3,7 +3,6 @@
 """1_example_geometry_viewer_2d_xml_version.py: plots few 2D views of a simple geometry ."""
 
 import openmc
-import matplotlib.pyplot as plt
 import os
 
 mats = openmc.Materials()
@@ -20,7 +19,7 @@ surface_sph2 = openmc.Sphere(r=600)
 # add surfaces here using https://openmc.readthedocs.io/en/stable/usersguide/geometry.html#surfaces-and-regions
 
 # example region
-region = +surface_sph1 & -surface_sph2   # above (+) surface_sph and below (-) surface_sph2
+region = +surface_sph1 & -surface_sph2  # above (+) surface_sph and below (-) surface_sph2
 
 # example cell
 cell1 = openmc.Cell(region=region)
@@ -28,7 +27,7 @@ cell1.fill = natural_lead
 
 # add another cell here
 
-universe = openmc.Universe(cells=[cell1])   # HINT: this list will need to include the new cell
+universe = openmc.Universe(cells=[cell1])  # HINT: this list will need to include the new cell
 
 geom = openmc.Geometry(universe)
 
@@ -37,8 +36,8 @@ geom.export_to_xml()
 p = openmc.Plot()
 p.basis = 'xz'
 p.filename = 'plot'
-p.width = (1200, 1200)   #HINT: this might need to be increased to see larger geometry
-p.pixels = (400, 400) 
+p.width = (1200, 1200)  # HINT: this might need to be increased to see larger geometry
+p.pixels = (400, 400)
 p.color_by = 'material'
 p.colors = {natural_lead: 'blue'}
 plots = openmc.Plots([p])

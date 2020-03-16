@@ -6,37 +6,37 @@ import openmc
 import json
 
 
-#MATERIALS#
+# MATERIALS
 
 firstwall_material = openmc.Material(name='Iron')
 firstwall_material.set_density('g/cm3', 7.75)
 firstwall_material.add_element('Fe', 1.0, percent_type='wo')
 
-breeder_material = openmc.Material(name="Lithium") 
+breeder_material = openmc.Material(name="Lithium")
 breeder_material.set_density('g/cm3', 2.0)
 breeder_material.add_element('Li', 1.0, percent_type='ao')
 
 mats = openmc.Materials([firstwall_material, breeder_material])
 
 
-#GEOMETRY#
+# GEOMETRY
 
-#surfaces
+# surfaces
 vessel_inner = openmc.Sphere(r=500)
 first_wall_outer_surface = openmc.Sphere(r=510)
-breeder_blanket_outer_surface = openmc.Sphere(r=610,boundary_type='vacuum')
+breeder_blanket_outer_surface = openmc.Sphere(r=610, boundary_type='vacuum')
 
-#cells
+# cells
 inner_vessel_region = -vessel_inner
-inner_vessel_cell = openmc.Cell(region=inner_vessel_region) 
+inner_vessel_cell = openmc.Cell(region=inner_vessel_region)
 # filled with void by default
 
 first_wall_region = -first_wall_outer_surface & +vessel_inner
-first_wall_cell = openmc.Cell(region=first_wall_region) 
+first_wall_cell = openmc.Cell(region=first_wall_region)
 first_wall_cell.fill = firstwall_material
 
 breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surface
-breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
+breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region)
 breeder_blanket_cell.fill = breeder_material
 
 universe = openmc.Universe(cells=[inner_vessel_cell,first_wall_cell, breeder_blanket_cell])
@@ -44,7 +44,7 @@ geom = openmc.Geometry(universe)
 
 
 
-#SIMULATION SETTINGS#
+# SIMULATION SETTINGS
 
 # Instantiate a Settings object
 sett = openmc.Settings()
@@ -56,7 +56,7 @@ sett.run_mode = 'fixed source'
 
 # Create a DT point source
 source = openmc.Source()
-source.space = openmc.stats.Point((0,0,0))
+source.space = openmc.stats.Point((0, 0, 0))
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1])
 sett.source = source
@@ -87,7 +87,7 @@ df = tally.get_pandas_dataframe()
 damage_energy_in_ev = df['mean'].sum()
 
 
-print('Damage energy depositied per source neutron = ',damage_energy_in_ev, 'eV\n')
+print('Damage energy depositied per source neutron = ', damage_energy_in_ev, 'eV\n')
 
 print('Two times the threshold energy of 40eV is needed to displace an atom')
 displacements_per_source_neutron = damage_energy_in_ev / (2*40)
@@ -97,10 +97,10 @@ print('Assuming about 80% remains after 20% recombine to original lattice locati
 displacements_per_source_neutron_with_recombination = displacements_per_source_neutron*0.8
 print('Displacements per source neutron after recombination = ', displacements_per_source_neutron_with_recombination, '\n')
 
-fusion_power = 3e9 # units Watts
-energy_per_fusion_reaction = 17.6e6 # units eV
-eV_to_Joules = 1.60218e-19 # multiplication factor to convert eV to Joules
-number_of_neutrons_per_second = fusion_power/ (energy_per_fusion_reaction*eV_to_Joules)
+fusion_power = 3e9  # units Watts
+energy_per_fusion_reaction = 17.6e6  # units eV
+eV_to_Joules = 1.60218e-19  # multiplication factor to convert eV to Joules
+number_of_neutrons_per_second = fusion_power / (energy_per_fusion_reaction*eV_to_Joules)
 print('Number of neutrons per second', number_of_neutrons_per_second, '\n')
 
 number_of_neutrons_per_year = number_of_neutrons_per_second * 60*60*24*365.25

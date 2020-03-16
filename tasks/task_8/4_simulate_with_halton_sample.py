@@ -16,7 +16,7 @@ import pandas as pd
 
 from openmc_model import simulate_model
 
-#reads all json files into pandas dataframe to check if the simulations have been previously performed
+# reads all json files into pandas dataframe to check if the simulations have been previously performed
 path_to_json = "outputs"
 Path('outputs/').mkdir(parents=True, exist_ok=True)
 list_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
@@ -31,16 +31,16 @@ results_df = pd.DataFrame(resultdict)
 
 
 
-number_of_new_simulations = 7 # this value will need to be changed to cover the space better
+number_of_new_simulations = 7  # this value will need to be changed to cover the space better
 
 for breeder_material_name in ['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8']:
 
     sequencer = ghalton.Halton(2)
 
     if len(results_df) > 0:
-        existing_simulations_for_this_material = results_df[results_df['breeder_material_name']==breeder_material_name]
+        existing_simulations_for_this_material = results_df[results_df['breeder_material_name'] == breeder_material_name]
 
-        coords = sequencer.get(number_of_new_simulations+len(existing_simulations_for_this_material))
+        coords = sequencer.get(number_of_new_simulations + len(existing_simulations_for_this_material))
 
     else:
         coords = sequencer.get(number_of_new_simulations)
@@ -50,13 +50,13 @@ for breeder_material_name in ['Li4SiO4', 'F2Li2BeF2', 'Li', 'Pb84.2Li15.8']:
         enrichment = coord[0]
         thickness = coord[1]*500
 
-        inputs = {'batches':2,
-                  'nps':1000,  
-                  'enrichment':enrichment,
-                  'inner_radius':500,
-                  'thickness':thickness,
-                  'breeder_material_name':breeder_material_name,
-                  'temperature_in_C':500
+        inputs = {'batches': 2,
+                  'nps': 1000,  
+                  'enrichment': enrichment,
+                  'inner_radius': 500,
+                  'thickness': thickness,
+                  'breeder_material_name': breeder_material_name,
+                  'temperature_in_C': 500
                  }
 
         result = simulate_model(**inputs)

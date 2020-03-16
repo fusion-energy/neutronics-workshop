@@ -4,10 +4,9 @@
 
 
 import openmc
-import matplotlib.pyplot as plt
 import os
 
-#MATERIALS#
+# MATERIALS
 
 breeder_material = openmc.Material(1, "PbLi")   # Pb84.2Li15.8
 breeder_material.add_element('Pb', 84.2, percent_type='ao')
@@ -32,22 +31,22 @@ eurofer.add_element('V', 0.2, percent_type='wo')
 mats = openmc.Materials([breeder_material, eurofer, copper])
 
 
-#GEOMETRY#
+# GEOMETRY
 
-#surfaces
+# surfaces
 central_sol_surface = openmc.ZCylinder(r=100)
 central_shield_outer_surface = openmc.ZCylinder(r=110)
 vessel_inner_surface = openmc.Sphere(r=500)
 first_wall_outer_surface = openmc.Sphere(r=510)
-breeder_blanket_outer_surface = openmc.Sphere(r=610,boundary_type='vacuum')
+breeder_blanket_outer_surface = openmc.Sphere(r=610, boundary_type='vacuum')
 
-#cells
+# cells
 central_sol_region = -central_sol_surface & -breeder_blanket_outer_surface
-central_sol_cell = openmc.Cell(region=central_sol_region) 
+central_sol_cell = openmc.Cell(region=central_sol_region)
 central_sol_cell.fill = copper
 
 central_shield_region = +central_sol_surface & -central_shield_outer_surface & -breeder_blanket_outer_surface
-central_shield_cell = openmc.Cell(region=central_shield_region) 
+central_shield_cell = openmc.Cell(region=central_shield_region)
 central_shield_cell.fill = eurofer
 
 inner_vessel_region = -vessel_inner_surface & +central_shield_outer_surface
@@ -55,20 +54,18 @@ inner_vessel_cell = openmc.Cell(region=inner_vessel_region)
 # no material set as default is vacuum
 
 first_wall_region = -first_wall_outer_surface & +vessel_inner_surface
-first_wall_cell = openmc.Cell(region=first_wall_region) 
+first_wall_cell = openmc.Cell(region=first_wall_region)
 first_wall_cell.fill = eurofer
 
 breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surface & +central_shield_outer_surface
-breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
+breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region)
 breeder_blanket_cell.fill = breeder_material
 
-universe = openmc.Universe(cells=[central_sol_cell,central_shield_cell,inner_vessel_cell,first_wall_cell, breeder_blanket_cell])
+universe = openmc.Universe(cells=[central_sol_cell, central_shield_cell, inner_vessel_cell, first_wall_cell, breeder_blanket_cell])
 geom = openmc.Geometry(universe)
 
 
-
-
-#SIMULATION SETTINGS#
+# SIMULATION SETTINGS
 
 # Instantiate a Settings object
 sett = openmc.Settings()
@@ -83,15 +80,15 @@ source = openmc.Source()
 mcnpsource = openmc.Source()
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1])
-source.space = openmc.stats.Point((150,150,0))
+source.space = openmc.stats.Point((150, 150, 0))
 
 sett.source = source
 
 # Create 3d mesh which will be used for tally
 mesh = openmc.RegularMesh()
-mesh.dimension = [200, 100, 200] #width, depth, height
-mesh.lower_left = [-750, 0, -750] #x,y,z coordinates
-mesh.upper_right = [750, 750, 750] #x,y,z coordinates
+mesh.dimension = [200, 100, 200]  # width, depth, height
+mesh.lower_left = [-750, 0, -750]  # x,y,z coordinates
+mesh.upper_right = [750, 750, 750]  # x,y,z coordinates
 
 
 tallies = openmc.Tallies()
@@ -102,7 +99,7 @@ mesh_filter = openmc.MeshFilter(mesh)
 # Create flux mesh tally to score flux
 mesh_tally = openmc.Tally(name='tally_on_mesh')
 mesh_tally.filters = [mesh_filter]
-mesh_tally.scores = ['(n,Xt)'] # this can be changed to 'absorption' to show the impact of the center column
+mesh_tally.scores = ['(n,Xt)']  # this can be changed to 'absorption' to show the impact of the center column
 tallies.append(mesh_tally)
 
 
