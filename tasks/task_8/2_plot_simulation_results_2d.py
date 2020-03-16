@@ -66,7 +66,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-s',
                     '--samples',
                     required=True,
-                    choices=['random', 'halton'],
+                    choices=['random', 'halton', 'adaptive'],
                     help='Choose the type of sampling to plot'
                     )
 args = parser.parse_args()
