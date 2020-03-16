@@ -5,7 +5,7 @@
 import openmc
 import json
 
-#MATERIALS#
+# MATERIALS
 
 density_of_iron_in_g_per_cm3 = 7.75
 firstwall_material = openmc.Material(name='iron')
@@ -19,12 +19,12 @@ breeder_material.add_element('Li', 1.0)
 mats = openmc.Materials([firstwall_material, breeder_material])
 mats.export_to_xml()
 
-#GEOMETRY#
+# GEOMETRY
 
-#surfaces
-vessel_inner_surface = openmc.Sphere(r=500) # when increasing the radius this number needs to change
-first_wall_outer_surface = openmc.Sphere(r=510) # when increasing the radius this number needs to change
-breeder_blanket_outer_surface = openmc.Sphere(r=610,boundary_type='vacuum')
+# surfaces
+vessel_inner_surface = openmc.Sphere(r=500)  # when increasing the radius this number needs to change
+first_wall_outer_surface = openmc.Sphere(r=510)  # when increasing the radius this number needs to change
+breeder_blanket_outer_surface = openmc.Sphere(r=610, boundary_type='vacuum')
 
 
 # cells
@@ -61,8 +61,6 @@ openmc.run()
 cell_vol_calc_results = openmc.VolumeCalculation.from_hdf5('volume_1.h5')
 
 
-
-
 print('\ninner_vessel_cell volume', cell_vol_calc_results.volumes[1], 'cm3')
 print('first_wall_cell volume', cell_vol_calc_results.volumes[2], 'cm3')
 print('breeder_blanket_cell volume', cell_vol_calc_results.volumes[3], 'cm3\n')
@@ -77,10 +75,10 @@ print('breeder_material volume', material_vol_calc_results.volumes[2], 'cm3')
 
 volume_of_firstwall_cell = cell_vol_calc_results.volumes[2].nominal_value
 
-iron_atomic_mass_in_g = 55.845*1.66054E-24 # molar mass multiplier by the atomic mass unit (u)
+iron_atomic_mass_in_g = 55.845*1.66054E-24  # molar mass multiplier by the atomic mass unit (u)
 number_of_iron_atoms = volume_of_firstwall_cell * density_of_iron_in_g_per_cm3 / (iron_atomic_mass_in_g)
 
-print('Number of iron atoms in the firstwall ',number_of_iron_atoms)
+print('Number of iron atoms in the firstwall ', number_of_iron_atoms)
 
 json_output = {'Firstwall cell volume': volume_of_firstwall_cell,
                'Number of iron atoms in firstwall': number_of_iron_atoms}

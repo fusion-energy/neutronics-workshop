@@ -2,7 +2,7 @@
 
 """example_isotope_plot.py: plots few 2D views of a simple tokamak geometry with neutron flux."""
 
-__author__      = "Jonathan Shimwell"
+__author__  = "Jonathan Shimwell"
 
 import openmc
 import plotly.graph_objects as go
@@ -11,12 +11,12 @@ from tqdm import tqdm
 
 def make_materials_geometry_tallies(enrichment):
 
-    #MATERIALS#
+    # MATERIALS#
 
-    breeder_material = openmc.Material(name = "breeder_material") # Pb84.2Li15.8
+    breeder_material = openmc.Material(name="breeder_material")  # Pb84.2Li15.8
     breeder_material.add_element('Pb', 84.2, percent_type='ao')
-    breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=enrichment, enrichment_target='Li6', enrichment_type='ao')   # enrichment defined by function call
-    breeder_material.set_density('atom/b-cm', 3.2720171e-2) # around 11 g/cm3
+    breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=enrichment, enrichment_target='Li6', enrichment_type='ao')  # enrichment defined by function call
+    breeder_material.set_density('atom/b-cm', 3.2720171e-2)  # around 11 g/cm3
 
     copper = openmc.Material(name='copper')
     copper.set_density('g/cm3', 8.5)
@@ -35,40 +35,39 @@ def make_materials_geometry_tallies(enrichment):
 
     mats = openmc.Materials([breeder_material, eurofer, copper])
 
-
-    #GEOMETRY#
+    # GEOMETRY
 
     central_sol_surface = openmc.ZCylinder(r=100)
     central_shield_outer_surface = openmc.ZCylinder(r=110)
     vessel_inner = openmc.Sphere(r=500)
     first_wall_outer_surface = openmc.Sphere(r=510)
-    breeder_blanket_outer_surface = openmc.Sphere(r=610,boundary_type='vacuum')
+    breeder_blanket_outer_surface = openmc.Sphere(r=610, boundary_type='vacuum')
 
     central_sol_region = -central_sol_surface & -vessel_inner
-    central_sol_cell = openmc.Cell(region=central_sol_region) 
+    central_sol_cell = openmc.Cell(region=central_sol_region)
     central_sol_cell.fill = copper
 
     central_shield_region = +central_sol_surface & -central_shield_outer_surface & -vessel_inner
-    central_shield_cell = openmc.Cell(region=central_shield_region) 
+    central_shield_cell = openmc.Cell(region=central_shield_region)
     central_shield_cell.fill = eurofer
 
     inner_vessel_region = -vessel_inner & + central_shield_outer_surface
-    inner_vessel_cell = openmc.Cell(region=inner_vessel_region) 
+    inner_vessel_cell = openmc.Cell(region=inner_vessel_region)
 
     first_wall_region = -first_wall_outer_surface & +vessel_inner
-    first_wall_cell = openmc.Cell(region=first_wall_region) 
+    first_wall_cell = openmc.Cell(region=first_wall_region)
     first_wall_cell.fill = eurofer
 
     breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surface
-    breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
+    breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region)
     breeder_blanket_cell.fill = breeder_material
     breeder_blanket_cell.name = 'breeder_blanket'
 
-    universe = openmc.Universe(cells=[central_sol_cell,central_shield_cell,inner_vessel_cell,first_wall_cell, breeder_blanket_cell])
+    universe = openmc.Universe(cells=[central_sol_cell,central_shield_cell, inner_vessel_cell, first_wall_cell, breeder_blanket_cell])
     geom = openmc.Geometry(universe)
 
 
-    #SIMULATION SETTINGS#
+    # SIMULATION SETTINGS
 
     sett = openmc.Settings()
     batches = 3
@@ -78,22 +77,22 @@ def make_materials_geometry_tallies(enrichment):
     sett.run_mode = 'fixed source'
 
     source = openmc.Source()
-    source.space = openmc.stats.Point((350,0,0))
+    source.space = openmc.stats.Point((350, 0, 0))
     source.angle = openmc.stats.Isotropic()
     source.energy = openmc.stats.Discrete([14e6], [1])
     sett.source = source
 
-    #TALLIES#
+    # TALLIES
 
     tallies = openmc.Tallies()
 
     cell_filter = openmc.CellFilter(breeder_blanket_cell)
-    tbr_tally = openmc.Tally(2,name='TBR')
+    tbr_tally = openmc.Tally(2, name='TBR')
     tbr_tally.filters = [cell_filter]
-    tbr_tally.scores = ['(n,Xt)'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
+    tbr_tally.scores = ['(n,Xt)']  # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
     tallies.append(tbr_tally)
 
-    #RUN OPENMC#
+    # RUN OPENMC
     model = openmc.model.Model(geom, mats, sett, tallies)
     model.run()
     sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
@@ -101,16 +100,16 @@ def make_materials_geometry_tallies(enrichment):
     tbr_tally = sp.get_tally(name='TBR')
 
     df = tbr_tally.get_pandas_dataframe()
-    
+
     tbr_tally_result = df['mean'].sum()
     tbr_tally_std_dev = df['std. dev.'].sum()
 
-    return {'enrichment':enrichment,
-            'tbr_tally_result':tbr_tally_result, 
-            'tbr_tally_std_dev':tbr_tally_std_dev}
+    return {'enrichment': enrichment,
+            'tbr_tally_result': tbr_tally_result,
+            'tbr_tally_std_dev': tbr_tally_std_dev}
 
 
-results=[]
+results = []
 for enrichment in tqdm([10, 20, 30, 40, 50, 60, 70, 80, 90, 100]):  # percentage enrichment from 10% Li6 to 100% Li6
     results.append(make_materials_geometry_tallies(enrichment))
 
@@ -118,24 +117,24 @@ print('results', results)
 
 fig = go.Figure()
 
-# PLOTS RESULTS #
-fig.add_trace(go.Scatter(x=[entry['enrichment'] for entry in results], 
-                y=[entry['tbr_tally_result'] for entry in results],
-                mode = 'lines',
-                error_y= {'array':[entry['tbr_tally_std_dev'] for entry in results]},
+# PLOTS RESULTS
+fig.add_trace(go.Scatter(x=[entry['enrichment'] for entry in results],
+                         y=[entry['tbr_tally_result'] for entry in results],
+                         mode='lines',
+                         error_y={'array': [entry['tbr_tally_std_dev'] for entry in results]},
                 )
              )
 
 fig.update_layout(
-      title = 'Tritium production as a function of Li6 enrichment',
-      xaxis = {'title':'Li6 enrichment (%)'},
-      yaxis = {'title':'TBR'}
+      title='Tritium production as a function of Li6 enrichment',
+      xaxis={'title': 'Li6 enrichment (%)'},
+      yaxis={'title': 'TBR'}
 )
 
 fig.write_html("tbr_study.html")
 try:
     fig.write_html("/my_openmc_workshop/tbr_study.html")
-except (FileNotFoundError, NotADirectoryError):   # for both inside and outside docker container
+except (FileNotFoundError, NotADirectoryError):  # for both inside and outside docker container
     pass
 
 fig.show()

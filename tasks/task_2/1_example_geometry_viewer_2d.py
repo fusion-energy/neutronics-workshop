@@ -32,7 +32,7 @@ surface_sph2 = openmc.Sphere(r=600)
 # for the first wall you will need another sphere
 # for the center column you will need a cylinder
 
-blanket_region = +surface_sph1 & -surface_sph2 # above (+) surface_sph and below (-) surface_sph2
+blanket_region = +surface_sph1 & -surface_sph2  # above (+) surface_sph and below (-) surface_sph2
 
 
 # example cell
@@ -41,17 +41,17 @@ cell_1.fill = natural_lead   # assigning a material to a cell
 
 # add more cells here for the first wall and the center column
 
-universe = openmc.Universe(cells=[cell_1])   # HINT: this list will need to include the new cell
+universe = openmc.Universe(cells=[cell_1])  # HINT: this list will need to include the new cell
 
 # shows the plots
-plt.show(universe.plot(width=(1200,1200),basis='xz',colors={cell_1: 'blue'}))
-plt.show(universe.plot(width=(1200,1200),basis='xy',colors={cell_1: 'blue'}))
-plt.show(universe.plot(width=(1200,1200),basis='yz',colors={cell_1: 'blue'}))
+plt.show(universe.plot(width=(1200, 1200), basis='xz', colors={cell_1: 'blue'}))
+plt.show(universe.plot(width=(1200, 1200), basis='xy', colors={cell_1: 'blue'}))
+plt.show(universe.plot(width=(1200, 1200), basis='yz', colors={cell_1: 'blue'}))
 
 # saves the plots
-universe.plot(width=(1200,1200),basis='xz',colors={cell_1: 'blue'}).get_figure().savefig('xz_sphere.png')
-universe.plot(width=(1200,1200),basis='xy',colors={cell_1: 'blue'}).get_figure().savefig('xy_sphere.png')
-universe.plot(width=(1200,1200),basis='yz',colors={cell_1: 'blue'}).get_figure().savefig('yz_sphere.png')
+universe.plot(width=(1200, 1200), basis='xz', colors={cell_1: 'blue'}).get_figure().savefig('xz_sphere.png')
+universe.plot(width=(1200, 1200), basis='xy', colors={cell_1: 'blue'}).get_figure().savefig('xy_sphere.png')
+universe.plot(width=(1200, 1200), basis='yz', colors={cell_1: 'blue'}).get_figure().savefig('yz_sphere.png')
 
 os.system('cp xz_sphere.png /my_openmc_workshop')
 os.system('cp xy_sphere.png /my_openmc_workshop')
