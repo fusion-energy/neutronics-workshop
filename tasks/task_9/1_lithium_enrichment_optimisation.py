@@ -9,16 +9,11 @@ __author__ = "Jonathan Shimwell"
 import openmc
 import os
 import json
-import numpy as np
-from numpy import random
-import re
-from tqdm import tqdm
 from inference.gp_tools import GpOptimiser
 # from inference.gp_tools import GpOptimiser
 from neutronics_material_maker import Material
 from numpy import sin, cos, linspace, array, meshgrid
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 import ghalton
 
 

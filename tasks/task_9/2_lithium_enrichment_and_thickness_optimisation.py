@@ -11,7 +11,7 @@ import os
 import json
 import numpy as np
 from numpy import random
-import re 
+import re
 from tqdm import tqdm
 from gp_tools import GpOptimiser
 # from inference.gp_tools import GpOptimiser
@@ -35,10 +35,9 @@ def make_materials_geometry_tallies(v):
                                 enrichment_fraction=enrichment_fraction,
                                 temperature_in_C=temperature_in_C).neutronics_material
 
-    eurofer = Material(material_name = 'eurofer').neutronics_material
+    eurofer = Material(material_name='eurofer').neutronics_material
 
     mats = openmc.Materials([breeder_material, eurofer])
-
 
     # GEOMETRY
 
@@ -106,7 +105,6 @@ def make_materials_geometry_tallies(v):
     tally.scores = ['(n,Xt)']  # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
     tallies.append(tally)
 
-
     # RUN OPENMC
     model = openmc.model.Model(geom, mats, sett, tallies)
     model.run()
@@ -139,7 +137,7 @@ def example_plot_1d(GP):
     ax1.plot(evaluations, max_values, marker='o', ls='solid', c='orange', label='optimum value', zorder=5)
     # ax1.plot([2,12], [max(y_func), max(y_func)], ls='dashed', label='actual max', c='black')
     ax1.set_xlabel('Simulations')
-    ax1.set_xlim([0,len(evaluations)])
+    ax1.set_xlim([0, len(evaluations)])
     # ax1.set_ylim([max(y)-0.3, max(y_func)+0.3])
     ax1.xaxis.set_label_position('top')
     ax1.yaxis.set_label_position('right')
@@ -180,13 +178,13 @@ def example_plot_2d(GP):
     ax1.plot(evaluations, max_values, marker='o', ls='solid', c='orange', label='optimum value', zorder=5)
     ax1.plot([5, 30], [z_func.max(), z_func.max()], ls='dashed', label='actual max', c='black')
     ax1.set_xlabel('function evaluations')
-    #ax1.set_xlim([5, 30])
-    #ax1.set_ylim([max(y) - 0.3, z_func.max() + 0.3])
-    #ax1.xaxis.set_label_position('top')
-    #ax1.yaxis.set_label_position('right')
-    #ax1.xaxis.tick_top()
-    #ax1.set_yticks([])
-    #ax1.legend(loc=4)
+    # ax1.set_xlim([5, 30])
+    # ax1.set_ylim([max(y) - 0.3, z_func.max() + 0.3])
+    # ax1.xaxis.set_label_position('top')
+    # ax1.yaxis.set_label_position('right')
+    # ax1.xaxis.tick_top()
+    # ax1.set_yticks([])
+    # ax1.legend(loc=4)
 
     ax2.contour(*mesh, z_func, 40)
     ax2.plot([i[0] for i in GP.x], [i[1] for i in GP.x], 'D', c='red', markeredgecolor='black')
