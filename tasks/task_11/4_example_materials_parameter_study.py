@@ -1,9 +1,7 @@
 
-import openmc
 import numpy as np
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
-from tqdm import tqdm
 
 from neutronics_material_maker import Material
 
@@ -17,14 +15,14 @@ from neutronics_material_maker import Material
 temperatures = np.linspace(0.1, 600., 200)
 water_densities = [Material('H2O', temperature_in_C=temperature, pressure_in_Pa=15500000).neutronics_material.density for temperature in temperatures]
 
-fig = make_subplots(rows=2, cols=2, 
-                    subplot_titles=("Water density as a function of temperature (at constant pressure)","Helium density as a function of temperature (at constant pressure)","Helium density as a function of pressure (at constant temperature)",""))
+fig = make_subplots(rows=2, cols=2,
+                    subplot_titles=("Water density as a function of temperature (at constant pressure)", "Helium density as a function of temperature (at constant pressure)", "Helium density as a function of pressure (at constant temperature)", ""))
 
 fig.add_trace(go.Scatter(x=temperatures,
                          y=water_densities,
                          mode='lines+markers',
                          showlegend=False),
-                         row=1, col=1)
+              row=1, col=1)
 
 fig.update_xaxes({'title': 'Temperature in C'}, row=1, col=1)
 fig.update_yaxes({'title': 'Density (g/cm3)'}, row=1, col=1)
@@ -41,7 +39,7 @@ fig.add_trace(go.Scatter(x=temperatures,
                          y=helium_densities,
                          mode='lines+markers',
                          showlegend=False),
-                         row=1, col=2)
+              row=1, col=2)
 
 fig.update_xaxes({'title': 'Temperature in C'}, row=1, col=2)
 fig.update_yaxes({'title': 'Density (g/cm3)'}, row=1, col=2)
@@ -58,7 +56,7 @@ fig.add_trace(go.Scatter(x=pressures,
                          y=helium_densities,
                          mode='lines+markers',
                          showlegend=False),
-                         row=2, col=1)
+              row=2, col=1)
 
 fig.update_xaxes({'title': 'Pressure in Pa'}, row=2, col=1)
 fig.update_yaxes({'title': 'Density (g/cm3)'}, row=2, col=1)

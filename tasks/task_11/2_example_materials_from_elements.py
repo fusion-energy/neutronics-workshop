@@ -11,7 +11,6 @@ water_from_elements.set_density('g/cm3', 0.99821)
 print(water_from_elements)
 
 
-
 # Making Li4SiO4 from elements
 
 # add Li4SiO4 here
@@ -20,7 +19,6 @@ print(water_from_elements)
 # Li4SiO4_from_elements.add_element.....
 # Li4SiO4_from_elements.set_density.....
 # print(Li4SiO4_from_elements)
-
 
 
 # Making enriched Li4SiO4 from elements
