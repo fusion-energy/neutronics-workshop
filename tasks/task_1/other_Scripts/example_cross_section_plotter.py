@@ -1,15 +1,8 @@
 # Cross section plotter
 
 import openmc
-from plotly import __version__
-from plotly.offline import download_plotlyjs, plot
 from plotly.graph_objs import Scatter, Layout
-
-import json
-import pandas as pd 
-from pandas.io.json import json_normalize
-import numpy as np
-
+from plotly.offline import plot
 
 # Materials
 
@@ -84,21 +77,21 @@ layout1 = Layout(
     title='Interaction cross-sections for different elements and interactions',
     xaxis=dict(title='Energy (eV)',
                range=[0, 10000000]),
-    yaxis={'title':'Macroscopic Cross-Section (1/cm)',
-           'type':'log'})
+    yaxis={'title': 'Macroscopic Cross-Section (1/cm)',
+           'type': 'log'})
 
 layout2 = Layout(
     title='Interaction cross-sections for different elements and interactions',
     xaxis=dict(title='Energy (eV)',
                range=[0, 10000000]),
     yaxis=dict(title='Macroscopic Cross-Section (1/cm)',
-               range=[0,0.6],))
+               range=[0, 0.6]))
 
 
-plot({'data':traces,
-      'layout':layout1},
+plot({'data': traces,
+      'layout': layout1},
       filename='elemental_cross_sections_logarithmic.html')
 
-plot({'data':traces,
-      'layout':layout2},
+plot({'data': traces,
+      'layout': layout2},
       filename='elemental_cross_sections.html')
