@@ -11,7 +11,7 @@ import os
 import json
 import numpy as np
 from numpy import random
-import re 
+import re
 from tqdm import tqdm
 from inference.gp_tools import GpOptimiser
 # from inference.gp_tools import GpOptimiser
@@ -188,7 +188,7 @@ def example_plot_1d(GP):
 
     ax2.errorbar(GP.x, GP.y, marker='o', yerr=GP.y_err, ftm=None, linestyle='', c='green', label='Simulation (Halton sample selection)', zorder=5)
     if len(GP.y) > number_of_samples:
-        ax2.errorbar(GP.x[number_of_samples:], GP.y[number_of_samples:], marker='o', yerr=GP.y_err[number_of_samples:], ftm=None, linestyle='', c='red', label='Simulation (Gaussian process selection)', zorder = 6)
+        ax2.errorbar(GP.x[number_of_samples:], GP.y[number_of_samples:], marker='o', yerr=GP.y_err[number_of_samples:], ftm=None, linestyle='', c='red', label='Simulation (Gaussian process selection)', zorder=6)
     # ax2.plot(GP.x, GP.y, marker='o', c='red', label='observations', zorder=5)
     # ax2.plot(GP.x, GP.y, 'o', c='red', label='observations', zorder=5)
     # ax2.plot(x_gp, y_func, lw=1.5, c='red', ls='dashed', label='actual function')
