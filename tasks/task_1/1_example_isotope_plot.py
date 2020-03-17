@@ -32,8 +32,8 @@ fig = go.Figure()
 # in the candidate_fusion_neutron_multipliers_list
 
 for isotope_name in tqdm(candidate_fusion_neutron_multipliers_list):
-    isotope_object = openmc.data.IncidentNeutron.from_hdf5(os.path.join(nuclear_data_path,isotope_name+'.h5')) # you may have to change this directory
-    energy = isotope_object.energy['294K'] # 294K is the temperature for endf, others use 293K
+    isotope_object = openmc.data.IncidentNeutron.from_hdf5(os.path.join(nuclear_data_path, isotope_name+'.h5'))  # you may have to change this directory
+    energy = isotope_object.energy['294K']  # 294K is the temperature for endf, others use 293K
     if MT_number in isotope_object.reactions.keys():
         cross_section = isotope_object[MT_number].xs['294K'](energy)
         fig.add_trace(go.Scatter(x=energy,
