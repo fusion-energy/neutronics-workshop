@@ -21,7 +21,6 @@ water_from_isotopes.set_density('g/cm3', 0.99821)
 print(water_from_isotopes)
 
 
-
 # Making Li4SiO4 from isotopes
 
 # add Li4SiO4 here
@@ -30,7 +29,6 @@ print(water_from_isotopes)
 # Li4SiO4_from_isotopes.add_nuclide......
 # Li4SiO4_from_isotopes.set_density......
 # print(Li4SiO4_from_isotopes)
-
 
 
 # Making enriched Li4SiO4 from isotopes
@@ -46,6 +44,6 @@ enriched_Li4SiO4_isotope.add_nuclide('Si30', NATURAL_ABUNDANCE['Si30'], percent_
 enriched_Li4SiO4_isotope.add_nuclide('O16', 4.0*NATURAL_ABUNDANCE['O16'], percent_type='ao')
 enriched_Li4SiO4_isotope.add_nuclide('O17', 4.0*NATURAL_ABUNDANCE['O17'], percent_type='ao')
 enriched_Li4SiO4_isotope.add_nuclide('O18', 4.0*NATURAL_ABUNDANCE['O18'], percent_type='ao')
-enriched_Li4SiO4_isotope.set_density('g/cm3', 2.32) # this would be lower than 2.32 but this would need calculating
+enriched_Li4SiO4_isotope.set_density('g/cm3', 2.32)  # this would be lower than 2.32 but this would need calculating
 
 # print(enriched_Li4SiO4_isotope)
