@@ -134,7 +134,7 @@ for sample, coords in zip(sampling_methods, row_col_coords):
 
 
 fig.update_xaxes(title_text="Li6 enrichment percent")
-fig.update_xaxes(title_text="blanket thickness (cm)")
+fig.update_yaxes(title_text="blanket thickness (cm)")
 
 fig.show()
 
