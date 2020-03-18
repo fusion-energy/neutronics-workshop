@@ -20,9 +20,7 @@ def load_data(path_to_json="outputs"):
     for filename in tqdm(list_files):
         with open(filename, "r") as inputjson:
             resultdict.append(json.load(inputjson))
-    print(resultdict)
     results_df = pd.DataFrame(resultdict)
-    print(results_df)
     return results_df
 
 
@@ -51,13 +49,13 @@ def make_2d_surface_trace(gp_mu, x_gp, y_gp, min_z, max_z):
 
 def make_gp(x, y, z, z_e=None):
 
-    # my_cov = RationalQuadratic()
+    my_cov = RationalQuadratic()
 
     coords = list(zip(x, y))
     if z_e is None:
-        GP = GpRegressor(coords, z)  # , kernel=my_cov)
+        GP = GpRegressor(coords, z, kernel=my_cov)
     else:
-        GP = GpRegressor(coords, z, y_err=z_e)  # , kernel=my_cov)
+        GP = GpRegressor(coords, z, y_err=z_e, kernel=my_cov)
 
     return GP
 
@@ -102,9 +100,9 @@ for sample, coords in zip(sampling_methods, row_col_coords):
 
     max_z_for_all = max(sample_data["gp_mu"])
 
-    # fig.add_trace(make_2d_surface_trace(**sample_data, min_z=0, max_z=max_z_for_all),
-    #     row=row,
-    #     col=col)
+    fig.add_trace(make_2d_surface_trace(**sample_data, min_z=0, max_z=max_z_for_all),
+        row=row,
+        col=col)
 
     fig.add_trace(
         go.Scatter(
@@ -120,19 +118,19 @@ for sample, coords in zip(sampling_methods, row_col_coords):
         row=row,
         col=col,
     )
-    
-    x = filtered_results_df["enrichment"]
-    y = filtered_results_df["thickness"]
-    z = filtered_results_df["TBR"]
 
-    xi = np.linspace(0, 100, 75)
-    yi = np.linspace(0, 500, 75)
+    # x = filtered_results_df["enrichment"]
+    # y = filtered_results_df["thickness"]
+    # z = filtered_results_df["TBR"]
 
-    zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method="cubic")
+    # xi = np.linspace(0, 100, 75)
+    # yi = np.linspace(0, 500, 75)
 
-    fig.add_trace(
-        go.Contour(z=zi, x=xi, y=yi), row=row, col=col,
-    )
+    # zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method="cubic")
+
+    # fig.add_trace(
+    #     go.Contour(z=zi, x=xi, y=yi), row=row, col=col,
+    # )
 
 
 fig.update_xaxes(title_text="Li6 enrichment percent")
