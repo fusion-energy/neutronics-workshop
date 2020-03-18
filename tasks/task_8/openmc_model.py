@@ -90,7 +90,7 @@ def simulate_model(
 
     sett = openmc.Settings()
     sett.batches = batches
-    sett.inactive = 1
+    sett.inactive = 0
     sett.particles = nps
     sett.run_mode = "fixed source"
 
@@ -100,7 +100,7 @@ def simulate_model(
     source.energy = openmc.stats.Discrete([14.08e6], [1])
     sett.source = source
 
-    sett.export_to_xml("settings.xml")
+    # sett.export_to_xml("settings.xml")
 
     # tally filters
     particle_filter = openmc.ParticleFilter("neutron")

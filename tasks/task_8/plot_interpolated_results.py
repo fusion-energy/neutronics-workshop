@@ -120,12 +120,13 @@ for sample, coords in zip(sampling_methods, row_col_coords):
         row=row,
         col=col,
     )
+    
     x = filtered_results_df["enrichment"]
     y = filtered_results_df["thickness"]
     z = filtered_results_df["TBR"]
 
-    xi = np.linspace(0, 100, 100)
-    yi = np.linspace(0, 500, 100)
+    xi = np.linspace(0, 100, 75)
+    yi = np.linspace(0, 500, 75)
 
     zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method="cubic")
 
