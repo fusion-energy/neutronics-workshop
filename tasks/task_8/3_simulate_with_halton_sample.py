@@ -29,7 +29,7 @@ coords = sequencer.get(args.number)
 
 print("running simulations with halton sampling")
 
-for i, coord in tqdm(enumerate(coords)):
+for coord in tqdm(coords):
 
     enrichment = coord[0] * 100  # scales smapling from 0 to 100
     thickness = coord[1] * 500  # scales smapling from 0 to 500
