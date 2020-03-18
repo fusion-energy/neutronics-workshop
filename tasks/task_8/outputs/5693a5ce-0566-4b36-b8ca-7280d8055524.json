@@ -1,0 +1,12 @@
+{
+    "batches": 10,
+    "nps": 1000,
+    "enrichment": 100,
+    "inner_radius": 500,
+    "thickness": 500,
+    "breeder_material_name": "Li4SiO4",
+    "temperature_in_C": 500,
+    "TBR": 0.9339194297334936,
+    "TBR_std_dev": 0.0056666215062580565,
+    "sample": "adaptive"
+}

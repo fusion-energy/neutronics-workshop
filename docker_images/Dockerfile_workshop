@@ -11,6 +11,7 @@ RUN pip3 install noisyopt
 RUN pip3 install scikit-optimize
 RUN pip3 install inference-tools
 RUN pip3 install neutronics_material_maker
+RUN pip3 install adaptive
 
 # dependancies used in the workshop
 RUN apt-get --yes install imagemagick
