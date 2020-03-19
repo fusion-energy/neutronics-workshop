@@ -8,6 +8,7 @@ The benefit of this over grid sampling is that if the study increases in scope
 and more points are added then this can be accommodated in an efficient manner
 """
 
+from pathlib import Path
 import json
 import uuid
 import argparse
@@ -39,5 +40,6 @@ for coord in tqdm(coords):
     result["sample"] = "halton"
 
     filename = "outputs/" + str(uuid.uuid4()) + ".json"
+    Path(filename).parent.mkdir(parents=True, exist_ok=True)
     with open(filename, mode="w", encoding="utf-8") as f:
         json.dump(result, f, indent=4)

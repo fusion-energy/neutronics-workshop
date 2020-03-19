@@ -6,6 +6,7 @@ selecting the sample coordinates so that samples are not wasted on
 regions that are relativly flat. Allows for more efficient use of compute
 """
 
+from pathlib import Path
 import json
 import uuid
 import argparse
@@ -23,6 +24,7 @@ def find_tbr(x):
     result["sample"] = "adaptive"
 
     filename = "outputs/" + str(uuid.uuid4()) + ".json"
+    Path(filename).parent.mkdir(parents=True, exist_ok=True)
     with open(filename, mode="w", encoding="utf-8") as f:
         json.dump(result, f, indent=4)
 
