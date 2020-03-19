@@ -6,6 +6,7 @@ This has limits as the number of dimentions increase and is inefficient
 when the number of samples is increase.
 """
 
+from pathlib import Path
 import json
 import uuid
 import math
@@ -35,5 +36,6 @@ for enrichment in tqdm(np.linspace(0, 100, number_of_steps)):
         result["sample"] = "grid"
 
         filename = "outputs/" + str(uuid.uuid4()) + ".json"
+        Path(filename).parent.mkdir(parents=True, exist_ok=True)
         with open(filename, mode="w", encoding="utf-8") as f:
             json.dump(result, f, indent=4)
