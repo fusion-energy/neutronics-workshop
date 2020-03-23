@@ -164,9 +164,8 @@ sudo apt-get --yes install libtbb-dev
 
 # install the occ_faceter, this currently uses a branch that could be merged
 cd ~
-git clone https://github.com/johnnonweiler/occ_faceter.git
+git clone https://github.com/makeclean/occ_faceter.git
 cd occ_faceter
-git checkout add-sense2-tag-and-materials
 mkdir build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=..
 make
