@@ -1,5 +1,5 @@
 # build with the following command
-# sudo docker build -t openmc_with_dagmc .
+# sudo docker build -f Dockerfile_openmc_dagmc -t openmcworkshop/openmc_dagmc .
 
 FROM ubuntu:18.04
 
