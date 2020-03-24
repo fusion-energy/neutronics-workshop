@@ -9,7 +9,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: openmcworkshop/workshop
+      - image: openmcworkshop/openmc_dagmc_nndc_dependencies
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -25,8 +25,7 @@ jobs:
           name: run tests
           command: 
             # python paramak/setup.py install
-            pytest tests 
-            # pytest tests -v --cov=neutronics_material_makergit  --cov-report term --cov-report html:htmlcov --cov-report xml --junitxml=test-reports/junit.xml
+            pytest tests -v --cov=openmc_workshop  --cov-report term --cov-report html:htmlcov --cov-report xml --junitxml=test-reports/junit.xml
             # pytest --cov=paramak --cov-report=xml
             # mkdir -p /root/repo/test-reports
             # pip3 install coverage --user

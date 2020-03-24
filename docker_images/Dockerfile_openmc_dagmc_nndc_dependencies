@@ -1,0 +1,52 @@
+# build with the following command
+# sudo docker build -f Dockerfile_openmc_dagmc_nndc_dependencies -t openmcworkshop/openmc_dagmc_nndc_dependencies .
+
+FROM openmcworkshop/openmc_dagmc_nndc
+
+# Python libraries used in the workshop
+RUN pip3 install plotly
+RUN pip3 install tqdm
+RUN pip3 install ghalton==0.6.1
+RUN pip3 install noisyopt
+RUN pip3 install scikit-optimize
+RUN pip3 install inference-tools
+RUN pip3 install neutronics_material_maker
+RUN pip3 install adaptive
+
+# dependancies used in the workshop
+RUN apt-get --yes install imagemagick
+RUN apt-get --yes install hdf5-tools
+RUN apt-get --yes install paraview
+RUN apt-get --yes install eog
+RUN apt-get --yes install wget
+RUN apt-get --yes install firefox
+
+# dependancies for vscode
+RUN apt-get --yes install libnotify4
+RUN apt-get --yes install libnss3
+RUN apt-get --yes install libxkbfile1
+RUN apt-get --yes install dpkg
+RUN apt-get --yes install libsecret-1-0
+RUN apt-get --yes install libasound2
+
+#installs VS code which is an IDE (Integrated development environment) for code
+RUN wget https://update.code.visualstudio.com/1.34.0/linux-deb-x64/stable
+RUN dpkg -i stable 
+RUN apt-get --yes install -f
+RUN echo 'function coder() { code "$1" --user-data-dir; }' >> ~/.bashrc
+#installs python and docker exstentions for syntax highlighting and hinting
+RUN code "$1" --user-data-dir  --install-extension ms-python.python
+RUN code "$1" --user-data-dir  --install-extension tht13.python
+RUN code "$1" --user-data-dir  --install-extension ms-azuretools.vscode-docker
+RUN code "$1" --user-data-dir  --install-extension ms-vscode.sublime-keybindings
+
+#installs FreeCAD
+RUN apt-get -y update
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository ppa:freecad-maintainers/freecad-stable
+RUN apt-get update 
+RUN apt-get --yes install freecad 
+RUN ln -s /usr/lib/freecad/Mod /usr/lib/freecad-python3/Mod
+
+RUN rm /usr/bin/python
+RUN cp /usr/bin/python3 /usr/bin/python
