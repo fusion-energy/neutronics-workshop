@@ -10,7 +10,7 @@ jobs:
   build:
     docker:
       - image: openmcworkshop/workshop
-      
+      parallelism: 4
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -25,7 +25,8 @@ jobs:
           name: run tests
           command: 
             # python paramak/setup.py install
-            pytest tests 
+            # pytest tests
+            circleci tests glob **/tests/*.py | circleci tests split --split-by=timings | xargs python -m pytest --reuse-db --cov-report term --cov-report html:htmlcov --cov-report xml --junitxml=test-reports/junit.xml
             # pytest tests -v --cov=neutronics_material_makergit  --cov-report term --cov-report html:htmlcov --cov-report xml --junitxml=test-reports/junit.xml
             # pytest --cov=paramak --cov-report=xml
             # mkdir -p /root/repo/test-reports
