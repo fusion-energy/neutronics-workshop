@@ -25,11 +25,11 @@ class test_task_9(unittest.TestCase):
     def test_task_9_part_1(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_9'))
+        os.chdir(Path('tasks/task_9'))
         output_filenames = ['simulation_results.json', 'output.gif']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
-        os.system('python lithium_enrichment_optimisation.py')
+        os.system('python 1_lithium_enrichment_optimisation.py')
         for output_filename in output_filenames:
             assert Path(output_filename).exists() == True
             os.system('rm '+output_filename)
@@ -37,4 +37,5 @@ class test_task_9(unittest.TestCase):
     def test_task_9_part_2(self):
         # lithium_enrichment_and_thickness_optimisation.py
         # test output (output not actually working yet)
+        # 2_lithium_enrichment_and_thickness_optimisation.py
         pass

@@ -24,7 +24,7 @@ class test_task_8(unittest.TestCase):
     def test_task_8_part_1(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_8'))
+        os.chdir(Path('tasks/task_8'))
         os.system('rm outputs/*.json')
         os.system('rmdir outputs')
         os.system('python 1_simulate_with_random_sample.py')
@@ -34,7 +34,7 @@ class test_task_8(unittest.TestCase):
     def test_task_8_part_1_graph_1(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_8'))
+        os.chdir(Path('tasks/task_8'))
         output_filenames = ['TBR_vs_enrichment_fraction_random.html', 'TBR_vs_thickness_random.html']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
@@ -46,7 +46,7 @@ class test_task_8(unittest.TestCase):
     def test_task_8_part_1_graph_2(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_8'))
+        os.chdir(Path('tasks/task_8'))
         output_filename = 'TBR_vs_thickness_vs_enrichment_fraction_random.html'
         os.system('rm '+output_filename)
         os.system('python 3_plot_simulation_results_3d.py --sample random')
@@ -58,7 +58,7 @@ class test_task_8(unittest.TestCase):
     def test_task_8_part_2(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_8'))
+        os.chdir(Path('tasks/task_8'))
         os.system('rm outputs/*.json')
         os.system('rmdir outputs')
         os.system('python 4_simulate_with_halton_sample.py')
@@ -69,7 +69,7 @@ class test_task_8(unittest.TestCase):
     def test_task_8_part_2_graph_1(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_8'))
+        os.chdir(Path('tasks/task_8'))
         output_filenames = ['TBR_vs_enrichment_fraction_halton.html', 'TBR_vs_thickness_halton.html']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
@@ -82,7 +82,7 @@ class test_task_8(unittest.TestCase):
     def test_task_8_part_2_graph_2(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_8'))
+        os.chdir(Path('tasks/task_8'))
         output_filename = 'TBR_vs_thickness_vs_enrichment_fraction_halton.html'
         os.system('rm '+output_filename)
         os.system('python 3_plot_simulation_results_3d.py --sample halton')
