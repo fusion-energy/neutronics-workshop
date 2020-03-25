@@ -72,7 +72,7 @@ sett = openmc.Settings()
 batches = 4
 sett.batches = batches
 sett.inactive = 0
-sett.particles = 10000
+sett.particles = 5000
 sett.run_mode = 'fixed source'
 
 # Create a DT point source
