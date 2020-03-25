@@ -70,7 +70,7 @@ def make_materials_geometry_tallies(enrichment):
     # SIMULATION SETTINGS
 
     sett = openmc.Settings()
-    batches = 3
+    batches = 2
     sett.batches = batches
     sett.inactive = 0
     sett.particles = 5000
