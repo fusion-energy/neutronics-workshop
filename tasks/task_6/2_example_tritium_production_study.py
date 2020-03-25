@@ -22,18 +22,12 @@ def make_materials_geometry_tallies(enrichment):
     copper.set_density('g/cm3', 8.5)
     copper.add_element('Cu', 1.0)
 
-    eurofer = openmc.Material(name='eurofer')
-    eurofer.set_density('g/cm3', 7.75)
-    eurofer.add_element('Fe', 89.067, percent_type='wo')
-    eurofer.add_element('C', 0.11, percent_type='wo')
-    eurofer.add_element('Mn', 0.4, percent_type='wo')
-    eurofer.add_element('Cr', 9.0, percent_type='wo')
-    eurofer.add_element('Ta', 0.12, percent_type='wo')
-    eurofer.add_element('W', 1.1, percent_type='wo')
-    eurofer.add_element('N', 0.003, percent_type='wo')
-    eurofer.add_element('V', 0.2, percent_type='wo')
+    steel = openmc.Material(name='steel')
+    steel.set_density('g/cm3', 7.75)
+    steel.add_element('Fe', 0.95, percent_type='wo')
+    steel.add_element('C', 0.05, percent_type='wo')
 
-    mats = openmc.Materials([breeder_material, eurofer, copper])
+    mats = openmc.Materials([breeder_material, steel, copper])
 
     # GEOMETRY
 
@@ -49,14 +43,14 @@ def make_materials_geometry_tallies(enrichment):
 
     central_shield_region = +central_sol_surface & -central_shield_outer_surface & -vessel_inner
     central_shield_cell = openmc.Cell(region=central_shield_region)
-    central_shield_cell.fill = eurofer
+    central_shield_cell.fill = steel
 
     inner_vessel_region = -vessel_inner & + central_shield_outer_surface
     inner_vessel_cell = openmc.Cell(region=inner_vessel_region)
 
     first_wall_region = -first_wall_outer_surface & +vessel_inner
     first_wall_cell = openmc.Cell(region=first_wall_region)
-    first_wall_cell.fill = eurofer
+    first_wall_cell.fill = steel
 
     breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surface
     breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region)
@@ -110,7 +104,7 @@ def make_materials_geometry_tallies(enrichment):
 
 
 results = []
-for enrichment in tqdm([0, 20, 40, 60, 80, 100]):  # percentage enrichment from 0% Li6 to 100% Li6
+for enrichment in tqdm([0, 25, 50, 75, 100]):  # percentage enrichment from 0% Li6 to 100% Li6
     results.append(make_materials_geometry_tallies(enrichment))
 
 print('results', results)
