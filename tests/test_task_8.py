@@ -27,10 +27,10 @@ class test_task_8(unittest.TestCase):
         os.chdir(Path('tasks/task_8'))
         os.system('rm outputs/*.json')
         os.system('rmdir outputs')
-        os.system('python 1_simulate_with_random_sample.py')
+        os.system('python 1_simulate_with_random_sample.py --number 4')
         assert Path('outputs').exists() == True
         assert len(os.listdir('outputs')) != 0
-        assert len(os.listdir('outputs')) == 16
+        assert len(os.listdir('outputs')) == 4
 
     # def test_task_8_part_1_graph_1(self):
 #    
