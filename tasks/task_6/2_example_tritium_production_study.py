@@ -110,7 +110,7 @@ def make_materials_geometry_tallies(enrichment):
 
 
 results = []
-for enrichment in tqdm([10, 20, 30, 40, 50, 60, 70, 80, 90, 100]):  # percentage enrichment from 10% Li6 to 100% Li6
+for enrichment in tqdm([0, 20, 40, 60, 80, 100]):  # percentage enrichment from 0% Li6 to 100% Li6
     results.append(make_materials_geometry_tallies(enrichment))
 
 print('results', results)
