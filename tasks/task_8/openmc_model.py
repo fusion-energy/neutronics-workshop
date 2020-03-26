@@ -8,7 +8,7 @@ def simulate_model(
     breeder_material_name="Li4SiO4",
     temperature_in_C=500,
     batches=2,
-    nps=5000,
+    nps=4000,
     inner_radius=500,
 ):
 
