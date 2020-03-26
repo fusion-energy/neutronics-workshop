@@ -27,7 +27,7 @@ class test_task_8(unittest.TestCase):
         os.chdir(Path('tasks/task_8'))
         os.system('rm outputs/*.json')
         os.system('rmdir outputs')
-        os.system('python 1_simulate_with_random_sample.py --number 2')
+        os.system('python 1_simulate_with_random_sample.py --number 1')
         assert Path('outputs').exists() == True
         assert len(os.listdir('outputs')) != 0
         assert len(os.listdir('outputs')) == 2
