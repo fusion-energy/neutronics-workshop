@@ -125,7 +125,7 @@ cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 sudo make 
 sudo make install
 cd /opt/openmc/ 
-sudo python3 setup.py install --user
+sudo python3 setup.py develop --user
 
 
 # Nuclear data install
