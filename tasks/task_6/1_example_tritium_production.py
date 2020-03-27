@@ -78,10 +78,10 @@ tallies.append(tbr_tally)
 
 # Run OpenMC!
 model = openmc.model.Model(geom, mats, sett, tallies)
-model.run()
+sp_filename = model.run()
 
 # open the results file
-sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+sp = openmc.StatePoint(sp_filename)
 
 # access the tally using pandas dataframes
 tbr_tally = sp.get_tally(name='TBR')
