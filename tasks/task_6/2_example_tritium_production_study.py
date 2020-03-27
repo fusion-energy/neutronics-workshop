@@ -52,12 +52,12 @@ def make_materials_geometry_tallies(enrichment):
 
 
     # SIMULATION SETTINGS
-    batches = 2
     sett = openmc.Settings()
-    batches = batches
-    sett.batches = batches
+    sett.batches = 2  # this is minimum number of batches that will be run
+    sett.trigger_active = True
+    sett.trigger_max_batches =  200  # this is maximum number of batches that will be run
     sett.inactive = 0
-    sett.particles = 5000
+    sett.particles = 1000
     sett.run_mode = 'fixed source'
 
     source = openmc.Source()
@@ -74,12 +74,15 @@ def make_materials_geometry_tallies(enrichment):
     tbr_tally = openmc.Tally(2, name='TBR')
     tbr_tally.filters = [cell_filter]
     tbr_tally.scores = ['(n,Xt)']  # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
+    tbr_tally.triggers = [openmc.Trigger(trigger_type='std_dev', threshold=0.01)]  # This stops the simulation if the threshold is meet
     tallies.append(tbr_tally)
 
     # RUN OPENMC
     model = openmc.model.Model(geom, mats, sett, tallies)
-    model.run()
-    sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+    sp_filename = model.run()
+
+    # OPEN OUPUT FILE
+    sp = openmc.StatePoint(sp_filename)
 
     tbr_tally = sp.get_tally(name='TBR')
 
