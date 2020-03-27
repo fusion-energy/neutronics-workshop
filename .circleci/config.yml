@@ -23,8 +23,8 @@ jobs:
 
       - run:
           name: run tests
+          no_output_timeout: 30m
           command: 
-            no_output_timeout: 30m
             # python paramak/setup.py install
             pytest tests -v --cov=openmc_workshop  --cov-report term --cov-report html:htmlcov --cov-report xml --junitxml=test-reports/junit.xml
             # pytest --cov=paramak --cov-report=xml
