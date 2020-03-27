@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 
-"""5_plot_neutron_birth_location_plasma.py: plots neutron birth locations."""
+"""4_plot_neutron_birth_location_plasma.py plots neutron birth locations."""
 
+
+import plotly.graph_objects as go
 
 import openmc
-import plotly.graph_objects as go
+
+# this copies a pre compiled external neutron source for use in this simulation
+os.system('cp /parametric-plasma-source/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_3')
+
 
 # MATERIALS
 
