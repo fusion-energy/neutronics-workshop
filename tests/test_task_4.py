@@ -21,7 +21,7 @@ class test_task_4(unittest.TestCase):
     def test_task_4_part_1(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_4'))
+        os.chdir(Path('tasks/task_4'))
         output_filenames = ['universe_plot.png', 'flux_plot.png']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
@@ -33,7 +33,7 @@ class test_task_4(unittest.TestCase):
     def test_task_4_part_2(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_4'))
+        os.chdir(Path('tasks/task_4'))
         output_filename = 'tally_on_mesh.vtk'
         os.system('rm '+output_filename)
         os.system('python 2_example_neutron_flux_tokamak.py')

@@ -21,7 +21,7 @@ class test_task_3(unittest.TestCase):
     def test_task_3_part_1(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_3'))
+        os.chdir(Path('tasks/task_3'))
         output_filename = 'particle_energy_histogram.html'
         os.system('rm '+output_filename)
         os.system('python 1_plot_neutron_birth_energy.py')
@@ -32,7 +32,7 @@ class test_task_3(unittest.TestCase):
     def test_task_3_part_2(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_3'))
+        os.chdir(Path('tasks/task_3'))
         output_filename = 'particle_location.html'
         os.system('rm '+output_filename)
         os.system('python 2_plot_neutron_birth_location.py')
@@ -43,7 +43,7 @@ class test_task_3(unittest.TestCase):
     def test_task_3_part_3(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_3'))
+        os.chdir(Path('tasks/task_3'))
         output_filename = 'particle_direction.html'
         os.system('rm '+output_filename)
         os.system('python 3_plot_neutron_birth_direction.py')
@@ -54,7 +54,7 @@ class test_task_3(unittest.TestCase):
     def test_task_3_part_4(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_3'))
+        os.chdir(Path('tasks/task_3'))
         output_filename = 'plasma_particle_location.html'
         os.system('rm '+output_filename)
         os.system('python 4_plot_neutron_birth_location_plasma.py')
@@ -65,7 +65,7 @@ class test_task_3(unittest.TestCase):
     def test_task_3_part_5(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_3'))
+        os.chdir(Path('tasks/task_3'))
         output_filename = 'plasma_particle_direction.html'
         os.system('rm '+output_filename)
         os.system('python 5_plot_neutron_birth_direction_plasma.py')
@@ -76,7 +76,7 @@ class test_task_3(unittest.TestCase):
     def test_task_3_part_6(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_3'))
+        os.chdir(Path('tasks/task_3'))
         output_filenames = ['plot_3d.h5', 'plot_3d.vti', 'track_1_1_4.h5', 'track_1_1_4.pvtp', 'track_1_1_4_0.vtp']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)

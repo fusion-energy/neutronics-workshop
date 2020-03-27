@@ -18,7 +18,7 @@ from openmc_model import simulate_model
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "-n", "--number", default=16, type=int, help="number of simulations to perform"
+    "-n", "--number", default=1, type=int, help="number of simulations to perform"
 )
 args = parser.parse_args()
 
