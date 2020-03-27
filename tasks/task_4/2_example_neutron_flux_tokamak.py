@@ -69,10 +69,10 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-batches = 4
+batches = 2
 sett.batches = batches
 sett.inactive = 0
-sett.particles = 10000
+sett.particles = 5000
 sett.run_mode = 'fixed source'
 
 # Create a DT point source
@@ -86,7 +86,7 @@ sett.source = source
 
 # Create 3d mesh which will be used for tally
 mesh = openmc.RegularMesh()
-mesh.dimension = [200, 100, 200]  # width, depth, height
+mesh.dimension = [100, 50, 100]  # width, depth, height
 mesh.lower_left = [-750, 0, -750]  # x,y,z coordinates
 mesh.upper_right = [750, 750, 750]  # x,y,z coordinates
 

@@ -23,7 +23,7 @@ class test_task_1(unittest.TestCase):
     def test_task_1_part_1(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_1'))
+        os.chdir(Path('tasks/task_1'))
         output_filename = '1_example_isotope_plot.html'
         os.system('rm '+output_filename)
         os.system('python 1_example_isotope_plot.py')
@@ -34,7 +34,7 @@ class test_task_1(unittest.TestCase):
     def test_task_1_part_2(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_1'))
+        os.chdir(Path('tasks/task_1'))
         output_filename = '2_example_element_plot_16.html'
         os.system('rm '+output_filename)
         os.system('python 2_example_element_plot.py')
@@ -45,7 +45,7 @@ class test_task_1(unittest.TestCase):
     def test_task_1_part_3(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_1'))
+        os.chdir(Path('tasks/task_1'))
         output_filename = '3_example_material_plot.html'
         os.system('rm '+output_filename)
         os.system('python 3_example_material_plot.py')
