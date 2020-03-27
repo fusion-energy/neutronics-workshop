@@ -9,13 +9,6 @@ FROM openmcworkshop/openmc
 RUN git clone https://github.com/openmc-dev/data.git
 
 # run script that converts ACE data to hdf5 data
-RUN python3 data/convert_nndc71.py
+RUN python3 data/convert_nndc71.py --cleanup
 
 ENV OPENMC_CROSS_SECTIONS=/nndc-b7.1-hdf5/cross_sections.xml
-
-RUN rm ENDF-B-VII.1-atomic_relax.zip
-RUN rm ENDF-B-VII.1-neutron-293.6K.tar.gz
-RUN rm ENDF-B-VII.1-photoat.zip
-RUN rm ENDF-B-VII.1-tsl.tar.gz
-RUN rm -rf nndc-b7.1-ace/
-RUN rm -rf nndc-b7.1-endf/

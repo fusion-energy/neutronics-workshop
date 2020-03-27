@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 
-"""4_plot_neutron_birth_direction_plasma.py: plots neutron birth direction."""
-
-import openmc
-from plotly.figure_factory import create_quiver
-import plotly.graph_objects as go
+"""5_plot_neutron_birth_direction_plasma.py : makes a 3d plot of neutron direction"""
 
 import os
+
 import numpy as np
+import plotly.graph_objects as go
+from plotly.figure_factory import create_quiver
+
+import openmc
+
+# this copies a pre compiled external neutron source for use in this simulation
+os.system('cp /parametric-plasma-source/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_3')
 
 # MATERIALS
 
