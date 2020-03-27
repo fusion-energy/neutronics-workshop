@@ -50,3 +50,9 @@ RUN ln -s /usr/lib/freecad/Mod /usr/lib/freecad-python3/Mod
 
 RUN rm /usr/bin/python
 RUN cp /usr/bin/python3 /usr/bin/python
+
+
+RUN git clone https://github.com/makeclean/parametric-plasma-source.git
+
+# Compile parametric plasma source
+RUN cd /parametric-plasma-source/parametric_plasma_source && bash compile.sh
