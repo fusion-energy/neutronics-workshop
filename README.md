@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/ukaea/openmc_workshop.svg?style=svg)](https://circleci.com/gh/ukaea/openmc_workshop)
+
 # Fusion Neutronics workshop with OpenMC
 A selection of resources for learning OpenMC with particular focus on simulations relevant to fusion energy.
 
