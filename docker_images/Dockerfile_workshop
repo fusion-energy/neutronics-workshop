@@ -3,12 +3,6 @@
 
 FROM openmcworkshop/openmc_dagmc_nndc_dependencies
 
-
 RUN git clone https://github.com/ukaea/openmc_workshop
-WORKDIR /openmc_workshop
-# Compile parametric plasma source
-RUN cd /openmc_workshop/parametric_plasma_source && bash compile.sh
-# source_sampling.so is the compiled plasma source so this copies it to various task folders for later use
-RUN cp /openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_3 
-RUN cp /openmc_workshop/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_10
 
+WORKDIR /openmc_workshop
