@@ -23,7 +23,7 @@ class test_task_7(unittest.TestCase):
     def test_task_7_part_1(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_7'))
+        os.chdir(Path('tasks/task_7'))
         output_filename = '1_find_dpa_results.json'
         os.system('rm '+output_filename)
         os.system('python 1_find_dpa.py')
@@ -33,7 +33,7 @@ class test_task_7(unittest.TestCase):
     def test_task_7_part_2(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_7'))
+        os.chdir(Path('tasks/task_7'))
         output_filename = '2_find_cell_volume_results.json'
         os.system('rm '+output_filename)
         os.system('python 2_find_cell_volume.py')

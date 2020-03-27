@@ -23,7 +23,7 @@ class test_task_2(unittest.TestCase):
     def test_task_2_part_1(self): #  This test launches matplotlib that pauses the running of the script
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_2'))
+        os.chdir(Path('tasks/task_2'))
         output_filenames = ['xz_sphere.png', 'xy_sphere.png', 'yz_sphere.png']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
@@ -36,7 +36,7 @@ class test_task_2(unittest.TestCase):
     def test_task_2_part_1_optional(self): #  This test launches eog that pauses the running of the script
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_2'))
+        os.chdir(Path('tasks/task_2'))
         output_filename = 'plot.png'
         os.system('rm '+output_filename)
         os.system('python 2_example_geometry_viewer_2d_xml_version.py')
@@ -47,7 +47,7 @@ class test_task_2(unittest.TestCase):
     def test_task_2_part_3(self): #  This test launches matplotlib that pauses the running of the script
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_2'))
+        os.chdir(Path('tasks/task_2'))
         output_filenames = ['xz_tokamak.png', 'xy_tokamak.png', 'yz_tokamak.png']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
@@ -60,7 +60,7 @@ class test_task_2(unittest.TestCase):
     def test_task_2_part_4(self):
 
         os.chdir(Path(cwd))
-        os.chdir(Path('../tasks/task_2'))
+        os.chdir(Path('tasks/task_2'))
         output_filename = 'plot_3d_tokamak.vti'
         os.system('rm '+output_filename)
         os.system('python 4_example_geometry_viewer_3d_tokamak.py')
