@@ -52,8 +52,7 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-batches = 2
-sett.batches = batches
+sett.batches = 2
 sett.inactive = 0
 sett.particles = 5000
 sett.run_mode = 'fixed source'
