@@ -27,7 +27,7 @@ class test_task_6(unittest.TestCase):
         output_filename = 'simulation_results.json'
         os.system('rm '+output_filename)
         os.system('python 1_example_tritium_production.py')
-        assert Path(output_filename).exists() == True
+        assert Path(output_filename).exists() is True
         os.system('rm '+output_filename)
 
     def test_task_6_part_2(self):
@@ -37,5 +37,5 @@ class test_task_6(unittest.TestCase):
         output_filename = 'tbr_study.html'
         os.system('rm '+output_filename)
         os.system('python 2_example_tritium_production_study.py')
-        assert Path(output_filename).exists() == True
+        assert Path(output_filename).exists() is True
         os.system('rm '+output_filename)

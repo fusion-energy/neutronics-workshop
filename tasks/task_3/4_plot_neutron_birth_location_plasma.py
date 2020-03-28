@@ -2,6 +2,7 @@
 
 """4_plot_neutron_birth_location_plasma.py plots neutron birth locations."""
 
+import os
 
 import plotly.graph_objects as go
 
