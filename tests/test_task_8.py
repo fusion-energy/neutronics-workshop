@@ -28,7 +28,8 @@ class test_task_8(unittest.TestCase):
         os.system('rm outputs/*.json')
         os.system('rmdir outputs')
         os.system('python 1_simulate_with_random_sample.py')
-        assert Path('outputs').exists() == True
+        print('looking for ', Path('outputs'))
+        assert Path('outputs').exists() is True
         assert len(os.listdir('outputs')) == 1
 
     # def test_task_8_part_1_graph_1(self):

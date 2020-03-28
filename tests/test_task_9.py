@@ -31,7 +31,7 @@ class test_task_9(unittest.TestCase):
             os.system('rm '+output_filename)
         os.system('python 1_lithium_enrichment_optimisation.py')
         for output_filename in output_filenames:
-            assert Path(output_filename).exists() == True
+            assert Path(output_filename).exists() is True
             os.system('rm '+output_filename)
 
     def test_task_9_part_2(self):
