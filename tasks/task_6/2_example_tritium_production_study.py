@@ -71,7 +71,7 @@ def make_materials_geometry_tallies(enrichment):
     tallies = openmc.Tallies()
 
     cell_filter = openmc.CellFilter(breeder_blanket_cell)
-    tbr_tally = openmc.Tally(2, name='TBR')
+    tbr_tally = openmc.Tally(name='TBR')
     tbr_tally.filters = [cell_filter]
     tbr_tally.scores = ['(n,Xt)']  # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
     tbr_tally.triggers = [openmc.Trigger(trigger_type='std_dev', threshold=0.01)]  # This stops the simulation if the threshold is meet
