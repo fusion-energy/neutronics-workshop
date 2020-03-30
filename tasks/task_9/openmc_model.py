@@ -3,16 +3,24 @@ from neutronics_material_maker import Material
 
 
 def objective(x):
-    result = simulate_model(enrichment=x[0], thickness=200)
+    if type(x) == int or type(x) == float:
+        result = simulate_model(enrichment=x)
+    elif len(x) == 1:
+        result = simulate_model(enrichment=x[0])
+    elif len(x) == 2:
+        result = simulate_model(enrichment=x[0],
+                                blanket_thickness=x[1]
+                                )
     return -1 * result["TBR"]
 
 
 def simulate_model(
     enrichment,
-    thickness,
+    blanket_thickness=200,
+    firstwall_thickness=5,
     breeder_material_name="Li4SiO4",
     temperature_in_C=500,
-    nps=1000,
+    threshold=0.001,
     inner_radius=500,
 ):
 
@@ -31,9 +39,9 @@ def simulate_model(
     # GEOMETRY#
 
     first_wall_inner_surface = openmc.Sphere(r=inner_radius)
-    first_wall_outer_surface = openmc.Sphere(r=inner_radius + 10.)
-    breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius + 10. + thickness)
-    vessel_outer_surface = openmc.Sphere(r=inner_radius + 10.0 + thickness + 10.,
+    first_wall_outer_surface = openmc.Sphere(r=inner_radius + firstwall_thickness)
+    breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius + firstwall_thickness + blanket_thickness)
+    vessel_outer_surface = openmc.Sphere(r=inner_radius + firstwall_thickness + blanket_thickness + 10.,
                                          boundary_type="vacuum")
 
     inner_void_region = -first_wall_inner_surface
@@ -69,7 +77,7 @@ def simulate_model(
     sett.trigger_active = True
     sett.trigger_max_batches =  2000  # this is maximum number of batches that will be run
     sett.inactive = 0
-    sett.particles = nps
+    sett.particles = 1000
     sett.run_mode = "fixed source"
 
     source = openmc.Source()
@@ -90,6 +98,7 @@ def simulate_model(
     tally = openmc.Tally(name="TBR")
     tally.filters = [cell_filter_breeder, particle_filter]
     tally.scores = ["(n,Xt)"]
+    tally.triggers = [openmc.Trigger(trigger_type='std_dev', threshold=threshold)]  # This stops the simulation if the threshold is meet
     tallies.append(tally)
 
     # RUN OPENMC #
@@ -101,11 +110,10 @@ def simulate_model(
     sp = openmc.StatePoint(sp_filename)
 
     json_output = {
-        "batches": batches,
-        "nps": nps,
         "enrichment": enrichment,
         "inner_radius": inner_radius,
-        "thickness": thickness,
+        "firstwall_thickness": firstwall_thickness,
+        "blanket_thickness": blanket_thickness,
         "breeder_material_name": breeder_material_name,
         "temperature_in_C": temperature_in_C,
     }
