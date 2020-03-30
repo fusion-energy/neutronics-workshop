@@ -8,36 +8,69 @@ Please allow 25 minutes for this task.
 Expected outputs from this task are in the [presentation](insert presentation list).
 
 The aim of this task is to explore sampling techniques for performing simulations across a parameter space of interest.
-A parameter space may be surveyed for a number of reasons. In the context of tritum breeding, simulations may be performed across a parameter space to determine the impact of that parameter on tritum breeding.
+A parameter space may be surveyed for several reasons. In the context of tritium breeding, this may be to determine the impact of a parameter on tritium breeding.
 
 There are many ways to sample a parameter space, but some provide significant advantages to others.
 
 In this task, we will use a simple tokamak model consisting of a central solenoid and shield, and a surrounding breeder blanket. As shown below.
 
 Using this model, we will perform simulations to determine the impact of changing the enrichment and thickness of the blanket cell on TBR.
-To do this, we will vary enrichment between 0 and 1, and thickness between 1cm and 500cm. This is our 'parameter space', which we will sample in a variety of different ways to perform simulations, and demonstrate the advantages and disadvantages of each.
+To do this, we will vary enrichment between 0 and 1, and thickness between 1cm and 500cm. This is our 'parameter space', which we will sample to perform simulations and demonstrate the advantages and disadvantages of different sampling techniques.
 
 # Random Sampling
 
-The easiest way to sample a parameter space is to use random sampling. 
+The easiest way to sample a parameter space is to use random sampling, where values for each parameter are chosen at random.
 
-Open the ```1_simulate_with_random_sample.py``` file and try to understand how the values for enrichment and thickness are randomly varied.
+Take a look at the ```1_simulate_with_random_sample.py``` script, which defines input parameters for the model defined in the ```openmc_model.py``` script. Try to understand how the values of enrichment and thickness are randomly varied.
 
-Run the script to perform simulations. 
+Run the script using the command ```python3 1_simulate_with_random_sample.py```, using the -n flag to specify the number of simulations to perform. The results of the simulation are saved in the 'outputs' folder of the task folder.
 
-The task folder also contains a script called ```plot_sampling_coordinates.py```. Running this script will produce plots showing how TBR varies as a function of thickness and enrichment.
+The task folder also contains a script called ```plot_sampling_coordinates.py``` which plots TBR as a function of thickness and enrichment for each sampling method.
 
-Run this script to see how the simulation settings have been randomly sampled from the parameter space.
-This should look similar to the plot shown below.
+Run the script to show the results of the random simulations. This should look similar to the plot below.
 
-As you can see, randomly sampling the values of enrichment and thickness means simulations are performed across the parameter space of interest.
-An advantage of using random sampling is that results are obtained across the entire parameter space (i.e. perform simulations across the whole space instead of it being ordered - you know what i mean. We can just run more random simulations and add them to our existing data set with no problem), but the points themselves do not have the best spatial distribution.
-(each simulation contributes to the overall trend)
-As you can see, some points are very close together meaning some simulations have been performed with very similar input parameters. Therefore, some simulations provide very little additional information about the overall trend across the parameter space. This wastes computational time and is, therefore, very inefficient.
+INSERT IMAGE
 
-Overall, although random sampling allows an easy way to perform simulations over a parameter space, the poor spatial distribution of results means that it is an inefficient way of performing simulations.
+As shown, the simulations have been performed randomly across the parameter space of enrichment and thickness.
+
+The main advantage of random sampling is that it is an 'unbiased' sampling technique because simulations are performed across the entire parameter space at the same rate. This means that all simulations contribute to the overall data trend and additional simulations can be easily performed to increase precision.
+
+However, random sampling is an inefficient way to sample a parameter space. As you can see, some points on the graph are very close together, meaning some simulations performed had very similar input parameters. This is inefficient because these simulations provide little information about the overall data trend and are, therefore, a waste of computational time. It would be better to 
+having a better spatial distribution of simulation points would mean the same precision data could be obtained with a smaller number of simulations.
+
+Overall, random sampling is an easy technique for performing unbiased simulations over a parameter space, however, its poor spatial distribution of sample points makes it an inefficient way of performing simulations.
+
 
 # Grid Sampling
+
+Another sampling technique is 'grid sampling', where samples are taken at regular grid intervals across the parameter space. This is an example of 'biased sampling' as the samples are ordered according to the grid.
+
+Take a look at the ```2_simulate_with_grid_sample.py``` script and try to understand how a grid of enrichment and thickness values is defined as the input parameters for the simulations. Also note the order in which these simulations are performed. 
+
+Run the ```2_simulate_with_grid_sample.py``` script with the -n flag to specify the number of simulations performed and plot the results using the ```plot_sampling_coordinates.py``` script. This should show the results of both the random simulations and the grid simulations on the same graph, similar to the graph shown below.
+
+The main advantage of grid sampling is that it maximises the spatial distribution of sample points across the parameter space. As shown, 
+Using grid sampling extracts the maximum amount of useful data from a number of simulations, maximising the efficiency.
+
+This means that the maximum amount of 
+
+However, a major disadvantage of grid sampling is that the simulations are performed in the order of the defined grid and are, therefore, biased towards the first parameter values.
+This means that all simulations must be performed to obtain the overall data trend across the whole parameter space of interest. Not being able to see the overall data trend until all simulations have completed means that we may end up performing many more simulations that are actually needed.
+Grid sampling also provides an additional problem in that it is hard to efficiently add further simulations to the existing data set. A whole new grid would need to be defined and simulated to completion, whereas any number of simulations based on random sampling techniques contribute to the trend as a whole.
+
+Grid sampling is, therefore, not a good technique for sampling a parameter space. Instead, we 
+
+As shown, the simulations performed 
+
+The main advantage of grid sampling is that it maximises the spatial distribution of sample points across the parameter space. As shown, the parameter space of interest is covered by the s
+
+SHOW A COMPARISON BETWEEN RANDOM AND GRID SAMPLING FOR THE SAME NUMBER OF POINTS.
+
+As a result, the maximum amount of useful information is extracted from the smallest number of simulations.This maximises the spatial distribution of sample points across the parameter space meaning This is an example of a 'biased' sampling technique as the 
+
+Instead of randomly sampling a parameter space, we can perform a 'grid sample'. This is where samples of the parameter space are taken in a regular grid
+
+An alternative sampling technique is 'grid sampling', where samples of a parameter space are taken in a regular grid
 
 Instead of randomly sampling a parameter space, we can perform a grid sample. This is where samples will be taken in a regular grid over the parameter space. This provides maximum spatial distribution of the points, meaning the maximum amount of useful information is extracted from the smallest number of simulations.
 
