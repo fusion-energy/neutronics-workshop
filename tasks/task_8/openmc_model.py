@@ -8,7 +8,7 @@ def simulate_model(
     breeder_material_name="Li4SiO4",
     temperature_in_C=500,
     batches=2,
-    nps=4000,
+    nps=500,
     inner_radius=500,
 ):
 
@@ -61,9 +61,11 @@ def simulate_model(
     # SIMULATION SETTINGS#
 
     sett = openmc.Settings()
-    sett.batches = batches
+    sett.batches = batches  # this is the minimum number of batches which will be run
+    sett.trigger_active = True
+    sett.trigger_max_batches = 200   # this is the maximum number of batches which will be run
     sett.inactive = 0
-    sett.particles = nps
+    sett.particles = nps   # as we are using a trigger, we specify a small number of particles per batch
     sett.run_mode = "fixed source"
 
     source = openmc.Source()
@@ -84,6 +86,7 @@ def simulate_model(
     tally = openmc.Tally(name="TBR")
     tally.filters = [cell_filter_breeder, particle_filter]
     tally.scores = ["(n,Xt)"]
+    tally.triggers = [openmc.Trigger(trigger_type='std_dev', threshold=0.01)]
     tallies.append(tally)
 
     # RUN OPENMC #
