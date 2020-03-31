@@ -1,57 +1,151 @@
 
 import json
+
+import matplotlib.pyplot as plt
 import numpy as np
-from skopt import gp_minimize
 import plotly.graph_objects as go
+from skopt import gp_minimize
+from skopt.acquisition import gaussian_ei
+from skopt.utils import load
 
 from openmc_model import objective
-# objective is a function that returns TBR value when provided with the Li6 enrichment as an argument
 
 # Note, optimisation functions tend to minimise the value therefore there are a few negative signs in these scripts
 
 
-# This call to gp_minimize is able to optimise black box functions involving noisy data
-# The resulting res_gp is an scipy optimisation object that includes iterations, final value
-res_gp = gp_minimize(func=objective,
-                     dimensions=[(0., 100.)],
-                     n_calls=10,
-                     n_random_starts=1, # this is 10 by default but as this is a simple 1d problem without local minima we can reduce this
-                     verbose=True)
-
-print('Optimal Li6 enrichment = ', res_gp.x[0])
-print('Maximum TBR = ', -res_gp.fun)
-
-
-
-# The rest of this script is plotting the results
-fig = go.Figure()
-
-# plotting iterations of the optimisation  algorithum 
-fig.add_trace(go.Scatter(name='All TBR values found',
-                         x=[x[0] for x in res_gp.x_iters],
-                         y=-res_gp.func_vals,
-                         mode='markers'
-                        )
-             )
-
-# plotting the maximum TBR found with the optimisation
-fig.add_trace(go.Scatter(name='Maximum TBR value found',
-                         x=res_gp.x,
-                         y=[-res_gp.fun],
-                         mode='markers'
-                        )
-             )
-
-
-# plotting the previously calculated values
+# Loads true data for comparison
 with open('enrichment_vs_tbr.json', 'r') as f: 
     data = json.load(f)
-fig.add_trace(go.Scatter(name='Maximum TBR value found',
-                         x=[i[0] for i in data],
-                         y=[i[1] for i in data],
-                         mode='lines'
+
+x_data=[i[0] for i in data]
+fx=[-i[1] for i in data]
+
+res = load('saved_optimisation_1d.dat')
+
+number_of_initial_points = len(res.specs['args']['x0'])
+
+number_of_calls = res.specs['args']['n_calls']
+
+
+x = np.linspace(0, 100, 101).reshape(-1, 1)
+x_gp = res.space.transform(x)
+
+
+fig = go.Figure()
+
+
+
+
+for n_iter in range(0, number_of_calls - number_of_initial_points +1):
+    gp = res.models[n_iter]
+    curr_x_iters = [i[0] for i in res.x_iters[number_of_initial_points:
+                                              number_of_initial_points + n_iter]]
+    curr_func_vals = res.func_vals[number_of_initial_points:
+                                   number_of_initial_points + n_iter]
+
+
+
+
+    y_pred, sigma = gp.predict(x_gp, return_std=True)
+
+    fig.add_trace(go.Scatter(name='uncertainty',
+                             x=[i[0] for i in np.concatenate([x, x[::-1]])],
+                             y=np.concatenate([-y_pred - 1.9600 * sigma, (-y_pred + 1.9600 * sigma)[::-1]]),
+                             visible=False,
+                            #  mode='markers',
+                             fill='toself', fillcolor = 'rgba(0, 0, 255, 0.1)',line_color='rgba(0, 0, 255, 0.1)'
+
+    )
+    )
+
+    fig.add_trace(go.Scatter(name="Predicted values",
+                             x = np.linspace(0, 100, 101), 
+                             y = -y_pred,
+                             visible=False,
+                             marker=dict(color='blue')
+                            )
+                )
+
+
+    # Plot sampled points
+    fig.add_trace(go.Scatter(x = curr_x_iters,
+                             y = -curr_func_vals,
+                             name="Observations",
+                             visible=False,
+                             mode='markers',
+                             marker=dict(color='red')
+                            )
+                 )
+
+    # # Plot EI(x)
+    # plt.subplot(2, 1, 2)
+    # if n_iter > 0:
+    #     acq = gaussian_ei(x_gp, gp, y_opt=np.min(curr_func_vals))
+    #     plt.plot(x, acq, "b", label="EI(x)")
+    #     plt.fill_between(x.ravel(), 0, acq.ravel(), alpha=0.3, color='blue')
+
+    #     if n_iter+1 < number_of_calls:
+    #         next_x = res.x_iters[n_iter+1]
+    #         next_acq = gaussian_ei(res.space.transform([next_x]), gp,
+    #                             y_opt=np.min(curr_func_vals))
+    #         plt.plot(next_x, next_acq, "bo", markersize=6, label="Next query point")
+
+# Plot true function.
+fig.add_trace(go.Scatter(name="True value (unknown)",
+                          x = x_data,
+                          y = [-i for i in fx],
+                          mode='lines',
+                          visible=False,
+                          marker=dict(color='green')
+                         )
+              )
+
+# Plot provided points (from adative sampling)
+fig.add_trace(go.Scatter(name = "Initial values (provided)",
+                            x = [i[0] for i in res.x_iters[0:number_of_initial_points]], 
+                            y = -res.func_vals[0:number_of_initial_points],
+                             mode='markers',
+                            marker=dict(color='pink')
                         )
-             )
+                )
+
+# fig.data[0].visible = True
+# fig.data[1].visible = True
+# fig.data[2].visible = True
+
+fig.data[-1].visible = True
+fig.data[-2].visible = True
+fig.data[-3].visible = True
+fig.data[-4].visible = True
+fig.data[-5].visible = True
+
+# Create and add slider
+steps = []
+for i in range(int((len(fig.data)-2)/3)):
+    step = dict(
+        method="restyle",
+        args=["visible", [False] * len(fig.data)],
+    )
+    step["args"][1][-1] = True  # Toggle i'th trace to "visible"
+    step["args"][1][-2] = True  # Toggle i'th trace to "visible"
+    
+    step["args"][1][i*3] = True  # Toggle i'th trace to "visible"
+    step["args"][1][i*3+1] = True  # Toggle i'th trace to "visible"
+    step["args"][1][i*3+2] = True  # Toggle i'th trace to "visible"
+    # step["args"][1][i+3] = True  # Toggle i'th trace to "visible"
+    steps.append(step)
+
+sliders = [dict(
+    active=10,
+    currentvalue={"prefix": "Frequency: "},
+    pad={"t": 50},
+    steps=steps
+)]
+
+fig.update_layout(
+    sliders=sliders
+)
+
 
 fig.update_layout(title='Optimal Li6 enrichment',
                   xaxis={'title': 'Li6 enrichment percent'},
@@ -61,13 +155,15 @@ fig.update_layout(title='Optimal Li6 enrichment',
 fig.show()
 
 
-# The optimser can be steered a bit but providing non random starting points (x0) 
-# and optionally the values for these points(y0)
-# Here is an example of how to 'help' the optimiser
-# res_gp = gp_minimize(func=objective,
-#                      dimensions=[(0., 100.)],  # these are integers values which reduces the number of options to try
-#                      x0=[[0.],[100.]],  # specifying first simulation coordinates (these are the periphery of the parameter space)
-#                      y0=[0.15773, 0.92599],  # specifying results of first simulation coordinates
-#                      n_random_starts=0,  # setting this to 0 as well spaced starting points have been set
-#                      n_calls=10,
-#                      verbose=True)
+fx=[-i[1] for i in data]
+
+print('Maximum TBR of ', res.fun, 'found with an enrichment of ', res.x)
+print('Maximum TBR of ', min(fx), 'found with an enrichment of ', fx.index(min(fx)))
+
+fig.write_html("lithium_optimization.html")
+try:
+    fig.write_html("/my_openmc_workshop/lithium_optimization.html")
+except (FileNotFoundError, NotADirectoryError):  # for both inside and outside docker container
+    pass
+
+fig.show()
