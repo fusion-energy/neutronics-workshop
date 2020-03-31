@@ -1,8 +1,12 @@
+import os
+
 import openmc
 from neutronics_material_maker import Material
 
 
 def objective(x):
+    """Used to find TBR for different enrichments / thicknesses
+    """
     if type(x) == int or type(x) == float:
         result = simulate_model(enrichment=x)
     elif len(x) == 1:
@@ -14,15 +18,13 @@ def objective(x):
     return -1 * result["TBR"]
 
 
-def simulate_model(
-    enrichment,
-    blanket_thickness=200,
-    firstwall_thickness=5,
-    breeder_material_name="Li4SiO4",
-    temperature_in_C=500,
-    threshold=0.001,
-    inner_radius=500,
-):
+def simulate_model(enrichment,
+                   blanket_thickness=200,
+                   firstwall_thickness=5,
+                   breeder_material_name="Li4SiO4",
+                   temperature_in_C=500,
+                   threshold=0.0005,
+                   inner_radius=500):
 
     # MATERIALS from library of materials in neutronics_material_maker package
     breeder_material = Material(material_name=breeder_material_name,
@@ -49,7 +51,7 @@ def simulate_model(
     inner_void_cell.name = "inner_void"
 
     first_wall_region = (-first_wall_outer_surface & 
-                        +first_wall_inner_surface)
+                         +first_wall_inner_surface)
     first_wall_cell = openmc.Cell(region=first_wall_region)
     first_wall_cell.fill = SS316
 
@@ -98,7 +100,7 @@ def simulate_model(
     tally = openmc.Tally(name="TBR")
     tally.filters = [cell_filter_breeder, particle_filter]
     tally.scores = ["(n,Xt)"]
-    tally.triggers = [openmc.Trigger(trigger_type='std_dev', threshold=threshold)]  # This stops the simulation if the threshold is meet
+    tally.triggers = [openmc.Trigger(trigger_type='rel_err', threshold=threshold)]  # This stops the simulation if the threshold is meet
     tallies.append(tally)
 
     # RUN OPENMC #
@@ -124,5 +126,7 @@ def simulate_model(
 
     json_output["TBR"] = df["mean"].sum()
     json_output["TBR_std_dev"] = df["std. dev."].sum()
+
+    os.system('rm *.h5')
 
     return json_output
