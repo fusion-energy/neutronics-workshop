@@ -26,7 +26,7 @@ Run the script using the command ```python3 1_simulate_with_random_sample.py```,
 
 The task folder also contains a script called ```plot_sampling_coordinates.py``` which plots TBR as a function of thickness and enrichment for each sampling method. Run this script to plot the results of the random simulations. This should look similar to the plot below.
 
-<p align="center"><img src="images/plot_random_sampling.png" height="500"></p>
+<p align="center"><img src="images/plot_random_sampling.png" height="400"></p>
 
 As shown, the simulations have been performed randomly across the parameter space of enrichment and thickness.
 
