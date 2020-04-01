@@ -2,6 +2,7 @@
 import json
 
 import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from skopt.acquisition import gaussian_ei
@@ -13,11 +14,10 @@ from openmc_model import objective
 
 
 # Loads true data for comparison
-with open('enrichment_vs_tbr.json', 'r') as f: 
-    data = json.load(f)
+data = pd.read_json('enrichment_vs_tbr.json')
 
-x_data=[i[0] for i in data]
-fx=[-i[1] for i in data]
+x_data=data['enrichment']
+fx=-data['tbr']
 
 res = load('saved_optimisation_1d.dat')
 
@@ -28,7 +28,6 @@ number_of_calls = res.specs['args']['n_calls']
 x = np.linspace(0, 100, 101).reshape(-1, 1)
 x_gp = res.space.transform(x)
 
-# fig = go.Figure()
 
 fig = make_subplots(rows=2, cols=1)
 
@@ -203,10 +202,9 @@ fig.update_layout(title='Optimal Li6 enrichment',
 
 
 
-fx=[-i[1] for i in data]
-
-print('Maximum TBR of ', res.fun, 'found with an enrichment of ', res.x)
-print('Maximum TBR of ', min(fx), 'found with an enrichment of ', fx.index(min(fx)))
+print('Maximum TBR of ', -res.fun, 'found with an enrichment of ', res.x[0])
+print('Maximum TBR of ', data.loc[data['tbr'].idxmax()]['tbr'], 
+      'found with an enrichment of ', data.loc[data['tbr'].idxmax()]['enrichment'])
 
 fig.write_html("lithium_optimization.html")
 try:
