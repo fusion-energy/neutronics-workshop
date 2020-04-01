@@ -41,7 +41,7 @@ Overall, random sampling is a simple technique for performing unbiased simulatio
 
 Another sampling technique is 'grid sampling', where samples are taken at regular grid intervals across the parameter space, as shown below. This is an example of 'biased sampling' as the samples are performed in order according to the grid.
 
-![](images/grid_sampling.gif)
+<p align="center"><img src="images/grid_sampling.gif" height="250"></p>
 
 Open the ```2_simulate_with_grid_sample.py``` script and try to understand how a grid of enrichment and thickness values defines the input parameters for the simulations; also note the order in which these simulations are performed.
 
