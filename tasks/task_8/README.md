@@ -32,13 +32,13 @@ As shown, the simulations have been performed randomly across the parameter spac
 
 The main advantage of random sampling is that it is an 'unbiased' sampling technique, meaning simulations are performed across the entire parameter space at the same rate. This means that all simulations contribute to the overall data trend and additional simulations can be easily performed to increase accuracy.
 
-However, random sampling is an inefficient sampling technique. As you can see, some points on the graph are very close together, meaning some simulations performed had very similar input parameters. This is inefficient because some simulations, therefore, provide little additional information about the overall trend, meaning the same results could have been obtained from a smaller number of simulations.
+However, random sampling is an inefficient sampling technique as it leads to point clusters and voids across the parameter space. Some simulations are performed with very similar input parameters,but some areas of parameter space are sparsely sampled. This is inefficient because some simulations provide little additional information about the overall trend and their computational time would be better spent sampling sparsely-sampled areas.
 
 Overall, random sampling is a simple technique for performing unbiased simulations over a parameter space, however, its poor spatial distribution of sample points makes it a highly inefficient technique.
 
 # Grid Sampling
 
-Another sampling technique is 'grid sampling', where samples are taken at regular grid intervals across the parameter space, as shown below. This is an example of 'biased sampling' as the samples are performed in order according to the grid.
+Another sampling technique is 'grid sampling', where samples are taken at regular grid intervals across the parameter space, as shown below. This is an example of 'biased sampling' as the samples are performed in order according to the grid. An example of this is shown below.
 
 <p align="center"><img src="images/grid_sampling.gif" height="250"></p>
 
@@ -48,38 +48,52 @@ Run the ```2_simulate_with_grid_sample.py``` script with the -n flag to specify 
 
 <p align="center"><img src="images/plot_grid_sampling.png" height="400"></p>
 
-As shown, grid sampling has a better spatial distribution of sample points than random sampling. Grid sampling maximises the spatial distribution of sample points across a parameter space and, therefore, maximises the amount of useful information obtained from each simulation. As a result, grid sampling is a highly efficient sampling technique for covering a parameter space.
+As shown, grid sampling has a better spatial distribution of sample points than random sampling. 
 
-However, as simulations are performed in order according to the defined grid, they are biased towards the first parameter values. For example, ```2_simulate_with_grid_sample.py``` performs simulations with enrichment = 0 for all blanket thicknesses before enrichment is changed. This means that all simulations across the grid must be performed before a data trend across the entire parameter space is obtained. This is the major disadvantage of grid sampling because more simulations may be performed than are necessary, because the data trend cannot be seen until the end, and it is difficult to add sample points to the existing data set. On the other hand, random sampling is unbiased meaning the data trend across the parameter space can be observed with a small number of simulations and additional data points can be added easily.
+Grid sampling maximises the spatial distribution of sample points across a parameter space by avoiding point clustering and, therefore, maximises the amount of useful information obtained from each simulation. As a result, grid sampling is a highly efficient sampling technique for covering a parameter space.
 
-Overall, grid sampling provides a much better spatial distribution of sample points across the parameter space than random sampling and is, therefore, a more efficient sampling technique. However, its bias towards initial parameter values makes it unsuitable for most applications. Instead, we tend to use 'quasi-random' sampling techniques which combine the spatial efficiency and randomness.
+However, as simulations are performed in order according to the defined grid, they are biased towards the first parameter values in the grid. For example, ```2_simulate_with_grid_sample.py``` performs simulations with enrichment = 0 for all blanket thicknesses before enrichment is changed. This means that all simulations across the grid must be performed before a data trend across the entire parameter space can be observed.
+This is the main disadvantage of grid sampling as more simulations than are necessary may be performed, and it is difficult to efficiently add sample points to the existing data without performing a complete new grid search 'in-between' the existing data points. On the other hand, random sampling is unbiased meaning the data trend across the parameter space can be observed with a small number of simulations and additional sample points can be added easily.
+
+Overall, grid sampling is a more efficient sampling technique than random sampling, but its bias towards initial parameter values makes it unsuitable for most applications. Instead, we tend to use more advanced 'quasi-random' or 'adaptive' techniques to improve sampling efficiency.
 
 # Halton Sampling
 
-Halton sampling is a quasi-random sampling technique based on the [halton sequence](link). Using a [quasi-random number sequence](link) based on coprime numbers, halton sampling allows a parameter space to be sampled both efficiently and with a element of random nature. Like random sampling, halton sampling allows data trends across the parameter space to be observed with a small number of samples, but distributes the sample points more efficiently throughout the parameter space.
+Halton sampling is a quasi-random sampling technique based on the [halton sequence](link). Using a [quasi-random number sequence](link) based on coprime numbers, halton sampling allows an entire parameter space to be sampled both efficiently and with a element of random nature. Like random sampling, halton sampling allows data trends across the parameter space to be observed with a small number of samples, but distributes the sample points more efficiently throughout the parameter space.
 
 Open the ```3_simulate_with_halton_sample.py``` script and try to understand how the halton sequence is used to generate inputs for the simulation.
 
-Run this script and plot the results. The graph should look similar to the plot below.
+Run this script and plot the results. The graph produced should look similar to the plot below.
 
 <p align="center"><img src="images/plot_halton_sampling.png" height="400"></p>
 
 As you can see, the sample points have a much better spatial distribution across the parameter space than random sampling.
 
-This means that each simulation extracts a large amount of information about the overall data trend 
-Simulation points are not close together so they are not wasted
-Efficient sampling technique for surveying an entire parameter space.
+The main advantage of halton sampling is that it allows the efficient sampling of an entire parameter space. Sample points are not clustered meaning each simulation provides a large amount of additional information about the overall data trend, and its quasi-random nature means additional samples can be added efficiently.
+However, the main disadvantage of halton sampling is that it still surveys the entire parameter space of interest. This can lead to the excessive sampling of 'flat' regions of the parameter space, i.e. areas where there is little variation in the overall trend, resulting in inefficiency. 
 
-The disadvantage of halton sampling is that it still surveys the entire parameter space when we only really want to survey the part of the parameter space where the important data trend is. 
-This is where we could use optimised sampling or adaptive sampling to further increase the efficiency of simulations.
+Overall, halton sampling is better than random and grid sampling as it provides good spatial distribution and allows more samples to be added easily and efficiently. Ideally, however, we want to avoid over-sampling flat regions of the parameter space to further improve efficiency and reduce the number of simulations required. This is where 'adaptive' sampling is advantageous.
+
+# Adaptive Sampling
+
+Adaptive sampling is a sampling technique which uses data fitting to decide where in the parameter space to sample next. By fitting the data from samples that have already been taken, the overall data trend across the parameter space can be roughly predicted and an informed choice on where to sample the parameter space next can be made. Regions in the parameter space where the data trend is relatively flat do not have to be sampled as densely as rapidly changing regions. By allowing sample points to be chosen based on the data trend, computational time can be focused on the most important parts of the data trend.
+
+Open the ```4_simulate_with_adaptive_sample.py``` script and try to understand how 'adaptive' python module is used to adaptively sample the parameter space. Simulations begin by sampling the limits of the parameter space (i.e. (enrichment, thickness) = (0, 1), (100, 1), (0, 500), (100, 500)) and then fitting these points to predict where TBR is varying most rapidly across the parameter space. A sample is then taken at this point and the process repeated. There are many ways to fit existing data points during adaptive sampling, however, this particular example uses [gaussian process regression](link). 
+
+Run this script and plot the results. The graph produced should look similar to the plot below.
+
+<p align="center"><img src="images/plot_adaptive_sampling.png" height="400"></p>
+
+As mentioned, the most important parts of a data trend are (usually) the regions where the data is changing as a function of parameter values. In our example, these are the regions where TBR is changing as a function of enrichment and thickness. I.e. we do not want to excessively sample regions where TBR changes negligibly as a function of enrichment and thickness.
+As shown, the parameter space is densely sampled in regions where TBR is changing most rapidly, and sparsely sampled in regions where TBR is changing negligibly.
+
+The main advantage of adaptive sampling is that it is the most efficient technique for sampling a parameter space with an unknown distribution. By iteratively fitting the data and performing additional simulations we can determine an accurate distribution across the parameter space with fewer simulations than any other sampling technique.
+It is not a perfect solution, however, because over-sampling could still take place if we don't specify when to stop sampling. I.e. we would calculate the data fit and stop when we reach an acceptable uncertainty. Also could miss areas which have less prominent trends? I.e we don't get the whole picture across the whole parameter space.
+
+Overall, adaptive sampling allows computational time to be focused on the most important parts of a distribution and is a highly efficient way of sampling a parameter space and, therefore, performing simulations.
 
 
-
-
-
-
-
-Maybe use some of these
+Possible Learning Outcomes:
 - Some candiate breeder materials can meet the TBR requirment with a thinner blanket.
 - Increasing the thickness of blanket or lthium 6 enrichment tend to increase the TBR but not for all materials.
 - Random slection of parameters is not an efficient way of covering the search space or finding the optimal.
