@@ -107,6 +107,6 @@ tallies.append(mesh_tally)
 model = openmc.model.Model(geom, mats, sett, tallies)
 sp_filename = model.run()
 
-os.system('python openmc-statepoint-3d.py -i '+sp_filename+' -t 1 -n tally_on_mesh -m 1 -o tally_on_mesh.vtk')
+os.system('python openmc-statepoint-3d.py -i '+str(sp_filename)+' -t 1 -n tally_on_mesh -m 1 -o tally_on_mesh.vtk')
 os.system('cp tally_on_mesh.vtk /my_openmc_workshop')
 os.system('paraview tally_on_mesh.vtk')
