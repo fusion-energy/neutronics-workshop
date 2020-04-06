@@ -1,35 +1,36 @@
 
 ## <a name="task9"></a>Task 9 - Optimize a breeder blanket for tritium production
 
-Google Colab Link: [Task_9](https://colab.research.google.com/drive/1Zak3lrQH6x2-As1vKskXtNmYs6mdRUgj)
+Task under development, you might need to generate the true data yourself by running ``python get_true_values_1d.py``` and ```python get_true_values_2d.py```
 
 Please allow 25 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/21).
+The previous task sampled from the available parameters and aimed to cover the parameter space efficiently. This task uses  Scikit-opt Gaussian Processing to home in on the optimal solution. In optimisation algorithms it is common to see a combination of exploration and exploitation to find the optimal value.
 
-The previous task sampled from the available parameters and used a brute force method of finding the optimal blanket composition. This task uses Gaussian processing to home in on the optimal solution and steer the sampling.
+The first stage of the optimisation is to 
 
-Open the following script which describes functions for constructing materials for use in simulations.
+Open the first file and try to identify the initial sample points, the optimisation section and the part where the code saves the output as a file.
 
-- ```material_maker_functions.py```
+- ```code get_optimised_values_1d.py```
 
-This task uses a [Gaussian process tool](https://github.com/C-bowman/inference_tools/blob/master/inference/gp_tools.py) developed by Chris Bowman to guide the simulations performed and optimize breeder blanket parameters for maximum TBR.
+We can compare the results with the true results to see how the optimiser did. The true results have previously be calculated using ```python get_true_values_1d.py``` and saved to a json file. A plot of the optimisation which loads the true results (enrichment_vs_tbr.json file) and the optimisation samples and initial samples (saved_optimisation_1d.dat file) can now be made.
 
-Take a look at the scripts below and try to understand how this works. Also try to understand how they use the material maker script to construct the model.
+Try plotting the graph and using the interactive scroll bar to see how the optimiser samples points ```python 1_lithium_enrichment_optimisation.py```
 
-- ```lithium_enrichment_optimisation.py```
+The same techniques can be applied to N dimensional problems but the number of simulations required increases. The next example is a 2D dimensional problem where the optimal enrichment and blanket thickness are being found. Open the optimisation script to identify the differences in the bounds of the 1d and 2d problem.
 
-- ```lithium_enrichment_and_thickness_optimisation.py```. Note - This script does not currently work.
+- ```meld get_optimised_values_2d.py```
 
-Initially, simulations are performed by sampling the parameter space of interest (according to the halton sequence) and the results fitted using Gaussian Regression. A further simulation is then performed using the parameters corresponding to max TBR as determined by the Gaussian fit. The simulation results are then fitted again, including this new point, and the process repeated. 
+Again we can compare the results with the true results to see how the optimiser did. The true results have previously be calculated using ```python get_true_values_2d.py``` and saved to a json file. A plot of the optimisation which loads the true results (enrichment_thickness_vs_tbr.json file) and the optimisation samples and inital samples (saved_optimisation_2d.dat file) can now be made.
 
-This iterative approach efficiently and accurately determines the point in the parameter space where TBR is maximum.
+There are currently two graphs to view these results
+```python 2_lithium_enrichment_and_thickness_optimisation_contour.py```
+```python 2_lithium_enrichment_and_thickness_optimisation.py```
 
-The output .gif shows how halton sampling is used to perform initial simulations before further simulations are informed by Gaussian interpolation.
 
-<p align="center"><img src="images/output.gif" height="500"></p>
 
 **Learning Outcomes**
 
-- Halton sampling allows non-biased simulations to be performed over a parameter space.
-- Data fitting can be used to optimise neutronics simulations.
+Introduction to a methods of optimising a neutronics results in 1d and 2d.
+Appreciation that for high dimensional space approaches to reduce the amount of sampling are needed.
+Understand that there are several factors that can be changed to increase the TBR
