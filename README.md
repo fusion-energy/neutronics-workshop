@@ -1,6 +1,6 @@
 # OpenMC workshop is under maintainance
 
-Docker files are now out of date and need building locally by the user. I am unable to upload new dockerfiles currently. Users can build the docker file by running these commands run from the within the docker_images folder, then use the docker run command as described below
+Docker files are now out of date and need building locally by the user. I am unable to upload new dockerfiles currently. Instead of using the docker pull command in the instructions, users can build the docker file by running these commands run from the within the docker_images folder, then use the docker run command as described below
 
 docker build -f Dockerfile_openmc_dagmc -t openmcworkshop/openmc_dagmc .
 
