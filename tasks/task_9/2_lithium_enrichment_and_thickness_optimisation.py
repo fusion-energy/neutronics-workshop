@@ -4,8 +4,22 @@ import numpy as np
 import plotly.graph_objects as go
 from skopt import gp_minimize
 from skopt.utils import load
+import pandas as pd
 
 from openmc_model import objective
+# loads up the optimisation data
+res = load('saved_optimisation_2d.dat')
+
+print('Optimal Li6 enrichment = ', res.x[0])
+print('Optimal thickness = ', res.x[1])
+print('Maximum TBR = ', -res.fun)
+
+# Loads true data for comparison
+data = pd.read_json('enrichment_thickness_vs_tbr.json')
+x_data=data['enrichment']
+y_data=data['thickness']
+z_data=data['tbr']
+
 
 res = load('saved_optimisation_2d.dat')
 
@@ -30,6 +44,15 @@ fig.add_trace(go.Scatter3d(name='Starting points',
                          mode='markers'
                         )
              )
+
+fig.add_trace(go.Scatter3d(name='True values',
+                         x=x_data,
+                         y=y_data,
+                         z=z_data,
+                         mode='markers'
+                        )
+             )
+
 
 fig.add_trace(go.Scatter3d(name='Maximum TBR value found',
                          x=[res.x[0]],

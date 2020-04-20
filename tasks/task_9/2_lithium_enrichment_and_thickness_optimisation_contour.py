@@ -71,14 +71,10 @@ print('Optimal thickness = ', res.x[1])
 print('Maximum TBR = ', -res.fun)
 
 # Loads true data for comparison
-with open('enrichment_thickness_vs_tbr.json', 'r') as f: 
-    data = json.load(f)
-
-
-
-x_data=[i[0] for i in data]
-y_data=[i[1] for i in data]
-z_data=[i[-1] for i in data]
+data = pd.read_json('enrichment_thickness_vs_tbr.json')
+x_data=data['enrichment']
+y_data=data['thickness']
+z_data=data['tbr']
 
 
 fig = go.Figure()
