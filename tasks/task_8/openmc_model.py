@@ -91,11 +91,11 @@ def simulate_model(
 
     # RUN OPENMC #
     model = openmc.model.Model(geom, mats, sett, tallies)
-    model.run(output=False)
+    sp_filename = model.run(output=False)
 
     # RETRIEVING TALLY RESULTS
 
-    sp = openmc.StatePoint("statepoint." + str(batches) + ".h5")
+    sp = openmc.StatePoint(sp_filename)
 
     json_output = {
         "batches": batches,
