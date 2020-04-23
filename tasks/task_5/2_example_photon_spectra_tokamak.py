@@ -12,10 +12,6 @@ breeder_material.add_element('Pb', 84.2, percent_type='ao')
 breeder_material.add_element('Li', 15.8, percent_type='ao', enrichment=7.0, enrichment_target='Li6', enrichment_type='ao')   # natural enrichment = 7% Li6
 breeder_material.set_density('atom/b-cm', 3.2720171e-2)  # around 11 g/cm3
 
-copper = openmc.Material(name='Copper')
-copper.set_density('g/cm3', 8.5)
-copper.add_element('Cu', 1.0)
-
 eurofer = openmc.Material(name='EUROFER97')
 eurofer.set_density('g/cm3', 7.75)
 eurofer.add_element('Fe', 89.067, percent_type='wo')
@@ -27,40 +23,30 @@ eurofer.add_element('W', 1.1, percent_type='wo')
 eurofer.add_element('N', 0.003, percent_type='wo')
 eurofer.add_element('V', 0.2, percent_type='wo')
 
-mats = openmc.Materials([breeder_material, eurofer, copper])
+mats = openmc.Materials([breeder_material, eurofer])
 
 
 # GEOMETRY
 
 # surfaces
-central_sol_surface = openmc.ZCylinder(r=100)
-central_shield_outer_surface = openmc.ZCylinder(r=110)
 vessel_inner = openmc.Sphere(r=500)
 first_wall_outer_surface = openmc.Sphere(r=510)
 breeder_blanket_outer_surface = openmc.Sphere(r=610, boundary_type='vacuum')
 
 # cells
 
-central_sol_region = -central_sol_surface & -breeder_blanket_outer_surface
-central_sol_cell = openmc.Cell(region=central_sol_region)
-central_sol_cell.fill = copper
-
-central_shield_region = +central_sol_surface & -central_shield_outer_surface & -breeder_blanket_outer_surface
-central_shield_cell = openmc.Cell(region=central_shield_region)
-central_shield_cell.fill = eurofer
-
-inner_vessel_region = -vessel_inner & + central_shield_outer_surface
+inner_vessel_region = -vessel_inner
 inner_vessel_cell = openmc.Cell(region=inner_vessel_region)
 
 first_wall_region = -first_wall_outer_surface & +vessel_inner
 first_wall_cell = openmc.Cell(region=first_wall_region)
 first_wall_cell.fill = eurofer
 
-breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surface & +central_shield_outer_surface
+breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surface
 breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region)
 breeder_blanket_cell.fill = breeder_material
 
-universe = openmc.Universe(cells=[central_sol_cell,central_shield_cell,inner_vessel_cell,first_wall_cell, breeder_blanket_cell])
+universe = openmc.Universe(cells=[inner_vessel_cell,first_wall_cell, breeder_blanket_cell])
 geom = openmc.Geometry(universe)
 
 
@@ -108,7 +94,7 @@ sp_filename = model.run()
 # open the results file
 sp = openmc.StatePoint(sp_filename)
 
-
+# obtains the neutron tally on the blanket
 spectra_tally = sp.get_tally(name='breeder_blanket_neutron_spectra')
 df = spectra_tally.get_pandas_dataframe()
 spectra_tally_result = df['mean']
@@ -125,6 +111,7 @@ fig.add_trace(go.Scatter(x=energy_bins,
               )
 
 
+# obtains the photon tally on the blanket
 spectra_tally = sp.get_tally(name='breeder_blanket_photon_spectra')
 df = spectra_tally.get_pandas_dataframe()
 spectra_tally_result = df['mean']
