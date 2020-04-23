@@ -68,8 +68,7 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-batches = 2
-sett.batches = batches
+sett.batches = 2
 sett.inactive = 0
 sett.particles = 5000
 sett.run_mode = 'fixed source'
@@ -104,10 +103,10 @@ tallies.append(spectra_tally)
 
 # Run OpenMC!
 model = openmc.model.Model(geom, mats, sett, tallies)
-model.run()
+sp_filename = model.run()
 
 # open the results file
-sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+sp = openmc.StatePoint(sp_filename)
 
 
 spectra_tally = sp.get_tally(name='breeder_blanket_neutron_spectra')
