@@ -23,7 +23,7 @@ cwd = os.getcwd()
 
 class test_task_9(unittest.TestCase):
     def test_task_9_part_1(self):
-
+        # assumes get_true_values_1d.py has been run previously and json file in repo
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_9'))
         output_filenames = ['simulation_results.json', 'output.gif']
