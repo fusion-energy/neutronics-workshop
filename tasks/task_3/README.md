@@ -1,4 +1,7 @@
 
+
+## <a name="task3"></a>This task is currently not working as source points are no longer included in the openmc statepoint file for fixed source problems.
+
 ## <a name="task3"></a>Task 3 - Visualizing neutron tracks
 
 Google Colab Link: [Task_3](https://colab.research.google.com/drive/1kOFp9s3utX0o2D7llXXJ6pyyrvK_V-Nz)
