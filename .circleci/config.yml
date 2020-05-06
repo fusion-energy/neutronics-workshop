@@ -9,8 +9,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: openmcworkshop/openmc_dagmc_nndc_dependencies
-      
+      - image: openmcworkshop/openmc_workshop_dependencies:openmc_dagmc_nndc_dependencies
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -25,16 +24,7 @@ jobs:
           name: run tests
           no_output_timeout: 30m
           command: 
-            # python paramak/setup.py install
             pytest tests -v --cov=openmc_workshop  --cov-report term --cov-report html:htmlcov --cov-report xml --junitxml=test-reports/junit.xml
-            # pytest --cov=paramak --cov-report=xml
-            # mkdir -p /root/repo/test-reports
-            # pip3 install coverage --user
-            # pip3 install pytest-cov
-            # pytest --cov=./
-            # py.test --cov-report=xml --cov=paramak ./
-            # py.test -v
-            # cp coverage.xml /root/repo/test-reports
       - store_test_results:
           path: test-reports
 
