@@ -81,43 +81,44 @@ row_col_coords = [[1, 1], [1, 2], [2, 1], [2, 2]]
 
 for sample, coords in zip(sampling_methods, row_col_coords):
     filtered_results_df = results_df[results_df["sample"] == sample]
-    row = coords[0]
-    col = coords[1]
+    if len(filtered_results_df) > 1:
+        row = coords[0]
+        col = coords[1]
 
-    GP_for_sample = make_gp(
-        x=filtered_results_df["enrichment"],
-        y=filtered_results_df["thickness"],
-        z=filtered_results_df["TBR"],
-        z_e=list(filtered_results_df["TBR_std_dev"]),
-    )
-    sample_data = prepare_grid_data(
-        GP=GP_for_sample,
-        x=filtered_results_df["enrichment"],
-        y=filtered_results_df["thickness"],
-        z=filtered_results_df["TBR"],
-        z_e=filtered_results_df["TBR_std_dev"],
-    )
-
-    max_z_for_all = max(sample_data["gp_mu"])
-
-    fig.add_trace(make_2d_surface_trace(**sample_data, min_z=0, max_z=max_z_for_all),
-        row=row,
-        col=col)
-
-    fig.add_trace(
-        go.Scatter(
+        GP_for_sample = make_gp(
             x=filtered_results_df["enrichment"],
             y=filtered_results_df["thickness"],
-            mode="markers",
-            name=sample,
-            hovertext=filtered_results_df["TBR"],
-            hoverinfo="text",
-            showlegend=False,
-            marker={"color": "red", "size": 8},
-        ),
-        row=row,
-        col=col,
-    )
+            z=filtered_results_df["TBR"],
+            #z_e=list(filtered_results_df["TBR_std_dev"]),
+        )
+        sample_data = prepare_grid_data(
+            GP=GP_for_sample,
+            x=filtered_results_df["enrichment"],
+            y=filtered_results_df["thickness"],
+            z=filtered_results_df["TBR"],
+            #z_e=filtered_results_df["TBR_std_dev"],
+        )
+
+        max_z_for_all = max(sample_data["gp_mu"])
+
+        fig.add_trace(make_2d_surface_trace(**sample_data, min_z=0, max_z=max_z_for_all),
+            row=row,
+            col=col)
+
+        fig.add_trace(
+            go.Scatter(
+                x=filtered_results_df["enrichment"],
+                y=filtered_results_df["thickness"],
+                mode="markers",
+                name=sample,
+                hovertext=filtered_results_df["TBR"],
+                hoverinfo="text",
+                showlegend=False,
+                marker={"color": "red", "size": 8},
+            ),
+            row=row,
+            col=col,
+        )
 
     # x = filtered_results_df["enrichment"]
     # y = filtered_results_df["thickness"]
