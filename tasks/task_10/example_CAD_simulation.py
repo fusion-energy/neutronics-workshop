@@ -8,6 +8,7 @@ import openmc
 import json
 import os
 from neutronics_material_maker import Material
+from parametric_plasma_source import Plasma
 
 # MATERIALS using the neutronics material maker
 
@@ -37,11 +38,20 @@ sett.particles = 1000
 sett.run_mode = 'fixed source'
 sett.dagmc = True  # this is the openmc command enables use of the dagmc.h5m file as the geometry
 
-source = openmc.Source()
-# sets the source poition, direction and energy with predefined plasma parameters (see source_sampling.cpp)
-source.library = './source_sampling.so'
 
+# creates a source object
+source = openmc.Source()
+# this creates a neutron distribution with the shape of a tokamak plasma
+my_plasma = Plasma(elongation=2.9,
+                   minor_radius=1.118,
+                   major_radius=1.9,
+                   triangularity = 0.55)
+# there are other parameters that can be set for the plasma, but we can use the defaults for now
+my_plasma.export_plasma_source('my_custom_plasma_source.so')
+# sets the source poition, direction and energy with predefined plasma parameters (see source_sampling.cpp)
+source.library = './my_custom_plasma_source.so'
 sett.source = source
+
 
 tallies = openmc.Tallies()
 
@@ -52,10 +62,10 @@ tallies.append(tbr_tally)
 
 # Run OpenMC!
 model = openmc.model.Model(geom, mats, sett, tallies)
-model.run()
+statepoint_filename = model.run()
 
 # open the results file
-sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+sp = openmc.StatePoint(statepoint_filename)
 
 # access the tally
 tbr_tally = sp.get_tally(name='TBR')

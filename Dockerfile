@@ -1,5 +1,5 @@
 # build with the following command
-# sudo docker build -f Dockerfile_workshop -t openmcworkshop/workshop .
+# sudo docker build -t openmcworkshop/workshop .
 
 FROM openmcworkshop/openmc_workshop_dependencies:openmc_dagmc_nndc_dependencies
 

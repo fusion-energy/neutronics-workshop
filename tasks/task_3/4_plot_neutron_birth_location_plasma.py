@@ -2,14 +2,11 @@
 
 """4_plot_neutron_birth_location_plasma.py plots neutron birth locations."""
 
-import os
-
 import plotly.graph_objects as go
 
 import openmc
 
-# this copies a pre compiled external neutron source for use in this simulation
-os.system('cp /parametric-plasma-source/parametric_plasma_source/source_sampling.so /openmc_workshop/tasks/task_3')
+from parametric_plasma_source import Plasma
 
 
 # MATERIALS
@@ -41,18 +38,23 @@ sett.run_mode = 'fixed source'
 
 # creates a source object
 source = openmc.Source()
-
+# this creates a neutron distribution with the shape of a tokamak plasma
+my_plasma = Plasma(elongation=2.9,
+                   minor_radius=1.118,
+                   major_radius=1.9,
+                   triangularity = 0.55)
+# there are other parameters that can be set for the plasma, but we can use the defaults for now
+my_plasma.export_plasma_source('my_custom_plasma_source.so')
 # sets the source poition, direction and energy with predefined plasma parameters (see source_sampling.cpp)
-source.library = './source_sampling.so'
-
+source.library = './my_custom_plasma_source.so'
 sett.source = source
 
 
 # Run OpenMC!
 model = openmc.model.Model(geom, mats, sett)
-model.run()
+statepoint_filename = model.run()
 
-sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+sp = openmc.StatePoint(statepoint_filename)
 
 print('birth location of first neutron =', sp.source['r'][0])  # these neutrons are all created
 

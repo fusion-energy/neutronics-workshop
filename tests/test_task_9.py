@@ -23,19 +23,94 @@ cwd = os.getcwd()
 
 class test_task_9(unittest.TestCase):
     def test_task_9_part_1(self):
+        # assumes get_true_values_1d.py has been run previously and json file in repo
+        # just checks the json file exisits as it is needed in the task
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_9'))
+        output_filenames = ['1d_tbr_values.json']
+
+        for output_filename in output_filenames:
+            assert Path(output_filename).exists() is True
+            # file not removed as it is needed in the next test
+
+    def test_task_9_part_2(self):
+        # runs a 1d optimisation
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_9'))
-        output_filenames = ['simulation_results.json', 'output.gif']
+        output_filenames = ['saved_optimisation_1d.dat']
         for output_filename in output_filenames:
             os.system('rm '+output_filename)
-        os.system('python 1_lithium_enrichment_optimisation.py')
+
+        os.system('python get_optimised_values_1d.py')
+
+        for output_filename in output_filenames:
+            assert Path(output_filename).exists() is True
+            # file not removed as it is needed in the next test
+
+    def test_task_9_part_3(self):
+        # plots a graph
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_9'))
+        output_filenames = ['1d_optimization_graph.html']
+        for output_filename in output_filenames:
+            os.system('rm '+output_filename)
+
+        os.system('python 1_plot_1d_optimisation.py')
         for output_filename in output_filenames:
             assert Path(output_filename).exists() is True
             os.system('rm '+output_filename)
 
-    def test_task_9_part_2(self):
-        # lithium_enrichment_and_thickness_optimisation.py
-        # test output (output not actually working yet)
-        # 2_lithium_enrichment_and_thickness_optimisation.py
-        pass
+    def test_task_9_part_4(self):
+        # assumes get_true_values_2d.py has been run previously and json file in repo
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_9'))
+        output_filenames = ['2d_tbr_values.json']
+
+        for output_filename in output_filenames:
+            assert Path(output_filename).exists() is True
+            # file not removed as it is needed in the next test
+
+    def test_task_9_part_5(self):
+        # runs a 2d optimisation
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_9'))
+        output_filenames = ['saved_optimisation_2d.dat']
+        for output_filename in output_filenames:
+            os.system('rm '+output_filename)
+
+        os.system('python get_optimised_values_2d.py')
+        for output_filename in output_filenames:
+            assert Path(output_filename).exists() is True
+            # file not removed as it is needed in the next test
+
+    def test_task_9_part_6(self):
+        # plots a scatter graph
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_9'))
+        output_filenames = ['2d_optimization_graph_scatter.html']
+        for output_filename in output_filenames:
+            os.system('rm '+output_filename)
+
+        os.system('python 2_plot_2d_optimisation_scatter.py')
+        for output_filename in output_filenames:
+            assert Path(output_filename).exists() is True
+            os.system('rm '+output_filename)
+
+    def test_task_9_part_7(self):
+        # plots a contour graph
+
+        os.chdir(Path(cwd))
+        os.chdir(Path('tasks/task_9'))
+        output_filenames = ['2d_optimization_graph_contour.html']
+        for output_filename in output_filenames:
+            os.system('rm '+output_filename)
+
+        os.system('python 2_plot_2d_optimisation_contour.py')
+        for output_filename in output_filenames:
+            assert Path(output_filename).exists() is True
+            os.system('rm '+output_filename)
