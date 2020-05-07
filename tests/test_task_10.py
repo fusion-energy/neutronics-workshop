@@ -22,15 +22,24 @@ cwd = os.getcwd()
 
 class test_task_10(unittest.TestCase):
 
+    # PPP not currently available
+    # def test_task_10_part_1(self):
 
-    def test_task_10_part_1(self):
+    #     os.chdir(Path(cwd))
+    #     os.chdir(Path('tasks/task_10'))
+    #     output_filename = 'manifest_processed/manifest_processed.brep'
+    #     os.system('rm '+output_filename)
+    #     os.system('geomPipeline.py manifest.json')
+    #     assert Path(output_filename).exists() == True
 
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_10'))
-        output_filename = 'dagmc_notwatertight.h5m'
-        os.system('rm '+output_filename)
-        os.system('steps2h5m geometry_details.json 1. dagmc_notwatertight.h5m')
-        assert Path(output_filename).exists() == True
+    # def test_task_10_part_1(self):
+
+    #     os.chdir(Path(cwd))
+    #     os.chdir(Path('tasks/task_10'))
+    #     output_filename = 'dagmc_notwatertight.h5m'
+    #     os.system('rm '+output_filename)
+    #     os.system('steps2h5m geometry_details.json 1. dagmc_notwatertight.h5m')
+    #     assert Path(output_filename).exists() == True
 
 
     def test_task_10_part_2(self):

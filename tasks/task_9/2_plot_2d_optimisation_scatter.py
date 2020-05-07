@@ -15,7 +15,7 @@ print('Optimal thickness = ', res.x[1])
 print('Maximum TBR = ', -res.fun)
 
 # Loads true data for comparison
-data = pd.read_json('enrichment_thickness_vs_tbr.json')
+data = pd.read_json('2d_tbr_values.json')
 x_data=data['enrichment']
 y_data=data['thickness']
 z_data=data['tbr']
