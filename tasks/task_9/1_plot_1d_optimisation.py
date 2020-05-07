@@ -14,7 +14,7 @@ from openmc_model import objective
 
 
 # Loads true data for comparison
-data = pd.read_json('enrichment_vs_tbr.json')
+data = pd.read_json('1d_tbr_values.json')
 
 x_data=data['enrichment']
 fx=-data['tbr']
@@ -206,9 +206,9 @@ print('Maximum TBR of ', -res.fun, 'found with an enrichment of ', res.x[0])
 print('Maximum TBR of ', data.loc[data['tbr'].idxmax()]['tbr'], 
       'found with an enrichment of ', data.loc[data['tbr'].idxmax()]['enrichment'])
 
-fig.write_html("lithium_optimization.html")
+fig.write_html("1d_optimization_graph.html")
 try:
-    fig.write_html("/my_openmc_workshop/lithium_optimization.html")
+    fig.write_html("/my_openmc_workshop/1d_optimization_graph.html")
 except (FileNotFoundError, NotADirectoryError):  # for both inside and outside docker container
     pass
 
