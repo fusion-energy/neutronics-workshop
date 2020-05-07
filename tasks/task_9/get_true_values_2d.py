@@ -15,5 +15,5 @@ for enrichment in tqdm(np.linspace(0, 100, 10)):
                            'tbr': -objective([enrichment, thickness])
                           })
 
-with open('enrichment_vs_tbr.json', mode="w", encoding="utf-8") as f:
+with open('2d_tbr_values.json', mode="w", encoding="utf-8") as f:
     json.dump(tbr_values, f, indent=4)
