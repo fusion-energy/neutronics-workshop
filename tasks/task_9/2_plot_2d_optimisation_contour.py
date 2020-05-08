@@ -75,6 +75,7 @@ data = pd.read_json('2d_tbr_values.json')
 x_data=data['enrichment']
 y_data=data['thickness']
 z_data=data['tbr']
+# z_data_error=data['TBR_std_dev']
 
 
 fig = go.Figure()
@@ -83,7 +84,7 @@ GP_for_sample = make_gp(
     x=x_data,
     y=y_data,
     z=z_data,
-    # z_e=list(filtered_results_df["TBR_std_dev"]),
+    # z_e=z_data_error,
 )
 
 sample_data = prepare_grid_data(
@@ -91,26 +92,50 @@ sample_data = prepare_grid_data(
     x=x_data,
     y=y_data,
     z=z_data,
-    # z_e=filtered_results_df["TBR_std_dev"],
+    # z_e=z_data_error,
 )
 
-fig.add_trace(make_2d_surface_trace(**sample_data, min_z=0, max_z=1.7)
-#         row=row,
-#         col=col)
-)
+fig.add_trace(make_2d_surface_trace(**sample_data, min_z=0, max_z=1.7))
 
-fig.add_trace(
-    go.Scatter(
-        x=x_data,
-        y=y_data,
-        mode="markers",
-        name='sample',
-        hovertext=z_data,
-        hoverinfo="text",
-        showlegend=False,
-        marker={"color": "red", "size": 8},
-    )
-)
+fig.add_trace(go.Scatter(name='All TBR values found',
+                         x=[x[0] for x in res.x_iters],
+                         y=[x[1] for x in res.x_iters],
+                         hovertext=-res.func_vals,
+                         hoverinfo="text",
+                         marker={"size": 8},
+                         mode='markers'
+                        )
+             )
+
+fig.add_trace(go.Scatter(name='Starting points',
+                         x=[x[0] for x in res.x_iters][0:30],
+                         y=[x[1] for x in res.x_iters][0:30],
+                         hovertext=-res.func_vals[0:30],
+                         hoverinfo="text",
+                         marker={"size": 8},
+                         mode='markers'
+                        )
+             )
+
+fig.add_trace(go.Scatter(name='True values',
+                         x=x_data,
+                         y=y_data,
+                         hovertext=z_data,
+                         hoverinfo="text",
+                         marker={"size": 8},
+                         mode='markers'
+                        )
+             )
+
+fig.add_trace(go.Scatter(name='Maximum TBR value found',
+                         x=[res.x[0]],
+                         y=[res.x[1]],
+                         hovertext=[-res.fun],
+                         hoverinfo="text",
+                         marker={"size": 8},
+                         mode='markers'
+                        )
+             )
 
 fig.write_html("2d_optimization_graph_contour.html")
 try:
