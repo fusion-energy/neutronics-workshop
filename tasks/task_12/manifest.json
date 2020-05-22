@@ -1,10 +1,28 @@
 [
     {
         "material": "Li4SiO4",
-        "filename": "blanket.stp"
+        "filename": "blanket.stp",
+        "mesh": "size 6"
     },
     {
         "material": "eurofer",
         "filename": "firstwall.stp"
+    },
+    {
+        "material": "copper",
+        "filename": "centre_column.stp",
+        "mesh": "size 2"
+    },
+    {
+        "material": "copper",
+        "filename": "poloidal_magnets.stp"
+    },
+    {
+        "material": "copper",
+        "filename": "divertor.stp"
+    },
+    {
+        "material": "Graveyard",
+        "filename": "Graveyard.stp"
     }
 ]
