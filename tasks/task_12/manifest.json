@@ -1,0 +1,10 @@
+[
+    {
+        "material": "Li4SiO4",
+        "filename": "blanket.stp"
+    },
+    {
+        "material": "eurofer",
+        "filename": "firstwall.stp"
+    }
+]
