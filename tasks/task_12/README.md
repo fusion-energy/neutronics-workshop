@@ -15,6 +15,6 @@ The next stage is to create the unstructured mesh using Trelis. To do this run t
 
 - h5m faceteted geometry file and the h5m unstructured mesh file can now be used in a neutronics simulation. Open up the openmc python script to see how these files are used in the simulations ```coder example_CAD_simulation.py``` . This script should look similar if you have completed task 10, look for the additional line where the tet mesh is loading into the model. Also another difference to find is in the arguments passed to the model.run() part of the script.
 
-- Run the openmc python script to using the command ```python perform_openmc_simulation.py```. This should produce a vtk file of the unstrucutred mesh tally.
+- Run the openmc python script to using the command ```python example_CAD_simulation.py```. This should produce a vtk file of the unstrucutred mesh tally.
 
 - Open the vtk file using paraview and take a look at the heat distribution withing the blanket and the firstwall using slice and threshold operations. ```paraview *.vtk```. You might also want to create and then load into paraview a stl file of the geometry ```mbconvert dagmc.h5m dagmc.stl```.
