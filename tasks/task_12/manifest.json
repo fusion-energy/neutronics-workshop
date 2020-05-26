@@ -2,7 +2,7 @@
     {
         "material": "Li4SiO4",
         "filename": "blanket.stp",
-        "mesh": "size 6"
+        "mesh": "size 30"
     },
     {
         "material": "eurofer",
@@ -11,7 +11,7 @@
     {
         "material": "copper",
         "filename": "centre_column.stp",
-        "mesh": "size 2"
+        "mesh": "size 20"
     },
     {
         "material": "copper",

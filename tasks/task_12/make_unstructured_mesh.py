@@ -75,7 +75,7 @@ with open('manifest.json') as json_file:
 
 input_locations = []
 for entry in data:
-    if mesh in entry.keys():
+    if 'mesh' in entry.keys():
         input_locations.append(entry)
 geometry_details = find_number_of_volumes_in_each_step_file(input_locations, '/home/shimwell/openmc_workshop/tasks/task_12/')
 
@@ -86,9 +86,9 @@ current_vols = cubit.parse_cubit_list("volume", "all")
 cubit.cmd('Trimesher volume gradation 1.3')
 
 cubit.cmd('volume all size auto factor 5')
-
+print(geometry_details)
 for entry in geometry_details:
-    for volume in geometry_details['volumes']:
+    for volume in entry['volumes']:
         cubit.cmd('volume '+str(volume)+' size auto factor 6') # this number is the size of the mesh 1 is small 10 is large
         cubit.cmd('volume all scheme tetmesh proximity layers off geometric sizing on')
         if "size" in entry['mesh']:
@@ -98,24 +98,8 @@ for entry in geometry_details:
         cubit.cmd('mesh volume '+str(volume))
 
 
-cubit.cmd('save as "'+output_filename_stub+'.cub" overwrite')
+cubit.cmd('save as "tet_mesh.cub" overwrite')
 
-print('unstrutured mesh saved as ',output_filename_stub+'.cub')
+print('unstrutured mesh saved as tet_mesh.cub')
 
 save_tet_details_to_json_file(geometry_details)
-
-
-# additional steps needed for unstructured mesh https://svalinn.github.io/DAGMC/usersguide/tally.html
-# os.system('rm *.jou')
-# os.system('rm *.log')
-
-# os.system('mbconvert '+output_filename_stub+'.cub '+output_filename_stub+'.h5m')
-# os.system('mbconvert '+output_filename_stub+'.h5m '+output_filename_stub+'.vtk')
-
-#for each element in the mesh
-# find all material names
-# allocate material numbers based on these names ('alpha')
-# write mcr2s material card using
-
-# find material name
-# alocate materials using their name
