@@ -17,4 +17,4 @@ The next stage is to create the unstructured mesh using Trelis. To do this run t
 
 - Run the openmc python script to using the command ```python example_CAD_simulation.py```. This should produce a vtk file of the unstrucutred mesh tally.
 
-- Open the vtk file using paraview and take a look at the heat distribution withing the blanket and the firstwall using slice and threshold operations. ```paraview *.vtk```. You might also want to create and then load into paraview a stl file of the geometry ```mbconvert dagmc.h5m dagmc.stl```.
+- Open the vtk file using paraview and take a look at the heat distribution withing the blanket and the firstwall using slice and threshold operations ```paraview *.vtk```. You might also want to create and then load into paraview a stl file of the geometry ```mbconvert dagmc.h5m dagmc.stl```.
