@@ -3,7 +3,7 @@ This task creates neutronics geometry from CAD files and creates an unstrucutred
 
 Task 10 makes neutronics geometry from CAD using an opensource workflow. This task creates the same neutronics geometry in a different way by using Trelis. The use of Trelis also allows unstructed mesh / tet mesh to be created and overlayed on the neutronics geometry for scoring heating tallies.
 
-The first stage is to install Trelis and then the DAGMC plugin , instucttions can be found [here](https://svalinn.github.io/DAGMC/install/plugin.html)
+The first stage is to install Trelis and then the DAGMC plugin , instuctions can be found [here](https://svalinn.github.io/DAGMC/install/plugin.html)
 
 The second part is to make the neutroics geometry and h5 file. This can be skipped and you can move to the third part if you prefer to use the task 10 workflow then you can simply copy the task 10 geometry into this folder ```cp ../task_10/dagmc.h5 .``` .
 
