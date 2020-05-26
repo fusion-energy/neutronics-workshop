@@ -67,9 +67,9 @@ def imprint_and_merge_geometry(tolerance='1e-4'):
 
 def save_output_files():
     cubit.cmd('set attribute on')
-    # use a faceting_tolerance 1.0e-4 for accurate simulations
+    # use a faceting_tolerance 1.0e-4 or smaller for accurate simulations
     cubit.cmd('export dagmc "dagmc_notwatertight.h5m" faceting_tolerance 1.0e-2')
-    #os.system('mbconvert -1 '+output_filename_stub + '.h5m '+output_filename_stub+'_edges.h5m')
+    #os.system('mbconvert -1 dagmc_notwatertight.h5m dagmc_notwatertight_edges.h5m')
     with open('geometry_details.json', 'w') as outfile:
         json.dump(geometry_details, outfile, indent=4)
 

@@ -36,7 +36,7 @@ sett.batches = batches
 sett.inactive = 0
 sett.particles = 1000
 sett.run_mode = 'fixed source'
-sett.output = {'tallies': False}
+# sett.output = {'tallies': False}
 sett.dagmc = True  # this is the openmc command enables use of the dagmc.h5m file as the geometry
 
 
@@ -62,15 +62,12 @@ mesh_filter = openmc.MeshFilter(umesh)
 
 umesh_tally = openmc.Tally(name='tally_on_umesh')
 umesh_tally.filters = [mesh_filter]
-umesh_tally.scores = ['heating']  
+umesh_tally.scores = ['heating']
+umesh_tally.estimator = 'tracklength'
 tallies.append(umesh_tally)
 
 
 # Run OpenMC!
 model = openmc.model.Model(geom, mats, sett, tallies)
-
-# it is important to set the output to False otherwise a large mesh tally is written to the output asci files (xml)
-# This writing of asci files for meshes can take a long time so it is best avoided.
-# The mesh contents are still included in the binaray statepoint h5 output file
-model.run()
-# model.run(output=False)
+# model.run()
+model.run(output=False)
