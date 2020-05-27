@@ -63,6 +63,7 @@ The plot produced should look similar to the plot shown below. As you can see li
 
  - Try editing the script so that other candidate breeder materials are added to the plot. ```coder 3_example_material_plot.py```
 
+
 **Learning Outcomes**
 
 - How OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). 
@@ -71,3 +72,7 @@ The plot produced should look similar to the plot shown below. As you can see li
 - Beryllium 9 has the lowest threshold energy for neutron multiplication reactions. 
 - Lithium 6 has the highest probability of producing tritium at low neutron energies.
 - Understand that lithium enrichment increases tritium production from low energy neutrons.
+
+**Bonus material**
+
+Now that you have the ability to access cross section data using OpenMC you can reproduce DT, DD or other fusion fuel cross section plots. The cross sections are Doppler broadened to take into account the motion of the incident and targets projectile. [Here](https://scipython.com/blog/plotting-nuclear-fusion-cross-sections/) is a seperate tutorial on that topic which guides you through the process (perhaps skip the ENDF nuclear data part and use OpenMC data readers instead).
