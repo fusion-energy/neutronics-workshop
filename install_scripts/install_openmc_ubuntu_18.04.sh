@@ -26,6 +26,10 @@ sudo apt-get --yes install -f
 sudo apt-get --yes install libblas-dev 
 sudo apt-get --yes install liblapack-dev
 
+# needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
+sudo apt-get --yes install libnetcdf-dev
+sudo apt-get --yes install libnetcdf13
+
 # needed for newest version of openmc with dagmc
 sudo apt remove -y cmake
 pip3 install cmake==3.12.0
@@ -85,7 +89,8 @@ cd MOAB
 git clone -b Version5.1.0 https://bitbucket.org/fathomteam/moab/
 mkdir build 
 cd build
-cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
+#cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
+cmake ../moab -DENABLE_HDF5=ON -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
 make
 make test install
 cd pymoab
