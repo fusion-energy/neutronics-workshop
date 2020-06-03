@@ -12,9 +12,16 @@ from parametric_plasma_source import Plasma
 
 # MATERIALS using the neutronics material maker
 
-breeder_material = Material(material_name='Li4SiO4', enrichment=90).neutronics_material
+breeder_material = Material(material_name='Li4SiO4',
+                            enrichment=90,
+                            # material_tag='blanket_material').neutronics_material
+                            ).neutronics_material
+breeder_material.name='blanket_material'
+copper = Material(material_name="copper",
+                #   material_tag="center_column_material").neutronics_material
+                  ).neutronics_material
+copper.name='center_column_material'
 
-copper = Material(material_name="copper").neutronics_material
 
 eurofer = Material(material_name='eurofer').neutronics_material
 
@@ -31,7 +38,7 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-batches = 10
+batches = 1000
 sett.batches = batches
 sett.inactive = 0
 sett.particles = 1000
@@ -57,6 +64,8 @@ sett.source = source
 tallies = openmc.Tallies()
 
 # this loads up the tet mesh created in Trelis so that it can be used as a mesh filter
+# umesh = openmc.UnstructuredMesh("tet_mesh.inp")
+# umesh = openmc.UnstructuredMesh("tet_mesh.exo")
 umesh = openmc.UnstructuredMesh("tet_mesh.h5m")
 mesh_filter = openmc.MeshFilter(umesh)
 
@@ -70,4 +79,4 @@ tallies.append(umesh_tally)
 # Run OpenMC!
 model = openmc.model.Model(geom, mats, sett, tallies)
 # model.run()
-model.run(output=False)
+model.run()

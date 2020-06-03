@@ -1,25 +1,53 @@
 [
     {
-        "material": "Li4SiO4",
+        "material": "blanket_material",
         "filename": "blanket.stp",
-        "mesh": "size 30"
+        "mesh": "size 80"
     },
     {
         "material": "eurofer",
-        "filename": "firstwall.stp"
+        "filename": "divertor_upper.stp"
     },
     {
-        "material": "copper",
-        "filename": "centre_column.stp",
-        "mesh": "size 20"
+        "material": "eurofer",
+        "filename": "divertor_lower.stp"
     },
     {
-        "material": "copper",
-        "filename": "poloidal_magnets.stp"
+        "material": "center_column_material",
+        "filename": "center_column_shield.stp",
+        "mesh": "size 60"
     },
     {
-        "material": "copper",
-        "filename": "divertor.stp"
+        "material": "pf_coil_material",
+        "filename": "pf_coil_1.stp"
+    },
+    {
+        "material": "eurofer",
+        "filename": "pf_coil_case_1.stp"
+    },
+    {
+        "material": "pf_coil_material",
+        "filename": "pf_coil_2.stp"
+    },
+    {
+        "material": "eurofer",
+        "filename": "pf_coil_case_2.stp"
+    },
+    {
+        "material": "pf_coil_material",
+        "filename": "pf_coil_3.stp"
+    },
+    {
+        "material": "eurofer",
+        "filename": "pf_coil_case_3.stp"
+    },
+    {
+        "material": "pf_coil_material",
+        "filename": "pf_coil_4.stp"
+    },
+    {
+        "material": "eurofer",
+        "filename": "pf_coil_case_4.stp"
     },
     {
         "material": "Graveyard",

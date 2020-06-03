@@ -98,8 +98,10 @@ for entry in geometry_details:
         cubit.cmd('mesh volume '+str(volume))
 
 
-cubit.cmd('save as "tet_mesh.cub" overwrite')
+cubit.cmd('export mesh "tet_mesh.exo" overwrite')
+# cubit.cmd('export abaqus "tet_mesh.inp" overwrite') # asci format, not goood for large meshes
+# cubit.cmd('save as "tet_mesh.cub" overwrite') # mbconvert code is older than the exo equivilent
 
-print('unstrutured mesh saved as tet_mesh.cub')
+print('unstrutured mesh saved as tet_mesh.exo')
 
 save_tet_details_to_json_file(geometry_details)
