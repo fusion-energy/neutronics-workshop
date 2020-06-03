@@ -90,10 +90,18 @@ cd MOAB
 git clone -b Version5.1.0 https://bitbucket.org/fathomteam/moab/
 mkdir build 
 cd build
+# this installs without netcdf but with pymoab
 #cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
-cmake ../moab -DENABLE_HDF5=ON -DENABLE_MPI=off -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
+# this installs with netcdf but without pymoab
+cmake ../moab -DENABLE_HDF5=ON -DENABLE_MPI=off -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR
 make
-make test install
+make install
+# this 2nd build is required which is a shame
+# this is to be used if you want pymoab
+# cmake ../moab -DBUILD_SHARED_LIBS=OFF
+# otherwise if you want netcdf
+cmake ../moab -DENABLE_MPI=off -DBUILD_SHARED_LIBS=OFF
+make install
 cd pymoab
 python3 setup.py install --user
 # rm -rf /MOAB/moab
