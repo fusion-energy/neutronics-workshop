@@ -81,6 +81,7 @@ echo 'export LD_LIBRARY_PATH=$MOAB_INSTALL_DIR/lib:$LD_LIBRARY_PATH' >> ~/.bashr
 echo 'export LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH' >> ~/.bashrc 
 # echo '$PATH:/openmc/build/bin/' >> ~/.bashrc 
 
+pip install cython
 
 # MOAB Install
 cd ~
@@ -90,7 +91,7 @@ git clone -b Version5.1.0 https://bitbucket.org/fathomteam/moab/
 mkdir build 
 cd build
 #cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
-cmake ../moab -DENABLE_HDF5=ON -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
+cmake ../moab -DENABLE_HDF5=ON -DENABLE_MPI=off -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
 make
 make test install
 cd pymoab
