@@ -16,7 +16,7 @@ from openmc_model import objective
 # Loads true data for comparison
 data = pd.read_json('1d_tbr_values.json')
 
-x_data=data['enrichment']
+x_data=data['breeder_percent_in_breeder_plus_multiplier']
 fx=-data['tbr']
 
 res = load('saved_optimisation_1d.dat')
@@ -195,18 +195,17 @@ fig.update_layout(
 )
 
 
-fig.update_layout(title='Optimal Li6 enrichment',
-                  xaxis={'title': 'Li6 enrichment percent', 'range': [0, 100]},
-                  yaxis={'title': 'TBR', 'range': [0.1, 1.15]}
+fig.update_layout(title='Optimal breeder percent in breeder plus multiplier',
+                  xaxis={'title': 'breeder percent in breeder plus multiplier', 'range': [0, 100]},
+                  yaxis={'title': 'TBR', 'range': [0.1, 1.5]}
                  )
 
 
-
-print('Maximum TBR of ', -res.fun, 'found with an enrichment of ', res.x[0])
+print('Maximum TBR of ', -res.fun, 'found with a Li6 enrichment of ', res.x[0])
 print('Maximum TBR of ', data.loc[data['tbr'].idxmax()]['tbr'], 
-      'found with an enrichment of ', data.loc[data['tbr'].idxmax()]['enrichment'])
+      'found with a Li6 enrichment of ', data.loc[data['tbr'].idxmax()]['blanket_breeder_li6_enrichment'])
 
-fig.write_html("1d_optimization_graph.html")
+fig.write html("1d_optimization_graph.html")
 try:
     fig.write_html("/my_openmc_workshop/1d_optimization_graph.html")
 except (FileNotFoundError, NotADirectoryError):  # for both inside and outside docker container
