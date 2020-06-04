@@ -14,16 +14,15 @@ from parametric_plasma_source import Plasma
 
 breeder_material = Material(material_name='Li4SiO4',
                             enrichment=90,
-                            # material_tag='blanket_material').neutronics_material
-                            ).neutronics_material
-breeder_material.name='blanket_material'
+                            material_tag='blanket_material'
+                            ).openmc_material
+
 copper = Material(material_name="copper",
-                #   material_tag="center_column_material").neutronics_material
-                  ).neutronics_material
-copper.name='center_column_material'
+                  material_tag="copper"
+                  ).openmc_material
 
-
-eurofer = Material(material_name='eurofer').neutronics_material
+eurofer = Material(material_name='eurofer',
+                   material_tag="eurofer").openmc_material
 
 mats = openmc.Materials([breeder_material, eurofer, copper])
 
@@ -38,7 +37,7 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-batches = 1002
+batches = 1000
 sett.batches = batches
 sett.inactive = 0
 sett.particles = 1000
