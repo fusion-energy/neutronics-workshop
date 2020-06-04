@@ -38,7 +38,7 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-batches = 1000
+batches = 1002
 sett.batches = batches
 sett.inactive = 0
 sett.particles = 1000
@@ -51,8 +51,8 @@ sett.dagmc = True  # this is the openmc command enables use of the dagmc.h5m fil
 source = openmc.Source()
 # this creates a neutron distribution with the shape of a tokamak plasma
 my_plasma = Plasma(elongation=2.9,
-                   minor_radius=1.118,
-                   major_radius=1.9,
+                   minor_radius=1.118*100,
+                   major_radius=1.9*100,
                    triangularity = 0.55)
 # there are other parameters that can be set for the plasma, but we can use the defaults for now
 my_plasma.export_plasma_source('my_custom_plasma_source.so')
