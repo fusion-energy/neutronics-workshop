@@ -94,17 +94,19 @@ cd build
 #cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
 # this installs with netcdf but without pymoab
 cmake ../moab -DENABLE_HDF5=ON -DENABLE_MPI=off -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR
-make
-make install
+make -j
+make -j install
 # this 2nd build is required which is a shame
 # this is to be used if you want pymoab
 # cmake ../moab -DBUILD_SHARED_LIBS=OFF
 # otherwise if you want netcdf
-cmake ../moab -DENABLE_MPI=off -DBUILD_SHARED_LIBS=OFF
-make install
-cd pymoab
-python3 setup.py install --user
-# rm -rf /MOAB/moab
+cmake ../moab -DBUILD_SHARED_LIBS=OFF
+make -j install
+
+# if you installed pymoab run these two commands as well
+# cd pymoab
+# python3 setup.py install --user
+
 #needs setting in bashrc
 LD_LIBRARY_PATH=$MOAB_INSTALL_DIR/lib:$LD_LIBRARY_PATH
 echo 'export PATH=$PATH:~/MOAB/bin' >> ~/.bashrc 
@@ -118,8 +120,9 @@ git clone -b develop https://github.com/svalinn/dagmc
 mkdir build
 cd build
 # cmake ../dagmc -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$DAGMC_INSTALL_DIR -DMOAB_DIR=$MOAB_INSTALL_DIR -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_EXE=ON
-cmake ../dagmc -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$DAGMC_INSTALL_DIR -DMOAB_DIR=$MOAB_INSTALL_DIR -DBUILD_STATIC_LIBS=OFF
-make install
+# cmake ../dagmc -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$DAGMC_INSTALL_DIR -DMOAB_DIR=$MOAB_INSTALL_DIR -DBUILD_STATIC_LIBS=OFF
+cmake ../dagmc -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$DAGMC_INSTALL_DIR -DMOAB_DIR=$MOAB_INSTALL_DIR
+make -j install
 # rm -rf $HOME/DAGMC/dagmc
 #needs setting in bashrc
 LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH
