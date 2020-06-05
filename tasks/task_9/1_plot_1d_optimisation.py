@@ -19,7 +19,7 @@ data = pd.read_json('1d_tbr_values.json')
 x_data=data['breeder_percent_in_breeder_plus_multiplier']
 fx=-data['tbr']
 
-res = load('saved_optimisation_1drunner.dat')
+res = load('saved_optimisation_1d.dat')
 
 fig = go.Figure()
 
