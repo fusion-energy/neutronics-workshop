@@ -15,13 +15,13 @@ Then run this optimisation script, it should save a .dat file which contains all
 
 - ```python get_optimised_values_1d.py```
 
-We can compare the results with previously calculated results to see how the optimiser did. A series of TBR results have previously be calculated using ```python get_true_values_1d.py``` and saved to a json file. A plot of the optimisation which loads the true results (enrichment_vs_tbr.json file) and the optimisation samples and initial samples (saved_optimisation_1d.dat file) can now be made.
+We can compare the results with previously calculated results to see how the optimiser did. A series of TBR results have previously be calculated using ```python get_true_values_1d.py``` and saved to a json file. A plot of the optimisation which loads the true results (1d_tbr_values.json file) and the optimisation samples and initial samples (saved_optimisation_1d.dat file) can now be made.
 
 Try plotting the graph and using the interactive scroll bar to see how the optimiser samples points 
 
-- ```python 1_lithium_enrichment_optimisation.py```
+- ```python 1_plot_1d_optimisation.py.py```
 
-The same techniques can be applied to N dimensional problems but the number of simulations required increases. The next example is a 2D dimensional problem where the optimal enrichment and blanket thickness are being found. Open the optimisation script to identify the differences in the bounds of the 1d and 2d problem.
+The same techniques can be applied to N dimensional problems but the number of simulations required increases. The next example is a 2D dimensional problem where the optimal breeder to multiplier ratio and enrichment are being found. Open the optimisation script to identify the differences in the bounds of the 1d and 2d problem.
 
 - ```meld get_optimised_values_2d.py```
 
@@ -29,13 +29,13 @@ Then run this optimisation script, it should save a .dat file which contains all
 
 - ```python get_optimised_values_2d.py```
 
-Again we can compare the results with the true results to see how the optimiser did. The a grid of TBR results have previously be calculated using ```python get_true_values_2d.py``` and saved to a json file. A plot of the optimisation which loads the true results (enrichment_thickness_vs_tbr.json file) and the optimisation samples and inital samples (saved_optimisation_2d.dat file) can now be made.
+Again we can compare the results with the true results to see how the optimiser did. The a grid of TBR results have previously be calculated using ```python get_true_values_2d.py``` and saved to a json file. A plot of the optimisation which loads the true results (2d_tbr_values.json file) and the optimisation samples and inital samples (saved_optimisation_2d.dat file) can now be made.
 
 There are currently two graphs to view these results, try both and let me know which you prefer
 
-- ```python 2_lithium_enrichment_and_thickness_optimisation_contour.py```
+- ```python 2_plot_2d_optimisation_contour.py```
 
-- ```python 2_lithium_enrichment_and_thickness_optimisation.py```
+- ```python 2_plot_2d_optimisation_scatter.py```
 
 
 

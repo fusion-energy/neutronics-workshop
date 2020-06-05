@@ -14,19 +14,19 @@ from plotly.subplots import make_subplots
 def make_3d_plot(results_df, x_axis_name, y_axis_name, z_axis_name, row, col):
 
     text_value = []
-    for e, t, tbr in zip(
-        results_df["enrichment"], results_df["thickness"], results_df["TBR"]
+    for e, r, tbr in zip(
+        results_df["blanket_breeder_li6_enrichment"], results_df["breeder_percent_in_breeder_plus_multiplier_ratio"], results_df["tbr"]
     ):
 
         text_value.append(
             "TBR ="
             + str(tbr)
             + "<br>"
-            + "enrichment ="
+            + "Li6 enrichment ="
             + str(e)
             + "<br>"
-            + "thickness ="
-            + str(t)
+            + "breeder percent in breeder + multiplier ="
+            + str(r)
             + "<br>"
         )
 
@@ -36,7 +36,7 @@ def make_3d_plot(results_df, x_axis_name, y_axis_name, z_axis_name, row, col):
             y=list(results_df[y_axis_name]),
             # z=list(results_df[z_axis_name]),
             mode="markers",
-            name="Li4SiO4",
+            name="TBR in HCPB blanket",
             showlegend=False,
             hoverinfo="text",
             text=text_value,
@@ -50,8 +50,8 @@ def make_3d_plot(results_df, x_axis_name, y_axis_name, z_axis_name, row, col):
         col=col,
     )
 
-    fig.update_xaxes({"title": x_axis_name}, row=row, col=col)
-    fig.update_yaxes({"title": y_axis_name}, row=row, col=col)
+    fig.update_xaxes({"title": x_axis_name.replace('_',' ')}, row=row, col=col)
+    fig.update_yaxes({"title": y_axis_name.replace('_',' ')}, row=row, col=col)
     # fig.update_zaxes({'title': z_axis_name}, row=row, col=col)
 
 
@@ -79,9 +79,9 @@ for sample, coords in zip(sampling_methods, row_col_coords):
 
     make_3d_plot(
         filtered_results_df,
-        x_axis_name="enrichment",
-        y_axis_name="thickness",
-        z_axis_name="TBR",
+        x_axis_name="blanket_breeder_li6_enrichment",
+        y_axis_name="breeder_percent_in_breeder_plus_multiplier_ratio",
+        z_axis_name="tbr",
         row=coords[0],
         col=coords[1],
     )
