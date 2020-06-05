@@ -1,0 +1,56 @@
+[
+    {
+        "material": "blanket_material",
+        "filename": "blanket.stp",
+        "mesh": "size 90"
+    },
+    {
+        "material": "eurofer",
+        "filename": "divertor_upper.stp"
+    },
+    {
+        "material": "eurofer",
+        "filename": "divertor_lower.stp"
+    },
+    {
+        "material": "copper",
+        "filename": "center_column_shield.stp",
+        "mesh": "size 80"
+    },
+    {
+        "material": "copper",
+        "filename": "pf_coil_1.stp"
+    },
+    {
+        "material": "eurofer",
+        "filename": "pf_coil_case_1.stp"
+    },
+    {
+        "material": "copper",
+        "filename": "pf_coil_2.stp"
+    },
+    {
+        "material": "eurofer",
+        "filename": "pf_coil_case_2.stp"
+    },
+    {
+        "material": "copper",
+        "filename": "pf_coil_3.stp"
+    },
+    {
+        "material": "eurofer",
+        "filename": "pf_coil_case_3.stp"
+    },
+    {
+        "material": "copper",
+        "filename": "pf_coil_4.stp"
+    },
+    {
+        "material": "eurofer",
+        "filename": "pf_coil_case_4.stp"
+    },
+    {
+        "material": "Graveyard",
+        "filename": "Graveyard.stp"
+    }
+]

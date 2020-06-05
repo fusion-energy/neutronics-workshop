@@ -12,23 +12,23 @@ A parameter space may be surveyed for several reasons. In the context of tritium
 
 There are many ways to sample a parameter space, but some provide significant advantages to others.
 
-In this task, we will use a simple tokamak model consisting of a central solenoid, shield and blanket, and perform simulations to measure the impact of varying blanket enrichment and thickness on TBR. Take a look at the ```openmc_model.py``` script to see the specific details of the model.
+In this task, we will use a simple ICF model (a sphere with a first wall), and perform simulations to measure the impact of varying lithium 6 enrichment and the breeder to multiplier fraction on TBR. Take a look at the ```openmc_model.py``` script to see the specific details of the model.
 
-Using this model, simulations will be performed by varying blanket enrichment between 0 and 100%, and blanket thickness between 1cm and 500cm. These ranges define the 'parameter space' over which simulations are performed. We will demonstrate a variety of sampling techniques to sample the parameter space and discuss the advantages and disadvantages of each.
+Using this model, simulations will be performed by varying blanket enrichment between 0 and 100%, and breeder percent in breeder plus multiplier volumes between 0 and 100%. These ranges define the 'parameter space' over which simulations are performed. We will demonstrate a variety of sampling techniques to sample the parameter space and discuss the advantages and disadvantages of each.
 
 # Random Sampling
 
 The easiest way to sample a parameter space is to use random sampling, where values are chosen at random from the parameter space.
 
-Take a look at the ```1_simulate_with_random_sample.py``` script, which defines input parameters for the model defined in the ```openmc_model.py``` script. This script calculates TBR for given values of enrichment and thickness. Try to understand how the values of enrichment and thickness are randomly varied.
+Take a look at the ```1_simulate_with_random_sample.py``` script, which defines input parameters for the model defined in the ```openmc_model.py``` script. This script calculates TBR for given values of enrichment and breeder to multiplier ratios. Try to understand how the values of enrichment and breeder to multiplier ratios are randomly varied.
 
 Run the script using the command ```python3 1_simulate_with_random_sample.py```, using the -n flag to specify the number of simulations. The results of the simulations are saved in the 'outputs' folder of the task directory.
 
-The task folder also contains a script called ```plot_sampling_coordinates.py``` which plots TBR as a function of thickness and enrichment for each sampling method. Run this script to plot the results of the random simulations. This should look similar to the plot below.
+The task folder also contains a script called ```plot_sampling_coordinates.py``` which plots TBR as a function of breeder to multiplier ratio and enrichment for each sampling method. Run this script to plot the results of the random simulations. This should look similar to the plot below.
 
 <p align="center"><img src="images/plot_random_sampling.png" height="400"></p>
 
-As shown, the simulations have been performed randomly across the parameter space of enrichment and thickness.
+As shown, the simulations have been performed randomly across the parameter space of enrichment and breeder to multiplier ratio.
 
 The main advantage of random sampling is that it is an 'unbiased' sampling technique, meaning simulations are performed across the entire parameter space at the same rate. This means that all simulations contribute to the overall data trend and additional simulations can be easily performed to increase accuracy.
 
@@ -42,7 +42,7 @@ Another sampling technique is 'grid sampling', where samples are taken at regula
 
 <p align="center"><img src="images/grid_sampling.gif" height="250"></p>
 
-Open the ```2_simulate_with_grid_sample.py``` script and try to understand how a grid of enrichment and thickness values defines the input parameters for the simulations; also note the order in which these simulations are performed.
+Open the ```2_simulate_with_grid_sample.py``` script and try to understand how a grid of enrichment and breeder to multiplier ratios values defines the input parameters for the simulations; also note the order in which these simulations are performed.
 
 Run the ```2_simulate_with_grid_sample.py``` script with the -n flag to specify the number of simulations and plot the results using the ```plot_sampling_coordinates.py``` script. Two graphs should be plotted showing the results for both random and grid simulations. Compare the two sampling methods.
 
@@ -52,7 +52,7 @@ As shown, grid sampling has a better spatial distribution of sample points than 
 
 Grid sampling maximises the spatial distribution of sample points across a parameter space by avoiding point clustering and, therefore, maximises the amount of useful information obtained from each simulation. As a result, grid sampling is a highly efficient sampling technique for covering a parameter space.
 
-However, as simulations are performed in order according to the defined grid, they are biased towards the first parameter values in the grid. For example, ```2_simulate_with_grid_sample.py``` performs simulations with enrichment = 0 for all blanket thicknesses before enrichment is changed. This means that all simulations across the grid must be performed before a data trend across the entire parameter space can be observed.
+However, as simulations are performed in order according to the defined grid, they are biased towards the first parameter values in the grid. For example, ```2_simulate_with_grid_sample.py``` performs simulations with enrichment = 0 for all blanket breeder percents before enrichment is changed. This means that all simulations across the grid must be performed before a data trend across the entire parameter space can be observed.
 This is the main disadvantage of grid sampling as more simulations than are necessary may be performed, and it is difficult to efficiently add sample points to the existing data without performing a complete new grid search 'in-between' the existing data points. On the other hand, random sampling is unbiased meaning the data trend across the parameter space can be observed with a small number of simulations and additional sample points can be added easily.
 
 Overall, grid sampling is a more efficient sampling technique than random sampling, but its bias towards initial parameter values makes it unsuitable for most applications. Instead, we tend to use more advanced 'quasi-random' or 'adaptive' techniques to improve sampling efficiency.
@@ -78,13 +78,13 @@ Overall, halton sampling is better than random and grid sampling as it provides 
 
 Adaptive sampling is a sampling technique which uses data fitting to decide where in the parameter space to sample next. By fitting the data from samples that have already been taken, the overall data trend across the parameter space can be roughly predicted and an informed choice on where to sample the parameter space next can be made. Regions in the parameter space where the data trend is relatively flat do not have to be sampled as densely as rapidly changing regions. By allowing sample points to be chosen based on the data trend, computational time can be focused on the most important parts of the data trend.
 
-Open the ```4_simulate_with_adaptive_sample.py``` script and try to understand how 'adaptive' python module is used to adaptively sample the parameter space. Simulations begin by sampling the limits of the parameter space (i.e. (enrichment, thickness) = (0, 1), (100, 1), (0, 500), (100, 500)) and then fitting these points to predict where TBR is varying most rapidly across the parameter space. A sample is then taken at this point and the process repeated. There are many ways to fit existing data points during adaptive sampling, however, this particular example uses [gaussian process regression](link). 
+Open the ```4_simulate_with_adaptive_sample.py``` script and try to understand how 'adaptive' python module is used to adaptively sample the parameter space. Simulations begin by sampling the limits of the parameter space (i.e. (enrichment, breeder percentage) = (0, 100), (100, 0), (0, 100), (100, 100)) and then fitting these points to predict where TBR is varying most rapidly across the parameter space. A sample is then taken at this point and the process repeated. There are many ways to fit existing data points during adaptive sampling, however, this particular example uses [gaussian process regression](link). 
 
 Run this script and plot the results. The graph produced should look similar to the plot below.
 
 <p align="center"><img src="images/plot_adaptive_sampling.png" height="400"></p>
 
-As mentioned, the most important parts of a data trend are (usually) the regions where the data is changing as a function of parameter values. In our example, these are the regions where TBR is changing as a function of enrichment and thickness. I.e. we do not want to excessively sample regions where TBR changes negligibly as a function of enrichment and thickness.
+As mentioned, the most important parts of a data trend are (usually) the regions where the data is changing as a function of parameter values. In our example, these are the regions where TBR is changing as a function of enrichment and breeder percentage. I.e. we do not want to excessively sample regions where TBR changes negligibly as a function of enrichment and breeder percentage.
 As shown, the parameter space is densely sampled in regions where TBR is changing most rapidly, and sparsely sampled in regions where TBR is changing negligibly.
 
 The main advantage of adaptive sampling is that it is the most efficient technique for sampling a parameter space with an unknown distribution. By iteratively fitting the data and performing additional simulations we can determine an accurate distribution across the parameter space with fewer simulations than any other sampling technique.
@@ -92,8 +92,10 @@ It is not a perfect solution, however, because over-sampling could still take pl
 
 Overall, adaptive sampling allows computational time to be focused on the most important parts of a distribution and is a highly efficient way of sampling a parameter space and, therefore, performing simulations.
 
+To more accuratly cover this parameter space more than the default 40 samples would be required.
+
 
 Possible Learning Outcomes:
-- Some candiate breeder materials can meet the TBR requirment with a thinner blanket.
-- Increasing the thickness of blanket or lthium 6 enrichment tend to increase the TBR but not for all materials.
+- The optimal breeder percent in breeder plus multiplier volume changes for different amounts of lithium enrichment.
+- Increasing the lthium 6 enrichment tends to increase the TBR.
 - Random slection of parameters is not an efficient way of covering the search space or finding the optimal.

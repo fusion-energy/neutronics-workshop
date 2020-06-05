@@ -1,0 +1,10 @@
+
+python get_true_values_1d.py
+python get_true_values_2d.py
+
+python get_optimised_values_1d.py
+python get_optimised_values_2d.py
+
+python 1_plot_1d_optimisation.py
+python 2_plot_2d_optimisation_contour.py
+python 2_plot_2d_optimisation_scatter.py

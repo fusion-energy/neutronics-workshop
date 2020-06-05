@@ -14,7 +14,7 @@ import argparse
 import numpy as np
 from tqdm import tqdm
 
-from openmc_model import simulate_model
+from openmc_model import find_tbr_hcpb
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -27,10 +27,11 @@ print("running simulations with random sampling")
 
 for i in tqdm(range(args.number)):
 
-    enrichment = np.random.uniform(0, 100)
-    thickness = np.random.uniform(1, 500)
+    breeder_percent_in_breeder_plus_multiplier_ratio = np.random.uniform(0, 100)
+    blanket_breeder_li6_enrichment = np.random.uniform(1, 100)
 
-    result = simulate_model(enrichment=enrichment, thickness=thickness)
+    result = find_tbr_hcpb(breeder_percent_in_breeder_plus_multiplier_ratio,
+                           blanket_breeder_li6_enrichment)
 
     result["sample"] = "random"
 
