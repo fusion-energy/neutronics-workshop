@@ -10,37 +10,23 @@ from openmc_model import objective
 # loads up the optimisation data
 res = load('saved_optimisation_2d.dat')
 
-print('Optimal Li6 enrichment = ', res.x[0])
-print('Optimal thickness = ', res.x[1])
+print('Optimal breeder_percent_in_breeder_plus_multiplier_ratio = ', res.x[0])
+print('Optimal Li6 enrichment = ', res.x[1])
 print('Maximum TBR = ', -res.fun)
 
 # Loads true data for comparison
 data = pd.read_json('2d_tbr_values.json')
-x_data=data['enrichment']
-y_data=data['thickness']
+x_data=data['breeder_percent_in_breeder_plus_multiplier']
+y_data=data['blanket_breeder_li6_enrichment']
 z_data=data['tbr']
 
 
-res = load('saved_optimisation_2d.dat')
-
-print('Optimal Li6 enrichment = ', res.x[0])
-print('Optimal thickness = ', res.x[1])
-print('Maximum TBR = ', -res.fun)
-
 fig = go.Figure()
 
-fig.add_trace(go.Scatter3d(name='All TBR values found',
+fig.add_trace(go.Scatter3d(name='TBR values found during optimisation',
                          x=[x[0] for x in res.x_iters],
                          y=[x[1] for x in res.x_iters],
                          z=-res.func_vals,
-                         mode='markers'
-                        )
-             )
-
-fig.add_trace(go.Scatter3d(name='Starting points',
-                         x=[x[0] for x in res.x_iters][0:30],
-                         y=[x[1] for x in res.x_iters][0:30],
-                         z=-res.func_vals[0:30],
                          mode='markers'
                         )
              )
@@ -62,9 +48,9 @@ fig.add_trace(go.Scatter3d(name='Maximum TBR value found',
                         )
              )
 
-fig.update_layout(title='Optimal Li6 enrichment and blanket thickness',
-                  scene={'xaxis': {'title': 'Li6 enrichment percent'},
-                         'yaxis': {'title': 'Blanket thickness'},
+fig.update_layout(title='Optimal Li6 enrichment and breeder percent in breeder plus multiplier',
+                  scene={'yaxis': {'title': 'Li6 enrichment percent'},
+                         'zaxis': {'title': 'breeder percent in breeder plus multiplier'},
                          'zaxis': {'title': 'TBR'}
                         }
                  )

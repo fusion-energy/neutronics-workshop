@@ -15,7 +15,7 @@ import argparse
 import numpy as np
 from tqdm import tqdm
 
-from openmc_model import simulate_model
+from openmc_model import find_tbr_hcpb
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -28,10 +28,11 @@ number_of_steps = math.floor(math.sqrt(args.number))
 
 print("running simulations with grid sampling")
 
-for enrichment in tqdm(np.linspace(0, 100, number_of_steps)):
-    for thickness in np.linspace(0, 500, number_of_steps):
+for breeder_percent_in_breeder_plus_multiplier_ratio in tqdm(np.linspace(0, 100, number_of_steps)):
+    for blanket_breeder_li6_enrichment in np.linspace(0, 100, number_of_steps):
 
-        result = simulate_model(enrichment=enrichment, thickness=thickness)
+        result = find_tbr_hcpb(breeder_percent_in_breeder_plus_multiplier_ratio,
+                               blanket_breeder_li6_enrichment)
 
         result["sample"] = "grid"
 

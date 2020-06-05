@@ -12,14 +12,15 @@ import uuid
 import argparse
 
 import adaptive
-from openmc_model import simulate_model
+from openmc_model import find_tbr_hcpb
 
 
 def find_tbr(x):
 
-    enrichment, thickness = x
-
-    result = simulate_model(enrichment=enrichment, thickness=thickness)
+    breeder_percent_in_breeder_plus_multiplier_ratio, blanket_breeder_li6_enrichment = x
+                           
+    result = find_tbr_hcpb(breeder_percent_in_breeder_plus_multiplier_ratio,
+                           blanket_breeder_li6_enrichment)
 
     result["sample"] = "adaptive"
 
@@ -28,7 +29,7 @@ def find_tbr(x):
     with open(filename, mode="w", encoding="utf-8") as f:
         json.dump(result, f, indent=4)
 
-    return result["TBR"]
+    return result["tbr"]
 
 
 parser = argparse.ArgumentParser()
@@ -39,7 +40,7 @@ args = parser.parse_args()
 
 print("running simulations with adaptive sampling")
 
-learner = adaptive.Learner2D(find_tbr, bounds=[(0, 100), (1, 500)])
+learner = adaptive.Learner2D(find_tbr, bounds=[(0, 100), (0, 100)])
 
 runner = adaptive.Runner(learner, ntasks=1, goal=lambda l: l.npoints > args.number)
 
