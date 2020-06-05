@@ -10,8 +10,8 @@ def find_tbr_hcpb(breeder_percent_in_breeder_plus_multiplier_ratio, blanket_bree
                             blanket_coolant_material='He',
                             firstwall_coolant_material='He',
                             blanket_breeder_li6_enrichment=blanket_breeder_li6_enrichment,
-                            blanket_multiplier_fraction=0.8 * (100-breeder_percent_in_breeder_plus_multiplier_ratio),
-                            blanket_breeder_fraction=0.8 * breeder_percent_in_breeder_plus_multiplier_ratio,
+                            blanket_multiplier_fraction=0.007 * (100-breeder_percent_in_breeder_plus_multiplier_ratio),
+                            blanket_breeder_fraction=0.007 * breeder_percent_in_breeder_plus_multiplier_ratio,
                             blanket_breeder_material_packing_fraction=0.62,
                             blanket_multiplier_packing_fraction=0.62,
                             coolant_pressure=15.5e6,
@@ -74,7 +74,7 @@ def sphere_with_firstwall_model(
                                     blanket_coolant_fraction,
                                     blanket_breeder_fraction],
                             percent_type='vo'
-                            ).neutronics_material
+                            ).openmc_material
 
     # creates homogensied blanket material using a combined breeder multiplier material (e.g lithium ceramic with be multiplier)
     else:
@@ -97,7 +97,7 @@ def sphere_with_firstwall_model(
                                         blanket_breeder_fraction,
                                         blanket_multiplier_fraction],
                                 percent_type='vo'
-                                ).neutronics_material
+                                ).openmc_material
 
 
     # creates homogensied firstwall material with eurofer, tungsten and a coolant
@@ -111,7 +111,7 @@ def sphere_with_firstwall_model(
                                         fracs = [firstwall_armour_fraction,
                                                  firstwall_coolant_fraction,
                                                  firstwall_structural_fraction]
-                                        ).neutronics_material
+                                        ).openmc_material
 
     mats = openmc.Materials([blanket_material, firstwall_material]) 
 
