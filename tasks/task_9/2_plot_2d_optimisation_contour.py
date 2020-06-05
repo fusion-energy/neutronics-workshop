@@ -55,8 +55,8 @@ fig.add_trace(trace = go.Contour(
     ))
 
 fig.add_trace(go.Scatter(name='TBR values found during optimisation',
-                         x=[x[0] for x in res.x_iters][30:],
-                         y=[x[1] for x in res.x_iters][30:],
+                         x=[x[0] for x in res.x_iters],
+                         y=[x[1] for x in res.x_iters],
                          hovertext=-res.func_vals,
                          hoverinfo="text",
                          marker={"size": 8},
@@ -64,16 +64,6 @@ fig.add_trace(go.Scatter(name='TBR values found during optimisation',
                         )
              )
 
-# The optimiser has intial points that are randomly selected over the parameter space
-fig.add_trace(go.Scatter(name='Random starting points',
-                         x=[x[0] for x in res.x_iters][0:30],
-                         y=[x[1] for x in res.x_iters][0:30],
-                         hovertext=-res.func_vals[0:30],
-                         hoverinfo="text",
-                         marker={"size": 8},
-                         mode='markers'
-                        )
-             )
 
 # This add the final optimal value found during the optimisation as a seperate scatter point on the graph
 fig.add_trace(go.Scatter(name='Maximum TBR value found',
