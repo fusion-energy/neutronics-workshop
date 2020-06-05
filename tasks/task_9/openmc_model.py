@@ -144,7 +144,7 @@ def sphere_with_firstwall_model(
     sett = openmc.Settings()
     sett.batches = 200  # this is minimum number of batches that will be run
     sett.trigger_active = True
-    sett.trigger_max_batches =  500  # this is maximum number of batches that will be run
+    sett.trigger_max_batches =  1500  # this is maximum number of batches that will be run
     sett.particles = 300
     sett.verbosity = 1
     sett.run_mode = 'fixed source'
