@@ -10,14 +10,14 @@ from openmc_model import objective
 # Optimisation for 2D EXAMPLE
 
 # Uses adaptive sampling methods from task 8 to obtain starting points for the optimiser
-learner = adaptive.Learner2D(objective, bounds=[(0, 100), (10, 200)])
+learner = adaptive.Learner2D(objective, bounds=[(0, 100), (0, 100)])
 runner = adaptive.Runner(learner, ntasks=1, goal=lambda l: l.npoints > 30)
 runner.ioloop.run_until_complete(runner.task)
 
 
 # Gaussian Processes based optimisation that returns an SciPy optimisation object
 res = gp_minimize(objective,          # the function to minimize
-                  dimensions=[(0., 100.), (10., 200.)],       # the bounds on each dimension of x
+                  dimensions=[(0., 100.), (0., 100.)],       # the bounds on each dimension of x
                   n_calls=40,         # the number of evaluations of f
                   n_random_starts=0,  # the number of random initialization points
                   verbose=True,
