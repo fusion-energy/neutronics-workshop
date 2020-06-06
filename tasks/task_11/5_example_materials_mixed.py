@@ -14,15 +14,15 @@ mixed_helium_Li4SiO4 = MultiMaterial(material_name='mixed_helium_Li4SiO4',   # n
                                      materials=[helium, Li4SiO4],            # list of material objects (NOT neutronics materials)
                                      fracs=[0.36, 0.64],                     # list of combination fractions for each material object
                                      percent_type='vo')                      # combination fraction type
-# print(mixed_helium_Li4SiO4.neutronics_material)
+# print(mixed_helium_Li4SiO4.openmc_material)
 
 
 # Homogenous mixture of tungsten carbide and water using mix_materials function
 
 mixed_water_WC = openmc.Material.mix_materials(name='mixed_water_WC',      # name of homogeneous material
                                                materials=[                 # list of neutronics materials
-                                                   Material('WC').neutronics_material,
-                                                   Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).neutronics_material
+                                                   Material('WC').openmc_material,
+                                                   Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).openmc_material
                                                ],
                                                fracs=[0.8, 0.2],           # list of combination fractions for each neutronics material
                                                percent_type='vo')          # combination fraction type
@@ -30,15 +30,15 @@ mixed_water_WC = openmc.Material.mix_materials(name='mixed_water_WC',      # nam
 
 # Demonstration of changing combination fractions of each material
 
-print('Tungsten carbide density = ' + str(Material('WC').neutronics_material.density))
-print('Water density = ' + str(Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).neutronics_material.density))
+print('Tungsten carbide density = ' + str(Material('WC').openmc_material.density))
+print('Water density = ' + str(Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).openmc_material.density))
 
 water_fractions = np.linspace(0., 1., 20)
 
 mixed_water_WC_densities = [openmc.Material.mix_materials(name='mixed_water_WC',
                                                           materials=[
-                                                              Material('WC').neutronics_material,
-                                                              Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).neutronics_material
+                                                              Material('WC').openmc_material,
+                                                              Material('H2O', temperature_in_C=25, pressure_in_Pa=100000).openmc_material
                                                           ],
                                                           fracs=[
                                                               water_fraction,
