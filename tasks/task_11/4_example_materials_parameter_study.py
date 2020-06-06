@@ -13,7 +13,7 @@ from neutronics_material_maker import Material
 # We will show density as a function of temperature over a larger range, but at correct pressure
 
 temperatures = np.linspace(0.1, 600., 200)
-water_densities = [Material('H2O', temperature_in_C=temperature, pressure_in_Pa=15500000).neutronics_material.density for temperature in temperatures]
+water_densities = [Material('H2O', temperature_in_C=temperature, pressure_in_Pa=15500000).openmc_material.density for temperature in temperatures]
 
 fig = make_subplots(rows=2, cols=2,
                     subplot_titles=("Water density as a function of temperature (at constant pressure)", "Helium density as a function of temperature (at constant pressure)", "Helium density as a function of pressure (at constant temperature)", ""))
@@ -33,7 +33,7 @@ fig.update_yaxes({'title': 'Density (g/cm3)'}, row=1, col=1)
 # We will show density as a function of temperature over a larger range, but at correct pressure
 
 temperatures = np.linspace(0.1, 600., 200)
-helium_densities = [Material('He', temperature_in_C=temperature, pressure_in_Pa=8000000).neutronics_material.density for temperature in temperatures]
+helium_densities = [Material('He', temperature_in_C=temperature, pressure_in_Pa=8000000).openmc_material.density for temperature in temperatures]
 
 fig.add_trace(go.Scatter(x=temperatures,
                          y=helium_densities,
@@ -50,7 +50,7 @@ fig.update_yaxes({'title': 'Density (g/cm3)'}, row=1, col=2)
 # Pressure is kept constant in HCPB, however, this is just demonstrating the effect
 
 pressures = np.linspace(1000000., 10000000., 100)
-helium_densities = [Material('He', temperature_in_C=400, pressure_in_Pa=pressure).neutronics_material.density for pressure in pressures]
+helium_densities = [Material('He', temperature_in_C=400, pressure_in_Pa=pressure).openmc_material.density for pressure in pressures]
 
 fig.add_trace(go.Scatter(x=pressures,
                          y=helium_densities,
