@@ -1,406 +1,406 @@
 [
     {
-        "enrichment": 0.0,
-        "tbr": 0.1571220884391228
+        "breeder_percent_in_breeder_plus_multiplier": 0.0,
+        "tbr": 0.019048484045770843
     },
     {
-        "enrichment": 1.0,
-        "tbr": 0.934915439529893
+        "breeder_percent_in_breeder_plus_multiplier": 1.0,
+        "tbr": 1.4378371844509474
     },
     {
-        "enrichment": 2.0,
-        "tbr": 0.96474401316522
+        "breeder_percent_in_breeder_plus_multiplier": 2.0,
+        "tbr": 1.6085735524644142
     },
     {
-        "enrichment": 3.0,
-        "tbr": 0.9799309039431923
+        "breeder_percent_in_breeder_plus_multiplier": 3.0,
+        "tbr": 1.6771059399106283
     },
     {
-        "enrichment": 4.0,
-        "tbr": 0.98947326858513
+        "breeder_percent_in_breeder_plus_multiplier": 4.0,
+        "tbr": 1.717080512624012
     },
     {
-        "enrichment": 5.0,
-        "tbr": 0.9952414178148205
+        "breeder_percent_in_breeder_plus_multiplier": 5.0,
+        "tbr": 1.7412571007761495
     },
     {
-        "enrichment": 6.0,
-        "tbr": 1.0001932469317492
+        "breeder_percent_in_breeder_plus_multiplier": 6.0,
+        "tbr": 1.7586782466267459
     },
     {
-        "enrichment": 7.0,
-        "tbr": 1.0032929873461571
+        "breeder_percent_in_breeder_plus_multiplier": 7.0,
+        "tbr": 1.7685525456034974
     },
     {
-        "enrichment": 8.0,
-        "tbr": 1.0061001875766864
+        "breeder_percent_in_breeder_plus_multiplier": 8.0,
+        "tbr": 1.7726474530944225
     },
     {
-        "enrichment": 9.0,
-        "tbr": 1.0077553468663707
+        "breeder_percent_in_breeder_plus_multiplier": 9.0,
+        "tbr": 1.7736440634242314
     },
     {
-        "enrichment": 10.0,
-        "tbr": 1.0094960082538922
+        "breeder_percent_in_breeder_plus_multiplier": 10.0,
+        "tbr": 1.7735139999239
     },
     {
-        "enrichment": 11.0,
-        "tbr": 1.010072193861155
+        "breeder_percent_in_breeder_plus_multiplier": 11.0,
+        "tbr": 1.771514547579638
     },
     {
-        "enrichment": 12.0,
-        "tbr": 1.010830234974907
+        "breeder_percent_in_breeder_plus_multiplier": 12.0,
+        "tbr": 1.77247989271186
     },
     {
-        "enrichment": 13.0,
-        "tbr": 1.0111116208865625
+        "breeder_percent_in_breeder_plus_multiplier": 13.0,
+        "tbr": 1.765734413814782
     },
     {
-        "enrichment": 14.0,
-        "tbr": 1.0120429767772774
+        "breeder_percent_in_breeder_plus_multiplier": 14.0,
+        "tbr": 1.7653711099442666
     },
     {
-        "enrichment": 15.0,
-        "tbr": 1.012323582655195
+        "breeder_percent_in_breeder_plus_multiplier": 15.0,
+        "tbr": 1.757715135014511
     },
     {
-        "enrichment": 16.0,
-        "tbr": 1.0121133810028184
+        "breeder_percent_in_breeder_plus_multiplier": 16.0,
+        "tbr": 1.7511734286706673
     },
     {
-        "enrichment": 17.0,
-        "tbr": 1.0119530238179317
+        "breeder_percent_in_breeder_plus_multiplier": 17.0,
+        "tbr": 1.7490399760174393
     },
     {
-        "enrichment": 18.0,
-        "tbr": 1.011994028355456
+        "breeder_percent_in_breeder_plus_multiplier": 18.0,
+        "tbr": 1.7437670144676127
     },
     {
-        "enrichment": 19.0,
-        "tbr": 1.0117971728480268
+        "breeder_percent_in_breeder_plus_multiplier": 19.0,
+        "tbr": 1.7339436808083377
     },
     {
-        "enrichment": 20.0,
-        "tbr": 1.01167321681645
+        "breeder_percent_in_breeder_plus_multiplier": 20.0,
+        "tbr": 1.7255128089534428
     },
     {
-        "enrichment": 21.0,
-        "tbr": 1.0115640773210695
+        "breeder_percent_in_breeder_plus_multiplier": 21.0,
+        "tbr": 1.7208456712570739
     },
     {
-        "enrichment": 22.0,
-        "tbr": 1.0109727632185217
+        "breeder_percent_in_breeder_plus_multiplier": 22.0,
+        "tbr": 1.7089686577105125
     },
     {
-        "enrichment": 23.0,
-        "tbr": 1.0101905177605766
+        "breeder_percent_in_breeder_plus_multiplier": 23.0,
+        "tbr": 1.7029439574537473
     },
     {
-        "enrichment": 24.0,
-        "tbr": 1.0096872496590956
+        "breeder_percent_in_breeder_plus_multiplier": 24.0,
+        "tbr": 1.6959572935572451
     },
     {
-        "enrichment": 25.0,
-        "tbr": 1.0085854315679927
+        "breeder_percent_in_breeder_plus_multiplier": 25.0,
+        "tbr": 1.6900544070367514
     },
     {
-        "enrichment": 26.0,
-        "tbr": 1.0080557361295874
+        "breeder_percent_in_breeder_plus_multiplier": 26.0,
+        "tbr": 1.6810316556101297
     },
     {
-        "enrichment": 27.0,
-        "tbr": 1.0075841492494333
+        "breeder_percent_in_breeder_plus_multiplier": 27.0,
+        "tbr": 1.672941145023221
     },
     {
-        "enrichment": 28.0,
-        "tbr": 1.0067812196890373
+        "breeder_percent_in_breeder_plus_multiplier": 28.0,
+        "tbr": 1.6645494654217203
     },
     {
-        "enrichment": 29.0,
-        "tbr": 1.0056315578178407
+        "breeder_percent_in_breeder_plus_multiplier": 29.0,
+        "tbr": 1.6569440598749419
     },
     {
-        "enrichment": 30.0,
-        "tbr": 1.0047270448607422
+        "breeder_percent_in_breeder_plus_multiplier": 30.0,
+        "tbr": 1.6508467552333692
     },
     {
-        "enrichment": 31.0,
-        "tbr": 1.0038232552574942
+        "breeder_percent_in_breeder_plus_multiplier": 31.0,
+        "tbr": 1.6370732067137685
     },
     {
-        "enrichment": 32.0,
-        "tbr": 1.0031601446666603
+        "breeder_percent_in_breeder_plus_multiplier": 32.0,
+        "tbr": 1.6297984769002116
     },
     {
-        "enrichment": 33.0,
-        "tbr": 0.999050204929963
+        "breeder_percent_in_breeder_plus_multiplier": 33.0,
+        "tbr": 1.6180291776257503
     },
     {
-        "enrichment": 34.0,
-        "tbr": 1.0015336675352107
+        "breeder_percent_in_breeder_plus_multiplier": 34.0,
+        "tbr": 1.6068041380339904
     },
     {
-        "enrichment": 35.0,
-        "tbr": 1.0006392801358426
+        "breeder_percent_in_breeder_plus_multiplier": 35.0,
+        "tbr": 1.5970355553049425
     },
     {
-        "enrichment": 36.0,
-        "tbr": 0.9995500696468569
+        "breeder_percent_in_breeder_plus_multiplier": 36.0,
+        "tbr": 1.5892930428256788
     },
     {
-        "enrichment": 37.0,
-        "tbr": 0.9987058199903974
+        "breeder_percent_in_breeder_plus_multiplier": 37.0,
+        "tbr": 1.5780475011453439
     },
     {
-        "enrichment": 38.0,
-        "tbr": 0.9983825984771938
+        "breeder_percent_in_breeder_plus_multiplier": 38.0,
+        "tbr": 1.569899634514002
     },
     {
-        "enrichment": 39.0,
-        "tbr": 0.9974214100002287
+        "breeder_percent_in_breeder_plus_multiplier": 39.0,
+        "tbr": 1.5622602226992406
     },
     {
-        "enrichment": 40.0,
-        "tbr": 0.9968501159842854
+        "breeder_percent_in_breeder_plus_multiplier": 40.0,
+        "tbr": 1.5517228305223691
     },
     {
-        "enrichment": 41.0,
-        "tbr": 0.995572713590916
+        "breeder_percent_in_breeder_plus_multiplier": 41.0,
+        "tbr": 1.5403802463257525
     },
     {
-        "enrichment": 42.0,
-        "tbr": 0.9948963161058315
+        "breeder_percent_in_breeder_plus_multiplier": 42.0,
+        "tbr": 1.527744648989686
     },
     {
-        "enrichment": 43.0,
-        "tbr": 0.9938043977531669
+        "breeder_percent_in_breeder_plus_multiplier": 43.0,
+        "tbr": 1.5184668714840084
     },
     {
-        "enrichment": 44.0,
-        "tbr": 0.9922134769449711
+        "breeder_percent_in_breeder_plus_multiplier": 44.0,
+        "tbr": 1.5095151852463802
     },
     {
-        "enrichment": 45.0,
-        "tbr": 0.9912903151077818
+        "breeder_percent_in_breeder_plus_multiplier": 45.0,
+        "tbr": 1.5017537613514162
     },
     {
-        "enrichment": 46.0,
-        "tbr": 0.9900046444931652
+        "breeder_percent_in_breeder_plus_multiplier": 46.0,
+        "tbr": 1.4914242145806214
     },
     {
-        "enrichment": 47.0,
-        "tbr": 0.9893605860031186
+        "breeder_percent_in_breeder_plus_multiplier": 47.0,
+        "tbr": 1.4848400689498742
     },
     {
-        "enrichment": 48.0,
-        "tbr": 0.9878734638022075
+        "breeder_percent_in_breeder_plus_multiplier": 48.0,
+        "tbr": 1.472879517828557
     },
     {
-        "enrichment": 49.0,
-        "tbr": 0.9869226033977325
+        "breeder_percent_in_breeder_plus_multiplier": 49.0,
+        "tbr": 1.4653043862415698
     },
     {
-        "enrichment": 50.0,
-        "tbr": 0.9856362260245278
+        "breeder_percent_in_breeder_plus_multiplier": 50.0,
+        "tbr": 1.4556388734192234
     },
     {
-        "enrichment": 51.0,
-        "tbr": 0.9845482047135762
+        "breeder_percent_in_breeder_plus_multiplier": 51.0,
+        "tbr": 1.4449328750966337
     },
     {
-        "enrichment": 52.0,
-        "tbr": 0.9833700491401572
+        "breeder_percent_in_breeder_plus_multiplier": 52.0,
+        "tbr": 1.4333730567742222
     },
     {
-        "enrichment": 53.0,
-        "tbr": 0.9825104269366938
+        "breeder_percent_in_breeder_plus_multiplier": 53.0,
+        "tbr": 1.4253414917100888
     },
     {
-        "enrichment": 54.0,
-        "tbr": 0.9815445205651983
+        "breeder_percent_in_breeder_plus_multiplier": 54.0,
+        "tbr": 1.4191188886861965
     },
     {
-        "enrichment": 55.0,
-        "tbr": 0.9805277259636432
+        "breeder_percent_in_breeder_plus_multiplier": 55.0,
+        "tbr": 1.4085310752886693
     },
     {
-        "enrichment": 56.0,
-        "tbr": 0.9795050949667694
+        "breeder_percent_in_breeder_plus_multiplier": 56.0,
+        "tbr": 1.3953937629029898
     },
     {
-        "enrichment": 57.0,
-        "tbr": 0.9786691500705114
+        "breeder_percent_in_breeder_plus_multiplier": 57.0,
+        "tbr": 1.3848346300852237
     },
     {
-        "enrichment": 58.0,
-        "tbr": 0.9775505263728461
+        "breeder_percent_in_breeder_plus_multiplier": 58.0,
+        "tbr": 1.3756935212159758
     },
     {
-        "enrichment": 59.0,
-        "tbr": 0.9766216981625169
+        "breeder_percent_in_breeder_plus_multiplier": 59.0,
+        "tbr": 1.3673782050912417
     },
     {
-        "enrichment": 60.0,
-        "tbr": 0.9753324257424612
+        "breeder_percent_in_breeder_plus_multiplier": 60.0,
+        "tbr": 1.3574649738972
     },
     {
-        "enrichment": 61.0,
-        "tbr": 0.9741286682809591
+        "breeder_percent_in_breeder_plus_multiplier": 61.0,
+        "tbr": 1.346247953125884
     },
     {
-        "enrichment": 62.0,
-        "tbr": 0.9731661576309849
+        "breeder_percent_in_breeder_plus_multiplier": 62.0,
+        "tbr": 1.3371121045543188
     },
     {
-        "enrichment": 63.0,
-        "tbr": 0.9719639112786476
+        "breeder_percent_in_breeder_plus_multiplier": 63.0,
+        "tbr": 1.327378853178525
     },
     {
-        "enrichment": 64.0,
-        "tbr": 0.970948118104835
+        "breeder_percent_in_breeder_plus_multiplier": 64.0,
+        "tbr": 1.316032695482841
     },
     {
-        "enrichment": 65.0,
-        "tbr": 0.9694802838119758
+        "breeder_percent_in_breeder_plus_multiplier": 65.0,
+        "tbr": 1.3064005433564225
     },
     {
-        "enrichment": 66.0,
-        "tbr": 0.9681224272929551
+        "breeder_percent_in_breeder_plus_multiplier": 66.0,
+        "tbr": 1.2977138700032487
     },
     {
-        "enrichment": 67.0,
-        "tbr": 0.9669097352855793
+        "breeder_percent_in_breeder_plus_multiplier": 67.0,
+        "tbr": 1.2880463557216453
     },
     {
-        "enrichment": 68.0,
-        "tbr": 0.9654539478911142
+        "breeder_percent_in_breeder_plus_multiplier": 68.0,
+        "tbr": 1.277412957276318
     },
     {
-        "enrichment": 69.0,
-        "tbr": 0.9639585189334565
+        "breeder_percent_in_breeder_plus_multiplier": 69.0,
+        "tbr": 1.2683725821345004
     },
     {
-        "enrichment": 70.0,
-        "tbr": 0.9628749078140999
+        "breeder_percent_in_breeder_plus_multiplier": 70.0,
+        "tbr": 1.25672846858465
     },
     {
-        "enrichment": 71.0,
-        "tbr": 0.9617336896488365
+        "breeder_percent_in_breeder_plus_multiplier": 71.0,
+        "tbr": 1.2475486098322939
     },
     {
-        "enrichment": 72.0,
-        "tbr": 0.9603835191584315
+        "breeder_percent_in_breeder_plus_multiplier": 72.0,
+        "tbr": 1.2373108256715595
     },
     {
-        "enrichment": 73.0,
-        "tbr": 0.9593384455550216
+        "breeder_percent_in_breeder_plus_multiplier": 73.0,
+        "tbr": 1.2276322406794469
     },
     {
-        "enrichment": 74.0,
-        "tbr": 0.9579787103429311
+        "breeder_percent_in_breeder_plus_multiplier": 74.0,
+        "tbr": 1.2202876279799697
     },
     {
-        "enrichment": 75.0,
-        "tbr": 0.9569333139330158
+        "breeder_percent_in_breeder_plus_multiplier": 75.0,
+        "tbr": 1.2101826845639168
     },
     {
-        "enrichment": 76.0,
-        "tbr": 0.9557148696271422
+        "breeder_percent_in_breeder_plus_multiplier": 76.0,
+        "tbr": 1.1970251519678137
     },
     {
-        "enrichment": 77.0,
-        "tbr": 0.9544482567087507
+        "breeder_percent_in_breeder_plus_multiplier": 77.0,
+        "tbr": 1.1891529670352854
     },
     {
-        "enrichment": 78.0,
-        "tbr": 0.9529217033957926
+        "breeder_percent_in_breeder_plus_multiplier": 78.0,
+        "tbr": 1.180394362556035
     },
     {
-        "enrichment": 79.0,
-        "tbr": 0.9516696563036636
+        "breeder_percent_in_breeder_plus_multiplier": 79.0,
+        "tbr": 1.1709432533036896
     },
     {
-        "enrichment": 80.0,
-        "tbr": 0.950323803999396
+        "breeder_percent_in_breeder_plus_multiplier": 80.0,
+        "tbr": 1.16394269523433
     },
     {
-        "enrichment": 81.0,
-        "tbr": 0.9489719584739268
+        "breeder_percent_in_breeder_plus_multiplier": 81.0,
+        "tbr": 1.1537162769064175
     },
     {
-        "enrichment": 82.0,
-        "tbr": 0.9478861637045515
+        "breeder_percent_in_breeder_plus_multiplier": 82.0,
+        "tbr": 1.143891162724854
     },
     {
-        "enrichment": 83.0,
-        "tbr": 0.946698461832062
+        "breeder_percent_in_breeder_plus_multiplier": 83.0,
+        "tbr": 1.132316905196076
     },
     {
-        "enrichment": 84.0,
-        "tbr": 0.9455634841595525
+        "breeder_percent_in_breeder_plus_multiplier": 84.0,
+        "tbr": 1.1209583988178928
     },
     {
-        "enrichment": 85.0,
-        "tbr": 0.9444694915937022
+        "breeder_percent_in_breeder_plus_multiplier": 85.0,
+        "tbr": 1.1134236256853682
     },
     {
-        "enrichment": 86.0,
-        "tbr": 0.9432524922367395
+        "breeder_percent_in_breeder_plus_multiplier": 86.0,
+        "tbr": 1.1029386711719618
     },
     {
-        "enrichment": 87.0,
-        "tbr": 0.9423365976523896
+        "breeder_percent_in_breeder_plus_multiplier": 87.0,
+        "tbr": 1.094549291323179
     },
     {
-        "enrichment": 88.0,
-        "tbr": 0.941180157246703
+        "breeder_percent_in_breeder_plus_multiplier": 88.0,
+        "tbr": 1.0841637082635107
     },
     {
-        "enrichment": 89.0,
-        "tbr": 0.9398243515709659
+        "breeder_percent_in_breeder_plus_multiplier": 89.0,
+        "tbr": 1.076544291696891
     },
     {
-        "enrichment": 90.0,
-        "tbr": 0.9386481500210511
+        "breeder_percent_in_breeder_plus_multiplier": 90.0,
+        "tbr": 1.0670617112987726
     },
     {
-        "enrichment": 91.0,
-        "tbr": 0.9374685309609354
+        "breeder_percent_in_breeder_plus_multiplier": 91.0,
+        "tbr": 1.0581700449977065
     },
     {
-        "enrichment": 92.0,
-        "tbr": 0.9362879259081107
+        "breeder_percent_in_breeder_plus_multiplier": 92.0,
+        "tbr": 1.04793614353228
     },
     {
-        "enrichment": 93.0,
-        "tbr": 0.935375041652796
+        "breeder_percent_in_breeder_plus_multiplier": 93.0,
+        "tbr": 1.0391040819101665
     },
     {
-        "enrichment": 94.0,
-        "tbr": 0.9340039670752482
+        "breeder_percent_in_breeder_plus_multiplier": 94.0,
+        "tbr": 1.0305030896285141
     },
     {
-        "enrichment": 95.0,
-        "tbr": 0.933117227265434
+        "breeder_percent_in_breeder_plus_multiplier": 95.0,
+        "tbr": 1.0218526973330366
     },
     {
-        "enrichment": 96.0,
-        "tbr": 0.9318582063556028
+        "breeder_percent_in_breeder_plus_multiplier": 96.0,
+        "tbr": 1.0142477600548783
     },
     {
-        "enrichment": 97.0,
-        "tbr": 0.9306271391621808
+        "breeder_percent_in_breeder_plus_multiplier": 97.0,
+        "tbr": 1.0045345359820343
     },
     {
-        "enrichment": 98.0,
-        "tbr": 0.9293892309885028
+        "breeder_percent_in_breeder_plus_multiplier": 98.0,
+        "tbr": 0.993940091477477
     },
     {
-        "enrichment": 99.0,
-        "tbr": 0.9280290228838859
+        "breeder_percent_in_breeder_plus_multiplier": 99.0,
+        "tbr": 0.9837719360883938
     },
     {
-        "enrichment": 100.0,
-        "tbr": 0.9267782123973004
+        "breeder_percent_in_breeder_plus_multiplier": 100.0,
+        "tbr": 0.974341284014369
     }
 ]
