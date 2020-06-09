@@ -12,11 +12,11 @@ from parametric_plasma_source import Plasma
 
 # MATERIALS using the neutronics material maker
 
-breeder_material = Material(material_name='Li4SiO4', enrichment=90).neutronics_material
+breeder_material = Material(material_name='Li4SiO4', enrichment=90).openmc_material
 
-copper = Material(material_name="copper").neutronics_material
+copper = Material(material_name="copper").openmc_material
 
-eurofer = Material(material_name='eurofer').neutronics_material
+eurofer = Material(material_name='eurofer').openmc_material
 
 mats = openmc.Materials([breeder_material, eurofer, copper])
 
