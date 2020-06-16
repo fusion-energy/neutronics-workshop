@@ -58,17 +58,11 @@ tallies = openmc.Tallies()
 
 neutron_particle_filter = openmc.ParticleFilter(['neutron'])
 cell_filter = openmc.CellFilter(breeder_blanket_cell)
-cell_filter_fw = openmc.CellFilter(first_wall_cell)
 energy_bins = openmc.mgxs.GROUP_STRUCTURES['VITAMIN-J-175']
 energy_filter = openmc.EnergyFilter(energy_bins)
 
-spectra_tally = openmc.Tally(3, name='breeder_blanket_spectra')
+spectra_tally = openmc.Tally(name='breeder_blanket_spectra')
 spectra_tally.filters = [cell_filter, neutron_particle_filter, energy_filter]
-spectra_tally.scores = ['flux']
-tallies.append(spectra_tally)
-
-spectra_tally = openmc.Tally(4, name='first_wall_spectra')
-spectra_tally.filters = [cell_filter_fw, neutron_particle_filter, energy_filter]
 spectra_tally.scores = ['flux']
 tallies.append(spectra_tally)
 
