@@ -35,14 +35,10 @@ outer_surface = openmc.Sphere(r=600, boundary_type='vacuum')
 # cells
 inner_vessel_cell = openmc.Cell(region=-vessel_surface)
 
-first_wall_cell = openmc.Cell(region=-outer_surface & +vessel_surface)
-first_wall_cell.fill = eurofer
+blanket_cell = openmc.Cell(region=-outer_surface & +vessel_surface)
+blanket_cell.fill = eurofer
 
-breeder_blanket_region = +first_wall_outer_surface & -breeder_blanket_outer_surface
-breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region)
-breeder_blanket_cell.fill = breeder_material
-
-universe = openmc.Universe(cells=[inner_vessel_cell,first_wall_cell, breeder_blanket_cell])
+universe = openmc.Universe(cells=[inner_vessel_cell,blanket_cell])
 geom = openmc.Geometry(universe)
 
 
