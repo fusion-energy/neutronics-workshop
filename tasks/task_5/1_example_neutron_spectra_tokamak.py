@@ -42,9 +42,8 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-sett.batches = 2
-sett.inactive = 0
-sett.particles = 7000
+sett.batches = 30
+sett.particles = 100
 sett.run_mode = 'fixed source'
 
 # Create a DT point source
