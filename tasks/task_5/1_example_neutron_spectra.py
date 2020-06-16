@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 
 # MATERIALS
 
-eurofer = openmc.Material(name='EUROFER97')
+eurofer = openmc.Material(name='eurofer')
 eurofer.add_element('Fe', 89.067, percent_type='wo')
 eurofer.add_element('C', 0.11, percent_type='wo')
 eurofer.add_element('Mn', 0.4, percent_type='wo')
@@ -57,11 +57,12 @@ sett.source = source
 tallies = openmc.Tallies()
 
 neutron_particle_filter = openmc.ParticleFilter(['neutron'])
-cell_filter = openmc.CellFilter(breeder_blanket_cell)
+cell_filter = openmc.CellFilter(blanket_cell) # detects particles across a cell / volume
+# surface_filter = openmc.SurfaceFilter(outer_surface) # detects particles across a surface
 energy_bins = openmc.mgxs.GROUP_STRUCTURES['VITAMIN-J-175']
 energy_filter = openmc.EnergyFilter(energy_bins)
 
-spectra_tally = openmc.Tally(name='breeder_blanket_spectra')
+spectra_tally = openmc.Tally(name='blanket_cell_neutron_spectra')
 spectra_tally.filters = [cell_filter, neutron_particle_filter, energy_filter]
 spectra_tally.scores = ['flux']
 tallies.append(spectra_tally)
@@ -75,7 +76,7 @@ sp_filename = model.run()
 sp = openmc.StatePoint(sp_filename)
 
 
-spectra_tally = sp.get_tally(name='breeder_blanket_spectra')  # add another tally for first_wall_spectra
+spectra_tally = sp.get_tally(name='blanket_cell_neutron_spectra')  # add another tally for first_wall_spectra
 df = spectra_tally.get_pandas_dataframe()
 spectra_tally_result = df['mean']
 
