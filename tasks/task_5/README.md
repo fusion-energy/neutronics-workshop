@@ -17,7 +17,7 @@ In this task the neutron spectra at two different locations will be measured and
 
 - Look for the Maxwell distribution of energys in the thermal energy range. This is where neutrons are in thermodynamic equilibrium with the material they are moving through. 
 
-- Currently the neutron flux spectra is being found for the blanket cell / volume. Try Changing this to the neutron current spectra on the back surface of the model. The code is contained in the scripts but needs uncommenting. Why do the two spectra differ and why has the standard deviation on the results increased so much?
+- Currently the neutron flux spectra is being found for the blanket cell / volume. Try Changing this to the neutron current spectra on the back surface of the model. The code is contained in the scripts but needs uncommenting. Why do the two spectra differ and why has the standard deviation on the results increased so much? Try doubling the number of batches and see if this reduces the standard deviation.
 
 The task now starts to look at secondary photons created from neutron interactions. These photons are often created in neutron scattering interactions where the nucleus is left excited and de-excites via photon production. To run OpenMC in coupled neutron, photon mode an additional setting is required to enable photon transport (which is disabled by default).
 
@@ -33,3 +33,4 @@ Why do you think the photons generated are of lower energy?
 
 - Plotting neutron / photon spectra for cells and surfaces and observing the changing neutron energy at different locations in the reactor.
 - Performing coupled neutron photon simulations where photons are created from neutron interactions.
+- Understand that longer simulations are need to improve results in some cases.
