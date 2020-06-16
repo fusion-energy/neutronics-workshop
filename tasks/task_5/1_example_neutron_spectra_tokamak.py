@@ -18,7 +18,7 @@ eurofer.add_element('N', 0.003, percent_type='wo')
 eurofer.add_element('V', 0.2, percent_type='wo')
 eurofer.set_density('g/cm3', 7.75)
 
-mats = openmc.Materials([breeder_material, eurofer])
+mats = openmc.Materials([eurofer])
 
 
 # GEOMETRY
