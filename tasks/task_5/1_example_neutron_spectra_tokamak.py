@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 breeder_material = openmc.Material(name="PbLi")  # Pb84.2Li15.8 with natural enrichment of Li6
 breeder_material.add_element('Pb', 84.2, percent_type='ao')
 breeder_material.add_element('Li', 15.8, percent_type='ao')
-breeder_material.set_density('atom/b-cm', 3.2720171e-2)  # around 11 g/cm3
+breeder_material.set_density('g/cm3', 11)
 
 eurofer = openmc.Material(name='EUROFER97')
 eurofer.set_density('g/cm3', 7.75)
