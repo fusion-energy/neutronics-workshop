@@ -13,7 +13,6 @@ breeder_material.add_element('Li', 15.8, percent_type='ao')
 breeder_material.set_density('g/cm3', 11)
 
 eurofer = openmc.Material(name='EUROFER97')
-eurofer.set_density('g/cm3', 7.75)
 eurofer.add_element('Fe', 89.067, percent_type='wo')
 eurofer.add_element('C', 0.11, percent_type='wo')
 eurofer.add_element('Mn', 0.4, percent_type='wo')
@@ -22,6 +21,7 @@ eurofer.add_element('Ta', 0.12, percent_type='wo')
 eurofer.add_element('W', 1.1, percent_type='wo')
 eurofer.add_element('N', 0.003, percent_type='wo')
 eurofer.add_element('V', 0.2, percent_type='wo')
+eurofer.set_density('g/cm3', 7.75)
 
 mats = openmc.Materials([breeder_material, eurofer])
 
