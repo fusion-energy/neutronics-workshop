@@ -29,9 +29,8 @@ mats = openmc.Materials([breeder_material, eurofer])
 # GEOMETRY
 
 # surfaces
-vessel_inner = openmc.Sphere(r=500)
-first_wall_outer_surface = openmc.Sphere(r=510)
-breeder_blanket_outer_surface = openmc.Sphere(r=610, boundary_type='vacuum')
+vessel_surface = openmc.Sphere(r=500)
+outer_surface = openmc.Sphere(r=600, boundary_type='vacuum')
 
 # cells
 
