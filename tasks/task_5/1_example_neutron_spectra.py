@@ -58,7 +58,7 @@ sett.source = source
 neutron_particle_filter = openmc.ParticleFilter(['neutron'])
 cell_filter = openmc.CellFilter(blanket_cell) # detects particles across a cell / volume
 # surface_filter = openmc.SurfaceFilter(outer_surface) # detects particles across a surface
-energy_bins = openmc.mgxs.GROUP_STRUCTURES['VITAMIN-J-175']
+energy_bins = openmc.mgxs.GROUP_STRUCTURES['VITAMIN-J-175'] # other energy group structures are avaiable https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py
 energy_filter = openmc.EnergyFilter(energy_bins)
 spectra_tally = openmc.Tally(name='blanket_cell_neutron_spectra')
 spectra_tally.filters = [cell_filter, neutron_particle_filter, energy_filter]
@@ -68,15 +68,16 @@ tallies = openmc.Tallies()
 tallies.append(spectra_tally)
 
 
-# Run OpenMC!
+# combine all the required parts to make a model
 model = openmc.model.Model(geom, mats, sett, tallies)
-sp_filename = model.run()
+# Run OpenMC!
+results_filename = model.run()
 
 # open the results file
-sp = openmc.StatePoint(sp_filename)
+results = openmc.StatePoint(results_filename)
 
 
-spectra_tally = sp.get_tally(name='blanket_cell_neutron_spectra')  # add another tally for first_wall_spectra
+spectra_tally = results.get_tally(name='blanket_cell_neutron_spectra')  # add another tally for first_wall_spectra
 df = spectra_tally.get_pandas_dataframe()
 spectra_tally_result = df['mean']
 
