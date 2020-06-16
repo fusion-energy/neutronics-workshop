@@ -7,11 +7,6 @@ import plotly.graph_objects as go
 
 # MATERIALS
 
-breeder_material = openmc.Material(name="PbLi")  # Pb84.2Li15.8 with natural enrichment of Li6
-breeder_material.add_element('Pb', 84.2, percent_type='ao')
-breeder_material.add_element('Li', 15.8, percent_type='ao')
-breeder_material.set_density('g/cm3', 11)
-
 eurofer = openmc.Material(name='EUROFER97')
 eurofer.add_element('Fe', 89.067, percent_type='wo')
 eurofer.add_element('C', 0.11, percent_type='wo')
@@ -34,6 +29,7 @@ outer_surface = openmc.Sphere(r=600, boundary_type='vacuum')
 
 # cells
 inner_vessel_cell = openmc.Cell(region=-vessel_surface)
+# this is filled with a void / vauum by default
 
 blanket_cell = openmc.Cell(region=-outer_surface & +vessel_surface)
 blanket_cell.fill = eurofer
