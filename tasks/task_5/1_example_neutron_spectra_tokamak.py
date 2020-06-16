@@ -42,13 +42,13 @@ geom = openmc.Geometry(universe)
 
 # Instantiate a Settings object
 sett = openmc.Settings()
-sett.batches = 30
+sett.batches = 40
 sett.particles = 100
 sett.run_mode = 'fixed source'
 
 # Create a DT point source
 source = openmc.Source()
-source.space = openmc.stats.Point((150, 0, 0))
+source.space = openmc.stats.Point((0, 0, 0))
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1])
 sett.source = source
