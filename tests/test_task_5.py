@@ -24,9 +24,9 @@ class test_task_5(unittest.TestCase):
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_5'))
-        output_filename = 'tokamak_spectra.html'
+        output_filename = 'blanket_neutron_spectra.html'
         os.system('rm '+output_filename)
-        os.system('python 1_example_neutron_spectra_tokamak.py')
+        os.system('python 1_example_neutron_spectra.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
 
@@ -34,8 +34,8 @@ class test_task_5(unittest.TestCase):
 
         os.chdir(Path(cwd))
         os.chdir(Path('tasks/task_5'))
-        output_filename = 'tokamak_photon_spectra.html'
+        output_filename = 'blanket_photon_spectra.html'
         os.system('rm '+output_filename)
-        os.system('python 2_example_photon_spectra_tokamak.py')
+        os.system('python 2_example_photon_spectra.py')
         assert Path(output_filename).exists() == True
         os.system('rm '+output_filename)
