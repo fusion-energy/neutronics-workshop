@@ -84,26 +84,12 @@ spectra_tally_result = df['mean']
 
 fig = go.Figure()
 
-
 fig.add_trace(go.Scatter(x=energy_bins,
                          y=spectra_tally_result,
                          name='breeder_blanket_spectra',
                          line=dict(shape='hv')
                         )
               )
-
-# this will need to be uncommented to add the first wall spectra to the plot
-# spectra_tally = sp.get_tally(name='first_wall_spectra') # add another tally for first_wall_spectra
-# df = spectra_tally.get_pandas_dataframe()
-# spectra_tally_result = df['mean']
-
-# fig.add_trace(go.Scatter(x=energy_bins,
-#                          y=spectra_tally_result,
-#                          name='first_wall_spectra',
-#                          line=dict(shape='hv')
-#                      )
-#               )
-
 
 fig.update_layout(
       title='Neutron energy spectra',
