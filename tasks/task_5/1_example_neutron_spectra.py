@@ -53,18 +53,17 @@ source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1])
 sett.source = source
 
-# setup the tallies
-tallies = openmc.Tallies()
+# setup the  filters for the tallies
 
 neutron_particle_filter = openmc.ParticleFilter(['neutron'])
 cell_filter = openmc.CellFilter(blanket_cell) # detects particles across a cell / volume
 # surface_filter = openmc.SurfaceFilter(outer_surface) # detects particles across a surface
-energy_bins = openmc.mgxs.GROUP_STRUCTURES['VITAMIN-J-175']
-energy_filter = openmc.EnergyFilter(energy_bins)
-
+energy_filter = openmc.EnergyFilter(openmc.mgxs.GROUP_STRUCTURES['VITAMIN-J-175'])
 spectra_tally = openmc.Tally(name='blanket_cell_neutron_spectra')
 spectra_tally.filters = [cell_filter, neutron_particle_filter, energy_filter]
 spectra_tally.scores = ['flux']
+
+tallies = openmc.Tallies()
 tallies.append(spectra_tally)
 
 
