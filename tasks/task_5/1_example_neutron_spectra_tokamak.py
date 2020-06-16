@@ -33,8 +33,7 @@ vessel_surface = openmc.Sphere(r=500)
 outer_surface = openmc.Sphere(r=600, boundary_type='vacuum')
 
 # cells
-
-inner_vessel_region = -vessel_inner
+inner_vessel_region = -vessel_surface
 inner_vessel_cell = openmc.Cell(region=inner_vessel_region)
 
 first_wall_region = -first_wall_outer_surface & +vessel_inner
