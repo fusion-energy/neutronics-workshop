@@ -1,5 +1,5 @@
 # build with the following command
-# sudo docker build -f Dockerfile_workshop_jupyter -t openmcworkshop/workshop_jupyter . --no-cache
+# sudo docker build -t openmcworkshop/workshop_jupyter . --no-cache
 # docker run -p 8888:8888 openmcworkshop/workshop_jupyter
 
 
