@@ -135,9 +135,9 @@ RUN pip install adaptive
 ENV OPENMC_CROSS_SECTIONS=/nndc-b7.1-hdf5/cross_sections.xml
 USER $NB_USER
 RUN git clone https://github.com/ukaea/openmc_workshop
-RUN cd openmc_workshop && git checkout jupyter_docker4
-
+RUN cd openmc_workshop && git checkout develop
 
 USER root
 RUN ln -s /home/jovyan/nndc-b7.1-hdf5 /nndc-b7.1-hdf5
 
+WORKDIR openmc_workshop
