@@ -108,7 +108,7 @@ fig.add_trace(go.Scatter(x=energy_bins,
                         )
               )
 
-fig.update_layout(title='Neutron energy spectra',
+fig.update_layout(title='Photon energy spectra',
                   xaxis={'title': 'Energy (eV)',
                          'type': 'log'},
                   yaxis={'title': 'Photon per cm2 per source neutron',
