@@ -92,9 +92,9 @@ USER root
 RUN cd /opt &&  git clone https://github.com/openmc-dev/openmc.git
 RUN cd /opt/openmc && git checkout develop
 RUN cd /opt/openmc && mkdir build
-RUN cd /opt/openmc/build cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR -DHDF5_PREFER_PARALLEL=OFF ..
-RUN cd /opt/openmc/build make -j8 
-RUN cd /opt/openmc/build make install 
+RUN cd /opt/openmc/build && cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR -DHDF5_PREFER_PARALLEL=OFF ..
+RUN cd /opt/openmc/build && make -j8 
+RUN cd /opt/openmc/build && make install 
 
 RUN cd /opt/openmc/ && python setup.py install
 
