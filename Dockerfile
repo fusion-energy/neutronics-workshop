@@ -20,20 +20,12 @@ RUN apt-get --yes install liblapack-dev
 
 # needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
 RUN apt-get --yes install libnetcdf-dev
-RUN apt-get --yes install libnetcdf13
+# RUN apt-get --yes install libnetcdf13
 
 
 RUN apt-get -y install sudo #  needed as the install NJOY script has a sudo make install command
 RUN apt-get -y install git
 
-# dependancies for the occ_faceter
-RUN apt-get --yes update && apt-get --yes upgrade
-RUN apt-get --yes install libcgal-dev
-RUN apt-get --yes install software-properties-common
-RUN add-apt-repository ppa:freecad-maintainers/freecad-stable
-RUN apt-get --yes install libocc*dev
-RUN apt-get --yes install occ*
-RUN apt-get --yes install libtbb-dev
 
 # dependancies used in the workshop
 RUN apt-get --yes install imagemagick
@@ -129,7 +121,8 @@ RUN pip install scikit-optimize
 RUN pip install inference-tools
 RUN pip install neutronics_material_maker
 RUN pip install adaptive
-
+RUN pip install vtk
+RUN pip install itkwidgets
 
 
 ENV OPENMC_CROSS_SECTIONS=/nndc-b7.1-hdf5/cross_sections.xml
