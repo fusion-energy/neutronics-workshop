@@ -14,9 +14,9 @@ The majority of the workshop can also be completed using Binder notebooks or Goo
 
 ### Ubuntu (Recommended)
 
-1. Install Docker CE for [linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), including the part where you enable docker use as a non-root user.
+1. Install Docker CE for [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Mac OS](https://store.docker.com/editions/community/docker-ce-desktop-mac), or [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows), including the part where you enable docker use as a non-root user.
 
-2. Pull the docker image from the store by typing the following command in a terminal window.
+2. Pull the docker image from the store by typing the following command in a terminal window, or Windows user might prefer PowerShell.
 
     ```docker pull openmcworkshop/workshop_jupyter```
 
