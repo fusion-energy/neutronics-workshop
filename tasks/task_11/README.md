@@ -104,14 +104,14 @@ Examine the script to understand how the Material class is used to iteratively c
 (Note: A density parameter study like this is not possible using in-built OpenMC functions as material densities must be specified explicitly.)
 
 
-### Creating multimaterials using the 'neutronics_material_maker' tool
+### Creating mixed materials
 
-The neutronics_material_maker also allows materials to be combined to create homogenised MultiMaterial objects. Like Material objects, MultiMaterial objects can be converted to neutronics materials for use in OpenMC.
+The are several ways of creating homogenious mixtures of materials to use in your neutronics simulations. 
 
-The MultiMaterial class is based on the *mix_materials* function in OpenMC, and accepts arguments of:
+Using the neutronics_material_maker.MultiMaterial class is a wrapped version of the native OpenMC *mix_materials* function in that allows neutronics_material_maker.Material objects to be mixed, and accepts arguments of:
 
-- material_name
-- materials : a list of Material objects to be combined
+- material_tag
+- materials : a list of neutronics_material_maker.Material objects or OpenMC.Material objects to be combined
 - fracs : a list of conbination fractions for each material object
 - percent_type : combination fraction type ('ao', 'wo' or 'vo') 
 
@@ -119,16 +119,14 @@ Take a look at the next example script.
 
 ```5_example_materials_mixed.py```
 
-The script shows how the MultiMaterial class can be used to construct a homogeneous material of helium and Li4SiO4. It also shows how the *mix_materials* function can be used to construct a homogeneous material of tungsten carbide and water.
+The script shows how a homgenised material can be used to construct from seperate material objects for tungsten carbide (WC), water and Li4SiO4.
 
 - Take some time to read the script and understand the MultiMaterial and mix_materials functions.
 
-The main difference between the two functions is that the MultiMaterial function accepts a list of Material objects as the 'materials' argument, whereas the mix_materials function accepts a list of neutronics materials.
+- Run each of the 4 examples in the script and see how similar materials can be obtained in a varity of ways.
 
-- Run the script to see how changing the fraction of each material in a two-material multimaterial changes its density. The script should produce a graph similar to below.
+### Learning Outcomes
 
-<p align="center"><img src="images/density_vs_volume_fraction.png" height="450"></p>
+- You are able to make materials from an original specification that could be isotope fractions, element fractions or materials fractions for a mixed material.
 
-As expected, when the combination fraction of one material is zero, the multimaterial density is equal to the density of the other material. When the combination fraction of one material is one, the multimaterial density is equal to the density of that material.
-
-
+- Understand that density varies for materials as a function of pressure, temperture, enrichment and mixture fraction.
