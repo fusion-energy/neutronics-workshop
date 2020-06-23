@@ -76,7 +76,8 @@ def save_output_files():
 with open('manifest.json') as f:
     geometry_details = byteify(json.load(f))
 
-geometry_details = find_number_of_volumes_in_each_step_file(geometry_details, '/home/shimwell/openmc_workshop/tasks/task_12/')
+
+geometry_details = find_number_of_volumes_in_each_step_file(geometry_details, str(os.path.abspath('.')))
 
 tag_geometry_with_mats(geometry_details)
 
