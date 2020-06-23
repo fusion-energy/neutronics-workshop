@@ -77,7 +77,7 @@ input_locations = []
 for entry in data:
     if 'mesh' in entry.keys():
         input_locations.append(entry)
-geometry_details = find_number_of_volumes_in_each_step_file(input_locations, '/home/shimwell/openmc_workshop/tasks/task_12/')
+geometry_details = find_number_of_volumes_in_each_step_file(input_locations, str(os.path.abspath('.')))
 
 imprint_and_merge_geometry()
 
