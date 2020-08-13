@@ -60,3 +60,6 @@ Try running the script using the command ```python example_CAD_simulation.py```.
 
 - CAD geometry can be used to build complex models with splines for use in neutronics simulations.
 - CAD based neutronics has a number of advantages over CSG based neutronics such as implicit voids.
+
+
+- [Task 11 - Options for making materials - 20 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_11)
