@@ -13,7 +13,7 @@ In this task the neutron spectra at two different locations will be measured and
 
 - Try running the example script which plot the neutron spectra within the breeder blanket. ```python 1_example_neutron_spectra.py```, the plot should look similar to the plot shown below.
 
-<p align="center"><img src="images/1_example_neutron_spectra.png" height="500"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138036-5034cc80-dd6e-11ea-8639-a280d4da3d2c.png" height="500"></p>
 
 - Look for the Maxwell distribution of energys in the thermal energy range. This is where neutrons are in thermodynamic equilibrium with the material they are moving through. 
 
@@ -27,7 +27,7 @@ The task now starts to look at secondary photons created from neutron interactio
 
 Why do you think the photons generated are of lower energy?
 
-<p align="center"><img src="images/2_example_photon_spectra.png" height="500"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138045-51fe9000-dd6e-11ea-8dfc-56e8240fc9fe.png" height="500"></p>
 
 **Learning Outcomes**
 

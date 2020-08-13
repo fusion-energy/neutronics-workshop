@@ -26,7 +26,7 @@ Run the script using the command ```python3 1_simulate_with_random_sample.py```,
 
 The task folder also contains a script called ```plot_sampling_coordinates.py``` which plots TBR as a function of breeder to multiplier ratio and enrichment for each sampling method. Run this script to plot the results of the random simulations. This should look similar to the plot below.
 
-<p align="center"><img src="images/plot_random_sampling.png" height="400"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138378-d3eeb900-dd6e-11ea-9d00-4615d5050c18.png" height="400"></p>
 
 As shown, the simulations have been performed randomly across the parameter space of enrichment and breeder to multiplier ratio.
 
@@ -40,13 +40,13 @@ Overall, random sampling is a simple technique for performing unbiased simulatio
 
 Another sampling technique is 'grid sampling', where samples are taken at regular grid intervals across the parameter space, as shown below. This is an example of 'biased sampling' as the samples are performed in order according to the grid. An example of this is shown below.
 
-<p align="center"><img src="images/grid_sampling.gif" height="250"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138394-d8b36d00-dd6e-11ea-8e0f-04df9cb06b36.gif" height="250"></p>
 
 Open the ```2_simulate_with_grid_sample.py``` script and try to understand how a grid of enrichment and breeder to multiplier ratios values defines the input parameters for the simulations; also note the order in which these simulations are performed.
 
 Run the ```2_simulate_with_grid_sample.py``` script with the -n flag to specify the number of simulations and plot the results using the ```plot_sampling_coordinates.py``` script. Two graphs should be plotted showing the results for both random and grid simulations. Compare the two sampling methods.
 
-<p align="center"><img src="images/plot_grid_sampling.png" height="400"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138402-dc46f400-dd6e-11ea-8af4-8cde0d7969c5.png" height="400"></p>
 
 As shown, grid sampling has a better spatial distribution of sample points than random sampling. 
 
@@ -65,7 +65,7 @@ Open the ```3_simulate_with_halton_sample.py``` script and try to understand how
 
 Run this script and plot the results. The graph produced should look similar to the plot below.
 
-<p align="center"><img src="images/plot_halton_sampling.png" height="400"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138407-dd782100-dd6e-11ea-905b-0b1617b48d3a.png" height="400"></p>
 
 As you can see, the sample points have a much better spatial distribution across the parameter space than random sampling.
 
@@ -82,7 +82,7 @@ Open the ```4_simulate_with_adaptive_sample.py``` script and try to understand h
 
 Run this script and plot the results. The graph produced should look similar to the plot below.
 
-<p align="center"><img src="images/plot_adaptive_sampling.png" height="400"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138409-dea94e00-dd6e-11ea-8424-bc4e46855eae.png" height="400"></p>
 
 As mentioned, the most important parts of a data trend are (usually) the regions where the data is changing as a function of parameter values. In our example, these are the regions where TBR is changing as a function of enrichment and breeder percentage. I.e. we do not want to excessively sample regions where TBR changes negligibly as a function of enrichment and breeder percentage.
 As shown, the parameter space is densely sampled in regions where TBR is changing most rapidly, and sparsely sampled in regions where TBR is changing negligibly.
