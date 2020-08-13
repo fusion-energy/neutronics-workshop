@@ -35,5 +35,4 @@ Why do you think the photons generated are of lower energy?
 - Performing coupled neutron photon simulations where photons are created from neutron interactions.
 - Understand that longer simulations are need to improve results in some cases.
 
-
-- [Task 6 - Finding the tritium production - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_6)
+**Next task:** [Task 6 - Finding the tritium production - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_6)

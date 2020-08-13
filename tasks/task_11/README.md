@@ -131,5 +131,4 @@ The script shows how a homgenised material can be used to construct from seperat
 
 - Understand that density varies for materials as a function of pressure, temperture, enrichment and mixture fraction.
 
-
-- [Task 12 - Unstructured mesh on CAD geometry- 20 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_12)
+**Next task:** [Task 12 - Unstructured mesh on CAD geometry- 20 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_12)

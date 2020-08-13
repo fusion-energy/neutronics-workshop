@@ -40,5 +40,4 @@ The script should produce a plot of TBR as a function of Li6 enrichment, as show
 - Simple methods of increasing the TBR using lithium enrichment.
 - Improving the uncertainty on the result is possible with more computation.
 
-
-- [Task 7 - Finding the neutron damage and stochastic volume calculation - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_7)
+**Next task:** [Task 7 - Finding the neutron damage and stochastic volume calculation - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_7)

@@ -56,5 +56,4 @@ OpenMC has a plotter which was first introduced in task 2 to view geometry can a
 - How mesh tallies can be used in neutronics simulations to measure a variety of different reactions such as neutron absorption, tritium production and flux. 
 - How neutrons are dissipated around the reactor.
 
-
-- [Task 5 - Finding the neutron and photon spectra - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_5)
+**Next task:** [Task 5 - Finding the neutron and photon spectra - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_5)

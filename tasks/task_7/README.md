@@ -33,5 +33,4 @@ The MT 444 / damage energy tally is in units of eV per source particle. Therefor
 - Perform post tally calculations to convert the neutronics numbers into something more useful
 - Gain an appreciation of how neutronics results can influence the design (e.g. radius of reactor must be increased to prevent critical material damage)
 
-
-- [Task 8 - Survey breeder blanket designs for tritium production - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_8)
+**Next task:** [Task 8 - Survey breeder blanket designs for tritium production - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_8)
