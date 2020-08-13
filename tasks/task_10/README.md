@@ -28,7 +28,7 @@ The geometry can be viewed in FreeCAD. Open up FreeCAD by typing ```freecad``` i
 Once loaded select file open and select CAD files (blanket.stp, firstwall.stp and poloidal_magnets.stp, centre_column.stp). This should show the 3D model within the FreeCAD viewer. Watch the video tutorial below to learn how to do this.
 
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=pyZXQg0AsJ4
-" target="_blank"><img src="images/task10thumbnail.png" height="400" /></a></p>
+" target="_blank"><img src="https://user-images.githubusercontent.com/56687624/90138471-f7196880-dd6e-11ea-8a63-c4766ccfe0ad.png" height="400" /></a></p>
 
 These CAD stp files can be converted into a neutronics geometry using the terminal commands. Open the run_all.sh to see these commands.
 

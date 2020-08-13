@@ -14,7 +14,10 @@ OpenMC uses 'tallies' to measure parameters such as particle flux, absorption an
 
 You should see plots of the simple sphere geometry and the isotropic point source, as shown below. The colour map shows the neutron flux, as tallied by the mesh, which is seen to reduce as one moves away from the point source.
 
-<img src="images/universe_point.png" height="300"> <img src="images/flux_point.png" height="300">
+<p align="center">
+<img src="https://user-images.githubusercontent.com/56687624/90137942-36938500-dd6e-11ea-8b51-5593c522aa9f.png" height="300">
+<img src="https://user-images.githubusercontent.com/56687624/90137945-37c4b200-dd6e-11ea-8393-c25f4c1f1b93.png" height="300">
+</p>
 
 <p align="center"><i>Left = Geometry Plot, Right = Flux Plot</i></p>
 
@@ -27,7 +30,7 @@ The model still has a point source but now it is located at x=150 y=150 z=0. The
 - Try running the script with the following command ```python 2_example_neutron_flux_tokamak.py``` and use the log scale within Paraview to show the tritium production more clearly. Watch the video below to learn how to do this.
 
 <p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=be3G3ceQSWU
-" target="_blank"><img src="images/task4thumbnail.png" height="400" /></a></p>
+" target="_blank"><img src="https://user-images.githubusercontent.com/56687624/90137972-3dba9300-dd6e-11ea-9663-108518bc7033.png" height="400" /></a></p>
 
 Further instructions can also be found in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/16/1).
 
@@ -35,7 +38,10 @@ Further instructions can also be found in the [presentation](https://slides.com/
 
 This should produce a 3D view of the mesh tally similar to the plots shown below.
 
-<p align="center"><img src="images/tritium_production_tokamak.png" height="300">   <img src="images/absorption_on_mesh.png" height="300"></p>
+<p align="center">
+<img src="https://user-images.githubusercontent.com/56687624/90137982-3f845680-dd6e-11ea-8074-6c1e8e946dda.png" height="300">
+<img src="https://user-images.githubusercontent.com/56687624/90137986-414e1a00-dd6e-11ea-9551-15b84ba9b63e.png" height="300">
+</p>
 
 <p align="center"><i>Left = Tritium production, Right = Neutron absorption</i></p>
 
