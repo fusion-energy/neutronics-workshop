@@ -76,3 +76,6 @@ The plot produced should look similar to the plot shown below. As you can see li
 **Bonus material**
 
 Now that you have the ability to access cross section data using OpenMC you can reproduce DT, DD or other fusion fuel cross section plots. The cross sections are Doppler broadened to take into account the motion of the incident and targets projectile. [Here](https://scipython.com/blog/plotting-nuclear-fusion-cross-sections/) is a seperate tutorial on that topic which guides you through the process (perhaps skip the ENDF nuclear data part and use OpenMC data readers instead).
+
+
+- [Task 2 - Building and visualizing the model geometry - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_2)

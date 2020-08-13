@@ -99,3 +99,6 @@ Possible Learning Outcomes:
 - The optimal breeder percent in breeder plus multiplier volume changes for different amounts of lithium enrichment.
 - Increasing the lthium 6 enrichment tends to increase the TBR.
 - Random slection of parameters is not an efficient way of covering the search space or finding the optimal.
+
+
+- [Task 9 - Optimize a breeder blanket for tritium production - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_9)
