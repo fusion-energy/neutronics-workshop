@@ -130,3 +130,5 @@ The script shows how a homgenised material can be used to construct from seperat
 - You are able to make materials from an original specification that could be isotope fractions, element fractions or materials fractions for a mixed material.
 
 - Understand that density varies for materials as a function of pressure, temperture, enrichment and mixture fraction.
+
+**Next task:** [Task 12 - Unstructured mesh on CAD geometry- 20 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_12)

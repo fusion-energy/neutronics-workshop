@@ -69,3 +69,5 @@ The next example script defines a model of a hollow sphere made of two materials
 
 - How to access information on the particle positions, energy and direction from the simulation.
 - How to visualize particle tracks through the geometry.
+
+**Next task:** [Task 4 - Finding neutron interactions with mesh tallies - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_4)
