@@ -44,3 +44,5 @@ There are currently two graphs to view these results, try both and let me know w
 Introduction to a methods of optimising a neutronics results in 1d and 2d.
 Appreciation that for high dimensional space approaches to reduce the amount of sampling are needed.
 Understand that there are several factors that can be changed to increase the TBR
+
+**Next task:** [Task 10 - Using CAD geometry - 30 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_10)

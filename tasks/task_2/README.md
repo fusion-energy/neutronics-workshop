@@ -75,3 +75,5 @@ OpenMC has a plotter which can also be used for viewing 3D geometry. This has be
 - Construction of simple Constructive Solid Geometry (CSG) geometry.
 - Visualisation of models using 2D slices.
 - Visualisation of models using 3D cube geometry.
+
+**Next task:** [Task 3 - Visualizing neutron tracks - 20 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_3)
