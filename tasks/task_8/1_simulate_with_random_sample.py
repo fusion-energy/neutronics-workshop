@@ -46,7 +46,7 @@ for i, j in tqdm(zip([0, 0, 100, 100], [0, 100, 0, 100]), total=4):
     
 print("running simulations with random sampling")
 
-for i in tqdm(range(args.number)):
+for i in tqdm(range(args.number - 4)):
 
     breeder_percent_in_breeder_plus_multiplier_ratio = np.random.uniform(0, 100)
     blanket_breeder_li6_enrichment = np.random.uniform(1, 100)

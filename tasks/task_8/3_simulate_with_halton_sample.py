@@ -48,7 +48,7 @@ for i, j in tqdm(zip([0, 0, 100, 100], [0, 100, 0, 100]), total=4):
 print("running simulations with halton sampling")
 
 sequencer = ghalton.Halton(2)
-coords = sequencer.get(args.number)
+coords = sequencer.get(args.number - 4)
 
 for coord in tqdm(coords):
 
