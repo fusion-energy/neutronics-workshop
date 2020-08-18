@@ -102,9 +102,9 @@ Open ```plot_interpolated_results.py``` and try to understand how the simulation
 
 Run this script to plot the interpolated results for all sampling techniques. The graphs produced should look similar to the plot below.
 
-<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90501468-521ed700-e144-11ea-8973-49e4825c3519.png" height="400"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90501468-521ed700-e144-11ea-8973-49e4825c3519.png" height="500"></p>
 
-The graphs show how the choice of sampling technique has a large impact on the interpolated data. Note how grid, halton and random sampling result in a large number of simulations being performed in regions where variation in TBR is small (upper right) meaning simulations are wasted. On the other hand, adaptive sampling avoids this region, meaning the number of wasted simulations is minimised.
+The graphs show how the choice of sampling technique has a large impact on the interpolated data. Note how grid, halton and random sampling result in a large number of simulations being performed in regions where variation in TBR is small (large Li6 enrichment and breeder percent) meaning simulations are wasted. On the other hand, adaptive sampling avoids this region, meaning the number of wasted simulations is minimised.
 
 Possible Learning Outcomes:
 - The optimal breeder percent in breeder plus multiplier volume changes for different amounts of lithium enrichment.
