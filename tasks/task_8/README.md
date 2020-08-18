@@ -26,7 +26,7 @@ Run the script using the command ```python3 1_simulate_with_random_sample.py```,
 
 The task folder also contains a script called ```plot_sampling_coordinates.py``` which plots TBR as a function of breeder to multiplier ratio and enrichment for each sampling method. Run this script to plot the results of the random simulations. This should look similar to the plot below.
 
-<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138378-d3eeb900-dd6e-11ea-9d00-4615d5050c18.png" height="400"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90494227-2e0ac800-e13b-11ea-8077-6c04d768e120.png" height="400"></p>
 
 As shown, the simulations have been performed randomly across the parameter space of enrichment and breeder to multiplier ratio.
 
@@ -46,7 +46,7 @@ Open the ```2_simulate_with_grid_sample.py``` script and try to understand how a
 
 Run the ```2_simulate_with_grid_sample.py``` script with the -n flag to specify the number of simulations and plot the results using the ```plot_sampling_coordinates.py``` script. Two graphs should be plotted showing the results for both random and grid simulations. Compare the two sampling methods.
 
-<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138402-dc46f400-dd6e-11ea-8af4-8cde0d7969c5.png" height="400"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90494315-48dd3c80-e13b-11ea-893b-7f09455a9499.png" height="400"></p>
 
 As shown, grid sampling has a better spatial distribution of sample points than random sampling. 
 
@@ -65,7 +65,7 @@ Open the ```3_simulate_with_halton_sample.py``` script and try to understand how
 
 Run this script and plot the results. The graph produced should look similar to the plot below.
 
-<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138407-dd782100-dd6e-11ea-905b-0b1617b48d3a.png" height="400"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90494317-4a0e6980-e13b-11ea-88fd-79dae7ee2506.png" height="400"></p>
 
 As you can see, the sample points have a much better spatial distribution across the parameter space than random sampling.
 
@@ -82,7 +82,7 @@ Open the ```4_simulate_with_adaptive_sample.py``` script and try to understand h
 
 Run this script and plot the results. The graph produced should look similar to the plot below.
 
-<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90138409-dea94e00-dd6e-11ea-8424-bc4e46855eae.png" height="400"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90494324-4b3f9680-e13b-11ea-8cf7-305a97437bb8.png" height="400"></p>
 
 As mentioned, the most important parts of a data trend are (usually) the regions where the data is changing as a function of parameter values. In our example, these are the regions where TBR is changing as a function of enrichment and breeder percentage. I.e. we do not want to excessively sample regions where TBR changes negligibly as a function of enrichment and breeder percentage.
 As shown, the parameter space is densely sampled in regions where TBR is changing most rapidly, and sparsely sampled in regions where TBR is changing negligibly.
@@ -92,8 +92,19 @@ It is not a perfect solution, however, because over-sampling could still take pl
 
 Overall, adaptive sampling allows computational time to be focused on the most important parts of a distribution and is a highly efficient way of sampling a parameter space and, therefore, performing simulations.
 
-To more accuratly cover this parameter space more than the default 40 samples would be required.
+To more accurately cover this parameter space more than the default 40 samples would be required.
 
+# Data Interpolation
+
+After sampling the parameter space of interest with a set of discrete simulations, we can interpolate between these results to deduce the data trend across the entire parameter space. Data can be fitted in several ways (e.g. linear, cubic, radial basis function, etc...) and contour plots can be created to show the overall data trend. The accuracy of the interpolated data is determined by the number of discrete data points meaning increasing the number of simulations performed increases the accuracy of the contour plot.
+
+Open ```plot_interpolated_results.py``` and try to understand how the simulation results are interpolated to produce a contour plot. By default, this script interpolates TBR across the parameter space using cubic interpolation.
+
+Run this script to plot the interpolated results for all sampling techniques. The graphs produced should look similar to the plot below.
+
+<p align="center"><img src="https://user-images.githubusercontent.com/56687624/90501468-521ed700-e144-11ea-8973-49e4825c3519.png" height="400"></p>
+
+The graphs show how the choice of sampling technique has a large impact on the interpolated data. Note how grid, halton and random sampling result in a large number of simulations being performed in regions where variation in TBR is small (upper right) meaning simulations are wasted. On the other hand, adaptive sampling avoids this region, meaning the number of wasted simulations is minimised.
 
 Possible Learning Outcomes:
 - The optimal breeder percent in breeder plus multiplier volume changes for different amounts of lithium enrichment.
