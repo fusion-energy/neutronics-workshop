@@ -37,7 +37,7 @@ The majority of the workshop can also be completed using Binder notebooks or Goo
 
 ## Optional workshop tasks
 
-- [Task 8 - Survey breeder blanket designs for tritium production - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_8)
+- [Task 8 - Techniques for sampling parameter space - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_8)
 - [Task 9 - Optimize a breeder blanket for tritium production - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_9)
 - [Task 10 - Using CAD geometry - 30 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_10)
 - [Task 11 - Options for making materials - 20 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_11)

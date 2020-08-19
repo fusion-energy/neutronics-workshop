@@ -1,5 +1,5 @@
 
-## <a name="task2"></a>Task 2 - Building and visualizing the model geometry.
+## <a name="task2"></a>Task 2 - Building and visualizing the model geometry
 
 Google Colab Link: [Task_2](https://colab.research.google.com/drive/17o94Go2_pQLHrrkcM_2K-asvKrSsMbtx)
 
