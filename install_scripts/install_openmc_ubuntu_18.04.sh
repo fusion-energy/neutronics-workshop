@@ -51,6 +51,7 @@ pip3 install pylint --user
 pip3 install plotly --user
 pip3 install tqdm --user
 pip3 install pyside2 --user # required by openmc plotter
+pip3 install ghalton==0.6.1
 
 # needed for workshop tasks
 pip3 install neutronics_material_maker --user
