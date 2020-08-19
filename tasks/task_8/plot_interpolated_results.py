@@ -42,13 +42,13 @@ for sample, coords in zip(sampling_methods, row_col_coords):
 
         # griddata can be used instead of r basis functions to z values using cubic or linear interpolation. 
         # This also works but don't predict outside of the sample space to the edges of the parameter space
-        # zi = griddata((x, y), z, (xi[None,:], yi[:,None]), method='cubic')
+        zi = griddata((x, y), z, (xi[None,:], yi[:,None]), method='cubic')
 
         # Uses radial basis function to obtain interpolated values
         # See https://docs.scipy.org/doc/scipy/reference/tutorial/interpolate.html for more details
-        XI, YI = np.meshgrid(xi, yi)
-        rbf = Rbf(x, y, z, epsilon=2)
-        zi = rbf(XI, YI)
+        # XI, YI = np.meshgrid(xi, yi)
+        # rbf = Rbf(x, y, z, epsilon=2)
+        # zi = rbf(XI, YI)
 
         # contour plot showing interpoloated TBR values
         fig.add_trace(
