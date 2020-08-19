@@ -25,15 +25,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-sequencer = ghalton.Halton(2)
-coords = sequencer.get(args.number)
-
-print("running simulations with halton sampling")
-
-for coord in tqdm(coords):
-
-    breeder_percent_in_breeder_plus_multiplier_ratio = coord[0] * 100  # scales sampling from 0 to 100
-    blanket_breeder_li6_enrichment = coord[1] * 100  # scales sampling from 0 to 100
+def run_simulation(breeder_percent_in_breeder_plus_multiplier_ratio, blanket_breeder_li6_enrichment):
 
     result = find_tbr_hcpb(breeder_percent_in_breeder_plus_multiplier_ratio,
                            blanket_breeder_li6_enrichment)
@@ -44,3 +36,23 @@ for coord in tqdm(coords):
     Path(filename).parent.mkdir(parents=True, exist_ok=True)
     with open(filename, mode="w", encoding="utf-8") as f:
         json.dump(result, f, indent=4)
+
+
+print("running corner simulations")
+
+for i, j in tqdm(zip([0, 0, 100, 100], [0, 100, 0, 100]), total=4):
+
+    run_simulation(i, j)
+
+
+print("running simulations with halton sampling")
+
+sequencer = ghalton.Halton(2)
+coords = sequencer.get(args.number - 4)
+
+for coord in tqdm(coords):
+
+    breeder_percent_in_breeder_plus_multiplier_ratio = coord[0] * 100  # scales sampling from 0 to 100
+    blanket_breeder_li6_enrichment = coord[1] * 100  # scales sampling from 0 to 100
+
+    run_simulation(breeder_percent_in_breeder_plus_multiplier_ratio, blanket_breeder_li6_enrichment)
