@@ -74,10 +74,10 @@ tallies.append(reaction_tally)
 
 # Run OpenMC!
 model = openmc.model.Model(geom, mats, sett, tallies)
-model.run()
+sp_filename = model.run()
 
 # open the results file
-sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+sp = openmc.StatePoint(sp_filename)
 
 # access the tally
 tally = sp.get_tally(name='DPA')

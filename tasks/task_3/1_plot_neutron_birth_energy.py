@@ -55,9 +55,9 @@ sett.source = source
 
 # Run OpenMC!
 model = openmc.model.Model(geom, mats, sett)
-model.run()
+sp_filename = model.run()
 
-sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+sp = openmc.StatePoint(sp_filename)
 
 print('energy of neutrons =',sp.source['E'])  # these neutrons are all created
 

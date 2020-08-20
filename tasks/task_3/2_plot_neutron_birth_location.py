@@ -45,9 +45,9 @@ sett.source = source
 
 # Run OpenMC!
 model = openmc.model.Model(geom, mats, sett)
-model.run()
+sp_filename = model.run()
 
-sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+sp = openmc.StatePoint(sp_filename)
 
 print('birth location of first neutron =', sp.source['r'][0])  # these neutrons are all created
 
