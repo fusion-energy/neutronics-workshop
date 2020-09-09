@@ -1,0 +1,10 @@
+
+plotly
+tqdm
+ghalton==0.6.1
+noisyopt
+scikit-optimize
+inference-tools
+adaptive
+neutronics-material-maker
+parametric-plasma-source
