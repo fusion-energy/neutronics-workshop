@@ -22,6 +22,7 @@ The majority of the workshop can also be completed using Binder notebooks or Goo
 
     ```docker run -p 8888:8888 openmcworkshop/workshop_jupyter```
 
+4. A URL should be displayed in the terminal and can now be opened in the internet browser of your choice
 
 **IMPORTANT:** Any changes you make to scripts in the docker container will be lost when you exit the container. Make sure you copy any files you want to keep into the ```my_openmc_workshop``` folder before exiting the container. **Note:** The output files created by the task scripts are automatically copied to this folder.
 
