@@ -134,8 +134,8 @@ RUN cd parametric-plasma-source && pip install .
 ENV OPENMC_CROSS_SECTIONS=/nndc-b7.1-hdf5/cross_sections.xml
 USER $NB_USER
 
-# Copy over the source code
-COPY openmc_workshop openmc_workshop/
+# Copy over the tasks
+COPY tasks tasks/
 #replaceing clone with copy RUN git clone -b develop https://github.com/ukaea/openmc_workshop
 
 
