@@ -1,12 +1,17 @@
 
-import plotly.graph_objects as go
-from tqdm import tqdm
-import openmc
-from openmc.data.reaction import REACTION_NAME
 import os
 
-def create_plot(isotopes, reaction):
-    """Creates a 
+import openmc
+import plotly.graph_objects as go
+from openmc.data import atomic_weight
+from openmc.data.reaction import REACTION_NAME
+from tqdm import tqdm
+
+
+
+
+def create_isotope_plot(isotopes, reaction):
+    """Creates a plot of isotopes and reaction provided
     """
     nuclear_data_path = os.path.dirname(os.environ["OPENMC_CROSS_SECTIONS"]) + '/neutron'
 
@@ -40,7 +45,80 @@ def create_plot(isotopes, reaction):
     return fig
 
 
-def create_plotly_figure():
+def create_element_plot(elements, reaction):
+    """Creates a plot of elements and reaction provided
+    """
+    fig = create_plotly_figure()
+
+    if isinstance(reaction, str):
+        REACTION_NUMBER = dict(zip(REACTION_NAME.values(), REACTION_NAME.keys()))
+        MT_number = REACTION_NUMBER[reaction]
+    else:
+        MT_number = reaction
+        reaction = REACTION_NAME[MT_number]
+
+    # this loop extracts the cross section and energy of reactions when they exist
+    for element_name in tqdm(elements):
+
+        element_object = openmc.Material()  # this material defaults to a density of 1g/cm3
+
+        try:
+            element_object.add_element(element_name, 1.0, percent_type='ao')
+        except ValueError:
+            print("The cross section files for the isotopes of ", element_name, " don't exist")
+            continue
+
+        try:
+            atomic_weight(element_name)
+        except ValueError:
+            print('There are no natural isotopes of ', element_name)
+            continue
+
+        energy, cross_sections = openmc.calculate_cexs(element_object, 'material', [MT_number])
+        cross_section = cross_sections[0]
+        if cross_section.sum() != 0.0:
+            fig.add_trace(go.Scatter(
+                x=energy,
+                y=cross_section,
+                mode='lines',
+                name=element_name + ' ' + reaction)
+            )
+        else:
+            print('Element ', element_name, ' has no cross section data for MT number', MT_number)
+
+    return fig
+
+
+
+def create_material_plot(materials, reaction):
+
+    fig = create_plotly_figure(y_axis_label='Macroscopic Cross Section (1/cm)')
+
+    if isinstance(reaction, str):
+        REACTION_NUMBER = dict(zip(REACTION_NAME.values(), REACTION_NAME.keys()))
+        MT_number = REACTION_NUMBER[reaction]
+    else:
+        MT_number = reaction
+        reaction = REACTION_NAME[MT_number]
+
+    for material in materials:
+        # extracts energy and cross section for the material for the provided MT reaction mumber
+        energy, xs_data = openmc.calculate_cexs(
+            material,
+            'material',
+            [MT_number])
+
+        # adds the energy dependnat cross sction to the plot
+        fig.add_trace(go.Scatter(
+            x=energy,
+            y=xs_data[0],
+            mode='lines',
+            name=material.name + ' ' + reaction)
+        )
+
+    return fig
+
+def create_plotly_figure(y_axis_label='Cross section (barns)'):
     
     fig = go.Figure()
 
@@ -48,7 +126,7 @@ def create_plotly_figure():
           title='Neutron interaction cross sections',
           xaxis={'title': 'Energy (eV)',
                  'range': (0, 14.1e6)},
-          yaxis={'title': 'Cross section (barns)'}
+          yaxis={'title': y_axis_label}
     )
 
 
