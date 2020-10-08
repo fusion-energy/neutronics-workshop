@@ -1,5 +1,5 @@
 # build with the following command
-# sudo docker build -t openmcworkshop/workshop_jupyter . --no-cache
+# sudo docker build -t ukaea/workshop_jupyter . --no-cache
 # docker run -p 8888:8888 openmcworkshop/workshop_jupyter
 
 
@@ -21,6 +21,8 @@ RUN apt-get --yes install liblapack-dev
 # needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
 RUN apt-get --yes install libnetcdf-dev
 # RUN apt-get --yes install libnetcdf13
+# eigen3 needed for DAGMC
+RUN apt-get --yes install libeigen3-dev
 
 
 RUN apt-get -y install sudo #  needed as the install NJOY script has a sudo make install command
@@ -34,7 +36,7 @@ RUN apt-get --yes install wget
 
 USER $NB_USER
 
-RUN pip install cmake==3.12.0
+RUN pip install cmake
 
 #RUN git clone https://github.com/ukaea/openmc_workshop
 
@@ -44,6 +46,7 @@ RUN pip install cmake==3.12.0
 ENV MOAB_BRANCH='Version5.1.0'
 ENV MOAB_REPO='https://bitbucket.org/fathomteam/moab/'
 ENV MOAB_INSTALL_DIR=$HOME/MOAB/
+
 
 # DAGMC Variables
 ENV DAGMC_BRANCH='develop'
@@ -125,9 +128,16 @@ RUN pip install vtk
 RUN pip install itkwidgets
 
 
+RUN git clone https://github.com/open-radiation-sources/parametric-plasma-source.git
+RUN cd parametric-plasma-source && pip install .
+
 ENV OPENMC_CROSS_SECTIONS=/nndc-b7.1-hdf5/cross_sections.xml
 USER $NB_USER
-RUN git clone -b develop https://github.com/ukaea/openmc_workshop
+
+# Copy over the source code
+COPY openmc_workshop openmc_workshop/
+#replaceing clone with copy RUN git clone -b develop https://github.com/ukaea/openmc_workshop
+
 
 USER root
 RUN ln -s /home/jovyan/nndc-b7.1-hdf5 /nndc-b7.1-hdf5
