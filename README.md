@@ -16,11 +16,11 @@ The majority of the workshop can also be completed using Binder notebooks or Goo
 
 2. Pull the docker image from the store by typing the following command in a terminal window, or Windows users might prefer PowerShell.
 
-    ```docker pull openmcworkshop/workshop_jupyter```
+    ```docker pull ukaea/openmcworkshop```
 
 3. Now that you have the docker image you can enable graphics linking between your os and docker, and then run the docker container by typing the following commands in a terminal window.
 
-    ```docker run -p 8888:8888 openmcworkshop/workshop_jupyter```
+    ```docker run -p 8888:8888 ukaea/openmcworkshop```
 
 4. A URL should be displayed in the terminal and can now be opened in the internet browser of your choice
 
