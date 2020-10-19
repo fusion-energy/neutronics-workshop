@@ -20,27 +20,20 @@ def create_isotope_plot(isotopes, reaction):
     # this loop plots n,2n cross-sections for all isotopes
     # in the candidate_fusion_neutron_multipliers_list
 
-    if isinstance(reaction, str):
-        REACTION_NUMBER = dict(zip(REACTION_NAME.values(), REACTION_NAME.keys()))
-        MT_number = REACTION_NUMBER[reaction]
-    else:
-        MT_number = reaction
-        reaction = REACTION_NAME[MT_number]
-
     for isotope_name in tqdm(isotopes):
         isotope_object = openmc.data.IncidentNeutron.from_hdf5(os.path.join(nuclear_data_path, isotope_name+'.h5'))  # you may have to change this directory
         energy = isotope_object.energy['294K']  # 294K is the temperature for endf, others use 293K
-        if MT_number in isotope_object.reactions.keys():
-            cross_section = isotope_object[MT_number].xs['294K'](energy)
+        if reaction in isotope_object.reactions.keys():
+            cross_section = isotope_object[reaction].xs['294K'](energy)
             fig.add_trace(go.Scatter(
                 x=energy,
                 y=cross_section,
                 mode='lines',
-                name=isotope_name + reaction
+                name=isotope_name + str(reaction)
             )
         )
         else:
-            print('isotope ', isotope_name, ' does not have the MT reaction number ', MT_number)
+            print('isotope ', isotope_name, ' does not have the MT reaction number ', reaction)
 
     return fig
 
@@ -50,23 +43,10 @@ def create_element_plot(elements, reaction):
     """
     fig = create_plotly_figure()
 
-    if isinstance(reaction, str):
-        REACTION_NUMBER = dict(zip(REACTION_NAME.values(), REACTION_NAME.keys()))
-        MT_number = REACTION_NUMBER[reaction]
-    else:
-        MT_number = reaction
-        reaction = REACTION_NAME[MT_number]
-
     # this loop extracts the cross section and energy of reactions when they exist
     for element_name in tqdm(elements):
 
-        element_object = openmc.Material()  # this material defaults to a density of 1g/cm3
-
-        try:
-            element_object.add_element(element_name, 1.0, percent_type='ao')
-        except ValueError:
-            print("The cross section files for the isotopes of ", element_name, " don't exist")
-            continue
+        element_object = openmc.Element(element_name)
 
         try:
             atomic_weight(element_name)
@@ -74,17 +54,20 @@ def create_element_plot(elements, reaction):
             print('There are no natural isotopes of ', element_name)
             continue
 
-        energy, cross_sections = openmc.calculate_cexs(element_object, 'material', [MT_number])
+        energy, cross_sections = openmc.calculate_cexs(
+            element_object,
+            'element',
+            [reaction])
         cross_section = cross_sections[0]
         if cross_section.sum() != 0.0:
             fig.add_trace(go.Scatter(
                 x=energy,
                 y=cross_section,
                 mode='lines',
-                name=element_name + ' ' + reaction)
+                name=element_name + ' ' + str(reaction))
             )
         else:
-            print('Element ', element_name, ' has no cross section data for MT number', MT_number)
+            print('Element ', element_name, ' has no cross section data for ', reaction)
 
     return fig
 
