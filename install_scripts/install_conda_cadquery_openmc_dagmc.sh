@@ -12,7 +12,6 @@ bash Miniconda3-py37_4.8.3-Linux-x86_64.sh -b
 
 # append ~/miniconda3/bin to path
 PATH=$PATH:~/miniconda3/bin
-echo 'export PATH=$PATH:~/miniconda3/bin' >> ~/.bashrc
 
 # don't know whether need to activate something?
 
@@ -76,7 +75,6 @@ pip install cmake
 sudo apt-get --yes install cmake
 
 LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
-echo 'export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH' >> ~/.bashrc
 
 wget https://github.com/ukaea/parallel-preprocessor/releases/download/dev/parallel-preprocessor-0.3-dev_ubuntu-18.04.deb
 dpkg -i parallel-preprocessor-0.3-dev_ubuntu-18.04.deb
@@ -107,7 +105,6 @@ python setup.py install
 # rm -rf $HOME/MOAB/moab $HOME/MOAB/build   # might be wrong
 
 LD_LIBRARY_PATH=$MOAB_INSTALL_DIR/lib:$LD_LIBRARY_PATH
-echo 'export PATH=$PATH:~/MOAB/bin' >> ~/.bashrc
 
 # occ faceter
 git clone https://github.com/makeclean/occ_faceter.git
@@ -136,7 +133,6 @@ make -j install
 # rm -rf $HOME/DAGMC/dagmc $HOME/DAGMC/build
 
 LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH
-echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc
 
 
 # OpenMC Install, this must be installed to /opt/openmc, `parametric_plasma_source` python module has this path hard-coded
@@ -181,11 +177,19 @@ python3 data/convert_nndc71.py
 python3 data/combine_libraries.py -l fendl-3.1d-hdf5/cross_sections.xml nndc-b7.1-hdf5/cross_sections.xml tendl-2019
 
 OPENMC_CROSS_SECTIONS=/cross_sections.xml
-echo 'export OPENMC_CROSS_SECTIONS=~/cross_sections.xml' >> ~/.bashrc
 
 
+# Install Paramak
 cd $HOME
 git clone https://github.com/ukaea/paramak.git
 cd paramak
 git checkout develop
 pip install -e .
+
+
+
+echo 'export PATH=$PATH:~/miniconda3/bin' >> ~/.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH' >> ~/.bashrc
+echo 'export PATH=$PATH:~/MOAB/bin' >> ~/.bashrc
+echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc
+echo 'export OPENMC_CROSS_SECTIONS=~/cross_sections.xml' >> ~/.bashrc
