@@ -60,10 +60,6 @@ sudo apt-get --yes install software-properties-common
 sudo add-apt-repository --yes ppa:freecad-maintainers/freecad-stable
 sudo apt update
 
-# ENV DEBIAN_FRONTEND=noninteractive
-# think this translates to:
-# export DEBIAN_FRONTEND=noninteractive
-
 sudo apt-get install --yes libocct*-dev occt*
 sudo apt-get install --yes cmake libcgal-dev libtbb-dev
 
@@ -79,7 +75,7 @@ pip install cython
 pip install cmake
 sudo apt-get --yes install cmake
 
-# LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
+LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
 echo 'export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH' >> ~/.bashrc
 
 wget https://github.com/ukaea/parallel-preprocessor/releases/download/dev/parallel-preprocessor-0.3-dev_ubuntu-18.04.deb
@@ -178,20 +174,18 @@ sudo make install
 # Nuclear data install
 cd ~
 git clone https://github.com/openmc-dev/data.git
-cd data
-python3 convert_fendl.py
-python3 convert_tendl.py
-python3 convert_nndc71.py
+python3 data/convert_fendl.py
+python3 data/convert_tendl.py
+python3 data/convert_nndc71.py
+
+python3 data/combine_libraries.py -l fendl-3.1d-hdf5/cross_sections.xml nndc-b7.1-hdf5/cross_sections.xml tendl-2019
+
+OPENMC_CROSS_SECTIONS=/cross_sections.xml
+echo 'export OPENMC_CROSS_SECTIONS=~/cross_sections.xml' >> ~/.bashrc
 
 
-OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-b7.1-hdf5/cross_sections.xml
-echo 'export OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-b7.1-hdf5/cross_sections.xml' >> ~/.bashrc
-OPENMC_CROSS_SECTIONS_TENDL=~/data/tendl-2017-hdf5/cross_sections.xml
-echo 'export OPENMC_CROSS_SECTIONS_TENDL=~/data/tendl-2019-hdf5/cross_sections.xml' >> ~/.bashrc
-OPENMC_CROSS_SECTIONS_FENDL=~/data/fendl-3.1d-hdf5/cross_sections.xml
-echo 'export OPENMC_CROSS_SECTIONS_FENDL=~/data/fendl-3.1d-hdf5/cross_sections.xml' >> ~/.bashrc
-
-OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml
-echo 'export OPENMC_CROSS_SECTIONS=~/data/tendl-2019-hdf5/cross_sections.xml' >> ~/.bashrc
-
-
+cd $HOME
+git clone https://github.com/ukaea/paramak.git
+cd paramak
+git checkout develop
+pip install -e .
