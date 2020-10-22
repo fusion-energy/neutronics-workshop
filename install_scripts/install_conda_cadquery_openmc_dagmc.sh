@@ -143,20 +143,26 @@ LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH
 echo 'export PATH=$PATH:~/DAGMC/bin' >> ~/.bashrc
 
 
-# OpenMC Install
+# OpenMC Install, this must be installed to /opt/openmc, `parametric_plasma_source` python module has this path hard-coded
 cd /opt
-sudo git clone https://github.com/mit-crpg/openmc.git --recursive
+sudo git clone --recurse-submodules https://github.com/openmc-dev/openmc.git
 cd /opt/openmc
+sudo chmod 777 -R openmc
 sudo git checkout develop
 sudo mkdir build
 sudo chmod 777 build
-cd build 
+cd build
 cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 # cmake -Ddagmc=ON -Ddebug=on -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
-sudo make 
-sudo make install
-cd /opt/openmc/ 
-sudo python3 setup.py develop --user
+sudo make -j
+sudo make -j install
+cd /opt/openmc/
+cd /opt
+sudo chmod 777 -R openmc
+cd /opt/openmc/
+pip install -e .
+# setup.py can be used instead but it doesn't appear to install to conda enviroments
+# sudo python3 setup.py develop --user
 
 
 # install NJOY2016
@@ -167,4 +173,25 @@ mkdir build
 cd build
 cmake -Dstatic=on .. && make 2>/dev/null
 sudo make install
+
+
+# Nuclear data install
+cd ~
+git clone https://github.com/openmc-dev/data.git
+cd data
+python3 convert_fendl.py
+python3 convert_tendl.py
+python3 convert_nndc71.py
+
+
+OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-b7.1-hdf5/cross_sections.xml
+echo 'export OPENMC_CROSS_SECTIONS_NNDC=~/data/nndc-b7.1-hdf5/cross_sections.xml' >> ~/.bashrc
+OPENMC_CROSS_SECTIONS_TENDL=~/data/tendl-2017-hdf5/cross_sections.xml
+echo 'export OPENMC_CROSS_SECTIONS_TENDL=~/data/tendl-2019-hdf5/cross_sections.xml' >> ~/.bashrc
+OPENMC_CROSS_SECTIONS_FENDL=~/data/fendl-3.1d-hdf5/cross_sections.xml
+echo 'export OPENMC_CROSS_SECTIONS_FENDL=~/data/fendl-3.1d-hdf5/cross_sections.xml' >> ~/.bashrc
+
+OPENMC_CROSS_SECTIONS=~/data/tendl-2017-hdf5/cross_sections.xml
+echo 'export OPENMC_CROSS_SECTIONS=~/data/tendl-2019-hdf5/cross_sections.xml' >> ~/.bashrc
+
 
