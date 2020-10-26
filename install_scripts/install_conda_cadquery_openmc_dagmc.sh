@@ -15,8 +15,8 @@ PATH=$PATH:~/miniconda3/bin
 
 # don't know whether need to activate something?
 
-conda install -c conda-forge -c cadquery cadquery=2
-conda install gxx_linux-64
+conda install -y -c conda-forge -c cadquery cadquery=2
+conda install -y gxx_linux-64
 
 sudo apt-get update
 sudo apt-get install -y libgl1-mesa-dev 
@@ -76,7 +76,7 @@ sudo apt-get --yes install cmake
 
 LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
 
-wget https://github.com/ukaea/parallel-preprocessor/releases/download/dev/parallel-preprocessor-0.3-dev_ubuntu-18.04.deb
+sudo wget https://github.com/ukaea/parallel-preprocessor/releases/download/dev/parallel-preprocessor-0.3-dev_ubuntu-18.04.deb
 dpkg -i parallel-preprocessor-0.3-dev_ubuntu-18.04.deb
 
 
@@ -93,16 +93,16 @@ git clone -b $MOAB_BRANCH $MOAB_REPO
 mkdir build
 cd build
 cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
-make -j
+make -j2
 make -j install
 
-cmake ../moab -DBUILD_SHARED_LIBS=OFF
+# for pymoab
+cmake ../moab -DBUILD_SHARED_LIBS=ON
 make -j install
 
 cd pymoab
 bash install.sh
 python setup.py install
-# rm -rf $HOME/MOAB/moab $HOME/MOAB/build   # might be wrong
 
 LD_LIBRARY_PATH=$MOAB_INSTALL_DIR/lib:$LD_LIBRARY_PATH
 
