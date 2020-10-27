@@ -163,6 +163,7 @@ echo 'export OPENMC_CROSS_SECTIONS=~/data/nndc-b7.1-hdf5/cross_sections.xml' >> 
 # Trelis-16.5.4-Lin64.deb
 
 # Install trelis in /opt folder
+# add Trelis-16.5.4-Lin64.deb to /opt folder
 # cd /opt
 # sudo dpkg -i Trelis-16.5.4-Lin64.deb
 
