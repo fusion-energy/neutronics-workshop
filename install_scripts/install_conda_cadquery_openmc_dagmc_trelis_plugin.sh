@@ -1,6 +1,8 @@
 
-# install anaconda
+# Download conda and run these commands to install CadQuery
 # conda create --name cq python=3.8.3
+# conda activate cq
+# conda clean --all
 # conda install -y -c conda-forge -c cadquery cadquery=master
 
 
@@ -130,10 +132,34 @@ echo 'export OPENMC_CROSS_SECTIONS_TENDL=~/data/tendl-2019-hdf5/cross_sections.x
 OPENMC_CROSS_SECTIONS_FENDL=~/data/fendl-3.1d-hdf5/cross_sections.xml
 echo 'export OPENMC_CROSS_SECTIONS_FENDL=~/data/fendl-3.1d-hdf5/cross_sections.xml' >> ~/.bashrc
 
-# python3 data/combine_libraries.py -l fendl-3.1d-hdf5/cross_sections.xml nndc-b7.1-hdf5/cross_sections.xml tendl -o
-# need to get correct tendl filepath and specify output filename
+# use this for making combined library cross-sections
+# python3 combine_libraries.py -l fendl-3.1d-hdf5/cross_sections.xml nndc-b7.1-hdf5/cross_sections.xml tendl-2019-hdf5/cross_sections.xml -o combined_cross_sections.xml
+# OPENMC_CROSS_SECTIONS=~/data/combined_cross_sections.xml
+# echo 'export OPENMC_CROSS_SECTIONS=~/data/combined_cross_sections.xml' >> ~/.bashrc
 
-# this file needs to match output file above
-OPENMC_CROSS_SECTIONS=/cross_sections.xml
-echo 'export OPENMC_CROSS_SECTIONS=~/cross_sections.xml' >> ~/.bashrc
+# or use an individual cross-section library
+OPENMC_CROSS_SECTIONS=~/data/nndc-b7.1-hdf5/cross_sections.xml
+echo 'export OPENMC_CROSS_SECTIONS=~/data/nndc-b7.1-hdf5/cross_sections.xml' >> ~/.bashrc
+
+
+# DAGMC Trelis Plugin
+
+# Download and install trelis in /opt folder
+# cd /opt
+# sudo dpkg -i Trelis-16.5.4-Lin64.deb
+
+# Download svalinn plugin and place in /bin/plugins in Trelis directory
+sudo apt install curl
+curl -o /opt/Trelis-16.5.4/bin/plugins/svalinn-plugin.tgz https://uwmadison.app.box.com/v/dagmc-trelis/file/423772352851
+
+# Unpack tarball
+cd /opt/Trelis-16.5/bin/plugins
+sudo tar xzf svalinn-plugun.tgz
+
+# Install plugin
+cd /opt/Trelis-16.5/bin
+sudo bash plugins/svalinn/install.sh
+
+PATH=$PATH:/opt/Trelis-16.5.4/bin
+echo 'export PATH=$PATH:/opt/Trelis-16.5.4/bin' >> ~/.bashrc
 
