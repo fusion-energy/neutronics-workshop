@@ -1,6 +1,21 @@
 
-# Download conda and run these commands to install CadQuery
-# conda create --name cq python=3.8.3
+sudo apt-get --yes update && sudo apt-get --yes upgrade
+sudo apt-get update
+
+sudo apt-get install --yes wget
+
+# Download and install conda
+
+# wget https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
+# bash Anaconda3-2020.07-Linux-x86_64.sh
+
+# Initialise conda and install CadQuery
+
+# conda init
+
+# Create new conda environment and install cadquery
+
+# conda create -y --name cq python=3.8.3
 # conda activate cq
 # conda clean --all
 # conda install -y -c conda-forge -c cadquery cadquery=master
@@ -8,6 +23,7 @@
 
 sudo apt-get --yes update && sudo apt-get --yes upgrade
 sudo apt-get update
+
 
 sudo apt-get --yes install gfortran 
 sudo apt-get --yes install g++ 
@@ -23,7 +39,6 @@ sudo apt-get install --yes imagemagick
 sudo apt-get install --yes hdf5-tools
 sudo apt-get install --yes paraview
 sudo apt-get install --yes eog
-sudo apt-get install --yes wget
 sudo apt-get install --yes libsilo-dev
 sudo apt-get install --yes git
 
@@ -144,17 +159,20 @@ echo 'export OPENMC_CROSS_SECTIONS=~/data/nndc-b7.1-hdf5/cross_sections.xml' >> 
 
 # DAGMC Trelis Plugin
 
-# Download and install trelis in /opt folder
+# Download trelis deb version 16.5.4 from https://www.csimsoft.com/account/
+# Trelis-16.5.4-Lin64.deb
+
+# Install trelis in /opt folder
 # cd /opt
 # sudo dpkg -i Trelis-16.5.4-Lin64.deb
 
 # Download svalinn plugin and place in /bin/plugins in Trelis directory
 sudo apt install curl
-curl -o /opt/Trelis-16.5.4/bin/plugins/svalinn-plugin.tgz https://uwmadison.app.box.com/v/dagmc-trelis/file/423772352851
+curl -o /opt/Trelis-16.5.4/bin/plugins/svalinn-plugin-16.5-u18.04.tgz https://uwmadison.app.box.com/v/dagmc-trelis/file/423772352851
 
 # Unpack tarball
 cd /opt/Trelis-16.5/bin/plugins
-sudo tar xzf svalinn-plugun.tgz
+sudo tar xzf svalinn-plugin-16.5-u18.04.tgz
 
 # Install plugin
 cd /opt/Trelis-16.5/bin
