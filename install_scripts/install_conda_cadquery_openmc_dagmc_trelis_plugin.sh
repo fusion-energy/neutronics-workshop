@@ -125,9 +125,8 @@ sudo chmod 777 build
 cd build
 cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
 # cmake -Ddagmc=ON -Ddebug=on -DDAGMC_ROOT=$DAGMC_INSTALL_DIR ..
-sudo make -j
+sudo make -j2
 sudo make -j install
-cd /opt/openmc/
 cd /opt
 sudo chmod 777 -R openmc
 cd /opt/openmc/
@@ -159,7 +158,7 @@ echo 'export OPENMC_CROSS_SECTIONS=~/data/nndc-b7.1-hdf5/cross_sections.xml' >> 
 
 # DAGMC Trelis Plugin
 
-# Download trelis deb version 16.5.4 from https://www.csimsoft.com/account/
+# Download trelis deb version 16.5.4 from https://www.coreform.com/
 # Trelis-16.5.4-Lin64.deb
 
 # Install trelis in /opt folder
