@@ -168,7 +168,7 @@ echo 'export OPENMC_CROSS_SECTIONS=~/data/nndc-b7.1-hdf5/cross_sections.xml' >> 
 
 # Download svalinn plugin and place in /bin/plugins in Trelis directory
 sudo apt install curl
-curl -o /opt/Trelis-16.5.4/bin/plugins/svalinn-plugin-16.5-u18.04.tgz https://uwmadison.app.box.com/v/dagmc-trelis/file/423772352851
+curl -o /opt/Trelis-16.5/bin/plugins/svalinn-plugin-16.5-u18.04.tgz https://uwmadison.app.box.com/v/dagmc-trelis/file/423772352851
 
 # Unpack tarball
 cd /opt/Trelis-16.5/bin/plugins
@@ -178,6 +178,6 @@ sudo tar xzf svalinn-plugin-16.5-u18.04.tgz
 cd /opt/Trelis-16.5/bin
 sudo bash plugins/svalinn/install.sh
 
-PATH=$PATH:/opt/Trelis-16.5.4/bin
-echo 'export PATH=$PATH:/opt/Trelis-16.5.4/bin' >> ~/.bashrc
+PATH=$PATH:/opt/Trelis-16.5/bin
+echo 'export PATH=$PATH:/opt/Trelis-16.5/bin' >> ~/.bashrc
 
