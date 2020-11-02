@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
-"""1_plot_neutron_birth_energy.py: plots 3D model with neutron tracks."""
-
-__author__ = "Jonathan Shimwell"
+"""Provides utilities for creating h5 files containing itintal source
+information and then plotting that information"""
 
 import xml.etree.ElementTree as ET
 
