@@ -1,96 +1,35 @@
 #!/usr/bin/env python3
 
-"""1_plot_neutron_birth_energy.py: plots 3D model with neutron tracks."""
-
-__author__ = "Jonathan Shimwell"
+"""plots different neutron energy distrubutions"""
 
 import openmc
-import plotly.graph_objects as go
-import numpy as np
+from source_extraction_utils import create_inital_particles, plot_energy_from_initial_source
 
-# MATERIALS
-
-mats = openmc.Materials([])
-
-
-# GEOMETRY
-
-sph1 = openmc.Sphere(r=1000, boundary_type='vacuum')
-
-simple_moderator_cell = openmc.Cell(region=-sph1)
-
-universe = openmc.Universe(cells=[simple_moderator_cell])
-
-geom = openmc.Geometry(universe)
-
-
-# SIMULATION SETTINGS
-
-# Instantiate a Settings object
-sett = openmc.Settings()
-batches = 2
-sett.batches = batches
-sett.inactive = 0
-sett.particles = 600
-sett.particle = "neutron"
-sett.run_mode = 'fixed source'
-
-
-# creates an isotropic point source
+# creates an isotropic point source with monoenergetic 14MeV neutrons
 source = openmc.Source()
 source.space = openmc.stats.Point((0, 0, 0))
 source.angle = openmc.stats.Isotropic()
-
-# sets the energy of neutrons to 14MeV (monoenergetic)
 source.energy = openmc.stats.Discrete([14e6], [1])
 
-# sets the energy of neutrons to a fission energy distribution
-# source.energy = openmc.stats.Watt(a=988000.0, b=2.249e-06)
-
-# sets the energy of neutrons to a fusion energy distribution, energy is 14.08MeV, atomic mass for D + T = 5, temperature is 20KeV
-# source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0)
-
-sett.source = source
+create_inital_particles(source)
+plot_energy_from_initial_source(input_filename='initial_source.h5')
 
 
-# Run OpenMC!
-model = openmc.model.Model(geom, mats, sett)
-sp_filename = model.run()
+# creates an isotropic point source with a fission energy distribution
+source = openmc.Source()
+source.space = openmc.stats.Point((0, 0, 0))
+source.angle = openmc.stats.Isotropic()
+source.energy = openmc.stats.Watt(a=988000.0, b=2.249e-06)
 
-sp = openmc.StatePoint(sp_filename)
-
-print('energy of neutrons =',sp.source['E'])  # these neutrons are all created
-
-energy_bins = np.linspace(0, 20e6, 50)
-
-print('energy_bins', energy_bins)
-
-# Calculate pdf for source energies
-probability, bin_edges = np.histogram(sp.source['E'], energy_bins, density=True)
-
-fig_energy = go.Figure()
-
-# Plot source energy histogram
-fig_energy.add_trace(go.Scatter(x=energy_bins[:-1],
-                                y=probability*np.diff(energy_bins),
-                                line={'shape': 'hv'},
-                                hoverinfo='text',
-                                name='neutron direction',
-                        )
-                  ) 
+create_inital_particles(source)
+plot_energy_from_initial_source(input_filename='initial_source.h5')
 
 
-fig_energy.update_layout(
-      title='neutron energy',
-      xaxis={'title': 'Energy (eV)'},
-      yaxis={'title': 'Probability'}
-)
+# creates an isotropic point source with a fusion energy distribution
+source = openmc.Source()
+source.space = openmc.stats.Point((0, 0, 0))
+source.angle = openmc.stats.Isotropic()
+source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0)
 
-
-fig_energy.write_html("particle_energy_histogram.html")
-try:
-    fig_energy.write_html("/my_openmc_workshop/particle_energy_histogram.html")
-except (FileNotFoundError, NotADirectoryError):  # for both inside and outside docker container
-    pass
-
-fig_energy.show()
+create_inital_particles(source)
+plot_energy_from_initial_source(input_filename='initial_source.h5')
