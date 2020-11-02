@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""1_plot_neutron_birth_energy.py: plots different neutron energy distrubutions"""
+"""plots different neutron energy distrubutions"""
 
 import openmc
 from source_extraction_utils import make_inital_source, plot_energy_from_initial_source
