@@ -8,12 +8,11 @@ from openmc.data.reaction import REACTION_NAME
 from tqdm import tqdm
 
 
-
-
-def create_isotope_plot(isotopes, reaction):
+def create_isotope_plot(isotopes, reaction, nuclear_data_path=None):
     """Creates a plot of isotopes and reaction provided
     """
-    nuclear_data_path = os.path.dirname(os.environ["OPENMC_CROSS_SECTIONS"]) + '/neutron'
+    if nuclear_data_path == None:
+        nuclear_data_path = os.path.dirname(os.environ["OPENMC_CROSS_SECTIONS"]) + '/neutron'
 
     fig = create_plotly_figure()
 
@@ -72,7 +71,6 @@ def create_element_plot(elements, reaction):
     return fig
 
 
-
 def create_material_plot(materials, reaction):
 
     fig = create_plotly_figure(y_axis_label='Macroscopic Cross Section (1/cm)')
@@ -100,6 +98,7 @@ def create_material_plot(materials, reaction):
         )
 
     return fig
+
 
 def create_plotly_figure(y_axis_label='Cross section (barns)'):
     
@@ -150,4 +149,3 @@ def create_plotly_figure(y_axis_label='Cross section (barns)'):
     )
     
     return fig
-
