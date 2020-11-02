@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 
-"""5_plot_neutron_birth_direction_plasma.py : makes a 3d plot of neutron direction"""
+"""makes a 3d plot of neutron direction"""
 
-import numpy as np
+
 from random import random
 import plotly.graph_objects as go
-from plotly.figure_factory import create_quiver
 
 from parametric_plasma_source import PlasmaSource
 

@@ -53,10 +53,9 @@ def create_inital_particles(source, number_of_particles=2000):
     elem.text = "true"
     tree.write("settings.xml")
 
-    # Run OpenMC!
-    # this will crash hence the try except loop, but it writes the inital source.h5
+    # This will crash hence the try except loop, but it writes the inital_source.h5
     try:
-        openmc.run()
+        openmc.run(output=False)
     except:
         pass
 
@@ -95,7 +94,7 @@ def plot_energy_from_initial_source(
           xaxis={'title': 'Energy (eV)'},
           yaxis={'title': 'Probability'}
     )
-    fig.show()
+
     return fig
 
 def plot_postion_from_initial_source(input_filename='initial_source.h5'):
@@ -134,7 +133,6 @@ def plot_postion_from_initial_source(input_filename='initial_source.h5'):
 
     fig.update_layout(title='particle production coordinates, coloured by energy')
 
-    fig.show()
     return fig
 
 def plot_direction_from_initial_source(input_filename='initial_source.h5'):
@@ -182,5 +180,4 @@ def plot_direction_from_initial_source(input_filename='initial_source.h5'):
 
     fig.update_layout(title='particle initial directions')
 
-    fig.show()
     return fig
