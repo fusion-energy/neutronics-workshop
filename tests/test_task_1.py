@@ -10,10 +10,15 @@
 # we are NOT testing to see whether the outputs are also saved locally
 # this will have to be implemented
 
-from pathlib import Path 
 import os
-import pytest
 import unittest
+from pathlib import Path
+
+import plotly
+import plotly.graph_objects as go
+import pytest
+
+from tasks.task_1.plotting_utils import *
 
 cwd = os.getcwd()
 
@@ -22,32 +27,9 @@ class test_task_1(unittest.TestCase):
 
     def test_task_1_part_1(self):
 
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_1'))
-        output_filename = '1_example_isotope_plot.html'
-        os.system('rm '+output_filename)
-        os.system('python 1_example_isotope_plot.py')
-        assert Path(output_filename).exists() == True
-        os.system('rm '+output_filename)
+        fig = create_isotope_plot(
+            isotopes=['Li6', 'Be9'],
+            reaction=205)#,
+            # nuclear_data_path='/home/jshim/data/nndc-b7.1-hdf5/neutron/')
 
-
-    def test_task_1_part_2(self):
-
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_1'))
-        output_filename = '2_example_element_plot_16.html'
-        os.system('rm '+output_filename)
-        os.system('python 2_example_element_plot.py')
-        assert Path(output_filename).exists() == True
-        os.system('rm '+output_filename)
-
-
-    def test_task_1_part_3(self):
-
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_1'))
-        output_filename = '3_example_material_plot.html'
-        os.system('rm '+output_filename)
-        os.system('python 3_example_material_plot.py')
-        assert Path(output_filename).exists() == True
-        os.system('rm '+output_filename)
+        assert isinstance(fig, go.Figure)
