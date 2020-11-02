@@ -12,7 +12,9 @@ import plotly.graph_objects as go
 import numpy as np
 
 
-def make_inital_source(energy=openmc.stats.Discrete([14e6], [1])):
+def make_inital_source(
+    energy=openmc.stats.Discrete([14e6], [1]),
+    number_of_particles=2000):
     """Accepts different energy distirbutions and creates an intial
     source file for the simulation. Example arguments for energy
     are openmc.stats.Discrete([14e6], [1]),
@@ -25,7 +27,6 @@ def make_inital_source(energy=openmc.stats.Discrete([14e6], [1])):
     # no real materials are needed for finding the source
     mats = openmc.Materials([])
 
-
     # GEOMETRY
 
     # just a minimal geometry
@@ -36,12 +37,12 @@ def make_inital_source(energy=openmc.stats.Discrete([14e6], [1])):
 
 
     # SIMULATION SETTINGS
-
+    
     # Instantiate a Settings object
     sett = openmc.Settings()
     sett.run_mode = "eigenvalue" # this will fail but it will write the inital_source.h5 file first
-    sett.particles = 600
-    sett.batches = 2
+    sett.particles = number_of_particles
+    sett.batches = 1
     sett.inactive = 0
     sett.write_initial_source = True
 
@@ -87,6 +88,9 @@ def plot_energy_from_initial_source(
     e_values = []
 
     for particle in dset:
+        # different attributes can be obtained here
+        # xyz is [0][0], [0][1], [0][2]
+        # dir is [1][0], [1][1], [1][2]
         e_values.append(particle[2])
 
     # Calculate pdf for source energies
@@ -110,7 +114,3 @@ def plot_energy_from_initial_source(
     )
     fig.show()
     return fig
-
-if __name__ == "__main__":
-    make_inital_source(openmc.stats.Discrete([14e6], [1]))
-    plot_energy_from_initial_source()
