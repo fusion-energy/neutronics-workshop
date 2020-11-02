@@ -3,84 +3,64 @@
 """5_plot_neutron_birth_direction_plasma.py : makes a 3d plot of neutron direction"""
 
 import numpy as np
+from random import random
 import plotly.graph_objects as go
 from plotly.figure_factory import create_quiver
 
-import openmc
+from parametric_plasma_source import PlasmaSource
 
-from parametric_plasma_source import Plasma
+plasma_params = {
+    "elongation": 1.557,
+    "ion_density_origin": 1.09e20,
+    "ion_density_peaking_factor": 1,
+    "ion_density_pedestal": 1.09e20,
+    "ion_density_separatrix": 3e19,
+    "ion_temperature_origin": 45.9,
+    "ion_temperature_peaking_factor": 8.06,
+    "ion_temperature_pedestal": 6.09,
+    "ion_temperature_separatrix": 0.1,
+    "major_radius": 906.0,
+    "minor_radius": 292.258,
+    "pedestal_radius": 0.8 * 292.258,
+    "plasma_id": 1,
+    "shafranov_shift": 44.789,
+    "triangularity": 0.270,
+    "ion_temperature_beta": 6,
+}
 
+my_plasma = PlasmaSource(**plasma_params)
 
-# MATERIALS
-
-mats = openmc.Materials([])
-
-
-# GEOMETRY
-
-sph1 = openmc.Sphere(r=1000, boundary_type='vacuum')
-
-simple_moderator_cell = openmc.Cell(region=-sph1)
-
-universe = openmc.Universe(cells=[simple_moderator_cell])
-
-geom = openmc.Geometry(universe)
-
-
-# SIMULATION SETTINGS
-
-# Instantiate a Settings object
-sett = openmc.Settings()
-batches = 2
-sett.batches = batches
-sett.inactive = 0
-sett.particles = 3000
-sett.particle = "neutron"
-sett.run_mode = 'fixed source'
-
-
-# creates a source object
-source = openmc.Source()
-# this creates a neutron distribution with the shape of a tokamak plasma
-my_plasma = Plasma(elongation=2.9,
-                   minor_radius=1.118,
-                   major_radius=1.9,
-                   triangularity = 0.55)
-# there are other parameters that can be set for the plasma, but we can use the defaults for now
-my_plasma.export_plasma_source('my_custom_plasma_source.so')
-# sets the source poition, direction and energy with predefined plasma parameters (see source_sampling.cpp)
-source.library = './my_custom_plasma_source.so'
-sett.source = source
-
-
-# Run OpenMC!
-model = openmc.model.Model(geom, mats, sett)
-statepoint_filename = model.run()
-
-sp = openmc.StatePoint(statepoint_filename)
-
-print('direction of first neutron =', sp.source['u'][0])  # these neutrons are all created
+x_locations, y_locations, z_locations, x_directions, y_directions, z_directions, energies = ([] for i in range(7))
 
 fig_directions = go.Figure()
 
-# plot the neutron birth locations and trajectory
+for x in range(500):
+    sample = my_plasma.sample([random(), random(), random(), random(), random(), random(), random(), 1])
+    x_locations.append(sample[0])
+    y_locations.append(sample[1])
+    z_locations.append(sample[2])
+    x_directions.append(sample[3])
+    y_directions.append(sample[4])
+    z_directions.append(sample[5])
+    energies.append(sample[6])
+
 fig_directions.add_trace({
     'type': 'cone',
     'cauto': False,
-    'x': sp.source['r']['x'],
-    'y': sp.source['r']['y'],
-    'z': sp.source['r']['z'],
-    'u': sp.source['u']['x'],
-    'v': sp.source['u']['y'],
-    'w': sp.source['u']['z'],
+    'x': x_locations,
+    'y': y_locations,
+    'z': z_locations,
+    'u': x_directions,
+    'v': y_directions,
+    'w': z_directions,
     'cmin': 0,
     'cmax': 1,
     "anchor": "tail",
-    "colorscale": 'Viridis',
+    "colorscale": "Viridis",
     "hoverinfo": "u+v+w+norm",
     "sizemode": "absolute",
     "sizeref": 3,
-    "showscale": False,
+    "showscale": False
 })
 
 fig_directions.update_layout(title='Neutron initial directions coloured by direction',
