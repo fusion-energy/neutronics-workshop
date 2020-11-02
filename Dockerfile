@@ -37,6 +37,7 @@ RUN apt-get --yes install wget
 USER $NB_USER
 
 RUN pip install cmake
+RUN pip install pytest
 
 #RUN git clone https://github.com/ukaea/openmc_workshop
 
