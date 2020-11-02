@@ -1,80 +1,15 @@
 #!/usr/bin/env python3
 
-"""3_plot_neutron_birth_location.py: plots neutron birth locations."""
+"""plots different neutron bith locations"""
 
 import openmc
-import plotly.graph_objects as go
+from source_extraction_utils import create_inital_particles, plot_postion_from_initial_source
 
-# MATERIALS
-
-mats = openmc.Materials([])
-
-
-# GEOMETRY
-
-sph1 = openmc.Sphere(r=1000, boundary_type='vacuum')
-
-simple_moderator_cell = openmc.Cell(region=-sph1)
-
-universe = openmc.Universe(cells=[simple_moderator_cell])
-
-geom = openmc.Geometry(universe)
-
-
-# SIMULATION SETTINGS
-
-# Instantiate a Settings object
-sett = openmc.Settings()
-batches = 2
-sett.batches = batches
-sett.inactive = 0
-sett.particles = 1000
-sett.particle = "neutron"
-sett.run_mode = 'fixed source'
-
-
-# creates a source object
+# creates an isotropic point source with monoenergetic 14MeV neutrons
 source = openmc.Source()
-
-# sets the source poition, direction and energy
 source.space = openmc.stats.Point((0, 0, 0))
 source.angle = openmc.stats.Isotropic()
-source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0)  #neutron energy = 14.08MeV, AMU for D + T = 5, temperature is 20KeV
+source.energy = openmc.stats.Discrete([14e6], [1])
 
-sett.source = source
-
-# Run OpenMC!
-model = openmc.model.Model(geom, mats, sett)
-sp_filename = model.run()
-
-sp = openmc.StatePoint(sp_filename)
-
-print('birth location of first neutron =', sp.source['r'][0])  # these neutrons are all created
-
-fig_coords = go.Figure()
-
-text = ['Energy = '+str(i)+' eV' for i in sp.source['E']]
-
-# plots 3d poisitons of particles coloured by energy
-
-fig_coords.add_trace(go.Scatter3d(x=sp.source['r']['x'],
-                                  y=sp.source['r']['y'],
-                                  z=sp.source['r']['z'],
-                                  hovertext=text,
-                                  text=text,
-                                  mode='markers',
-                                  marker={'size': 2,
-                                          'color': sp.source['E'],
-                                  }
-                    )
-                  )
-
-fig_coords.update_layout(title='Neutron production coordinates, coloured by energy')
-
-fig_coords.write_html("particle_location.html")
-try:
-    fig_coords.write_html("/my_openmc_workshop/particle_location.html")
-except (FileNotFoundError, NotADirectoryError):  # for both inside and outside docker container
-    pass
-
-fig_coords.show()
+create_inital_particles(source)
+plot_postion_from_initial_source()
