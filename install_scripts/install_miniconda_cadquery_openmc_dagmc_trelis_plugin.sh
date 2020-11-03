@@ -170,8 +170,12 @@ echo 'export OPENMC_CROSS_SECTIONS=~/data/nndc-b7.1-hdf5/cross_sections.xml' >> 
 
 # Trelis-DAGMC Plugin
 
+cd ~
+sudo apt-get install openfortivpn
 sudo apt install curl
-curl -o /opt/Trelis-16.5/bin/plugins/svalinn-plugin-16.5-u18.04.tgz https://uwmadison.app.box.com/v/dagmc-trelis/file/423772352851
+
+# Download svalinn-plugin-16.5-u18.04.tgz from https://uwmadison.app.box.com/v/dagmc-trelis
+# Add svalinn-plugin-16.5-u18.04.tgz to /opt/Trelis-16.5/bin/plugins
 
 cd /opt/Trelis-16.5/bin/plugins
 sudo tar xzf svalinn-plugin-16.5-u18.04.tgz
