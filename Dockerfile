@@ -114,7 +114,10 @@ ENV PATH=$PATH:$HOME/NJOY2016/build
 RUN git clone https://github.com/openmc-dev/data.git
 
 # run script that converts ACE data to hdf5 data
-RUN python3 data/convert_nndc71.py --cleanup
+RUN python3 data/convert_nndc71.py --cleanup && \
+    rm -rf nndc-b7.1-endf  && \
+    rm -rf nndc-b7.1-ace/  && \
+    rm -rf nndc-b7.1-download
 
 # Python libraries used in the workshop
 RUN pip install plotly
@@ -123,14 +126,12 @@ RUN pip install ghalton==0.6.1
 RUN pip install noisyopt
 RUN pip install scikit-optimize
 RUN pip install inference-tools
-RUN pip install neutronics_material_maker
 RUN pip install adaptive
 RUN pip install vtk
 RUN pip install itkwidgets
+RUN pip install neutronics_material_maker
+RUN pip install parametric-plasma-source
 
-
-RUN git clone https://github.com/open-radiation-sources/parametric-plasma-source.git
-RUN cd parametric-plasma-source && pip install .
 
 ENV OPENMC_CROSS_SECTIONS=/nndc-b7.1-hdf5/cross_sections.xml
 USER $NB_USER
