@@ -1,5 +1,7 @@
 
-[![CircleCI](https://circleci.com/gh/ukaea/openmc_workshop.svg?style=svg)](https://circleci.com/gh/ukaea/openmc_workshop) Task 3 and Task 10  are currently failing the automated tests.
+[![CircleCI](https://circleci.com/gh/ukaea/openmc_workshop.svg?style=svg)](https://circleci.com/gh/ukaea/openmc_workshop)
+![dockerhub-publish](https://github.com/ukaea/openmc_workshop/workflows/dockerhub-publish/badge.svg)
+
 
 # Fusion Neutronics workshop with OpenMC
 A selection of resources for learning OpenMC with particular focus on simulations relevant to fusion energy.
