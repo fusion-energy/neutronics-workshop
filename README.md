@@ -4,21 +4,24 @@
 
 
 # Fusion Neutronics workshop with OpenMC
-A selection of resources for learning OpenMC with particular focus on simulations relevant to fusion energy.
+A selection of resources for learning OpenMC with particular focus on
+simulations relevant to fusion energy.
 
-There are a few [slides](https://slides.com/openmc_workshop/neutronics_workshop) that introduce the workshop and show the expected outputs of each task.
+There are a few 
+[slides](https://slides.com/openmc_workshop/neutronics_workshop) that introduce
+the workshop and show the expected outputs of each task.
 
-The use of OpenMC for neutronics analysis requires several software packages and nuclear data. These have been installed inside a Docker container.
-
-The majority of the workshop can also be completed using Binder notebooks or Google Colab Notebooks which do not require and installation and can be run online. Links are provided in the readme files for each task. Note - not all tasks can be completed in Colab as it lacks some required dependencies.
+The use of OpenMC for neutronics analysis requires several software packages
+and nuclear data. These have all been installed inside a Docker container.
 
 # History
 
-The OpenMC workshop was created by and is maintained by Jonathan Shimwell.
-John Billingsley has also made lots of great contributions and
+The OpenMC workshop was created by and is maintained by Jonathan Shimwell
+largely as a hobby project. John Billingsley has also made lots of great
+contributions and
 [others](https://github.com/ukaea/openmc_workshop/graphs/contributors) have
-also helped. The repository was originally made to teach university students
-via workshops but also became useful for placement students.
+also also helped. The repository was originally made to teach university
+students via workshops but also became useful for placement students.
 
 The repository has benefitted greatly from user feedback. Please feel free to
 raise Github issues if you spot anything that needs fixing. Contributions are
@@ -29,19 +32,25 @@ accessable fusion neutronics training resources.
 
 ## Docker Container Installation
 
-1. Install Docker CE for [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Mac OS](https://store.docker.com/editions/community/docker-ce-desktop-mac), or [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows), including the part where you enable docker use as a non-root user.
+1. Install Docker CE for
+[Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/),
+[Mac OS](https://store.docker.com/editions/community/docker-ce-desktop-mac), or
+[Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows),
+including the part where you enable docker use as a non-root user.
 
-2. Pull the docker image from the store by typing the following command in a terminal window, or Windows users might prefer PowerShell.
+2. Pull the docker image from the store by typing the following command in a
+terminal window, or Windows users might prefer PowerShell.
 
     ```docker pull ukaea/openmcworkshop```
 
-3. Now that you have the docker image you can enable graphics linking between your os and docker, and then run the docker container by typing the following commands in a terminal window.
+3. Now that you have the docker image you can enable graphics linking between
+your os and docker, and then run the docker container by typing the following
+commands in a terminal window.
 
     ```docker run -p 8888:8888 ukaea/openmcworkshop```
 
-4. A URL should be displayed in the terminal and can now be opened in the internet browser of your choice
-
-**IMPORTANT:** Any changes you make to scripts in the docker container will be lost when you exit the container. Make sure you copy any files you want to keep into the ```my_openmc_workshop``` folder before exiting the container. **Note:** The output files created by the task scripts are automatically copied to this folder.
+4. A URL should be displayed in the terminal and can now be opened in the
+internet browser of your choice
 
 ## Core workshop tasks
 
