@@ -12,6 +12,21 @@ The use of OpenMC for neutronics analysis requires several software packages and
 
 The majority of the workshop can also be completed using Binder notebooks or Google Colab Notebooks which do not require and installation and can be run online. Links are provided in the readme files for each task. Note - not all tasks can be completed in Colab as it lacks some required dependencies.
 
+# History
+
+The OpenMC workshop was created by and is maintained by Jonathan Shimwell.
+John Billingsley has also made lots of great contributions and
+[others](https://github.com/ukaea/openmc_workshop/graphs/contributors) have
+also helped. The repository was originally made to teach university students
+via workshops but also became useful for placement students.
+
+The repository has benefitted greatly from user feedback. Please feel free to
+raise Github issues if you spot anything that needs fixing. Contributions are
+also welcome from as pull requests to the develop branch. 
+
+The resource has proven most useful as it is one of the few open source and
+accessable fusion neutronics training resources.
+
 ## Docker Container Installation
 
 1. Install Docker CE for [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Mac OS](https://store.docker.com/editions/community/docker-ce-desktop-mac), or [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows), including the part where you enable docker use as a non-root user.
