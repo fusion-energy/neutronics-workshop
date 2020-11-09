@@ -140,4 +140,4 @@ COPY tasks tasks/
 USER root
 RUN ln -s /home/jovyan/nndc-b7.1-hdf5 /nndc-b7.1-hdf5
 
-WORKDIR openmc_workshop/tasks
+WORKDIR tasks
