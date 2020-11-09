@@ -4,8 +4,11 @@ import os
 import openmc
 import plotly.graph_objects as go
 from openmc.data import atomic_weight
+from openmc.data import REACTION_MT
 from openmc.data.reaction import REACTION_NAME
 from tqdm import tqdm
+import neutronics_material_maker as nmm
+import numpy as np
 
 
 def create_isotope_plot(isotopes, reaction, nuclear_data_path=None):
@@ -97,6 +100,40 @@ def create_material_plot(materials, reaction):
             name=material.name + ' ' + reaction)
         )
 
+    return fig
+
+
+def create_temperature_plot_for_isotope(
+    isotope, temperatures,
+    path_to_wmp='/home/jshim/WMP_Library/',
+    reaction='(n,total)',
+    samples=50000,
+    min_energy=1,
+    max_energy=2000
+):
+
+    energy = np.linspace(min_energy, max_energy, samples)
+
+    fig = create_plotly_figure()
+
+    if reaction not in REACTION_MT.keys():
+        print('Reaction not found, only these reactions are accepted', REACTION_MT.keys())
+        return None
+
+    mt_number = REACTION_MT[reaction]
+
+    for temperature in temperatures:
+
+        h5_file = path_to_wmp + nmm.isotope_to_zaid(isotope) + '.h5'
+
+        isotope_multipole = openmc.data.WindowedMultipole.from_hdf5(h5_file)
+
+        fig.add_trace(go.Scatter(
+                        x=energy,
+                        y=isotope_multipole(energy, temperature)[mt_number],
+                        mode='lines',
+                        name=isotope + ' ' + str(mt_number))
+                    )
     return fig
 
 
