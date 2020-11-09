@@ -39,26 +39,19 @@ USER $NB_USER
 RUN pip install cmake
 RUN pip install pytest
 
-#RUN git clone https://github.com/ukaea/openmc_workshop
 
-
-#ENV DAGMC_DIR=$HOME/DAGMC/
 # MOAB Variables
-ENV MOAB_BRANCH='Version5.1.0'
-ENV MOAB_REPO='https://bitbucket.org/fathomteam/moab/'
 ENV MOAB_INSTALL_DIR=$HOME/MOAB/
 
 
 # DAGMC Variables
-ENV DAGMC_BRANCH='develop'
-ENV DAGMC_REPO='https://github.com/svalinn/dagmc'
 ENV DAGMC_INSTALL_DIR=$HOME/DAGMC/
 
 # MOAB Install
 RUN cd $HOME && \
     mkdir MOAB && \
     cd MOAB && \
-    git clone -b $MOAB_BRANCH $MOAB_REPO  && \
+    git clone  --single-branch --branch Version5.1.0 https://bitbucket.org/fathomteam/moab/  && \
     mkdir build && cd build && \
     cmake ../moab -DENABLE_HDF5=ON -DENABLE_MPI=off -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR && \
     make -j8 &&  \
@@ -70,7 +63,7 @@ RUN cd $HOME && \
 # DAGMC Install
 RUN cd $HOME && \
     mkdir DAGMC && cd DAGMC && \
-    git clone -b $DAGMC_BRANCH $DAGMC_REPO && \
+    git clone --single-branch --branch develop https://github.com/svalinn/dagmc && \
     mkdir build && \
     cd build && \
     cmake ../dagmc -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$DAGMC_INSTALL_DIR -DMOAB_DIR=$MOAB_INSTALL_DIR && \
@@ -85,22 +78,25 @@ RUN pip install --upgrade numpy
 USER root
 
 # installs OpenMc from source
-RUN cd /opt &&  git clone https://github.com/openmc-dev/openmc.git
-RUN cd /opt/openmc && git checkout develop
-RUN cd /opt/openmc && mkdir build
-RUN cd /opt/openmc/build && cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR -DHDF5_PREFER_PARALLEL=OFF ..
-RUN cd /opt/openmc/build && make -j8 
-RUN cd /opt/openmc/build && make install 
-
-RUN cd /opt/openmc/ && python setup.py install
-
+RUN cd /opt && \
+    git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git && \
+    cd openmc && \
+    mkdir build && \
+    cd build && \
+    cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR -DHDF5_PREFER_PARALLEL=OFF ..  && \
+    make -j8 && \
+    make install && \ 
+    cd /opt/openmc/ && \
+    pip install .
 
 # Clone and install NJOY2016
-RUN git clone https://github.com/njoy/NJOY2016
-RUN cd NJOY2016 && mkdir build
-RUN cd NJOY2016/build/ && cmake -Dstatic=on .. 
-RUN cd NJOY2016/build/ && make 2>/dev/null
-RUN cd NJOY2016/build/ && sudo make install
+RUN git clone https://github.com/njoy/NJOY2016 && \
+    cd NJOY2016 && \
+    mkdir build && \
+    cd build && \
+    cmake -Dstatic=on .. && \
+    make 2>/dev/null && \
+    sudo make install
 
 ENV OPENMC_CROSS_SECTIONS=$HOME/nndc_hdf5/cross_sections.xml
 ENV LD_LIBRARY_PATH=$HOME/MOAB/lib:$HOME/DAGMC/lib
