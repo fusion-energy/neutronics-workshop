@@ -127,6 +127,7 @@ RUN pip install inference-tools
 RUN pip install adaptive
 RUN pip install vtk
 RUN pip install itkwidgets
+RUN pip install nest_asyncio
 RUN pip install neutronics_material_maker
 RUN pip install parametric-plasma-source
 
@@ -137,6 +138,7 @@ USER $NB_USER
 
 # Copy over the tasks
 COPY tasks tasks/
+COPY tests tests/
 
 
 USER root

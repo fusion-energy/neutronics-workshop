@@ -140,7 +140,7 @@ def sphere_with_firstwall_model(
 
     # assigns simulation settings
     sett = openmc.Settings()
-    sett.batches = 200  # this is minimum number of batches that will be run
+    sett.batches = 100  # this is minimum number of batches that will be run
     sett.trigger_active = True
     sett.trigger_max_batches =  500  # this is maximum number of batches that will be run
     sett.particles = 300
@@ -151,7 +151,9 @@ def sphere_with_firstwall_model(
     source = openmc.Source()
     source.space = openmc.stats.Point((0,0,0))
     source.angle = openmc.stats.Isotropic()
-    source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0) #neutron energy = 14.08MeV, AMU for D + T = 5, temperature is 20KeV
+    source.energy = openmc.stats.Discrete([14e6], [1])
+    # there is a small bug in the muir distribution at time of writing
+#     source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0) #neutron energy = 14.08MeV, AMU for D + T = 5, temperature is 20KeV
     sett.source = source
 
     # this is the tally set up
