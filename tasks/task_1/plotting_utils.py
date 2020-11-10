@@ -17,6 +17,12 @@ def create_isotope_plot(isotopes, reaction, nuclear_data_path=None):
     if nuclear_data_path == None:
         nuclear_data_path = os.path.dirname(os.environ["OPENMC_CROSS_SECTIONS"]) + '/neutron'
 
+    if reaction not in REACTION_MT.keys():
+        print('Reaction not found, only these reactions are accepted', REACTION_MT.keys())
+        return None
+    
+    mt_number = REACTION_MT[reaction]
+
     fig = create_plotly_figure()
 
     # this loop plots n,2n cross-sections for all isotopes
@@ -25,8 +31,8 @@ def create_isotope_plot(isotopes, reaction, nuclear_data_path=None):
     for isotope_name in tqdm(isotopes):
         isotope_object = openmc.data.IncidentNeutron.from_hdf5(os.path.join(nuclear_data_path, isotope_name+'.h5'))  # you may have to change this directory
         energy = isotope_object.energy['294K']  # 294K is the temperature for endf, others use 293K
-        if reaction in isotope_object.reactions.keys():
-            cross_section = isotope_object[reaction].xs['294K'](energy)
+        if mt_number in isotope_object.reactions.keys():
+            cross_section = isotope_object[mt_number].xs['294K'](energy)
             fig.add_trace(go.Scatter(
                 x=energy,
                 y=cross_section,
@@ -105,7 +111,7 @@ def create_material_plot(materials, reaction):
 
 def create_temperature_plot_for_isotope(
     isotope, temperatures,
-    path_to_wmp='/home/jshim/WMP_Library/',
+    path_to_wmp='/WMP_Library',
     reaction='(n,total)',
     samples=50000,
     min_energy=1,
@@ -124,7 +130,7 @@ def create_temperature_plot_for_isotope(
 
     for temperature in temperatures:
 
-        h5_file = path_to_wmp + nmm.isotope_to_zaid(isotope) + '.h5'
+        h5_file = os.path.join(path_to_wmp, nmm.isotope_to_zaid(isotope) + '.h5')
 
         isotope_multipole = openmc.data.WindowedMultipole.from_hdf5(h5_file)
 
