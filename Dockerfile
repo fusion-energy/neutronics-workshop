@@ -116,8 +116,7 @@ RUN python3 data/convert_nndc71.py --cleanup && \
     rm -rf nndc-b7.1-download
 
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz
-RUN tar -xf WMP_Library_v1.1.tar.gz
-
+RUN tar -xf WMP_Library_v1.1.tar.gz -C /
 # Python libraries used in the workshop
 RUN pip install plotly
 RUN pip install tqdm
