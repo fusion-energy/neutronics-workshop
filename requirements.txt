@@ -8,3 +8,4 @@ inference-tools
 adaptive
 neutronics-material-maker
 parametric-plasma-source
+nest_asyncio
