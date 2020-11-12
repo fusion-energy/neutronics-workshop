@@ -1,86 +1,134 @@
-
-""" test_script.py: run all the examples in the openmc workshop and check each example produces the expected results.
-    The example scripts open up various plots, some of which pause / block the running of this test suite.
-    The running of the tests can be manually resumed by closing matplotlib and eog windows when they pop up
-    run with
-    pytest test_scripts.py
-"""
-
-# at the moment, we are only testing to see whether the outputs are created
-# we are NOT testing to see whether the outputs are also saved locally
-# this will have to be implemented
-
-from pathlib import Path 
-import os
-import pytest
 import unittest
 
-cwd = os.getcwd()
+# from the notebook
+import openmc
+from tasks.task_3.source_extraction_utils import *  # imports plotting functions
 
-class test_task_3(unittest.TestCase):
-    def test_task_3_part_1(self):
+class test_task_3_notebook_1(unittest.TestCase):
 
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_3'))
-        output_filename = 'particle_energy_histogram.html'
-        os.system('rm '+output_filename)
-        os.system('python 1_plot_neutron_birth_energy.py')
-        assert Path(output_filename).exists() == True
-        os.system('rm '+output_filename)
+    def test_part_1(self):
+        # initialises a new source object
+        source = openmc.Source()
 
+        # sets the location of the source to x=0 y=0 z=0
+        source.space = openmc.stats.Point((0, 0, 0))
 
-    def test_task_3_part_2(self):
+        # sets the direction to isotropic
+        source.angle = openmc.stats.Isotropic()
 
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_3'))
-        output_filename = 'particle_location.html'
-        os.system('rm '+output_filename)
-        os.system('python 2_plot_neutron_birth_location.py')
-        assert Path(output_filename).exists() == True
-        os.system('rm '+output_filename)
+        # sets the energy distribution to 100% 14MeV neutrons
+        source.energy = openmc.stats.Discrete([14e6], [1])
 
+        create_inital_particles(source)
+        plot_energy_from_initial_source(input_filename='initial_source.h5')
 
-    def test_task_3_part_3(self):
+    def test_part_2(self):
+        source = openmc.Source()
+        source.space = openmc.stats.Point((0, 0, 0))
+        source.angle = openmc.stats.Isotropic()
 
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_3'))
-        output_filename = 'particle_direction.html'
-        os.system('rm '+output_filename)
-        os.system('python 3_plot_neutron_birth_direction.py')
-        assert Path(output_filename).exists() == True
-        os.system('rm '+output_filename)
+        # Documentation on the Watt distribution is here
+        # https://docs.openmc.org/en/stable/pythonapi/generated/openmc.data.WattEnergy.html
+        source.energy = openmc.stats.Watt(a=988000.0, b=2.249e-06)
 
 
-    def test_task_3_part_4(self):
+        create_inital_particles(source)
+        plot_energy_from_initial_source(input_filename='initial_source.h5')
 
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_3'))
-        output_filename = 'plasma_particle_location.html'
-        os.system('rm '+output_filename)
-        os.system('python 4_plot_neutron_birth_location_plasma.py')
-        assert Path(output_filename).exists() == True
-        os.system('rm '+output_filename)
- 
+    def test_part_3(self):
+        source = openmc.Source()
+        source.space = openmc.stats.Point((0, 0, 0))
+        source.angle = openmc.stats.Isotropic()
 
-    def test_task_3_part_5(self):
+        # Documentation on the Muir distribution is here
+        # https://docs.openmc.org/en/stable/pythonapi/generated/openmc.stats.Muir.html
+        source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0)
 
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_3'))
-        output_filename = 'plasma_particle_direction.html'
-        os.system('rm '+output_filename)
-        os.system('python 5_plot_neutron_birth_direction_plasma.py')
-        assert Path(output_filename).exists() == True
-        os.system('rm '+output_filename)
+        create_inital_particles(source)
+        plot_energy_from_initial_source(input_filename='initial_source.h5')
 
+    def test_part_3(self):
+        # Creates an isotropic point source with monoenergetic 14MeV neutrons
+        source = openmc.Source()
+        source.space = openmc.stats.Point((0, 0, 0))
+        source.angle = openmc.stats.Isotropic()
+        source.energy = openmc.stats.Discrete([14e6], [1])
 
-    def test_task_3_part_6(self):
+        create_inital_particles(source)
+        # plots the position of neutrons created
+        plot_postion_from_initial_source()
 
-        os.chdir(Path(cwd))
-        os.chdir(Path('tasks/task_3'))
-        output_filenames = ['plot_3d.h5', 'plot_3d.vti', 'track_1_1_4.h5', 'track_1_1_4.pvtp', 'track_1_1_4_0.vtp']
-        for output_filename in output_filenames:
-            os.system('rm '+output_filename)
-        os.system('python 6_example_neutron_tracks.py')
-        for output_filename in output_filenames:
-            assert Path(output_filename).exists() == True
-            os.system('rm '+output_filename)
+    def test_part_4(self):
+        # Creates an isotropic point source with monoenergetic 14MeV neutrons
+        source = openmc.Source()
+        source.space = openmc.stats.Point((0, 0, 0))
+        source.angle = openmc.stats.Isotropic()
+        source.energy = openmc.stats.Discrete([14e6], [1])
+
+        create_inital_particles(source)
+        # plots the initial direction of neutrons created
+        plot_direction_from_initial_source()
+
+from random import random
+import plotly.graph_objects as go
+from parametric_plasma_source import PlasmaSource
+
+class test_task_3_notebook_2(unittest.TestCase):
+
+    def test_part_1_2_3(self):
+        my_plasma = PlasmaSource(
+            elongation=1.557,
+            ion_density_origin=1.09e20,
+            ion_density_peaking_factor=1,
+            ion_density_pedestal=1.09e20,
+            ion_density_separatrix=3e19,
+            ion_temperature_origin=45.9,
+            ion_temperature_peaking_factor=8.06,
+            ion_temperature_pedestal=6.09,
+            ion_temperature_separatrix=0.1,
+            major_radius=906.0,
+            minor_radius=292.258,
+            pedestal_radius=0.8 * 292.258,
+            plasma_id=1,
+            shafranov_shift=44.789,
+            triangularity=0.270,
+            ion_temperature_beta=6
+        )
+
+        # cell 2
+        #creates empty lists ready to be populated
+        x_locations, y_locations, z_locations, x_directions, y_directions, z_directions, energies = ([] for i in range(7))
+
+        number_of_samples = 500
+
+        for x in range(number_of_samples):
+            # randomises the neutron sampler
+            sample = my_plasma.sample([random(), random(), random(), random(), random(), random(), random(), random()])
+            x_locations.append(sample[0])
+            y_locations.append(sample[1])
+            z_locations.append(sample[2])
+            x_directions.append(sample[3])
+            y_directions.append(sample[4])
+            z_directions.append(sample[5])
+            energies.append(sample[6])
+
+            text = ['Energy = ' + str(i) + ' eV' for i in energies]
+
+        # cell 3
+        fig_coords = go.Figure()
+
+        fig_coords.add_trace(go.Scatter3d(
+            x=x_locations,
+            y=y_locations,
+            z=z_locations,
+            hovertext=text,
+            text=text,
+            mode='markers',
+            marker={
+                'size': 1.5,
+                'color': energies
+                }
+            )
+        )
+
+        fig_coords.update_layout(title='Neutron production coordinates, coloured by energy')

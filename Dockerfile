@@ -143,7 +143,7 @@ USER $NB_USER
 # Copy over the tasks
 COPY tasks tasks/
 
-RUN echo retest
+RUN echo copying over test files
 
 COPY tests tests/
 

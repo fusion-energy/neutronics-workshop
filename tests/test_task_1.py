@@ -1,14 +1,8 @@
 
-""" test_script.py: run all the examples in the openmc workshop and check each example produces the expected results.
-    The example scripts open up various plots, some of which pause / block the running of this test suite.
-    The running of the tests can be manually resumed by closing matplotlib and eog windows when they pop up
-    run with
-    pytest test_scripts.py
 """
-
-# at the moment, we are only testing to see whether the outputs are created
-# we are NOT testing to see whether the outputs are also saved locally
-# this will have to be implemented
+tests the create_isotope_plot from plotting_utils in the same way the examples
+use the function.
+"""
 
 import os
 import unittest
@@ -16,8 +10,6 @@ import unittest
 import plotly.graph_objects as go
 
 from tasks.task_1.plotting_utils import create_isotope_plot
-
-cwd = os.getcwd()
 
 
 class test_task_1(unittest.TestCase):
