@@ -1,7 +1,11 @@
 # build with the following command
-# sudo docker build -t ukaea/workshop_jupyter . --no-cache
-# docker run -p 8888:8888 openmcworkshop/workshop_jupyter
+# sudo docker build -t workshop_jupyter .
 
+# run with the following command
+# docker run -p 8888:8888 workshop_jupyter
+
+# test with the folowing command
+# sudo docker run --rm workshop_jupyter pytest ../tests
 
 FROM jupyter/minimal-notebook
 
@@ -127,6 +131,7 @@ RUN pip install inference-tools
 RUN pip install adaptive
 RUN pip install vtk
 RUN pip install itkwidgets
+RUN pip install nest_asyncio
 RUN pip install neutronics_material_maker
 RUN pip install parametric-plasma-source
 
@@ -137,6 +142,10 @@ USER $NB_USER
 
 # Copy over the tasks
 COPY tasks tasks/
+
+RUN echo copying over test files
+
+COPY tests tests/
 
 
 USER root
