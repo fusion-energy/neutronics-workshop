@@ -81,6 +81,8 @@ RUN apt-get --yes install libeigen3-dev && \
     apt-get --yes install libglfw3-dev 
 
 
+RUN pip install paramak
+
 ARG compile_cores=50
 
 # Clone and install Embree
