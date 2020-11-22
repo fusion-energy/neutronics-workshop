@@ -1,85 +1,149 @@
 # build with the following command
-# sudo docker build -t workshop_jupyter .
+# sudo docker build -t ukaea/openmcworkshop .
 
 # run with the following command
-# docker run -p 8888:8888 workshop_jupyter
+# docker run -p 8888:8888 ukaea/openmcworkshop /bin/bash -c "jupyter notebook --notebook-dir=/tasks --ip='*' --port=8888 --no-browser --allow-root"
 
 # test with the folowing command
-# sudo docker run --rm workshop_jupyter pytest ../tests
+# sudo docker run --rm ukaea/openmcworkshop pytest ../tests
 
-FROM jupyter/minimal-notebook
+FROM continuumio/miniconda3
 
-# this is required to install programs on the base image
-USER root
 
 RUN apt-get --yes update && apt-get --yes upgrade
 
 # required pacakges identified from openmc travis.yml
-RUN apt-get --yes install mpich
-RUN apt-get --yes install libmpich-dev
-RUN apt-get --yes install libhdf5-serial-dev
-RUN apt-get --yes install libhdf5-mpich-dev
-RUN apt-get --yes install libblas-dev
-RUN apt-get --yes install liblapack-dev
+RUN apt-get --yes install mpich libmpich-dev libhdf5-serial-dev \
+                          libhdf5-mpich-dev libblas-dev liblapack-dev
 
 # needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
 RUN apt-get --yes install libnetcdf-dev
 # RUN apt-get --yes install libnetcdf13
+
 # eigen3 needed for DAGMC
 RUN apt-get --yes install libeigen3-dev
 
-
-RUN apt-get -y install sudo #  needed as the install NJOY script has a sudo make install command
+# sudo is needed during the NJOY install
+RUN apt-get -y install sudo 
 RUN apt-get -y install git
-
 
 # dependancies used in the workshop
 RUN apt-get --yes install imagemagick
 RUN apt-get --yes install hdf5-tools
 RUN apt-get --yes install wget
 
-USER $NB_USER
-
+# new version needed for openmc compile
 RUN pip install cmake
-RUN pip install pytest
 
+# Python libraries used in the workshop
+RUN pip install plotly tqdm ghalton==0.6.1 noisyopt scikit-optimize \
+                inference-tools adaptive vtk itkwidgets nest_asyncio \
+                neutronics_material_maker parametric-plasma-source pytest
 
-# MOAB Variables
-ENV MOAB_INSTALL_DIR=$HOME/MOAB/
+RUN git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git
+RUN git clone https://github.com/njoy/NJOY2016
 
+RUN mkdir DAGMC && \
+    cd DAGMC && \
+    git clone -b develop https://github.com/svalinn/dagmc
 
-# DAGMC Variables
-ENV DAGMC_INSTALL_DIR=$HOME/DAGMC/
-
-# MOAB Install
-RUN cd $HOME && \
-    mkdir MOAB && \
+RUN mkdir MOAB && \
     cd MOAB && \
-    git clone  --single-branch --branch Version5.1.0 https://bitbucket.org/fathomteam/moab/  && \
-    mkdir build && cd build && \
-    cmake ../moab -DENABLE_HDF5=ON -DENABLE_MPI=off -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR && \
-    make -j8 &&  \
-    make -j8 install  && \
-    cmake ../moab -DBUILD_SHARED_LIBS=OFF && \
-    make -j8 install && \
-    rm -rf $HOME/MOAB/moab $HOME/MOAB/build
+    git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab/
 
-# DAGMC Install
-RUN cd $HOME && \
-    mkdir DAGMC && cd DAGMC && \
-    git clone --single-branch --branch develop https://github.com/svalinn/dagmc && \
-    mkdir build && \
-    cd build && \
-    cmake ../dagmc -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$DAGMC_INSTALL_DIR -DMOAB_DIR=$MOAB_INSTALL_DIR && \
-    make -j8 install && \
-    rm -rf $HOME/DAGMC/dagmc $HOME/DAGMC/build
+RUN conda install jupyter -y
+RUN conda install -c cadquery -c conda-forge cadquery=master
 
-
-# check if this is still neeeded
+# needed for openmc
 RUN pip install --upgrade numpy
 
-# /opt folder is owned by root
-USER root
+RUN git clone https://github.com/embree/embree
+RUN git clone https://github.com/pshriwise/double-down
+
+# needed for moab
+RUN pip install cython
+
+# Install dependencies from Debian package manager
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+        wget git gfortran g++ cmake \
+        mpich libmpich-dev libhdf5-serial-dev libhdf5-mpich-dev \
+        imagemagick && \
+    apt-get autoremove
+
+# install addition packages required for DAGMC
+RUN apt-get --yes install libeigen3-dev && \
+    apt-get --yes install libblas-dev && \
+    apt-get --yes install liblapack-dev && \
+    apt-get --yes install libnetcdf-dev && \
+    apt-get --yes install libtbb-dev && \
+    apt-get --yes install libglfw3-dev 
+
+
+ARG compile_cores=50
+
+# Clone and install Embree
+RUN echo git clone https://github.com/embree/embree  && \
+    cd embree && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=.. \
+        -DEMBREE_ISPC_SUPPORT=OFF && \
+    make -j"$compile_cores" && \
+    make -j"$compile_cores" install
+
+
+RUN echo git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab/ && \
+    cd MOAB && \
+    mkdir build && \
+    cd build && \
+    cmake ../moab -DENABLE_HDF5=ON \
+        -DENABLE_NETCDF=ON \
+        -DBUILD_SHARED_LIBS=OFF \
+        -DENABLE_FORTRAN=OFF \
+        -DCMAKE_INSTALL_PREFIX=/MOAB && \
+    make -j"$compile_cores" &&  \
+    make -j"$compile_cores" install && \
+    cmake ../moab -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_HDF5=ON \
+        -DENABLE_PYMOAB=ON \
+        -DENABLE_BLASLAPACK=OFF \
+        -DENABLE_FORTRAN=OFF \
+        -DCMAKE_INSTALL_PREFIX=/MOAB && \
+    make -j"$compile_cores" install && \
+    rm -rf $HOME/MOAB/moab && \
+    rm -rf $HOME/MOAB/build
+
+
+# Clone and install Double-Down
+RUN echo git clone https://github.com/pshriwise/double-down && \
+    cd double-down && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=.. \
+        -DMOAB_DIR=/MOAB \
+        -DEMBREE_DIR=/embree/lib/cmake/embree-3.12.1 \
+        -DEMBREE_ROOT=/embree/lib/cmake/embree-3.12.1 && \
+    make -j"$compile_cores" && \
+    make -j"$compile_cores" install
+
+
+# DAGMC install
+# ENV DAGMC_INSTALL_DIR=$HOME/DAGMC/
+RUN echo installing dagmc && \
+    cd DAGMC && \
+    # mkdir DAGMC && cd DAGMC && \
+    # git clone --single-branch --branch develop https://github.com/svalinn/dagmc && \
+    mkdir build && \
+    cd build && \
+    cmake ../dagmc -DBUILD_TALLY=ON \
+        -DCMAKE_INSTALL_PREFIX=/DAGMC \
+        -DMOAB_DIR=/MOAB && \
+    make -j"$compile_cores" install && \
+    rm -rf /DAGMC/dagmc /DAGMC/build
+
+
 
 # installs OpenMc from source
 RUN cd /opt && \
@@ -88,13 +152,14 @@ RUN cd /opt && \
     mkdir build && \
     cd build && \
     cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR -DHDF5_PREFER_PARALLEL=OFF ..  && \
-    make -j8 && \
-    make install && \ 
+    make -j"$compile_cores" && \
+    make -j"$compile_cores" install && \ 
     cd /opt/openmc/ && \
     pip install .
 
 # Clone and install NJOY2016
-RUN git clone https://github.com/njoy/NJOY2016 && \
+RUN echo installing openmc && \
+    # git clone https://github.com/njoy/NJOY2016 && \
     cd NJOY2016 && \
     mkdir build && \
     cd build && \
@@ -102,18 +167,12 @@ RUN git clone https://github.com/njoy/NJOY2016 && \
     make 2>/dev/null && \
     sudo make install
 
-ENV OPENMC_CROSS_SECTIONS=$HOME/nndc_hdf5/cross_sections.xml
 ENV LD_LIBRARY_PATH=$HOME/MOAB/lib:$HOME/DAGMC/lib
 ENV PATH=$PATH:$HOME/NJOY2016/build
 
 
-
-# install endf nuclear data
-
-# clone data repository
+# install nuclear data
 RUN git clone https://github.com/openmc-dev/data.git
-
-# run script that converts ACE data to hdf5 data
 RUN python3 data/convert_nndc71.py --cleanup && \
     rm -rf nndc-b7.1-endf  && \
     rm -rf nndc-b7.1-ace/  && \
@@ -121,34 +180,13 @@ RUN python3 data/convert_nndc71.py --cleanup && \
 
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz
 RUN tar -xf WMP_Library_v1.1.tar.gz -C /
-# Python libraries used in the workshop
-RUN pip install plotly
-RUN pip install tqdm
-RUN pip install ghalton==0.6.1
-RUN pip install noisyopt
-RUN pip install scikit-optimize
-RUN pip install inference-tools
-RUN pip install adaptive
-RUN pip install vtk
-RUN pip install itkwidgets
-RUN pip install nest_asyncio
-RUN pip install neutronics_material_maker
-RUN pip install parametric-plasma-source
 
 
 ENV OPENMC_CROSS_SECTIONS=/nndc-b7.1-hdf5/cross_sections.xml
-USER $NB_USER
 
 
-# Copy over the tasks
+# Copy over the local repository files
 COPY tasks tasks/
-
-RUN echo copying over test files
-
 COPY tests tests/
-
-
-USER root
-RUN ln -s /home/jovyan/nndc-b7.1-hdf5 /nndc-b7.1-hdf5
 
 WORKDIR tasks
