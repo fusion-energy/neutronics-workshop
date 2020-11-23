@@ -2,9 +2,9 @@ import unittest
 
 # from the notebook
 import openmc
-from tasks.task_3.source_extraction_utils import *  # imports plotting functions
+from tasks.task_04_make_sources.source_extraction_utils import *  # imports plotting functions
 
-class test_task_3_notebook_1(unittest.TestCase):
+class test_task_4_notebook_1(unittest.TestCase):
 
     def test_part_1(self):
         # initialises a new source object
@@ -73,7 +73,7 @@ from random import random
 import plotly.graph_objects as go
 from parametric_plasma_source import PlasmaSource
 
-class test_task_3_notebook_2(unittest.TestCase):
+class test_task_4_notebook_2(unittest.TestCase):
 
     def test_part_1_2_3(self):
         my_plasma = PlasmaSource(

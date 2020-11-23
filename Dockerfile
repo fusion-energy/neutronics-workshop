@@ -51,13 +51,11 @@ RUN mkdir MOAB && \
     cd MOAB && \
     git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab/
 
-RUN conda install jupyter -y
-RUN conda install -c cadquery -c conda-forge cadquery=master
 
 # needed for openmc
 RUN pip install --upgrade numpy
 
-RUN git clone https://github.com/embree/embree
+RUN git clone --single-branch --branch master https://github.com/embree/embree
 RUN git clone https://github.com/pshriwise/double-down
 
 # needed for moab
@@ -80,13 +78,26 @@ RUN apt-get --yes install libeigen3-dev && \
     apt-get --yes install libtbb-dev && \
     apt-get --yes install libglfw3-dev 
 
+# needed for CadQuery functionality
+RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
+                       freeglut3-dev libosmesa6 libosmesa6-dev \
+                       libgles2-mesa-dev && \
+                       apt-get clean
 
-RUN pip install paramak
+RUN conda install jupyter -y
+RUN conda install -c cadquery -c conda-forge cadquery=2
+# RUN conda install -c cadquery -c conda-forge cadquery=master
+
+RUN git clone  --single-branch --branch develop https://github.com/ukaea/paramak.git && \
+    cd paramak && \
+    python setup.py install
+
+# RUN pip install paramak
 
 ARG compile_cores=50
 
 # Clone and install Embree
-RUN echo git clone https://github.com/embree/embree  && \
+RUN echo git clone --single-branch --branch master https://github.com/embree/embree  && \
     cd embree && \
     mkdir build && \
     cd build && \
