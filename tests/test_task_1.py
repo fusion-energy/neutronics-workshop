@@ -9,7 +9,7 @@ import unittest
 
 import plotly.graph_objects as go
 
-from tasks.task_1.plotting_utils import create_isotope_plot
+from tasks.task_01_cross_sections.plotting_utils import create_isotope_plot
 
 
 class test_task_1(unittest.TestCase):
@@ -36,7 +36,7 @@ class test_task_1(unittest.TestCase):
         )
         assert isinstance(fig, go.Figure)
 
-    def test_task_1_notebook_1_part_2(self):
+    def test_task_1_notebook_1_part_3(self):
 
         # this is a list of every stable isotope, this list will take a long time to process
         isotopes_of_interest = ['Ag107', 'Ag109', 'Al27', 'Ar36', 'Ar38', 'Ar40', 'As75', 'Au197', 'B10', 'B11', 'Ba130',
