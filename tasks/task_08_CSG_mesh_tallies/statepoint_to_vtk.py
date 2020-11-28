@@ -107,11 +107,11 @@ def initiate_mesh(
     output_filename,
     mesh_id,
     tally_id
-)
+):
 
-    print('Loading file %s' % input_filename)
+    print('Loading file %s' % statepoint_filename)
 
-    sp = openmc.StatePoint(input_filename)
+    sp = openmc.StatePoint(statepoint_filename)
 
     print('Loading mesh with ID of %s' % mesh_id)
     mesh = sp.meshes[mesh_id]
