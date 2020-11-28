@@ -138,7 +138,7 @@ def create_temperature_plot_for_isotope(
                         x=energy,
                         y=isotope_multipole(energy, temperature)[mt_number],
                         mode='lines',
-                        name=isotope + ' ' + str(mt_number))
+                        name=isotope + ' ' + reaction + ' ' + str(temperature)+' Kelvin')
                     )
     return fig
 
