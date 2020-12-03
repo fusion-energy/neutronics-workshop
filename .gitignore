@@ -16,7 +16,8 @@ tallies.out
 *.so
 
 *.vtk
-
+*.vtp
+*.pvtp
 *.vti
 
 *.ppm

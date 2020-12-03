@@ -101,6 +101,69 @@ def write_vtk(xs, ys, zs, tally_label, tally_data, error_data, outfile):
 
     writer.Write()
 
+def initiate_mesh(
+    statepoint_filename,
+    tally_name,
+    output_filename,
+    mesh_id,
+    tally_id
+)
+
+    print('Loading file %s' % input_filename)
+
+    sp = openmc.StatePoint(input_filename)
+
+    print('Loading mesh with ID of %s' % mesh_id)
+    mesh = sp.meshes[mesh_id]
+
+    xs = np.linspace(mesh.lower_left[0],
+                     mesh.upper_right[0],
+                     mesh.dimension[0] + 1)
+    ys = np.linspace(mesh.lower_left[1],
+                     mesh.upper_right[1],
+                     mesh.dimension[1] + 1)
+    zs = np.linspace(mesh.lower_left[2],
+                     mesh.upper_right[2],
+                     mesh.dimension[2] + 1)
+
+    tally_args = {'name' : tally_name,
+                  'id'   : tally_id}
+
+    msg = "Loading retrieving tally with \n"
+    if tally_name is not None:
+        msg += "Name: {}\n".format(tally_name)
+    if tally_id is not None:
+        msg += "ID: {}\n".format(tally_id)
+    try:
+        tally = sp.get_tally(**tally_args)
+    except LookupError as e:
+        raise e
+
+    data = tally.mean[:,0,0]
+    error = tally.std_dev[:,0,0]
+
+    data = data.tolist()
+    error = error.tolist()
+
+    for c, i in enumerate(data):
+        if math.isnan(i):
+            data[c] = 0.
+
+    for c, i in enumerate(error):
+        if math.isnan(i):
+            error[c] = 0.
+
+    if tally_name is None:
+        tally_label = "tally_{}".format(tally_id)
+    else:
+        tally_label = tally_name
+
+    if output_filename.endswith(".vtk"):
+        write_vtk(xs, ys, zs, tally_label, data, error, output_filename)
+    else:
+        write_moab(xs, ys, zs, tally_label, data, error, output_filename)
+ 
+
 def main():
 
     ap = argparse.ArgumentParser(description=__doc__)
@@ -129,59 +192,14 @@ def main():
 
     args = ap.parse_args()
 
-    print('Loading file %s' % args.input)
+    initiate_mesh(
+        statepoint_filename=args.input,
+        tally_name=args.tally_name,
+        output_filename=args.output,
+        mesh_id = args.mesh_id,
+        tally_id=args.tally_id
+    )
 
-    sp = openmc.StatePoint(args.input)
-
-    print('Loading mesh with ID of %s' % args.mesh_id)
-    mesh = sp.meshes[args.mesh_id]
-
-    xs = np.linspace(mesh.lower_left[0],
-                     mesh.upper_right[0],
-                     mesh.dimension[0] + 1)
-    ys = np.linspace(mesh.lower_left[1],
-                     mesh.upper_right[1],
-                     mesh.dimension[1] + 1)
-    zs = np.linspace(mesh.lower_left[2],
-                     mesh.upper_right[2],
-                     mesh.dimension[2] + 1)
-
-    tally_args = {'name' : args.tally_name,
-                  'id'   : args.tally_id}
-
-    msg = "Loading retrieving tally with \n"
-    if args.tally_name is not None:
-        msg += "Name: {}\n".format(args.tally_name)
-    if args.tally_id is not None:
-        msg += "ID: {}\n".format(args.tally_id)
-    try:
-        tally = sp.get_tally(**tally_args)
-    except LookupError as e:
-        raise e
-
-    data = tally.mean[:,0,0]
-    error = tally.std_dev[:,0,0]
-
-    data = data.tolist()
-    error = error.tolist()
-
-    for c, i in enumerate(data):
-        if math.isnan(i):
-            data[c] = 0.
-
-    for c, i in enumerate(error):
-        if math.isnan(i):
-            error[c] = 0.
-
-    if args.tally_name is None:
-        tally_label = "tally_{}".format(args.tally_id)
-    else:
-        tally_label = args.tally_name
-
-    if args.output.endswith(".vtk"):
-        write_vtk(xs, ys, zs, tally_label, data, error, args.output)
-    else:
-        write_moab(xs, ys, zs, tally_label, data, error, args.output)
 
 if __name__ == "__main__":
     main()
