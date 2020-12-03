@@ -23,18 +23,15 @@ jobs:
       - run:
           name: run tests
           no_output_timeout: 30m
-          command: 
-            pytest tests -v --cov=openmc_workshop  --cov-report term --cov-report html:htmlcov --cov-report xml --junitxml=test-reports/junit.xml
+          command: |
+            cd ..
+            pytest tests -v --cov=openmc_workshop --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
       - store_test_results:
           path: test-reports
-
       - store_artifacts:
           path: test-reports
-          # destination: test-reports
       - run:
           name: install curl
           command:
             apt-get install curl
       - run: curl -s https://codecov.io/bash | bash
-      # - codecov/upload:
-          # file: {{ coverage_report_filepath }}
