@@ -20,7 +20,7 @@ def create_isotope_plot(isotopes, reaction, nuclear_data_path=None):
     if reaction not in REACTION_MT.keys():
         print('Reaction not found, only these reactions are accepted', REACTION_MT.keys())
         return None
-    
+   
     mt_number = REACTION_MT[reaction]
 
     fig = create_plotly_figure()
@@ -49,6 +49,11 @@ def create_isotope_plot(isotopes, reaction, nuclear_data_path=None):
 def create_element_plot(elements, reaction):
     """Creates a plot of elements and reaction provided
     """
+
+    if reaction not in REACTION_MT.keys():
+        print('Reaction not found, only these reactions are accepted', REACTION_MT.keys())
+        return None
+
     fig = create_plotly_figure()
 
     # this loop extracts the cross section and energy of reactions when they exist
@@ -82,6 +87,10 @@ def create_element_plot(elements, reaction):
 
 def create_material_plot(materials, reaction):
 
+    if reaction not in REACTION_MT.keys():
+        print('Reaction not found, only these reactions are accepted', REACTION_MT.keys())
+        return None
+
     fig = create_plotly_figure(y_axis_label='Macroscopic Cross Section (1/cm)')
 
     if isinstance(reaction, str):
@@ -90,6 +99,9 @@ def create_material_plot(materials, reaction):
     else:
         MT_number = reaction
         reaction = REACTION_NAME[MT_number]
+
+    if not isinstance(materials, list):
+        materials = [materials]
 
     for material in materials:
         # extracts energy and cross section for the material for the provided MT reaction mumber
@@ -138,7 +150,7 @@ def create_temperature_plot_for_isotope(
                         x=energy,
                         y=isotope_multipole(energy, temperature)[mt_number],
                         mode='lines',
-                        name=isotope + ' ' + str(mt_number))
+                        name=isotope + ' ' + reaction + ' ' + str(temperature)+' Kelvin')
                     )
     return fig
 

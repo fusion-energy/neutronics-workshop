@@ -1,11 +1,11 @@
 # build with the following command
-# sudo docker build -t ukaea/openmcworkshop .
+# docker build -t ukaea/openmcworkshop .
 
 # run with the following command
 # docker run -p 8888:8888 ukaea/openmcworkshop /bin/bash -c "jupyter notebook --notebook-dir=/tasks --ip='*' --port=8888 --no-browser --allow-root"
 
 # test with the folowing command
-# sudo docker run --rm ukaea/openmcworkshop pytest ../tests
+# docker run --rm ukaea/openmcworkshop pytest ../tests
 
 FROM continuumio/miniconda3
 
