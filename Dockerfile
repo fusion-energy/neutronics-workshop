@@ -38,7 +38,8 @@ RUN pip install cmake
 # Python libraries used in the workshop
 RUN pip install plotly tqdm ghalton==0.6.1 noisyopt scikit-optimize \
                 inference-tools adaptive vtk itkwidgets nest_asyncio \
-                neutronics_material_maker parametric-plasma-source pytest
+                neutronics_material_maker parametric-plasma-source pytest \
+                pytest-cov
 
 RUN git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git
 RUN git clone https://github.com/njoy/NJOY2016
@@ -85,8 +86,8 @@ RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
                        apt-get clean
 
 RUN conda install jupyter -y
-RUN conda install -c cadquery -c conda-forge cadquery=2
-# RUN conda install -c cadquery -c conda-forge cadquery=master
+# RUN conda install -c cadquery -c conda-forge cadquery=2
+RUN conda install -c cadquery -c conda-forge cadquery=master
 
 RUN git clone  --single-branch --branch develop https://github.com/ukaea/paramak.git && \
     cd paramak && \
