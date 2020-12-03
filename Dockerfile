@@ -85,8 +85,8 @@ RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
                        apt-get clean
 
 RUN conda install jupyter -y
-RUN conda install -c cadquery -c conda-forge cadquery=2
-# RUN conda install -c cadquery -c conda-forge cadquery=master
+# RUN conda install -c cadquery -c conda-forge cadquery=2
+RUN conda install -c cadquery -c conda-forge cadquery=master
 
 RUN git clone  --single-branch --branch develop https://github.com/ukaea/paramak.git && \
     cd paramak && \
