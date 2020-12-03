@@ -200,7 +200,7 @@ ENV OPENMC_CROSS_SECTIONS=/nndc-b7.1-hdf5/cross_sections.xml
 
 
 # Copy over the local repository files
-COPY tasks tasks/
 COPY tests tests/
+COPY tasks tasks/
 
 WORKDIR tasks
