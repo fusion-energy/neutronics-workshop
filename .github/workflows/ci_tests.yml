@@ -16,5 +16,5 @@ jobs:
    - uses: actions/checkout@v1
    - name: Build and test with Docker
      run: |
-       docker build --tag openmc_docker .
+       docker build --tag openmc_docker --build-arg compile_cores=2 .
        docker run --rm openmc_docker pytest ../tests
