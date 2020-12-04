@@ -1,5 +1,5 @@
-# build with the following command
-# docker build -t ukaea/openmcworkshop .
+# build with the following command, replace the 50 cores with however many you would like to use
+# docker build -t ukaea/openmcworkshop --build-arg compile_cores=50 .
 
 # run with the following command
 # docker run -p 8888:8888 ukaea/openmcworkshop /bin/bash -c "jupyter notebook --notebook-dir=/tasks --ip='*' --port=8888 --no-browser --allow-root"
@@ -85,17 +85,17 @@ RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
                        libgles2-mesa-dev && \
                        apt-get clean
 
-RUN conda install jupyter -y
-# RUN conda install -c cadquery -c conda-forge cadquery=2
-RUN conda install -c cadquery -c conda-forge cadquery=master
-
 RUN git clone  --single-branch --branch develop https://github.com/ukaea/paramak.git && \
     cd paramak && \
     python setup.py install
 
+RUN conda install jupyter -y
+# RUN conda install -c cadquery -c conda-forge cadquery=2
+RUN conda install -c cadquery -c conda-forge cadquery=master
+
 # RUN pip install paramak
 
-ARG compile_cores=50
+ARG compile_cores=2
 
 # Clone and install Embree
 RUN echo git clone --single-branch --branch master https://github.com/embree/embree  && \
