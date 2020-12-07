@@ -126,8 +126,9 @@ RUN echo git clone  --single-branch --branch develop https://bitbucket.org/fatho
         -DENABLE_FORTRAN=OFF \
         -DCMAKE_INSTALL_PREFIX=/MOAB && \
     make -j"$compile_cores" install && \
-    rm -rf $HOME/MOAB/moab && \
-    rm -rf $HOME/MOAB/build
+    cd pymoab && \
+    bash install.sh && \
+    python setup.py install
 
 
 # Clone and install Double-Down
