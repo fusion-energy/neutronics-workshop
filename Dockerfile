@@ -90,8 +90,8 @@ RUN git clone  --single-branch --branch develop https://github.com/ukaea/paramak
     python setup.py install
 
 RUN conda install jupyter -y
-# RUN conda install -c cadquery -c conda-forge cadquery=2
-RUN conda install -c cadquery -c conda-forge cadquery=master
+RUN conda install -c cadquery -c conda-forge cadquery=2
+# RUN conda install -c cadquery -c conda-forge cadquery=master
 
 # RUN pip install paramak
 
