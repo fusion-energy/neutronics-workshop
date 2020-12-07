@@ -25,7 +25,7 @@ jobs:
           no_output_timeout: 30m
           command: |
             cd ..
-            pytest tests
+            pytest repo/tests
       - store_test_results:
           path: test-reports
       - store_artifacts:
