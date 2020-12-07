@@ -46,7 +46,7 @@ RUN git clone https://github.com/njoy/NJOY2016
 
 RUN mkdir DAGMC && \
     cd DAGMC && \
-    git clone -b develop https://github.com/svalinn/dagmc
+    git clone --single-branch --branch develop https://github.com/svalinn/dagmc
 
 RUN mkdir MOAB && \
     cd MOAB && \
