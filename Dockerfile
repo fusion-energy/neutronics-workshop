@@ -107,7 +107,7 @@ RUN echo git clone --single-branch --branch master https://github.com/embree/emb
     make -j"$compile_cores" && \
     make -j"$compile_cores" install
 
-
+# Clone and install MOAB
 RUN echo git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab/ && \
     cd MOAB && \
     mkdir build && \
@@ -157,7 +157,6 @@ RUN echo installing dagmc && \
         -DMOAB_DIR=/MOAB && \
     make -j"$compile_cores" install && \
     rm -rf /DAGMC/dagmc /DAGMC/build
-
 
 
 # installs OpenMc from source
