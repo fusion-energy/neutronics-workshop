@@ -70,5 +70,3 @@ echo 'export PATH=$PATH:~/MOAB/bin' >> ~/.bashrc
 # Add to $HOME folder
 # sudo chmod +x build_embree.sh
 # MOAB_DIR=~/MOAB OPENMC_INSTALL_DIR=~ ./build_embree.sh
-
-# check LD_LIBRARY_PATH for dagmc and things
