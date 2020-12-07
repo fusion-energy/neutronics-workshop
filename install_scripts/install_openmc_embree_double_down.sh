@@ -2,71 +2,175 @@
 sudo apt-get --yes update && sudo apt-get --yes upgrade 
 sudo apt-get update
 
-sudo apt-get install --yes wget
+# Install dependencies from Debian package manager
+sudo apt-get install --yes wget \
+    git \
+    gfortran \
+    g++ \
+    cmake \
+    mpich \
+    libmpich-dev \
+    libhdf5-serial-dev \
+    libhdf5-mpich-dev \
+    imagemagick \
+    autoremove \
+    clean
 
 # Miniconda
+wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh
+bash Miniconda3-py37_4.8.3-Linux-x86_64.sh
+conda init
+conda create -y --name cq
+conda activate cq
+conda clean --all
+conda install -c conda-forge -c cadquery cadquery=master
+conda install gxx_linux-64
 
-# wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh
-# bash Miniconda3-py37_4.8.3-Linux-x86_64.sh
-# conda init
-# conda create -y --name cq
-# conda activate cq
-# conda clean --all
-# conda install -c conda-forge -c python python=3.7.8
-# conda clean --all
-# conda install -c conda-forge -c cadquery cadquery=2
+# required pacakges identified from openmc travis.yml
+sudo apt-get --yes install mpich \
+    libmpich-dev \
+    libhdf5-serial-dev \
+    libhdf5-mpich-dev \
+    libblas-dev \
+    liblapack-dev \
+    imagemagick
 
-sudo apt-get --yes update && sudo apt-get --yes upgrade
-sudo apt-get update
+# needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
+sudo apt-get --yes install libnetcdf-dev
 
-sudo apt-get --yes install gfortran g++ cmake libhdf5-dev
-sudo apt-get --yes install python3 python3-pip python3-dev python3-tk
-sudo apt-get --yes install imagemagick hdf5-tools paraview eog libsilo-dev git
-sudo apt-get --yes install dpkg libxkbfile1 -f libblas-dev liblapack-dev
-sudo apt-get --yes install libeigen3-dev libnetcdf-dev libnetcdf13
+# eigen3 needed for DAGMC
+sudo apt-get --yes install libeigen3-dev
 
-sudo apt remove -y cmake 
-pip3 install cmake
+# dependancies used in the workshop
+sudo apt-get -y install git
+sudo apt-get --yes install hdf5-tools
 
-pip3 install numpy pandas six h5py Matplotlib uncertainties lxml scipy cython vtk pytest
-pip3 install codecov pytest-cov pylint plotly tqdm pyside2 ghalton==0.6.1 cython
-# pip3 install neutronics_material_maker
+# new version needed for openmc compile
+pip install cmake
 
+
+# Python libraries used in the workshop
+pip install plotly tqdm ghalton==0.6.1 noisyopt scikit-optimize \
+            inference-tools adaptive vtk itkwidgets nest_asyncio \
+            neutronics_material_maker parametric-plasma-source pytest \
+            pytest-cov
+
+# needed for moab
+pip install cython
+
+# needed for openmc
+pip install --upgrade numpy
+
+
+# install addition packages required for DAGMC
+sudo apt-get --yes install libeigen3-dev \
+    libblas-dev \
+    liblapack-dev \
+    libnetcdf-dev \
+    libtbb-dev \
+    libglfw3-dev
+
+# needed for CadQuery functionality
+sudo apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
+                       freeglut3-dev libosmesa6 libosmesa6-dev \
+                       libgles2-mesa-dev
+
+
+export compile_cores=2
+
+# Clone and install Embree
+git clone --single-branch --branch master https://github.com/embree/embree
+cd embree
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=.. \
+    -DEMBREE_ISPC_SUPPORT=OFF
+make -j"$compile_cores"
+make -j"$compile_cores" install
+
+
+cd ~
+mkdir MOAB
+cd MOAB
+git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab/
+mkdir build
+cd build
+# this installs without netcdf but with pymoab
+#cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
+cmake ../moab -DENABLE_HDF5=ON \
+    -DENABLE_NETCDF=ON \
+    -DBUILD_SHARED_LIBS=OFF \
+    -DENABLE_FORTRAN=OFF \
+    -DCMAKE_INSTALL_PREFIX=$HOME/MOAB
+make -j"$compile_cores" 
+make -j"$compile_cores" install
+# this 2nd build is required and includes pymoab
+cmake ../moab -DBUILD_SHARED_LIBS=ON \
+    -DENABLE_HDF5=ON \
+    -DENABLE_PYMOAB=ON \
+    -DENABLE_BLASLAPACK=OFF \
+    -DENABLE_FORTRAN=OFF \
+    -DCMAKE_INSTALL_PREFIX=$HOME/MOAB
+make -j"$compile_cores"
+make -j"$compile_cores" install
+cd pymoab
+bash install.sh
+python setup.py install
+
+# Clone and install Double-Down
+cd ~
+git clone https://github.com/pshriwise/double-down
+cd double-down
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=.. \
+    -DMOAB_DIR=$HOME/MOAB \
+    -DEMBREE_DIR=$HOME/embree/lib/cmake/embree-3.12.1 \
+    -DEMBREE_ROOT=$HOME/embree/lib/cmake/embree-3.12.1
+make -j"$compile_cores"
+make -j"$compile_cores" install
+
+# DAGMC install
+cd ~
+mkdir DAGMC
+cd DAGMC
+git clone --single-branch --branch develop https://github.com/svalinn/dagmc
+mkdir build
+cd build
+cmake ../dagmc -DBUILD_TALLY=ON \
+    -DCMAKE_INSTALL_PREFIX=$HOME/DAGMC \
+    -DMOAB_DIR=$HOME/MOAB  # this might need changing to /home/username/MOAB
+make -j"$compile_cores" install
+
+export LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH
+
+# installs OpenMc from source
+cd /opt
+git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git
+sudo chmod -R 777 openmc
+cd openmc
+mkdir build
+cd build
+cmake -Ddagmc=ON \
+    -DDAGMC_DIR=$HOME/DAGMC \
+    -DHDF5_PREFER_PARALLEL=OFF .. 
+make -j"$compile_cores"
+sudo make -j"$compile_cores" install 
+cd /opt/openmc/
+pip install .
+
+# Clone and install NJOY2016
 cd ~
 git clone https://github.com/njoy/NJOY2016
 cd NJOY2016
 mkdir build
 cd build
-cmake -Dstatic=on .. && make 2>/dev/null
+cmake -Dstatic=on .. 
+make 2>/dev/null
 sudo make install
 
-MOAB_INSTALL_DIR=$HOME/MOAB
-echo 'export MOAB_INSTALL_DIR=$HOME/MOAB' >> ~/.bashrc
-echo 'export LD_LIBRARY_PATH=$MOAB_INSTALL_DIR/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
-
-cd ~
-mkdir MOAB
-cd MOAB
-git clone -b develop https://bitbucket.org/fathomteam/moab/
-mkdir build
-cd build
-# this installs without netcdf but with pymoab
-#cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR -DENABLE_PYMOAB=ON
-# this installs with netcdf but without pymoab
-cmake ../moab -DENABLE_HDF5=ON -DENABLE_MPI=off -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$MOAB_INSTALL_DIR
-make -j2 
-make -j install
-# this 2nd build is required which is a shame
-# this is to be used if you want pymoab
-# cmake ../moab -DBUILD_SHARED_LIBS=OFF
-# otherwise if you want netcdf
-cmake ../moab -DBUILD_SHARED_LIBS=OFF
-make -j install
-
-LD_LIBRARY_PATH=$MOAB_INSTALL_DIR/lib:$LD_LIBRARY_PATH
-echo 'export PATH=$PATH:~/MOAB/bin' >> ~/.bashrc
-
-# Download build_embree.sh script
-# Add to $HOME folder
-# sudo chmod +x build_embree.sh
-# MOAB_DIR=~/MOAB OPENMC_INSTALL_DIR=~ ./build_embree.sh
+# clone and download nuclear data
+git clone --single-branch --branch master https://github.com/openmc-dev/data.git
+python3 data/convert_nndc71.py
+python3 data/convert_tendl.py
+python3 data/data/combine_libraries.py -l data/nndc-b7.1-hdf5/cross_sections.xml data/tendl-2019-hdf5/cross_sections.xml -o data/cross_sections.xml
