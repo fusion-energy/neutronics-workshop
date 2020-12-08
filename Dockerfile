@@ -32,6 +32,11 @@ RUN apt-get --yes install imagemagick
 RUN apt-get --yes install hdf5-tools
 RUN apt-get --yes install wget
 
+# installing cadquery and jupyter
+RUN conda install jupyter -y
+RUN conda install -c conda-forge -c cadquery cadquery=2
+# RUN conda install -c cadquery -c conda-forge cadquery=master
+
 # new version needed for openmc compile
 RUN pip install cmake
 
@@ -88,10 +93,6 @@ RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
 RUN git clone  --single-branch --branch develop https://github.com/ukaea/paramak.git && \
     cd paramak && \
     python setup.py install
-
-RUN conda install jupyter -y
-RUN conda install -c conda-forge -c cadquery cadquery=2
-# RUN conda install -c cadquery -c conda-forge cadquery=master
 
 # RUN pip install paramak
 
