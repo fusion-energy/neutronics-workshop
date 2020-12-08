@@ -34,6 +34,7 @@ RUN apt-get --yes install wget
 
 # installing cadquery and jupyter
 RUN conda install jupyter -y
+RUN conda install -c conda-forge -c python python=3.7.8
 RUN conda install -c conda-forge -c cadquery cadquery=2
 # RUN conda install -c cadquery -c conda-forge cadquery=master
 
