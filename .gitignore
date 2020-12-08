@@ -25,3 +25,6 @@ tallies.out
 __pycache__/
 
 .ipynb_checkpoints/
+
+*.stl
+*.stp
