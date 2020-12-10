@@ -57,20 +57,38 @@ internet browser of your choice
 
 ## Core workshop tasks
 
-- [Task 1 - Cross section plotting - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_1)
-- [Task 2 - Building and visualizing the model geometry - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_2)
-- [Task 3 - Visualizing neutron tracks - 20 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_3)
-- [Task 4 - Finding neutron interactions with mesh tallies - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_4)
-- [Task 5 - Finding the neutron and photon spectra - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_5)
-- [Task 6 - Finding the tritium production - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_6)
-- [Task 7 - Finding the neutron damage and stochastic volume calculation - 15 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_7)
+- [Task 1 - Cross section plotting](insert_link)
+- [Task 2 - Options for making materials](insert_link)
+- [Task 3 - Building and visualising CSG geometry](insert_link)
+- [Task 4 - Making neutron sources](insert_link)
+- [Task 5 - TBR](insert_link)
+- [Task 6 - DPA](insert_link)
+- [Task 7 - Finding the neutron and photon spectra](insert_link)
+- [Task 8 - Mesh tallies](insert_link)
+- [Task 9 - Dose](insert_link)
+- [Task 10 - Making CAD geometry](insert_link)
+- [Task 11 - CAD simulations, fast flux](insert_link)
+- [Task 12 - CAD simulations, mesh tallies, heat](insert_link)
+- [Task 13 - Techniques for sampling parameter space](insert_link)
+- [Task 14 - Techniques for parameter study optimisation](insert_link)
 
-## Optional workshop tasks
-
-- [Task 8 - Techniques for sampling parameter space - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_8)
-- [Task 9 - Optimize a breeder blanket for tritium production - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_9)
-- [Task 10 - Using CAD geometry - 30 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_10)
-- [Task 11 - Options for making materials - 20 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_11)
-- [Task 12 - Unstructured mesh on CAD geometry- 20 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_12)
++--------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Task**                             | **Keywords**                                                                                                    |
++--------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| Task 1                               | Nuclear data, cross-sections, MT numbers, Isotopes, Elements Materials                                          |
+| Task 2                               | Materials, material-making, neutronics material maker, openmc materials, mixed materials                        |
+| Task 3                               | CSG geometry, visualising CSG geometry                                                                          |
+| Task 4                               | Sources, point sources, plasma sources, openmc sources, parameteric plasma source, visualising neutron tracks   |
+| Task 5                               | Tallies, TBR, Cell Tallies, Cell Filters, Simulations                                                           |
+| Task 6                               | Tallies, DPA, Cell tallies, cell filters, simulations, volume calculations                                      |
+| Task 7                               | Neutron Spectra, Photon Spectra, Surface tallies/filters, energy filters/bins/group structures, flux, current   |
+| Task 8                               | Mesh tallies, 2d, 3d regular mesh                                                                               |
+| Task 9                               | Dose tallies                                                                                                    |
+| Task 10                              | CAD geometry, Paramak, Visualising CAD geometry                                                                 |
+| Task 11                              | CAD-based neutronics, Paramak, DAGMC, Fast Flux, Cell tallies                                                   |
+| Task 12                              | CAD-based neutronics, Heat, mesh tallies                                                                        |
+| Task 13                              | Sampling parameter space, parameter studies                                                                     |
+| Task 14                              | Optimisation                                                                                                    |
++--------------------------------------+-----------------------------------------------------------------------------------------------------------------+
 
 &ensp;
