@@ -72,9 +72,8 @@ internet browser of your choice
 - [Task 13 - Techniques for sampling parameter space](insert_link)
 - [Task 14 - Techniques for parameter study optimisation](insert_link)
 
-+--------------------------------------+-----------------------------------------------------------------------------------------------------------------+
 | **Task**                             | **Keywords**                                                                                                    |
-+--------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+|--------------------------------------|-----------------------------------------------------------------------------------------------------------------|
 | Task 1                               | Nuclear data, cross-sections, MT numbers, Isotopes, Elements Materials                                          |
 | Task 2                               | Materials, material-making, neutronics material maker, openmc materials, mixed materials                        |
 | Task 3                               | CSG geometry, visualising CSG geometry                                                                          |
@@ -89,6 +88,5 @@ internet browser of your choice
 | Task 12                              | CAD-based neutronics, Heat, mesh tallies                                                                        |
 | Task 13                              | Sampling parameter space, parameter studies                                                                     |
 | Task 14                              | Optimisation                                                                                                    |
-+--------------------------------------+-----------------------------------------------------------------------------------------------------------------+
 
 &ensp;
