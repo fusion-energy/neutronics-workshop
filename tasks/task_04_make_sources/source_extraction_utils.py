@@ -97,6 +97,7 @@ def plot_energy_from_initial_source(
 
     return fig
 
+
 def plot_postion_from_initial_source(input_filename='initial_source.h5'):
     """makes a plot of the inital creation locations of the particle source"""
 
