@@ -9,7 +9,6 @@
 
 FROM continuumio/miniconda3
 
-
 RUN apt-get --yes update && apt-get --yes upgrade
 
 # required pacakges identified from openmc travis.yml
@@ -32,11 +31,10 @@ RUN apt-get --yes install hdf5-tools
 RUN apt-get --yes install wget
 
 # installing cadquery and jupyter
-RUN conda install -c conda-forge -c python python=3.7.8
 RUN conda install jupyter -y
+RUN conda install -c conda-forge -c python python=3.7.8
 RUN conda install -c conda-forge -c cadquery cadquery=2
 # cadquery master don't appear to show the .solid in the notebook
-# RUN conda install -c cadquery -c conda-forge cadquery=master
 
 # new version needed for openmc compile
 RUN pip install cmake
