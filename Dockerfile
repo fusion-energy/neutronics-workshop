@@ -9,12 +9,11 @@
 
 FROM continuumio/miniconda3
 
-
 RUN apt-get --yes update && apt-get --yes upgrade
 
 # required pacakges identified from openmc travis.yml
 RUN apt-get --yes install mpich libmpich-dev libhdf5-serial-dev \
-                          libhdf5-mpich-dev libblas-dev liblapack-dev
+                          libhdf5-mpich-dev
 
 # needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
 RUN apt-get --yes install libnetcdf-dev
@@ -28,7 +27,6 @@ RUN apt-get -y install sudo
 RUN apt-get -y install git
 
 # dependancies used in the workshop
-RUN apt-get --yes install imagemagick
 RUN apt-get --yes install hdf5-tools
 RUN apt-get --yes install wget
 
@@ -36,7 +34,7 @@ RUN apt-get --yes install wget
 RUN conda install jupyter -y
 RUN conda install -c conda-forge -c python python=3.7.8
 RUN conda install -c conda-forge -c cadquery cadquery=2
-# RUN conda install -c cadquery -c conda-forge cadquery=master
+# cadquery master don't appear to show the .solid in the notebook
 
 # new version needed for openmc compile
 RUN pip install cmake
@@ -79,8 +77,6 @@ RUN apt-get update -y && \
 
 # install addition packages required for DAGMC
 RUN apt-get --yes install libeigen3-dev && \
-    apt-get --yes install libblas-dev && \
-    apt-get --yes install liblapack-dev && \
     apt-get --yes install libnetcdf-dev && \
     apt-get --yes install libtbb-dev && \
     apt-get --yes install libglfw3-dev 
@@ -105,7 +101,7 @@ RUN echo git clone --single-branch --branch master https://github.com/embree/emb
     mkdir build && \
     cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-        -DEMBREE_ISPC_SUPPORT=OFF && \
+             -DEMBREE_ISPC_SUPPORT=OFF && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install
 
@@ -116,6 +112,7 @@ RUN echo git clone  --single-branch --branch develop https://bitbucket.org/fatho
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
         -DENABLE_NETCDF=ON \
+        -DENABLE_BLASLAPACK=OFF \
         -DBUILD_SHARED_LIBS=OFF \
         -DENABLE_FORTRAN=OFF \
         -DCMAKE_INSTALL_PREFIX=/MOAB && \
@@ -140,8 +137,7 @@ RUN echo git clone https://github.com/pshriwise/double-down && \
     cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=.. \
         -DMOAB_DIR=/MOAB \
-        -DEMBREE_DIR=/embree/lib/cmake/embree-3.12.1 \
-        -DEMBREE_ROOT=/embree/lib/cmake/embree-3.12.1 && \
+        -DEMBREE_DIR=/embree/lib/cmake/embree-3.12.1 && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install
 
@@ -167,14 +163,14 @@ RUN cd /opt && \
     cd openmc && \
     mkdir build && \
     cd build && \
-    cmake -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR -DHDF5_PREFER_PARALLEL=OFF ..  && \
+    cmake -Doptimize=on -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR -DHDF5_PREFER_PARALLEL=OFF ..  && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \ 
     cd /opt/openmc/ && \
     pip install .
 
 # Clone and install NJOY2016
-RUN echo installing openmc && \
+RUN echo installing NJOY2016 && \
     # git clone https://github.com/njoy/NJOY2016 && \
     cd NJOY2016 && \
     mkdir build && \
