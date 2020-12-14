@@ -69,8 +69,8 @@ internet browser of your choice
 | [Task 8 - Mesh tallies](https://github.com/ukaea/openmc_workshop/tree/main/tasks/task_08_CSG_mesh_tally)                             | Mesh tallies, 2D 3D Regular Mesh                                                                           |
 | [Task 9 - Dose](https://github.com/ukaea/openmc_workshop/tree/main/tasks/task_09_CSG_surface_tally_dose)                                     | Dose tallies                                                                                               |
 | [Task 10 - Making CAD geometry](https://github.com/ukaea/openmc_workshop/tree/main/tasks/task_10_making_CAD_geometry)                     | CAD geometry, Paramak, Geometry visualisation                                                              |
-| [Task 11 - CAD simulations - Heating]               | CAD-based neutronics, Heating, Mesh tallies                                                                |
-| [Task 12 - CAD simulations - Fast flux]             | CAD-based neutronics, Paramak, DAGMC, Fast Flux, Cell tallies                                              |
+| Task 11 - CAD simulations - Heating               | CAD-based neutronics, Heating, Mesh tallies                                                                |
+| Task 12 - CAD simulations - Fast flux             | CAD-based neutronics, Paramak, DAGMC, Fast flux, Cell tallies                                              |
 | [Task 13 - Techniques for sampling parameter space](https://github.com/ukaea/openmc_workshop/tree/main/tasks/task_13_parameter_study_sampling) | Sampling, Interpolation                                                                                    |
 | [Task 14 - Parameter study optimisation](https://github.com/ukaea/openmc_workshop/tree/main/tasks/task_14_parameter_study_optimisation)            | Optimisation                                                                                               |
 
