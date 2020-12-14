@@ -87,8 +87,8 @@ internet browser of your choice
 | Task 8                                       | Mesh tallies, 2d, 3d regular mesh                                                                          |
 | Task 9                                       | Dose tallies                                                                                               |
 | Task 10                                      | CAD geometry, Paramak, Visualising CAD geometry                                                            |
-| Task 11                                      | CAD-based neutronics, Paramak, DAGMC, Fast Flux, Cell tallies                                              |
-| Task 12                                      | CAD-based neutronics, Heat, mesh tallies                                                                   |
+| Task 11                                      | CAD-based neutronics, Heat, mesh tallies                                                                   |
+| Task 12                                      | CAD-based neutronics, Paramak, DAGMC, Fast Flux, Cell tallies                                              |
 | Task 13                                      | Sampling parameter space, parameter studies                                                                |
 | Task 14                                      | Optimisation                                                                                               |
 
