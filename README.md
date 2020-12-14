@@ -74,22 +74,19 @@ internet browser of your choice
 
 | **Task**                                     | **Keywords**                                                                                               |
 |----------------------------------------------|------------------------------------------------------------------------------------------------------------|
-| Task 1                                       | Nuclear data, cross-sections, MT numbers, Isotopes, Elements Materials                                     |
-| Task 2                                       | Materials, material-making, neutronics material maker, openmc materials,                                   |
-|                                              | mixed materials                                                                                            |
-| Task 3                                       | CSG geometry, visualising CSG geometry                                                                     |
-| Task 4                                       | Sources, point sources, plasma sources, openmc sources, parameteric plasma source,                         |
-|                                              | visualising neutron tracks                                                                                 |
-| Task 5                                       | Tallies, TBR, Cell Tallies, Cell Filters, Simulations                                                      |
-| Task 6                                       | Tallies, DPA, Cell tallies, cell filters, simulations, volume calculations                                 |
-| Task 7                                       | Neutron Spectra, Photon Spectra, Surface tallies/filters, energy filters/bins/group structures,            |
-|                                              | flux, current                                                                                              |
-| Task 8                                       | Mesh tallies, 2d, 3d regular mesh                                                                          |
+| Task 1                                       | Nuclear data, cross-sections, MT numbers, Doppler broadening                                               |
+| Task 2                                       | Materials, Neutronics Material Maker, Mixed materials                                                      |
+| Task 3                                       | CSG geometry, Geometry visualisation                                                                       |
+| Task 4                                       | Sources, Plasma sources, Parameteric Plasma Source, Neutron track visualisation                            |
+| Task 5                                       | TBR, Cell tallies, Simulations                                                                             |
+| Task 6                                       | DPA, Cell tallies, Simulations, Volume calculations                                                        |
+| Task 7                                       | Neutron Spectra, Photon Spectra, Surface tallies, Energy filters, Flux, Current                            |
+| Task 8                                       | Mesh tallies, 2D 3D Regular Mesh                                                                           |
 | Task 9                                       | Dose tallies                                                                                               |
-| Task 10                                      | CAD geometry, Paramak, Visualising CAD geometry                                                            |
-| Task 11                                      | CAD-based neutronics, Heat, mesh tallies                                                                   |
+| Task 10                                      | CAD geometry, Paramak, Geometry visualisation                                                              |
+| Task 11                                      | CAD-based neutronics, Heating, Mesh tallies                                                                |
 | Task 12                                      | CAD-based neutronics, Paramak, DAGMC, Fast Flux, Cell tallies                                              |
-| Task 13                                      | Sampling parameter space, parameter studies                                                                |
+| Task 13                                      | Sampling, Interpolation                                                                                    |
 | Task 14                                      | Optimisation                                                                                               |
 
 &ensp;
