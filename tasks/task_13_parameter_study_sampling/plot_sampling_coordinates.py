@@ -11,7 +11,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 
-def make_3d_plot(results_df,
+def plot_simulation_results(results_df,
     x_axis_name='blanket_breeder_li6_enrichment',
     y_axis_name="breeder_percent_in_breeder_plus_multiplier_ratio",
     z_axis_name='tbr'):
@@ -50,3 +50,15 @@ def make_3d_plot(results_df,
         )
     )
     return fig
+
+def read_in_data(path_to_json="outputs"):
+    # reads all json files into pandas dataframe
+    list_files = [
+        pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith(".json")
+    ]
+    resultdict = []
+    for filename in list_files:
+        with open(os.path.join(path_to_json, filename), "r") as inputjson:
+            resultdict.append(json.load(inputjson))
+    results_df = pd.DataFrame(resultdict)
+    return results_df
