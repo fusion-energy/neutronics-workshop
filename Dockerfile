@@ -43,7 +43,7 @@ RUN pip install cmake
 RUN pip install plotly tqdm ghalton==0.6.1 noisyopt scikit-optimize \
                 inference-tools adaptive vtk itkwidgets nest_asyncio \
                 neutronics_material_maker parametric-plasma-source pytest \
-                pytest-cov
+                pytest-cov holoviews ipywidgets
 
 RUN git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git
 RUN git clone https://github.com/njoy/NJOY2016
@@ -189,12 +189,16 @@ RUN python3 data/convert_nndc71.py --cleanup && \
     rm -rf nndc-b7.1-endf  && \
     rm -rf nndc-b7.1-ace/  && \
     rm -rf nndc-b7.1-download
+RUN python3 data/convert_tendl.py --cleanup && \
+    rm -rf tendl-2019-ace/ && \
+    rm -rf tendl-2019-download
+RUN python3 data/combine_libraries.py -l data/nndc-b7.1-hdf5/cross_sections.xml data/tendl-2019-hdf5/cross_sections.xml -o data/cross_sections.xml
 
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz
 RUN tar -xf WMP_Library_v1.1.tar.gz -C /
 
 
-ENV OPENMC_CROSS_SECTIONS=/nndc-b7.1-hdf5/cross_sections.xml
+ENV OPENMC_CROSS_SECTIONS=data/cross_sections.xml
 
 
 # Copy over the local repository files
