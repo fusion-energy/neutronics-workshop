@@ -192,7 +192,7 @@ RUN python3 data/convert_nndc71.py --cleanup && \
 RUN python3 data/convert_tendl.py --cleanup && \
     rm -rf tendl-2019-ace/ && \
     rm -rf tendl-2019-download
-RUN python3 data/combine_libraries.py -l data/nndc-b7.1-hdf5/cross_sections.xml data/tendl-2019-hdf5/cross_sections.xml -o data/cross_sections.xml
+RUN python3 data/combine_libraries.py -l nndc-b7.1-hdf5/cross_sections.xml tendl-2019-hdf5/cross_sections.xml -o data/cross_sections.xml
 
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz
 RUN tar -xf WMP_Library_v1.1.tar.gz -C /
