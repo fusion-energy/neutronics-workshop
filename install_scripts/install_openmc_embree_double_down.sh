@@ -142,7 +142,9 @@ cmake ../dagmc -DBUILD_TALLY=ON \
     -DMOAB_DIR=$HOME/MOAB  # this might need changing to /home/username/MOAB
 make -j"$compile_cores" install
 
+export DAGMC_INSTALL_DIR=$HOME/DAGMC
 export LD_LIBRARY_PATH=$DAGMC_INSTALL_DIR/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/opt/Trelis-16.5/bin/plugins/svalinn:$LD_LIBRARY_PATH
 
 # installs OpenMc from source
 cd /opt
