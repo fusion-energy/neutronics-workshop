@@ -15,7 +15,7 @@ def create_isotope_plot(isotopes, reaction, nuclear_data_path=None):
     """Creates a plot of isotopes and reaction provided
     """
     if nuclear_data_path == None:
-        nuclear_data_path = os.path.dirname(os.environ["OPENMC_CROSS_SECTIONS"]) + '/neutron'
+        nuclear_data_path = os.path.dirname(os.environ["OPENMC_CROSS_SECTIONS"]) + '/nndc-b7.1-hdf5/neutron'
 
     if reaction not in REACTION_MT.keys():
         print('Reaction not found, only these reactions are accepted', REACTION_MT.keys())
