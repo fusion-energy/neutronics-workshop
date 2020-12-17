@@ -185,3 +185,6 @@ sudo bash plugins/svalinn/install.sh
 
 PATH=$PATH:/opt/Trelis-16.5/bin
 echo 'export PATH=$PATH:/opt/Trelis-16.5/bin' >> ~/.bashrc
+
+LD_LIBRARY_PATH=/opt/Trelis-16.5/bin/plugins/svalinn:$LD_LIBRARY_PATH
+echo 'export LD_LIBRARY_PATH=/opt/Trelis-16.5/bin/plugins/svalinn:$LD_LIBRARY_PATH' >> ~/.bashrc
