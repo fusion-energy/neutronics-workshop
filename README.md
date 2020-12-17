@@ -54,10 +54,10 @@ commands in a terminal window.
 4. A URL should be displayed in the terminal and can now be opened in the
 internet browser of your choice.
 
-5. Some talks require the use of Paraview to view the 3D meshes produced.
+5. Some tasks require the use of Paraview to view the 3D meshes produced.
 Parview can be download from [here](https://www.paraview.org/download/)
 
-6. Some talks require the use of CAD software to view the 3D geometry produced.
+6. Some tasks require the use of CAD software to view the 3D geometry produced.
 FreeCAD is one option for this and can be downloaded [here](https://www.freecadweb.org/downloads.php)
 
 
