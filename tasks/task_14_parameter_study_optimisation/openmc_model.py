@@ -142,7 +142,7 @@ def sphere_with_firstwall_model(
 
     # assigns simulation settings
     sett = openmc.Settings()
-    sett.batches = 200  # this is minimum number of batches that will be run
+    sett.batches = 5  # this is minimum number of batches that will be run
     sett.trigger_active = True
     sett.trigger_max_batches =  1500  # this is maximum number of batches that will be run
     sett.particles = 300
@@ -167,7 +167,7 @@ def sphere_with_firstwall_model(
     tally = openmc.Tally(name='TBR')
     tally.filters = [cell_filter_breeder, particle_filter]
     tally.scores = ['(n,Xt)'] # where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
-    tally.triggers = [openmc.Trigger(trigger_type='rel_err', threshold=0.0001)]  # This stops the simulation if the threshold is meet
+    tally.triggers = [openmc.Trigger(trigger_type='rel_err', threshold=0.1)]  # This stops the simulation if the threshold is meet
     tallies.append(tally)
 
     # collects all the model parts and runs the model
