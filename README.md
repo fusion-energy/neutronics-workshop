@@ -1,6 +1,6 @@
 
 [![CircleCI](https://circleci.com/gh/ukaea/openmc_workshop.svg?style=svg)](https://circleci.com/gh/ukaea/openmc_workshop)
-![dockerhub-publish](https://github.com/ukaea/openmc_workshop/workflows/dockerhub-publish/badge.svg)
+[![dockerhub-publish](https://github.com/ukaea/openmc_workshop/workflows/dockerhub-publish/badge.svg)](https://github.com/ukaea/openmc_workshop/actions?query=workflow%3Adockerhub-publish)
 
 
 # Fusion Neutronics workshop with OpenMC
