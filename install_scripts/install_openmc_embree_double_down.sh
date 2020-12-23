@@ -125,8 +125,7 @@ mkdir build
 cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=.. \
     -DMOAB_DIR=$HOME/MOAB \
-    -DEMBREE_DIR=$HOME/embree/lib/cmake/embree-3.12.1 \
-    -DEMBREE_ROOT=$HOME/embree/lib/cmake/embree-3.12.1
+    -DEMBREE_DIR=$HOME/embree/lib/cmake/embree-3.12.1
 make -j"$compile_cores"
 make -j"$compile_cores" install
 
@@ -154,7 +153,7 @@ cd openmc
 mkdir build
 cd build
 cmake -Ddagmc=ON \
-    -DDAGMC_DIR=$HOME/DAGMC \
+    -DDAGMC_DIR=$HOME/DAGMC/build \
     -DHDF5_PREFER_PARALLEL=OFF .. 
 make -j"$compile_cores"
 sudo make -j"$compile_cores" install 
@@ -163,7 +162,7 @@ pip install .
 
 # Clone and install NJOY2016
 cd ~
-git clone https://github.com/njoy/NJOY2016
+git clone https://github.com/njoy/NJOY2016 --branch master --single-branch
 cd NJOY2016
 mkdir build
 cd build
