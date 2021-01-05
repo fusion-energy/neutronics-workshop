@@ -1,21 +1,18 @@
 
 ## Task 1 - Cross sections
 
-Please allow X minutes for this task.
+Please allow 25 minutes for this task.
 
-Expected outputs from this task are also in the [presentation]().
+Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/2).
 
-Short task description?
+In this task you will be using OpenMC to plot interaction cross sections for isotopes, elements and materials. You will also see how Doppler broadening affects neutron interaction cross sections.
 
-Maybe put a small list of instructions to what notebooks to use?
-
-Maybe put learning outcomes here too??
 
 **Learning Outcomes**
 
-- How OpenMC can be used to plot cross-sectional data for a variety of fusion-relevant interactions, e.g. (n,2n), (n,Xt). 
-- Reaction probabilities vary for each isotope depending on the energy of the neutron. 
-- Cross sections can be plotted for specific isotopes, elements and full materials. 
-- Beryllium 9 has the lowest threshold energy for neutron multiplication reactions. 
+- OpenMC can be used to plot interaction cross sections for specific isotopes, elements and materials.
+- Reaction probabilities vary depending on the energy of the neutron.
+- Beryllium 9 has the lowest threshold energy for neutron multiplication reactions.
 - Lithium 6 has the highest probability of producing tritium at low neutron energies.
-- Understand that lithium enrichment increases tritium production from low energy neutrons.
+- Lithium-6 enrichment increases tritium production from low energy neutrons.
+- The relative motion of colliding nuclei causes Doppler broadening of resonance peaks in interaction cross sections.
