@@ -1,5 +1,5 @@
 
-## Task 4 - Making sources
+## Task 10 - Making CAD geometry
 
 Please allow X minutes for this task.
 
@@ -12,5 +12,3 @@ Maybe put a small list of instructions to what notebooks to use?
 Maybe put learning outcomes here too??
 
 **Learning Outcomes**
-
-- How to access information on the particle positions, energy and direction from the simulation.

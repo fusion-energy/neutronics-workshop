@@ -1,11 +1,9 @@
 
-## <a name="task8"></a>Task 8 - Techniques for sampling parameter space
+## Task 13 - Techniques for sampling parameter space
 
-Google Colab Link: [Task_8](insert google colab link)
+Please allow X minutes for this task.
 
-Please allow 25 minutes for this task.
-
-Expected outputs from this task are in the [presentation](insert presentation list).
+Expected outputs from this task are in the [presentation]().
 
 The aim of this task is to explore sampling techniques for performing simulations across a parameter space of interest.
 A parameter space may be surveyed for several reasons. In the context of tritium breeding, this may be to measure the impact of a parameter on tritium breeding.
@@ -110,5 +108,3 @@ Possible Learning Outcomes:
 - The optimal breeder percent in breeder plus multiplier volume changes for different amounts of lithium enrichment.
 - Increasing the lthium 6 enrichment tends to increase the TBR.
 - Random slection of parameters is not an efficient way of covering the search space or finding the optimal.
-
-**Next task:** [Task 9 - Optimize a breeder blanket for tritium production - 25 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_9)
