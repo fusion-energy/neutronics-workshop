@@ -1,5 +1,5 @@
 
-## Task 1 - Cross sections
+## Task 1 - Cross section plotting
 
 Please allow 25 minutes for this task.
 

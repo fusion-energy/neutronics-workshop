@@ -1,21 +1,15 @@
 
-## Task 2 - Making materials
+## Task 2 - Options for making materials
 
-Please allow X minutes for this task.
+Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation]().
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/3).
 
-Short task description?
-
-Maybe put a small list of instructions to what notebooks to use?
-
-Maybe put learning outcomes here too??
-
-
-(Note: A density parameter study like this is not possible using in-built OpenMC functions as material densities must be specified explicitly.)
+In this task you will use OpenMC and the neutronics material maker to create a variety of neutronics-ready materials.
 
 ### Learning Outcomes
 
-- You are able to make materials from an original specification that could be isotope fractions, element fractions or materials fractions for a mixed material.
-
-- Understand that density varies for materials as a function of pressure, temperture, enrichment and mixture fraction.
+- Materials can be made in OpenMC using isotope and element fractions, and densities.
+- The neutronics material maker provides an easy way to make materials and account for isotopic enrichment, temperature and pressure effects.
+- Material density varies as a function of pressure, temperature, enrichment and mixture fraction.
+- Mixed materials can be created using in-built OpenMC features or the neutronics material maker

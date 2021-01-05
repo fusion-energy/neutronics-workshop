@@ -1,19 +1,14 @@
 
-## Task 6 - Finding Neutron damage using cell tallies and stochastic volume calculations
+## Task 6 - DPA
 
 Please allow X minutes for this task.
 
-Expected outputs from this task are also in the [presentation]().
+Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/7).
 
-Short task description?
-
-Maybe put a small list of instructions to what notebooks to use?
-
-Maybe put learning outcomes here too??
+In this task you will use OpenMC to run simple neutronics simulations to tally DPA using a cell tally.
 
 **Learning Outcomes**
 
-- Finding damage energy deposited with the OpenMC MT 444 tally
-- Find the volume of a cell using the stochastic volume method
-- Perform post tally calculations to convert the neutronics numbers into something more useful
-- Gain an appreciation of how neutronics results can influence the design (e.g. radius of reactor must be increased to prevent critical material damage)
+- Damage energy deposited can be found with the OpenMC MT 444 tally.
+- Cell volumes can be found using the stochastic volume method.
+- Post tally calculations can be performed to convert neutronics numbers into something more useful.
