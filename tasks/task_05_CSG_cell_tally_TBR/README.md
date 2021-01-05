@@ -1,19 +1,13 @@
 
-## Task 5 - Finding TBR with Cell tallies
+## Task 5 - TBR
 
-Please allow X minutes for this task.
+Please allow 15 minutes for this task.
 
-Expected outputs from this task are also in the [presentation]().
+Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/6).
 
-Short task description?
-
-Maybe put a small list of instructions to what notebooks to use?
-
-Maybe put learning outcomes here too??
+In this task you will use OpenMC to run simple neutronics simulations to tally TBR using a cell tally.
 
 **Learning Outcomes**
 
-- Finding TBR with OpenMC.
-- Introduction to MT reaction numbers. e.g. (n,Xt) = 205.
-- Simple methods of increasing the TBR using lithium enrichment.
-- Improving the uncertainty on the result is possible with more computation.
+- OpenMC can be used to run simple neutronics simulations and tally TBR.
+- Simple methods of increasing the TBR using Lithium enrichment.

@@ -1,14 +1,15 @@
 
-## Task 9 - Effective dose on surfaces or something like this
+## Task 9 - Dose
 
-Please allow X minutes for this task.
+Please allow 20 minutes for this task.
 
-Expected outputs from this task are also in the [presentation]().
+Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/10).
 
-Short task description?
-
-Maybe put a small list of instructions to what notebooks to use?
-
-Maybe put learning outcomes here too??
+In this task you will use OpenMC to calculate the dose administered to cells and materials in a geometry.
 
 **Learning Outcomes**
+
+- Appreciation of equivalent and effective dose.
+- Dose tallies.
+- Post-processing of tally results to obtain dose rate.
+- Several geometry surfaces can be utilised to obtain a tally result as a function of a physical parameter, such as distance from source.
