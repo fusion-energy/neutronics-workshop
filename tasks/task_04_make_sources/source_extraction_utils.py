@@ -90,7 +90,7 @@ def plot_energy_from_initial_source(
     ) 
 
     fig.update_layout(
-          title='particle energy',
+          title='Particle energy',
           xaxis={'title': 'Energy (eV)'},
           yaxis={'title': 'Probability'}
     )
@@ -132,7 +132,7 @@ def plot_postion_from_initial_source(input_filename='initial_source.h5'):
             )
         )
 
-    fig.update_layout(title='particle production coordinates, coloured by energy')
+    fig.update_layout(title='Particle production coordinates - coloured by energy')
 
     return fig
 
@@ -179,6 +179,6 @@ def plot_direction_from_initial_source(input_filename='initial_source.h5'):
         "showscale": False,
     })
 
-    fig.update_layout(title='particle initial directions')
+    fig.update_layout(title='Particle initial directions')
 
     return fig
