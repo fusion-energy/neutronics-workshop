@@ -1,7 +1,7 @@
 
 ## This task is currently under development and may not work
 
-## <a name="task9"></a>Task 9 - Optimize a breeder blanket for tritium production
+## Task 14 - Optimize a breeder blanket for tritium production
 
 Please allow 25 plus minutes for this task depending on the computational power available.
 
@@ -39,12 +39,8 @@ There are currently two graphs to view these results, try both and let me know w
 
 - ```python 2_plot_2d_optimisation_scatter.py```
 
-
-
 **Learning Outcomes**
 
 Introduction to a methods of optimising a neutronics results in 1d and 2d.
 Appreciation that for high dimensional space approaches to reduce the amount of sampling are needed.
 Understand that there are several factors that can be changed to increase the TBR
-
-**Next task:** [Task 10 - Using CAD geometry - 30 minutes](https://github.com/ukaea/openmc_workshop/tree/master/tasks/task_10)
