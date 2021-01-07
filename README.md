@@ -64,18 +64,18 @@ Parview can be download from [here](https://www.paraview.org/download/)
 
 <details>
   <summary>Ubuntu terminal commands for Paraview install</summary>
-```bash
-sudo apt update && sudo apt-get install paraview
-```
+    <pre><code class="language-html">
+    sudo apt update && sudo apt-get install paraview
+    </code></pre>
 </details>
 
 6. Some tasks require the use of CAD software to view the 3D geometry produced.
 FreeCAD is one option for this and can be downloaded [here](https://www.freecadweb.org/downloads.php)
 <details>
   <summary>Ubuntu terminal commands for FreeCAD install</summary>
-```bash
-sudo apt update && sudo apt-get install freecad
-```
+    <pre><code class="language-html">
+    sudo apt update && sudo apt-get install freecad
+    </code></pre>
 </details>
 
 ## Workshop tasks
