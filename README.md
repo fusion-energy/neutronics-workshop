@@ -52,7 +52,9 @@ commands in a terminal window.
     ```docker run -p 8888:8888 ukaea/openmcworkshop /bin/bash -c "jupyter notebook --notebook-dir=/tasks --ip='*' --port=8888 --no-browser --allow-root"```
 
 4. A URL should be displayed in the terminal and can now be opened in the
-internet browser of your choice.
+internet browser of your choice. Select and open the URL at the end of the terminal print out (highlighted below)
+
+![url_to_select](https://user-images.githubusercontent.com/8583900/103912503-4a65cc00-50ff-11eb-87db-ebe26a313fd6.png)
 
 5. Some tasks require the use of Paraview to view the 3D meshes produced.
 Parview can be download from [here](https://www.paraview.org/download/)
