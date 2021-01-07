@@ -59,9 +59,24 @@ internet browser of your choice. Select and open the URL at the end of the termi
 5. Some tasks require the use of Paraview to view the 3D meshes produced.
 Parview can be download from [here](https://www.paraview.org/download/)
 
+
+
+
+<details>
+  <summary>Ubuntu terminal commands for Paraview install</summary>
+```bash
+sudo apt update && sudo apt-get install paraview
+```
+</details>
+
 6. Some tasks require the use of CAD software to view the 3D geometry produced.
 FreeCAD is one option for this and can be downloaded [here](https://www.freecadweb.org/downloads.php)
-
+<details>
+  <summary>Ubuntu terminal commands for FreeCAD install</summary>
+```bash
+sudo apt update && sudo apt-get install freecad
+```
+</details>
 
 ## Workshop tasks
 
