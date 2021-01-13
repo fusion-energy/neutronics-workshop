@@ -184,21 +184,26 @@ ENV PATH=$PATH:$HOME/NJOY2016/build
 
 
 # install nuclear data
-RUN git clone https://github.com/openmc-dev/data.git
-RUN python3 data/convert_nndc71.py --cleanup && \
-    rm -rf nndc-b7.1-endf  && \
-    rm -rf nndc-b7.1-ace/  && \
-    rm -rf nndc-b7.1-download
-RUN python3 data/convert_tendl.py --cleanup && \
-    rm -rf tendl-2019-ace/ && \
-    rm -rf tendl-2019-download
-RUN python3 data/combine_libraries.py -l nndc-b7.1-hdf5/cross_sections.xml tendl-2019-hdf5/cross_sections.xml -o cross_sections.xml
 
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz
 RUN tar -xf WMP_Library_v1.1.tar.gz -C /
 
-
 ENV OPENMC_CROSS_SECTIONS=/cross_sections.xml
+
+COPY scripts/delete_nuclear_data_not_used_in_cross_section_xml.py .
+
+RUN git clone https://github.com/openmc-dev/data.git
+RUN python data/convert_nndc71.py --cleanup && \
+    rm -rf nndc-b7.1-endf  && \
+    rm -rf nndc-b7.1-ace/  && \
+    rm -rf nndc-b7.1-download && \
+    python data/convert_tendl.py --cleanup && \
+    rm -rf tendl-2019-ace/ && \
+    rm -rf tendl-2019-download && \
+    python data/combine_libraries.py -l nndc-b7.1-hdf5/cross_sections.xml tendl-2019-hdf5/cross_sections.xml -o cross_sections.xml && \
+    python delete_nuclear_data_not_used_in_cross_section_xml.py
+
+
 
 
 # Copy over the local repository files
