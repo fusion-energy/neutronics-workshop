@@ -14,9 +14,8 @@ the workshop and show the expected outputs of each task.
 The use of OpenMC for neutronics analysis requires several software packages
 and nuclear data. These have all been installed inside a Docker container.
 
-<!-- <p align="center"><a href="https://youtu.be/gcZo7ZPtPr8" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/101077155-54def400-359c-11eb-9d48-e0ace62aea40.png" height="400" /></a></p> -->
+<p align="center"><a href="https://youtu.be/gcZo7ZPtPr8" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/101077155-54def400-359c-11eb-9d48-e0ace62aea40.png" height="400" /></a></p>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gcZo7ZPtPr8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # History
 
