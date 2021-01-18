@@ -1,7 +1,7 @@
 
-## Task 1 - Cross section plotting
+## Task 1 - Cross sections
 
-Please allow 25 minutes for this task.
+Please allow 30 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/2).
 

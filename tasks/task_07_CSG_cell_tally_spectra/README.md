@@ -1,5 +1,5 @@
 
-## Task 7 - Finding neutron and photon spectra using cell tallies
+## Task 7 - Neutron and photon spectra
 
 Please allow 15 minutes for this task.
 
