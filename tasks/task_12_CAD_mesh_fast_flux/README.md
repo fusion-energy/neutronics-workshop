@@ -1,9 +1,11 @@
 
+## This task is currently under development and may not work
+
 ## </a>Task 12 - Unstructured mesh on CAD geometry
 
-Please allow X minutes for this task.
+Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation]().
+Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/13).
 
 This task creates neutronics geometry from CAD files and creates an unstrucutred mesh that is then used to score volumentic heating on the CAD geometry.
 
