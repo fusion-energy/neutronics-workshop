@@ -14,7 +14,8 @@ the workshop and show the expected outputs of each task.
 The use of OpenMC for neutronics analysis requires several software packages
 and nuclear data. These have all been installed inside a Docker container.
 
-<p align="center"><a href="https://youtu.be/gcZo7ZPtPr8" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/101077155-54def400-359c-11eb-9d48-e0ace62aea40.png" height="400" /></a></p>
+<!-- <p align="center"><a href="https://youtu.be/gcZo7ZPtPr8" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/101077155-54def400-359c-11eb-9d48-e0ace62aea40.png" height="400" /></a></p> -->
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gcZo7ZPtPr8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # History
 
@@ -27,10 +28,10 @@ students via workshops but also became useful for placement students.
 
 The repository has benefitted greatly from user feedback. Please feel free to
 raise Github issues if you spot anything that needs fixing. Contributions are
-also welcome from as pull requests to the develop branch. 
+also welcome as pull requests to the develop branch. 
 
 The resource has proven most useful as it is one of the few open source and
-accessable fusion neutronics training resources.
+accessible fusion neutronics training resources.
 
 ## Docker Container Installation
 
@@ -92,5 +93,3 @@ FreeCAD is one option for this and can be downloaded [here](https://www.freecadw
 | [Task 12 - CAD Mesh tallies](https://github.com/ukaea/openmc_workshop/tree/main/tasks/task_12_CAD_cell_tally_fast_flux)             | CAD-based neutronics, Mesh tallies, Paramak, DAGMC, Fast flux                                              |
 | [Task 13 - Techniques for sampling parameter space](https://github.com/ukaea/openmc_workshop/tree/main/tasks/task_13_parameter_study_sampling) | Sampling, Interpolation, Multi-dimensional parameter stidues                                                                                    |
 | [Task 14 - Parameter study optimisation](https://github.com/ukaea/openmc_workshop/tree/main/tasks/task_14_parameter_study_optimisation)            | Data science machine learning approaches                                                                                               |
-
-&ensp;
