@@ -1,7 +1,7 @@
 
 ## Task 10 - Making CAD geometry
 
-Please allow 25 minutes for this task.
+Please allow 10 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/11).
 

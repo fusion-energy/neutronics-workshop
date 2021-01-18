@@ -1,14 +1,8 @@
 
+## This task is currently under development and may not work
+
 ## Task 11 - Tallying heat on surfaces
 
-Please allow X minutes for this task.
+Please allow 20 minutes for this task.
 
-Expected outputs from this task are also in the [presentation]().
-
-Short task description?
-
-Maybe put a small list of instructions to what notebooks to use?
-
-Maybe put learning outcomes here too??
-
-**Learning Outcomes**
+Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/12).

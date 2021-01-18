@@ -1,5 +1,5 @@
 
-## Task 3 - Making CSG geometry
+## Task 3 - CSG geometry
 
 Please allow 25 minutes for this task.
 

@@ -1,7 +1,7 @@
 
 ## Task 6 - DPA
 
-Please allow X minutes for this task.
+Please allow 15 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/7).
 
