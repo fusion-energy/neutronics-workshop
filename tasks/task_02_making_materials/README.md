@@ -1,5 +1,5 @@
 
-## Task 2 - Options for making materials
+## Task 2 - Materials
 
 Please allow 20 minutes for this task.
 
