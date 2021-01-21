@@ -2,12 +2,14 @@
 # docker build -t ukaea/openmcworkshop --build-arg compile_cores=50 .
 
 # run with the following command
-# docker run -p 8888:8888 ukaea/openmcworkshop /bin/bash -c "jupyter notebook --notebook-dir=/tasks --ip='*' --port=8888 --no-browser --allow-root"
+# docker run -p 8888:8888 ukaea/openmcworkshop
 
 # test with the folowing command
 # docker run --rm ukaea/openmcworkshop pytest ../tests
 
 FROM continuumio/miniconda3
+
+ARG compile_cores=1
 
 RUN apt-get --yes update && apt-get --yes upgrade
 
@@ -15,16 +17,16 @@ RUN apt-get --yes update && apt-get --yes upgrade
 RUN apt-get --yes install mpich libmpich-dev libhdf5-serial-dev \
                           libhdf5-mpich-dev
 
-# perhaps needed for unstructured meshes in openmc
+# perhaps libnetcdf13 is needed for unstructured meshes in openmc
 # RUN apt-get --yes install libnetcdf13
 
 # eigen3 needed for DAGMC
 RUN apt-get --yes install libeigen3-dev \
-# sudo is needed during the NJOY install
                           sudo  \ 
+# sudo is needed during the NJOY install
                           git \
-# libnetcdf-dev is needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
                           libnetcdf-dev \
+# libnetcdf-dev is needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
                           hdf5-tools \
                           wget
 
@@ -34,20 +36,34 @@ RUN conda install -c conda-forge -c python python=3.7.8
 RUN conda install -c conda-forge -c cadquery cadquery=2
 # cadquery master don't appear to show the .solid in the notebook
 
-# new version needed for openmc compile
-RUN pip install cmake
 
 # Python libraries used in the workshop
-RUN pip install plotly tqdm ghalton==0.6.1 noisyopt scikit-optimize \
-                inference-tools adaptive vtk itkwidgets nest_asyncio \
-                neutronics_material_maker parametric-plasma-source pytest \
-                pytest-cov holoviews ipywidgets svalinn-tools
+RUN pip install cmake\
+# new version of cmake needed for openmc compile
+                plotly \
+                tqdm \
+                ghalton==0.6.1 \
+                noisyopt \
+                scikit-optimize \
+                inference-tools \
+                adaptive \
+                vtk \
+                itkwidgets \
+                nest_asyncio \
+                neutronics_material_maker \
+                parametric-plasma-source \
+                pytest \
+                pytest-cov \
+                holoviews \
+                ipywidgets \
+                svalinn-tools \
+# cython is needed for moab
+                cython \
+                paramak
 
 # needed for openmc
 RUN pip install --upgrade numpy
 
-# needed for moab
-RUN pip install cython
 
 # Install dependencies from Debian package manager
 RUN apt-get update -y && \
@@ -70,17 +86,8 @@ RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
                        libgles2-mesa-dev && \
                        apt-get clean
 
-RUN git clone  --single-branch --branch develop https://github.com/ukaea/paramak.git && \
-    cd paramak && \
-    python setup.py install
-
-# RUN pip install paramak
-
-ARG compile_cores=2
-
 # Clone and install Embree
-RUN echo installing embree && \
-    git clone --single-branch --branch master https://github.com/embree/embree  && \
+RUN git clone --single-branch --branch master https://github.com/embree/embree  && \
     cd embree && \
     mkdir build && \
     cd build && \
@@ -89,60 +96,61 @@ RUN echo installing embree && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install
 
+
 # Clone and install MOAB
-RUN echo installing MOAB \
-    mkdir MOAB && \
+RUN mkdir MOAB && \
     cd MOAB && \
     git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab/ && \
     mkdir build && \
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
-        -DENABLE_NETCDF=ON \
-        -DENABLE_BLASLAPACK=OFF \
-        -DBUILD_SHARED_LIBS=OFF \
-        -DENABLE_FORTRAN=OFF \
-        -DCMAKE_INSTALL_PREFIX=/MOAB && \
+                  -DENABLE_NETCDF=ON \
+                  -DENABLE_FORTRAN=OFF \
+                  -DENABLE_BLASLAPACK=OFF \
+                  -DBUILD_SHARED_LIBS=OFF \
+                  -DCMAKE_INSTALL_PREFIX=/MOAB && \
     make -j"$compile_cores" &&  \
     make -j"$compile_cores" install && \
-    cmake ../moab -DBUILD_SHARED_LIBS=ON \
-        -DENABLE_HDF5=ON \
-        -DENABLE_PYMOAB=ON \
-        -DENABLE_BLASLAPACK=OFF \
-        -DENABLE_FORTRAN=OFF \
-        -DCMAKE_INSTALL_PREFIX=/MOAB && \
+    cmake ../moab -DENABLE_HDF5=ON \
+                  -DENABLE_PYMOAB=ON \
+                  -DENABLE_FORTRAN=OFF \
+                  -DBUILD_SHARED_LIBS=ON \
+                  -DENABLE_BLASLAPACK=OFF \
+                  -DCMAKE_INSTALL_PREFIX=/MOAB && \
     make -j"$compile_cores" install && \
     cd pymoab && \
     bash install.sh && \
     python setup.py install
 ENV PATH=$PATH:$HOME/MOAB/bin
 
+
 # Clone and install Double-Down
-RUN echo installing double-down && \
-    git clone --single-branch --branch master https://github.com/pshriwise/double-down && \
+RUN git clone --single-branch --branch master https://github.com/pshriwise/double-down && \
     cd double-down && \
     mkdir build && \
     cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-        -DMOAB_DIR=/MOAB \
-        -DEMBREE_DIR=/embree/lib/cmake/embree-3.12.1 && \
+             -DMOAB_DIR=/MOAB \
+             -DEMBREE_DIR=/embree/lib/cmake/embree-3.12.1 && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install
 
 
-# DAGMC install
-# ENV DAGMC_INSTALL_DIR=$HOME/DAGMC/
-RUN echo installing dagmc && \
-    mkdir DAGMC && \
+# DAGMC install from source
+RUN mkdir DAGMC && \
     cd DAGMC && \
     git clone --single-branch --branch develop https://github.com/svalinn/dagmc && \
     mkdir build && \
     cd build && \
     cmake ../dagmc -DBUILD_TALLY=ON \
-        -DCMAKE_INSTALL_PREFIX=/DAGMC \
-        -DMOAB_DIR=/MOAB && \
+                   -DMOAB_DIR=/MOAB \
+                   -DBUILD_STATIC_EXE=OFF \
+                   -DBUILD_STATIC_LIBS=OFF \
+                   -DCMAKE_INSTALL_PREFIX=/dagmc/ && \
     make -j"$compile_cores" install && \
     rm -rf /DAGMC/dagmc /DAGMC/build
 ENV PATH=$PATH:$HOME/DAGMC/bin
+
 
 # installs OpenMc from source
 RUN cd /opt && \
@@ -150,15 +158,17 @@ RUN cd /opt && \
     cd openmc && \
     mkdir build && \
     cd build && \
-    cmake -Doptimize=on -Ddagmc=ON -DDAGMC_ROOT=$DAGMC_INSTALL_DIR -DHDF5_PREFER_PARALLEL=OFF ..  && \
+    cmake -Doptimize=on \
+          -Ddagmc=ON \
+          -DDAGMC_ROOT=/DAGMC \
+          -DHDF5_PREFER_PARALLEL=on ..  && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \ 
     cd /opt/openmc/ && \
     pip install .
 
-# Clone and install NJOY2016
-RUN echo installing NJOY2016 && \
-    git clone https://github.com/njoy/NJOY2016 && \
+#  NJOY2016 install from source
+RUN git clone https://github.com/njoy/NJOY2016 && \
     cd NJOY2016 && \
     mkdir build && \
     cd build && \
@@ -171,7 +181,6 @@ ENV PATH=$PATH:$HOME/NJOY2016/build
 
 
 # install nuclear data
-
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz
 RUN tar -xf WMP_Library_v1.1.tar.gz -C /
 
@@ -189,8 +198,6 @@ RUN python data/convert_nndc71.py --cleanup && \
     rm -rf tendl-2019-download && \
     python data/combine_libraries.py -l nndc-b7.1-hdf5/cross_sections.xml tendl-2019-hdf5/cross_sections.xml -o cross_sections.xml && \
     python delete_nuclear_data_not_used_in_cross_section_xml.py
-
-
 
 
 # Copy over the local repository files
