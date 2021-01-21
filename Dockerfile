@@ -41,7 +41,7 @@ RUN pip install cmake
 RUN pip install plotly tqdm ghalton==0.6.1 noisyopt scikit-optimize \
                 inference-tools adaptive vtk itkwidgets nest_asyncio \
                 neutronics_material_maker parametric-plasma-source pytest \
-                pytest-cov holoviews ipywidgets
+                pytest-cov holoviews ipywidgets svalinn-tools
 
 # needed for openmc
 RUN pip install --upgrade numpy
