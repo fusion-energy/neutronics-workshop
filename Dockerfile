@@ -199,3 +199,8 @@ COPY tasks tasks/
 
 WORKDIR tasks
 
+#this sets the port, gcr looks for this varible
+ENV PORT 8888
+
+# could switch to --ip='*'
+CMD ["jupyter", "notebook", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
