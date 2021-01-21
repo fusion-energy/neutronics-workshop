@@ -15,20 +15,18 @@ RUN apt-get --yes update && apt-get --yes upgrade
 RUN apt-get --yes install mpich libmpich-dev libhdf5-serial-dev \
                           libhdf5-mpich-dev
 
-# needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
-RUN apt-get --yes install libnetcdf-dev
+# perhaps needed for unstructured meshes in openmc
 # RUN apt-get --yes install libnetcdf13
 
 # eigen3 needed for DAGMC
-RUN apt-get --yes install libeigen3-dev
-
+RUN apt-get --yes install libeigen3-dev \
 # sudo is needed during the NJOY install
-RUN apt-get -y install sudo 
-RUN apt-get -y install git
-
-# dependancies used in the workshop
-RUN apt-get --yes install hdf5-tools
-RUN apt-get --yes install wget
+                          sudo  \ 
+                          git \
+# libnetcdf-dev is needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
+                          libnetcdf-dev \
+                          hdf5-tools \
+                          wget
 
 # installing cadquery and jupyter
 RUN conda install jupyter -y
@@ -45,23 +43,8 @@ RUN pip install plotly tqdm ghalton==0.6.1 noisyopt scikit-optimize \
                 neutronics_material_maker parametric-plasma-source pytest \
                 pytest-cov holoviews ipywidgets
 
-RUN git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git
-RUN git clone https://github.com/njoy/NJOY2016
-
-RUN mkdir DAGMC && \
-    cd DAGMC && \
-    git clone --single-branch --branch develop https://github.com/svalinn/dagmc
-
-RUN mkdir MOAB && \
-    cd MOAB && \
-    git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab/
-
-
 # needed for openmc
 RUN pip install --upgrade numpy
-
-RUN git clone --single-branch --branch master https://github.com/embree/embree
-RUN git clone https://github.com/pshriwise/double-down
 
 # needed for moab
 RUN pip install cython
@@ -96,7 +79,8 @@ RUN git clone  --single-branch --branch develop https://github.com/ukaea/paramak
 ARG compile_cores=2
 
 # Clone and install Embree
-RUN echo git clone --single-branch --branch master https://github.com/embree/embree  && \
+RUN echo installing embree && \
+    git clone --single-branch --branch master https://github.com/embree/embree  && \
     cd embree && \
     mkdir build && \
     cd build && \
@@ -106,8 +90,10 @@ RUN echo git clone --single-branch --branch master https://github.com/embree/emb
     make -j"$compile_cores" install
 
 # Clone and install MOAB
-RUN echo git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab/ && \
+RUN echo installing MOAB \
+    mkdir MOAB && \
     cd MOAB && \
+    git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab/ && \
     mkdir build && \
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
@@ -128,10 +114,11 @@ RUN echo git clone  --single-branch --branch develop https://bitbucket.org/fatho
     cd pymoab && \
     bash install.sh && \
     python setup.py install
-
+ENV PATH=$PATH:$HOME/MOAB/bin
 
 # Clone and install Double-Down
-RUN echo git clone https://github.com/pshriwise/double-down && \
+RUN echo installing double-down && \
+    git clone --single-branch --branch master https://github.com/pshriwise/double-down && \
     cd double-down && \
     mkdir build && \
     cd build && \
@@ -145,9 +132,9 @@ RUN echo git clone https://github.com/pshriwise/double-down && \
 # DAGMC install
 # ENV DAGMC_INSTALL_DIR=$HOME/DAGMC/
 RUN echo installing dagmc && \
+    mkdir DAGMC && \
     cd DAGMC && \
-    # mkdir DAGMC && cd DAGMC && \
-    # git clone --single-branch --branch develop https://github.com/svalinn/dagmc && \
+    git clone --single-branch --branch develop https://github.com/svalinn/dagmc && \
     mkdir build && \
     cd build && \
     cmake ../dagmc -DBUILD_TALLY=ON \
@@ -155,7 +142,7 @@ RUN echo installing dagmc && \
         -DMOAB_DIR=/MOAB && \
     make -j"$compile_cores" install && \
     rm -rf /DAGMC/dagmc /DAGMC/build
-
+ENV PATH=$PATH:$HOME/DAGMC/bin
 
 # installs OpenMc from source
 RUN cd /opt && \
@@ -171,7 +158,7 @@ RUN cd /opt && \
 
 # Clone and install NJOY2016
 RUN echo installing NJOY2016 && \
-    # git clone https://github.com/njoy/NJOY2016 && \
+    git clone https://github.com/njoy/NJOY2016 && \
     cd NJOY2016 && \
     mkdir build && \
     cd build && \
@@ -211,3 +198,4 @@ COPY tests tests/
 COPY tasks tasks/
 
 WORKDIR tasks
+
