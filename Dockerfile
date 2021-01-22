@@ -58,6 +58,7 @@ RUN pip install cmake\
 # needed for openmc
 RUN pip install --upgrade numpy
 
+RUN apt-get --yes install gcc
 # gcc needs to be install before ghalton
 RUN pip install ghalton==0.6.1
 
