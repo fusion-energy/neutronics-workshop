@@ -37,7 +37,6 @@ RUN pip install cmake\
 # new version of cmake needed for openmc compile
                 plotly \
                 tqdm \
-                ghalton==0.6.1 \
                 noisyopt \
                 scikit-optimize \
                 inference-tools \
@@ -58,6 +57,9 @@ RUN pip install cmake\
 
 # needed for openmc
 RUN pip install --upgrade numpy
+
+# gcc needs to be install before ghalton
+RUN pip install ghalton==0.6.1 \
 
 
 # Install dependencies from Debian package manager
