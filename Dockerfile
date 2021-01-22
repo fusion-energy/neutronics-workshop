@@ -123,13 +123,13 @@ ENV PATH=$PATH:$HOME/MOAB/bin
 
 
 # Clone and install Double-Down
-RUN git clone --single-branch --branch master https://github.com/pshriwise/double-down && \
+RUN git clone --single-branch --branch main https://github.com/pshriwise/double-down && \
     cd double-down && \
     mkdir build && \
     cd build && \
-    cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-             -DMOAB_DIR=/MOAB \
-             -DEMBREE_DIR=/embree/lib/cmake/embree-3.12.1 && \
+    cmake .. -DMOAB_DIR=/MOAB \
+             -DCMAKE_INSTALL_PREFIX=.. \
+             -DEMBREE_DIR=/embree/lib/cmake/embree-3.12.2 && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install
 
@@ -166,7 +166,7 @@ RUN cd /opt && \
     pip install .
 
 #  NJOY2016 install from source
-RUN git clone https://github.com/njoy/NJOY2016 && \
+RUN git clone --single-branch --branch master https://github.com/njoy/NJOY2016 && \
     cd NJOY2016 && \
     mkdir build && \
     cd build && \
