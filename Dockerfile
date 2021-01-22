@@ -53,14 +53,11 @@ RUN pip install cmake\
                 svalinn-tools \
 # cython is needed for moab
                 cython \
+                scikit-opt
                 paramak
 
 # needed for openmc
 RUN pip install --upgrade numpy
-
-RUN apt-get --yes install gcc
-# gcc needs to be install before ghalton
-RUN pip install ghalton==0.6.1
 
 
 # Install dependencies from Debian package manager
@@ -72,17 +69,20 @@ RUN apt-get update -y && \
         hdf5-tools imagemagick && \
     apt-get autoremove
 
+
 # install addition packages required for DAGMC
 RUN apt-get --yes install libeigen3-dev && \
     apt-get --yes install libnetcdf-dev && \
     apt-get --yes install libtbb-dev && \
     apt-get --yes install libglfw3-dev 
 
+
 # needed for CadQuery functionality
 RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
                        freeglut3-dev libosmesa6 libosmesa6-dev \
                        libgles2-mesa-dev && \
                        apt-get clean
+
 
 # Clone and install Embree
 RUN git clone --single-branch --branch master https://github.com/embree/embree  && \
