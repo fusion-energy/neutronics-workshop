@@ -59,7 +59,7 @@ RUN pip install cmake\
 RUN pip install --upgrade numpy
 
 # gcc needs to be install before ghalton
-RUN pip install ghalton==0.6.1 \
+RUN pip install ghalton==0.6.1
 
 
 # Install dependencies from Debian package manager
