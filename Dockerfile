@@ -13,10 +13,6 @@ ARG compile_cores=1
 
 RUN apt-get --yes update && apt-get --yes upgrade
 
-# required pacakges identified from openmc travis.yml
-RUN apt-get --yes install mpich libmpich-dev libhdf5-serial-dev \
-                          libhdf5-mpich-dev
-
 # perhaps libnetcdf13 is needed for unstructured meshes in openmc
 # RUN apt-get --yes install libnetcdf13
 
@@ -27,7 +23,6 @@ RUN apt-get --yes install libeigen3-dev \
                           git \
                           libnetcdf-dev \
 # libnetcdf-dev is needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
-                          hdf5-tools \
                           wget
 
 # installing cadquery and jupyter
@@ -71,7 +66,7 @@ RUN apt-get update -y && \
     apt-get install -y \
         wget git gfortran g++ cmake \
         mpich libmpich-dev libhdf5-serial-dev libhdf5-mpich-dev \
-        imagemagick && \
+        hdf5-tools imagemagick && \
     apt-get autoremove
 
 # install addition packages required for DAGMC
