@@ -137,16 +137,16 @@ RUN git clone --single-branch --branch main https://github.com/pshriwise/double-
 # DAGMC install from source
 RUN mkdir DAGMC && \
     cd DAGMC && \
-    git clone --single-branch --branch develop https://github.com/svalinn/dagmc && \
+    git clone --single-branch --branch develop https://github.com/svalinn/DAGMC.git && \
     mkdir build && \
     cd build && \
-    cmake ../dagmc -DBUILD_TALLY=ON \
+    cmake ../DAGMC -DBUILD_TALLY=ON \
                    -DMOAB_DIR=/MOAB \
                    -DBUILD_STATIC_EXE=OFF \
                    -DBUILD_STATIC_LIBS=OFF \
                    -DCMAKE_INSTALL_PREFIX=/dagmc/ && \
     make -j"$compile_cores" install && \
-    rm -rf /DAGMC/dagmc /DAGMC/build
+    rm -rf /DAGMC/DAGMC /DAGMC/build
 ENV PATH=$PATH:$HOME/DAGMC/bin
 
 
