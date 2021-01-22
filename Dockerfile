@@ -39,6 +39,7 @@ RUN pip install cmake\
                 tqdm \
                 noisyopt \
                 scikit-optimize \
+                scikit-opt \
                 inference-tools \
                 adaptive \
                 vtk \
@@ -53,7 +54,6 @@ RUN pip install cmake\
                 svalinn-tools \
 # cython is needed for moab
                 cython \
-                scikit-opt
                 paramak
 
 # needed for openmc
