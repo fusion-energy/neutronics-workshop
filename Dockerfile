@@ -159,7 +159,7 @@ RUN cd /opt && \
     cmake -Doptimize=on \
           -Ddagmc=ON \
           -DDAGMC_ROOT=/DAGMC \
-          -DHDF5_PREFER_PARALLEL=on ..  && \
+          -DHDF5_PREFER_PARALLEL=off ..  && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \ 
     cd /opt/openmc/ && \
