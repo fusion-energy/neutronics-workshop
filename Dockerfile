@@ -83,14 +83,16 @@ RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
                        libgles2-mesa-dev && \
                        apt-get clean
 
+RUN git clone --single-branch --branch master https://github.com/embree/embree.git 
 
 # Clone and install Embree
-RUN git clone --single-branch --branch master https://github.com/embree/embree.git  && \
-    cd embree && \
+# RUN git clone --single-branch --branch master https://github.com/embree/embree.git  && \
+RUN cd embree && \
     mkdir build && \
     cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-             -DEMBREE_ISPC_SUPPORT=OFF && \
+             -DEMBREE_ISPC_SUPPORT=OFF \
+             -DEMBREE_DIR=/embree && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install
 
@@ -128,7 +130,8 @@ RUN git clone --single-branch --branch main https://github.com/pshriwise/double-
     mkdir build && \
     cd build && \
     cmake .. -DMOAB_DIR=/MOAB \
-             -DCMAKE_INSTALL_PREFIX=.. && \
+             -DCMAKE_INSTALL_PREFIX=.. \
+             -DEMBREE_DIR=/embree/lib/cmake/ && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install
 
