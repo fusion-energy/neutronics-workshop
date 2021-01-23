@@ -128,7 +128,8 @@ RUN git clone --single-branch --branch main https://github.com/pshriwise/double-
     mkdir build && \
     cd build && \
     cmake .. -DMOAB_DIR=/MOAB \
-             -DCMAKE_INSTALL_PREFIX=.. && \
+             -DCMAKE_INSTALL_PREFIX=.. \
+             -DEMBREE_DIR=/embree && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install
 
