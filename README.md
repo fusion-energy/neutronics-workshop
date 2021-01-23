@@ -50,7 +50,7 @@ terminal window, or Windows users might prefer PowerShell.
 your os and docker, and then run the docker container by typing the following
 commands in a terminal window.
 
-    ```docker run -p 8888:8888 ukaea/openmcworkshop /bin/bash -c "jupyter notebook --notebook-dir=/tasks --ip='*' --port=8888 --no-browser --allow-root"```
+    ```docker run -p 8888:8888 ukaea/openmcworkshop```
 
 4. A URL should be displayed in the terminal and can now be opened in the
 internet browser of your choice. Select and open the URL at the end of the terminal print out (highlighted below)
