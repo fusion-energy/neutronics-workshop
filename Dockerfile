@@ -85,7 +85,7 @@ RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
 
 
 # Clone and install Embree
-RUN git clone --single-branch --branch master https://github.com/embree/embree  && \
+RUN git clone --single-branch --branch master https://github.com/embree/embree.git  && \
     cd embree && \
     mkdir build && \
     cd build && \
@@ -98,7 +98,7 @@ RUN git clone --single-branch --branch master https://github.com/embree/embree  
 # Clone and install MOAB
 RUN mkdir MOAB && \
     cd MOAB && \
-    git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab/ && \
+    git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
@@ -123,13 +123,13 @@ ENV PATH=$PATH:$HOME/MOAB/bin
 
 
 # Clone and install Double-Down
-RUN git clone --single-branch --branch main https://github.com/pshriwise/double-down && \
+RUN git clone --single-branch --branch main https://github.com/pshriwise/double-down.git && \
     cd double-down && \
     mkdir build && \
     cd build && \
     cmake .. -DMOAB_DIR=/MOAB \
              -DCMAKE_INSTALL_PREFIX=.. \
-             -DEMBREE_DIR=/embree/lib/cmake/embree-3.12.2 && \
+             -DEMBREE_DIR=/embree/lib/cmake/embree-3.12.1 && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install
 
@@ -166,7 +166,7 @@ RUN cd /opt && \
     pip install .
 
 #  NJOY2016 install from source
-RUN git clone --single-branch --branch master https://github.com/njoy/NJOY2016 && \
+RUN git clone --single-branch --branch master https://github.com/njoy/NJOY2016.git && \
     cd NJOY2016 && \
     mkdir build && \
     cd build && \
