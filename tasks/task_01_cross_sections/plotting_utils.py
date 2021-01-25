@@ -30,9 +30,11 @@ def create_isotope_plot(isotopes, reaction, nuclear_data_path=None):
 
     for isotope_name in tqdm(isotopes):
         isotope_object = openmc.data.IncidentNeutron.from_hdf5(os.path.join(nuclear_data_path, isotope_name+'.h5'))  # you may have to change this directory
-        energy = isotope_object.energy['294K']  # 294K is the temperature for endf, others use 293K
+
+        temperature = find_temperature_to_use(list(isotope_object.energy.keys()))
+        energy = isotope_object.energy[temperature]
         if mt_number in isotope_object.reactions.keys():
-            cross_section = isotope_object[mt_number].xs['294K'](energy)
+            cross_section = isotope_object[mt_number].xs[temperature](energy)
             fig.add_trace(go.Scatter(
                 x=energy,
                 y=cross_section,
@@ -44,6 +46,16 @@ def create_isotope_plot(isotopes, reaction, nuclear_data_path=None):
             print('isotope ', isotope_name, ' does not have the MT reaction number ', reaction)
 
     return fig
+
+
+def find_temperature_to_use(list_of_string_temps):
+
+    # 294K is the temperature for endf, others use 293K
+    list_of_ints = [int(t[:-1]) for t in list_of_string_temps]
+
+    temp_value = min(list_of_ints, key=lambda x:abs(x-294))
+    print('temp found = ', str(temp_value) + 'K')
+    return str(temp_value) + 'K'
 
 
 def create_element_plot(elements, reaction):
