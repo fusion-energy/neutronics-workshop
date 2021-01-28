@@ -5,18 +5,17 @@ use the function.
 """
 
 import os
-import unittest
-import sys
-import os
 import subprocess
+import sys
 import tempfile
-from pathlib import Path
-import nbformat
+import unittest
 from glob import glob
+from pathlib import Path
 
 import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
 from nbconvert.preprocessors.execute import CellExecutionError
+
 
 def _notebook_run(path):
   """
@@ -31,7 +30,7 @@ def _notebook_run(path):
   with open(path) as f:
     nb = nbformat.read(f, as_version=4)
     nb.metadata.get('kernelspec', {})['name'] = kernel_name
-    ep = ExecutePreprocessor(kernel_name=kernel_name, timeout=10) #, allow_errors=True
+    ep = ExecutePreprocessor(kernel_name=kernel_name, timeout=20) #, allow_errors=True
 
     try:
       ep.preprocess(nb, {'metadata': {'path': this_file_directory}})
