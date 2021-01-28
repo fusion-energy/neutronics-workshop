@@ -71,10 +71,9 @@ RUN apt-get update -y && \
 
 
 # install addition packages required for DAGMC
-RUN apt-get --yes install libeigen3-dev && \
-    apt-get --yes install libnetcdf-dev && \
-    apt-get --yes install libtbb-dev && \
-    apt-get --yes install libglfw3-dev 
+RUN apt-get --yes install  \
+        libeigen3-dev libnetcdf-dev libtbb-dev libglfw3-dev && \
+        apt-get clean
 
 
 # needed for CadQuery functionality
