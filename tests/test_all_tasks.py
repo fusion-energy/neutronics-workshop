@@ -5,11 +5,8 @@ use the function.
 """
 
 import os
-import subprocess
 import sys
-import tempfile
 import unittest
-from glob import glob
 from pathlib import Path
 
 import nbformat
@@ -18,32 +15,32 @@ from nbconvert.preprocessors.execute import CellExecutionError
 
 
 def _notebook_run(path):
-  """
-  Execute a notebook via nbconvert and collect output.
-   :returns (parsed nb object, execution errors)
-  """
-  kernel_name = 'python%d' % sys.version_info[0]
-  this_file_directory = os.path.dirname(__file__)
-  errors = []
+    """
+    Execute a notebook via nbconvert and collect output.
+    :returns (parsed nb object, execution errors)
+    """
+    kernel_name = 'python%d' % sys.version_info[0]
+    this_file_directory = os.path.dirname(__file__)
+    errors = []
+
+    with open(path) as f:
+        nb = nbformat.read(f, as_version=4)
+        nb.metadata.get('kernelspec', {})['name'] = kernel_name
+        ep = ExecutePreprocessor(kernel_name=kernel_name, timeout=50) #, allow_errors=True
+
+        try:
+            ep.preprocess(nb, {'metadata': {'path': this_file_directory}})
+
+        except CellExecutionError as e: 
+            if "SKIP" in e.traceback:
+                print(str(e.traceback).split("\n")[-2])
+            else:
+                raise e
+
+    return nb, errors
 
 
-  with open(path) as f:
-    nb = nbformat.read(f, as_version=4)
-    nb.metadata.get('kernelspec', {})['name'] = kernel_name
-    ep = ExecutePreprocessor(kernel_name=kernel_name, timeout=40) #, allow_errors=True
-
-    try:
-      ep.preprocess(nb, {'metadata': {'path': this_file_directory}})
-
-    except CellExecutionError as e: 
-      if "SKIP" in e.traceback:
-        print(str(e.traceback).split("\n")[-2])
-      else:
-        raise e
-
-  return nb, errors
-
-class test_task_1(unittest.TestCase):
+class test_tasks(unittest.TestCase):
 
     def test_task_1(self):
         for notebook in Path().rglob("tasks/tasks/task_01_*/*.ipynb"):
