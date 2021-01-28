@@ -24,9 +24,8 @@ jobs:
           name: run tests
           no_output_timeout: 30m
           command: |
-            pip install pytest-cov
             cd ..
-            pytest-cov repo/tests -v --cov=tasks/ --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
+            pytest repo/tests -v --cov=tasks/ --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
       - store_test_results:
           path: test-reports
       - store_artifacts:
