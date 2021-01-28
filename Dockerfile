@@ -142,9 +142,11 @@ RUN mkdir DAGMC && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
                    -DMOAB_DIR=/MOAB \
+                   -DDOUBLE_DOWN=ON \
+                   -DDOUBLE_DOWN_DIR=/double-down \
                    -DBUILD_STATIC_EXE=OFF \
                    -DBUILD_STATIC_LIBS=OFF \
-                   -DCMAKE_INSTALL_PREFIX=/dagmc/ && \
+                   -DCMAKE_INSTALL_PREFIX=/DAGMC/ && \
     make -j"$compile_cores" install && \
     rm -rf /DAGMC/DAGMC /DAGMC/build
 ENV PATH=$PATH:$HOME/DAGMC/bin
