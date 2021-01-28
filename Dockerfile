@@ -67,12 +67,14 @@ RUN apt-get update -y && \
         wget git gfortran g++ cmake \
         mpich libmpich-dev libhdf5-serial-dev libhdf5-mpich-dev \
         hdf5-tools imagemagick && \
-    apt-get autoremove
+    apt-get autoremove  && \
+    apt-get clean
 
 
 # install addition packages required for DAGMC
 RUN apt-get --yes install  \
         libeigen3-dev libnetcdf-dev libtbb-dev libglfw3-dev && \
+        apt-get autoremove  && \
         apt-get clean
 
 
@@ -80,6 +82,7 @@ RUN apt-get --yes install  \
 RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
                        freeglut3-dev libosmesa6 libosmesa6-dev \
                        libgles2-mesa-dev && \
+                       apt-get autoremove  && \
                        apt-get clean
 
 
