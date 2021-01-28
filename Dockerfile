@@ -118,6 +118,7 @@ RUN mkdir MOAB && \
                   -DENABLE_BLASLAPACK=OFF \
                   -DCMAKE_INSTALL_PREFIX=/MOAB && \
     make -j"$compile_cores" install && \
+    rm -rf /MOAB/moab /MOAB/build && \
     cd pymoab && \
     bash install.sh && \
     python setup.py install
