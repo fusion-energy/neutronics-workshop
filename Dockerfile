@@ -66,7 +66,7 @@ RUN apt-get update -y && \
     apt-get install -y \
         wget git gfortran g++ \
         mpich libmpich-dev libhdf5-serial-dev libhdf5-mpich-dev \
-        hdf5-tools imagemagick && \
+        hdf5-tools imagemagick cmake && \
     apt-get autoremove  && \
     apt-get clean
 
@@ -88,12 +88,12 @@ RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
 
 # Clone and install Embree
 RUN mkdir embree && \
-    cd embree
-    git clone --single-branch --branch master https://github.com/embree/embree.git  && \
+    cd embree && \
+    git clone --single-branch --branch master https://github.com/embree/embree.git && \
     mkdir build && \
     cd build && \
     cmake ../embree -DCMAKE_INSTALL_PREFIX=/embree \
-             -DEMBREE_ISPC_SUPPORT=OFF && \
+                    -DEMBREE_ISPC_SUPPORT=OFF && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \
     rm -rf /embree/build /embree/embree
@@ -120,10 +120,10 @@ RUN mkdir MOAB && \
                   -DENABLE_BLASLAPACK=OFF \
                   -DCMAKE_INSTALL_PREFIX=/MOAB && \
     make -j"$compile_cores" install && \
-    rm -rf /MOAB/moab /MOAB/build && \
     cd pymoab && \
     bash install.sh && \
-    python setup.py install
+    python setup.py install && \
+    rm -rf /MOAB/moab /MOAB/build
     
 ENV PATH=$PATH:/MOAB/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
@@ -150,10 +150,10 @@ RUN mkdir DAGMC && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
                    -DMOAB_DIR=/MOAB \
                    -DDOUBLE_DOWN=ON \
-                   -DDOUBLE_DOWN_DIR=/double-down \
                    -DBUILD_STATIC_EXE=OFF \
                    -DBUILD_STATIC_LIBS=OFF \
-                   -DCMAKE_INSTALL_PREFIX=/DAGMC/ && \
+                   -DCMAKE_INSTALL_PREFIX=/DAGMC/ \
+                   -DDOUBLE_DOWN_DIR=/double-down && \
     make -j"$compile_cores" install && \
     rm -rf /DAGMC/DAGMC /DAGMC/build
     
