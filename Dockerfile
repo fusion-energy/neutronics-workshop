@@ -176,14 +176,14 @@ RUN cd /opt && \
     pip install .
 
 #  NJOY2016 install from source
-RUN git clone --single-branch --branch master https://github.com/njoy/NJOY2016.git && \
-    cd NJOY2016 && \
-    mkdir build && \
-    cd build && \
-    cmake -Dstatic=on .. && \
+RUN mkdir njoy && cd njoy && \
+    git clone --single-branch --branch master https://github.com/njoy/NJOY2016.git && \
+    mkdir build && cd build && \
+    cmake -Dstatic=on ../NJOY2016 && \
     make 2>/dev/null && \
+    rm -rf /njoy/NJOY2016
 
-ENV PATH=$PATH:/NJOY2016/build
+ENV PATH=$PATH:/njoy/build
 
 
 # install nuclear data
