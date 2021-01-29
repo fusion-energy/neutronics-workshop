@@ -64,7 +64,7 @@ RUN pip install --upgrade numpy
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y \
-        wget git gfortran g++ cmake \
+        wget git gfortran g++ \
         mpich libmpich-dev libhdf5-serial-dev libhdf5-mpich-dev \
         hdf5-tools imagemagick && \
     apt-get autoremove  && \
@@ -87,14 +87,16 @@ RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
 
 
 # Clone and install Embree
-RUN git clone --single-branch --branch master https://github.com/embree/embree.git  && \
-    cd embree && \
+RUN mkdir embree && \
+    cd embree
+    git clone --single-branch --branch master https://github.com/embree/embree.git  && \
     mkdir build && \
     cd build && \
-    cmake .. -DCMAKE_INSTALL_PREFIX=.. \
+    cmake ../embree -DCMAKE_INSTALL_PREFIX=/embree \
              -DEMBREE_ISPC_SUPPORT=OFF && \
     make -j"$compile_cores" && \
-    make -j"$compile_cores" install
+    make -j"$compile_cores" install && \
+    rm -rf /embree/build /embree/embree
 
 
 # Clone and install MOAB
@@ -122,7 +124,9 @@ RUN mkdir MOAB && \
     cd pymoab && \
     bash install.sh && \
     python setup.py install
-ENV PATH=$PATH:$HOME/MOAB/bin
+    
+ENV PATH=$PATH:/MOAB/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
 
 
 # Clone and install Double-Down
@@ -152,7 +156,8 @@ RUN mkdir DAGMC && \
                    -DCMAKE_INSTALL_PREFIX=/DAGMC/ && \
     make -j"$compile_cores" install && \
     rm -rf /DAGMC/DAGMC /DAGMC/build
-ENV PATH=$PATH:$HOME/DAGMC/bin
+    
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
 
 # installs OpenMc from source
@@ -177,10 +182,8 @@ RUN git clone --single-branch --branch master https://github.com/njoy/NJOY2016.g
     cd build && \
     cmake -Dstatic=on .. && \
     make 2>/dev/null && \
-    sudo make install
 
-ENV LD_LIBRARY_PATH=$HOME/MOAB/lib:$HOME/DAGMC/lib
-ENV PATH=$PATH:$HOME/NJOY2016/build
+ENV PATH=$PATH:/NJOY2016/build
 
 
 # install nuclear data
