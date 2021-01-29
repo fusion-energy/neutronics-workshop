@@ -88,7 +88,7 @@ RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
 
 # Clone and install Embree
 RUN mkdir embree && \
-    cd embree
+    cd embree && \
     git clone --single-branch --branch master https://github.com/embree/embree.git  && \
     mkdir build && \
     cd build && \
@@ -120,10 +120,10 @@ RUN mkdir MOAB && \
                   -DENABLE_BLASLAPACK=OFF \
                   -DCMAKE_INSTALL_PREFIX=/MOAB && \
     make -j"$compile_cores" install && \
-    rm -rf /MOAB/moab /MOAB/build && \
     cd pymoab && \
     bash install.sh && \
-    python setup.py install
+    python setup.py install && \
+    rm -rf /MOAB/moab /MOAB/build
     
 ENV PATH=$PATH:/MOAB/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
