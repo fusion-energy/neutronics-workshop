@@ -54,7 +54,7 @@ def find_temperature_to_use(list_of_string_temps):
     list_of_ints = [int(t[:-1]) for t in list_of_string_temps]
 
     temp_value = min(list_of_ints, key=lambda x:abs(x-294))
-    print('temp found = ', str(temp_value) + 'K')
+
     return str(temp_value) + 'K'
 
 
