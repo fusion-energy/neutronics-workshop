@@ -64,35 +64,39 @@ RUN pip install --upgrade numpy
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y \
-        wget git gfortran g++ cmake \
+        wget git gfortran g++ \
         mpich libmpich-dev libhdf5-serial-dev libhdf5-mpich-dev \
-        hdf5-tools imagemagick && \
-    apt-get autoremove
+        hdf5-tools imagemagick cmake && \
+    apt-get autoremove  && \
+    apt-get clean
 
 
 # install addition packages required for DAGMC
-RUN apt-get --yes install libeigen3-dev && \
-    apt-get --yes install libnetcdf-dev && \
-    apt-get --yes install libtbb-dev && \
-    apt-get --yes install libglfw3-dev 
+RUN apt-get --yes install  \
+        libeigen3-dev libnetcdf-dev libtbb-dev libglfw3-dev && \
+        apt-get autoremove  && \
+        apt-get clean
 
 
 # needed for CadQuery functionality
 RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
                        freeglut3-dev libosmesa6 libosmesa6-dev \
                        libgles2-mesa-dev && \
+                       apt-get autoremove  && \
                        apt-get clean
 
 
 # Clone and install Embree
-RUN git clone --single-branch --branch master https://github.com/embree/embree.git  && \
+RUN mkdir embree && \
     cd embree && \
+    git clone --single-branch --branch master https://github.com/embree/embree.git && \
     mkdir build && \
     cd build && \
-    cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-             -DEMBREE_ISPC_SUPPORT=OFF && \
+    cmake ../embree -DCMAKE_INSTALL_PREFIX=/embree \
+                    -DEMBREE_ISPC_SUPPORT=OFF && \
     make -j"$compile_cores" && \
-    make -j"$compile_cores" install
+    make -j"$compile_cores" install && \
+    rm -rf /embree/build /embree/embree
 
 
 # Clone and install MOAB
@@ -118,8 +122,11 @@ RUN mkdir MOAB && \
     make -j"$compile_cores" install && \
     cd pymoab && \
     bash install.sh && \
-    python setup.py install
-ENV PATH=$PATH:$HOME/MOAB/bin
+    python setup.py install && \
+    rm -rf /MOAB/moab /MOAB/build
+    
+ENV PATH=$PATH:/MOAB/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
 
 
 # Clone and install Double-Down
@@ -142,12 +149,15 @@ RUN mkdir DAGMC && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
                    -DMOAB_DIR=/MOAB \
+                   -DDOUBLE_DOWN=ON \
                    -DBUILD_STATIC_EXE=OFF \
                    -DBUILD_STATIC_LIBS=OFF \
-                   -DCMAKE_INSTALL_PREFIX=/dagmc/ && \
+                   -DCMAKE_INSTALL_PREFIX=/DAGMC/ \
+                   -DDOUBLE_DOWN_DIR=/double-down && \
     make -j"$compile_cores" install && \
     rm -rf /DAGMC/DAGMC /DAGMC/build
-ENV PATH=$PATH:$HOME/DAGMC/bin
+    
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
 
 # installs OpenMc from source
@@ -166,16 +176,14 @@ RUN cd /opt && \
     pip install .
 
 #  NJOY2016 install from source
-RUN git clone --single-branch --branch master https://github.com/njoy/NJOY2016.git && \
-    cd NJOY2016 && \
-    mkdir build && \
-    cd build && \
-    cmake -Dstatic=on .. && \
+RUN mkdir njoy && cd njoy && \
+    git clone --single-branch --branch master https://github.com/njoy/NJOY2016.git && \
+    mkdir build && cd build && \
+    cmake -Dstatic=on ../NJOY2016 && \
     make 2>/dev/null && \
-    sudo make install
+    rm -rf /njoy/NJOY2016
 
-ENV LD_LIBRARY_PATH=$HOME/MOAB/lib:$HOME/DAGMC/lib
-ENV PATH=$PATH:$HOME/NJOY2016/build
+ENV PATH=$PATH:/njoy/build
 
 
 # install nuclear data
