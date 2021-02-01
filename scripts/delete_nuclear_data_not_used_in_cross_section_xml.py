@@ -39,7 +39,7 @@ for folder in folders_to_check:
     print(folder)
     folder_with_prefix = Path(cs_xml_folder) / Path(folder)
     for nuc_data_file in list(folder_with_prefix.rglob('*.h5')):
-         nuc_data_in_folders.append(str(Path(cs_xml_folder) / nuc_data_file))
+        nuc_data_in_folders.append(str(Path(cs_xml_folder) / nuc_data_file))
 
 
 print(len(nuc_data_in_folders), 'nuclear data files in folders')
