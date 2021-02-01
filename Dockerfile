@@ -156,7 +156,8 @@ RUN mkdir DAGMC && \
                    -DDOUBLE_DOWN_DIR=/double-down && \
     make -j"$compile_cores" install && \
     rm -rf /DAGMC/DAGMC /DAGMC/build
-    
+
+ENV PATH=$PATH:/DAGMC/bin    
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
 
