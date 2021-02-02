@@ -214,6 +214,7 @@ RUN git clone https://github.com/open-radiation-sources/parametric-plasma-source
     cd build && \
     cmake .. -DOPENMC_DIR=/opt/openmc && \
     make && \
+    cd .. && \
     pip install -e .
 
 
