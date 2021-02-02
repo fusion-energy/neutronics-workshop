@@ -46,7 +46,6 @@ RUN pip install cmake\
                 itkwidgets \
                 nest_asyncio \
                 neutronics_material_maker \
-                parametric-plasma-source \
                 pytest \
                 pytest-cov \
                 holoviews \
@@ -156,7 +155,8 @@ RUN mkdir DAGMC && \
                    -DDOUBLE_DOWN_DIR=/double-down && \
     make -j"$compile_cores" install && \
     rm -rf /DAGMC/DAGMC /DAGMC/build
-    
+
+ENV PATH=$PATH:/DAGMC/bin    
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
 
@@ -204,6 +204,18 @@ RUN python data/convert_nndc71.py --cleanup && \
     rm -rf tendl-2019-download && \
     python data/combine_libraries.py -l nndc-b7.1-hdf5/cross_sections.xml tendl-2019-hdf5/cross_sections.xml -o cross_sections.xml && \
     python delete_nuclear_data_not_used_in_cross_section_xml.py
+
+
+# download and compile parametric-plasma-source
+RUN git clone https://github.com/open-radiation-sources/parametric-plasma-source.git && \
+    cd parametric-plasma-source && \
+    git checkout develop && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DOPENMC_DIR=/opt/openmc && \
+    make && \
+    cd .. && \
+    pip install -e .
 
 
 # Copy over the local repository files
