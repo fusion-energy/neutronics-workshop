@@ -121,8 +121,10 @@ RUN mkdir MOAB && \
     make -j"$compile_cores" install && \
     cd pymoab && \
     bash install.sh && \
-    python setup.py install && \
-    rm -rf /MOAB/moab /MOAB/build
+    python setup.py install
+    # the following rm command appears to remove libraries that are need to use
+    # pymoab so this has been commented out for now
+    # rm -rf /MOAB/moab /MOAB/build
     
 ENV PATH=$PATH:/MOAB/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
@@ -213,10 +215,9 @@ RUN git clone https://github.com/open-radiation-sources/parametric-plasma-source
     mkdir build && \
     cd build && \
     cmake .. -DOPENMC_DIR=/opt/openmc && \
-    make && \
-    cd .. && \
-    pip install -e .
+    make
 
+ENV PYTHONPATH="${PYTHONPATH}:/parametric-plasma-source/build"
 
 # Copy over the local repository files
 COPY tests tests/
