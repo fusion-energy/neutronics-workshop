@@ -50,7 +50,7 @@ RUN pip install cmake\
                 pytest-cov \
                 holoviews \
                 ipywidgets \
-                svalinn-tools \
+                # svalinn-tools \ not python 3 at the moment
 # cython is needed for moab
                 cython \
                 paramak
@@ -131,15 +131,18 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
 
 
 # Clone and install Double-Down
-RUN git clone --single-branch --branch main https://github.com/pshriwise/double-down.git && \
+RUN mkdir double-down && \
+    cd double-down && \
+    git clone --single-branch --branch main https://github.com/pshriwise/double-down.git && \
     cd double-down && \
     mkdir build && \
     cd build && \
-    cmake .. -DMOAB_DIR=/MOAB \
-             -DCMAKE_INSTALL_PREFIX=.. \
-             -DEMBREE_DIR=/embree && \
+    cmake ../double-down -DMOAB_DIR=/MOAB \
+                         -DCMAKE_INSTALL_PREFIX=/double-down \
+                         -DEMBREE_DIR=/embree && \
     make -j"$compile_cores" && \
-    make -j"$compile_cores" install
+    make -j"$compile_cores" install && \
+    rm /double-down/build /double-down/double-down 
 
 
 # DAGMC install from source
@@ -178,9 +181,11 @@ RUN cd /opt && \
     pip install .
 
 #  NJOY2016 install from source
-RUN mkdir njoy && cd njoy && \
+RUN mkdir njoy && \
+    cd njoy && \
     git clone --single-branch --branch master https://github.com/njoy/NJOY2016.git && \
-    mkdir build && cd build && \
+    mkdir build && \
+    cd build && \
     cmake -Dstatic=on ../NJOY2016 && \
     make 2>/dev/null && \
     rm -rf /njoy/NJOY2016
