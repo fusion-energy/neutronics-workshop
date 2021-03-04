@@ -197,8 +197,8 @@ ENV OPENMC_CROSS_SECTIONS=/cross_sections.xml
 
 COPY scripts/delete_nuclear_data_not_used_in_cross_section_xml.py .
 
-RUN git clone https://github.com/openmc-dev/data.git
-RUN python data/convert_nndc71.py --cleanup && \
+RUN git clone https://github.com/openmc-dev/data.git && \
+    python data/convert_nndc71.py --cleanup && \
     rm -rf nndc-b7.1-endf  && \
     rm -rf nndc-b7.1-ace/  && \
     rm -rf nndc-b7.1-download && \
