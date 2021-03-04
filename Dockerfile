@@ -26,10 +26,10 @@ RUN apt-get --yes install libeigen3-dev \
                           wget
 
 # installing cadquery and jupyter
-RUN conda install jupyter -y
-RUN conda install -c conda-forge -c python python=3.7.8
-RUN conda install -c conda-forge -c cadquery cadquery=2
-# cadquery master don't appear to show the .solid in the notebook
+RUN conda install jupyter -y && \
+    conda install -c conda-forge -c python python=3.7.8 && \
+    conda install -c conda-forge -c cadquery cadquery=2
+# cadquery master dose not appear to show the .solid in the notebook
 
 
 # Python libraries used in the workshop
@@ -189,15 +189,16 @@ ENV PATH=$PATH:/njoy/build
 
 
 # install nuclear data
-RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz
-RUN tar -xf WMP_Library_v1.1.tar.gz -C /
+RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
+    tar -xf WMP_Library_v1.1.tar.gz -C /  && \
+    rm WMP_Library_v1.1.tar.gz
 
 ENV OPENMC_CROSS_SECTIONS=/cross_sections.xml
 
 COPY scripts/delete_nuclear_data_not_used_in_cross_section_xml.py .
 
-RUN git clone https://github.com/openmc-dev/data.git
-RUN python data/convert_nndc71.py --cleanup && \
+RUN git clone https://github.com/openmc-dev/data.git && \
+    python data/convert_nndc71.py --cleanup && \
     rm -rf nndc-b7.1-endf  && \
     rm -rf nndc-b7.1-ace/  && \
     rm -rf nndc-b7.1-download && \
