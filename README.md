@@ -77,6 +77,8 @@ FreeCAD is one option for this and can be downloaded [here](https://www.freecadw
 
 ## Workshop tasks
 
+The task videos are all avaialbe on a nice [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) map which is great for working through the workshop with collegues.
+
 | Tasks | Keywords | Video(s) |
 |-|-|-|
 | [Task 1 - Cross sections](https://github.com/ukaea/openmc_workshop/tree/main/tasks/task_01_cross_sections) | Nuclear data, cross-sections, MT numbers, Doppler | [link1](https://youtu.be/eBZ2lY_2v7I)  [link2](https://youtu.be/ELZNeIdSuMY) [link3](https://youtu.be/ec5BLLL6Q_g) [link4](https://youtu.be/mkl1mVnTO6g) |
