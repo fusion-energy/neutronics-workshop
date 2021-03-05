@@ -134,7 +134,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
 RUN mkdir double-down && \
     cd double-down && \
     git clone --single-branch --branch main https://github.com/pshriwise/double-down.git && \
-    cd double-down && \
+    # cd double-down && \
     mkdir build && \
     cd build && \
     cmake ../double-down -DMOAB_DIR=/MOAB \
