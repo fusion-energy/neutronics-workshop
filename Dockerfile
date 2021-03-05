@@ -142,7 +142,7 @@ RUN mkdir double-down && \
                          -DEMBREE_DIR=/embree && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \
-    rm /double-down/build /double-down/double-down 
+    rm -rf /double-down/build /double-down/double-down 
 
 
 # DAGMC install from source
