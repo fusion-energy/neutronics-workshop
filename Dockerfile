@@ -7,7 +7,7 @@
 # test with the folowing command
 # docker run --rm ukaea/openmcworkshop pytest ../tests
 
-FROM continuumio/miniconda3
+FROM continuumio/miniconda3:4.9.2
 
 ARG compile_cores=1
 
@@ -16,8 +16,7 @@ RUN apt-get --yes update && apt-get --yes upgrade
 # perhaps libnetcdf13 is needed for unstructured meshes in openmc
 # RUN apt-get --yes install libnetcdf13
 
-# Install dependencies from Debian package manager
-# eigen3 needed for DAGMC
+                          # eigen3 needed for DAGMC
 RUN apt-get --yes install libeigen3-dev \
                           sudo  \ 
                           # sudo is needed during the NJOY install
