@@ -16,14 +16,47 @@ RUN apt-get --yes update && apt-get --yes upgrade
 # perhaps libnetcdf13 is needed for unstructured meshes in openmc
 # RUN apt-get --yes install libnetcdf13
 
+# Install dependencies from Debian package manager
 # eigen3 needed for DAGMC
 RUN apt-get --yes install libeigen3-dev \
                           sudo  \ 
-# sudo is needed during the NJOY install
+                          # sudo is needed during the NJOY install
                           git \
+                          wget \
+                          gfortran \
+                          g++ \
+                          mpich \
+                          libmpich-dev \
+                          libhdf5-serial-dev \
+                          libhdf5-mpich-dev \
+                          hdf5-tools \
+                          imagemagick \
+                          cmake \
+                          # libeigen3-dev required for DAGMC
+                          libeigen3-dev \
+                          # libnetcdf-dev is needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
                           libnetcdf-dev \
-# libnetcdf-dev is needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
-                          wget
+                          # libtbb-dev required for DAGMC
+                          libtbb-dev \
+                          # libglfw3-dev required for DAGMC
+                          libglfw3-dev \
+                          # needed for CadQuery functionality
+                          libgl1-mesa-glx \
+                          # needed for CadQuery functionality
+                          libgl1-mesa-dev \
+                          # needed for CadQuery functionality
+                          libglu1-mesa-dev \
+                          # needed for CadQuery functionality
+                          freeglut3-dev \
+                          # needed for CadQuery functionality
+                          libosmesa6 \
+                          # needed for CadQuery functionality
+                          libosmesa6-dev \
+                          # needed for CadQuery functionality
+                          libgles2-mesa-dev && \
+                          apt-get autoremove && \
+                          apt-get clean
+
 
 # installing cadquery and jupyter
 RUN conda install jupyter -y && \
@@ -37,10 +70,10 @@ RUN pip install cmake\
 # new version of cmake needed for openmc compile
                 plotly \
                 tqdm \
-                noisyopt \
+                # noisyopt \
                 scikit-optimize \
                 scikit-opt \
-                inference-tools \
+                # inference-tools \
                 adaptive \
                 vtk \
                 itkwidgets \
@@ -48,41 +81,17 @@ RUN pip install cmake\
                 neutronics_material_maker \
                 pytest \
                 pytest-cov \
-                holoviews \
+                # holoviews \
                 ipywidgets \
-                # svalinn-tools \ not python 3 at the moment
 # cython is needed for moab
                 cython \
                 paramak
 
+# svalinn-tools should be added but it is not working with python 3 at the moment
+
 # needed for openmc
 RUN pip install --upgrade numpy
 
-
-# Install dependencies from Debian package manager
-RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y \
-        wget git gfortran g++ \
-        mpich libmpich-dev libhdf5-serial-dev libhdf5-mpich-dev \
-        hdf5-tools imagemagick cmake && \
-    apt-get autoremove  && \
-    apt-get clean
-
-
-# install addition packages required for DAGMC
-RUN apt-get --yes install  \
-        libeigen3-dev libnetcdf-dev libtbb-dev libglfw3-dev && \
-        apt-get autoremove  && \
-        apt-get clean
-
-
-# needed for CadQuery functionality
-RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev \
-                       freeglut3-dev libosmesa6 libosmesa6-dev \
-                       libgles2-mesa-dev && \
-                       apt-get autoremove  && \
-                       apt-get clean
 
 
 # Clone and install Embree
@@ -229,7 +238,7 @@ ENV PYTHONPATH="${PYTHONPATH}:/parametric-plasma-source/build"
 COPY tests tests/
 COPY tasks tasks/
 
-WORKDIR tasks
+WORKDIR /tasks
 
 #this sets the port, gcr looks for this varible
 ENV PORT 8888
