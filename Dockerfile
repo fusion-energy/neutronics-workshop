@@ -212,6 +212,7 @@ COPY scripts/delete_nuclear_data_not_used_in_cross_section_xml.py .
 
 
 RUN wget -O nndc-b7.1.tar.xz https://anl.box.com/shared/static/9igk353zpy8fn9ttvtrqgzvw1vtejoz6.xz && \
+    mkdir nndc-b7.1-hdf5 && \
     tar -xf nndc-b7.1.tar.xz -C nndc-b7.1-hdf5 && \
     rm nndc-b7.1.tar.xz
 
