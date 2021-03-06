@@ -210,11 +210,15 @@ ENV OPENMC_CROSS_SECTIONS=/cross_sections.xml
 
 COPY scripts/delete_nuclear_data_not_used_in_cross_section_xml.py .
 
+
+RUN wget -O nndc-b7.1.tar.xz https://anl.box.com/shared/static/9igk353zpy8fn9ttvtrqgzvw1vtejoz6.xz && \
+    tar -xf nndc-b7.1.tar.xz -C nndc-b7.1-hdf5
+
 RUN git clone https://github.com/openmc-dev/data.git && \
-    python data/convert_nndc71.py --cleanup && \
-    rm -rf nndc-b7.1-endf  && \
-    rm -rf nndc-b7.1-ace/  && \
-    rm -rf nndc-b7.1-download && \
+    # python data/convert_nndc71.py --cleanup && \
+    # rm -rf nndc-b7.1-endf  && \
+    # rm -rf nndc-b7.1-ace/  && \
+    # rm -rf nndc-b7.1-download && \
     python data/convert_tendl.py --cleanup && \
     rm -rf tendl-2019-ace/ && \
     rm -rf tendl-2019-download && \
