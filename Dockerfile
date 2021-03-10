@@ -96,7 +96,7 @@ RUN pip install --upgrade numpy
 # Clone and install Embree
 RUN mkdir embree && \
     cd embree && \
-    git clone --single-branch --branch master https://github.com/embree/embree.git && \
+    git clone --single-branch --branch master --depth 1 https://github.com/embree/embree.git && \
     mkdir build && \
     cd build && \
     cmake ../embree -DCMAKE_INSTALL_PREFIX=/embree \
@@ -109,7 +109,7 @@ RUN mkdir embree && \
 # Clone and install MOAB
 RUN mkdir MOAB && \
     cd MOAB && \
-    git clone  --single-branch --branch develop https://bitbucket.org/fathomteam/moab.git && \
+    git clone  --single-branch --branch develop --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
@@ -141,7 +141,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
 # Clone and install Double-Down
 RUN mkdir double-down && \
     cd double-down && \
-    git clone --single-branch --branch main https://github.com/pshriwise/double-down.git && \
+    git clone --single-branch --branch main --depth 1 https://github.com/pshriwise/double-down.git && \
     # cd double-down && \
     mkdir build && \
     cd build && \
@@ -156,7 +156,7 @@ RUN mkdir double-down && \
 # DAGMC install from source
 RUN mkdir DAGMC && \
     cd DAGMC && \
-    git clone --single-branch --branch develop https://github.com/svalinn/DAGMC.git && \
+    git clone --single-branch --branch develop --depth 1 https://github.com/svalinn/DAGMC.git && \
     mkdir build && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
@@ -175,7 +175,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
 # installs OpenMc from source
 RUN cd /opt && \
-    git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git && \
+    git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
     mkdir build && \
     cd build && \
@@ -191,7 +191,7 @@ RUN cd /opt && \
 #  NJOY2016 install from source
 RUN mkdir njoy && \
     cd njoy && \
-    git clone --single-branch --branch master https://github.com/njoy/NJOY2016.git && \
+    git clone --single-branch --branch master --depth 1 https://github.com/njoy/NJOY2016.git && \
     mkdir build && \
     cd build && \
     cmake -Dstatic=on ../NJOY2016 && \
@@ -229,9 +229,8 @@ RUN git clone https://github.com/openmc-dev/data.git && \
 
 
 # download and compile parametric-plasma-source
-RUN git clone https://github.com/open-radiation-sources/parametric-plasma-source.git && \
+RUN git clone --single-branch --branch develop --depth 1 https://github.com/open-radiation-sources/parametric-plasma-source.git && \
     cd parametric-plasma-source && \
-    git checkout develop && \
     mkdir build && \
     cd build && \
     cmake .. -DOPENMC_DIR=/opt/openmc && \
