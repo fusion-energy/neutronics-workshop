@@ -234,7 +234,9 @@ RUN git clone --single-branch --branch develop --depth 1 https://github.com/open
     mkdir build && \
     cd build && \
     cmake .. -DOPENMC_DIR=/opt/openmc && \
-    make
+    make && \
+    cd .. && \
+    pip install .
 
 ENV PYTHONPATH="${PYTHONPATH}:/parametric-plasma-source/build"
 
