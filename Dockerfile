@@ -216,7 +216,7 @@ RUN wget -O nndc-b7.1.tar.xz https://anl.box.com/shared/static/9igk353zpy8fn9ttv
     tar -xf nndc-b7.1.tar.xz -C nndc-b7.1-hdf5 && \
     rm nndc-b7.1.tar.xz
 
-RUN git clone https://github.com/openmc-dev/data.git && \
+RUN git clone --single-branch --branch master --depth 1 https://github.com/openmc-dev/data.git && \
     # python data/convert_nndc71.py --cleanup && \
     # rm -rf nndc-b7.1-endf  && \
     # rm -rf nndc-b7.1-ace/  && \
