@@ -175,7 +175,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
 # installs OpenMc from source
 RUN cd /opt && \
-    git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
+    git clone --single-branch --branch v0.12.1 --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
     mkdir build && \
     cd build && \
