@@ -96,7 +96,7 @@ RUN pip install --upgrade numpy
 # Clone and install Embree
 RUN mkdir embree && \
     cd embree && \
-    git clone --single-branch --branch master --depth 1 https://github.com/embree/embree.git && \
+    git clone --single-branch --branch v3.12.2 --depth 1 https://github.com/embree/embree.git && \
     mkdir build && \
     cd build && \
     cmake ../embree -DCMAKE_INSTALL_PREFIX=/embree \
@@ -109,7 +109,7 @@ RUN mkdir embree && \
 # Clone and install MOAB
 RUN mkdir MOAB && \
     cd MOAB && \
-    git clone  --single-branch --branch develop --depth 1 https://bitbucket.org/fathomteam/moab.git && \
+    git clone  --single-branch --branch 5.2.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
