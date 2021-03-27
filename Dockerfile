@@ -217,6 +217,8 @@ COPY scripts/delete_nuclear_data_not_used_in_cross_section_xml.py .
 #    rm nndc-b7.1.tar.xz
 
 RUN git clone --single-branch --branch master --depth 1 https://github.com/openmc-dev/data.git && \
+    pip install neutronics-material-maker && \
+    openmc_data_downloader -l ENDFB-7.1-NNDC -p photon -e H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Th Pa U 
     # python data/convert_nndc71.py --cleanup && \
     # rm -rf nndc-b7.1-endf  && \
     # rm -rf nndc-b7.1-ace/  && \
