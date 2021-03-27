@@ -191,7 +191,7 @@ RUN cd /opt && \
 #  NJOY2016 install from source
 RUN mkdir njoy && \
     cd njoy && \
-    git clone --single-branch --branch master --depth 1 https://github.com/njoy/NJOY2016.git && \
+    git clone --single-branch --branch 2016.61 --depth 1 https://github.com/njoy/NJOY2016.git && \
     mkdir build && \
     cd build && \
     cmake -Dstatic=on ../NJOY2016 && \
