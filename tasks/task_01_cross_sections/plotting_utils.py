@@ -11,39 +11,35 @@ import neutronics_material_maker as nmm
 import numpy as np
 
 
-def create_isotope_plot(isotopes, reaction, nuclear_data_path=None):
-    """Creates a plot of isotopes and reaction provided
+def create_isotope_plot(isotopes, reaction):
+    """Creates a plot of elements and reaction provided
     """
-    if nuclear_data_path == None:
-        nuclear_data_path = os.path.dirname(os.environ["OPENMC_CROSS_SECTIONS"]) + '/nndc-b7.1-hdf5/neutron'
 
     if reaction not in REACTION_MT.keys():
         print('Reaction not found, only these reactions are accepted', REACTION_MT.keys())
         return None
-   
-    mt_number = REACTION_MT[reaction]
 
     fig = create_plotly_figure()
 
-    # this loop plots n,2n cross-sections for all isotopes
-    # in the candidate_fusion_neutron_multipliers_list
-
+    # this loop extracts the cross section and energy of reactions when they exist
     for isotope_name in tqdm(isotopes):
-        isotope_object = openmc.data.IncidentNeutron.from_hdf5(os.path.join(nuclear_data_path, isotope_name+'.h5'))  # you may have to change this directory
 
-        temperature = find_temperature_to_use(list(isotope_object.energy.keys()))
-        energy = isotope_object.energy[temperature]
-        if mt_number in isotope_object.reactions.keys():
-            cross_section = isotope_object[mt_number].xs[temperature](energy)
+        isotope_object = openmc.Nuclide(isotope_name)
+
+        energy, cross_sections = openmc.calculate_cexs(
+            isotope_object,
+            'nuclide',
+            [reaction])
+        cross_section = cross_sections[0]
+        if cross_section.sum() != 0.0:
             fig.add_trace(go.Scatter(
                 x=energy,
                 y=cross_section,
                 mode='lines',
-                name=isotope_name + str(reaction)
+                name=isotope_name + ' ' + str(reaction))
             )
-        )
         else:
-            print('isotope ', isotope_name, ' does not have the MT reaction number ', reaction)
+            print('isotope ', isotope_name, ' has no cross section data for ', reaction)
 
     return fig
 
