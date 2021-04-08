@@ -3,6 +3,7 @@
 [![dockerhub-publish](https://github.com/ukaea/openmc_workshop/workflows/dockerhub-publish/badge.svg)](https://github.com/ukaea/openmc_workshop/actions?query=workflow%3Adockerhub-publish)
 
 
+
 # Fusion Neutronics workshop with OpenMC
 A selection of resources for learning OpenMC with particular focus on
 simulations relevant to fusion energy.
@@ -29,12 +30,14 @@ contributions and
 also also helped. The repository was originally made to teach university
 students via workshops but also became useful for placement students.
 
-The repository has benefitted greatly from user feedback. Please feel free to
+The repository has benefited greatly from user feedback. Please feel free to
 raise Github issues if you spot anything that needs fixing. Contributions are
 also welcome as pull requests to the develop branch. 
 
 The resource has proven most useful as it is one of the few open source and
 accessible fusion neutronics training resources.
+
+
 
 ## Installation
 
