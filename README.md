@@ -3,6 +3,7 @@
 [![dockerhub-publish](https://github.com/ukaea/openmc_workshop/workflows/dockerhub-publish/badge.svg)](https://github.com/ukaea/openmc_workshop/actions?query=workflow%3Adockerhub-publish)
 
 
+
 # Fusion Neutronics workshop with OpenMC
 A selection of resources for learning OpenMC with particular focus on
 simulations relevant to fusion energy.
@@ -13,8 +14,11 @@ the workshop and show the expected outputs of each task.
 
 The use of OpenMC for neutronics analysis requires several software packages
 and nuclear data. These have all been installed inside a Docker container.
+The video below gives a brief explainer of what to exspect in the workshop and
+some motivation for learning neutronics.
 
 <p align="center"><a href="https://youtu.be/gcZo7ZPtPr8" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/101077155-54def400-359c-11eb-9d48-e0ace62aea40.png" height="400" /></a></p>
+
 
 
 # History
@@ -26,20 +30,29 @@ contributions and
 also also helped. The repository was originally made to teach university
 students via workshops but also became useful for placement students.
 
-The repository has benefitted greatly from user feedback. Please feel free to
+The repository has benefited greatly from user feedback. Please feel free to
 raise Github issues if you spot anything that needs fixing. Contributions are
 also welcome as pull requests to the develop branch. 
 
 The resource has proven most useful as it is one of the few open source and
 accessible fusion neutronics training resources.
 
-## Docker Container Installation
+
+
+## Installation
+
+There are video tutorials for this section which accompany the step by step
+instructions below.
+- Ubuntu installation video <p align="center"><a href="https://youtu.be/PqIb5MZKyGA" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/114008054-c9cb7e80-9859-11eb-8e07-32e95c600667.png" height="50" /></a></p>
+- Windows installation video <p align="center"><a href="https://youtu.be/WltgKuTNxmE" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/114008108-d3ed7d00-9859-11eb-8bb5-0c19ce775015.png" height="50" /></a></p>
+- Mac installation video <p align="center"><a href="" target="_blank"><img src="" height="50" /></a></p>
 
 1. Install Docker CE for
 [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/),
 [Mac OS](https://store.docker.com/editions/community/docker-ce-desktop-mac), or
 [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows),
-including the part where you enable docker use as a non-root user.
+including the part where you enable docker use as a non-root user. 
+
 
 2. Pull the docker image from the store by typing the following command in a
 terminal window, or Windows users might prefer PowerShell.
@@ -55,7 +68,7 @@ commands in a terminal window.
 4. A URL should be displayed in the terminal and can now be opened in the
 internet browser of your choice. Select and open the URL at the end of the terminal print out (highlighted below)
 
-![url_to_select](https://user-images.githubusercontent.com/8583900/103912503-4a65cc00-50ff-11eb-87db-ebe26a313fd6.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/8583900/114006504-6725b300-9858-11eb-905f-b7b2f26a0113.png" height="100" /></p>
 
 5. Some tasks require the use of Paraview to view the 3D meshes produced.
 Parview can be download from [here](https://www.paraview.org/download/).
