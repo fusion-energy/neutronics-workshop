@@ -43,9 +43,9 @@ accessible fusion neutronics training resources.
 
 There are video tutorials for this section which accompany the step by step
 instructions below.
-- Ubuntu installation video <p align="center"><a href="https://youtu.be/PqIb5MZKyGA" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/114008054-c9cb7e80-9859-11eb-8e07-32e95c600667.png" height="50" /></a></p>
-- Windows installation video <p align="center"><a href="https://youtu.be/WltgKuTNxmE" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/114008108-d3ed7d00-9859-11eb-8bb5-0c19ce775015.png" height="50" /></a></p>
-- Mac installation video <p align="center"><a href="" target="_blank"><img src="" height="50" /></a></p>
+- Ubuntu installation video :point_right: <p align="center"><a href="https://youtu.be/PqIb5MZKyGA" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/114008054-c9cb7e80-9859-11eb-8e07-32e95c600667.png" height="70" /></a></p>
+- Windows installation video :point_right: <p align="center"><a href="https://youtu.be/WltgKuTNxmE" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/114008108-d3ed7d00-9859-11eb-8bb5-0c19ce775015.png" height="70" /></a></p>
+- Mac installation video :point_right: <p align="center"><a href="https://www.youtube.com/watch?v=wPk3BenK-Qk" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/114172031-05834880-992d-11eb-8277-5a6cda2b5e12.png" height="70" /></a></p>
 
 1. Install Docker CE for
 [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/),
@@ -68,7 +68,7 @@ commands in a terminal window.
 4. A URL should be displayed in the terminal and can now be opened in the
 internet browser of your choice. Select and open the URL at the end of the terminal print out (highlighted below)
 
-<p align="center"><img src="https://user-images.githubusercontent.com/8583900/114006504-6725b300-9858-11eb-905f-b7b2f26a0113.png" height="100" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/8583900/114006504-6725b300-9858-11eb-905f-b7b2f26a0113.png" height="200" /></p>
 
 5. Some tasks require the use of Paraview to view the 3D meshes produced.
 Parview can be download from [here](https://www.paraview.org/download/).
