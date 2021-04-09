@@ -68,7 +68,7 @@ commands in a terminal window.
 4. A URL should be displayed in the terminal and can now be opened in the
 internet browser of your choice. Select and open the URL at the end of the terminal print out (highlighted below)
 
-<p align="center"><img src="https://user-images.githubusercontent.com/8583900/114006504-6725b300-9858-11eb-905f-b7b2f26a0113.png" height="150" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/8583900/114006504-6725b300-9858-11eb-905f-b7b2f26a0113.png" height="200" /></p>
 
 5. Some tasks require the use of Paraview to view the 3D meshes produced.
 Parview can be download from [here](https://www.paraview.org/download/).
