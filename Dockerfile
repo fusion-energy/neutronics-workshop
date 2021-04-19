@@ -85,7 +85,10 @@ RUN pip install cmake\
 # cython is needed for moab
                 cython \
                 paramak \
-                openmc_data_downloader
+                openmc_data_downloader \
+                itkwidgets \
+                nest_asyncio \
+                ipywidgets
 
 # svalinn-tools should be added but it is not working with python 3 at the moment
 
