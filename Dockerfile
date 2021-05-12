@@ -192,46 +192,14 @@ RUN cd /opt && \
     cd /opt/openmc/ && \
     pip install .
 
-#  NJOY2016 install from source
-# RUN mkdir njoy && \
-#     cd njoy && \
-#     git clone --single-branch --branch 2016.61 --depth 1 https://github.com/njoy/NJOY2016.git && \
-#     mkdir build && \
-#     cd build && \
-#     cmake -Dstatic=on ../NJOY2016 && \
-#     make 2>/dev/null && \
-#     rm -rf /njoy/NJOY2016
-
-# ENV PATH=$PATH:/njoy/build
-
 
 # install nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
     rm WMP_Library_v1.1.tar.gz
 
-# ENV OPENMC_CROSS_SECTIONS=/cross_sections.xml
-
-
-# COPY scripts/delete_nuclear_data_not_used_in_cross_section_xml.py .
-
-
-# RUN wget -O nndc-b7.1.tar.xz https://anl.box.com/shared/static/9igk353zpy8fn9ttvtrqgzvw1vtejoz6.xz && \
-#    mkdir nndc-b7.1-hdf5 && \
-#    tar -xf nndc-b7.1.tar.xz -C nndc-b7.1-hdf5 && \
-#    rm nndc-b7.1.tar.xz
-
 RUN git clone --single-branch --branch master --depth 1 https://github.com/openmc-dev/data.git && \
-    openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Th Pa U
-    # python data/convert_nndc71.py --cleanup && \
-    # rm -rf nndc-b7.1-endf  && \
-    # rm -rf nndc-b7.1-ace/  && \
-    # rm -rf nndc-b7.1-download && \
-    # python data/convert_tendl.py --cleanup && \
-    # rm -rf tendl-2019-ace/ && \
-    # rm -rf tendl-2019-download && \
-    # python data/combine_libraries.py -l nndc-b7.1-hdf5/cross_sections.xml tendl-2019-hdf5/cross_sections.xml -o cross_sections.xml && \
-    # python delete_nuclear_data_not_used_in_cross_section_xml.py
+    openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all
 
 ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
 
