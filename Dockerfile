@@ -8,7 +8,7 @@
 # test with the folowing command
 # docker run --rm fusion-energy/neutronics-workshop pytest ../tests
 
-FROM continuumio/miniconda3:4.9.2
+FROM continuumio/miniconda3:4.9.2 as dependencies
 
 ARG compile_cores=1
 
@@ -216,6 +216,8 @@ RUN git clone --single-branch --branch develop --depth 1 https://github.com/open
     pip install .
 
 ENV PYTHONPATH="${PYTHONPATH}:/parametric-plasma-source/build"
+
+FROM dependencies as final
 
 # Copy over the local repository files
 COPY tests tests/
