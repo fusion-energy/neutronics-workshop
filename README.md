@@ -4,9 +4,9 @@
 
 
 
-# Fusion Neutronics workshop with OpenMC
-A selection of resources for learning OpenMC with particular focus on
-simulations relevant to fusion energy.
+# Fusion Neutronics workshop
+A selection of resources for learning fusion neutronics simulations with a
+particular focus on OpenMC with DAGMC and the Paramak
 
 There are a few 
 [slides](https://slides.com/neutronics-workshop/neutronics_workshop) that introduce
@@ -23,7 +23,7 @@ some motivation for learning neutronics.
 
 # History
 
-The OpenMC workshop was created by and is maintained by Jonathan Shimwell
+The neutronics workshop was created by and is maintained by Jonathan Shimwell
 largely as a hobby project. John Billingsley has also made lots of great
 contributions and
 [others](https://github.com/fusion-energy/neutronics-workshop/graphs/contributors) have
@@ -57,13 +57,13 @@ including the part where you enable docker use as a non-root user.
 2. Pull the docker image from the store by typing the following command in a
 terminal window, or Windows users might prefer PowerShell.
 
-    ```docker pull fusion-energy/openmcworkshop```
+    ```docker pull fusion-energy/neutronics-workshop```
 
 3. Now that you have the docker image you can enable graphics linking between
 your os and docker, and then run the docker container by typing the following
 commands in a terminal window.
 
-    ```docker run -p 8888:8888 fusion-energy/openmcworkshop```
+    ```docker run -p 8888:8888 fusion-energy/neutronics-workshop```
 
 4. A URL should be displayed in the terminal and can now be opened in the
 internet browser of your choice. Select and open the URL at the end of the terminal print out (highlighted below)
@@ -90,7 +90,8 @@ FreeCAD is one option for this and can be downloaded [here](https://www.freecadw
 
 ## Workshop tasks
 
-The task videos are all avaialbe on a nice [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) map which is great for working through the workshop with collegues.
+The task videos are all avaialbe on a nice [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) 
+map which is great for working through the workshop with collegues.
 
 | Tasks | Keywords | Video(s) |
 |-|-|-|
