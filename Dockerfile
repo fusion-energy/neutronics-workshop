@@ -1,13 +1,14 @@
-# build with the following command, replace the 50 cores with however many you would like to use
-# docker build -t ukaea/openmcworkshop --build-arg compile_cores=50 .
+# build with the following command, replace the 7 cores with the number of
+# cores you would like to use
+# docker build -t fusion-energy/neutronics-workshop --build-arg compile_cores=7 .
 
 # run with the following command
-# docker run -p 8888:8888 ukaea/openmcworkshop
+# docker run -p 8888:8888 fusion-energy/neutronics-workshop
 
 # test with the folowing command
-# docker run --rm ukaea/openmcworkshop pytest ../tests
+# docker run --rm fusion-energy/neutronics-workshop pytest ../tests
 
-FROM continuumio/miniconda3:4.9.2
+FROM continuumio/miniconda3:4.9.2 as dependencies
 
 ARG compile_cores=1
 
@@ -179,7 +180,8 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
 # installs OpenMc from source
 RUN cd /opt && \
-    git clone --single-branch --branch v0.12.1 --depth 1 https://github.com/openmc-dev/openmc.git && \
+    git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
+    # git clone --single-branch --branch v0.12.1 --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
     mkdir build && \
     cd build && \
@@ -214,6 +216,8 @@ RUN git clone --single-branch --branch develop --depth 1 https://github.com/open
     pip install .
 
 ENV PYTHONPATH="${PYTHONPATH}:/parametric-plasma-source/build"
+
+FROM dependencies as final
 
 # Copy over the local repository files
 COPY tests tests/

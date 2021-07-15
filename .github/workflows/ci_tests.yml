@@ -1,20 +1,25 @@
-name: CI
-on:  
+
+# This CI will lauch a Docker image that contains all the dependencies required
+# within that image the pytest test suite is run 
+
+name: CI with install
+
+on:
   pull_request:    
     branches:
-    - main  
     - develop
-  push:
-    branches:
     - main
-    - develop
-jobs:  
-  build:     
-   runs-on: ubuntu-latest
-   
-   steps:    
-   - uses: actions/checkout@v1
-   - name: Build and test with Docker
-     run: |
-       docker build --tag openmc_docker --build-arg compile_cores=2 .
-       docker run --rm openmc_docker pytest ../tests
+ 
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/fusion-energy/neutronics-workshop:dependencies
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: run tests
+        run: |
+          bash run_tests.sh
+          curl -s https://codecov.io/bash
