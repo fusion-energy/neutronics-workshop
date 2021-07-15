@@ -5,6 +5,7 @@
 name: docker-publish-release
 
 on:
+  workflow_dispatch:
   release:
     types: [created]
 
