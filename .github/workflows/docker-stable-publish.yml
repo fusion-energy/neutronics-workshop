@@ -1,0 +1,39 @@
+# This yml file will trigger a Github Action on release creation.
+# This Action will build and upload a Docker image to GHCR
+# https://github.com/marketplace/actions/publish-docker
+
+name: docker-release-publish
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build_and_push_dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+
+          tags: ghcr.io/fusion-energy/neutronics-workshop:latest
+          build-args: |
+            compile_cores=2
