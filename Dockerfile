@@ -158,10 +158,10 @@ RUN mkdir double-down && \
     rm -rf /double-down/build /double-down/double-down 
 
 
-# DAGMC version 3.2.0 install from source
+# DAGMC version develop install from source
 RUN mkdir DAGMC && \
     cd DAGMC && \
-    git clone --single-branch --branch 3.2.0 --depth 1 https://github.com/svalinn/DAGMC.git && \
+    git clone --single-branch --branch develop --depth 1 https://github.com/svalinn/DAGMC.git && \
     mkdir build && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
