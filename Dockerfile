@@ -205,15 +205,16 @@ RUN git clone --single-branch --branch master --depth 1 https://github.com/openm
 
 ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
 
+# appears to not be working, not installing
 # download and compile parametric-plasma-source
-RUN git clone --single-branch --branch develop --depth 1 https://github.com/open-radiation-sources/parametric-plasma-source.git && \
-    cd parametric-plasma-source && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DOPENMC_DIR=/opt/openmc && \
-    make && \
-    cd .. && \
-    pip install .
+# RUN git clone --single-branch --branch develop --depth 1 https://github.com/open-radiation-sources/parametric-plasma-source.git && \
+#     cd parametric-plasma-source && \
+#     mkdir build && \
+#     cd build && \
+#     cmake .. -DOPENMC_DIR=/opt/openmc && \
+#     make && \
+#     cd .. && \
+#     pip install .
 
 ENV PYTHONPATH="${PYTHONPATH}:/parametric-plasma-source/build"
 
