@@ -86,6 +86,7 @@ RUN pip install cmake\
 # cython is needed for moab
                 cython \
                 paramak \
+                paramak-neutronics \
                 openmc_data_downloader \
                 itkwidgets \
                 nest_asyncio \
