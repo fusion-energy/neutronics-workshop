@@ -86,10 +86,13 @@ RUN pip install cmake\
 # cython is needed for moab
                 cython \
                 paramak \
+                paramak-neutronics \
                 openmc_data_downloader \
                 itkwidgets \
                 nest_asyncio \
-                ipywidgets
+                ipywidgets \
+                jupyter-cadquery \
+                matplotlib
 
 # svalinn-tools should be added but it is not working with python 3 at the moment
 
