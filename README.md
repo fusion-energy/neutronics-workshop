@@ -1,8 +1,7 @@
 
 [![CircleCI](https://circleci.com/gh/fusion-energy/neutronics-workshop.svg?style=svg)](https://circleci.com/gh/fusion-energy/neutronics-workshop)
-[![dockerhub-publish](https://github.com/fusion-energy/neutronics-workshop/workflows/docker-publish/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions?query=workflow%3Adockerhub-publish)
 
-
+[![docker-publish-release](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml)
 
 # Fusion Neutronics workshop
 A selection of resources for learning fusion neutronics simulations with a
@@ -57,13 +56,13 @@ including the part where you enable docker use as a non-root user.
 2. Pull the docker image from the store by typing the following command in a
 terminal window, or Windows users might prefer PowerShell.
 
-    ```docker pull fusion-energy/neutronics-workshop```
+    ```docker pull ghcr.io/fusion-energy/neutronics-workshop```
 
 3. Now that you have the docker image you can enable graphics linking between
 your os and docker, and then run the docker container by typing the following
 commands in a terminal window.
 
-    ```docker run -p 8888:8888 fusion-energy/neutronics-workshop```
+    ```docker run -p 8888:8888 ghcr.io/fusion-energy/neutronics-workshop```
 
 4. A URL should be displayed in the terminal and can now be opened in the
 internet browser of your choice. Select and open the URL at the end of the terminal print out (highlighted below)
