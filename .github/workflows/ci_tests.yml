@@ -21,4 +21,4 @@ jobs:
 
       - name: run tests
         run: |
-          pytest repo/tests -v --cov=tasks/ --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
+          pytest tests -v --cov=tasks/ --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
