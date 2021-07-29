@@ -1,5 +1,5 @@
 
-[![CircleCI](https://circleci.com/gh/fusion-energy/neutronics-workshop.svg?style=svg)](https://circleci.com/gh/fusion-energy/neutronics-workshop)
+[![CircleCI](https://circleci.com/gh/fusion-energy/neutronics-workshop/tree/main.svg?style=svg)](https://circleci.com/gh/fusion-energy/neutronics-workshop/tree/main)
 
 [![docker-publish-release](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml)
 
