@@ -21,5 +21,4 @@ jobs:
 
       - name: run tests
         run: |
-          bash run_tests.sh
-          curl -s https://codecov.io/bash
+          pytest repo/tests -v --cov=tasks/ --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
