@@ -19,7 +19,7 @@ RUN apt-get --yes update && apt-get --yes upgrade
 
                           # eigen3 needed for DAGMC
 RUN apt-get --yes install libeigen3-dev \
-                        #   sudo  \ 
+                        #   sudo  \
                           # sudo is needed during the NJOY install
                           git \
                           wget \
@@ -117,7 +117,7 @@ RUN mkdir embree && \
 # Clone and install MOAB
 RUN mkdir MOAB && \
     cd MOAB && \
-    git clone  --single-branch --branch 5.2.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
+    git clone  --single-branch --branch 5.3.0 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
@@ -141,7 +141,7 @@ RUN mkdir MOAB && \
     # the following rm command appears to remove libraries that are need to use
     # pymoab so this has been commented out for now
     # rm -rf /MOAB/moab /MOAB/build
-    
+
 ENV PATH=$PATH:/MOAB/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
 
@@ -158,7 +158,7 @@ RUN mkdir double-down && \
                          -DEMBREE_DIR=/embree && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \
-    rm -rf /double-down/build /double-down/double-down 
+    rm -rf /double-down/build /double-down/double-down
 
 
 # DAGMC version develop install from source
@@ -177,7 +177,7 @@ RUN mkdir DAGMC && \
     make -j"$compile_cores" install && \
     rm -rf /DAGMC/DAGMC /DAGMC/build
 
-ENV PATH=$PATH:/DAGMC/bin    
+ENV PATH=$PATH:/DAGMC/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
 
@@ -193,7 +193,7 @@ RUN cd /opt && \
           -DDAGMC_ROOT=/DAGMC \
           -DHDF5_PREFER_PARALLEL=off ..  && \
     make -j"$compile_cores" && \
-    make -j"$compile_cores" install && \ 
+    make -j"$compile_cores" install && \
     cd /opt/openmc/ && \
     pip install .
 
