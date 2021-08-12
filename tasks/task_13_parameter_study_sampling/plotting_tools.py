@@ -1,4 +1,3 @@
-
 import os
 import json
 
@@ -24,13 +23,17 @@ def read_in_data(path_to_json="outputs"):
     return results_df
 
 
-def plot_simulation_results(results_df,
-    x_axis_name='blanket_breeder_li6_enrichment',
+def plot_simulation_results(
+    results_df,
+    x_axis_name="blanket_breeder_li6_enrichment",
     y_axis_name="breeder_percent_in_breeder_plus_multiplier_ratio",
-    z_axis_name='tbr'):
+    z_axis_name="tbr",
+):
 
     text_value = []
-    for e, r, tbr in zip(results_df[x_axis_name], results_df[y_axis_name], results_df[z_axis_name]):
+    for e, r, tbr in zip(
+        results_df[x_axis_name], results_df[y_axis_name], results_df[z_axis_name]
+    ):
 
         text_value.append(
             "TBR ="
@@ -42,36 +45,40 @@ def plot_simulation_results(results_df,
             + "breeder percent in breeder + multiplier ="
             + str(r)
             + "<br>"
-    )
+        )
 
     trace = go.Scatter(
-                x=list(results_df[x_axis_name]),
-                y=list(results_df[y_axis_name]),
-                # z=list(results_df[z_axis_name]),
-                mode="markers",
-                name="TBR in HCPB blanket",
-                showlegend=False,
-                hoverinfo="text",
-                text=text_value,
-                marker={
-                    "color": list(results_df[z_axis_name]),
-                    "colorscale": "Viridis",
-                    "size": 8,
-                },
-            )
+        x=list(results_df[x_axis_name]),
+        y=list(results_df[y_axis_name]),
+        # z=list(results_df[z_axis_name]),
+        mode="markers",
+        name="TBR in HCPB blanket",
+        showlegend=False,
+        hoverinfo="text",
+        text=text_value,
+        marker={
+            "color": list(results_df[z_axis_name]),
+            "colorscale": "Viridis",
+            "size": 8,
+        },
+    )
 
     return trace
 
 
-def plot_interpolated_results(results_df,
-    x_axis_name='blanket_breeder_li6_enrichment',
-    y_axis_name='breeder_percent_in_breeder_plus_multiplier_ratio',
-    z_axis_name='tbr'):
+def plot_interpolated_results(
+    results_df,
+    x_axis_name="blanket_breeder_li6_enrichment",
+    y_axis_name="breeder_percent_in_breeder_plus_multiplier_ratio",
+    z_axis_name="tbr",
+):
 
     traces = []
 
     text_value = []
-    for e, r, tbr in zip(results_df[x_axis_name], results_df[y_axis_name], results_df[z_axis_name]):
+    for e, r, tbr in zip(
+        results_df[x_axis_name], results_df[y_axis_name], results_df[z_axis_name]
+    ):
 
         text_value.append(
             "TBR ="
@@ -95,9 +102,9 @@ def plot_interpolated_results(results_df,
         xi = np.linspace(0, 100, 100)
         yi = np.linspace(0, 100, 100)
 
-        # griddata can be used instead of r basis functions to z values using cubic or linear interpolation. 
+        # griddata can be used instead of r basis functions to z values using cubic or linear interpolation.
         # This also works but don't predict outside of the sample space to the edges of the parameter space
-        zi = griddata((x, y), z, (xi[None,:], yi[:,None]), method='cubic')
+        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method="cubic")
 
         # Uses radial basis function to obtain interpolated values
         # See https://docs.scipy.org/doc/scipy/reference/tutorial/interpolate.html for more details
@@ -106,33 +113,37 @@ def plot_interpolated_results(results_df,
         # zi = rbf(XI, YI)
 
         # contour plot showing interpoloated TBR values
-        traces.append(go.Contour(
-                        z=zi,
-                        x=xi,
-                        y=yi,
-                        colorscale="Viridis",
-                        opacity=0.9,
-                        line=dict(width=1, smoothing=0.85),
-                        contours=dict(
-                            showlines=False,
-                            showlabels=False,
-                            coloring="heatmap",
-                            start=min(z),
-                            end=max(z),
-                            size=0.,
-                            labelfont=dict(size=15,),
-                        )
-                    )
+        traces.append(
+            go.Contour(
+                z=zi,
+                x=xi,
+                y=yi,
+                colorscale="Viridis",
+                opacity=0.9,
+                line=dict(width=1, smoothing=0.85),
+                contours=dict(
+                    showlines=False,
+                    showlabels=False,
+                    coloring="heatmap",
+                    start=min(z),
+                    end=max(z),
+                    size=0.0,
+                    labelfont=dict(
+                        size=15,
+                    ),
+                ),
+            )
         )
 
-        traces.append(go.Scatter(
-                        x=x,
-                        y=y,
-                        mode="markers",
-                        hoverinfo="text",
-                        showlegend=False,
-                        marker={"color": "red", "size": 8},
-                    )
+        traces.append(
+            go.Scatter(
+                x=x,
+                y=y,
+                mode="markers",
+                hoverinfo="text",
+                showlegend=False,
+                marker={"color": "red", "size": 8},
+            )
         )
 
         return traces
