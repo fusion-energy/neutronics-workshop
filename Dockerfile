@@ -1,6 +1,16 @@
-# build with the following command, replace the 7 cores with the number of
-# cores you would like to use
+# build with the following command
+# docker build -t fusion-energy/neutronics-workshop
+
+# To build with multiple cores change the build command to the following.
+# Replace 7 with the number of cores you would like to use
 # docker build -t fusion-energy/neutronics-workshop --build-arg compile_cores=7 .
+
+# Double Down speeds up the DAGMC simulations but might not work on all architetures
+# Double Down  is enabled by default but to build without Double Down use this build command
+# docker build -t fusion-energy/neutronics-workshop --build-arg include_double_down=OFF .
+
+# Build arguments can be combined, this command builds without double down and with 7 cores
+# docker build -t fusion-energy/neutronics-workshop --build-arg compile_cores=7 --build-arg include_double_down=OFF .
 
 # run with the following command
 # docker run -p 8888:8888 fusion-energy/neutronics-workshop
@@ -8,10 +18,13 @@
 # test with the folowing command
 # docker run --rm fusion-energy/neutronics-workshop pytest ../tests
 
+# Python 3.8 image, cool props and Cubit don't support python 3.9 currently
 FROM continuumio/miniconda3:4.9.2 as dependencies
 
 ARG compile_cores=1
+ARG include_double_down=ON
 
+RUN apt-get --allow-releaseinfo-change update
 RUN apt-get --yes update && apt-get --yes upgrade
 
 # perhaps libnetcdf13 is needed for unstructured meshes in openmc
@@ -92,13 +105,12 @@ RUN pip install cmake\
                 nest_asyncio \
                 ipywidgets \
                 jupyter-cadquery \
-                matplotlib
-
-# svalinn-tools should be added but it is not working with python 3 at the moment
+                matplotlib \
+                remove_dagmc_tags \
+                cad_to_h5m
 
 # needed for openmc
 RUN pip install --upgrade numpy
-
 
 
 # Clone and install Embree
@@ -150,7 +162,6 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
 RUN mkdir double-down && \
     cd double-down && \
     git clone --single-branch --branch main --depth 1 https://github.com/pshriwise/double-down.git && \
-    # cd double-down && \
     mkdir build && \
     cd build && \
     cmake ../double-down -DMOAB_DIR=/MOAB \
@@ -169,7 +180,7 @@ RUN mkdir DAGMC && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
                    -DMOAB_DIR=/MOAB \
-                   -DDOUBLE_DOWN=ON \
+                   -DDOUBLE_DOWN="$include_double_down" \
                    -DBUILD_STATIC_EXE=OFF \
                    -DBUILD_STATIC_LIBS=OFF \
                    -DCMAKE_INSTALL_PREFIX=/DAGMC/ \
@@ -198,28 +209,16 @@ RUN cd /opt && \
     pip install .
 
 
-# install nuclear data
+# install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
     rm WMP_Library_v1.1.tar.gz
 
-RUN git clone --single-branch --branch master --depth 1 https://github.com/openmc-dev/data.git && \
-    openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all
+# installs TENDL and ENDF nuclear data
+RUN openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all
 
 ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
 
-# appears to not be working, not installing
-# download and compile parametric-plasma-source
-# RUN git clone --single-branch --branch develop --depth 1 https://github.com/open-radiation-sources/parametric-plasma-source.git && \
-#     cd parametric-plasma-source && \
-#     mkdir build && \
-#     cd build && \
-#     cmake .. -DOPENMC_DIR=/opt/openmc && \
-#     make && \
-#     cd .. && \
-#     pip install .
-
-ENV PYTHONPATH="${PYTHONPATH}:/parametric-plasma-source/build"
 
 FROM dependencies as final
 
