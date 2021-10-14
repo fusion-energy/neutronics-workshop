@@ -91,23 +91,17 @@ RUN pip install cmake\
                 vtk \
                 itkwidgets \
                 nest_asyncio \
-                neutronics_material_maker \
                 pytest \
                 pytest-cov \
                 # holoviews \
                 ipywidgets \
 # cython is needed for moab
                 cython \
-                paramak \
-                paramak-neutronics \
-                openmc_data_downloader \
                 itkwidgets \
                 nest_asyncio \
                 ipywidgets \
                 jupyter-cadquery \
                 matplotlib \
-                remove_dagmc_tags \
-                cad_to_h5m
 
 # needed for openmc
 RUN pip install --upgrade numpy
@@ -191,11 +185,21 @@ RUN mkdir DAGMC && \
 ENV PATH=$PATH:/DAGMC/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
+# install WMP nuclear data
+RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
+    tar -xf WMP_Library_v1.1.tar.gz -C /  && \
+    rm WMP_Library_v1.1.tar.gz
+
+# installs TENDL and ENDF nuclear data
+RUN openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all
+
+ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
 
 # installs OpenMc from source
 RUN cd /opt && \
-    git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
+    # git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
     # git clone --single-branch --branch v0.12.1 --depth 1 https://github.com/openmc-dev/openmc.git && \
+    git clone --single-branch --branch write-initial-source --depth 1 https://github.com/paulromano/openmc.git && \
     cd openmc && \
     mkdir build && \
     cd build && \
@@ -208,16 +212,15 @@ RUN cd /opt && \
     cd /opt/openmc/ && \
     pip install .
 
-
-# install WMP nuclear data
-RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
-    tar -xf WMP_Library_v1.1.tar.gz -C /  && \
-    rm WMP_Library_v1.1.tar.gz
-
-# installs TENDL and ENDF nuclear data
-RUN openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all
-
-ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
+# python packages from the neutronics workflow
+RUN pip install neutronics_material_maker \
+                remove_dagmc_tags \
+                paramak \
+                openmc-dagmc-wrapper \
+                openmc_data_downloader \
+                cad_to_h5m \
+                stl_to_h5m \
+                openmc-plasma-source
 
 
 FROM dependencies as final
