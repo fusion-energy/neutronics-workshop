@@ -101,7 +101,7 @@ RUN pip install cmake\
                 nest_asyncio \
                 ipywidgets \
                 jupyter-cadquery \
-                matplotlib \
+                matplotlib
 
 # needed for openmc
 RUN pip install --upgrade numpy
@@ -190,10 +190,6 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
     rm WMP_Library_v1.1.tar.gz
 
-# installs TENDL and ENDF nuclear data
-RUN openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all
-
-ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
 
 # installs OpenMc from source
 RUN cd /opt && \
@@ -212,6 +208,14 @@ RUN cd /opt && \
     cd /opt/openmc/ && \
     pip install .
 
+# installs TENDL and ENDF nuclear data. Performed after openmc install as
+# openmc is needed to write the cross_Sections.xml file
+RUN pip install openmc_data_downloader && \
+    openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all
+
+ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
+
+
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker \
                 remove_dagmc_tags \
@@ -226,8 +230,8 @@ RUN pip install neutronics_material_maker \
 FROM dependencies as final
 
 # Copy over the local repository files
-COPY tests tests/
 COPY tasks tasks/
+COPY tests tests/
 
 WORKDIR /tasks
 
@@ -235,4 +239,4 @@ WORKDIR /tasks
 ENV PORT 8888
 
 # could switch to --ip='*'
-CMD ["jupyter", "notebook", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+# CMD ["jupyter", "notebook", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
