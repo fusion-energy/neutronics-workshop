@@ -80,7 +80,7 @@ def plot_energy_from_initial_source(
 
 
 def plot_postion_from_initial_source(input_filename="initial_source.h5"):
-    """makes a plot of the inital creation locations of the particle source"""
+    """makes a plot of the initial creation locations of the particle source"""
 
     f = h5py.File(input_filename, "r")
     dset = f["source_bank"]
@@ -121,7 +121,7 @@ def plot_postion_from_initial_source(input_filename="initial_source.h5"):
 
 
 def plot_direction_from_initial_source(input_filename="initial_source.h5"):
-    """makes a plot of the inital creation directions of the particle source"""
+    """makes a plot of the initial creation directions of the particle source"""
 
     f = h5py.File(input_filename, "r")
     dset = f["source_bank"]
