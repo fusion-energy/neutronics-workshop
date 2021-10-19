@@ -227,8 +227,9 @@ RUN pip install neutronics_material_maker \
                 openmc-dagmc-wrapper \
                 openmc-post-processor
 
-# FROM ghcr.io/fusion-energy/neutronics-workflow:dependencies as final
-FROM dependencies as final
+# these two from statements can be switched when building locally
+# FROM dependencies as final
+FROM ghcr.io/fusion-energy/neutronics-workflow:dependencies as final
 
 # Copy over the local repository files
 COPY tasks tasks/
