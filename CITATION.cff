@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Shimwell"
+  given-names: "Jonathan"
+  orcid: "https://orcid.org/0000-0001-6909-0946"
+- family-names: "Billingsley"
+  given-names: "John"
+  orcid: "https://orcid.org/0000-0001-5223-5694"
+- family-names: "Pranto"
+  given-names: "Ariful Islam"
+- family-names: "Taylor"
+  given-names: "Katie"
+- family-names: "Shriwise"
+  given-names: "Patrick"
+  orcid: "https://orcid.org/0000-0002-3979-7665"
+- family-names: "Worrall"
+  given-names: "Ross"
+title: "A workshop covering a range of fusion relevant analysis and simulations with OpenMC, DAGMC and the Paramak"
+version: 0.0.4
+date-released: 2021-10-19
+url: "https://github.com/fusion-energy/neutronics-workshop"
