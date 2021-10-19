@@ -229,7 +229,7 @@ RUN pip install neutronics_material_maker \
 
 # these two from statements can be switched when building locally
 # FROM dependencies as final
-FROM ghcr.io/fusion-energy/neutronics-workflow:dependencies as final
+FROM ghcr.io/fusion-energy/neutronics-workshop:dependencies as final
 
 # Copy over the local repository files
 COPY tasks tasks/
