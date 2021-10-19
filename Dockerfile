@@ -218,15 +218,16 @@ ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker \
+                openmc-plasma-source \
                 remove_dagmc_tags \
                 paramak \
-                openmc-dagmc-wrapper \
                 openmc_data_downloader \
                 cad_to_h5m \
                 stl_to_h5m \
-                openmc-plasma-source
+                openmc-dagmc-wrapper \
+                openmc-post-processor
 
-
+# FROM ghcr.io/fusion-energy/neutronics-workflow:dependencies as final
 FROM dependencies as final
 
 # Copy over the local repository files
@@ -239,4 +240,4 @@ WORKDIR /tasks
 ENV PORT 8888
 
 # could switch to --ip='*'
-# CMD ["jupyter", "notebook", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+CMD ["jupyter", "notebook", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
