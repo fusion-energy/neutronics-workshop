@@ -1,27 +1,23 @@
 #!/usr/bin/env python3
 
-"""Provides utilities for creating h5 files containing itintal source
+"""Provides utilities for creating h5 files containing initial source
 information and then plotting that information"""
 
 import xml.etree.ElementTree as ET
 
 import h5py
+import numpy as np
 import openmc
 import plotly.graph_objects as go
-import numpy as np
 
 
-def create_inital_particles(source, number_of_particles=2000):
-    """Accepts an openmc source and creates an inital_source.h5 that can be
-    used to find intial xyz, direction and energy of the partice source
+def create_initial_particles(source, number_of_particles=2000):
+    """Accepts an openmc source and creates an initial_source.h5 that can be
+    used to find initial xyz, direction and energy of the partice source
     """
-
-    # MATERIALS
 
     # no real materials are needed for finding the source
     mats = openmc.Materials([])
-
-    # GEOMETRY
 
     # just a minimal geometry
     outer_surface = openmc.Sphere(r=100, boundary_type="vacuum")
@@ -29,42 +25,25 @@ def create_inital_particles(source, number_of_particles=2000):
     universe = openmc.Universe(cells=[cell])
     geom = openmc.Geometry(universe)
 
-    # SIMULATION SETTINGS
-
     # Instantiate a Settings object
-    sett = openmc.Settings()
-    sett.run_mode = (
-        "eigenvalue"  # this will fail but it will write the inital_source.h5 file first
-    )
-    sett.particles = number_of_particles
-    sett.batches = 1
-    sett.inactive = 0
-    sett.write_initial_source = True
+    settings = openmc.Settings()
+    settings.run_mode = ("fixed source")
+    settings.particles = number_of_particles
+    settings.batches = 1
+    settings.inactive = 0
+    settings.write_initial_source = True
+    settings.source = source
 
-    sett.source = source
-
-    model = openmc.model.Model(geom, mats, sett)
+    model = openmc.model.Model(geom, mats, settings)
 
     model.export_to_xml()
 
-    # this just adds write_initial_source == True to the settings.xml
-    tree = ET.parse("settings.xml")
-    root = tree.getroot()
-    elem = ET.SubElement(root, "write_initial_source")
-    elem.text = "true"
-    tree.write("settings.xml")
-
-    # This will crash hence the try except loop, but it writes the inital_source.h5
-    try:
-        openmc.run(output=False)
-    except:
-        pass
-
-    return "initial_source.h5"
+    openmc.run()
 
 
 def plot_energy_from_initial_source(
-    energy_bins=np.linspace(0, 20e6, 50), input_filename="initial_source.h5"
+    energy_bins=np.linspace(0, 20e6, 50),
+    input_filename: str = "initial_source.h5"
 ):
     """makes a plot of the energy distribution of the source"""
 
@@ -101,7 +80,7 @@ def plot_energy_from_initial_source(
 
 
 def plot_postion_from_initial_source(input_filename="initial_source.h5"):
-    """makes a plot of the inital creation locations of the particle source"""
+    """makes a plot of the initial creation locations of the particle source"""
 
     f = h5py.File(input_filename, "r")
     dset = f["source_bank"]
@@ -142,7 +121,7 @@ def plot_postion_from_initial_source(input_filename="initial_source.h5"):
 
 
 def plot_direction_from_initial_source(input_filename="initial_source.h5"):
-    """makes a plot of the inital creation directions of the particle source"""
+    """makes a plot of the initial creation directions of the particle source"""
 
     f = h5py.File(input_filename, "r")
     dset = f["source_bank"]
