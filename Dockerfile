@@ -193,9 +193,8 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
 
 # installs OpenMc from source
 RUN cd /opt && \
-    # git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
+    git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
     # git clone --single-branch --branch v0.12.1 --depth 1 https://github.com/openmc-dev/openmc.git && \
-    git clone --single-branch --branch write-initial-source --depth 1 https://github.com/paulromano/openmc.git && \
     cd openmc && \
     mkdir build && \
     cd build && \
@@ -225,7 +224,8 @@ RUN pip install neutronics_material_maker \
                 cad_to_h5m \
                 stl_to_h5m \
                 openmc-dagmc-wrapper \
-                openmc-post-processor
+                openmc-post-processor \
+                regular_mesh_plotter
 
 # these two from statements can be switched when building locally
 # FROM dependencies as final
