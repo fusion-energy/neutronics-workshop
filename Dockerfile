@@ -225,7 +225,8 @@ RUN pip install neutronics_material_maker \
                 stl_to_h5m \
                 openmc-dagmc-wrapper \
                 openmc-post-processor \
-                regular_mesh_plotter
+                regular_mesh_plotter \
+                spectrum_plotter
 
 # these two from statements can be switched when building locally
 # FROM dependencies as final
