@@ -210,7 +210,7 @@ RUN cd /opt && \
 # installs TENDL and ENDF nuclear data. Performed after openmc install as
 # openmc is needed to write the cross_Sections.xml file
 RUN pip install openmc_data_downloader && \
-    openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all
+    openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all -i H3
 
 ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
 
@@ -220,7 +220,6 @@ RUN pip install neutronics_material_maker \
                 openmc-plasma-source \
                 remove_dagmc_tags \
                 paramak \
-                openmc_data_downloader \
                 cad_to_h5m \
                 stl_to_h5m \
                 openmc-dagmc-wrapper \
