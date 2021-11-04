@@ -9,12 +9,12 @@ A selection of resources for learning fusion neutronics simulations with a
 particular focus on OpenMC with DAGMC and the Paramak
 
 There are a few 
-[slides](https://slides.com/neutronics-workshop/neutronics_workshop) that introduce
+[slides](https://slides.com/neutronics_workshop/neutronics_workshop) that introduce
 the workshop and show the expected outputs of each task.
 
 The use of OpenMC for neutronics analysis requires several software packages
 and nuclear data. These have all been installed inside a Docker container.
-The video below gives a brief explainer of what to exspect in the workshop and
+The video below gives a brief explainer of what to expect in the workshop and
 some motivation for learning neutronics.
 
 <p align="center"><a href="https://youtu.be/gcZo7ZPtPr8" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/101077155-54def400-359c-11eb-9d48-e0ace62aea40.png" height="400" /></a></p>
@@ -90,8 +90,8 @@ FreeCAD is one option for this and can be downloaded [here](https://www.freecadw
 
 ## Workshop tasks
 
-The task videos are all avaialbe on a nice [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) 
-map which is great for working through the workshop with collegues.
+The task videos are all available on a nice [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) 
+map which is great for working through the workshop with colleagues.
 
 | Tasks | Keywords | Video(s) |
 |-|-|-|

@@ -5,7 +5,7 @@
 
 Please allow 25 plus minutes for this task depending on the computational power available.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/15).
+Expected outputs from this task are in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/15).
 
 The previous task sampled from the available parameters and aimed to cover the parameter space efficiently. This task uses  Scikit-opt Gaussian Processing to home in on the optimal solution. In optimisation algorithms it is common to see a combination of exploration and exploitation to find the optimal value.
 
@@ -33,7 +33,7 @@ Then run this optimisation script, it should save a .dat file which contains all
 
 - ```python get_optimised_values_2d.py```
 
-Again we can compare the results with the true results to see how the optimiser did. The a grid of TBR results have previously be calculated using ```python get_true_values_2d.py``` and saved to a json file. A plot of the optimisation which loads the true results (2d_tbr_values.json file) and the optimisation samples and inital samples (saved_optimisation_2d.dat file) can now be made.
+Again we can compare the results with the true results to see how the optimiser did. The a grid of TBR results have previously be calculated using ```python get_true_values_2d.py``` and saved to a json file. A plot of the optimisation which loads the true results (2d_tbr_values.json file) and the optimisation samples and initial samples (saved_optimisation_2d.dat file) can now be made.
 
 There are currently two graphs to view these results, try both and let me know which you prefer
 

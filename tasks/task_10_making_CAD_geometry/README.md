@@ -3,7 +3,7 @@
 
 Please allow 10 minutes for this task.
 
-Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/11).
+Expected outputs from this task are also in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/11).
 
 In this task you will use the paramak tool to create CAD geometry which can be converted into a neutronics-ready model.
 
