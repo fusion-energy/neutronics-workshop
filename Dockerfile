@@ -193,9 +193,11 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
 
 # installs OpenMc from source
 RUN cd /opt && \
-    git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
+    git clone --single-branch --branch model_lib_fix --depth 1 https://github.com/fusion-energy/openmc.git && \
+    # git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git && \
     # git clone --single-branch --branch v0.12.1 --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
+    # git checkout model_lib_fix && \
     mkdir build && \
     cd build && \
     cmake -Doptimize=on \
