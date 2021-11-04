@@ -5,7 +5,7 @@
 
 Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/14).
+Expected outputs from this task are in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/14).
 
 The aim of this task is to explore sampling techniques for performing simulations across a parameter space of interest.
 A parameter space may be surveyed for several reasons. In the context of tritium breeding, this may be to measure the impact of a parameter on tritium breeding.
