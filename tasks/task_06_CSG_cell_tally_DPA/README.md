@@ -3,7 +3,7 @@
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/7).
+Expected outputs from this task are also in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/7).
 
 In this task you will use OpenMC to run simple neutronics simulations to tally DPA using a cell tally.
 

@@ -3,7 +3,7 @@
 
 Please allow 20 minutes for this task.
 
-Expected outputs from this task are in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/3).
+Expected outputs from this task are in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/3).
 
 In this task you will use OpenMC and the neutronics material maker to create a variety of neutronics-ready materials.
 
