@@ -3,7 +3,7 @@
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/9)
+Expected outputs from this task are also in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/9)
 
 In this task you will use OpenMC to tally interactions in a geometry using 2D and 3D mesh tallies.
 

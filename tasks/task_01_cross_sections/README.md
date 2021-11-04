@@ -3,7 +3,7 @@
 
 Please allow 30 minutes for this task.
 
-Expected outputs from this task are also in the [presentation](https://slides.com/openmc_workshop/neutronics_workshop#/2).
+Expected outputs from this task are also in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/2).
 
 In this task you will be using OpenMC to plot interaction cross sections for isotopes, elements and materials. You will also see how Doppler broadening affects neutron interaction cross sections.
 
