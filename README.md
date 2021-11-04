@@ -9,7 +9,7 @@ A selection of resources for learning fusion neutronics simulations with a
 particular focus on OpenMC with DAGMC and the Paramak
 
 There are a few 
-[slides](https://slides.com/neutronics-workshop/neutronics_workshop) that introduce
+[slides](https://slides.com/neutronics_workshop/neutronics_workshop) that introduce
 the workshop and show the expected outputs of each task.
 
 The use of OpenMC for neutronics analysis requires several software packages
