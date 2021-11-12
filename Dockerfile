@@ -155,7 +155,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
 # Clone and install Double-Down
 RUN mkdir double-down && \
     cd double-down && \
-    git clone --single-branch --branch main --depth 1 https://github.com/pshriwise/double-down.git && \
+    git clone --single-branch --branch v1.0.0 --depth 1 https://github.com/pshriwise/double-down.git && \
     mkdir build && \
     cd build && \
     cmake ../double-down -DMOAB_DIR=/MOAB \
@@ -169,7 +169,12 @@ RUN mkdir double-down && \
 # DAGMC version develop install from source
 RUN mkdir DAGMC && \
     cd DAGMC && \
-    git clone --single-branch --branch develop --depth 1 https://github.com/svalinn/DAGMC.git && \
+    git clone --single-branch --branch develop https://github.com/svalinn/DAGMC.git && \
+    # git clone --single-branch --branch develop --depth 1 https://github.com/svalinn/DAGMC.git && \
+    cd DAGMC && \
+    # this commit is from this PR https://github.com/svalinn/DAGMC/pull/786
+    git checkout fbd0cdbad100a0fd8d80de42321e69d09fdd67f4 && \
+    cd .. && \
     mkdir build && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
@@ -193,11 +198,12 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
 
 # installs OpenMc from source
 RUN cd /opt && \
-    git clone --single-branch --branch model_lib_fix --depth 1 https://github.com/fusion-energy/openmc.git && \
-    # git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git && \
+    # git clone --single-branch --branch model_lib_fix --depth 1 https://github.com/fusion-energy/openmc.git && \
+    git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git && \
     # git clone --single-branch --branch v0.12.1 --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
-    # git checkout model_lib_fix && \
+    # this commit is from this PR https://github.com/openmc-dev/openmc/pull/1900
+    git checkout 0157dc219ff8dca814859b3140c6cef1e78cdee1 && \
     mkdir build && \
     cd build && \
     cmake -Doptimize=on \
