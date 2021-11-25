@@ -11,7 +11,7 @@ import openmc
 import plotly.graph_objects as go
 
 
-def create_initial_particles(source, number_of_particles=2000):
+def create_initial_particles(source, number_of_particles=2000, openmc_exec='openmc'):
     """Accepts an openmc source and creates an initial_source.h5 that can be
     used to find initial xyz, direction and energy of the partice source
     """
@@ -38,7 +38,10 @@ def create_initial_particles(source, number_of_particles=2000):
 
     model.export_to_xml()
 
-    openmc.run()
+    # openmc.run(openmc_exec='/home/jshimwell/openmc/build/bin/openmc_0.11.0')
+    # when using conda install openmc==0.11.0 then the dir for the executable is
+    # '/home/jshimwell/miniconda3/envs/openmc_0_11_0/bin/openmc'
+    openmc.run(openmc_exec=openmc_exec)
 
 
 def plot_energy_from_initial_source(
