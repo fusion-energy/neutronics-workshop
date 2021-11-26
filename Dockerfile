@@ -231,9 +231,10 @@ RUN pip install neutronics_material_maker \
                 cad_to_h5m \
                 stl_to_h5m \
                 openmc-dagmc-wrapper \
-                openmc-post-processor \
+                openmc-tally-unit-convertor \
                 regular_mesh_plotter \
-                spectrum_plotter
+                spectrum_plotter \
+                openmc_source_plotter
 
 # an older version of openmc is need to provide an older executable
 # this particular exectuable allows an inital_source.h5 to be written
