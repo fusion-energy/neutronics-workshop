@@ -2,7 +2,7 @@
 # This Action will build and upload a Docker image to GHCR
 # https://github.com/marketplace/actions/publish-docker
 
-name: docker-publish-release
+name: docker-publish-dev
 
 on:
   workflow_dispatch:
