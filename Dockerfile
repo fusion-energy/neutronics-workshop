@@ -231,9 +231,17 @@ RUN pip install neutronics_material_maker \
                 cad_to_h5m \
                 stl_to_h5m \
                 openmc-dagmc-wrapper \
-                openmc-post-processor \
+                openmc-tally-unit-convertor \
                 regular_mesh_plotter \
-                spectrum_plotter
+                spectrum_plotter \
+                openmc_source_plotter \
+                dagmc_bounding_box
+
+# an older version of openmc is need to provide an older executable
+# this particular exectuable allows an inital_source.h5 to be written
+# a specific openmc executable can be called using model.run(openmc_exec=path)
+RUN conda create --name openmc_version_0_11_0 python=3.8
+RUN conda install -c conda-forge openmc=0.11.0 -n openmc_version_0_11_0
 
 # these two from statements can be switched when building locally
 # FROM dependencies as final
