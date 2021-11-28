@@ -231,7 +231,7 @@ RUN pip install neutronics_material_maker \
                 cad_to_h5m \
                 stl_to_h5m \
                 openmc-dagmc-wrapper \
-                openmc-tally-unit-convertor \
+                openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
                 openmc_source_plotter \
