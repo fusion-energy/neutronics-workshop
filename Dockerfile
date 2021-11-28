@@ -231,7 +231,7 @@ RUN pip install neutronics_material_maker \
                 cad_to_h5m \
                 stl_to_h5m \
                 openmc-dagmc-wrapper \
-                openmc-tally-unit-convertor \
+                openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
                 openmc_source_plotter \
@@ -244,8 +244,8 @@ RUN conda create --name openmc_version_0_11_0 python=3.8
 RUN conda install -c conda-forge openmc=0.11.0 -n openmc_version_0_11_0
 
 # these two from statements can be switched when building locally
-# FROM dependencies as final
-FROM ghcr.io/fusion-energy/neutronics-workshop:dependencies as final
+FROM dependencies as final
+# FROM ghcr.io/fusion-energy/neutronics-workshop:dependencies as final
 
 # Copy over the local repository files
 COPY tasks tasks/
