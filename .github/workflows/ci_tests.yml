@@ -9,6 +9,10 @@ on:
     branches:
     - develop
     - main
+  push:    
+    branches:
+    - develop
+    - main
  
 jobs:
   testing:
