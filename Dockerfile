@@ -19,7 +19,7 @@
 # docker run --rm fusion-energy/neutronics-workshop pytest ../tests
 
 # Python 3.8 image, cool props and Cubit don't support python 3.9 currently
-FROM continuumio/miniconda3:4.9.2 as dependencies
+FROM ghcr.io/openmc-data-storage/miniconda3_4.9.2_endfb-7.1_nndc_tendl_2019:latest
 
 ARG compile_cores=1
 ARG include_double_down=ON
@@ -73,8 +73,8 @@ RUN apt-get --yes install libeigen3-dev \
 
 # installing cadquery and jupyter
 RUN conda install jupyter -y && \
-    conda install -c conda-forge -c python python=3.7.8 && \
-    conda install -c conda-forge -c cadquery cadquery=2
+    conda install -c conda-forge -c python python=3.8 && \
+    conda install -c conda-forge -c cadquery cadquery=2.1
 # cadquery master dose not appear to show the .solid in the notebook
 
 
@@ -114,7 +114,11 @@ RUN mkdir embree && \
     mkdir build && \
     cd build && \
     cmake ../embree -DCMAKE_INSTALL_PREFIX=/embree \
-                    -DEMBREE_ISPC_SUPPORT=OFF && \
+             -DEMBREE_ISPC_SUPPORT=OFF \
+             # added following two lines to allow use on AMD CPUs see discussion
+             # https://openmc.discourse.group/t/dagmc-geometry-open-mc-aborted-unexpectedly/1369/24?u=pshriwise
+             -DEMBREE_MAX_ISA=NONE \
+             -DEMBREE_ISA_SSE42=ON && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \
     rm -rf /embree/build /embree/embree
