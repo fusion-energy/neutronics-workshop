@@ -19,7 +19,7 @@
 # docker run --rm fusion-energy/neutronics-workshop pytest ../tests
 
 # Python 3.8 image, cool props and Cubit don't support python 3.9 currently
-FROM ghcr.io/openmc-data-storage/miniconda3_4.9.2_endfb-7.1_nndc_tendl_2019:latest
+FROM ghcr.io/openmc-data-storage/miniconda3_4.9.2_endfb-7.1_nndc_tendl_2019:latest as dependencies
 
 ARG compile_cores=1
 ARG include_double_down=ON
@@ -222,7 +222,8 @@ RUN cd /opt && \
 # installs TENDL and ENDF nuclear data. Performed after openmc install as
 # openmc is needed to write the cross_Sections.xml file
 RUN pip install openmc_data_downloader && \
-    openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all -i H3
+    openmc_data_downloader -d nuclear_data -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all -i H3 --no-overwrite
+
 
 ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
 
