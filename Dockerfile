@@ -29,7 +29,7 @@
 
 
 # This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
-FROM ghcr.io/openmc-data-storage/miniconda3_4.9.2_endfb-7.1_nndc_tendl_2019:latest
+FROM ghcr.io/openmc-data-storage/miniconda3_4.9.2_endfb-7.1_nndc_tendl_2019:latest as dependencies
 
 ARG compile_cores=1
 ARG include_avx=true
