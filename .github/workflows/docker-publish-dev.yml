@@ -60,28 +60,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/fusion-energy/neutronics-workshop-dev
+          tags: ghcr.io/fusion-energy/neutronics-workshop:dev
           build-args: |
             include_avx=false
             build_double_down=OFF
-            compile_cores=2
-
-      - name: Build and push the Docker image
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ghcr.io/fusion-energy/neutronics-workshop-dev:embree
-          build-args: |
-            include_avx=false
-            build_double_down=ON
-            compile_cores=2
-
-      - name: Build and push the Docker image
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ghcr.io/fusion-energy/neutronics-workshop-dev:embree-avx
-          build-args: |
-            include_avx=true
-            build_double_down=ON
             compile_cores=2
