@@ -1,28 +1,39 @@
-# build with the following command
-# docker build -t fusion-energy/neutronics-workshop
+# This Dockerfile creates an enviroment / dependancies needed to run the
+# neutronics-workflow.
 
-# To build with multiple cores change the build command to the following.
-# Replace 7 with the number of cores you would like to use
-# docker build -t fusion-energy/neutronics-workshop --build-arg compile_cores=7 .
+# This Dockerfile can be build locally or a prebuild image can be downloaded
 
-# Double Down speeds up the DAGMC simulations but might not work on all architetures
-# Double Down  is enabled by default but to build without Double Down use this build command
-# docker build -t fusion-energy/neutronics-workshop --build-arg include_double_down=OFF .
+# To download the prebuild image
+# docker pull ghcr.io/fusion-energy/neutronics-workflow
+# docker pull ghcr.io/fusion-energy/neutronics-workflow:embree
+# docker pull ghcr.io/fusion-energy/neutronics-workflow:embree-avx
 
-# Build arguments can be combined, this command builds without double down and with 7 cores
-# docker build -t fusion-energy/neutronics-workshop --build-arg compile_cores=7 --build-arg include_double_down=OFF .
+# To build this Dockerfile into a docker image:
+# docker build -t neutronics-workflow .
 
-# run with the following command
-# docker run -p 8888:8888 fusion-energy/neutronics-workshop
 
-# test with the folowing command
-# docker run --rm fusion-energy/neutronics-workshop pytest ../tests
+# To build this Dockerfile with different options --build-arg can be used
+# --build-arg compile_cores=1
+#   int
+#   number of cores to compile codes with
+# --build-arg build_double_down=OFF
+#   ON OFF
+#   controls if DAGMC is built with double down (ON) or not (OFF). Note that if double down is OFF then Embree is not included
+# --build-arg include_avx=true
+#   true false
+#   controls if the Embree is built to use AVX instruction set (true) or not (false). AVX is not supported by all CPUs 
 
-# Python 3.8 image, cool props and Cubit don't support python 3.9 currently
-FROM continuumio/miniconda3:4.9.2 as dependencies
+#  docker build -t neutronics-workflow --build-arg compile_cores=7 --build-arg build_double_down=OFF .
+#  docker build -t neutronics-workflow:embree --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=true .
+#  docker build -t neutronics-workflow:embree-avx --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=false .
+
+
+# This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
+FROM ghcr.io/openmc-data-storage/miniconda3_4.9.2_endfb-7.1_nndc_tendl_2019:latest as dependencies
 
 ARG compile_cores=1
-ARG include_double_down=ON
+ARG include_avx=true
+ARG build_double_down=OFF
 
 RUN apt-get --allow-releaseinfo-change update
 RUN apt-get --yes update && apt-get --yes upgrade
@@ -73,8 +84,8 @@ RUN apt-get --yes install libeigen3-dev \
 
 # installing cadquery and jupyter
 RUN conda install jupyter -y && \
-    conda install -c conda-forge -c python python=3.7.8 && \
-    conda install -c conda-forge -c cadquery cadquery=2
+    conda install -c conda-forge -c python python=3.8 && \
+    conda install -c conda-forge -c cadquery cadquery=2.1
 # cadquery master dose not appear to show the .solid in the notebook
 
 
@@ -108,17 +119,29 @@ RUN pip install --upgrade numpy
 
 
 # Clone and install Embree
-RUN mkdir embree && \
-    cd embree && \
-    git clone --single-branch --branch v3.12.2 --depth 1 https://github.com/embree/embree.git && \
-    mkdir build && \
-    cd build && \
-    cmake ../embree -DCMAKE_INSTALL_PREFIX=/embree \
-                    -DEMBREE_ISPC_SUPPORT=OFF && \
-    make -j"$compile_cores" && \
-    make -j"$compile_cores" install && \
-    rm -rf /embree/build /embree/embree
-
+# embree from conda is not supported yet
+# conda install -c conda-forge embree >> version: 2.17.7
+# requested version "3.6.1"
+# added following two lines to allow use on AMD CPUs see discussion
+# https://openmc.discourse.group/t/dagmc-geometry-open-mc-aborted-unexpectedly/1369/24?u=pshriwise  
+RUN if [ "$build_double_down" = "ON" ] ; \
+        then git clone --shallow-submodules --single-branch --branch v3.12.2 --depth 1 https://github.com/embree/embree.git ; \
+        cd embree ; \
+        mkdir build ; \
+        cd build ; \
+        if [ "$include_avx" = "false" ] ; \
+            then cmake .. -DCMAKE_INSTALL_PREFIX=.. \
+                        -DEMBREE_ISPC_SUPPORT=OFF \
+                        -DEMBREE_MAX_ISA=NONE \
+                        -DEMBREE_ISA_SSE42=ON ; \
+        fi ; \
+        if [ "$include_avx" = "true" ] ; \
+            then cmake .. -DCMAKE_INSTALL_PREFIX=.. \
+                        -DEMBREE_ISPC_SUPPORT=OFF ; \
+        fi ; \
+        make -j"$compile_cores" ; \
+        make -j"$compile_cores" install ; \
+    fi
 
 # Clone and install MOAB
 RUN mkdir MOAB && \
@@ -153,17 +176,18 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
 
 
 # Clone and install Double-Down
-RUN mkdir double-down && \
-    cd double-down && \
-    git clone --single-branch --branch v1.0.0 --depth 1 https://github.com/pshriwise/double-down.git && \
-    mkdir build && \
-    cd build && \
-    cmake ../double-down -DMOAB_DIR=/MOAB \
-                         -DCMAKE_INSTALL_PREFIX=/double-down \
-                         -DEMBREE_DIR=/embree && \
-    make -j"$compile_cores" && \
-    make -j"$compile_cores" install && \
-    rm -rf /double-down/build /double-down/double-down
+RUN if [ "$build_double_down" = "ON" ] ; \
+        then git clone --shallow-submodules --single-branch --branch v1.0.0 --depth 1 https://github.com/pshriwise/double-down.git && \
+        cd double-down ; \
+        mkdir build ; \
+        cd build ; \
+        cmake .. -DMOAB_DIR=/MOAB \
+                -DCMAKE_INSTALL_PREFIX=.. \
+                -DEMBREE_DIR=/embree ; \
+        make -j"$compile_cores" ; \
+        make -j"$compile_cores" install ; \
+        rm -rf /double-down/build /double-down/double-down ; \
+    fi
 
 
 # DAGMC version develop install from source
@@ -179,7 +203,7 @@ RUN mkdir DAGMC && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
                    -DMOAB_DIR=/MOAB \
-                   -DDOUBLE_DOWN="$include_double_down" \
+                   -DDOUBLE_DOWN=${build_double_down} \
                    -DBUILD_STATIC_EXE=OFF \
                    -DBUILD_STATIC_LIBS=OFF \
                    -DCMAKE_INSTALL_PREFIX=/DAGMC/ \
@@ -218,9 +242,10 @@ RUN cd /opt && \
 # installs TENDL and ENDF nuclear data. Performed after openmc install as
 # openmc is needed to write the cross_Sections.xml file
 RUN pip install openmc_data_downloader && \
-    openmc_data_downloader -l ENDFB-7.1-NNDC TENDL-2019 -d cross_section_data -p neutron photon -e all -i H3
+    openmc_data_downloader -d nuclear_data -l ENDFB-7.1-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
 
-ENV OPENMC_CROSS_SECTIONS=/cross_section_data/cross_sections.xml
+
+ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 
 
 # python packages from the neutronics workflow
