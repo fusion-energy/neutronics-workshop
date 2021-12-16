@@ -105,7 +105,7 @@ map which is great for working through the workshop with colleagues.
 | [Task 8 - Mesh tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_08_CSG_mesh_tally) | Mesh tallies, Structured meshes | [link](https://youtu.be/KYIsDjip1nQ) |
 | [Task 9 - Dose](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_09_CSG_surface_tally_dose) | Dose, Cell tallies, Dose coefficients |  |
 | [Task 10 - Making CAD geometry](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_10_making_CAD_geometry) | Parametric CAD geometry, Paramak, Geometry visualisation | [link](https://www.youtube.com/watch?v=Bn_TcJSOvaA) |
-| [Task 11 - CAD Cell tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_11_CAD_mesh_tally_heat) | CAD-based neutronics, Cell tallies, DAGMC, Heating |  |
-| [Task 12 - CAD Mesh tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_12_CAD_cell_tally_fast_flux) | CAD-based neutronics, Mesh tallies, Paramak, DAGMC, Fast flux |  |
+| [Task 11 - CAD Cell tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_11_CAD_cell_tally_heat) | CAD-based neutronics, Cell tallies, DAGMC, Heating |  |
+| [Task 12 - CAD Mesh tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_12_CAD_mesh_fast_flux) | CAD-based neutronics, Mesh tallies, Paramak, DAGMC, Fast flux |  |
 | [Task 13 - Techniques for sampling parameter space](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_13_parameter_study_sampling) | Sampling, Interpolation, Multi-dimensional parameter studies |  |
 | [Task 14 - Parameter study optimisation](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_14_parameter_study_optimisation) | Data science machine learning approaches |  |
