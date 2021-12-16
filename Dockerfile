@@ -260,7 +260,8 @@ RUN pip install neutronics_material_maker \
                 regular_mesh_plotter \
                 spectrum_plotter \
                 openmc_source_plotter \
-                dagmc_bounding_box
+                dagmc_bounding_box \
+                openmc_mesh_tally_to_vtk
 
 # an older version of openmc is need to provide an older executable
 # this particular exectuable allows an inital_source.h5 to be written
