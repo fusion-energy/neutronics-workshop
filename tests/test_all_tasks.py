@@ -60,12 +60,17 @@ class test_tasks(unittest.TestCase):
             nb, errors = _notebook_run(notebook)
             assert errors == []
 
-# ModuleNotFoundError: No module named 'source_extraction_utils
-    # def test_task_4(self):
-            # print(notebook)
-    #     for notebook in Path().rglob("tasks/task_04_*/*.ipynb"):
-    #         nb, errors = _notebook_run(notebook)
-    #         assert errors == []
+    def test_task_4(self):
+        for notebook in Path().rglob("tasks/task_04_*/1_.ipynb"):
+            nb, errors = _notebook_run(notebook)
+            assert errors == []
+        for notebook in Path().rglob("tasks/task_04_*/4_.ipynb"):
+            nb, errors = _notebook_run(notebook)
+            assert errors == []
+# failing tasks
+# 2_ring_source.ipynb -> no ring source in openmc 0.11
+# 3_plasma_source_plots.ipynb -> no ring source in openmc 0.11
+# 5_gamma_source_example.ipynb -> gamma outside of nuclear data energy range
 
     def test_task_5(self):
         for notebook in Path().rglob("tasks/task_05_*/*.ipynb"):
@@ -79,12 +84,11 @@ class test_tasks(unittest.TestCase):
             nb, errors = _notebook_run(notebook)
             assert errors == []
 
-# ModuleNotFoundError: No module named 'plotting_utils'
-    # def test_task_7(self):
-    #     for notebook in Path().rglob("tasks/task_07_*/*.ipynb"):
-            # print(notebook)
-    #         nb, errors = _notebook_run(notebook)
-    #         assert errors == []
+    def test_task_7(self):
+        for notebook in Path().rglob("tasks/task_07_*/*.ipynb"):
+            print(notebook)
+            nb, errors = _notebook_run(notebook)
+            assert errors == []
 
 # ModuleNotFoundError: No module named 'statepoint_to_vtk'
 #     def test_task_8(self):
@@ -105,23 +109,28 @@ class test_tasks(unittest.TestCase):
             nb, errors = _notebook_run(notebook)
             assert errors == []
 
-# TimeoutError: Cell execution timed out
     def test_task_11(self):
         for notebook in Path().rglob("tasks/task_11_*/*.ipynb"):
             print(notebook)
             nb, errors = _notebook_run(notebook)
             assert errors == []
 
-    # def test_task_12(self):
-    #     for notebook in Path().rglob("tasks/task_12_*/*.ipynb"):
+    def test_task_12(self):
+        for notebook in Path().rglob("tasks/task_12_*/*.ipynb"):
+            print(notebook)
+            nb, errors = _notebook_run(notebook)
+            assert errors == []
+
+# No module named 'openmc_model'
+    # def test_task_13(self):
+    #     for notebook in Path().rglob("tasks/task_13_*/*.ipynb"):
     #         print(notebook)
     #         nb, errors = _notebook_run(notebook)
     #         assert errors == []
 
 # No module named 'openmc_model'
-# ModuleNotFoundError: No module named 'statepoint_to_vtk'
-    # def test_task_13(self):
-    #     for notebook in Path().rglob("tasks/task_13_*/*.ipynb"):
+    # def test_task_14(self):
+    #     for notebook in Path().rglob("tasks/task_14_*/*.ipynb"):
     #         print(notebook)
     #         nb, errors = _notebook_run(notebook)
     #         assert errors == []

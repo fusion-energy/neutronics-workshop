@@ -1,9 +1,9 @@
 
-## Task 1 - Cross sections
+## Task 12 - CAD mesh tally of fast flux
 
 Please allow 30 minutes for this task.
 
-Expected outputs from this task are also in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/13.
+Expected outputs from this task are also in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/13).
 
 In this task you will be using OpenMC, DAGMC to perform neutronics simulations
 on 2D meshes and 3D meshes.
