@@ -1,9 +1,9 @@
 import openmc
-from neutronics_material_maker import Material, MultiMaterial
+from neutronics_material_maker import Material
 
 
 def find_tbr_hcpb(
-    breeder_percent_in_breeder_plus_multiplier_ratio, blanket_breeder_li6_enrichment
+    breeder_percent_in_breeder_plus_multiplier_ratio, blanket_breeder_li6_enrichment=60
 ):
 
     inputs_and_outputs = sphere_with_firstwall_model(
@@ -69,78 +69,88 @@ def sphere_with_firstwall_model(
 
     # creates homogensied blanket material using a single breeder / multiplier material (e.g lithium lead)
     if blanket_breeder_material == "Pb842Li158":
-        blanket_material = MultiMaterial(
-            material_tag="blanket_material",
+        my_mat1= Material.from_library(material_for_structure)
+        my_mat2 = Material.from_library(
+            blanket_coolant_material,
+            temperature=blanket_coolant_temperature_in_C+273.15,
+            pressure=coolant_pressure,
+        )
+        my_mat3 = Material(
+            material_name=blanket_breeder_material,
+            enrichment=blanket_breeder_li6_enrichment,
+            temperature=blanket_breeder_temperature_in_C+273.15,
+        )
+        blanket_material = Material.from_mixture(
             materials=[
-                Material(material_name=material_for_structure),
-                Material(
-                    material_name=blanket_coolant_material,
-                    temperature_in_C=blanket_coolant_temperature_in_C,
-                    pressure_in_Pa=coolant_pressure,
-                ),
-                Material(
-                    material_name=blanket_breeder_material,
-                    enrichment=blanket_breeder_li6_enrichment,
-                    temperature_in_C=blanket_breeder_temperature_in_C,
-                ),
+                my_mat1,
+                my_mat2,
+                my_mat3
             ],
+            name='blanket_material',
             fracs=[
                 blanket_structural_fraction,
                 blanket_coolant_fraction,
                 blanket_breeder_fraction,
             ],
-            percent_type="vo",
-        ).openmc_material
+            percent_type='vo').openmc_material
 
     # creates homogensied blanket material using a combined breeder multiplier material (e.g lithium ceramic with be multiplier)
     else:
 
-        blanket_material = MultiMaterial(
-            material_tag="blanket_material",
+        my_mat1 = Material.from_library(material_for_structure)
+        my_mat2 = Material.from_library(
+            blanket_coolant_material,
+            temperature=blanket_coolant_temperature_in_C+273.15,
+            pressure=coolant_pressure,
+        )
+        my_mat3 = Material.from_library(
+            blanket_breeder_material,
+            enrichment=blanket_breeder_li6_enrichment,
+            packing_fraction=blanket_breeder_material_packing_fraction,
+        )
+        my_mat4 = Material.from_library(
+            blanket_multipler_material,
+            packing_fraction=blanket_multiplier_packing_fraction,
+        )
+        blanket_material = Material.from_mixture(
             materials=[
-                Material(material_name=material_for_structure),
-                Material(
-                    material_name=blanket_coolant_material,
-                    temperature_in_C=blanket_coolant_temperature_in_C,
-                    pressure_in_Pa=coolant_pressure,
-                ),
-                Material(
-                    material_name=blanket_breeder_material,
-                    enrichment=blanket_breeder_li6_enrichment,
-                    packing_fraction=blanket_breeder_material_packing_fraction,
-                ),
-                Material(
-                    material_name=blanket_multipler_material,
-                    packing_fraction=blanket_multiplier_packing_fraction,
-                ),
+                my_mat1,
+                my_mat2,
+                my_mat3,
+                my_mat4,
             ],
+            name='blanket_material',
             fracs=[
                 blanket_structural_fraction,
                 blanket_coolant_fraction,
                 blanket_breeder_fraction,
                 blanket_multiplier_fraction,
             ],
-            percent_type="vo",
-        ).openmc_material
+            percent_type='vo').openmc_material
+
 
     # creates homogensied firstwall material with eurofer, tungsten and a coolant
-    firstwall_material = MultiMaterial(
-        material_tag="firstwall_material",
+    my_mat1 = Material.from_library("tungsten")
+    my_mat2 = Material.from_library(
+        firstwall_coolant_material,
+        temperature=firstwall_coolant_temperature_in_C + 273.15,
+        pressure=coolant_pressure,
+    )
+    my_mat3 = Material.from_library("eurofer")
+
+    firstwall_material = Material.from_mixture(
         materials=[
-            Material(material_name="tungsten"),
-            Material(
-                material_name=firstwall_coolant_material,
-                temperature_in_C=firstwall_coolant_temperature_in_C,
-                pressure_in_Pa=coolant_pressure,
-            ),
-            Material(material_name="eurofer"),
+            my_mat1,
+            my_mat2,
+            my_mat3,
         ],
+        name='firstwall_material',
         fracs=[
             firstwall_armour_fraction,
             firstwall_coolant_fraction,
             firstwall_structural_fraction,
         ],
-    ).openmc_material
+        percent_type='vo').openmc_material
 
     mats = openmc.Materials([blanket_material, firstwall_material])
 
@@ -186,9 +196,9 @@ def sphere_with_firstwall_model(
     source = openmc.Source()
     source.space = openmc.stats.Point((0, 0, 0))
     source.angle = openmc.stats.Isotropic()
-    source.energy = openmc.stats.Discrete([14e6], [1])
-    # there is a small bug in the muir distribution at time of writing
-    #     source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0) #neutron energy = 14.08MeV, AMU for D + T = 5, temperature is 20KeV
+    source.energy = openmc.stats.Muir(
+        e0=14080000.0, m_rat=5.0, kt=20000.0
+    )  # neutron energy = 14.08MeV, AMU for D + T = 5, temperature is 20KeV
     sett.source = source
 
     # this is the tally set up
