@@ -104,7 +104,7 @@ RUN pip install cmake\
                 nest_asyncio \
                 pytest \
                 pytest-cov \
-                # holoviews \
+                holoviews \
                 ipywidgets \
 # cython is needed for moab
                 cython \
