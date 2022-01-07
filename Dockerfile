@@ -1,15 +1,15 @@
 # This Dockerfile creates an enviroment / dependancies needed to run the
-# neutronics-workflow.
+# neutronics-workshop.
 
 # This Dockerfile can be build locally or a prebuild image can be downloaded
 
 # To download the prebuild image
-# docker pull ghcr.io/fusion-energy/neutronics-workflow
-# docker pull ghcr.io/fusion-energy/neutronics-workflow:embree
-# docker pull ghcr.io/fusion-energy/neutronics-workflow:embree-avx
+# docker pull ghcr.io/fusion-energy/neutronics-workshop
+# docker pull ghcr.io/fusion-energy/neutronics-workshop:embree
+# docker pull ghcr.io/fusion-energy/neutronics-workshop:embree-avx
 
 # To build this Dockerfile into a docker image:
-# docker build -t neutronics-workflow .
+# docker build -t neutronics-workshop .
 
 
 # To build this Dockerfile with different options --build-arg can be used
@@ -23,10 +23,12 @@
 #   true false
 #   controls if the Embree is built to use AVX instruction set (true) or not (false). AVX is not supported by all CPUs 
 
-#  docker build -t neutronics-workflow --build-arg compile_cores=7 --build-arg build_double_down=OFF .
-#  docker build -t neutronics-workflow:embree --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=true .
-#  docker build -t neutronics-workflow:embree-avx --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=false .
+#  docker build -t neutronics-workshop --build-arg compile_cores=7 --build-arg build_double_down=OFF .
+#  docker build -t neutronics-workshop:embree --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=true .
+#  docker build -t neutronics-workshop:embree-avx --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=false .
 
+# for local testing I tend to use this build command
+# docker build -t neutronics-workshop --build-arg compile_cores=14 --build-arg build_double_down=ON .
 
 # This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
 FROM ghcr.io/openmc-data-storage/miniconda3_4.9.2_endfb-7.1_nndc_tendl_2019:latest as dependencies
@@ -283,4 +285,4 @@ WORKDIR /tasks
 ENV PORT 8888
 
 # could switch to --ip='*'
-CMD ["jupyter", "notebook", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+CMD ["jupyter", "lab", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
