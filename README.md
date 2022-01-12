@@ -60,11 +60,31 @@ terminal window, or Windows users might prefer PowerShell.
 
     ```docker pull ghcr.io/fusion-energy/neutronics-workshop```
 
+    <details>
+      <summary><b>Expand</b> - Having permission denied errors?</summary>
+        <pre><code class="language-html">
+        If you are running the command from Linux or Ubuntu terminal and getting permission denied messages back.
+        Try running the same command with with elevated user permissions by adding sudo at the front.
+        sudo docker pull ghcr.io/fusion-energy/neutronics-workshop
+        Then enter your password when prompted.
+        </code></pre>
+    </details>
+
 3. Now that you have the docker image you can enable graphics linking between
 your os and docker, and then run the docker container by typing the following
 commands in a terminal window.
 
     ```docker run -p 8888:8888 ghcr.io/fusion-energy/neutronics-workshop```
+
+    <details>
+      <summary><b>Expand</b> - Having permission denied errors?</summary>
+        <pre><code class="language-html">
+        If you are running the command from Linux or Ubuntu terminal and getting permission denied messages back.
+        Try running the same command with with elevated user permissions by adding sudo at the front.
+        sudo docker run -p 8888:8888 ghcr.io/fusion-energy/neutronics-workshop
+        Then enter your password when prompted.
+        </code></pre>
+    </details>
 
 4. A URL should be displayed in the terminal and can now be opened in the
 internet browser of your choice. Select and open the URL at the end of the terminal print out (highlighted below)
