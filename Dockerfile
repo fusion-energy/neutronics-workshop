@@ -87,9 +87,14 @@ RUN apt-get --yes install libeigen3-dev \
 # installing cadquery and jupyter
 RUN conda install jupyter -y && \
     conda install -c conda-forge -c python python=3.8 && \
-    conda install -c conda-forge -c cadquery cadquery=2.1
+    # conda install -c conda-forge -c cadquery cadquery=2.2
+    # commented out until next CQ release
+    conda install -c conda-forge -c cadquery cadquery=master
 # cadquery master dose not appear to show the .solid in the notebook
 
+# Installing Gmsh
+RUN conda install -c conda-forge gmsh
+RUN apt-get install libxft2 
 
 # Python libraries used in the workshop
 RUN pip install cmake\
@@ -235,7 +240,7 @@ RUN cd /opt && \
     cmake -Doptimize=on \
           -Ddagmc=ON \
           -DDAGMC_ROOT=/DAGMC \
-          -DHDF5_PREFER_PARALLEL=off ..  && \
+          -DHDF5_PREFER_PARALLEL=off .. && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \
     cd /opt/openmc/ && \
@@ -254,8 +259,7 @@ ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 RUN pip install neutronics_material_maker \
                 openmc-plasma-source \
                 remove_dagmc_tags \
-                paramak \
-                cad_to_h5m \
+                # paramak \
                 stl_to_h5m \
                 openmc-dagmc-wrapper \
                 openmc-tally-unit-converter \
@@ -264,6 +268,10 @@ RUN pip install neutronics_material_maker \
                 openmc_source_plotter \
                 dagmc_bounding_box \
                 openmc_mesh_tally_to_vtk
+
+# installing from a branch that is still under development
+RUN pip install https://github.com/fusion-energy/paramak/archive/adding_export_h5m_using_brep_gmsh_method.zip
+
 
 # an older version of openmc is need to provide an older executable
 # this particular exectuable allows an inital_source.h5 to be written
