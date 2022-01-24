@@ -23,6 +23,59 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: run tests
+      - name: test task 1
         run: |
-          pytest tests -v --cov=tasks/ --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
+          pytest tests/test_task_1 -v
+
+      - name: test task 2
+        run: |
+          pytest tests/test_task_2 -v
+
+      - name: test task 3
+        run: |
+          pytest tests/test_task_3 -v
+
+      - name: test task 4
+        run: |
+          pytest tests/test_task_4 -v
+
+      - name: test task 5
+        run: |
+          pytest tests/test_task_5 -v
+
+      - name: test task 6
+        run: |
+          pytest tests/test_task_6 -v
+
+      - name: test task 7
+        run: |
+          pytest tests/test_task_7 -v
+
+      - name: test task 8
+        run: |
+          pytest tests/test_task_8 -v
+
+      - name: test task 9
+        run: |
+          pytest tests/test_task_9 -v
+
+      - name: test task 10
+        run: |
+          pytest tests/test_task_10 -v
+
+      - name: test task 11
+        run: |
+          pytest tests/test_task_11 -v
+
+      - name: test task 12
+        run: |
+          pytest tests/test_task_12 -v
+
+      - name: test task 13
+        run: |
+          pytest tests/test_task_13 -v
+
+      - name: test task 14
+        run: |
+          pytest tests/test_task_14 -v
+
