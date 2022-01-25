@@ -25,57 +25,57 @@ jobs:
 
       - name: test task 1
         run: |
-          pytest tests/test_task_1 -v
+          pytest tests/test_task_1.py -v
 
       - name: test task 2
         run: |
-          pytest tests/test_task_2 -v
+          pytest tests/test_task_2.py -v
 
       - name: test task 3
         run: |
-          pytest tests/test_task_3 -v
+          pytest tests/test_task_3.py -v
 
       - name: test task 4
         run: |
-          pytest tests/test_task_4 -v
+          pytest tests/test_task_4.py -v
 
       - name: test task 5
         run: |
-          pytest tests/test_task_5 -v
+          pytest tests/test_task_5.py -v
 
       - name: test task 6
         run: |
-          pytest tests/test_task_6 -v
+          pytest tests/test_task_6.py -v
 
       - name: test task 7
         run: |
-          pytest tests/test_task_7 -v
+          pytest tests/test_task_7.py -v
 
       - name: test task 8
         run: |
-          pytest tests/test_task_8 -v
+          pytest tests/test_task_8.py -v
 
       - name: test task 9
         run: |
-          pytest tests/test_task_9 -v
+          pytest tests/test_task_9.py -v
 
       - name: test task 10
         run: |
-          pytest tests/test_task_10 -v
+          pytest tests/test_task_10.py -v
 
       - name: test task 11
         run: |
-          pytest tests/test_task_11 -v
+          pytest tests/test_task_11.py -v
 
       - name: test task 12
         run: |
-          pytest tests/test_task_12 -v
+          pytest tests/test_task_12.py -v
 
       - name: test task 13
         run: |
-          pytest tests/test_task_13 -v
+          pytest tests/test_task_13.py -v
 
       - name: test task 14
         run: |
-          pytest tests/test_task_14 -v
+          pytest tests/test_task_14.py -v
 

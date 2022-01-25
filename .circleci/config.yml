@@ -20,13 +20,6 @@ jobs:
     steps:
       - checkout
 
-      # - run:
-      #     name: run tests
-      #     no_output_timeout: 30m
-      #     command: |
-      #       cd ..
-      #       pytest repo/tests -v
-
       - run:
           name: test task 1
           command: pytest tests/test_task_1.py -v
@@ -69,13 +62,3 @@ jobs:
       - run:
           name: test task 14
           command: pytest tests/test_task_14.py -v
-
-
-
-
-
-
-      - store_test_results:
-          path: test-reports
-      - store_artifacts:
-          path: test-reports
