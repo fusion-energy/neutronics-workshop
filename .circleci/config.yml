@@ -20,12 +20,61 @@ jobs:
     steps:
       - checkout
 
+      # - run:
+      #     name: run tests
+      #     no_output_timeout: 30m
+      #     command: |
+      #       cd ..
+      #       pytest repo/tests -v
+
       - run:
-          name: run tests
-          no_output_timeout: 30m
-          command: |
-            cd ..
-            pytest repo/tests -v --cov=tasks/ --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
+          name: test task 1
+          command: pytest tests/test_task_1 -v
+      - run:
+          name: test task 2
+          command: pytest tests/test_task_2 -v
+      - run:
+          name: test task 3
+          command: pytest tests/test_task_3 -v
+      - run:
+          name: test task 4
+          command: pytest tests/test_task_4 -v
+      - run:
+          name: test task 5
+          command: pytest tests/test_task_5 -v
+      - run:
+          name: test task 6
+          command: pytest tests/test_task_6 -v
+      - run:
+          name: test task 7
+          command: pytest tests/test_task_7 -v
+      - run:
+          name: test task 8
+          command: pytest tests/test_task_8 -v
+      - run:
+          name: test task 9
+          command: pytest tests/test_task_9 -v
+      - run:
+          name: test task 10
+          command: pytest tests/test_task_10 -v
+      - run:
+          name: test task 11
+          command: pytest tests/test_task_11 -v
+      - run:
+          name: test task 12
+          command: pytest tests/test_task_12 -v
+      - run:
+          name: test task 13
+          command: pytest tests/test_task_13 -v
+      - run:
+          name: test task 14
+          command: pytest tests/test_task_14 -v
+
+
+
+
+
+
       - store_test_results:
           path: test-reports
       - store_artifacts:
