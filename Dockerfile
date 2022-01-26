@@ -261,8 +261,8 @@ RUN pip install neutronics_material_maker \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
-                openmc_source_plotter \
                 dagmc_bounding_box \
+                openmc_source_plotter \
                 openmc_mesh_tally_to_vtk
 
 # an older version of openmc is need to provide an older executable
