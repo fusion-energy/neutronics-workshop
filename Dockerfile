@@ -29,6 +29,8 @@
 
 # for local testing I tend to use this build command
 # docker build -t neutronics-workshop --build-arg compile_cores=14 --build-arg build_double_down=ON .
+# and then run with this command
+# docker run -p 8888:8888 neutronics-workshop
 
 # This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
 FROM ghcr.io/openmc-data-storage/miniconda3_4.9.2_endfb-7.1_nndc_tendl_2019:latest as dependencies
