@@ -78,21 +78,26 @@ sett.run_mode = 'fixed source'
 sett.weight_windows = ww
 
 
-# Create mesh which will be used for tally and weight window
-my_tally_mesh = openmc.RegularMesh()
-my_tally_mesh.dimension = [mesh_width, 1, mesh_height]  # only 1 cell in the Y dimension
-my_tally_mesh.lower_left = [-100, -100, -100]   # physical limits (corners) of the mesh
-my_tally_mesh.upper_right = [100, 100, 100]
 
 
-
+#creates an empty tally object
 tallies = openmc.Tallies()
-# Create mesh filter for tally
-mesh_filter = openmc.MeshFilter(my_tally_mesh)
-mesh_tally = openmc.Tally(name='flux_on_mesh')
-mesh_tally.filters = [mesh_filter]
-mesh_tally.scores = ['flux']
-tallies.append(mesh_tally)
+
+
+# sets up filters for the tallies
+neutron_particle_filter = openmc.ParticleFilter(['neutron'])
+energy_bins = openmc.mgxs.GROUP_STRUCTURES['CCFE-709']
+energy_filter = openmc.EnergyFilter(energy_bins)
+
+# setup the filters for the surface tally
+front_surface_filter = openmc.SurfaceFilter(sph1)
+# detects when particles across the surface
+
+front_surface_spectra_tally = openmc.Tally(name='front_surface_spectra_tally')
+front_surface_spectra_tally.scores = ['current']
+front_surface_spectra_tally.filters = [front_surface_filter, neutron_particle_filter, energy_filter]
+tallies.append(front_surface_spectra_tally)
+
 
 # combines the geometry, materials, settings and tallies to create a neutronics model
 model = openmc.model.Model(geom, mats, sett, tallies)
@@ -108,25 +113,17 @@ output_filename = model.run()
 
 # open the results file
 results = openmc.StatePoint(output_filename)
+my_tally = results.get_tally(name="front_surface_spectra_tally")
 
-# access the flux tally
-my_tally = results.get_tally(scores=['flux'])
-my_slice = my_tally.get_slice(scores=['flux'])
-my_slice.mean.shape = (mesh_width, mesh_height)
-fig = plt.subplot()
+from spectrum_plotter import plot_spectrum_from_tally
 
-# when plotting the 2d data, added the extent is required.
-# otherwise the plot uses the index of the 2d data arrays
-# as the x y axis
-fig.imshow(my_slice.mean, extent=[-200,200,-200,200], vmin=1e-5, vmax=28)
-plt.show()
-
-fig.imshow(my_slice.std_dev, extent=[-200,200,-200,200])#, vmin=1e-7, vmax=1)
-
-# np.amax(my_slice.mean)
-28
-
-plt.show()
-
-# notice that neutrons are produced and emitted isotropically from a point source.
-# There is a slight increase in flux within the neutron multiplier.
+test_plot = plot_spectrum_from_tally(
+    spectrum={"neutron spectra": my_tally},
+    volume=1,
+    x_label="Energy [MeV]",
+    y_label="Flux [n/cm^2s]",
+    x_scale="linear",
+    y_scale="linear",
+    title="example plot 1",
+    filename="example_spectra_from_tally_matplotlib.png",
+)
