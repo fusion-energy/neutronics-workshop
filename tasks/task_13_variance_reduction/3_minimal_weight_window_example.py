@@ -1,6 +1,7 @@
 import openmc
 import os
-import matplotlib.pyplot as plt
+from spectrum_plotter import plot_spectrum_from_tally
+
 
 # MATERIALS
 
@@ -27,6 +28,7 @@ universe = openmc.Universe(cells=[shield_cell])
 
 geom = openmc.Geometry(universe)
 
+
 # creates a 14MeV neutron point source
 source = openmc.Source()
 source.space = openmc.stats.Point((0, 0, 0))
@@ -45,53 +47,54 @@ sett.source = source
 sett.run_mode = 'fixed source'
 
 
-# Create mesh which will be used for the tally
-my_tally_mesh = openmc.RegularMesh()
-my_tally_mesh.dimension = [25, 1, 25]  # only 1 cell in the Y dimension
-my_tally_mesh.lower_left = [-120, -1, -120]  # physical limits (corners) of the mesh
-my_tally_mesh.upper_right = [120, 1, 120]
-
-# Create mesh filter for tally
-mesh_filter = openmc.MeshFilter(my_tally_mesh)
-mesh_tally = openmc.Tally(name='flux_on_mesh')
-mesh_tally.filters = [mesh_filter]
-mesh_tally.scores = ['flux']
 #creates an empty tally object
 tallies = openmc.Tallies()
-tallies.append(mesh_tally)
+
+
+# setup the filters for the surface tally
+# detects neutrons (not photons)
+neutron_particle_filter = openmc.ParticleFilter(['neutron'])
+# detects when particles across the surface
+front_surface_filter = openmc.SurfaceFilter(sph1)
+energy_bins = openmc.mgxs.GROUP_STRUCTURES['CCFE-709']
+energy_filter = openmc.EnergyFilter(energy_bins)
+
+front_surface_spectra_tally = openmc.Tally(name='front_surface_spectra_tally')
+front_surface_spectra_tally.scores = ['current']
+front_surface_spectra_tally.filters = [front_surface_filter, neutron_particle_filter, energy_filter]
+tallies.append(front_surface_spectra_tally)
+
 
 # combines the geometry, materials, settings and tallies to create a neutronics model
 model = openmc.model.Model(geom, mats, sett, tallies)
 
-# runs the simulation with weight windows
-output_no_ww_filename = model.run()
+# deletes old files
+try:
+    os.remove('summary.h5')
+    os.remove('statepoint.*.h5')
+except OSError:
+    pass
+
+
+# runs the simulation without weight windows
+output_filename = model.run()
 
 # open the results file
-results_no_ww = openmc.StatePoint(output_no_ww_filename)
-
-# access the flux tally
-my_tally_no_ww = results_no_ww.get_tally(scores=['flux'])
-my_slice_no_ww = my_tally_no_ww.get_slice(scores=['flux'])
-my_slice_no_ww.mean.shape = (25, 25)
-fig = plt.subplot()
-
-# when plotting the 2d data, added the extent is required.
-# otherwise the plot uses the index of the 2d data arrays
-# as the x y axis
-fig.imshow(my_slice_no_ww.mean, extent=[-120,120,-120,120], vmin=1e-5, vmax=10)
-plt.savefig('no_ww.png')
-# plt.show()
+results = openmc.StatePoint(output_filename)
+my_analogy_tally = results.get_tally(name="front_surface_spectra_tally")
 
 
 
-# Create mesh which will be used for tally and weight window
+# Create mesh which will be used for the weight windows
 my_ww_mesh = openmc.RegularMesh()
+
 my_ww_mesh.dimension = [25, 25, 25]
 my_ww_mesh.lower_left = [-120, -120, -120]  # physical limits (corners) of the mesh
 my_ww_mesh.upper_right = [120, 120, 120]
 
 # imports values for weight windows
 from weight_window_values import upper_ww_bounds, lower_ww_bounds
+
 
 # docs for ww are here
 # https://docs.openmc.org/en/latest/_modules/openmc/weight_windows.html?highlight=weight%20windows
@@ -118,28 +121,30 @@ except OSError:
 # a similar amount of time as 100 without weight windows
 sett.batches=20
 
-
 # combines the geometry, materials, settings and tallies to create a neutronics model
 model = openmc.model.Model(geom, mats, sett, tallies)
 
 # runs the simulation with weight windows
 output_ww_filename = model.run()
 
-
-
-
 # open the results file
-results_ww = openmc.StatePoint(output_ww_filename)
+ww_results = openmc.StatePoint(output_ww_filename)
+my_weight_window_tally = ww_results.get_tally(name="front_surface_spectra_tally")
 
-# access the flux tally
-my_tally_ww = results_ww.get_tally(scores=['flux'])
-my_slice_ww = my_tally_ww.get_slice(scores=['flux'])
-my_slice_ww.mean.shape = (25, 25)
-fig = plt.subplot()
 
-# when plotting the 2d data, added the extent is required.
-# otherwise the plot uses the index of the 2d data arrays
-# as the x y axis
-fig.imshow(my_slice_ww.mean, extent=[-120,120,-120,120], vmin=1e-5, vmax=10)
-plt.savefig('ww.png')
-# plt.show()
+# this function plots the neutron spectrum and requires spectrum_plotter to be installed
+# pip install spectrum_plotter
+test_plot = plot_spectrum_from_tally(
+    spectrum={"analogy": my_analogy_tally, 'my_weight_window_tally': my_weight_window_tally},
+    x_label="Energy [MeV]",
+    y_label="Current [n/source_particle]",
+    x_scale="log",
+    y_scale="log",
+    title="example plot 1",
+    required_units="neutron / source_particle",
+    plotting_package="plotly",
+    filename="example_spectra_from_tally_matplotlib.html",
+)
+
+# loads up the plot in a webbrowser
+test_plot.show()
