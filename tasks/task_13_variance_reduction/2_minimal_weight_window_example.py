@@ -1,5 +1,5 @@
 import openmc
-import matplotlib.pyplot as plt
+import os
 
 # MATERIALS
 
@@ -18,9 +18,12 @@ mats = [shielding_material]
 
 # surfaces
 sph1 = openmc.Sphere(r=200, boundary_type='vacuum')
+plane1 = openmc.YPlane(y0=-1, boundary_type='reflective')
+plane2 = openmc.YPlane(y0=1, boundary_type='reflective')
+
 
 # cells
-shield_cell = openmc.Cell(region=-sph1)
+shield_cell = openmc.Cell(region=-sph1 & +plane1 & -plane2)
 shield_cell.fill = shielding_material
 
 universe = openmc.Universe(cells=[shield_cell])
@@ -29,29 +32,34 @@ geom = openmc.Geometry(universe)
 
 # Create mesh which will be used for tally and weight window
 my_ww_mesh = openmc.RegularMesh()
-mesh_height = 10  # number of mesh elements in the Y direction
-mesh_width = 10  # number of mesh elements in the X direction
+mesh_height = 5  # number of mesh elements in the Y direction
+mesh_width = 5  # number of mesh elements in the X direction
 my_ww_mesh.dimension = [mesh_width, 1, mesh_height] # only 1 cell in the Y dimension
-my_ww_mesh.lower_left = [-100, -100, -100]  # physical limits (corners) of the mesh
-my_ww_mesh.upper_right = [100, 100, 100]
+my_ww_mesh.lower_left = [-100, -1, -100]  # physical limits (corners) of the mesh
+my_ww_mesh.upper_right = [100, 1, 100]
 
 
+lower_ww_bounds = [
+    -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1,
+]
+
+upper_ww_bounds = [
+    0.1, 0.1, 0.1, 0.1, 0.1,
+    0.1, 0.2, 0.2, 0.2, 0.1,
+    0.1, 0.2, -1, 0.2, 0.1,
+    0.1, 0.2, 0.2, 0.2, 0.1,
+    0.1, 0.1, 0.1, 0.1, 0.1,
+]
 
 
-lower_ww_bounds=[]
-upper_ww_bounds=[]
-for mesh_element in range(1,  (mesh_height * mesh_width)+1):
-    if mesh_element > (mesh_height * mesh_width) *0.5:
-        lower_ww_bounds.append(0.001)
-        upper_ww_bounds.append(0.7)
-    else:
-        lower_ww_bounds.append(-1)
-        upper_ww_bounds.append(-1)
-
-
-# docs on ww https://docs.openmc.org/en/latest/_modules/openmc/weight_windows.html?highlight=weight%20windows
+# docs for ww are here
+# https://docs.openmc.org/en/latest/_modules/openmc/weight_windows.html?highlight=weight%20windows
 ww = openmc.WeightWindows(
-    mesh =my_ww_mesh,
+    mesh=my_ww_mesh,
     upper_ww_bounds=upper_ww_bounds,
     lower_ww_bounds=lower_ww_bounds,
     particle_type='neutron',
@@ -76,8 +84,7 @@ sett.particles = 500
 sett.source = source
 sett.run_mode = 'fixed source'
 sett.weight_windows = ww
-
-
+sett.particles = 'neutron'
 
 
 #creates an empty tally object
@@ -105,8 +112,9 @@ model = openmc.model.Model(geom, mats, sett, tallies)
 # plt.show(universe.plot(width=(180, 180), basis='xz'))
 
 # # deletes old files
-# !rm summary.h5
-# !rm statepoint.*.h5
+os.remove('summary.h5')
+os.remove('statepoint.100.h5')
+
 
 # runs the simulation
 output_filename = model.run()
@@ -119,11 +127,14 @@ from spectrum_plotter import plot_spectrum_from_tally
 
 test_plot = plot_spectrum_from_tally(
     spectrum={"neutron spectra": my_tally},
-    volume=1,
     x_label="Energy [MeV]",
-    y_label="Flux [n/cm^2s]",
-    x_scale="linear",
-    y_scale="linear",
+    y_label="Current [n/source_particle]",
+    x_scale="log",
+    y_scale="log",
     title="example plot 1",
-    filename="example_spectra_from_tally_matplotlib.png",
+    required_units="neutron / source_particle",
+    plotting_package="plotly",
+    filename="example_spectra_from_tally_matplotlib.html",
 )
+
+test_plot.show()
