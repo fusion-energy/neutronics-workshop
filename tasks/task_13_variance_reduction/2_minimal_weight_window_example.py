@@ -1,5 +1,7 @@
 import openmc
 import os
+from spectrum_plotter import plot_spectrum_from_tally
+
 
 # MATERIALS
 
@@ -30,43 +32,6 @@ universe = openmc.Universe(cells=[shield_cell])
 
 geom = openmc.Geometry(universe)
 
-# Create mesh which will be used for tally and weight window
-my_ww_mesh = openmc.RegularMesh()
-mesh_height = 5  # number of mesh elements in the Y direction
-mesh_width = 5  # number of mesh elements in the X direction
-my_ww_mesh.dimension = [mesh_width, 1, mesh_height] # only 1 cell in the Y dimension
-my_ww_mesh.lower_left = [-100, -1, -100]  # physical limits (corners) of the mesh
-my_ww_mesh.upper_right = [100, 1, 100]
-
-
-lower_ww_bounds = [
-    -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1,
-]
-
-upper_ww_bounds = [
-    0.1, 0.1, 0.1, 0.1, 0.1,
-    0.1, 0.2, 0.2, 0.2, 0.1,
-    0.1, 0.2, -1, 0.2, 0.1,
-    0.1, 0.2, 0.2, 0.2, 0.1,
-    0.1, 0.1, 0.1, 0.1, 0.1,
-]
-
-
-# docs for ww are here
-# https://docs.openmc.org/en/latest/_modules/openmc/weight_windows.html?highlight=weight%20windows
-ww = openmc.WeightWindows(
-    mesh=my_ww_mesh,
-    upper_ww_bounds=upper_ww_bounds,
-    lower_ww_bounds=lower_ww_bounds,
-    particle_type='neutron',
-    energy_bins=(0.0, 100_000_000.0),  # applies this weight window to neutrons of within a large energy range (basically all neutrons in the simulation)
-    survival_ratio=5
-)
-
 
 # creates a 14MeV point source
 source = openmc.Source()
@@ -83,8 +48,7 @@ sett.inactive = 0
 sett.particles = 500
 sett.source = source
 sett.run_mode = 'fixed source'
-sett.weight_windows = ww
-sett.particles = 'neutron'
+# sett.particles = 'neutrons'
 
 
 #creates an empty tally object
@@ -113,7 +77,7 @@ model = openmc.model.Model(geom, mats, sett, tallies)
 
 # # deletes old files
 os.remove('summary.h5')
-os.remove('statepoint.100.h5')
+os.remove(f'statepoint.{sett.batches}.h5')
 
 
 # runs the simulation
@@ -121,12 +85,66 @@ output_filename = model.run()
 
 # open the results file
 results = openmc.StatePoint(output_filename)
-my_tally = results.get_tally(name="front_surface_spectra_tally")
+my_analogy_tally = results.get_tally(name="front_surface_spectra_tally")
 
-from spectrum_plotter import plot_spectrum_from_tally
+
+
+
+
+
+# Create mesh which will be used for tally and weight window
+my_ww_mesh = openmc.RegularMesh()
+mesh_height = 5  # number of mesh elements in the Y direction
+mesh_width = 5  # number of mesh elements in the X direction
+my_ww_mesh.dimension = [mesh_width, 1, mesh_height] # only 1 cell in the Y dimension
+my_ww_mesh.lower_left = [-100, -1, -100]  # physical limits (corners) of the mesh
+my_ww_mesh.upper_right = [100, 1, 100]
+
+
+lower_ww_bounds = [
+    0.1, 0.1, 0.1, 0.1, 0.1,
+    0.1, 0.2, 0.2, 0.2, 0.1,
+    0.1, 0.2, -1, 0.2, 0.1,
+    0.1, 0.2, 0.2, 0.2, 0.1,
+    0.1, 0.1, 0.1, 0.1, 0.1,
+]
+
+upper_ww_bounds = [
+    0.2, 0.2, 0.2, 0.2, 0.2,
+    0.2, 0.4, 0.4, 0.4, 0.2,
+    0.2, 0.4, -1, 0.4, 0.2,
+    0.2, 0.4, 0.4, 0.4, 0.2,
+    0.2, 0.2, 0.2, 0.2, 0.2,
+]
+
+
+# docs for ww are here
+# https://docs.openmc.org/en/latest/_modules/openmc/weight_windows.html?highlight=weight%20windows
+ww = openmc.WeightWindows(
+    mesh=my_ww_mesh,
+    upper_ww_bounds=upper_ww_bounds,
+    lower_ww_bounds=lower_ww_bounds,
+    particle_type='neutron',
+    energy_bins=(0.0, 100_000_000.0),  # applies this weight window to neutrons of within a large energy range (basically all neutrons in the simulation)
+    survival_ratio=5
+)
+sett.weight_windows = ww
+
+
+# # deletes old files
+os.remove('summary.h5')
+os.remove(f'statepoint.{sett.batches}.h5')
+
+output_filename = model.run()
+
+# open the results file
+ww_results = openmc.StatePoint(output_filename)
+my_weight_window_tally = ww_results.get_tally(name="front_surface_spectra_tally")
+
+
 
 test_plot = plot_spectrum_from_tally(
-    spectrum={"neutron spectra": my_tally},
+    spectrum={"analogy": my_analogy_tally, 'my_weight_window_tally': my_weight_window_tally},
     x_label="Energy [MeV]",
     y_label="Current [n/source_particle]",
     x_scale="log",
