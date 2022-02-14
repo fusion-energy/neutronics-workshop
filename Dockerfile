@@ -186,8 +186,8 @@ RUN if [ "$build_double_down" = "ON" ] ; \
         mkdir build ; \
         cd build ; \
         cmake .. -DMOAB_DIR=/MOAB \
-                -DCMAKE_INSTALL_PREFIX=.. \
-                -DEMBREE_DIR=/embree ; \
+                 -DCMAKE_INSTALL_PREFIX=.. \
+                 -DEMBREE_DIR=/embree ; \
         make -j"$compile_cores" ; \
         make -j"$compile_cores" install ; \
         rm -rf /double-down/build /double-down/double-down ; \
@@ -230,8 +230,6 @@ RUN cd /opt && \
     # git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git && \
     git clone --single-branch --branch v0.13.0 --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
-    # this commit is from this PR https://github.com/openmc-dev/openmc/pull/1900
-    git checkout 0157dc219ff8dca814859b3140c6cef1e78cdee1 && \
     mkdir build && \
     cd build && \
     cmake -Doptimize=on \
@@ -257,15 +255,17 @@ RUN pip install neutronics_material_maker \
                 openmc-plasma-source \
                 remove_dagmc_tags \
                 paramak \
-                cad_to_h5m \
-                stl_to_h5m \
+                brep_to_h5m \
+                brep_part_finder \
                 openmc-dagmc-wrapper \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
                 dagmc_bounding_box \
                 openmc_source_plotter \
-                openmc_mesh_tally_to_vtk
+                openmc_mesh_tally_to_vtk \
+                cad_to_h5m \
+                stl_to_h5m
 
 # an older version of openmc is need to provide an older executable
 # this particular exectuable allows an inital_source.h5 to be written
