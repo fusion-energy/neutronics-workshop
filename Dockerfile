@@ -122,98 +122,11 @@ RUN pip install cmake\
 RUN pip install --upgrade numpy
 
 
-# Clone and install Embree
-# embree from conda is not supported yet
-# conda install -c conda-forge embree >> version: 2.17.7
-# requested version "3.6.1"
-# added following two lines to allow use on AMD CPUs see discussion
-# https://openmc.discourse.group/t/dagmc-geometry-open-mc-aborted-unexpectedly/1369/24?u=pshriwise  
-RUN if [ "$build_double_down" = "ON" ] ; \
-        then git clone --shallow-submodules --single-branch --branch v3.12.2 --depth 1 https://github.com/embree/embree.git ; \
-        cd embree ; \
-        mkdir build ; \
-        cd build ; \
-        if [ "$include_avx" = "false" ] ; \
-            then cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-                        -DEMBREE_ISPC_SUPPORT=OFF \
-                        -DEMBREE_MAX_ISA=NONE \
-                        -DEMBREE_ISA_SSE42=ON ; \
-        fi ; \
-        if [ "$include_avx" = "true" ] ; \
-            then cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-                        -DEMBREE_ISPC_SUPPORT=OFF ; \
-        fi ; \
-        make -j"$compile_cores" ; \
-        make -j"$compile_cores" install ; \
-    fi
+RUN conda install conda-forge embree
 
-# Clone and install MOAB
-RUN mkdir MOAB && \
-    cd MOAB && \
-    git clone  --single-branch --branch 5.3.0 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
-    mkdir build && \
-    cd build && \
-    cmake ../moab -DENABLE_HDF5=ON \
-                  -DENABLE_NETCDF=ON \
-                  -DENABLE_FORTRAN=OFF \
-                  -DENABLE_BLASLAPACK=OFF \
-                  -DBUILD_SHARED_LIBS=OFF \
-                  -DCMAKE_INSTALL_PREFIX=/MOAB && \
-    make -j"$compile_cores" &&  \
-    make -j"$compile_cores" install && \
-    cmake ../moab -DENABLE_HDF5=ON \
-                  -DENABLE_PYMOAB=ON \
-                  -DENABLE_FORTRAN=OFF \
-                  -DBUILD_SHARED_LIBS=ON \
-                  -DENABLE_BLASLAPACK=OFF \
-                  -DCMAKE_INSTALL_PREFIX=/MOAB && \
-    make -j"$compile_cores" install && \
-    cd pymoab && \
-    bash install.sh && \
-    python setup.py install
-    # the following rm command appears to remove libraries that are need to use
-    # pymoab so this has been commented out for now
-    # rm -rf /MOAB/moab /MOAB/build
-
-ENV PATH=$PATH:/MOAB/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
-
-
-# Clone and install Double-Down
-RUN if [ "$build_double_down" = "ON" ] ; \
-        then git clone --shallow-submodules --single-branch --branch v1.0.0 --depth 1 https://github.com/pshriwise/double-down.git && \
-        cd double-down ; \
-        mkdir build ; \
-        cd build ; \
-        cmake .. -DMOAB_DIR=/MOAB \
-                 -DCMAKE_INSTALL_PREFIX=.. \
-                 -DEMBREE_DIR=/embree ; \
-        make -j"$compile_cores" ; \
-        make -j"$compile_cores" install ; \
-        rm -rf /double-down/build /double-down/double-down ; \
-    fi
-
-
-# DAGMC version develop install from source
-RUN mkdir DAGMC && \
-    cd DAGMC && \
-    git clone --single-branch --branch develop https://github.com/svalinn/DAGMC.git && \
-    # git clone --single-branch --branch develop --depth 1 https://github.com/svalinn/DAGMC.git && \
-    cd DAGMC && \
-    # this commit is from this PR https://github.com/svalinn/DAGMC/pull/786
-    git checkout fbd0cdbad100a0fd8d80de42321e69d09fdd67f4 && \
-    cd .. && \
-    mkdir build && \
-    cd build && \
-    cmake ../DAGMC -DBUILD_TALLY=ON \
-                   -DMOAB_DIR=/MOAB \
-                   -DDOUBLE_DOWN=${build_double_down} \
-                   -DBUILD_STATIC_EXE=OFF \
-                   -DBUILD_STATIC_LIBS=OFF \
-                   -DCMAKE_INSTALL_PREFIX=/DAGMC/ \
-                   -DDOUBLE_DOWN_DIR=/double-down && \
-    make -j"$compile_cores" install && \
-    rm -rf /DAGMC/DAGMC /DAGMC/build
+RUN conda install maob
+RUN conda install double-down
+RUN conda install dagmc
 
 ENV PATH=$PATH:/DAGMC/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
@@ -223,23 +136,7 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
     rm WMP_Library_v1.1.tar.gz
 
-
-# installs OpenMc from source
-RUN cd /opt && \
-    # git clone --single-branch --branch model_lib_fix --depth 1 https://github.com/fusion-energy/openmc.git && \
-    # git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git && \
-    git clone --single-branch --branch v0.13.0 --depth 1 https://github.com/openmc-dev/openmc.git && \
-    cd openmc && \
-    mkdir build && \
-    cd build && \
-    cmake -Doptimize=on \
-          -Ddagmc=ON \
-          -DDAGMC_ROOT=/DAGMC \
-          -DHDF5_PREFER_PARALLEL=off ..  && \
-    make -j"$compile_cores" && \
-    make -j"$compile_cores" install && \
-    cd /opt/openmc/ && \
-    pip install .
+RUN conda install openmc
 
 # installs TENDL and ENDF nuclear data. Performed after openmc install as
 # openmc is needed to write the cross_Sections.xml file
@@ -249,23 +146,18 @@ RUN pip install openmc_data_downloader && \
 
 ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 
+RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker \
                 openmc-plasma-source \
                 remove_dagmc_tags \
-                paramak \
-                brep_to_h5m \
-                brep_part_finder \
                 openmc-dagmc-wrapper \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
-                dagmc_bounding_box \
                 openmc_source_plotter \
                 openmc_mesh_tally_to_vtk \
-                cad_to_h5m \
-                stl_to_h5m
 
 # an older version of openmc is need to provide an older executable
 # this particular exectuable allows an inital_source.h5 to be written
