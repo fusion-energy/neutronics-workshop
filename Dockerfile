@@ -60,8 +60,6 @@ RUN apt-get --yes install libeigen3-dev \
                           hdf5-tools \
                           imagemagick \
                           cmake \
-                          # libeigen3-dev required for DAGMC
-                          libeigen3-dev \
                           # libnetcdf-dev is needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
                           libnetcdf-dev \
                           # libtbb-dev required for DAGMC
@@ -150,7 +148,7 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 # Clone and install MOAB
 RUN mkdir MOAB && \
     cd MOAB && \
-    git clone  --single-branch --branch 5.3.0 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
+    git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
@@ -197,12 +195,7 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 # DAGMC version develop install from source
 RUN mkdir DAGMC && \
     cd DAGMC && \
-    git clone --single-branch --branch develop https://github.com/svalinn/DAGMC.git && \
-    # git clone --single-branch --branch develop --depth 1 https://github.com/svalinn/DAGMC.git && \
-    cd DAGMC && \
-    # this commit is from this PR https://github.com/svalinn/DAGMC/pull/786
-    git checkout fbd0cdbad100a0fd8d80de42321e69d09fdd67f4 && \
-    cd .. && \
+    git clone --single-branch --branch v3.2.1 --depth 1 https://github.com/svalinn/DAGMC.git && \
     mkdir build && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
@@ -226,8 +219,6 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
 
 # installs OpenMc from source
 RUN cd /opt && \
-    # git clone --single-branch --branch model_lib_fix --depth 1 https://github.com/fusion-energy/openmc.git && \
-    # git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git && \
     git clone --single-branch --branch v0.13.0 --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
     mkdir build && \
