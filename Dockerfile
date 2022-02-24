@@ -247,7 +247,7 @@ ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 
 
 # python packages from the neutronics workflow
-RUN pip install neutronics_material_maker \
+RUN pip install neutronics_material_maker[density] \
                 openmc-plasma-source \
                 remove_dagmc_tags \
                 openmc-dagmc-wrapper \
