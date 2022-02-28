@@ -29,6 +29,8 @@
 
 # for local testing I tend to use this build command
 # docker build -t neutronics-workshop --build-arg compile_cores=14 --build-arg build_double_down=ON .
+# and then run with this command
+# docker run -p 8888:8888 neutronics-workshop
 
 # This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
 FROM ghcr.io/openmc-data-storage/miniconda3_4.9.2_endfb-7.1_nndc_tendl_2019:latest as dependencies
@@ -58,8 +60,6 @@ RUN apt-get --yes install libeigen3-dev \
                           hdf5-tools \
                           imagemagick \
                           cmake \
-                          # libeigen3-dev required for DAGMC
-                          libeigen3-dev \
                           # libnetcdf-dev is needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
                           libnetcdf-dev \
                           # libtbb-dev required for DAGMC
@@ -87,9 +87,14 @@ RUN apt-get --yes install libeigen3-dev \
 # installing cadquery and jupyter
 RUN conda install jupyter -y && \
     conda install -c conda-forge -c python python=3.8 && \
-    conda install -c conda-forge -c cadquery cadquery=2.1
+    # conda install -c conda-forge -c cadquery cadquery=2.2
+    # commented out until next CQ release
+    conda install -c conda-forge -c cadquery cadquery=master
 # cadquery master dose not appear to show the .solid in the notebook
 
+# Installing Gmsh
+RUN conda install -c conda-forge gmsh
+RUN apt-get install libxft2 
 
 # Python libraries used in the workshop
 RUN pip install cmake\
@@ -148,7 +153,7 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 # Clone and install MOAB
 RUN mkdir MOAB && \
     cd MOAB && \
-    git clone  --single-branch --branch 5.3.0 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
+    git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
@@ -184,8 +189,8 @@ RUN if [ "$build_double_down" = "ON" ] ; \
         mkdir build ; \
         cd build ; \
         cmake .. -DMOAB_DIR=/MOAB \
-                -DCMAKE_INSTALL_PREFIX=.. \
-                -DEMBREE_DIR=/embree ; \
+                 -DCMAKE_INSTALL_PREFIX=.. \
+                 -DEMBREE_DIR=/embree ; \
         make -j"$compile_cores" ; \
         make -j"$compile_cores" install ; \
         rm -rf /double-down/build /double-down/double-down ; \
@@ -195,12 +200,7 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 # DAGMC version develop install from source
 RUN mkdir DAGMC && \
     cd DAGMC && \
-    git clone --single-branch --branch develop https://github.com/svalinn/DAGMC.git && \
-    # git clone --single-branch --branch develop --depth 1 https://github.com/svalinn/DAGMC.git && \
-    cd DAGMC && \
-    # this commit is from this PR https://github.com/svalinn/DAGMC/pull/786
-    git checkout fbd0cdbad100a0fd8d80de42321e69d09fdd67f4 && \
-    cd .. && \
+    git clone --single-branch --branch v3.2.1 --depth 1 https://github.com/svalinn/DAGMC.git && \
     mkdir build && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
@@ -224,18 +224,14 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
 
 # installs OpenMc from source
 RUN cd /opt && \
-    # git clone --single-branch --branch model_lib_fix --depth 1 https://github.com/fusion-energy/openmc.git && \
-    git clone --single-branch --branch develop https://github.com/openmc-dev/openmc.git && \
-    # git clone --single-branch --branch v0.12.1 --depth 1 https://github.com/openmc-dev/openmc.git && \
+    git clone --single-branch --branch v0.13.0 --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
-    # this commit is from this PR https://github.com/openmc-dev/openmc/pull/1900
-    git checkout 0157dc219ff8dca814859b3140c6cef1e78cdee1 && \
     mkdir build && \
     cd build && \
     cmake -Doptimize=on \
           -Ddagmc=ON \
           -DDAGMC_ROOT=/DAGMC \
-          -DHDF5_PREFER_PARALLEL=off ..  && \
+          -DHDF5_PREFER_PARALLEL=off .. && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \
     cd /opt/openmc/ && \
@@ -251,19 +247,19 @@ ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 
 
 # python packages from the neutronics workflow
-RUN pip install neutronics_material_maker \
+RUN pip install neutronics_material_maker[density] \
                 openmc-plasma-source \
                 remove_dagmc_tags \
-                paramak \
-                cad_to_h5m \
-                stl_to_h5m \
                 openmc-dagmc-wrapper \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
                 openmc_source_plotter \
-                dagmc_bounding_box \
                 openmc_mesh_tally_to_vtk
+
+# installing a development version of the paramak that allows exporting to h5m files
+RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak_develop
+
 
 # an older version of openmc is need to provide an older executable
 # this particular exectuable allows an inital_source.h5 to be written
