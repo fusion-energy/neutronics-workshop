@@ -19,7 +19,6 @@ some motivation for learning neutronics.
 
 <p align="center"><a href="https://youtu.be/HH-poTG-FxM" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/144746742-3e31e0ee-6380-4db7-b8ea-0b1c302d497b.png" height="400" /></a></p>
 
-
 :point_right: [Try the workshop in your browser](https://neutronics-workshop-4zf6u4tg6a-lz.a.run.app/)
 
 # History
@@ -38,8 +37,6 @@ also welcome as pull requests to the develop branch.
 The resource has proven most useful as it is one of the few open source and
 accessible fusion neutronics training resources.
 
-
-
 ## Installation
 
 There are video tutorials for this section which accompany the step by step
@@ -53,7 +50,6 @@ instructions below.
 [Mac OS](https://store.docker.com/editions/community/docker-ce-desktop-mac), or
 [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows),
 including the part where you enable docker use as a non-root user. 
-
 
 2. Pull the docker image from the store by typing the following command in a
 terminal window, or Windows users might prefer PowerShell.
@@ -128,5 +124,7 @@ map which is great for working through the workshop with colleagues.
 | [Task 10 - Making CAD geometry](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_10_making_CAD_geometry) | Parametric CAD geometry, Paramak, Geometry visualisation | [link](https://www.youtube.com/watch?v=Bn_TcJSOvaA) |
 | [Task 11 - CAD Cell tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_11_CAD_cell_tally_heat) | CAD-based neutronics, Cell tallies, DAGMC, Heating |  |
 | [Task 12 - CAD Mesh tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_12_CAD_mesh_fast_flux) | CAD-based neutronics, Mesh tallies, Paramak, DAGMC, Fast flux |  |
-| [Task 13 - Techniques for sampling parameter space](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_13_parameter_study_sampling) | Sampling, Interpolation, Multi-dimensional parameter studies |  |
-| [Task 14 - Parameter study optimisation](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_14_parameter_study_optimisation) | Data science machine learning approaches |  |
+| [Task 13 - Variance_reduction](https://github.com/fusion-energy/neutronics-workshop/tree/develop/tasks/task_13_variance_reduction) | Variance reduction, weight windows |  |
+| [Task 14 - Activation transmutation](https://github.com/fusion-energy/neutronics-workshop/tree/develop/tasks/task_14_activation_transmutation) | Isotope build up and tally variation as a function of time |  |
+| [Task 15 - Techniques for sampling parameter space](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_15_parameter_study_sampling) | Sampling, Interpolation, Multi-dimensional parameter studies |  |
+| [Task 16 - Parameter study optimisation](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_16_parameter_study_optimisation) | Data science machine learning approaches |  |
