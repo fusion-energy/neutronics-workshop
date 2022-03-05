@@ -9,7 +9,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: ghcr.io/fusion-energy/neutronics-workshop:latest
+      - image: ghcr.io/fusion-energy/neutronics-workshop:dependencies
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
