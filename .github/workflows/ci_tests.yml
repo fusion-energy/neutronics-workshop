@@ -75,11 +75,11 @@ jobs:
         run: |
           pytest tests/test_task_13.py -v
 
-      # TODO include when these have been speed up
-      # - name: test task 14
-      #   run: |
-      #     pytest tests/test_task_14.py -v
+      - name: test task 14
+        run: |
+          pytest tests/test_task_14.py -v
 
+      # TODO include when these have been speed up
       # - name: test task 15
       #   run: |
       #     pytest tests/test_task_15.py -v
