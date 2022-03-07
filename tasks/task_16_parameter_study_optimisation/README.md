@@ -5,7 +5,7 @@
 
 Please allow 25 plus minutes for this task depending on the computational power available.
 
-Expected outputs from this task are in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/15).
+Expected outputs from this task are in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/17).
 
 The previous task sampled from the available parameters and aimed to cover the parameter space efficiently. This task uses  Scikit-opt Gaussian Processing to home in on the optimal solution. In optimisation algorithms it is common to see a combination of exploration and exploitation to find the optimal value.
 
