@@ -9,22 +9,22 @@ apt-get --yes upgrade
 
 
 # install dependancies
-sudo apt-get install libeigen3-dev
-sudo apt-get install git
-sudo apt-get install wget
-sudo apt-get install gfortran
-sudo apt-get install g++
-sudo apt-get install mpich
-sudo apt-get install libmpich-dev
-sudo apt-get install libhdf5-serial-dev
-sudo apt-get install libhdf5-mpich-dev
-sudo apt-get install hdf5-tools
-sudo apt-get install imagemagick
-sudo apt-get install cmake
-sudo apt-get install libeigen3-dev
-sudo apt-get install libnetcdf-dev
-sudo apt-get install libtbb-dev
-sudo apt-get install libgles2-mesa-dev
+sudo apt-get install -y libeigen3-dev
+sudo apt-get install -y git
+sudo apt-get install -y wget
+sudo apt-get install -y gfortran
+sudo apt-get install -y g++
+sudo apt-get install -y mpich
+sudo apt-get install -y libmpich-dev
+sudo apt-get install -y libhdf5-serial-dev
+sudo apt-get install -y libhdf5-mpich-dev
+sudo apt-get install -y hdf5-tools
+sudo apt-get install -y imagemagick
+sudo apt-get install -y cmake
+sudo apt-get install -y libeigen3-dev
+sudo apt-get install -y libnetcdf-dev
+sudo apt-get install -y libtbb-dev
+sudo apt-get install -y libgles2-mesa-dev
 
 # install conda, creates new python enviroment and activates it
 cd ~
