@@ -108,16 +108,13 @@ RUN pip install cmake\
                 adaptive \
                 vtk \
                 itkwidgets \
-                nest_asyncio \
                 pytest \
                 pytest-cov \
                 holoviews \
                 ipywidgets \
 # cython is needed for moab
                 cython \
-                itkwidgets \
                 nest_asyncio \
-                ipywidgets \
                 jupyter-cadquery \
                 matplotlib
 
