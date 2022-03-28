@@ -89,7 +89,7 @@ RUN conda install jupyter -y && \
     conda install -c conda-forge -c python python=3.8 && \
     # conda install -c conda-forge -c cadquery cadquery=2.2
     # commented out until next CQ release
-    conda install -c conda-forge -c cadquery cadquery=master
+    conda install -c cadquery -c conda-forge cadquery=master
 # cadquery master dose not appear to show the .solid in the notebook
 
 # Installing Gmsh
