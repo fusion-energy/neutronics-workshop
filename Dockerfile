@@ -259,9 +259,7 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_source_plotter \
                 openmc_mesh_tally_to_vtk
 
-# installing a development version of the paramak that allows exporting to h5m files
-RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak_develop
-
+RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak
 
 # an older version of openmc is need to provide an older executable
 # this particular exectuable allows an inital_source.h5 to be written
