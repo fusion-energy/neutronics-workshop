@@ -224,9 +224,9 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
 
 # installs OpenMc from source
 RUN cd /opt && \
-    # switch back to tagged version when 0.13.1 is released
+    # switch back to tagged version when 0.13.1 is released as develop depletion is used
     # git clone --single-branch --branch v0.13.0 --depth 1 https://github.com/openmc-dev/openmc.git && \
-    git clone --single-branch --branch changing_get_atoms_arg_to_mat_object_try2 --depth 1 https://github.com/shimwell/openmc.git && \
+    git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
     mkdir build && \
     cd build && \
@@ -259,9 +259,7 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_source_plotter \
                 openmc_mesh_tally_to_vtk
 
-# installing a development version of the paramak that allows exporting to h5m files
-RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak_develop
-
+RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak
 
 # an older version of openmc is need to provide an older executable
 # this particular exectuable allows an inital_source.h5 to be written
