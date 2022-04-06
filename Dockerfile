@@ -81,20 +81,30 @@ RUN apt-get --yes install libeigen3-dev \
                           # needed for CadQuery functionality
                           libgles2-mesa-dev && \
                           apt-get autoremove && \
-                          apt-get clean
-
+                          apt-get clean && \
+                          # needed for Gmsh functionality
+                          libxft2 
 
 # installing cadquery and jupyter
 RUN conda install jupyter -y && \
     conda install -c conda-forge -c python python=3.8 && \
     # conda install -c conda-forge -c cadquery cadquery=2.2
     # commented out until next CQ release
-    conda install -c cadquery -c conda-forge cadquery=master
+    # conda install -c cadquery -c conda-forge cadquery=master
 # cadquery master dose not appear to show the .solid in the notebook
 
-# Installing Gmsh
-RUN conda install -c conda-forge gmsh
-RUN apt-get install libxft2 
+# python packages from the neutronics workflow
+RUN pip install neutronics_material_maker[density] \
+                openmc-plasma-source \
+                remove_dagmc_tags \
+                openmc-dagmc-wrapper \
+                openmc-tally-unit-converter \
+                regular_mesh_plotter \
+                spectrum_plotter \
+                openmc_source_plotter \
+                openmc_mesh_tally_to_vtk
+
+RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak
 
 # Python libraries used in the workshop
 RUN pip install cmake\
@@ -227,8 +237,7 @@ RUN cd /opt && \
     cd openmc && \
     mkdir build && \
     cd build && \
-    cmake -Doptimize=on \
-          -Ddagmc=ON \
+    cmake -DOPENMC_USE_DAGMC=ON \
           -DDAGMC_ROOT=/DAGMC \
           -DHDF5_PREFER_PARALLEL=off .. && \
     make -j"$compile_cores" && \
@@ -245,18 +254,7 @@ RUN pip install openmc_data_downloader && \
 ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 
 
-# python packages from the neutronics workflow
-RUN pip install neutronics_material_maker[density] \
-                openmc-plasma-source \
-                remove_dagmc_tags \
-                openmc-dagmc-wrapper \
-                openmc-tally-unit-converter \
-                regular_mesh_plotter \
-                spectrum_plotter \
-                openmc_source_plotter \
-                openmc_mesh_tally_to_vtk
 
-RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak
 
 # an older version of openmc is need to provide an older executable
 # this particular exectuable allows an inital_source.h5 to be written
