@@ -79,15 +79,15 @@ RUN apt-get --yes install libeigen3-dev \
                           # needed for CadQuery functionality
                           libosmesa6-dev \
                           # needed for CadQuery functionality
-                          libgles2-mesa-dev && \
-                          apt-get autoremove && \
-                          apt-get clean && \
+                          libgles2-mesa-dev \
                           # needed for Gmsh functionality
-                          libxft2 
+                          libxft2 && \
+                          apt-get autoremove && \
+                          apt-get clean
 
 # installing cadquery and jupyter
 RUN conda install jupyter -y && \
-    conda install -c conda-forge -c python python=3.8 && \
+    conda install -c conda-forge -c python python=3.8
     # conda install -c conda-forge -c cadquery cadquery=2.2
     # commented out until next CQ release
     # conda install -c cadquery -c conda-forge cadquery=master
