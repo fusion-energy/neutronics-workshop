@@ -1,0 +1,35 @@
+
+channels:
+  - fusion-energy
+  - cadquery
+  - conda-forge
+dependencies:
+  - python=3.9
+  - paramak=0.7.2
+  - remove_dagmc_tags
+  - pip
+  - pip:
+    - jupyter-cadquery
+    - neutronics_material_maker[density]
+    - openmc-plasma-source
+    - openmc-dagmc-wrapper
+    - openmc-tally-unit-converter
+    - regular_mesh_plotter
+    - spectrum_plotter
+    - openmc_source_plotter
+    - openmc_mesh_tally_to_vtk
+    - cmake
+    - plotly
+    - tqdm
+    - scikit-optimize
+    - scikit-opt
+    - adaptive
+    - vtk
+    - itkwidgets
+    - nest_asyncio
+    - pytest
+    - pytest-cov
+    - holoviews
+    - ipywidgets
+    - cython
+    - matplotlib
