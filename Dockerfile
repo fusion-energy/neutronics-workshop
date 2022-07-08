@@ -32,11 +32,14 @@
 # and then run with this command
 # docker run -p 8888:8888 neutronics-workshop
 
-# docker build -t neutronics-workshop --build-arg compile_cores=14 --target dependencies .
+# docker build -t neutronics-workshop --build-arg compile_cores=14 --target base .
 # docker run -p 8888:8888 -v ${PWD}/tasks neutronics-workshop
 
 # This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
-FROM ghcr.io/openmc-data-storage/miniconda3_4.10.3_endfb-7.1_nndc_tendl_2019:latest as dependencies
+# FROM ghcr.io/openmc-data-storage/miniconda3_4.10.3_endfb-7.1_nndc_tendl_2019:latest as dependencies
+FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
+
+
 
 ARG compile_cores=1
 ARG include_avx=true
