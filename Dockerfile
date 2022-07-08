@@ -32,6 +32,9 @@
 # and then run with this command
 # docker run -p 8888:8888 neutronics-workshop
 
+# docker build -t neutronics-workshop --build-arg compile_cores=14 --target dependencies .
+# docker run -p 8888:8888 -v ${PWD}/tasks neutronics-workshop
+
 # This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
 FROM ghcr.io/openmc-data-storage/miniconda3_4.10.3_endfb-7.1_nndc_tendl_2019:latest as dependencies
 
@@ -254,7 +257,7 @@ RUN conda install -c conda-forge mamba
 RUN mamba install -c conda-forge openmc=0.11.0 -n openmc_version_0_11_0
 
 # these two from statements can be switched when building locally
-FROM dependencies as final
+FROM dependencies as base
 # FROM ghcr.io/fusion-energy/neutronics-workshop:dependencies as final
 
 # Copy over the local repository files
@@ -264,6 +267,8 @@ COPY tests tests/
 WORKDIR /tasks
 
 # this sets the port, gcr looks for this varible
+FROM base as jupyter_cmd
+
 ENV PORT 8888
 
 # could switch to --ip='*'
