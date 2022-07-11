@@ -20,6 +20,5 @@ The results will processed into VTK files and png images depending on the part.
 - Mesh tallies can obtain spatial response throughout the geometry   
 - 3D and 2D spatial maps can be made
 - The bounding box of DAGMC geometry can be found using
-- How to convert 2D and 3D mesh tallies to VTK files using [openmc_mesh_tally_to_vtk](https://github.com/fusion-energy/openmc_mesh_tally_to_vtk)
 - How to process 2D mesh tallies into images using [regular_mesh_plotter](https://github.com/fusion-energy/regular_mesh_plotter)
 - How to make sliced images of DAGMC geometry using [dagmc_geometry_slice_plotter](https://github.com/fusion-energy/dagmc_geometry_slice_plotter)
