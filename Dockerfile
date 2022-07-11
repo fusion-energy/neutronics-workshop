@@ -248,17 +248,6 @@ RUN pip install openmc_data_downloader && \
 
 ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 
-
-# an older version of openmc is need to provide an older executable
-# this particular exectuable allows an inital_source.h5 to be written
-# a specific openmc executable can be called using model.run(openmc_exec=path)
-
-# conda install is currently not working 21/april/2022
-# mamba install is the current work around for this issue
-RUN conda create --name openmc_version_0_11_0 python=3.8
-RUN conda install -c conda-forge mamba
-RUN mamba install -c conda-forge openmc=0.11.0 -n openmc_version_0_11_0
-
 # these two from statements can be switched when building locally
 FROM dependencies as base
 # FROM ghcr.io/fusion-energy/neutronics-workshop:dependencies as final
