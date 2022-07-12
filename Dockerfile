@@ -101,8 +101,7 @@ RUN pip install neutronics_material_maker[density] \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
-                openmc_source_plotter \
-                openmc_mesh_tally_to_vtk
+                openmc_source_plotter
 
 RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak
 
