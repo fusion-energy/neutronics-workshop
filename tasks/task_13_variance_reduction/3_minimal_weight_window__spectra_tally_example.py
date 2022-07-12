@@ -56,8 +56,8 @@ tallies = openmc.Tallies()
 neutron_particle_filter = openmc.ParticleFilter(['neutron'])
 # detects when particles across the surface
 front_surface_filter = openmc.SurfaceFilter(sph1)
-energy_bins = openmc.mgxs.GROUP_STRUCTURES['CCFE-709']
-energy_filter = openmc.EnergyFilter(energy_bins)
+energy_filter = openmc.EnergyFilter.from_group_structure('CCFE-709')
+
 
 front_surface_spectra_tally = openmc.Tally(name='front_surface_spectra_tally')
 front_surface_spectra_tally.scores = ['current']
