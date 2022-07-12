@@ -32,8 +32,14 @@
 # and then run with this command
 # docker run -p 8888:8888 neutronics-workshop
 
+# docker build -t neutronics-workshop --build-arg compile_cores=14 --target base .
+# docker run -p 8888:8888 -v ${PWD}/tasks neutronics-workshop
+
 # This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
-FROM ghcr.io/openmc-data-storage/miniconda3_4.9.2_endfb-7.1_nndc_tendl_2019:latest as dependencies
+# FROM ghcr.io/openmc-data-storage/miniconda3_4.10.3_endfb-7.1_nndc_tendl_2019:latest as dependencies
+FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
+
+
 
 ARG compile_cores=1
 ARG include_avx=true
@@ -81,51 +87,40 @@ RUN apt-get --yes install libeigen3-dev \
                           # needed for CadQuery functionality
                           libgles2-mesa-dev \
                           # needed for Gmsh functionality
-                          libxft2 && \
-                          apt-get autoremove && \
-                          apt-get clean
+                          libxft2
 
 # installing cadquery and jupyter
-RUN conda install jupyter -y && \
-    conda install -c conda-forge -c python python=3.8
-    # conda install -c conda-forge -c cadquery cadquery=2.2
-    # commented out until next CQ release
-    # conda install -c cadquery -c conda-forge cadquery=master
-# cadquery master dose not appear to show the .solid in the notebook
+RUN conda install -c conda-forge -c python python=3.8
+
+RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.2
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
-                openmc-plasma-source \
                 remove_dagmc_tags \
+                openmc-plasma-source \
                 openmc-dagmc-wrapper \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
                 openmc_source_plotter
 
-RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak
-
 # Python libraries used in the workshop
 RUN pip install cmake\
 # new version of cmake needed for openmc compile
                 plotly \
                 tqdm \
-                # noisyopt \
                 scikit-optimize \
                 scikit-opt \
-                # inference-tools \
                 adaptive \
                 vtk \
                 itkwidgets \
                 pytest \
-                pytest-cov \
                 holoviews \
                 ipywidgets \
 # cython is needed for moab
                 cython \
                 nest_asyncio \
-                jupyter-cadquery \
-                matplotlib
+                jupyter-cadquery
 
 # needed for openmc
 RUN pip install --upgrade numpy
@@ -133,6 +128,7 @@ RUN pip install --upgrade numpy
 
 # Clone and install Embree
 # embree from conda is not supported yet
+# TODO check if embree3 package on conda is supported
 # conda install -c conda-forge embree >> version: 2.17.7
 # requested version "3.6.1"
 # added following two lines to allow use on AMD CPUs see discussion
@@ -143,10 +139,10 @@ RUN if [ "$build_double_down" = "ON" ] ; \
         mkdir build ; \
         cd build ; \
         if [ "$include_avx" = "false" ] ; \
-            then cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-                        -DEMBREE_ISPC_SUPPORT=OFF \
-                        -DEMBREE_MAX_ISA=NONE \
-                        -DEMBREE_ISA_SSE42=ON ; \
+            then cmake .. -DEMBREE_MAX_ISA=NONE \
+                          -DEMBREE_ISA_SSE42=ON \
+                          -DCMAKE_INSTALL_PREFIX=.. \
+                          -DEMBREE_ISPC_SUPPORT=OFF ; \
         fi ; \
         if [ "$include_avx" = "true" ] ; \
             then cmake .. -DCMAKE_INSTALL_PREFIX=.. \
@@ -238,7 +234,7 @@ RUN cd /opt && \
     cd build && \
     cmake -DOPENMC_USE_DAGMC=ON \
           -DDAGMC_ROOT=/DAGMC \
-          -DHDF5_PREFER_PARALLEL=off .. && \
+          -DHDF5_PREFER_PARALLEL=OFF .. && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \
     cd /opt/openmc/ && \
@@ -252,17 +248,8 @@ RUN pip install openmc_data_downloader && \
 
 ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 
-
-
-
-# an older version of openmc is need to provide an older executable
-# this particular exectuable allows an inital_source.h5 to be written
-# a specific openmc executable can be called using model.run(openmc_exec=path)
-RUN conda create --name openmc_version_0_11_0 python=3.8
-RUN conda install -c conda-forge openmc=0.11.0 -n openmc_version_0_11_0
-
 # these two from statements can be switched when building locally
-FROM dependencies as final
+FROM dependencies as base
 # FROM ghcr.io/fusion-energy/neutronics-workshop:dependencies as final
 
 # Copy over the local repository files
@@ -271,7 +258,9 @@ COPY tests tests/
 
 WORKDIR /tasks
 
-#this sets the port, gcr looks for this varible
+# this sets the port, gcr looks for this varible
+FROM base as jupyter_cmd
+
 ENV PORT 8888
 
 # could switch to --ip='*'
