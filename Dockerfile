@@ -32,8 +32,14 @@
 # and then run with this command
 # docker run -p 8888:8888 neutronics-workshop
 
+# docker build -t neutronics-workshop --build-arg compile_cores=14 --target base .
+# docker run -p 8888:8888 -v ${PWD}/tasks neutronics-workshop
+
 # This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
-FROM ghcr.io/openmc-data-storage/miniconda3_4.10.3_endfb-7.1_nndc_tendl_2019:latest as dependencies
+# FROM ghcr.io/openmc-data-storage/miniconda3_4.10.3_endfb-7.1_nndc_tendl_2019:latest as dependencies
+FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
+
+
 
 ARG compile_cores=1
 ARG include_avx=true
@@ -86,7 +92,7 @@ RUN apt-get --yes install libeigen3-dev \
 # installing cadquery and jupyter
 RUN conda install -c conda-forge -c python python=3.8
 
-RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.1
+RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.2
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
@@ -96,8 +102,7 @@ RUN pip install neutronics_material_maker[density] \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
-                openmc_source_plotter \
-                openmc_mesh_tally_to_vtk
+                openmc_source_plotter
 
 # Python libraries used in the workshop
 RUN pip install cmake\
@@ -243,17 +248,8 @@ RUN pip install openmc_data_downloader && \
 
 ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 
-
-# an older version of openmc is need to provide an older executable
-# this particular exectuable allows an inital_source.h5 to be written
-# a specific openmc executable can be called using model.run(openmc_exec=path)
-
-# conda install is currently not working 21/april/2022
-# RUN conda create --name openmc_version_0_11_0 python=3.8
-# RUN conda install -c conda-forge openmc=0.11.0 -n openmc_version_0_11_0
-
 # these two from statements can be switched when building locally
-FROM dependencies as final
+FROM dependencies as base
 # FROM ghcr.io/fusion-energy/neutronics-workshop:dependencies as final
 
 # Copy over the local repository files
@@ -263,6 +259,8 @@ COPY tests tests/
 WORKDIR /tasks
 
 # this sets the port, gcr looks for this varible
+FROM base as jupyter_cmd
+
 ENV PORT 8888
 
 # could switch to --ip='*'
