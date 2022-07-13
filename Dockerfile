@@ -120,6 +120,7 @@ RUN pip install cmake\
 # cython is needed for moab
                 cython \
                 nest_asyncio \
+                jupyterlab \
                 jupyter-cadquery
 
 # needed for openmc
