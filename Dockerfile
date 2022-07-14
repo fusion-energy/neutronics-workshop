@@ -120,6 +120,7 @@ RUN pip install cmake\
 # cython is needed for moab
                 cython \
                 nest_asyncio \
+                jupyterlab \
                 jupyter-cadquery
 
 # needed for openmc
@@ -228,7 +229,8 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
 RUN cd /opt && \
     # switch back to tagged version when 0.13.1 is released as develop depletion is used
     # git clone --single-branch --branch v0.13.0 --depth 1 https://github.com/openmc-dev/openmc.git && \
-    git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
+    # git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
+    git clone --single-branch --branch adding_dagmcuniverse_bounding_region --depth 1 https://github.com/shimwell/openmc.git && \
     cd openmc && \
     mkdir build && \
     cd build && \
