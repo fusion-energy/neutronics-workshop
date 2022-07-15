@@ -37,7 +37,19 @@ also welcome as pull requests to the develop branch.
 The resource has proven most useful as it is one of the few open source and
 accessible fusion neutronics training resources.
 
-## Installation
+# Run in the cloud
+
+The repository is ready for deployment on Github Codespaces which allows users
+to launch the containerized environment on the cloud without installing anything
+locally.
+
+- To get started sign up to the free :point_right: [codespaces Beta](https://github.com/features/codespaces/signup).
+
+- Then follow :point_right: [this link](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=386229912) to config a computer instance to launch :point_right: <p align="center"><a href="https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=386229912" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/179179958-cc7f0700-6df5-47e9-a10f-67a9c1e556c6.png" height="150" /></a></p>
+
+- VS Code will then launch in the browser, once loaded you must select the conda python interpreter to enable the correct Python environment.
+
+# Local Installation
 
 There are video tutorials for this section which accompany the step by step
 instructions below.
@@ -105,10 +117,9 @@ FreeCAD is one option for this and can be downloaded [here](https://www.freecadw
             </code></pre>
     </details>
 
-## Workshop tasks
+# Workshop tasks
 
-The task videos are all available on a nice [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) 
-map which is great for working through the workshop with colleagues.
+The task videos are all available on a [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) space which is great for working through the workshop with colleagues.
 
 | Tasks | Keywords | Video(s) |
 |-|-|-|
