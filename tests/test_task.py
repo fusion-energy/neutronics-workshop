@@ -7,7 +7,7 @@ use the function.
 import os
 import sys
 from pathlib import Path
-
+import unittest
 import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
 from nbconvert.preprocessors.execute import CellExecutionError
@@ -38,9 +38,9 @@ def _notebook_run(path):
 
     return nb, errors
 
-
-def test_task(name):
-    for notebook in Path().rglob(name):
-        print('testing', notebook)
-        nb, errors = _notebook_run(notebook)
-        assert errors == []
+class test_tasks(unittest.TestCase):
+    def test_task(name):
+        for notebook in Path().rglob(name):
+            print('testing', notebook)
+            nb, errors = _notebook_run(notebook)
+            assert errors == []
