@@ -20,6 +20,7 @@ def _notebook_run(path):
     """
     kernel_name = 'python%d' % sys.version_info[0]
     this_file_directory = os.path.dirname(__file__)
+    this_file_directory = '/home/jshimwell/neutronics-workshop'
     errors = []
 
     with open(path) as f:
@@ -38,9 +39,8 @@ def _notebook_run(path):
 
     return nb, errors
 
-class test_tasks(unittest.TestCase):
-    def test_task(name):
-        for notebook in Path().rglob(name):
-            print('testing', notebook)
-            nb, errors = _notebook_run(notebook)
-            assert errors == []
+def test_task(name):
+    for notebook in Path().rglob(name):
+        print('testing', notebook)
+        nb, errors = _notebook_run(notebook)
+        assert errors == []
