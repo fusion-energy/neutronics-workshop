@@ -25,59 +25,67 @@ jobs:
 
       - name: test task 1
         run: |
-          pytest tests/test_task_1.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_01_*/*.ipynb
 
       - name: test task 2
         run: |
-          pytest tests/test_task_2.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_02_*/*.ipynb
 
       - name: test task 3
         run: |
-          pytest tests/test_task_3.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_03_*/*.ipynb
 
       - name: test task 4
         run: |
-          pytest tests/test_task_4.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_04_*/*.ipynb
 
       - name: test task 5
         run: |
-          pytest tests/test_task_5.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_05_*/*.ipynb
 
       - name: test task 6
         run: |
-          pytest tests/test_task_6.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_06_*/*.ipynb
 
       - name: test task 7
         run: |
-          pytest tests/test_task_7.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_07_*/*.ipynb
 
       - name: test task 8
         run: |
-          pytest tests/test_task_8.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_08_*/*.ipynb
 
       - name: test task 9
         run: |
-          pytest tests/test_task_9.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_09_*/*.ipynb
 
       - name: test task 10
         run: |
-          pytest tests/test_task_10.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_10_*/*.ipynb
 
       - name: test task 11
         run: |
-          pytest tests/test_task_11.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_11_*/*.ipynb
 
-      - name: test task 12
+      - name: test task 12 part 1
         run: |
-          pytest tests/test_task_12.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_12_*/1*.ipynb
+
+      - name: test task 12 part 2
+        run: |
+          pytest -v -s tests/test_task.py --name ../tasks/task_12_*/2*.ipynb
+
+      - name: test task 12 part 3
+        run: |
+          pytest -v -s tests/test_task.py --name ../tasks/task_12_*/3*.ipynb
 
       - name: test task 13
         run: |
-          pytest tests/test_task_13.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_13_*/*.ipynb
 
       - name: test task 14
         run: |
-          pytest tests/test_task_14.py -v
+          pytest -v -s tests/test_task.py --name ../tasks/task_14_*/*.ipynb
 
       # TODO include when these have been speed up
       # - name: test task 15
