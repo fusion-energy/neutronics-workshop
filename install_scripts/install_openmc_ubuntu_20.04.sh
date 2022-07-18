@@ -98,11 +98,11 @@ source ~/.bashrc
 
 # installs OpenMC
 cd ~
-git clone --single-branch --branch v0.13.0 --depth 1 https://github.com/openmc-dev/openmc.git
+git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git
 cd openmc
 mkdir build
 cd build
-cmake -Doptimize=on -Ddagmc=ON -DDAGMC_ROOT=$HOME/DAGMC -DHDF5_PREFER_PARALLEL=off .. 
+cmake -Doptimize=on -DOPENMC_USE_DAGMC=ON -DDAGMC_ROOT=$HOME/DAGMC -DHDF5_PREFER_PARALLEL=off .. 
 make -j
 make -j install
 cd ..
