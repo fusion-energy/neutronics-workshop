@@ -66,7 +66,11 @@ chain_filename = 'chain-nndc-b7.1.xml'
 chain = openmc.deplete.Chain.from_xml(chain_filename)
 
 
-operator = openmc.deplete.Operator(model, chain_filename)
+operator = openmc.deplete.Operator(
+    model=model,
+    chain_file=chain_filename,
+    normalization_mode="source-rate"
+)
 
 # 1e9 neutrons per second for 5 years then 5 years of no neutrons (shut down cooling time)
 time_steps = [365*24*60*60] + [365*24*60*60] * 5
