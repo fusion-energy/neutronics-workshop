@@ -42,7 +42,6 @@ def _notebook_run(path):
 
 class test_tasks(unittest.TestCase):
 
-# ModuleNotFoundError: No module named 'statepoint_to_vtk'
     def test_task_8(self):
         for notebook in Path().rglob("tasks/task_08_*/*.ipynb"):
             print(notebook)
