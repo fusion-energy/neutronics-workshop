@@ -47,3 +47,8 @@ class test_tasks(unittest.TestCase):
             print(notebook)
             nb, errors = _notebook_run(notebook)
             assert errors == []
+
+
+        for notebook in Path().rglob("tasks/task_12_*/3_.ipynb"):
+            nb, errors = _notebook_run(notebook)
+            assert errors == []
