@@ -43,13 +43,6 @@ def _notebook_run(path):
 class test_tasks(unittest.TestCase):
 
     def test_task_4(self):
-        for notebook in Path().rglob("tasks/task_04_*/1_.ipynb"):
+        for notebook in Path().rglob("tasks/task_04_*/*_.ipynb"):
             nb, errors = _notebook_run(notebook)
             assert errors == []
-        for notebook in Path().rglob("tasks/task_04_*/4_.ipynb"):
-            nb, errors = _notebook_run(notebook)
-            assert errors == []
-# failing tasks
-# 2_ring_source.ipynb -> no ring source in openmc 0.11
-# 3_plasma_source_plots.ipynb -> no ring source in openmc 0.11
-# 5_gamma_source_example.ipynb -> gamma outside of nuclear data energy range
