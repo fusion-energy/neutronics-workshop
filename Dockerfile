@@ -247,6 +247,9 @@ RUN cd /opt && \
 RUN pip install openmc_data_downloader && \
     openmc_data_downloader -d nuclear_data -l ENDFB-7.1-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
 
+RUN pip install openmc_data  && \
+    cd tasks/task_14_activation_transmutation/ && \
+    download_nndc_chain
 
 ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 
