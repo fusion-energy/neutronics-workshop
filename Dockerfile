@@ -229,8 +229,7 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
 RUN cd /opt && \
     # switch back to tagged version when 0.13.1 is released as develop depletion is used
     # git clone --single-branch --branch v0.13.0 --depth 1 https://github.com/openmc-dev/openmc.git && \
-    # git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
-    git clone --single-branch --branch adding_dagmcuniverse_bounding_region --depth 1 https://github.com/shimwell/openmc.git && \
+    git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
     mkdir build && \
     cd build && \
@@ -248,7 +247,8 @@ RUN pip install openmc_data_downloader && \
     openmc_data_downloader -d nuclear_data -l ENDFB-7.1-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
 
 RUN pip install openmc_data  && \
-    cd tasks/task_14_activation_transmutation/ && \
+    mkdir -p tasks/task_14_activation_transmutation_depletion && \
+    cd tasks/task_14_activation_transmutation_depletion/ && \
     download_nndc_chain
 
 ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
