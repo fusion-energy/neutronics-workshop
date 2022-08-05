@@ -10,38 +10,47 @@ particular focus on OpenMC with DAGMC and the Paramak
 
 There are a few 
 [slides](https://slides.com/neutronics_workshop/neutronics_workshop) that introduce
-the workshop and show the expected outputs of each task.
+the workshop, cover some theory and show the expected outputs of each task.
 
-The use of OpenMC for neutronics analysis requires several software packages
-and nuclear data. These have all been installed inside a Docker container.
+The use of [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
+and [Paramak](https://paramak.readthedocs.io) for neutronics analysis requires
+several software packages and nuclear data.
+These have all been installed inside a Docker container.
 The video below gives a brief explainer of what to expect in the workshop and
 some motivation for learning neutronics.
 
-<p align="center"><a href="https://youtu.be/HH-poTG-FxM" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/144746742-3e31e0ee-6380-4db7-b8ea-0b1c302d497b.png" height="400" /></a></p>
-
-:point_right: [Try the workshop in your browser](https://neutronics-workshop-4zf6u4tg6a-lz.a.run.app/)
-
-# History
-
-The neutronics workshop was created by and is maintained by Jonathan Shimwell
-largely as a hobby project. John Billingsley has also made lots of great
-contributions and
-[others](https://github.com/fusion-energy/neutronics-workshop/graphs/contributors) have
-also also helped. The repository was originally made to teach university
-students via workshops but also became useful for placement students.
-
-The repository has benefited greatly from user feedback. Please feel free to
-raise Github issues if you spot anything that needs fixing. Contributions are
-also welcome as pull requests to the develop branch. 
+The neutronics workshop was created by and is maintained by
+[Jonathan Shimwell](https://github.com/shimwell/).
+The repository has benefited greatly from contributions from [John Billingsley](https://github.com/billingsley-john)
+and [others](https://github.com/fusion-energy/neutronics-workshop/graphs/contributors)
 
 The resource has proven most useful as it is one of the few open source and
 accessible fusion neutronics training resources.
 
-# Run in the cloud
+The repository has benefited greatly from user feedback. Please feel free to
+raise Github [issues](https://github.com/fusion-energy/neutronics-workshop/issues)
+or reach out in the [discussions](https://github.com/fusion-energy/neutronics-workshop/discussions)
+section if you spot anything that needs fixing or think of an improvement.
+Contributions are also very welcome as pull requests to the develop branch.
 
-The repository is ready for deployment on Github Codespaces which allows users
-to launch the containerized environment on the cloud without installing anything
-locally.
+<p align="center"><a href="https://youtu.be/HH-poTG-FxM" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/144746742-3e31e0ee-6380-4db7-b8ea-0b1c302d497b.png" height="400" /></a></p>
+
+# Run in the cloud (low CPU count)
+
+One advantage of the containerization of the entire software stack is that it
+can be deployed in the cloud and launched in your browser on demand.
+
+To demonstrate this I've deployed the workshop on a minimal cloud computer which
+can be spun up by anyone going to the following URL.
+This is mainly intended for demonstration purposes and the CPU count is low to
+keep my costs down.
+:point_right: [Try the workshop in your browser](https://neutronics-workshop-4zf6u4tg6a-lz.a.run.app/)
+
+# Run in the cloud (higher CPU count)
+
+The repository is also ready for deployment on Github Codespaces which allows
+users to launch the containerized environment on more powerful cloud computers
+without installing anything locally.
 
 - To get started sign up to the free :point_right: [codespaces Beta](https://github.com/features/codespaces/signup).
 
@@ -136,6 +145,6 @@ The task videos are all available on a [Gather Town](https://gather.town/app/QnH
 | [Task 11 - CAD Cell tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_11_CAD_cell_tally_heat) | CAD-based neutronics, Cell tallies, DAGMC, Heating |  |
 | [Task 12 - CAD Mesh tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_12_CAD_mesh_fast_flux) | CAD-based neutronics, Mesh tallies, Paramak, DAGMC, Fast flux |  |
 | [Task 13 - Variance_reduction](https://github.com/fusion-energy/neutronics-workshop/tree/develop/tasks/task_13_variance_reduction) | Variance reduction, weight windows |  |
-| [Task 14 - Activation transmutation](https://github.com/fusion-energy/neutronics-workshop/tree/develop/tasks/task_14_activation_transmutation) | Isotope build up and tally variation as a function of time |  |
+| [Task 14 - Activation transmutation depletion](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_14_activation_transmutation_depletion) | Isotope build up and tally variation as a function of time |  |
 | [Task 15 - Techniques for sampling parameter space](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_15_parameter_study_sampling) | Sampling, Interpolation, Multi-dimensional parameter studies |  |
 | [Task 16 - Parameter study optimisation](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_16_parameter_study_optimisation) | Data science machine learning approaches |  |
