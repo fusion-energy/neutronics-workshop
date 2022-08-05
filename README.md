@@ -44,6 +44,8 @@ To demonstrate this I've deployed the workshop on a minimal cloud computer which
 can be spun up by anyone going to the following URL.
 This is mainly intended for demonstration purposes and the CPU count is low to
 keep my costs down.
+For the the best performance there are other options for deployment which take
+more effort than clicking a link but provide more computing power.
 :point_right: [Try the workshop in your browser](https://neutronics-workshop-4zf6u4tg6a-lz.a.run.app/)
 
 # Run in the cloud (higher CPU count)
