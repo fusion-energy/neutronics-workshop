@@ -7,16 +7,18 @@ authors:
 - family-names: "Billingsley"
   given-names: "John"
   orcid: "https://orcid.org/0000-0001-5223-5694"
+- family-names: "Nonweiler"
+  given-names: "John"
 - family-names: "Pranto"
   given-names: "Ariful Islam"
-- family-names: "Taylor"
-  given-names: "Katie"
 - family-names: "Shriwise"
   given-names: "Patrick"
   orcid: "https://orcid.org/0000-0002-3979-7665"
+- family-names: "Taylor"
+  given-names: "Katie"
 - family-names: "Worrall"
   given-names: "Ross"
 title: "A workshop covering a range of fusion relevant analysis and simulations with OpenMC, DAGMC and the Paramak"
-version: 0.0.4
-date-released: 2021-10-19
+version: 0.4.0
+date-released: 2022-07-27
 url: "https://github.com/fusion-energy/neutronics-workshop"
