@@ -84,11 +84,12 @@ make -j install
 cd ~
 mkdir DAGMC
 cd DAGMC
-# git clone --single-branch --branch 3.2.1-rc1 --depth 1 https://github.com/svalinn/DAGMC.git
-git clone --single-branch --branch v3.2.1 --depth 1 https://github.com/svalinn/DAGMC.git
+git clone --single-branch --branch v3.2.2 --depth 1 https://github.com/svalinn/DAGMC.git
 mkdir build
 cd build
 cmake ../DAGMC -DBUILD_TALLY=ON -DMOAB_DIR=$HOME/MOAB -DDOUBLE_DOWN=ON -DBUILD_STATIC_EXE=OFF -DBUILD_STATIC_LIBS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/DAGMC/ -DDOUBLE_DOWN_DIR=$HOME/double-down
+# or build without double down
+# cmake ../DAGMC -DBUILD_TALLY=ON -DMOAB_DIR=$HOME/MOAB -DBUILD_STATIC_EXE=OFF -DBUILD_STATIC_LIBS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/DAGMC/
 make -j install
 
 # add to new dirs to the path
