@@ -35,7 +35,7 @@ Contributions are also very welcome as pull requests to the develop branch.
 
 <p align="center"><a href="https://youtu.be/HH-poTG-FxM" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/144746742-3e31e0ee-6380-4db7-b8ea-0b1c302d497b.png" height="400" /></a></p>
 
-# Run in the cloud (low CPU count)
+<!-- # Run in the cloud (low CPU count)
 
 One advantage of the containerization of the entire software stack is that it
 can be deployed in the cloud and launched in your browser on demand.
@@ -46,9 +46,10 @@ This is mainly intended for demonstration purposes and the CPU count is low to
 keep my costs down.
 For the the best performance there are other options for deployment which take
 more effort than clicking a link but provide more computing power.
-:point_right: [Try the workshop in your browser](https://neutronics-workshop-4zf6u4tg6a-lz.a.run.app/)
+:point_right: [Try the workshop in your browser](https://neutronics-workshop-4zf6u4tg6a-lz.a.run.app/) -->
 
-# Run in the cloud (higher CPU count)
+<!-- # Run in the cloud (higher CPU count) -->
+# Run in the cloud
 
 The repository is also ready for deployment on Github Codespaces which allows
 users to launch the containerized environment on more powerful cloud computers
