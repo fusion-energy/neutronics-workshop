@@ -102,7 +102,8 @@ RUN pip install neutronics_material_maker[density] \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
-                openmc_source_plotter
+                openmc_source_plotter \
+                openmc_depletion_plotter
 
 # Python libraries used in the workshop
 RUN pip install cmake\
