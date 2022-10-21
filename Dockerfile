@@ -92,7 +92,7 @@ RUN apt-get --yes install libeigen3-dev \
 # installing cadquery and jupyter
 RUN conda install -c conda-forge -c python python=3.8
 
-RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.2
+RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.5
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
