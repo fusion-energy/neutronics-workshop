@@ -29,46 +29,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-single-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-single-buildx
-
-      - name: dependencies build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          target: dependencies
-          tags: ghcr.io/fusion-energy/neutronics-workshop:dependencies
-          build-args: |
-            include_avx=false
-            build_double_down=OFF
-            compile_cores=2
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
-
-        # Temp fix
-        # https://github.com/docker/build-push-action/issues/252
-        # https://github.com/moby/buildkit/issues/1896
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-      - name: base build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          target: base
-          tags: ghcr.io/fusion-energy/neutronics-workshop:base
-          build-args: |
-            include_avx=false
-            build_double_down=OFF
-            compile_cores=2
-
       - name: default build and push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -77,24 +37,4 @@ jobs:
           build-args: |
             include_avx=false
             build_double_down=OFF
-            compile_cores=2
-
-      - name: embree build and push the Docker image
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: ghcr.io/fusion-energy/neutronics-workshop:embree
-          build-args: |
-            include_avx=false
-            build_double_down=ON
-            compile_cores=2
-
-      - name: embree-avx build and push the Docker image
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: ghcr.io/fusion-energy/neutronics-workshop:embree-avx
-          build-args: |
-            include_avx=true
-            build_double_down=ON
             compile_cores=2
