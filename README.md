@@ -1,5 +1,4 @@
-
-[![CircleCI](https://circleci.com/gh/fusion-energy/neutronics-workshop/tree/main.svg?style=svg)](https://circleci.com/gh/fusion-energy/neutronics-workshop/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/fusion-energy/neutronics-workshop/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/fusion-energy/neutronics-workshop/tree/main)
 [![CI with install](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_tests.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_tests.yml)
 
 [![docker-publish-release](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml)
