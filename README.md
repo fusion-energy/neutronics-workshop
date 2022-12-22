@@ -128,3 +128,4 @@ map which is great for working through the workshop with colleagues.
 | [Task 14 - Activation transmutation](https://github.com/fusion-energy/neutronics-workshop/tree/develop/tasks/task_14_activation_transmutation) | Isotope build up and tally variation as a function of time |  |
 | [Task 15 - Techniques for sampling parameter space](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_15_parameter_study_sampling) | Sampling, Interpolation, Multi-dimensional parameter studies |  |
 | [Task 16 - Parameter study optimisation](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_16_parameter_study_optimisation) | Data science machine learning approaches |  |
+| [Task 17 - Detector examples](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_17_detector_examples) | Time filter detector response time of flight |  |
