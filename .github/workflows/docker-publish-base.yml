@@ -29,8 +29,8 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
-        file: .devcontainer/base.Dockerfile
         with:
+          file: .devcontainer/base.Dockerfile
           push: true
           tags: ghcr.io/fusion-energy/neutronics-workshop-base
 
