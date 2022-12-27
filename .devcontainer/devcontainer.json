@@ -2,11 +2,11 @@
 {
 	"name": "Python 3",
 	"build": {
-		"dockerfile": "../Dockerfile",
-		"target": "dependencies",
+		"dockerfile": "Dockerfile",
+		"target": "base",
 		"context": "..",
 		"args": { 
-			"VARIANT": "3.10-bullseye",
+			"VARIANT": "3.10-bullseye"
 		}
 	},
 
