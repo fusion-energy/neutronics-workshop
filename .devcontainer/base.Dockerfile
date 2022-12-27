@@ -120,8 +120,8 @@ RUN pip install cmake\
 RUN pip install --upgrade numpy
 
 
-ARG compile_cores=1
-ARG include_avx=true
+ARG compile_cores=2
+ARG include_avx=false
 ARG build_double_down=OFF
 
 # Clone and install Embree
