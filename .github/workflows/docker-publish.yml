@@ -33,6 +33,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
+          file: .devcontainer/Dockerfile
           tags: ghcr.io/fusion-energy/neutronics-workshop
           build-args: |
             include_avx=false
