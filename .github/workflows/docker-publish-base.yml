@@ -32,5 +32,5 @@ jobs:
         with:
           file: .devcontainer/base.Dockerfile
           push: true
-          tags: ghcr.io/fusion-energy/neutronics-workshop-base
+          tags: ghcr.io/fusion-energy/neutronics-workshop:base
 
