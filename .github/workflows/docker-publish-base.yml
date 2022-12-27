@@ -2,7 +2,7 @@
 # This Action will build and upload a Docker image to GHCR
 # https://github.com/marketplace/actions/publish-docker
 
-name: docker-publish-dev
+name: docker-publish-base
 
 on:
   workflow_dispatch:
@@ -29,10 +29,8 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
+        file: .devcontainer/base.Dockerfile
         with:
           push: true
-          tags: ghcr.io/fusion-energy/neutronics-workshop:dev
-          build-args: |
-            include_avx=false
-            build_double_down=OFF
-            compile_cores=2
+          tags: ghcr.io/fusion-energy/neutronics-workshop-base
+
