@@ -36,58 +36,11 @@
 # docker run -p 8888:8888 -v ${PWD}/tasks neutronics-workshop
 
 # This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
-# FROM ghcr.io/openmc-data-storage/miniconda3_4.10.3_endfb-7.1_nndc_tendl_2019:latest as dependencies
-FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
-
-
+FROM ghcr.io/fusion-energy/neutronics-workshop-base:latest
 
 ARG compile_cores=1
 ARG include_avx=true
 ARG build_double_down=OFF
-
-RUN apt-get --allow-releaseinfo-change update
-RUN apt-get --yes update && apt-get --yes upgrade
-
-# perhaps libnetcdf13 is needed for unstructured meshes in openmc
-# RUN apt-get --yes install libnetcdf13
-
-                          # eigen3 needed for DAGMC
-RUN apt-get --yes install libeigen3-dev \
-                        #   sudo  \
-                          # sudo is needed during the NJOY install
-                          git \
-                          wget \
-                          gfortran \
-                          g++ \
-                          mpich \
-                          libmpich-dev \
-                          libhdf5-serial-dev \
-                          libhdf5-mpich-dev \
-                          hdf5-tools \
-                          imagemagick \
-                          cmake \
-                          # libnetcdf-dev is needed to allow NETCDF on MOAB which helps with tet meshes in OpenMC
-                          libnetcdf-dev \
-                          # libtbb-dev required for DAGMC
-                          libtbb-dev \
-                          # libglfw3-dev required for DAGMC
-                          libglfw3-dev \
-                          # needed for CadQuery functionality
-                          libgl1-mesa-glx \
-                          # needed for CadQuery functionality
-                          libgl1-mesa-dev \
-                          # needed for CadQuery functionality
-                          libglu1-mesa-dev \
-                          # needed for CadQuery functionality
-                          freeglut3-dev \
-                          # needed for CadQuery functionality
-                          libosmesa6 \
-                          # needed for CadQuery functionality
-                          libosmesa6-dev \
-                          # needed for CadQuery functionality
-                          libgles2-mesa-dev \
-                          # needed for Gmsh functionality
-                          libxft2
 
 # installing cadquery and jupyter
 RUN conda install -c conda-forge -c python python=3.8
