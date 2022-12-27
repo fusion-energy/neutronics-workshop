@@ -36,7 +36,7 @@
 # docker run -p 8888:8888 -v ${PWD}/tasks neutronics-workshop
 
 # This can't be done currently as the base images uses conda installs for moab / dagmc which don't compile with OpenMC
-FROM ghcr.io/fusion-energy/neutronics-workshop-base:latest
+FROM ghcr.io/fusion-energy/neutronics-workshop:base
 
 ARG compile_cores=1
 ARG include_avx=true
