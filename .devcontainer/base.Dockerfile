@@ -3,8 +3,11 @@
 
 # This Dockerfile can be build locally or a prebuild image can be downloaded
 
+# To download the prebuild image
+# docker pull ghcr.io/fusion-energy/neutronics-workshop:base
+
 # To build this Dockerfile into a docker image:
-# docker build -t neutronics-workshop-base .
+# docker build -t neutronics-workshop:base -f .devcontainer/base.Dockerfile .
 
 
 # To build this Dockerfile with different options --build-arg can be used
@@ -18,17 +21,14 @@
 #   true false
 #   controls if the Embree is built to use AVX instruction set (true) or not (false). AVX is not supported by all CPUs 
 
-#  docker build -t neutronics-workshop --build-arg compile_cores=7 --build-arg build_double_down=OFF .
-#  docker build -t neutronics-workshop:embree --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=true .
-#  docker build -t neutronics-workshop:embree-avx --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=false .
+#  docker build -t neutronics-workshop:base --build-arg compile_cores=7 --build-arg build_double_down=OFF .
+#  docker build -t neutronics-workshop:base:embree --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=true .
+#  docker build -t neutronics-workshop:base:embree-avx --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=false .
 
 # for local testing I tend to use this build command
-# docker build -t neutronics-workshop --build-arg compile_cores=14 --build-arg build_double_down=ON .
+# docker build -t neutronics-workshop:base --build-arg compile_cores=14 --build-arg build_double_down=ON .
 # and then run with this command
-# docker run -p 8888:8888 neutronics-workshop
-
-# docker build -t neutronics-workshop --build-arg compile_cores=14 --target base .
-# docker run -p 8888:8888 -v ${PWD}/tasks neutronics-workshop
+# docker run -it neutronics-workshop:base
 
 FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
 
@@ -79,8 +79,8 @@ RUN apt-get --yes install libeigen3-dev \
 
 RUN conda install -c conda-forge -c python python=3.8
 
-
-RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.6
+RUN conda install -c conda-forge mamba
+RUN mamba install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7
 
 
 # python packages from the neutronics workflow
