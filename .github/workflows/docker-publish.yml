@@ -35,7 +35,3 @@ jobs:
           push: true
           file: .devcontainer/Dockerfile
           tags: ghcr.io/fusion-energy/neutronics-workshop
-          build-args: |
-            include_avx=false
-            build_double_down=OFF
-            compile_cores=2
