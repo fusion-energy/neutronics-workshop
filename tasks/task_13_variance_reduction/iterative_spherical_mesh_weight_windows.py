@@ -19,7 +19,7 @@ mat_water.set_density("g/cm3", 1.0)
 my_materials = openmc.Materials([mat_water])
 
 # surfaces
-outer_surface = openmc.Sphere(r=1000, boundary_type="vacuum")
+outer_surface = openmc.Sphere(r=50*100, boundary_type="vacuum")
 
 # regions
 region_1 = -outer_surface
@@ -66,11 +66,13 @@ model = openmc.Model(my_geometry, my_materials, my_settings, my_tallies)
 
 
 all_wws = model.generate_wws_magic_method(
-    tally=flux_tally, iterations=5, max_split=2, output_dir="magic_ww", rel_err_tol=0.99
+    tally=flux_tally, iterations=50,
+    max_split=500_000,
+    output_dir="magic_ww", rel_err_tol=0.99
 )
 
 # plots the flux as a function of radius for each iteration
-output_files = [Path("magic_ww") / str(c) / f"statepoint.{my_settings.batches}.h5" for c in range(1, 6)]
+output_files = [Path("magic_ww") / str(c) / f"statepoint.{my_settings.batches}.h5" for c in range(1, len(all_wws))]
 fig = go.Figure()
 for i, output_file in enumerate(output_files):
     with openmc.StatePoint(output_file) as sp:
@@ -94,5 +96,20 @@ for i, weight_windows in enumerate(all_wws):
             name=f"lower ww bounds, iteration {i+1}",
         )
     )
-fig.update_layout(xaxis_title="Radius [cm]", yaxis_title="weight window bound value")
+fig.update_yaxes(type="log")
+fig.update_layout(xaxis_title="Radius [cm]", yaxis_title="weight window lower bound value")
+fig.show()
+
+# plots the upper bound of the the weight window values as a function of radius for each iteration
+fig = go.Figure()
+for i, weight_windows in enumerate(all_wws):
+    fig.add_trace(
+        go.Scatter(
+            x=mesh.r_grid[1:],
+            y=weight_windows[0].upper_ww_bounds.flatten(),
+            name=f"upper ww bounds, iteration {i+1}",
+        )
+    )
+fig.update_yaxes(type="log")
+fig.update_layout(xaxis_title="Radius [cm]", yaxis_title="weight window upper bound value")
 fig.show()

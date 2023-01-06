@@ -144,7 +144,7 @@ The task videos are all available on a [Gather Town](https://gather.town/app/QnH
 | [Task 6 - DPA](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_06_CSG_cell_tally_DPA) | Displacements Per Atom, Cell tallies, Simulations, Volume calculations | [link](https://youtu.be/VLn59FSc4GA) |
 | [Task 7 - Neutron and photon spectra](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_07_CSG_cell_tally_spectra) | Neutron Spectra, Photon Spectra, Cell tallies, Energy group structures, Flux, Current | [link](https://youtu.be/qHqAuqMLYPA) |
 | [Task 8 - Mesh tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_08_CSG_mesh_tally) | Mesh tallies, Structured meshes | [link](https://youtu.be/KYIsDjip1nQ) |
-| [Task 9 - Dose](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_09_CSG_surface_tally_dose) | Dose, Cell tallies, Dose coefficients |  |
+| [Task 9 - Dose](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_09_CSG_dose_tallies) | Instantaneous Dose, Cell tallies, Dose coefficients |  |
 | [Task 10 - Making CAD geometry](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_10_making_CAD_geometry) | Parametric CAD geometry, Paramak, Geometry visualisation | [link](https://www.youtube.com/watch?v=Bn_TcJSOvaA) |
 | [Task 11 - CAD Cell tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_11_CAD_cell_tally_heat) | CAD-based neutronics, Cell tallies, DAGMC, Heating |  |
 | [Task 12 - CAD Mesh tallies](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_12_CAD_mesh_fast_flux) | CAD-based neutronics, Mesh tallies, Paramak, DAGMC, Fast flux |  |
