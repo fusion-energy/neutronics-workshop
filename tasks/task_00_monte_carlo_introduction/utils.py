@@ -19,7 +19,8 @@ def plot_circle(xy):
 
 def calculate_pi(xy): 
     r = np.sqrt(xy[:,0]**2+xy[:,1]**2)
-    print(f"For {len(xy):2e} points, $\pi$ has been estimated as: {round(4*(sum(r<1)/len(xy)),5)}")
+    ratio = sum(r<1)/len(xy)
+    print(f"For {len(xy):2e} points, $\pi$ has been estimated as: {round(4*(ratio),5)}")
 
 def calculate_scatter_angle(current_angle, scatter_angle_mean, scatter_angle_width, distribution='uniform'):
     if distribution == 'uniform': 
@@ -36,11 +37,10 @@ def calculate_step(scatter_angle):
 def calculate_scatter_length(path, width): 
     if width == 0: 
         return path 
-    else: 
-        width = np.random.randint(path-width, path+width)
-        if width <= 1: 
-            return 1
-        return width
+    width = np.random.randint(path-width, path+width)
+    if width <= 1: 
+        return 1
+    return width
 
 def calculate_scatter_event(current_angle, scatter_angle_mean, scatter_angle_width, mean_free_path, mean_free_path_width, distribution='uniform'): 
     new_angle = calculate_scatter_angle(current_angle, scatter_angle_mean, scatter_angle_width, distribution)
@@ -65,7 +65,7 @@ def plot_track(track):
         track = [track]
     
     plt.figure(figsize=(10,10))
-    for i in range(len(track)):
+    for i,_ in enumerate(track):
         plt.plot(track[i][:,0], track[i][:,1], label =f"Track {i+1}")
     #plt.legend()
     plt.ylabel("Y-Coordinate")
