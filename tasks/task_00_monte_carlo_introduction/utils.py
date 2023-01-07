@@ -65,7 +65,7 @@ def plot_track(track):
         track = [track]
     
     plt.figure(figsize=(10,10))
-    for _,line in enumerate(track):
+    for i,line in enumerate(track):
         plt.plot(line[:,0], line[:,1], label =f"Track {i+1}")
     #plt.legend()
     plt.ylabel("Y-Coordinate")
