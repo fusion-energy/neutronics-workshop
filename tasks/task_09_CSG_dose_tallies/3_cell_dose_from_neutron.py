@@ -1,4 +1,4 @@
-# This simulation obtains dose on a cylindical disk phantom at various
+# This simulation obtains dose on a cylindrical disk phantom at various
 # distances from a 14MeV neutron source. Dose in millisieverts is found
 # and compared to the yearly limit
 
@@ -13,16 +13,18 @@ import matplotlib.pyplot as plt
 
 # Tissue Equivalent, MS20 from PNNL
 mat_tissue = openmc.Material()
-mat_tissue.add_element("H", 0.546359)
+mat_tissue.add_element("O", 0.079013)
 mat_tissue.add_element("C", 0.32948)
+mat_tissue.add_element("H", 0.546359)
+mat_tissue.add_element("N", 0.008619)
 mat_tissue.add_element("Mg", 0.036358)
 mat_tissue.add_element("Cl", 0.000172)
 mat_tissue.set_density("g/cm3", 1.0)
 my_materials = openmc.Materials([mat_tissue])
 
 yearly_dose = []
-distances_to_simulate = [100, 200, 300, 400, 500]
-for distance_from_source in distances_to_simulate:  # units of cm
+distances_to_simulate = [100, 200, 300, 400, 500]  # units of cm
+for distance_from_source in distances_to_simulate:
 
     # representing a human as a cylindrical phantom
     # average human is 62,000cm3 volume
@@ -64,6 +66,9 @@ for distance_from_source in distances_to_simulate:  # units of cm
     # openmc native units for length are cm so volume is in cm3
     phantom_volume = math.pi * math.pow(10.782, 2) * 169.75
 
+    # these are the dose coeffients coded into openmc
+    # originall from ICRP https://journals.sagepub.com/doi/10.1016/j.icrp.2011.10.001
+
     energy_bins_n, dose_coeffs_n = openmc.data.dose_coefficients(
         particle="neutron", geometry="AP"
     )
@@ -75,7 +80,12 @@ for distance_from_source in distances_to_simulate:  # units of cm
 
     # Create tally to score dose
     dose_cell_tally = openmc.Tally(name="neutron_dose_on_cell")
-    dose_cell_tally.filters = [cell_filter, neutron_particle_filter, energy_function_filter_n]
+    # note that the EnergyFunctionFilter is included as a filter
+    dose_cell_tally.filters = [
+        cell_filter,
+        neutron_particle_filter,
+        energy_function_filter_n,
+    ]
     dose_cell_tally.scores = ["flux"]
     my_tallies = openmc.Tallies([dose_cell_tally])
 
@@ -95,22 +105,26 @@ for distance_from_source in distances_to_simulate:  # units of cm
     # this multiplication changes units to neutron to pSv-cm3/second
     total_dose = neutron_tally_result * neutrons_per_second
 
-    # converts from pSv-cm3 to pSv
+    # converts from pSv-cm3/second to pSv/second
     total_dose = total_dose / phantom_volume
 
-    # converts from pico Sv to milli Sv
+    # converts from (pico) pSv/second to (milli) mSv/second
     total_dose = total_dose * 1e-9
 
-    print(f"dose on phantom is {total_dose}mSv per second")
-    print(f"dose on phantom is {total_dose*60*60*24*365}mSv per year")
+    # converts from (milli) mSv/second to (milli) mSv/year
+    total_dose = total_dose * 60 * 60 * 24 * 365
 
-    yearly_dose.append(total_dose * 60 * 60 * 24 * 365)
+    yearly_dose.append(total_dose)
 
 plt.plot(distances_to_simulate, yearly_dose, label="dose on phantom")
 # UK limit for public dose is 2.7 millisieverts per year
-plt.plot(distances_to_simulate, [2.7] * 5, label="UK public dose limit")
+plt.plot(
+    distances_to_simulate,
+    [2.7] * 5,
+    label="UK public dose limit 2.7 millisieverts per year",
+)
 plt.xlabel("Distance between neutron source and phantom")
 plt.ylabel("Dose [mSv per year]")
 plt.title("Dose on a phantom as a function of distance [cm]\n")
 plt.legend()
-plt.show
+plt.show()
