@@ -75,7 +75,7 @@ for distance_from_source in distances_to_simulate:  # units of cm
 
     # Create tally to score dose
     dose_cell_tally = openmc.Tally(name="neutron_dose_on_cell")
-    dose_cell_tally.filters = [cell_filter, neutron_particle_filter]
+    dose_cell_tally.filters = [cell_filter, neutron_particle_filter, energy_function_filter_n]
     dose_cell_tally.scores = ["flux"]
     my_tallies = openmc.Tallies([dose_cell_tally])
 
