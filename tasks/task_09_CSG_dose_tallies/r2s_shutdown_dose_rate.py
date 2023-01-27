@@ -5,8 +5,155 @@
 # activation results in Ag110 which has a half life of 24 seconds. The
 # irradiation and decay timescales are set so that the buildup and decay can be
 # observed
-
+from pathlib import Path
 import openmc
+import typing
+
+
+# R2SModel class code is by eepeterson
+# with a few tiny modifications made by shimwell
+# this is not merged into openmc
+# Adding the class to the script to allow usage within the script
+# If this gets merged into openmc then this class can be removed
+class R2SModel(openmc.Model):
+    """A Model container for an R2S calculation.
+    Parameters
+    ----------
+    Attributes
+    ----------
+    timesteps : iterable of times, units
+        Blah
+    source_rates : iterable of float
+        more blah
+    depletion_options : dict
+        dictionary with model.deplete kwargs
+    photon_timesteps : iterable of int
+        which depletion steps to do photon transport for
+    photon_settings : Settings object
+    photon_tallies : Tallies object
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ntransport_path = Path('neutron_transport')
+        self.depletion_path = Path('depletion')
+        self.ptransport_path = Path('photon_transport')
+        depletion_options = {}
+        depletion_options['method'] = 'predictor'
+        depletion_options['final_step'] = False
+        operator_kwargs={
+            'normalization_mode': 'source-rate',
+            'dilute_initial': 0,
+            'reduce_chain': True,
+            'reduce_chain_level': 5
+        }
+        depletion_options['operator_kwargs'] = operator_kwargs
+        self.depletion_options = depletion_options
+
+    def execute_run(self, **kwargs):
+        # Do neutron transport and depletion calcs
+        self.export_to_xml(self.ntransport_path)
+        #super().run(cwd=self.ntransport_path)
+        self.deplete(self.timesteps,
+                     directory=self.depletion_path,
+                     source_rates=self.source_rates,
+                     **self.depletion_options
+                     )
+
+        # Read in results and get new depleted materials
+        results = openmc.deplete.Results.from_hdf5(self.depletion_path / "depletion_results.h5")
+        matlist = [results.export_to_materials(i, path=self.depletion_path)
+                   for i in range(len(self.timesteps))]
+
+        # Set up photon calculation
+        self.settings = self.photon_settings
+        self.settings.photon_transport = True
+        self.tallies = self.photon_tallies
+
+        statepoint_paths = []
+        # Run photon transport for each desired timestep
+        for tidx in self.photon_timesteps:
+            new_mats = matlist[tidx]
+            rundir = self.ptransport_path / f'timestep_{tidx}'
+
+            # Create Source for every depleted region
+            src_list = []
+            for cell in self.geometry.get_all_cells().values():
+                if cell.fill is None:
+                    continue
+                src = openmc.Source.from_cell_with_material(cell)
+                src_list.append(src)
+
+            self.settings.source = src_list
+            self.export_to_xml(rundir)
+            statepoint_path = self.run(cwd=rundir)
+            statepoint_paths.append(statepoint_path)
+        return statepoint_paths
+
+# this patches openmc to include the new R2SModel class
+openmc.R2SModel = R2SModel
+
+class Source(openmc.Source):
+    @classmethod
+    def from_cell_with_material(
+        cls,
+        cell: openmc.Cell,
+        material: typing.Optional[openmc.Material] = None
+    ) -> typing.Optional['openmc.Source']:
+        """Generate an isotropic photon source from an openmc.Cell object. By
+        default the cells material is used to generate the source. If the
+        material used to fill the cell has no photon emission then None is
+        returned.
+
+        Parameters
+        ----------
+        cell : openmc.Cell
+            OpenMC cell object to use for the source creation. Source domain is
+            set to the cell.
+        material : openmc.Material, optional
+            OpenMC material object to use for the source creation. If set then
+            this material is used preferentially over the cell.fill material.
+
+        Returns
+        -------
+        Optional[openmc.Source, None]
+            Source generated from an openmc.Material or None
+        """
+
+        if material is None:
+            material = cell.fill
+
+        if material is None:
+            msg = (
+                "Either a material must be provided or the cell must be "
+                "filled with an openmc.Material object as this method make "
+                "use of a material and the Material.decay_photon_energy method"
+            )
+            raise ValueError(msg)
+        if material.volume is None:
+            msg = (
+                "The openmc.Material object used must have the volume "
+                "property set"
+            )
+            raise ValueError(msg)
+
+        photon_spec = material.decay_photon_energy
+
+        if photon_spec is None:
+            return None
+
+        source = cls(domains=[cell])
+        source.particle = 'photon'
+        source.energy = photon_spec
+        source.strength = photon_spec.integral()
+        source.space = openmc.stats.Box(*cell.bounding_box)
+        source.angle = openmc.stats.multivariate.Isotropic()
+
+        return source
+
+# this patches openmc to include the new R2SModel class
+openmc.Source = Source
+
+# The actual example starts here ...
 
 sphere_surf_1 = openmc.Sphere(r=20, boundary_type="vacuum")
 sphere_surf_2 = openmc.Sphere(r=5, x0=10)
