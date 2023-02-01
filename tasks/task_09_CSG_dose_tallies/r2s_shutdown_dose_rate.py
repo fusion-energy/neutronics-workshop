@@ -50,6 +50,7 @@ class R2SModel(openmc.Model):
         self.depletion_options = depletion_options
 
     def execute_run(self, **kwargs):
+        """Returns the statepoint filenames from the photon runs"""
         # Do neutron transport and depletion calcs
         self.export_to_xml(self.ntransport_path)
         #super().run(cwd=self.ntransport_path)
@@ -61,7 +62,7 @@ class R2SModel(openmc.Model):
 
         # Read in results and get new depleted materials
         results = openmc.deplete.Results.from_hdf5(self.depletion_path / "depletion_results.h5")
-        matlist = [results.export_to_materials(i, path=self.depletion_path)
+        matlist = [results.export_to_materials(i, path=self.depletion_path/'materials.xml')
                    for i in range(len(self.timesteps))]
 
         # Set up photon calculation
@@ -72,7 +73,11 @@ class R2SModel(openmc.Model):
         statepoint_paths = []
         # Run photon transport for each desired timestep
         for tidx in self.photon_timesteps:
-            new_mats = matlist[tidx]
+            new_mats_by_id = {}
+            for new_mat in matlist[tidx]:
+                new_mats_by_id[new_mat.id] = new_mat
+            print('new_mats_by_id', new_mats_by_id)
+
             rundir = self.ptransport_path / f'timestep_{tidx}'
 
             # Create Source for every depleted region
@@ -80,8 +85,9 @@ class R2SModel(openmc.Model):
             for cell in self.geometry.get_all_cells().values():
                 if cell.fill is None:
                     continue
-                src = openmc.Source.from_cell_with_material(cell)
-                src_list.append(src)
+                src = openmc.Source.from_cell_with_material(cell, new_mats_by_id[cell.fill.id])
+                if src is not None:  # materials may have no photon emission
+                    src_list.append(src)
 
             self.settings.source = src_list
             self.export_to_xml(rundir)
@@ -89,8 +95,10 @@ class R2SModel(openmc.Model):
             statepoint_paths.append(statepoint_path)
         return statepoint_paths
 
+
 # this patches openmc to include the new R2SModel class
 openmc.R2SModel = R2SModel
+
 
 class Source(openmc.Source):
     @classmethod
@@ -139,12 +147,14 @@ class Source(openmc.Source):
         photon_spec = material.decay_photon_energy
 
         if photon_spec is None:
+            print('no photon source for this material')
             return None
 
         source = cls(domains=[cell])
         source.particle = 'photon'
         source.energy = photon_spec
         source.strength = photon_spec.integral()
+        print('source.strength', source.strength)
         source.space = openmc.stats.Box(*cell.bounding_box)
         source.angle = openmc.stats.multivariate.Isotropic()
 
@@ -155,8 +165,9 @@ openmc.Source = Source
 
 # The actual example starts here ...
 
+# First we make a simple geometry
 sphere_surf_1 = openmc.Sphere(r=20, boundary_type="vacuum")
-sphere_surf_2 = openmc.Sphere(r=5, x0=10)
+sphere_surf_2 = openmc.Sphere(r=5, y0=10)
 
 sphere_region_1 = -sphere_surf_1 & +sphere_surf_2  # void space
 sphere_region_2 = -sphere_surf_2
@@ -165,17 +176,18 @@ sphere_cell_1 = openmc.Cell(region=sphere_region_1)
 
 sphere_cell_2 = openmc.Cell(region=sphere_region_2)
 
-mat_silver = openmc.Material()
-mat_silver.add_element("Ag", 1.0)
-mat_silver.set_density("g/cm3", 10.49)
-mat_silver.depletable = True
-mat_silver.volume = 523.6
-sphere_cell_2.fill = mat_silver
+# We make a nickle material which should produce a few activation products
+mat_nickle = openmc.Material()
+mat_nickle.id = 1
+mat_nickle.add_element("Ni", 1.0)
+mat_nickle.set_density("g/cm3", 8.9)
+mat_nickle.depletable = True  # must set the depletion to True to deplete the material
+mat_nickle.volume = 523.6  # must set the volume as well as openmc calculates number of atoms
+sphere_cell_2.fill = mat_nickle
 
-universe = openmc.Universe(cells=[sphere_cell_1, sphere_cell_2])
-my_geometry = openmc.Geometry(universe)
+my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2])
 
-my_materials = openmc.Materials([mat_silver])
+my_materials = openmc.Materials([mat_nickle])
 
 my_neutron_settings = openmc.Settings()
 my_neutron_settings.batches = 10
@@ -183,9 +195,9 @@ my_neutron_settings.particles = 500000
 my_neutron_settings.run_mode = "fixed source"
 
 source = openmc.Source()
-source.space = openmc.stats.Point((0, 0, 0))
+source.space = openmc.stats.Point((0, 0, 0))  # source is located at x 0, y 0, z 0
 source.angle = openmc.stats.Isotropic()
-source.energy = openmc.stats.Discrete([14e6], [1])
+source.energy = openmc.stats.Discrete([2e6], [1])
 my_neutron_settings.source = source
 
 my_photon_settings = openmc.Settings()
@@ -196,7 +208,7 @@ my_photon_settings.run_mode = "fixed source"
 # Create mesh which will be used for tally
 mesh = openmc.RegularMesh().from_domain(
     my_geometry,  # the corners of the mesh are being set automatically to surround the geometry
-    dimension=[200, 200, 1],
+    dimension=[100, 100, 100],
 )
 
 mesh_filter = openmc.MeshFilter(mesh)
@@ -217,49 +229,92 @@ r2s_model = openmc.R2SModel(
     settings=my_neutron_settings,
 )
 
-r2s_model.timesteps = [200] * 100  # neutron irradiation timesteps
-r2s_model.source_rates = [1e18] * 20 + [0] * 80  # 6 full power and 6 zero power neutron irradiation source rates
+# We define timesteps together with the source rate to make it clearer
+timesteps_and_source_rates = [
+    (60*60*24*50, 1e20),
+    (60*60*24*50, 0),
+    (60*60*24*50, 0),
+    (60*60*24*50, 0),
+    (60*60*24*50, 0),
+    (60*60*24*50, 0),
+    (60*60*24*50, 0),
+    (60*60*24*50, 0),
+    (60*60*24*50, 0),
+    (60*60*24*50, 0),
+    (60*60*24*50, 0),
+    (60*60*24*50, 0),
+]
+
+# Uses list Python comprehension to get the timesteps and source_rates separately
+timesteps = [item[0] for item in timesteps_and_source_rates]
+source_rates = [item[1] for item in timesteps_and_source_rates]
+
+r2s_model.timesteps = timesteps
+r2s_model.source_rates = source_rates
 r2s_model.photon_settings = my_photon_settings
 r2s_model.photon_tallies = my_photon_tallies
-# runs photon transport on every timestep but could change to  after [6, 7, 8, 9, 10, 11] which would be ever step after the neutron source goes to 0
-r2s_model.photon_timesteps = list(range(100))
-
+# runs photon transport on every timestep but could change to  after [2,3] which would be ever step after the neutron source goes to 0
+r2s_model.photon_timesteps = list(range(len(timesteps)))
 
 statepoints = r2s_model.execute_run()
+
+# these are the statepoint files produced by the photon simulations
 print([str(s) for s in statepoints])
+
+
+# post processing the results and plotting
 
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 import numpy as np
+import regular_mesh_plotter  # extends openmc.Mesh to include data slice functions
+import openmc_geometry_plot  # extends openmc.Geometry class with plotting functions
 
+my_geometry.view_direction = 'x'
 plotted_part_of_tallys=[]
 
+material_ids_slice = my_geometry.get_slice_of_material_ids(pixels_across=400)
+
+# these are the material ids in the geometry
+levels = np.unique([item for sublist in material_ids_slice for item in sublist])
+
+# this loop plots the decay photon flux after each time step
+# this includes the first neutron transport timestep, in this plot the secondary photons are seen
+# subsequent time steps the neutron source is switched off and only decay photons are seen
 for i, statepoint_file in enumerate(statepoints):
     with openmc.StatePoint(statepoint_file) as statepoint:
         my_tally = statepoint.get_tally(name="photon_flux_on_mesh")
-        plotted_part_of_tally = my_tally.mean.flatten()
-        print(sum(plotted_part_of_tally))
-        plotted_part_of_tallys.append(plotted_part_of_tally)
-        reshaped_tally = plotted_part_of_tally.reshape(mesh.dimension, order="F")
-        tally_aligned = reshaped_tally.transpose(2, 0, 1) # specific transpose for slicing z axis
-        image_slice = tally_aligned[int(mesh.dimension[2] / 2)] # mid mesh slice
-        left = mesh.lower_left[2]  # 2 as z axis slice
-        right = mesh.upper_right[2]
-        bottom = mesh.lower_left[2]
-        top = mesh.upper_right[2]
-        norm = LogNorm(vmin=1e-4, vmax=1e1)
-        mpl_image_slice = np.rot90(image_slice)
-        plt.cla()
-        plt.clf()
-        plt.axes(title=f"Photon Flux from Activated Ag, timestep {i} = {sum(r2s_model.timesteps[:i])}s", xlabel='X [cm]', ylabel='y [cm]')
-        plt.imshow(X=mpl_image_slice, extent=(left, right, bottom, top), norm=norm)
-        plt.contour(mpl_image_slice, levels=[1e1])
-        plt.colorbar(label='flux')
+        mesh = my_tally.find_filter(openmc.MeshFilter).mesh
+        print(max(my_tally.mean.flatten()))
+
+        tally_slice = mesh.slice_of_data(
+            dataset=my_tally.mean,
+            view_direction='x',
+            volume_normalization=True,
+        )
+        fig = plt.figure()
+
+        plot_1 = plt.imshow(
+            tally_slice,
+            interpolation="None",
+            extent=my_geometry.get_mpl_plot_extent(),
+        )
+
+        cbar = plt.colorbar(plot_1)
+        cbar.set_label(f"Photon flux")
+
+        # adds a contour of the cell geometry
+        plt.contour(
+            np.flip(material_ids_slice), # data flipped as mpl operations imshow and contour result in different rotations
+            origin="upper",
+            colors="k",
+            linestyles="solid",
+            levels=levels,
+            linewidths=1,
+            extent=my_geometry.get_mpl_plot_extent(),
+        )
+
         plt.savefig(f'photon_flux_map{str(i).zfill(3)}.png')
 
-plt.cla()
-plt.clf()
-plt.plot(plotted_part_of_tallys)
-plt.savefig(f'flux_vs_time.png')
-import os
-os.system('convert -delay 20 -loop 0 photon_*.png  r2s.gif')
+        plt.cla()
+        plt.clf()
