@@ -142,7 +142,7 @@ class Source(openmc.Source):
             )
             raise ValueError(msg)
         if material.volume is None:
-            msg = "The openmc.Material object used must have the volume " "property set"
+            msg = "The openmc.Material object used must have the volume property set"
             raise ValueError(msg)
 
         photon_spec = material.decay_photon_energy
@@ -150,14 +150,14 @@ class Source(openmc.Source):
         if photon_spec is None:
             return None
 
-        source = cls(domains=[cell])
-        source.particle = "photon"
-        source.energy = photon_spec
-        source.strength = photon_spec.integral()
-        source.space = openmc.stats.Box(*cell.bounding_box)
-        source.angle = openmc.stats.multivariate.Isotropic()
+        cell_source = cls(domains=[cell])
+        cell_source.particle = "photon"
+        cell_source.energy = photon_spec
+        cell_source.strength = photon_spec.integral()
+        cell_source.space = openmc.stats.Box(*cell.bounding_box)
+        cell_source.angle = openmc.stats.multivariate.Isotropic()
 
-        return source
+        return cell_source
 
 
 # this patches openmc to include the new R2SModel class
@@ -334,7 +334,7 @@ for i, statepoint_file in enumerate(statepoints):
         )
 
         cbar = plt.colorbar(plot_1)
-        cbar.set_label(f'Photon dose ["(micro) uSv/second"]')
+        cbar.set_label('Photon dose ["(micro) uSv/second"]')
 
         # adds a contour of the cell geometry
         plt.contour(
