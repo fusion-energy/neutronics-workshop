@@ -18,7 +18,7 @@ detector_material = openmc.Material()
 detector_material.add_nuclide("He3", 100.0, percent_type="ao")
 detector_material.set_density("g/cm3", 0.178e-3)
 
-materials = openmc.Materials([detector_material])
+my_materials = openmc.Materials([detector_material])
 
 
 # GEOMETRY
@@ -52,7 +52,7 @@ void_space_region = -sphere_surface
 void_space_cell = openmc.Cell(region=void_space_region & ~detector_region)
 
 universe = openmc.Universe(cells=[void_space_cell, detector_cell])
-geometry = openmc.Geometry(universe)
+my_geometry = openmc.Geometry(universe)
 
 
 # universe.plot(width=(1000.0, 1000.0), basis='xz')
@@ -74,15 +74,15 @@ source.energy = openmc.stats.Discrete([2.5e6, 14e6], [0.5, 0.5])
 # SETTINGS
 
 # Instantiate a Settings object
-settings = openmc.Settings()
-settings.batches = 10
-settings.particles = 50000
-settings.run_mode = "fixed source"
-settings.source = source
+my_settings = openmc.Settings()
+my_settings.batches = 10
+my_settings.particles = 50000
+my_settings.run_mode = "fixed source"
+my_settings.source = source
 
 # TALLIES
 
-tallies = openmc.Tallies()
+
 
 # 1 nano second to 100 nano seconds with 500 bins
 time_steps = np.linspace(start=1e-9, stop=100e-9, num=500)
@@ -93,10 +93,10 @@ time_filter = openmc.TimeFilter(time_steps)
 cell_filter = openmc.CellFilter(detector_cell)
 time_tally.scores = ["flux"]
 time_tally.filters = [time_filter, cell_filter]
-tallies.append(time_tally)
+my_tallies = openmc.Tallies(time_tally)
 
 
-model = openmc.model.Model(geometry, materials, settings, tallies)
+model = openmc.model.Model(my_geometry, my_materials, my_settings, my_tallies)
 
 sp_filename = model.run()
 
