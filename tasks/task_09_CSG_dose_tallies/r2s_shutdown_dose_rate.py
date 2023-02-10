@@ -5,6 +5,18 @@
 from pathlib import Path
 import openmc
 import typing
+import matplotlib.pyplot as plt
+import numpy as np
+import regular_mesh_plotter  # extends openmc.Mesh to include data slice functions
+import openmc_geometry_plot  # extends openmc.Geometry class with plotting functions
+
+from matplotlib.colors import LogNorm
+
+
+# be sure to have matching chain and cross section file, these are both endf8
+# both obtained with the https://github.com/openmc-data-storage/openmc_data package
+openmc.config['chain_file'] = '/home/jshimwell/m4_csg_neutronics_model/chain-nndc-b8.0.xml'
+openmc.config['cross_sections'] = '/home/jshimwell/openmc_data/nndc-b8.0-hdf5/endfb-viii.0-hdf5/cross_sections.xml'
 
 
 # R2SModel class code is by eepeterson.
@@ -206,6 +218,7 @@ my_neutron_settings = openmc.Settings()
 my_neutron_settings.batches = 10
 my_neutron_settings.particles = 500000
 my_neutron_settings.run_mode = "fixed source"
+my_neutron_settings.photon_transport = True
 
 source = openmc.Source()
 source.space = openmc.stats.Point((0, 0, 0))  # source is located at x 0, y 0, z 0
@@ -256,15 +269,15 @@ timesteps_and_source_rates = [
     (60 * 60 * 24 * 50, 1e20),
     (60 * 60 * 24 * 50, 0),  # cooling timestep with zero neutron flux from here onwards
     (60 * 60 * 24 * 50, 0),
-    (60 * 60 * 24 * 50, 0),
-    (60 * 60 * 24 * 50, 0),
-    (60 * 60 * 24 * 50, 0),
-    (60 * 60 * 24 * 50, 0),
-    (60 * 60 * 24 * 50, 0),
-    (60 * 60 * 24 * 50, 0),
-    (60 * 60 * 24 * 50, 0),
-    (60 * 60 * 24 * 50, 0),
-    (60 * 60 * 24 * 50, 0),
+    # (60 * 60 * 24 * 50, 0),
+    # (60 * 60 * 24 * 50, 0),
+    # (60 * 60 * 24 * 50, 0),
+    # (60 * 60 * 24 * 50, 0),
+    # (60 * 60 * 24 * 50, 0),
+    # (60 * 60 * 24 * 50, 0),
+    # (60 * 60 * 24 * 50, 0),
+    # (60 * 60 * 24 * 50, 0),
+    # (60 * 60 * 24 * 50, 0),
 ]
 
 # Uses list Python comprehension to get the timesteps and source_rates separately
@@ -276,20 +289,16 @@ r2s_model.source_rates = source_rates
 r2s_model.photon_settings = my_photon_settings
 r2s_model.photon_tallies = my_photon_tallies
 # runs photon transport on every timestep
-r2s_model.photon_timesteps = list(range(len(timesteps)))
+r2s_model.photon_timesteps = [i for i in range(len(timesteps_and_source_rates))] #list(range(len(timesteps)))
 
 statepoints = r2s_model.execute_run()
 
 # these are the statepoint files produced by the photon simulations
-print([str(s) for s in statepoints])
+print('photon statepoint files', [str(s) for s in statepoints])
 
 
 # post processing the results and plotting
 
-import matplotlib.pyplot as plt
-import numpy as np
-import regular_mesh_plotter  # extends openmc.Mesh to include data slice functions
-import openmc_geometry_plot  # extends openmc.Geometry class with plotting functions
 
 my_geometry.view_direction = "x"
 plotted_part_of_tallys = []
@@ -299,56 +308,72 @@ material_ids_slice = my_geometry.get_slice_of_material_ids(pixels_across=400)
 # these are the material ids in the geometry
 levels = np.unique([item for sublist in material_ids_slice for item in sublist])
 
-# this loop plots the decay photon flux after each time step
-# this includes the first neutron transport timestep, in this plot the secondary photons are seen
-# subsequent time steps the neutron source is switched off and only decay photons are seen
-for i, statepoint_file in enumerate(statepoints):
-    with openmc.StatePoint(statepoint_file) as statepoint:
-        my_tally = statepoint.get_tally(name="photon_dose_on_mesh")
-        mesh = my_tally.find_filter(openmc.MeshFilter).mesh
+# this loop plots the decay photon dose after each photon timestep
+for photon_time_step_index in r2s_model.photon_timesteps:
+    print(f'accessing photon_time_step_index {photon_time_step_index}')
+    statepoint_filename=f"photon_transport/timestep_{photon_time_step_index}/statepoint.{my_photon_settings.batches}.h5"
+    settings_filename=f"photon_transport/timestep_{photon_time_step_index}/settings.xml"
 
-        neutrons_per_second = 1e18
+    with openmc.StatePoint(statepoint_filename) as statepoint:
+        photon_tally_result = statepoint.get_tally(name="photon_dose_on_mesh")
 
-        # converts units from pSv-cm3/source_neutron to pSv-cm3/second
-        dose = my_tally.mean * neutrons_per_second
+    # gets the combined source strength of all the sources.
+    # this is in units of Bq so it is photons emitted per second
+    my_settings = openmc.Settings.from_xml(settings_filename)
+    photons_per_second = sum(src.strength for src in my_settings.source)
+    print('photons_per_second', photons_per_second)
 
-        # converts from pSv-cm3/second to pSv/second
-        dose = (
-            dose / mesh.volumes[0][0][0]
-        )  # regular mesh used all voxel have the same volume
+    mesh = photon_tally_result.find_filter(openmc.MeshFilter).mesh
 
-        # converts from (pico) pSv/second to (micro) uSv/second
-        dose = dose * 1e-6
+    # converts units from pSv-cm3/source_photon to pSv-cm3/second
+    dose_rate = photon_tally_result.mean * photons_per_second
 
-        tally_slice = mesh.slice_of_data(
-            dataset=dose,
-            view_direction="x",
-            volume_normalization=True,
-        )
-        fig = plt.figure()
+    # converts from pSv-cm3/second to pSv/second
+    # regular mesh used all voxel have the same volume
+    dose_rate = dose_rate / mesh.volumes[0][0][0]
 
-        plot_1 = plt.imshow(
-            tally_slice,
-            interpolation="None",
-            extent=my_geometry.get_mpl_plot_extent(),
-        )
+    # converts from (pico) pSv/second to (milli) mSv/second
+    dose_rate = dose_rate * 1e-9
 
-        cbar = plt.colorbar(plot_1)
-        cbar.set_label('Photon dose ["(micro) uSv/second"]')
+    tally_slice = mesh.slice_of_data(
+        dataset=dose_rate,
+        view_direction=my_geometry.view_direction,
+        volume_normalization=True,
+    )
 
-        # adds a contour of the cell geometry
-        plt.contour(
-            # data flipped as mpl operations imshow and contour result in different rotations
-            np.rot90(material_ids_slice, 1),
-            origin="upper",
-            colors="k",
-            linestyles="solid",
-            levels=levels,
-            linewidths=1,
-            extent=my_geometry.get_mpl_plot_extent(),
-        )
+    plt.cla()
+    plt.clf()
+    fig = plt.figure()
 
-        plt.savefig(f"photon_flux_map{str(i).zfill(3)}.png")
+    plt.ylabel("Z [cm]")
+    plt.xlabel("Y [cm]")
+    days = timesteps_and_source_rates[photon_time_step_index][0] / (60 * 60 * 24)
+    plt.title(
+        f"Shut down dose rate with {days} day of cooldown,\n"
+        f"view direction from {my_geometry.view_direction} axis, mid plane slice\n"
+        f"assuming single shot of {1e20} neutrons\n"
+    )
 
-        plt.cla()
-        plt.clf()
+    plot_1 = plt.imshow(
+        tally_slice,
+        interpolation="None",
+        norm=LogNorm(),
+        extent=my_geometry.get_mpl_plot_extent(),
+    )
+
+    cbar = plt.colorbar(plot_1)
+    cbar.set_label('Photon dose ["(milli) mSv/second"]')
+
+    # adds a contour of the cell geometry
+    plt.contour(
+        # data flipped as mpl operations imshow and contour result in different rotations
+        np.rot90(material_ids_slice, 1),
+        origin="upper",
+        colors="k",
+        linestyles="solid",
+        levels=levels,
+        linewidths=1,
+        extent=my_geometry.get_mpl_plot_extent(),
+    )
+
+    plt.savefig(f"photon_flux_map{str(photon_time_step_index).zfill(3)}.png")
