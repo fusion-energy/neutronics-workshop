@@ -166,17 +166,7 @@ RUN mkdir MOAB && \
                   -DBUILD_SHARED_LIBS=OFF \
                   -DCMAKE_INSTALL_PREFIX=/MOAB && \
     make -j"$compile_cores" &&  \
-    make -j"$compile_cores" install && \
-    cmake ../moab -DENABLE_HDF5=ON \
-                  -DENABLE_PYMOAB=ON \
-                  -DENABLE_FORTRAN=OFF \
-                  -DBUILD_SHARED_LIBS=ON \
-                  -DENABLE_BLASLAPACK=OFF \
-                  -DCMAKE_INSTALL_PREFIX=/MOAB && \
-    make -j"$compile_cores" install && \
-    cd pymoab && \
-    bash install.sh && \
-    python setup.py install
+    make -j"$compile_cores" install
     # the following rm command appears to remove libraries that are need to use
     # pymoab so this has been commented out for now
     # rm -rf /MOAB/moab /MOAB/build
