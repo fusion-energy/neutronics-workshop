@@ -94,7 +94,7 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
                 openmc_data_downloader \
-                openmc_geometry_plot \
+                openmc_plot \
                 dagmc_geometry_slice_plotter
 
 RUN pip install git+https://github.com/fusion-energy/openmc_weight_window_generator.git
@@ -163,13 +163,12 @@ RUN mkdir MOAB && \
                   -DENABLE_NETCDF=ON \
                   -DENABLE_FORTRAN=OFF \
                   -DENABLE_BLASLAPACK=OFF \
-                  -DBUILD_SHARED_LIBS=OFF \
+                  -DBUILD_SHARED_LIBS=ON \
+                  -DENABLE_PYMOAB=ON \
                   -DCMAKE_INSTALL_PREFIX=/MOAB && \
     make -j"$compile_cores" &&  \
     make -j"$compile_cores" install
-    # the following rm command appears to remove libraries that are need to use
-    # pymoab so this has been commented out for now
-    # rm -rf /MOAB/moab /MOAB/build
+
 
 ENV PATH=$PATH:/MOAB/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
