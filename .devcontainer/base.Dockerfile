@@ -229,7 +229,7 @@ RUN cd /opt && \
 # RUN pip install openmc_data_downloader && \
 #     openmc_data_downloader -d nuclear_data -l ENDFB-7.1-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
 
-RUN pip install openmc_data  && \
+RUN pip install openmc_data && \
     mkdir -p /nuclear_data && \
     download_nndc_chain -d nuclear_data -r b8.0 && \
     download_nndc -d nuclear_data -r b8.0
@@ -239,5 +239,5 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
     rm WMP_Library_v1.1.tar.gz
 
-ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
+ENV OPENMC_CROSS_SECTIONS=/nuclear_data/endfb-viii.0-hdf5/cross_sections.xml
 ENV OPENMC_CHAIN_FILE=/nuclear_data/cross_sections.xml
