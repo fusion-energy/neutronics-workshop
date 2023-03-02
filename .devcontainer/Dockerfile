@@ -18,8 +18,6 @@
 # FROM ghcr.io/fusion-energy/neutronics-workshop:base as base
 FROM neutronics-workshop:base as base
 
-ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
-
 # Copy over the local repository files
 COPY tasks tasks/
 COPY tests tests/
