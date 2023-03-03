@@ -15,8 +15,7 @@
 # docker run -p 8888:8888 neutronics-workshop
 
 
-# FROM ghcr.io/fusion-energy/neutronics-workshop:base as base
-FROM neutronics-workshop:base as base
+FROM ghcr.io/fusion-energy/neutronics-workshop:base as base
 
 # Copy over the local repository files
 COPY tasks tasks/
