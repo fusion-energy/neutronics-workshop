@@ -7,7 +7,7 @@
 # docker pull ghcr.io/fusion-energy/neutronics-workshop
 
 # To build this Dockerfile into a docker image:
-# docker build -t neutronics-workshop .devcontainer/Dockerfile .
+# docker build -t neutronics-workshop -f .devcontainer/Dockerfile .
 
 # for local testing I tend to use this build command
 # docker build -t neutronics-workshop 
@@ -16,8 +16,6 @@
 
 
 FROM ghcr.io/fusion-energy/neutronics-workshop:base as base
-
-ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 
 # Copy over the local repository files
 COPY tasks tasks/
