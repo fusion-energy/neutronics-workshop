@@ -100,7 +100,7 @@ time_steps = np.linspace(start=1e-9, stop=100e-9, num=1000)
 time_tally = openmc.Tally(name="time_tally_in_cell")
 time_filter = openmc.TimeFilter(time_steps)
 cell_filter = openmc.CellFilter(detector_cell)
-time_tally.scores = ["flux"]
+time_tally.scores = ["absorption"]
 time_tally.filters = [time_filter, cell_filter]
 tallies.append(time_tally)
 
