@@ -1,6 +1,6 @@
 # this example has a Helium 3 detector with a point source of neutrons.
 # The emitted neutrons have two energies (14MeV and 2.5MeV)
-# The example shows the neutron flux as a function of time at the detector.
+# The example shows the neutron absorption as a function of time at the detector.
 # The simulation results show the arrival time of the neutrons at the detector
 # The higher energy faster neutrons arrive first and have a smaller spread of
 # arrival times while the lower energy neutrons arrive later and have a larger
