@@ -79,8 +79,8 @@ RUN apt-get --yes install libeigen3-dev \
 
 RUN conda install -c conda-forge -c python python=3.8
 
-RUN conda install -c conda-forge mamba
-RUN mamba install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7
+RUN conda install -c conda-forge mamba -y
+RUN mamba install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
 
 
 # python packages from the neutronics workflow
