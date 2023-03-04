@@ -1,6 +1,6 @@
 # this example has a Helium 3 detector with a point source of neutrons.
 # The emitted neutrons have two energies (14MeV and 2.5MeV)
-# The example shows the neutron flux as a function of time at the detector.
+# The example shows the neutron absorption as a function of time at the detector.
 # The simulation results show the arrival time of the neutrons at the detector
 # The higher energy faster neutrons arrive first and have a smaller spread of
 # arrival times while the lower energy neutrons arrive later and have a larger
@@ -91,7 +91,7 @@ time_steps = np.linspace(start=1e-9, stop=100e-9, num=500)
 time_tally = openmc.Tally(name="time_tally_in_cell")
 time_filter = openmc.TimeFilter(time_steps)
 cell_filter = openmc.CellFilter(detector_cell)
-time_tally.scores = ["flux"]
+time_tally.scores = ["absorption"]
 time_tally.filters = [time_filter, cell_filter]
 my_tallies = openmc.Tallies(time_tally)
 
