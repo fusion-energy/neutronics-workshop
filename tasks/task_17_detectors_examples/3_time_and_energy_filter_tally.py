@@ -1,7 +1,7 @@
 # This example has a Helium 3 detector with a point source of neutrons next to
 # a sphere of beryllium which is particularly good reflector of neutrons
 # The emitted neutrons has a single neutron energy (14MeV)
-# The example shows the neutron flux as a function of time and energy at the
+# The example shows the neutron absorption as a function of time and energy at the
 # detector.
 # The simulation results show the arrival time of the neutrons at the detector
 # grouped by the energy of the neutron. There are 16 energy bins 
@@ -91,7 +91,7 @@ time_tally = openmc.Tally(name="time_tally_in_cell")
 time_filter = openmc.TimeFilter(time_steps)
 energy_filter = openmc.EnergyFilter(np.linspace(0,14e6,16))
 cell_filter = openmc.CellFilter(detector_cell)
-time_tally.scores = ["flux"]
+time_tally.scores = ["absorption"]
 time_tally.filters = [time_filter, cell_filter, energy_filter]
 tallies.append(time_tally)
 
@@ -124,6 +124,6 @@ for high_energy_edge, low_energy_edge in zip(energy_bins_high_edge, energy_bins_
 plt.legend(loc='upper right')
 plt.tight_layout()
 plt.xlabel('Time [s]')
-plt.ylabel('Neutron flux')
+plt.ylabel('Neutron absorption')
 # plt.show()
 plt.savefig('energy_filtering_on_time_tally_with_reflective_object.png', dpi=400)

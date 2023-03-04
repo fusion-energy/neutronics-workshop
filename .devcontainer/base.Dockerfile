@@ -79,8 +79,8 @@ RUN apt-get --yes install libeigen3-dev \
 
 RUN conda install -c conda-forge -c python python=3.8
 
-RUN conda install -c conda-forge mamba
-RUN mamba install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7
+RUN conda install -c conda-forge mamba -y
+RUN mamba install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
 
 
 # python packages from the neutronics workflow
@@ -92,7 +92,10 @@ RUN pip install neutronics_material_maker[density] \
                 regular_mesh_plotter \
                 spectrum_plotter \
                 openmc_source_plotter \
-                openmc_depletion_plotter
+                openmc_depletion_plotter \
+                openmc_data_downloader \
+                openmc_plot \
+                dagmc_geometry_slice_plotter
 
 RUN pip install git+https://github.com/fusion-energy/openmc_weight_window_generator.git
 
@@ -153,30 +156,19 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 # Clone and install MOAB
 RUN mkdir MOAB && \
     cd MOAB && \
-    git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
+    git clone  --single-branch --branch 5.4.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
                   -DENABLE_NETCDF=ON \
                   -DENABLE_FORTRAN=OFF \
                   -DENABLE_BLASLAPACK=OFF \
-                  -DBUILD_SHARED_LIBS=OFF \
+                  -DBUILD_SHARED_LIBS=ON \
+                  -DENABLE_PYMOAB=ON \
                   -DCMAKE_INSTALL_PREFIX=/MOAB && \
     make -j"$compile_cores" &&  \
-    make -j"$compile_cores" install && \
-    cmake ../moab -DENABLE_HDF5=ON \
-                  -DENABLE_PYMOAB=ON \
-                  -DENABLE_FORTRAN=OFF \
-                  -DBUILD_SHARED_LIBS=ON \
-                  -DENABLE_BLASLAPACK=OFF \
-                  -DCMAKE_INSTALL_PREFIX=/MOAB && \
-    make -j"$compile_cores" install && \
-    cd pymoab && \
-    bash install.sh && \
-    python setup.py install
-    # the following rm command appears to remove libraries that are need to use
-    # pymoab so this has been commented out for now
-    # rm -rf /MOAB/moab /MOAB/build
+    make -j"$compile_cores" install
+
 
 ENV PATH=$PATH:/MOAB/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
@@ -200,7 +192,7 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 # DAGMC version develop install from source
 RUN mkdir DAGMC && \
     cd DAGMC && \
-    git clone --single-branch --branch v3.2.1 --depth 1 https://github.com/svalinn/DAGMC.git && \
+    git clone --single-branch --branch v3.2.2 --depth 1 https://github.com/svalinn/DAGMC.git && \
     mkdir build && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
@@ -216,16 +208,10 @@ RUN mkdir DAGMC && \
 ENV PATH=$PATH:/DAGMC/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
-# install WMP nuclear data
-RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
-    tar -xf WMP_Library_v1.1.tar.gz -C /  && \
-    rm WMP_Library_v1.1.tar.gz
-
-
 # installs OpenMc from source
 RUN cd /opt && \
-    # switch back to tagged version when 0.13.1 is released as develop depletion is used
-    # git clone --single-branch --branch v0.13.0 --depth 1 https://github.com/openmc-dev/openmc.git && \
+    # switch back to tagged version when 0.13.3 is released as develop depletion is used
+    # git clone --single-branch --branch v0.13.3 --depth 1 https://github.com/openmc-dev/openmc.git && \
     git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
     mkdir build && \
@@ -240,12 +226,18 @@ RUN cd /opt && \
 
 # installs TENDL and ENDF nuclear data. Performed after openmc install as
 # openmc is needed to write the cross_Sections.xml file
-RUN pip install openmc_data_downloader && \
-    openmc_data_downloader -d nuclear_data -l ENDFB-7.1-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
+# RUN pip install openmc_data_downloader && \
+#     openmc_data_downloader -d nuclear_data -l ENDFB-7.1-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
 
-RUN pip install openmc_data  && \
-    mkdir -p tasks/task_14_activation_transmutation_depletion && \
-    cd tasks/task_14_activation_transmutation_depletion/ && \
-    download_nndc_chain
+RUN pip install openmc_data && \
+    mkdir -p /nuclear_data && \
+    download_nndc_chain -d nuclear_data -r b8.0 && \
+    download_nndc -d nuclear_data -r b8.0
 
-ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
+# install WMP nuclear data
+RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
+    tar -xf WMP_Library_v1.1.tar.gz -C /  && \
+    rm WMP_Library_v1.1.tar.gz
+
+ENV OPENMC_CROSS_SECTIONS=/nuclear_data/endfb-viii.0-hdf5/cross_sections.xml
+ENV OPENMC_CHAIN_FILE=/nuclear_data/cross_sections.xml
