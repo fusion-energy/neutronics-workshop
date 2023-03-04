@@ -1,7 +1,7 @@
 # This example has a Helium 3 detector with a point source of neutrons next to
 # a sphere of beryllium which is particularly good reflector of neutrons
 # The emitted neutrons have two energies (14MeV and 2.5MeV)
-# The example shows the neutron flux as a function of time at the detector.
+# The example shows the neutron absorption as a function of time at the detector.
 # The simulation results show the arrival time of the neutrons at the detector
 # The higher energy faster neutrons arrive first and then we start to see
 # reflected neutrons and the lower energy neutrons arriving.
