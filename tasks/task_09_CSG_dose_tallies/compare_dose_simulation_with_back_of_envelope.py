@@ -11,27 +11,42 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def manual_dose_calc(particles_per_shot, distance_from_source, particle, particle_energy):
-    # as the model is so simple we can calculate the dose manually by finding
-    # neutrons across the surface area of the sphere.
-    # Conversion factor from fluence to dose at 14.1MeV = 495pSv cm2 per neutron (AP)
+def manual_dose_calc(
+    particles_per_shot:int,
+    distance_from_source:float,
+    particle:str,
+    particle_energy:float
+):
+    """Finds the dose in Sv a given distance from a point source 
+
+    Args:
+        particles_per_shot (int): the number of particles emitted by the source
+        distance_from_source (float): the distance between the person and source in cm
+        particle (str): the particle type "photon" or "neutron"
+        particle_energy (float): the particle energy in eV
+
+    Returns:
+        float: the dose in Sv
+    """
+    # As the model is so simple we can calculate the dose manually by finding
+    # neutrons across the surface area of the sphere and assuming no shielding
 
     sphere_surface_area = 4 * math.pi * math.pow(distance_from_source, 2)
 
     particles_per_unit_area = particles_per_shot / sphere_surface_area
 
-    # this obtains the does coefficients for the particle
+    # this obtains the does coefficients for the particle, AP is front facing (worst case)
     energy, dose_coeffs = openmc.data.dose_coefficients(particle, geometry='AP')
 
     # this gets the index of the particle energy
     closest_index = np.argmin(np.abs(np.array(energy)-particle_energy))
 
+    #dose coefficient from ICRP
+    # example conversion factor from fluence to dose at 14.1MeV = 495pSv cm2 per neutron (AP)
     dose_coeff = dose_coeffs[closest_index]
 
-    print('dose_coeff', dose_coeff)
 
     return particles_per_unit_area * dose_coeff * 1e-12
-
 
 
 mat_tissue = openmc.Material()
