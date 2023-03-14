@@ -232,7 +232,13 @@ RUN cd /opt && \
 RUN pip install openmc_data && \
     mkdir -p /nuclear_data && \
     download_nndc_chain -d nuclear_data -r b8.0 && \
-    download_nndc -d nuclear_data -r b8.0
+    download_nndc -d nuclear_data -r b8.0 --cleanup && \
+    rm -rf nndc-b8.0-download
+# The last line here deletes the downloaded compressed nuclear datafile
+# not sure why but cleanup is not working, trackign on issue
+# https://github.com/openmc-data-storage/openmc_data/issues/29
+
+
 
 # install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
