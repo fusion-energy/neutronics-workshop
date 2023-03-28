@@ -86,7 +86,7 @@ for distance_from_source in distances_to_simulate:  # units of cm
         particle="photon", geometry="AP"
     )
     energy_function_filter_p = openmc.EnergyFunctionFilter(energy_bins_p, dose_coeffs_p)
-    energy_function_filter_p.interpolation == "cubic"
+    energy_function_filter_p.interpolation = "cubic"  # cubic interpolation is recommended by ICRP
 
     photon_particle_filter = openmc.ParticleFilter("photon")
     cell_filter = openmc.CellFilter(phantom_cell)

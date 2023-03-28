@@ -66,14 +66,14 @@ for distance_from_source in distances_to_simulate:
     # openmc native units for length are cm so volume is in cm3
     phantom_volume = math.pi * math.pow(10.782, 2) * 169.75
 
-    # these are the dose coeffients coded into openmc
-    # originall from ICRP https://journals.sagepub.com/doi/10.1016/j.icrp.2011.10.001
+    # these are the dose coefficients coded into openmc
+    # originally from ICRP https://journals.sagepub.com/doi/10.1016/j.icrp.2011.10.001
 
     energy_bins_n, dose_coeffs_n = openmc.data.dose_coefficients(
         particle="neutron", geometry="AP"
     )
     energy_function_filter_n = openmc.EnergyFunctionFilter(energy_bins_n, dose_coeffs_n)
-    energy_function_filter_n.interpolation == "cubic"
+    energy_function_filter_n.interpolation = "cubic"  # cubic interpolation is recommended by ICRP
 
     neutron_particle_filter = openmc.ParticleFilter("neutron")
     cell_filter = openmc.CellFilter(phantom_cell)
