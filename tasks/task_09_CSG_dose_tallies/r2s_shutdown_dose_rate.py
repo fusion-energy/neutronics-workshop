@@ -284,15 +284,15 @@ timesteps_and_source_rates = [
     (timestep_in_seconds, neutrons_per_second),
     (timestep_in_seconds, 0),  # cooling timestep with zero neutron flux from here onwards
     (timestep_in_seconds, 0),
-    (timestep_in_seconds, 0),
-    (timestep_in_seconds, 0),
-    (timestep_in_seconds, 0),
-    (timestep_in_seconds, 0),
-    (timestep_in_seconds, 0),
-    (timestep_in_seconds, 0),
-    (timestep_in_seconds, 0),
-    (timestep_in_seconds, 0),
-    (timestep_in_seconds, 0),
+    # (timestep_in_seconds, 0),
+    # (timestep_in_seconds, 0),
+    # (timestep_in_seconds, 0),
+    # (timestep_in_seconds, 0),
+    # (timestep_in_seconds, 0),
+    # (timestep_in_seconds, 0),
+    # (timestep_in_seconds, 0),
+    # (timestep_in_seconds, 0),
+    # (timestep_in_seconds, 0),
 ]
 
 # Uses list Python comprehension to get the timesteps and source_rates separately
@@ -319,7 +319,7 @@ print('photon statepoint files', [str(s) for s in statepoints])
 my_geometry.view_direction = "x"
 plotted_part_of_tallys = []
 
-material_ids_slice = my_geometry.get_slice_of_material_ids(pixels_across=400)
+material_ids_slice = my_geometry.get_slice_of_material_ids(pixels_across=400, view_direction='x')
 
 # these are the material ids in the geometry
 levels = np.unique([item for sublist in material_ids_slice for item in sublist])
@@ -344,17 +344,13 @@ for photon_time_step_index in r2s_model.photon_timesteps:
     # converts units from pSv-cm3/source_photon to pSv-cm3/second
     dose_rate = photon_tally_result.mean * photons_per_second
 
-    # converts from pSv-cm3/second to pSv/second
-    # regular mesh used all voxel have the same volume
-    dose_rate = dose_rate / mesh.volumes[0][0][0]
-
     # converts from (pico) pSv/second to (milli) mSv/second
     dose_rate = dose_rate * 1e-9
 
     tally_slice = mesh.slice_of_data(
         dataset=dose_rate,
         view_direction=my_geometry.view_direction,
-        volume_normalization=True,
+        volume_normalization=True,  # converts from pSv-cm3/second to pSv/second
     )
 
     plt.cla()
@@ -377,7 +373,7 @@ for photon_time_step_index in r2s_model.photon_timesteps:
             vmin=1e12,
             vmax=1e21,
         ),
-        extent=my_geometry.get_mpl_plot_extent(),
+        extent=my_geometry.get_mpl_plot_extent(view_direction='x'),
     )
 
     cbar = plt.colorbar(plot_1)
@@ -392,7 +388,7 @@ for photon_time_step_index in r2s_model.photon_timesteps:
         linestyles="solid",
         levels=levels,
         linewidths=1,
-        extent=my_geometry.get_mpl_plot_extent(),
+        extent=my_geometry.get_mpl_plot_extent(view_direction='x'),
     )
 
     plt.savefig(f"photon_flux_map_timestep_{str(photon_time_step_index).zfill(3)}.png")
