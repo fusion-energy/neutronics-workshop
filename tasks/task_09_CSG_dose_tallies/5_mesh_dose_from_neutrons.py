@@ -51,7 +51,7 @@ energy_bins_n, dose_coeffs_n = openmc.data.dose_coefficients(
     geometry="ISO",  # we are using the ISO direction as this is a dose field with dose
 )
 energy_function_filter_n = openmc.EnergyFunctionFilter(energy_bins_n, dose_coeffs_n)
-energy_function_filter_n.interpolation == "cubic"  # cubic is recommended by ICRP
+energy_function_filter_n.interpolation = "cubic"  # cubic interpolation is recommended by ICRP
 
 # just getting the dose for neutrons, not photons or other particles
 neutron_particle_filter = openmc.ParticleFilter("neutron")
