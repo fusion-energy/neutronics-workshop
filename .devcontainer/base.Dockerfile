@@ -79,8 +79,8 @@ RUN apt-get --yes install libeigen3-dev \
 
 RUN conda install -c conda-forge -c python python=3.8
 
-RUN conda install -c conda-forge mamba -y
-RUN mamba install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
+# RUN conda install -c conda-forge mamba -y
+RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
 
 
 # python packages from the neutronics workflow
@@ -94,6 +94,7 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
                 openmc_data_downloader \
+                openmc_data \
                 openmc_plot \
                 dagmc_geometry_slice_plotter
 
@@ -226,19 +227,13 @@ RUN cd /opt && \
 
 # installs TENDL and ENDF nuclear data. Performed after openmc install as
 # openmc is needed to write the cross_Sections.xml file
+
 # RUN pip install openmc_data_downloader && \
-#     openmc_data_downloader -d nuclear_data -l ENDFB-7.1-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
+RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
 
 RUN pip install openmc_data && \
     mkdir -p /nuclear_data && \
-    download_nndc_chain -d nuclear_data -r b8.0 && \
-    download_nndc -d nuclear_data -r b8.0 --cleanup && \
-    rm -rf nndc-b8.0-download
-# The last line here deletes the downloaded compressed nuclear datafile
-# not sure why but cleanup is not working, trackign on issue
-# https://github.com/openmc-data-storage/openmc_data/issues/29
-
-
+    download_nndc_chain -d nuclear_data -r b8.0
 
 # install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
@@ -246,4 +241,4 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
     rm WMP_Library_v1.1.tar.gz
 
 ENV OPENMC_CROSS_SECTIONS=/nuclear_data/endfb-viii.0-hdf5/cross_sections.xml
-ENV OPENMC_CHAIN_FILE=/nuclear_data/cross_sections.xml
+ENV OPENMC_CHAIN_FILE=/nuclear_data/chain-nndc-b8.0.xml
