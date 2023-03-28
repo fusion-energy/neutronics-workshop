@@ -435,3 +435,16 @@ for burnup_index in range(1, len(results)):
     plt.savefig(f"gamma_spec_{str(burnup_index).zfill(3)}.png")
 
 os.system("convert -delay 20 -loop 0 gamma_spec_*.png  r2s.gif")
+
+
+# this section plots the activity as a function of time
+import openmc_depletion_plotter  # adds plot_atoms_vs_time and plot_activity_vs_time methods to openmc.deplete.Results
+
+# plots the atoms activity in Bq/g as a function of time
+plot = results.plot_activity_vs_time(
+    time_units="s",
+    units="Bq/g",
+    plotting_backend="plotly",
+)
+plot.show()
+plot.write_html("activity_vs_time_activation.html")
