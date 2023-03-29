@@ -30,7 +30,8 @@
 # and then run with this command
 # docker run -it neutronics-workshop:base
 
-FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
+# FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
+FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.9-bullseye as dependencies
 
 RUN apt-get --allow-releaseinfo-change update
 RUN apt-get --yes update && apt-get --yes upgrade
@@ -77,11 +78,19 @@ RUN apt-get --yes install libeigen3-dev \
                           libxft2
 
 
-RUN conda install -c conda-forge -c python python=3.8
+# RUN conda install -c conda-forge -c python python=3.8
 
-RUN conda install -c conda-forge mamba -y
-RUN mamba install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
+# RUN conda install -c conda-forge mamba -y
+# RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
+RUN pip install cadquery  \
+                paramak
 
+RUN pip install gmsh
+# needed for gmsh
+RUN apt-get install libxcursor-dev -y
+# needed for gmsh
+RUN apt-get install libxinerama-dev -y
+# might be libxinerama1
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
@@ -93,7 +102,8 @@ RUN pip install neutronics_material_maker[density] \
                 spectrum_plotter \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
-                openmc_data_downloader \
+                openmc_data_downloader>=0.6.0 \
+                openmc_data \
                 openmc_plot \
                 dagmc_geometry_slice_plotter
 
@@ -156,7 +166,8 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 # Clone and install MOAB
 RUN mkdir MOAB && \
     cd MOAB && \
-    git clone  --single-branch --branch 5.4.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
+    # newer versions of moab (5.4.0, 5.4.1) don't produce an importable pymoab package!
+    git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
     cmake ../moab -DENABLE_HDF5=ON \
@@ -166,8 +177,13 @@ RUN mkdir MOAB && \
                   -DBUILD_SHARED_LIBS=ON \
                   -DENABLE_PYMOAB=ON \
                   -DCMAKE_INSTALL_PREFIX=/MOAB && \
-    make -j"$compile_cores" &&  \
-    make -j"$compile_cores" install
+    mkdir -p MOAB/lib/pymoab/lib/python3.9/site-packages && \
+    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.9/site-packages:${PYTHONPATH} make -j && \
+    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.9/site-packages:${PYTHONPATH} make install -j
+
+ENV PYTHONPATH="/MOAB/lib/python3.9/site-packages/pymoab-5.3.1-py3.9-linux-x86_64.egg/"
+
+RUN python -c "import pymoab"
 
 
 ENV PATH=$PATH:/MOAB/bin
@@ -209,10 +225,9 @@ ENV PATH=$PATH:/DAGMC/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
 # installs OpenMc from source
-RUN cd /opt && \
-    # switch back to tagged version when 0.13.3 is released as develop depletion is used
-    # git clone --single-branch --branch v0.13.3 --depth 1 https://github.com/openmc-dev/openmc.git && \
-    git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
+# switch back to tagged version when 0.13.3 is released as develop depletion is used
+# git clone --single-branch --branch v0.13.3 --depth 1 https://github.com/openmc-dev/openmc.git && \
+RUN git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
     mkdir build && \
     cd build && \
@@ -221,29 +236,23 @@ RUN cd /opt && \
           -DHDF5_PREFER_PARALLEL=OFF .. && \
     make -j"$compile_cores" && \
     make -j"$compile_cores" install && \
-    cd /opt/openmc/ && \
+    cd /openmc/ && \
     pip install .
 
 # installs TENDL and ENDF nuclear data. Performed after openmc install as
 # openmc is needed to write the cross_Sections.xml file
+
 # RUN pip install openmc_data_downloader && \
-#     openmc_data_downloader -d nuclear_data -l ENDFB-7.1-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
+RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
 
 RUN pip install openmc_data && \
     mkdir -p /nuclear_data && \
-    download_nndc_chain -d nuclear_data -r b8.0 && \
-    download_nndc -d nuclear_data -r b8.0 --cleanup && \
-    rm -rf nndc-b8.0-download
-# The last line here deletes the downloaded compressed nuclear datafile
-# not sure why but cleanup is not working, trackign on issue
-# https://github.com/openmc-data-storage/openmc_data/issues/29
-
-
+    download_nndc_chain -d nuclear_data -r b8.0
 
 # install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
     rm WMP_Library_v1.1.tar.gz
 
-ENV OPENMC_CROSS_SECTIONS=/nuclear_data/endfb-viii.0-hdf5/cross_sections.xml
-ENV OPENMC_CHAIN_FILE=/nuclear_data/cross_sections.xml
+ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
+ENV OPENMC_CHAIN_FILE=/nuclear_data/chain-nndc-b8.0.xml
