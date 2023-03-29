@@ -30,7 +30,8 @@
 # and then run with this command
 # docker run -it neutronics-workshop:base
 
-FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
+# FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
+FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.9-bullseye as dependencies
 
 RUN apt-get --allow-releaseinfo-change update
 RUN apt-get --yes update && apt-get --yes upgrade
@@ -77,11 +78,11 @@ RUN apt-get --yes install libeigen3-dev \
                           libxft2
 
 
-RUN conda install -c conda-forge -c python python=3.8
+# RUN conda install -c conda-forge -c python python=3.8
 
 # RUN conda install -c conda-forge mamba -y
-RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
-
+# RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
+RUN pip install cadquery
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
