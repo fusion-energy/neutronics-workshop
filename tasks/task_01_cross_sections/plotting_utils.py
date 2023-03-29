@@ -27,7 +27,7 @@ def create_isotope_plot(isotopes, reaction):
         isotope_object = openmc.Nuclide(isotope_name)
 
         energy, cross_sections = openmc.calculate_cexs(
-            isotope_object, "nuclide", [reaction]
+            isotope_object, [reaction]
         )
         cross_section = cross_sections[0]
         if cross_section.sum() != 0.0:
@@ -78,7 +78,7 @@ def create_element_plot(elements, reaction):
             continue
 
         energy, cross_sections = openmc.calculate_cexs(
-            element_object, "element", [reaction]
+            element_object, [reaction]
         )
         cross_section = cross_sections[0]
         if cross_section.sum() != 0.0:
@@ -118,7 +118,7 @@ def create_material_plot(materials, reaction):
 
     for material in materials:
         # extracts energy and cross section for the material for the provided MT reaction mumber
-        energy, xs_data = openmc.calculate_cexs(material, "material", [MT_number])
+        energy, xs_data = openmc.calculate_cexs(material, [MT_number])
 
         # adds the energy dependnat cross sction to the plot
         fig.add_trace(
