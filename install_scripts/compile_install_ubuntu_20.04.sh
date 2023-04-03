@@ -9,6 +9,7 @@ apt-get --yes upgrade
 
 
 # install dependancies
+sudo apt-get install -y libpng-dev
 sudo apt-get install -y libeigen3-dev
 sudo apt-get install -y git
 sudo apt-get install -y wget
