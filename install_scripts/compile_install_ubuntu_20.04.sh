@@ -9,6 +9,7 @@ apt-get --yes upgrade
 
 
 # install dependancies
+sudo apt-get install -y libopenblas-dev
 sudo apt-get install -y libpng-dev
 sudo apt-get install -y libeigen3-dev
 sudo apt-get install -y git
@@ -56,7 +57,7 @@ git clone  --single-branch --branch 5.4.1 --depth 1 https://bitbucket.org/fathom
 mkdir build
 cd build
 #cmake ../moab -DENABLE_HDF5=ON -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$HOME/MOAB -DENABLE_BLASLAPACK=OFF
-cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/MOAB -DENABLE_FORTRAN=OFF -DENABLE_BLASLAPACK=OFF 
+cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/MOAB -DENABLE_FORTRAN=OFF
 make -j
 #sudo 
 make -j install
