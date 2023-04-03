@@ -9,7 +9,13 @@ apt-get --yes upgrade
 
 
 # install dependancies
+# needed for embree
+sudo apt-get install libglfw3
+# needed for embree
+sudo apt-get install libglfw3-dev
+# needed for moab compile
 sudo apt-get install -y libopenblas-dev
+# needed for openmc compile
 sudo apt-get install -y libpng-dev
 sudo apt-get install -y libeigen3-dev
 sudo apt-get install -y git
