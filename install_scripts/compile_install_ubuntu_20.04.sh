@@ -107,7 +107,7 @@ git clone --single-branch --branch develop --depth 1 https://github.com/openmc-d
 cd openmc
 mkdir build
 cd build
-cmake -Doptimize=on -DOPENMC_USE_DAGMC=ON -DDAGMC_ROOT=$HOME/DAGMC -DHDF5_PREFER_PARALLEL=off .. 
+cmake -DOPENMC_USE_DAGMC=ON -DDAGMC_ROOT=$HOME/DAGMC -DHDF5_PREFER_PARALLEL=off .. 
 make -j
 make -j install
 cd ..
