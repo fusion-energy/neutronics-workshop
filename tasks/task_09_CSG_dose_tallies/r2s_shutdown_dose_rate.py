@@ -123,7 +123,6 @@ class R2SModel(openmc.Model):
                 src = openmc.Source.from_cell_with_material(
                     cell, new_mats_by_id[cell.fill.id]
                 )
-                print(src.strength, src.energy)
                 if src is not None:  # some materials will have no photon decays
                     src_list.append(src)
 
@@ -143,7 +142,9 @@ openmc.R2SModel = R2SModel
 class Source(openmc.Source):
     @classmethod
     def from_cell_with_material(
-        cls, cell: openmc.Cell, material: typing.Optional[openmc.Material] = None
+        cls,
+        cell: openmc.Cell,
+        material: typing.Optional[openmc.Material] = None,
     ) -> typing.Optional["openmc.Source"]:
         """Generate an isotropic photon source from an openmc.Cell object. By
         default the cells material is used to generate the source. If the
@@ -355,16 +356,11 @@ for photon_time_step_index in r2s_model.photon_timesteps:
     with openmc.StatePoint(statepoint_filename) as statepoint:
         photon_tally_result = statepoint.get_tally(name="photon_dose_on_mesh")
 
-    # gets the combined source strength of all the sources.
-    # this is in units of Bq so it is photons emitted per second
-    my_settings = openmc.Settings.from_xml(settings_filename)
-    photons_per_second = sum(src.strength for src in my_settings.source)
-    print("photons_per_second", photons_per_second)
-
     mesh = photon_tally_result.find_filter(openmc.MeshFilter).mesh
 
     # converts units from pSv-cm3/source_photon to pSv-cm3/second
-    dose_rate = photon_tally_result.mean * photons_per_second
+    # note source photon is in units of Bq already as the source strength has been set
+    dose_rate = photon_tally_result.mean
 
     # converts from (pico) pSv/second to (milli) mSv/second
     dose_rate = dose_rate * 1e-9
@@ -392,8 +388,8 @@ for photon_time_step_index in r2s_model.photon_timesteps:
         tally_slice,
         interpolation="None",
         norm=LogNorm(
-            vmin=1e12,
-            vmax=1e21,
+            vmin=1e-3,
+            vmax=1e4,
         ),
         extent=my_geometry.get_mpl_plot_extent(view_direction="x"),
     )
@@ -404,8 +400,8 @@ for photon_time_step_index in r2s_model.photon_timesteps:
     # adds a contour of the cell geometry
     plt.contour(
         # data flipped as mpl operations imshow and contour result in different rotations
-        np.flipud(np.flip(material_ids_slice)),
-        origin="upper",
+        np.flipud(material_ids_slice),
+        origin="lower",
         colors="k",
         linestyles="solid",
         levels=levels,
