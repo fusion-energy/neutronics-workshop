@@ -64,11 +64,11 @@ universe = openmc.Universe(cells=[void_space_cell, detector_cell, reflective_cel
 geometry = openmc.Geometry(universe)
 
 
-universe.plot(width=(1000.0, 1000.0), basis="xz")
+universe.plot(basis="xz")
 plt.show()
-universe.plot(width=(1000.0, 1000.0), basis="yz")
+universe.plot(basis="yz")
 plt.show()
-universe.plot(width=(1000.0, 1000.0), basis="xy")
+universe.plot(basis="xy")
 plt.show()
 
 # SOURCE
