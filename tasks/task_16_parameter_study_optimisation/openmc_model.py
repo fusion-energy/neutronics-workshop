@@ -198,7 +198,7 @@ def sphere_with_firstwall_model(
     source = openmc.Source()
     source.space = openmc.stats.Point((0, 0, 0))
     source.angle = openmc.stats.Isotropic()
-    source.energy = openmc.stats.Muir(
+    source.energy = openmc.stats.muir(
         e0=14080000.0, m_rat=5.0, kt=20000.0
     )  # neutron energy = 14.08MeV, AMU for D + T = 5, temperature is 20KeV
     sett.source = source

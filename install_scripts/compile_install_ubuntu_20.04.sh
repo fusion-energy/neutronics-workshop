@@ -9,6 +9,14 @@ apt-get --yes upgrade
 
 
 # install dependancies
+# needed for embree
+sudo apt-get install libglfw3
+# needed for embree
+sudo apt-get install libglfw3-dev
+# needed for moab compile
+sudo apt-get install -y libopenblas-dev
+# needed for openmc compile
+sudo apt-get install -y libpng-dev
 sudo apt-get install -y libeigen3-dev
 sudo apt-get install -y git
 sudo apt-get install -y wget
@@ -55,7 +63,7 @@ git clone  --single-branch --branch 5.4.1 --depth 1 https://bitbucket.org/fathom
 mkdir build
 cd build
 #cmake ../moab -DENABLE_HDF5=ON -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$HOME/MOAB -DENABLE_BLASLAPACK=OFF
-cmake ../moab -DENABLE_HDF5=ON -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/MOAB -DENABLE_FORTRAN=OFF -DENABLE_BLASLAPACK=OFF 
+cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$HOME/MOAB -DENABLE_FORTRAN=OFF
 make -j
 #sudo 
 make -j install
@@ -106,7 +114,9 @@ git clone --single-branch --branch develop --depth 1 https://github.com/openmc-d
 cd openmc
 mkdir build
 cd build
-cmake -Doptimize=on -DOPENMC_USE_DAGMC=ON -DDAGMC_ROOT=$HOME/DAGMC -DHDF5_PREFER_PARALLEL=off .. 
+# compile without dagmc
+# cmake ..
+cmake -DOPENMC_USE_DAGMC=ON -DDAGMC_ROOT=$HOME/DAGMC -DHDF5_PREFER_PARALLEL=off .. 
 make -j
 make -j install
 cd ..
