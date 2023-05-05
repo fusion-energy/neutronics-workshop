@@ -153,3 +153,4 @@ The task videos are all available on a [Gather Town](https://gather.town/app/QnH
 | [Task 15 - Techniques for sampling parameter space](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_15_parameter_study_sampling) | Sampling, Interpolation, Multi-dimensional parameter studies |  |
 | [Task 16 - Parameter study optimisation](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_16_parameter_study_optimisation) | Data science machine learning approaches |  |
 | [Task 17 - Detector examples](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_17_detector_examples) | Time filter detector response time of flight |  |
+| [Task 18 - stochastic volume calculation](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks/task_18_stochastic_volume_calculation) | stochastic volume material atoms in cell |  |
