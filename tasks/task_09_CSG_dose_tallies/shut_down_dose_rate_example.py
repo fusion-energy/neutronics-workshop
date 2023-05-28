@@ -5,16 +5,20 @@ import numpy as np
 import openmc
 import openmc.deplete
 import pint
-from pathlib import 
+from pathlib import Path
 import math
 
 # users might want to change these to use specific xml files to use particular decay data or transport cross sections
-# openmc.config['chain_file'] = 'chain.xml'
+# the chain file was downloaded with
+# pip install openmc_data
+# download_nndc_chain -r b8.0
+chain_file = Path(__file__).parents[0] / 'chain-nndc-b8.0.xml'
+openmc.config['chain_file'] = chain_file
 # openmc.config['cross_sections'] = 'cross_sections.xml'
 
 # a few user settings
 # Set up the folders to save all the data in
-n_particles = 1_000
+n_particles = 1_00000
 p_particles = 1_000
 statepoints_folder = Path('statepoints_folder')
 
@@ -40,7 +44,7 @@ mat_iron.set_density("g/cm3", 7.7)
 # must set the depletion to True to deplete the material
 mat_iron.depletable = True
 # volume must set the volume as well as openmc calculates number of atoms
-mat_iron.volume = (4 / 3) * math.pi * math.pow(1, 3)
+mat_iron.volume = (4 / 3) * math.pi * math.pow(sphere_surf_2.r, 3)
 sphere_cell_2.fill = mat_iron
 
 # We make a Al material which should produce a few different activation products
@@ -51,7 +55,7 @@ mat_aluminum.set_density("g/cm3", 2.7)
 # must set the depletion to True to deplete the material
 mat_aluminum.depletable = True
 # volume must set the volume as well as openmc calculates number of atoms
-mat_aluminum.volume = (4 / 3) * math.pi * math.pow(5, 3)
+mat_aluminum.volume = (4 / 3) * math.pi * math.pow(sphere_surf_3.r, 3)
 sphere_cell_3.fill = mat_aluminum
 
 my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3])
@@ -106,22 +110,9 @@ model.deplete(
     operator_kwargs={
         "normalization_mode": "source-rate",  # needed as this is a fixed source simulation
         "dilute_initial": 0,  # need to avoid adding small amounts of fissle material
+        "chain_file": chain_file
     },
 )
-
-# this section makes the photon sources from each active material at each time step
-all_photon_sources = {}
-cells = model.geometry.get_all_cells()
-results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_results.h5")
-for i_cool in range(len(timesteps)):
-    print(f"getting results {i_cool}")
-    all_photon_sources[i_cool] = {}
-    for uid in activated_cell_ids:
-        mat_id = cells[uid].fill.id
-        mat = results[i_cool].get_material(str(mat_id))
-        all_photon_sources[i_cool][uid] = mat.decay_photon_energy
-
-print("all_photon_sources", all_photon_sources)
 
 # creates a regular mesh that surrounds the geometry
 mesh = openmc.RegularMesh().from_domain(
@@ -145,22 +136,29 @@ flux_tally.name = "photon_dose_on_mesh"
 tallies = openmc.Tallies([flux_tally])
 model.tallies = tallies
 
+cells = model.geometry.get_all_cells()
 activated_cells = [cells[uid] for uid in activated_cell_ids]
 
-for step_number in list(all_photon_sources.keys()):
+
+# this section makes the photon sources from each active material at each
+# timestep and runs the photon simulations
+results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_results.h5")
+for i_cool in range(len(timesteps)):
     photon_sources_for_timestep = []
+    print(f"making photon source for timestep {i_cool}")
+    for cell_uid in activated_cell_ids:
+        mat_id = cells[cell_uid].fill.id
+        mat = results[i_cool].get_material(str(mat_id))
+        energy = mat.decay_photon_energy
 
-    cells = model.geometry.get_all_cells()
-
-    for cell in activated_cells:
-        space = openmc.stats.Box(*cell.bounding_box)
-        energy = all_photon_sources[step_number][cell.id]
+        space = openmc.stats.Box(*cells[cell_uid].bounding_box)
+        print(f'source strength {energy.integral()}')
         source = openmc.Source(
             space=space,
             energy=energy,
             particle="photon",
             strength=energy.integral(),
-            domains=[cell],
+            domains=[cells[cell_uid]],
         )
         photon_sources_for_timestep.append(source)
 
@@ -169,9 +167,9 @@ for step_number in list(all_photon_sources.keys()):
     model.settings.batches = 100
     model.settings.particles = p_particles
     model.settings.source = photon_sources_for_timestep
-    model.settings.export_to_xml(
-        path=statepoints_folder / "photons" / "settings.xml"
-    )
 
-    model.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{step_number}")
+    if i_cool != 0:
+        # todo replace with something that checks all sources for strength == 0
+        # there are no decay products in this first timestep for this model
+        model.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
 
