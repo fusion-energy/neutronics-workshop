@@ -108,10 +108,9 @@ data_slice = mesh.slice_of_data(dataset=my_mesh_tally_result.mean, view_directio
 
 data_slice = data_slice * neutrons_per_second * pico_to_milli
 
-
 plot_1 = plt.imshow(
     data_slice,
-    extent=mesh.get_mpl_plot_extent(view_direction="x"),
+    extent=mesh.bounding_box.extent['xy'],
     interpolation=None,
     norm=LogNorm(
         vmin=1e-12,  # trims out the lower section of the colors
@@ -134,7 +133,7 @@ plt.contour(
     linestyles="solid",
     levels=levels,
     linewidths=2.0,
-    extent=my_geometry.get_mpl_plot_extent(view_direction="x"),
+    extent=my_geometry.bounding_box.extent['xy'],
 )
 xlabel, ylabel = my_geometry.get_axis_labels(view_direction="x")
 plt.xlabel(xlabel)
