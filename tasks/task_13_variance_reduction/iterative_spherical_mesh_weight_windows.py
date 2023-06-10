@@ -59,17 +59,37 @@ flux_tally.scores = ["flux"]
 my_tallies = openmc.Tallies()
 my_tallies.append(flux_tally)
 
-import openmc_weight_window_generator
-# import adds generate_wws_magic_method method to the model class
 
 model = openmc.Model(my_geometry, my_materials, my_settings, my_tallies)
 
+model.export_to_xml()
 
-all_wws = model.generate_wws_magic_method(
-    tally=flux_tally, iterations=50,
-    max_split=500_000,
-    output_dir="magic_ww", rel_err_tol=0.99
-)
+
+
+import openmc.lib
+
+iterations = 5
+
+with openmc.lib.run_in_memory():
+
+    tally = openmc.lib.tallies[1]
+
+    wws = openmc.lib.WeightWindows.from_tally(tally)
+    
+    for i in range(iterations):
+        
+        openmc.lib.run()
+
+        wws.update_magic(tally)
+        
+        openmc.lib.settings.weight_windows_on = True
+        
+        openmc.lib.reset()
+        
+
+plot_flux_tally(f'statepoint.{model.settings.batches}.h5')
+
+
 
 # plots the flux as a function of radius for each iteration
 output_files = [Path("magic_ww") / str(c) / f"statepoint.{my_settings.batches}.h5" for c in range(1, len(all_wws))]
