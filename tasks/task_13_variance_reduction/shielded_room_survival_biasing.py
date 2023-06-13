@@ -153,7 +153,7 @@ def run_and_plot(model, filename, output=True):
     with openmc.StatePoint(sp_filename) as sp:
         flux_tally = sp.get_tally(name="flux tally")
 
-    llc, urc = model.geometry.bounding_box
+    mesh_extent = mesh.bounding_box.extent['xy']
 
     # create a plot of the mean flux values
     flux_mean = flux_tally.mean.reshape(100, 100)
@@ -161,12 +161,11 @@ def run_and_plot(model, filename, output=True):
     plt.imshow(
         flux_mean,
         origin="lower",
-        extent=(llc[0], urc[0], llc[1], urc[1]),
+        extent=mesh_extent,
         norm=LogNorm(),
     )
     plt.title("Flux Mean")
 
-    plot_extent = geometry.get_mpl_plot_extent(view_direction="z")
     data_slice = geometry.get_slice_of_material_ids(view_direction="z")
     xlabel, ylabel = geometry.get_axis_labels(view_direction="z")
     plt.xlabel(xlabel)
@@ -178,16 +177,16 @@ def run_and_plot(model, filename, output=True):
         colors="k",
         linestyles="solid",
         linewidths=1,
-        extent=plot_extent,
+        extent=mesh_extent,
     )
 
     plt.subplot(1, 2, 2)
-    # # create a plot of the flux relative error
+    # create a plot of the flux relative error
     flux_std_dev = flux_tally.get_values(value="std_dev").reshape(*mesh.dimension)
     plt.imshow(
         flux_std_dev,
         origin="lower",
-        extent=(llc[0], urc[0], llc[1], urc[1]),
+        extent=mesh_extent,
         norm=LogNorm(),
     )
     plt.title("Flux Std. Dev.")
@@ -200,7 +199,7 @@ def run_and_plot(model, filename, output=True):
         colors="k",
         linestyles="solid",
         linewidths=1,
-        extent=plot_extent,
+        extent=mesh_extent,
     )
     plt.savefig(filename)
     return sp
