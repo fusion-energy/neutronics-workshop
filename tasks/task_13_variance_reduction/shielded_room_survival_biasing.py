@@ -76,16 +76,16 @@ corridor_region = +xplane_4 & -xplane_5 & +yplane_2 & -yplane_5 & +zplane_2 & -z
 roof_region = +xplane_1 & -xplane_6 & +yplane_1 & -yplane_5 & +zplane_1 & -zplane_2
 floor_region = +xplane_1 & -xplane_6 & +yplane_1 & -yplane_5 & +zplane_3 & -zplane_4
 
-outside_left_cell = openmc.Cell(region=outside_left_region, fill=air, name="outside_left_cell")
-outside_right_cell = openmc.Cell(region=outside_right_region, fill=air, name="outside_right_cell")
-outside_top_cell = openmc.Cell(region=outside_top_region, fill=air, name="outside_top_cell")
-outside_bottom_cell = openmc.Cell(region=outside_bottom_region, fill=air, name="outside_bottom_cell")
+outside_left_cell = openmc.Cell(region=outside_left_region, fill=air)
+outside_right_cell = openmc.Cell(region=outside_right_region, fill=air)
+outside_top_cell = openmc.Cell(region=outside_top_region, fill=air)
+outside_bottom_cell = openmc.Cell(region=outside_bottom_region, fill=air)
 wall_left_cell = openmc.Cell(region=wall_left_region, fill=concrete)
 wall_right_cell = openmc.Cell(region=wall_right_region, fill=concrete)
 wall_top_cell = openmc.Cell(region=wall_top_region, fill=concrete)
 wall_bottom_cell = openmc.Cell(region=wall_bottom_region, fill=concrete)
 wall_middle_cell = openmc.Cell(region=wall_middle_region, fill=concrete)
-room_cell = openmc.Cell(region=room_region, fill=air, name="room_cell")
+room_cell = openmc.Cell(region=room_region, fill=air)
 gap_cell = openmc.Cell(region=gap_region, fill=air)
 corridor_cell = openmc.Cell(region=corridor_region, fill=air)
 
@@ -120,62 +120,8 @@ source_x = width_a + width_b + width_c * 0.5
 source_y = depth_a + depth_b + depth_c * 0.75
 source_z = height_j + height_k * 0.5
 
-xlabel, ylabel = geometry.get_axis_labels(view_direction="z")
-plt.xlabel(xlabel)
-plt.ylabel(ylabel)
-
-plot_extent = geometry.get_mpl_plot_extent(view_direction="z")
-
-data_slice = geometry.get_slice_of_material_ids(view_direction="z")
-# plots the materials with randomly assigned colors
-plt.imshow(
-    np.fliplr(data_slice),
-    extent=plot_extent,
-)
-
-# plots the outline of the cells
-plt.contour(
-    np.fliplr(data_slice),
-    origin="upper",
-    colors="k",
-    linestyles="solid",
-    linewidths=1,
-    extent=plot_extent,
-)
-
-# plots the source location
-plt.scatter(source_x, source_y, c="red")
-plt.savefig('geometry_view.png')
-
-plt.clf()
-plt.cla()
-
-xlabel, ylabel = geometry.get_axis_labels(view_direction="y")
-plt.xlabel(xlabel)
-plt.ylabel(ylabel)
-
-plot_extent = geometry.get_mpl_plot_extent(view_direction="y")
-
-data_slice = geometry.get_slice_of_material_ids(view_direction="y")
-# plots the materials with randomly assigned colors
-plt.imshow(
-    np.fliplr(data_slice),
-    extent=plot_extent,
-)
-
-# plots the outline of the cells
-plt.contour(
-    np.fliplr(data_slice),
-    origin="upper",
-    colors="k",
-    linestyles="solid",
-    linewidths=1,
-    extent=plot_extent,
-)
-
-# plots the source location
-plt.scatter(source_x, source_z, c="red")
-plt.savefig('geometry_view_2.png')
+geometry.root_universe.plot(basis='xy', color_by='material') 
+plt.savefig('geometry_view_2.png', bbox_inches="tight")
 
 mesh = openmc.RegularMesh().from_domain(geometry)
 mesh.dimension = (100, 100, 1)
@@ -267,4 +213,4 @@ model.settings.cutoff = {
     "weight": 0.3,  # value needs to be between 0 and 1
     "weight_avg": 0.9,  # value needs to be between 0 and 1
 }
-run_and_plot(model, "yes_survival_biasing.png")
+# run_and_plot(model, "yes_survival_biasing.png")
