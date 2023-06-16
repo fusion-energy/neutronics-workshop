@@ -55,7 +55,7 @@ source.particles = 'neutron'
 settings = openmc.Settings()
 settings.batches = 20
 settings.inactive = 0
-settings.particles = 1000000
+settings.particles = 1000
 settings.source = source
 settings.run_mode = 'fixed source'
 
@@ -132,24 +132,7 @@ times, number_of_Ag110_atoms = results.get_atoms(my_material, 'Ag110')
 for time, num in zip(times, number_of_Ag110_atoms):
     print(f" Time {time}s. Number of Ag110 atoms {num}")
 
-#  Time 0.0s. Number of Ag110 atoms 0.0
-#  Time 24.0s. Number of Ag110 atoms -9.774839608324947e+51
-#  Time 48.0s. Number of Ag110 atoms -4.9707495427014786e+51
-#  Time 72.0s. Number of Ag110 atoms -2.5277497760489057e+51
-#  Time 96.0s. Number of Ag110 atoms -1.2854236318739867e+51
-#  Time 120.0s. Number of Ag110 atoms -6.536698881496181e+50
-#  Time 144.0s. Number of Ag110 atoms -3.3240739634653125e+50
-#  Time 168.0s. Number of Ag110 atoms -1.6903742875270554e+50
-#  Time 192.0s. Number of Ag110 atoms -8.595973685717351e+49
-#  Time 216.0s. Number of Ag110 atoms -4.371266420151486e+49
-#  Time 240.0s. Number of Ag110 atoms -2.2228976977550398e+49
-#  Time 264.0s. Number of Ag110 atoms -1.1303987677130439e+49
-#  Time 288.0s. Number of Ag110 atoms -5.748358889109708e+48
-#  Time 312.0s. Number of Ag110 atoms -2.923183469569638e+48
-#  Time 336.0s. Number of Ag110 atoms -1.4865115003438162e+48
-#  Time 360.0s. Number of Ag110 atoms -7.559280707685955e+47
-#  Time 384.0s. Number of Ag110 atoms -3.844082255964817e+47
-#  Time 408.0s. Number of Ag110 atoms -1.9548114380246485e+47
-#  Time 432.0s. Number of Ag110 atoms -9.940702367392234e+46
-#  Time 456.0s. Number of Ag110 atoms -5.055094401173212e+46
-#  Time 480.0s. Number of Ag110 atoms -2.5706412344258073e+46
+import matplotlib.pyplot as plt
+
+plt.plot(times, number_of_Ag110_atoms)
+plt.show()
