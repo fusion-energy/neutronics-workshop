@@ -7,7 +7,7 @@ The workshop contains the following variance reduction examples:
 
 | Filename | variance reduction technique | geometry | mesh type |
 |---|---|---|---|
-| shielded_room_survival_biasing.py | survival_biasing | shielded bunker | RegularMesh |
-| generate_single_ww_and_apply.ipynb | weight windows | sphere | SphericalMesh |
-| iterative_spherical_mesh_weight_windows.py | weight windows | sphere | SphericalMesh |
-| batch_by_batch_till_tally_convergence_limit.py | weight windows | sphere | SphericalMesh |
+| 1_shielded_room_survival_biasing.py | survival_biasing | shielded bunker | RegularMesh |
+| 2_shielded_room_single_ww.ipynb | weight windows | sphere | SphericalMesh |
+| 3_sphere_iterative_per_run_ww.py | weight windows | sphere | SphericalMesh |
+| 4_sphere_iterative_per_batch_ww.py | weight windows | sphere | SphericalMesh |
