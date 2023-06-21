@@ -74,7 +74,7 @@ plt.show()
 # SOURCE
 
 # Create a neutron point source
-source = openmc.Source()
+source = openmc.IndependentSource()
 source.space = openmc.stats.Point((0, 0, 0))
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([2.5e6, 14e6], [0.5, 0.5])

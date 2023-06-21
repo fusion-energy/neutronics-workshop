@@ -195,7 +195,7 @@ def sphere_with_firstwall_model(
     sett.run_mode = "fixed source"
 
     # sets a 14MeV (distributuion) point source
-    source = openmc.Source()
+    source = openmc.IndependentSource()
     source.space = openmc.stats.Point((0, 0, 0))
     source.angle = openmc.stats.Isotropic()
     source.energy = openmc.stats.muir(

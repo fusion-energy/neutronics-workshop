@@ -68,7 +68,7 @@ activated_cell_ids = [c.id for c in my_geometry.get_all_material_cells().values(
 print("activated_cell_ids", activated_cell_ids)
 
 # 14MeV neutron source that activates material
-my_source = openmc.Source()
+my_source = openmc.IndependentSource()
 my_source.space = openmc.stats.Point((0, 0, 0))
 my_source.angle = openmc.stats.Isotropic()
 my_source.energy = openmc.stats.Discrete([14.06e6], [1])
@@ -152,7 +152,7 @@ for i_cool in range(len(timesteps)):
 
         space = openmc.stats.Box(*cells[cell_uid].bounding_box)
         print(f'source strength {energy.integral()}')
-        source = openmc.Source(
+        source = openmc.IndependentSource(
             space=space,
             energy=energy,
             particle="photon",
