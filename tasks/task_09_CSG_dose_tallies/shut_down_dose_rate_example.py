@@ -109,7 +109,6 @@ model.deplete(
     # final_step=False,
     operator_kwargs={
         "normalization_mode": "source-rate",  # needed as this is a fixed source simulation
-        "dilute_initial": 0,  # need to avoid adding small amounts of fissle material
         "chain_file": chain_file
     },
 )
