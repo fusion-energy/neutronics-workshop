@@ -9,7 +9,6 @@
 
 import openmc
 import openmc.deplete
-import os
 
 import math
 
@@ -61,8 +60,7 @@ settings.run_mode = 'fixed source'
 
 model = openmc.model.Model(geometry, materials, settings)
 
-# openmc.config['chain_file'] = '/nuclear_data/chain-nndc-b8.0.xml'
-openmc.config['chain_file'] = 'chain-nndc-b8.0.xml'
+openmc.config['chain_file'] = '/nuclear_data/chain-endf-b8.0.xml'
 
 # runs the simulation to generate one group microscopic cross sections
 micro_xs = openmc.deplete.MicroXS.from_model(
@@ -78,7 +76,6 @@ operator = openmc.deplete.IndependentOperator(
     materials=materials,
     micro_xs=micro_xs,
     chain_file=openmc.config['chain_file'],
-    dilute_initial=0,  # set to zero to avoid adding small amounts of isotopes, defaults to adding small amounts of fissionable isotopes
     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
     reduce_chain_level=5,
 )
@@ -123,7 +120,6 @@ integrator = openmc.deplete.PredictorIntegrator(
 )
 
 integrator.integrate()
-print("Finalize depletion...")
 
 results = openmc.deplete.ResultsList.from_hdf5("depletion_results.h5")
 
@@ -136,3 +132,4 @@ import matplotlib.pyplot as plt
 
 plt.plot(times, number_of_Ag110_atoms)
 plt.show()
+
