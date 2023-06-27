@@ -94,6 +94,7 @@ RUN apt-get install libxinerama-dev -y
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
+                stl_to_h5m \
                 remove_dagmc_tags \
                 openmc-plasma-source \
                 openmc-dagmc-wrapper \
