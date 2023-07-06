@@ -60,76 +60,77 @@ settings.run_mode = 'fixed source'
 
 model = openmc.model.Model(geometry, materials, settings)
 
-openmc.config['chain_file'] = '/nuclear_data/chain-endf-b8.0.xml'
+# openmc.config['chain_file'] = '/nuclear_data/chain-endf-b8.0.xml'
+openmc.config['chain_file'] = '/home/jshimwell/ENDF-B-VIII.0-NNDC/chain-nndc-b8.0.xml'
 
 # runs the simulation to generate one group microscopic cross sections
 micro_xs = openmc.deplete.MicroXS.from_model(
-    model,
-    my_material,
-    openmc.config['chain_file']
+    model=model,
+    domain=my_material,
+    chain_file=openmc.config['chain_file']
 )
 print('All the reaction rates within the material', micro_xs)
 
-# This category of operator uses one-group microscopic cross sections to obtain transmutation reaction rates.
-# The cross sections are pre-calculated, so there is no need for direct coupling between a transport-independent operator and a transport solver.
-operator = openmc.deplete.IndependentOperator(
-    materials=materials,
-    micro_xs=micro_xs,
-    chain_file=openmc.config['chain_file'],
-    reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
-    reduce_chain_level=5,
-)
+# # This category of operator uses one-group microscopic cross sections to obtain transmutation reaction rates.
+# # The cross sections are pre-calculated, so there is no need for direct coupling between a transport-independent operator and a transport solver.
+# operator = openmc.deplete.IndependentOperator(
+#     materials=materials,
+#     micro_xs=micro_xs,
+#     chain_file=openmc.config['chain_file'],
+#     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
+#     reduce_chain_level=5,
+# )
 
-# We define timesteps together with the source rate to make it clearer
-timesteps_and_source_rates = [
-    (24, 1e20),
-    (24, 1e20),
-    (24, 1e20),
-    (24, 1e20),
-    (24, 1e20),  # should saturate Ag110 here as it has been irradiated for over 5 halflives
-    (24, 1e20),
-    (24, 1e20),
-    (24, 1e20),
-    (24, 1e20),
-    (24, 0),
-    (24, 0),
-    (24, 0),
-    (24, 0),
-    (24, 0),
-    (24, 0),
-    (24, 0),
-    (24, 0),
-    (24, 0),
-    (24, 0),
-    (24, 0),
-]
+# # We define timesteps together with the source rate to make it clearer
+# timesteps_and_source_rates = [
+#     (24, 1e20),
+#     (24, 1e20),
+#     (24, 1e20),
+#     (24, 1e20),
+#     (24, 1e20),  # should saturate Ag110 here as it has been irradiated for over 5 halflives
+#     (24, 1e20),
+#     (24, 1e20),
+#     (24, 1e20),
+#     (24, 1e20),
+#     (24, 0),
+#     (24, 0),
+#     (24, 0),
+#     (24, 0),
+#     (24, 0),
+#     (24, 0),
+#     (24, 0),
+#     (24, 0),
+#     (24, 0),
+#     (24, 0),
+#     (24, 0),
+# ]
 
-# Uses list Python comprehension to get the timesteps and source_rates separately
-timesteps = [item[0] for item in timesteps_and_source_rates]
-source_rates = [item[1] for item in timesteps_and_source_rates]
+# # Uses list Python comprehension to get the timesteps and source_rates separately
+# timesteps = [item[0] for item in timesteps_and_source_rates]
+# source_rates = [item[1] for item in timesteps_and_source_rates]
 
 
-# PredictorIntegrator has been selected as the depletion operator for this example as it is a fast first order Integrator
-# OpenMC offers several time-integration algorithms https://docs.openmc.org/en/stable/pythonapi/deplete.html#primary-api\n",
-# CF4Integrator should normally be selected as it appears to be the most accurate https://dspace.mit.edu/handle/1721.1/113721\n",
-integrator = openmc.deplete.PredictorIntegrator(
-    operator=operator,
-    timesteps=timesteps,
-    source_rates=source_rates,
-    timestep_units='s'
-)
+# # PredictorIntegrator has been selected as the depletion operator for this example as it is a fast first order Integrator
+# # OpenMC offers several time-integration algorithms https://docs.openmc.org/en/stable/pythonapi/deplete.html#primary-api\n",
+# # CF4Integrator should normally be selected as it appears to be the most accurate https://dspace.mit.edu/handle/1721.1/113721\n",
+# integrator = openmc.deplete.PredictorIntegrator(
+#     operator=operator,
+#     timesteps=timesteps,
+#     source_rates=source_rates,
+#     timestep_units='s'
+# )
 
-integrator.integrate()
+# integrator.integrate()
 
-results = openmc.deplete.ResultsList.from_hdf5("depletion_results.h5")
+# results = openmc.deplete.ResultsList.from_hdf5("depletion_results.h5")
 
-times, number_of_Ag110_atoms = results.get_atoms(my_material, 'Ag110')
+# times, number_of_Ag110_atoms = results.get_atoms(my_material, 'Ag110')
 
-for time, num in zip(times, number_of_Ag110_atoms):
-    print(f" Time {time}s. Number of Ag110 atoms {num}")
+# for time, num in zip(times, number_of_Ag110_atoms):
+#     print(f" Time {time}s. Number of Ag110 atoms {num}")
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
-plt.plot(times, number_of_Ag110_atoms)
-plt.show()
+# plt.plot(times, number_of_Ag110_atoms)
+# plt.show()
 
