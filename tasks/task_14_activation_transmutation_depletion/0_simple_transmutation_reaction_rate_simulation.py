@@ -1,3 +1,6 @@
+# This example finds the transmutation rates in a material.
+# This is an introduction task for the topic and for real inventory tracking
+# decay and material evolution would need to be considered.
 
 import re
 
