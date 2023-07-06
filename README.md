@@ -5,32 +5,23 @@
 
 # Fusion Neutronics workshop
 A selection of resources for learning fusion neutronics simulations with a
-particular focus on OpenMC with DAGMC and the Paramak
+particular focus on [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
+and [Paramak](https://paramak.readthedocs.io)
 
 There is a 
 [slide](https://slides.com/neutronics_workshop/neutronics_workshop) deck that introduces
 the workshop and show the expected outputs of each task.
 
-The use of [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
-and [Paramak](https://paramak.readthedocs.io) for neutronics analysis requires
-several software packages and nuclear data.
-These have all been installed inside a Docker container.
-The video below gives a brief explainer of what to expect in the workshop and
-some motivation for learning neutronics.
-
-The neutronics workshop was created by and is maintained by
-[Jonathan Shimwell](https://github.com/shimwell/).
-The repository has benefited greatly from contributions from [John Billingsley](https://github.com/billingsley-john)
-and [others](https://github.com/fusion-energy/neutronics-workshop/graphs/contributors)
-
-The resource has proven most useful as it is one of the few open source and
-accessible fusion neutronics training resources.
+These examples requires several specific versions of software packages and nuclear data to run correctly.
+Therefore I recommend making use of this containerised environment to run these example notebooks.
 
 The repository has benefited greatly from user feedback. Please feel free to
 raise Github [issues](https://github.com/fusion-energy/neutronics-workshop/issues)
 or reach out in the [discussions](https://github.com/fusion-energy/neutronics-workshop/discussions)
 section if you spot anything that needs fixing or think of an improvement.
-Contributions are also very welcome as pull requests to the develop branch.
+Pull requests are very welcome.
+
+The video below gives a brief explainer of what to expect in the workshop and some motivation for learning neutronics.
 
 <p align="center"><a href="https://youtu.be/HH-poTG-FxM" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/144746742-3e31e0ee-6380-4db7-b8ea-0b1c302d497b.png" height="400" /></a></p>
 
