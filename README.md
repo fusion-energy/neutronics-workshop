@@ -12,8 +12,8 @@ There is a
 [slide](https://slides.com/neutronics_workshop/neutronics_workshop) deck that introduces
 the workshop and show the expected outputs of each task.
 
-These examples requires several specific versions of software packages and nuclear data to run correctly.
-Therefore I recommend making use of this containerised environment to run these example notebooks.
+These examples require specific versions of software packages and nuclear data to run correctly.
+Therefore I highly recommend making use of this containerised environment to run these example notebooks.
 
 The repository has benefited greatly from user feedback. Please feel free to
 raise Github [issues](https://github.com/fusion-energy/neutronics-workshop/issues)
