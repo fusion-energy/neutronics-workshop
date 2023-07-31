@@ -1,36 +1,44 @@
 
-[![CI with install](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_tests.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_tests.yml)
+[![Task 1](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_1.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_1.yml)
+[![Task 2](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_2.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_2.yml)
+[![Task 3](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_3.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_3.yml)
+[![Task 4](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_4.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_4.yml)
+[![Task 5](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_5.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_5.yml)
+[![Task 6](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_6.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_6.yml)
+[![Task 7](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_7.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_7.yml)
+[![Task 8](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_8.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_8.yml)
+[![Task 9](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_9.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_9.yml)
+[![Task 10](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_10.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_10.yml)
+[![Task 11](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_11.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_11.yml)
+[![Task 12](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_12.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_12.yml)
+[![Task 13](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_13.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_13.yml)
+[![Task 14](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_14.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_14.yml)
+[![Task 15](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_15.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_15.yml)
+[![Task 16](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_16.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_16.yml)
+[![Task 17](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_17.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_17.yml)
+[![Task 18](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_18.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_18.yml)
 
 [![docker-publish-release](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml)
 
 # Fusion Neutronics workshop
 A selection of resources for learning fusion neutronics simulations with a
-particular focus on OpenMC with DAGMC and the Paramak
+particular focus on [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
+and [Paramak](https://paramak.readthedocs.io)
 
 There is a 
 [slide](https://slides.com/neutronics_workshop/neutronics_workshop) deck that introduces
 the workshop and show the expected outputs of each task.
 
-The use of [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
-and [Paramak](https://paramak.readthedocs.io) for neutronics analysis requires
-several software packages and nuclear data.
-These have all been installed inside a Docker container.
-The video below gives a brief explainer of what to expect in the workshop and
-some motivation for learning neutronics.
-
-The neutronics workshop was created by and is maintained by
-[Jonathan Shimwell](https://github.com/shimwell/).
-The repository has benefited greatly from contributions from [John Billingsley](https://github.com/billingsley-john)
-and [others](https://github.com/fusion-energy/neutronics-workshop/graphs/contributors)
-
-The resource has proven most useful as it is one of the few open source and
-accessible fusion neutronics training resources.
+These examples require specific versions of software packages and nuclear data to run correctly.
+Therefore I highly recommend making use of the containerised environment to run these example notebooks.
 
 The repository has benefited greatly from user feedback. Please feel free to
 raise Github [issues](https://github.com/fusion-energy/neutronics-workshop/issues)
 or reach out in the [discussions](https://github.com/fusion-energy/neutronics-workshop/discussions)
 section if you spot anything that needs fixing or think of an improvement.
-Contributions are also very welcome as pull requests to the develop branch.
+Pull requests are very welcome.
+
+The video below gives a brief explainer of what to expect in the workshop and some motivation for learning neutronics.
 
 <p align="center"><a href="https://youtu.be/HH-poTG-FxM" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/144746742-3e31e0ee-6380-4db7-b8ea-0b1c302d497b.png" height="400" /></a></p>
 

@@ -40,10 +40,8 @@ def _notebook_run(path):
     return nb, errors
 
 
-class test_tasks(unittest.TestCase):
-
-    def test_task_3(self):
-        for notebook in Path().rglob("tasks/task_03_*/*.ipynb"):
-            print(notebook)
-            nb, errors = _notebook_run(notebook)
-            assert errors == []
+def test_task_3():
+    for notebook in Path().rglob("tasks/task_03_*/*.ipynb"):
+        print(notebook)
+        nb, errors = _notebook_run(notebook)
+        assert errors == []
