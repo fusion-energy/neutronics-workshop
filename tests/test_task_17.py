@@ -40,11 +40,8 @@ def _notebook_run(path):
     return nb, errors
 
 
-class test_tasks(unittest.TestCase):
-
-# No module named 'openmc_model'
-    def test_task_14(self):
-        for notebook in Path().rglob("tasks/task_17_*/*.ipynb"):
-            print(notebook)
-            nb, errors = _notebook_run(notebook)
-            assert errors == []
+def test_task_17():
+    for notebook in Path().rglob("tasks/task_17_*/*.ipynb"):
+        print(notebook)
+        nb, errors = _notebook_run(notebook)
+        assert errors == []

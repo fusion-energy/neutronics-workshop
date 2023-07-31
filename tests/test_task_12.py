@@ -6,7 +6,6 @@ use the function.
 
 import os
 import sys
-import unittest
 from pathlib import Path
 
 import nbformat
@@ -40,16 +39,14 @@ def _notebook_run(path):
     return nb, errors
 
 
-class test_tasks(unittest.TestCase):
+def test_task_12():
+    for notebook in Path().rglob("tasks/task_12_*/1*.ipynb"):
+        print(notebook)
+        nb, errors = _notebook_run(notebook)
+        assert errors == []
 
-    def test_task_12(self):
-        for notebook in Path().rglob("tasks/task_12_*/1*.ipynb"):
-            print(notebook)
-            nb, errors = _notebook_run(notebook)
-            assert errors == []
-
-        for notebook in Path().rglob("tasks/task_12_*/2_.ipynb"):
-            nb, errors = _notebook_run(notebook)
-            assert errors == []
-        
-        # task 3 is skipped as it causes errors
+    for notebook in Path().rglob("tasks/task_12_*/2_.ipynb"):
+        nb, errors = _notebook_run(notebook)
+        assert errors == []
+    
+    # task 3 is skipped as it causes errors, issue raised
