@@ -1,5 +1,22 @@
 
-[![CI with install](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_tests.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_tests.yml)
+[![Task 1](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_1.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_1.yml)
+[![Task 2](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_2.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_2.yml)
+[![Task 3](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_3.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_3.yml)
+[![Task 4](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_4.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_4.yml)
+[![Task 5](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_5.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_5.yml)
+[![Task 6](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_6.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_6.yml)
+[![Task 7](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_7.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_7.yml)
+[![Task 8](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_8.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_8.yml)
+[![Task 9](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_9.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_9.yml)
+[![Task 10](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_10.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_10.yml)
+[![Task 11](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_11.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_11.yml)
+[![Task 12](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_12.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_12.yml)
+[![Task 13](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_13.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_13.yml)
+[![Task 14](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_14.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_14.yml)
+[![Task 15](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_15.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_15.yml)
+[![Task 16](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_16.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_16.yml)
+[![Task 17](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_17.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_17.yml)
+[![Task 18](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_18.yml/badge.svg?branch=main)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/ci_task_18.yml)
 
 [![docker-publish-release](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml)
 
