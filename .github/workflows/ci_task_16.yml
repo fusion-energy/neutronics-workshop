@@ -1,0 +1,25 @@
+
+name: Task 16
+
+on:
+  pull_request:
+    branches:
+    - develop
+    - main
+  push:    
+    branches:
+    - develop
+    - main
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/fusion-energy/neutronics-workshop:base
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: test task 16
+        run: |
+          pytest tests/test_task_16.py -v
