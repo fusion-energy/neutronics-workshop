@@ -26,7 +26,7 @@
 #  docker build -t neutronics-workshop:base:embree-avx --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=false .
 
 # for local testing I tend to use this build command
-# docker build -t neutronics-workshop:base --build-arg compile_cores=14 --build-arg build_double_down=ON .
+# docker build -t neutronics-workshop:base --build-arg compile_cores=14 --build-arg build_double_down=ON -f .devcontainer/base.Dockerfile .
 # and then run with this command
 # docker run -it neutronics-workshop:base
 
@@ -82,7 +82,8 @@ RUN apt-get --yes install libeigen3-dev \
 
 # RUN conda install -c conda-forge mamba -y
 # RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
-RUN pip install cadquery  \
+# RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
+RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8  \
                 paramak
 
 RUN pip install gmsh
@@ -103,8 +104,8 @@ RUN pip install neutronics_material_maker[density] \
                 spectrum_plotter \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
-                openmc_data_downloader>=0.6.0 \
-                openmc_data \
+                "openmc_data_downloader>=0.6.0" \
+                "openmc_data>=0.2.2" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter
 
@@ -124,8 +125,8 @@ RUN pip install cmake\
                 pytest \
                 holoviews \
                 ipywidgets \
-# cython is needed for moab
-                cython \
+# cython is needed for moab and openmc, specific version tagged to avoid build errors
+                "cython<3.0" \
                 nest_asyncio \
                 jupyterlab \
                 jupyter-cadquery
@@ -240,15 +241,10 @@ RUN git clone --single-branch --branch develop --depth 1 https://github.com/open
     cd /openmc/ && \
     pip install .
 
-# installs TENDL and ENDF nuclear data. Performed after openmc install as
-# openmc is needed to write the cross_Sections.xml file
-
-# RUN pip install openmc_data_downloader && \
+# Installs ENDF with TENDL where ENDF cross sections are not available.
+# Performed after openmc install as openmc is needed to write the cross_Sections.xml file
 RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
-
-RUN pip install openmc_data && \
-    mkdir -p /nuclear_data && \
-    download_endf_chain -d nuclear_data -r b8.0
+RUN download_endf_chain -d nuclear_data -r b8.0
 
 # install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
