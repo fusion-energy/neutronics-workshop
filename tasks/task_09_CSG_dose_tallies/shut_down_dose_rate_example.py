@@ -11,8 +11,8 @@ import math
 # users might want to change these to use specific xml files to use particular decay data or transport cross sections
 # the chain file was downloaded with
 # pip install openmc_data
-# download_nndc_chain -r b8.0
-chain_file = Path(__file__).parents[0] / 'chain-nndc-b8.0.xml'
+# download_endf_chain -r b8.0
+chain_file = Path(__file__).parents[0] / 'chain-endf-b8.0.xml'
 openmc.config['chain_file'] = chain_file
 # openmc.config['cross_sections'] = 'cross_sections.xml'
 
