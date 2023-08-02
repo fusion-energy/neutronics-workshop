@@ -240,9 +240,8 @@ RUN git clone --single-branch --branch develop --depth 1 https://github.com/open
     cd /openmc/ && \
     pip install .
 
-# installs ENDF nuclear data. Performed after openmc install as
-# openmc is needed to write the cross_Sections.xml file
-
+# Installs ENDF with TENDL where ENDF cross sections are not available.
+# Performed after openmc install as openmc is needed to write the cross_Sections.xml file
 RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
 RUN download_endf_chain -d nuclear_data -r b8.0
 
