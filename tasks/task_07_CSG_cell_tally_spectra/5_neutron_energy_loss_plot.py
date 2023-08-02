@@ -5,6 +5,7 @@ import openmc
 import matplotlib.pyplot as plt
 from shutil import move
 
+
 def generate_tracks_file_for_material(element):
     iron = openmc.Material()
     iron.set_density("g/cm3", 7.75)
@@ -33,8 +34,9 @@ def generate_tracks_file_for_material(element):
     move("tracks.h5", f"tracks_{element}.h5")
     return f"tracks_{element}.h5"
 
+
 tracks_file_w = generate_tracks_file_for_material('W')
-tracks_file_be = generate_tracks_file_for_material('C')
+tracks_file_be = generate_tracks_file_for_material('Li')
 
 for tracks_filenames, color in zip([tracks_file_be, tracks_file_w], ['red','blue']):
     tracks = openmc.Tracks(tracks_filenames)
@@ -44,9 +46,15 @@ for tracks_filenames, color in zip([tracks_file_be, tracks_file_w], ['red','blue
             if particle.particle == 0:  # 0 is a neutron
                 for state in particle.states:
                     energy.append(state[2])
-                plt.plot(energy, label=p_number, color=color)
+                plt.plot(energy, color=color)
 
+plt.legend()
 plt.xlabel('Interaction number')
 plt.ylabel('Energy [eV]')
 plt.yscale("log")
+
+leg = ax.get_legend()
+leg.legendHandles[0].set_color('red')
+leg.legendHandles[1].set_color('yellow')
+
 plt.show()
