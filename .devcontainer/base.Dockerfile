@@ -103,8 +103,8 @@ RUN pip install neutronics_material_maker[density] \
                 spectrum_plotter \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
-                openmc_data_downloader>=0.6.0 \
-                openmc_data>=0.2.2 \
+                "openmc_data_downloader>=0.6.0" \
+                "openmc_data>=0.2.2" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter
 
