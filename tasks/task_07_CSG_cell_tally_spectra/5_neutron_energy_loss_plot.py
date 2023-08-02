@@ -1,5 +1,7 @@
 # This example shows the energy loss per collision for a large mass absorbing
-# element (W) and a relatively low mass transparent element (C)
+# element (W) and a low mass element (H). The both end up stopping neutrons
+# The hydrogen slows the neutron down quickly and absorbs low energy neutrons
+# The Tungsten slows the neutron down less effectively but absorbs high energy neutrons
 
 import openmc
 import matplotlib.pyplot as plt
@@ -38,7 +40,7 @@ def generate_tracks_file_for_material(element):
 tracks_file_w = generate_tracks_file_for_material("W")
 
 
-for element, color in zip(["C", "W"], ["red", "blue"]):
+for element, color in zip(["H", "W"], ["red", "blue"]):
     plt.plot([0], label=element, color=color)
     tracks_filename = generate_tracks_file_for_material(element)
     tracks = openmc.Tracks(tracks_filename)
