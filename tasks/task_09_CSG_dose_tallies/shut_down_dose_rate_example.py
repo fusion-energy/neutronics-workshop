@@ -12,8 +12,7 @@ import math
 # the chain file was downloaded with
 # pip install openmc_data
 # download_endf_chain -r b8.0
-chain_file = Path(__file__).parents[0] / 'chain-endf-b8.0.xml'
-openmc.config['chain_file'] = chain_file
+openmc.config['chain_file'] = 'nuclear_data/chain-endf-b8.0.xml'
 # openmc.config['cross_sections'] = 'cross_sections.xml'
 
 # a few user settings
