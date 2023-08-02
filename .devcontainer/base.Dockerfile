@@ -82,7 +82,8 @@ RUN apt-get --yes install libeigen3-dev \
 
 # RUN conda install -c conda-forge mamba -y
 # RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
-RUN pip install cadquery  \
+# RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
+RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8  \
                 paramak
 
 RUN pip install gmsh
