@@ -104,7 +104,7 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
                 openmc_data_downloader>=0.6.0 \
-                openmc_data \
+                openmc_data>=0.2.2 \
                 openmc_plot \
                 dagmc_geometry_slice_plotter
 
@@ -125,7 +125,7 @@ RUN pip install cmake\
                 holoviews \
                 ipywidgets \
 # cython is needed for moab and openmc, specific version tagged to avoid build errors
-                cython<3.0 \
+                "cython<3.0" \
                 nest_asyncio \
                 jupyterlab \
                 jupyter-cadquery
@@ -240,15 +240,11 @@ RUN git clone --single-branch --branch develop --depth 1 https://github.com/open
     cd /openmc/ && \
     pip install .
 
-# installs TENDL and ENDF nuclear data. Performed after openmc install as
+# installs ENDF nuclear data. Performed after openmc install as
 # openmc is needed to write the cross_Sections.xml file
 
-# RUN pip install openmc_data_downloader && \
 RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
-
-RUN pip install openmc_data && \
-    mkdir -p /nuclear_data && \
-    download_endf_chain -d nuclear_data -r b8.0
+RUN download_endf_chain -d nuclear_data -r b8.0
 
 # install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
