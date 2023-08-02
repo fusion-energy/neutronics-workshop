@@ -26,7 +26,7 @@
 #  docker build -t neutronics-workshop:base:embree-avx --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=false .
 
 # for local testing I tend to use this build command
-# docker build -t neutronics-workshop:base --build-arg compile_cores=14 --build-arg build_double_down=ON .
+# docker build -t neutronics-workshop:base --build-arg compile_cores=14 --build-arg build_double_down=ON -f .devcontainer/base.Dockerfile .
 # and then run with this command
 # docker run -it neutronics-workshop:base
 
@@ -124,8 +124,8 @@ RUN pip install cmake\
                 pytest \
                 holoviews \
                 ipywidgets \
-# cython is needed for moab
-                cython \
+# cython is needed for moab and openmc, specific version tagged to avoid build errors
+                cython<3.0 \
                 nest_asyncio \
                 jupyterlab \
                 jupyter-cadquery
