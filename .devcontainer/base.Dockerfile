@@ -137,10 +137,6 @@ ARG include_avx=false
 ARG build_double_down=OFF
 
 # Clone and install Embree
-# embree from conda is not supported yet
-# TODO check if embree3 package on conda is supported
-# conda install -c conda-forge embree >> version: 2.17.7
-# requested version "3.6.1"
 # added following two lines to allow use on AMD CPUs see discussion
 # https://openmc.discourse.group/t/dagmc-geometry-open-mc-aborted-unexpectedly/1369/24?u=pshriwise  
 RUN if [ "$build_double_down" = "ON" ] ; \
@@ -184,10 +180,8 @@ ENV PYTHONPATH="/MOAB/lib/python3.9/site-packages/pymoab-5.3.1-py3.9-linux-x86_6
 
 RUN python -c "import pymoab"
 
-
 ENV PATH=$PATH:/MOAB/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
-
 
 # Clone and install Double-Down
 RUN if [ "$build_double_down" = "ON" ] ; \
@@ -202,7 +196,6 @@ RUN if [ "$build_double_down" = "ON" ] ; \
         make -j"$compile_cores" install ; \
         rm -rf /double-down/build /double-down/double-down ; \
     fi
-
 
 # DAGMC version develop install from source
 RUN mkdir DAGMC && \
@@ -253,14 +246,6 @@ ENV OPENMC_CHAIN_FILE=/nuclear_data/chain-endf-b8.0.xml
 
 RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
 RUN pip install paramak
+
 # cadquery-ocp==7.7.1 needs python 3.10 or higher
 RUN pip install cadquery-ocp==7.7.1
-# # have to build ocp from source as we need OCP version 7.7.1 which as the _address option
-# RUN git clone https://github.com/CadQuery/OCP.git
-# RUN git clone https://github.com/CadQuery/pywrap.git
-# # RUN sudo apt-get install clang -y 
-# RUN pip install clang
-# RUN cd pywrap && python -m pip install .
-# RUN cd OCP && pywrap all ocp.toml
-# RUN cd OCP && cmake -S OCP -B build
-# RUN cd OCP && cmake --build build
