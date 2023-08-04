@@ -31,7 +31,7 @@
 # docker run -it neutronics-workshop:base
 
 # FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
-FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.9-bullseye as dependencies
+FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.10-bullseye as dependencies
 
 RUN apt-get --allow-releaseinfo-change update
 RUN apt-get --yes update && apt-get --yes upgrade
@@ -256,12 +256,14 @@ ENV OPENMC_CHAIN_FILE=/nuclear_data/chain-endf-b8.0.xml
 
 RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
 RUN pip install paramak
-
-# have to build ocp from source as we need OCP version 7.7.1 which as the _address option
-RUN git clone https://github.com/CadQuery/OCP.git
-RUN git clone https://github.com/CadQuery/pywrap.git
-RUN cd pywrap && python -m pip install .
-RUN sudo apt-get install clang -y 
-RUN cd OCP && pywrap all ocp.toml
-RUN cd OCP && cmake -S OCP -B build
-RUN cd OCP && cmake --build build
+# cadquery-ocp==7.7.1 needs python 3.10 or higher
+RUN pip install cadquery-ocp==7.7.1
+# # have to build ocp from source as we need OCP version 7.7.1 which as the _address option
+# RUN git clone https://github.com/CadQuery/OCP.git
+# RUN git clone https://github.com/CadQuery/pywrap.git
+# # RUN sudo apt-get install clang -y 
+# RUN pip install clang
+# RUN cd pywrap && python -m pip install .
+# RUN cd OCP && pywrap all ocp.toml
+# RUN cd OCP && cmake -S OCP -B build
+# RUN cd OCP && cmake --build build
