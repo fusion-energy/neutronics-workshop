@@ -83,8 +83,8 @@ RUN apt-get --yes install libeigen3-dev \
 # RUN conda install -c conda-forge mamba -y
 # RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
 # RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
-RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8  \
-                paramak
+# RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
+# RUN pip install paramak
 
 RUN pip install gmsh
 # needed for gmsh
@@ -253,3 +253,15 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
 
 ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
 ENV OPENMC_CHAIN_FILE=/nuclear_data/chain-endf-b8.0.xml
+
+RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
+RUN pip install paramak
+
+# have to build ocp from source as we need OCP version 7.7.1 which as the _address option
+RUN git clone https://github.com/CadQuery/OCP.git
+RUN git clone https://github.com/CadQuery/pywrap.git
+RUN cd pywrap && python -m pip install .
+RUN sudo apt-get install clang -y 
+RUN cd OCP && pywrap all ocp.toml
+RUN cd OCP && cmake -S OCP -B build
+RUN cd OCP && cmake --build build
