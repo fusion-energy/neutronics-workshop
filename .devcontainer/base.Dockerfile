@@ -109,9 +109,6 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_plot \
                 dagmc_geometry_slice_plotter
 
-RUN pip install git+https://github.com/fusion-energy/openmc_weight_window_generator.git
-
-
 # Python libraries used in the workshop
 RUN pip install cmake\
 # new version of cmake needed for openmc compile
