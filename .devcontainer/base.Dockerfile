@@ -83,7 +83,6 @@ RUN apt-get --yes install libeigen3-dev \
                           libxinerama-dev 
                     
 RUN apt-get --yes install python3-pip python3-venv
-RUN pip install --upgrade pip
 
 
 # Enabling a venv within Docker is needed to avoid system wide installs
@@ -92,6 +91,7 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
+RUN pip install --upgrade pip
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
@@ -113,14 +113,7 @@ RUN pip install neutronics_material_maker[density] \
 RUN pip install git+https://github.com/fusion-energy/openmc-plasma-source
 
 RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
-RUN pip install cadquery-ocp==7.7.1
-RUN pip install ezdxf
-RUN pip install multimethod>=1.7<2.0
-RUN pip install nlopt
-RUN pip install nptyping==2.0.1
-RUN pip install typish
-RUN pip install casadi
-RUN pip install path
+RUN pip install cadquery-ocp==7.7.1 "multimethod>=1.7<2.0" nlopt typish casadi path ezdxf nptyping==2.0.1
 
 # Python libraries used in the workshop
 RUN pip install cmake\
@@ -176,6 +169,7 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 RUN mkdir MOAB && \
     cd MOAB && \
     # newer versions of moab (5.4.0, 5.4.1) don't produce an importable pymoab package!
+    # TODO try moab 5.5.0
     git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
@@ -186,11 +180,11 @@ RUN mkdir MOAB && \
                   -DBUILD_SHARED_LIBS=ON \
                   -DENABLE_PYMOAB=ON \
                   -DCMAKE_INSTALL_PREFIX=/MOAB && \
-    mkdir -p MOAB/lib/pymoab/lib/python3.9/site-packages && \
-    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.9/site-packages:${PYTHONPATH} make -j && \
-    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.9/site-packages:${PYTHONPATH} make install -j
+    mkdir -p MOAB/lib/pymoab/lib/python3.11/site-packages && \
+    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.11/site-packages:${PYTHONPATH} make -j && \
+    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.11/site-packages:${PYTHONPATH} make install -j
 
-ENV PYTHONPATH="/MOAB/lib/python3.9/site-packages/pymoab-5.3.1-py3.9-linux-x86_64.egg/"
+ENV PYTHONPATH="/MOAB/lib/python3.11/site-packages/pymoab-5.3.1-py3.11-linux-x86_64.egg/"
 
 RUN python -c "import pymoab"
 
