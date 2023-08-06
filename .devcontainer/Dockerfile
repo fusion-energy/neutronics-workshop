@@ -28,12 +28,5 @@ FROM base as jupyter_cmd
 
 ENV PORT 8888
 
-# ENV PYTHONPATH="/MOAB/moab/pymoab"
-# RUN pip install gmsh
-# RUN apt-get install libxcursor-dev -y
-# RUN apt-get install libxinerama-dev -y
-
-# libXinerama.so.1: cannot open shared object file: No such file or directory
-
 # could switch to --ip='*'
 CMD ["jupyter", "lab", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
