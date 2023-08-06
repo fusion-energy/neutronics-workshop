@@ -26,12 +26,13 @@
 #  docker build -t neutronics-workshop:base:embree-avx --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=false .
 
 # for local testing I tend to use this build command
-# docker build -t neutronics-workshop:base --build-arg compile_cores=14 --build-arg build_double_down=ON -f .devcontainer/base.Dockerfile .
+# docker build -t neutronics-workshop:base --build-arg compile_cores=14 -f .devcontainer/base.Dockerfile .
 # and then run with this command
 # docker run -it neutronics-workshop:base
 
 # FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
-FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.9-bullseye as dependencies
+# FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.10-bullseye as dependencies
+FROM mcr.microsoft.com/devcontainers/base:bookworm as dependencies
 
 RUN apt-get --allow-releaseinfo-change update
 RUN apt-get --yes update && apt-get --yes upgrade
@@ -75,29 +76,27 @@ RUN apt-get --yes install libeigen3-dev \
                           # needed for CadQuery functionality
                           libgles2-mesa-dev \
                           # needed for Gmsh functionality
-                          libxft2
+                          libxft2 \
+                          # needed for gmsh
+                          libxcursor-dev \
+                          # needed for gmsh
+                          libxinerama-dev 
+                    
+RUN apt-get --yes install python3-pip python3-venv
 
 
-# RUN conda install -c conda-forge -c python python=3.8
+# Enabling a venv within Docker is needed to avoid system wide installs
+# https://pythonspeed.com/articles/activate-virtualenv-dockerfile/
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# RUN conda install -c conda-forge mamba -y
-# RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
-# RUN conda install -c fusion-energy -c cadquery -c conda-forge paramak==0.8.7 -y
-RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8  \
-                paramak
-
-RUN pip install gmsh
-# needed for gmsh
-RUN apt-get install libxcursor-dev -y
-# needed for gmsh
-RUN apt-get install libxinerama-dev -y
-# might be libxinerama1
+RUN pip install --upgrade pip
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
                 stl_to_h5m \
                 remove_dagmc_tags \
-                openmc-plasma-source \
                 openmc-dagmc-wrapper \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
@@ -107,10 +106,14 @@ RUN pip install neutronics_material_maker[density] \
                 "openmc_data_downloader>=0.6.0" \
                 "openmc_data>=0.2.2" \
                 openmc_plot \
-                dagmc_geometry_slice_plotter
+                dagmc_geometry_slice_plotter \
+                paramak
 
-RUN pip install git+https://github.com/fusion-energy/openmc_weight_window_generator.git
+# openmc-plasma-source needs main branch to work with openmc develop, currently unreleased
+RUN pip install git+https://github.com/fusion-energy/openmc-plasma-source
 
+RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
+RUN pip install cadquery-ocp==7.7.1 "multimethod>=1.7<2.0" nlopt typish casadi path ezdxf nptyping==2.0.1
 
 # Python libraries used in the workshop
 RUN pip install cmake\
@@ -129,7 +132,8 @@ RUN pip install cmake\
                 "cython<3.0" \
                 nest_asyncio \
                 jupyterlab \
-                jupyter-cadquery
+                jupyter-cadquery \
+                gmsh
 
 # needed for openmc
 RUN pip install --upgrade numpy
@@ -140,10 +144,6 @@ ARG include_avx=false
 ARG build_double_down=OFF
 
 # Clone and install Embree
-# embree from conda is not supported yet
-# TODO check if embree3 package on conda is supported
-# conda install -c conda-forge embree >> version: 2.17.7
-# requested version "3.6.1"
 # added following two lines to allow use on AMD CPUs see discussion
 # https://openmc.discourse.group/t/dagmc-geometry-open-mc-aborted-unexpectedly/1369/24?u=pshriwise  
 RUN if [ "$build_double_down" = "ON" ] ; \
@@ -169,6 +169,7 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 RUN mkdir MOAB && \
     cd MOAB && \
     # newer versions of moab (5.4.0, 5.4.1) don't produce an importable pymoab package!
+    # TODO try moab 5.5.0
     git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
@@ -179,18 +180,16 @@ RUN mkdir MOAB && \
                   -DBUILD_SHARED_LIBS=ON \
                   -DENABLE_PYMOAB=ON \
                   -DCMAKE_INSTALL_PREFIX=/MOAB && \
-    mkdir -p MOAB/lib/pymoab/lib/python3.9/site-packages && \
-    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.9/site-packages:${PYTHONPATH} make -j && \
-    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.9/site-packages:${PYTHONPATH} make install -j
+    mkdir -p MOAB/lib/pymoab/lib/python3.11/site-packages && \
+    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.11/site-packages:${PYTHONPATH} make -j && \
+    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.11/site-packages:${PYTHONPATH} make install -j
 
-ENV PYTHONPATH="/MOAB/lib/python3.9/site-packages/pymoab-5.3.1-py3.9-linux-x86_64.egg/"
+ENV PYTHONPATH="/MOAB/lib/python3.11/site-packages/pymoab-5.3.1-py3.11-linux-x86_64.egg/"
 
 RUN python -c "import pymoab"
 
-
 ENV PATH=$PATH:/MOAB/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
-
 
 # Clone and install Double-Down
 RUN if [ "$build_double_down" = "ON" ] ; \
@@ -205,7 +204,6 @@ RUN if [ "$build_double_down" = "ON" ] ; \
         make -j"$compile_cores" install ; \
         rm -rf /double-down/build /double-down/double-down ; \
     fi
-
 
 # DAGMC version develop install from source
 RUN mkdir DAGMC && \
