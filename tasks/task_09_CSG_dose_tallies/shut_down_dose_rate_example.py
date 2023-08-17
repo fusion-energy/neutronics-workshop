@@ -79,12 +79,17 @@ my_neutron_settings.run_mode = "fixed source"
 my_neutron_settings.particles = n_particles
 my_neutron_settings.batches = 100
 my_neutron_settings.source = my_source
+my_neutron_settings.photon_transport = False
 
 model = openmc.Model(my_geometry, my_materials, my_neutron_settings)
 
 hour_in_seconds = pint.Quantity(1.0, "hour").to("s").magnitude
 
-# defines the neutron pulse schedule
+# This section defines the neutron pulse schedule.
+# Warning, be sure to add sufficient timesteps and run the neutron simulation with enough 
+# batches/particles as the solver can produce unstable results otherwise. I typically plot
+# activity of gamma sources as a function of step to see if they decay according to the
+# half lives of the main unstable nuclides, this helps me check the solution is stable.
 timesteps_and_source_rates = [
     (1, 1e18),  # 1 second
     (hour_in_seconds, 0),  # 1 hour
@@ -108,21 +113,23 @@ model.deplete(
     # final_step=False,
     operator_kwargs={
         "normalization_mode": "source-rate",  # needed as this is a fixed source simulation
-        "chain_file": chain_file
+        "chain_file": chain_file,
+        "reduce_chain_level": 5,
+        "redcue_chain": True
     },
 )
 
 # creates a regular mesh that surrounds the geometry
 mesh = openmc.RegularMesh().from_domain(
-    model.geometry,  # the corners of the mesh are being set automatically to surround the geometry
-    dimension=[10, 10, 10],  # 10 voxels in each axis direction (r, z, phi)
+    model.geometry,
+    dimension=[10, 10, 10],  # 10 voxels in each axis direction (x, y, z)
 )
 
 # adding a dose tally on a regular mesh
-# AP, PA, LLAT, RLAT, ROT, ISO are geomety options
+# AP, PA, LLAT, RLAT, ROT, ISO are ICRP incident dose field directions, AP is front facing
 energies, pSv_cm2 = openmc.data.dose_coefficients(particle="photon", geometry="AP")
 dose_filter = openmc.EnergyFunctionFilter(
-    energies, pSv_cm2, interpolation="cubic"
+    energies, pSv_cm2, interpolation="cubic"  # interpolation method recommended by ICRP
 )
 particle_filter = openmc.ParticleFilter(["photon"])
 mesh_filter = openmc.MeshFilter(mesh)
@@ -137,6 +144,7 @@ model.tallies = tallies
 cells = model.geometry.get_all_cells()
 activated_cells = [cells[uid] for uid in activated_cell_ids]
 
+activity_of_all_gamma_sources_for_step = []
 
 # this section makes the photon sources from each active material at each
 # timestep and runs the photon simulations
@@ -144,6 +152,7 @@ results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_re
 for i_cool in range(len(timesteps)):
     photon_sources_for_timestep = []
     print(f"making photon source for timestep {i_cool}")
+    cumlative_source_strength = 0
     for cell_uid in activated_cell_ids:
         mat_id = cells[cell_uid].fill.id
         mat = results[i_cool].get_material(str(mat_id))
@@ -159,6 +168,11 @@ for i_cool in range(len(timesteps)):
             domains=[cells[cell_uid]],
         )
         photon_sources_for_timestep.append(source)
+        cumlative_source_strength=cumlative_source_strength+source.strength
+
+    # this is needed to normalise the tally results during post processing steps
+    # as tally results are per simulated source particle
+    activity_of_all_gamma_sources_for_step.append(cumlative_source_strength)
 
     model.settings = openmc.Settings()
     model.settings.run_mode = "fixed source"
@@ -166,8 +180,10 @@ for i_cool in range(len(timesteps)):
     model.settings.particles = p_particles
     model.settings.source = photon_sources_for_timestep
 
-    if i_cool != 0:
-        # todo replace with something that checks all sources for strength == 0
+    # we skip the first step as that is an irradiation step and there is no
+    # decay gamma source from the stable material at that time
+    if i_cool != 0: 
         # there are no decay products in this first timestep for this model
         model.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
 
+# You may wish to add a dose tally on a mesh and plot the result, but I wanted to keep this already complex example minimal so I've not added tallies to the decay gamma step.
