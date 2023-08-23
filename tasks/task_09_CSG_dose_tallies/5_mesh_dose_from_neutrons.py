@@ -27,7 +27,7 @@ cylinder_cell.fill = mat
 my_geometry = openmc.Geometry([cylinder_cell, void_cell])
 
 # 14MeV point source
-source = openmc.Source()
+source = openmc.IndependentSource()
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1])
 source.space = openmc.stats.Point((0.0, 50.0, 50.0))
