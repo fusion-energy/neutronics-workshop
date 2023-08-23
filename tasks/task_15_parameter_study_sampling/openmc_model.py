@@ -177,11 +177,7 @@ def sphere_with_firstwall_model(
     )
     breeder_blanket_cell.fill = blanket_material
 
-    universe = openmc.Universe(
-        cells=[inner_void_cell, firstwall_cell, breeder_blanket_cell]
-    )
-
-    geom = openmc.Geometry(universe)
+    geom = openmc.Geometry([inner_void_cell, firstwall_cell, breeder_blanket_cell])
 
     # assigns simulation settings
     sett = openmc.Settings()
