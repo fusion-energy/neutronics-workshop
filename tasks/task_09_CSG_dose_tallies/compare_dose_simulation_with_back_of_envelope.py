@@ -83,7 +83,7 @@ def simulate_dose(distance_from_source, particle, particles_per_shot, energy):
     my_settings.particles = 6000000
     my_settings.run_mode = "fixed source"
 
-    source = openmc.Source()
+    source = openmc.IndependentSource()
     source.particle = particle
     source.angle = openmc.stats.Isotropic()
     source.energy = openmc.stats.Discrete([energy], [1])

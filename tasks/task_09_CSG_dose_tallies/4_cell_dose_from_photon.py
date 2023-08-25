@@ -67,7 +67,7 @@ for distance_from_source in distances_to_simulate:  # units of cm
     my_settings.run_mode = "fixed source"
 
     # Create a gamma point source
-    source = openmc.Source()
+    source = openmc.IndependentSource()
     source.space = openmc.stats.Point((0, 0, 0))
     source.angle = openmc.stats.Isotropic()
     # This is a Co60 source, see the task on sources to understand it
