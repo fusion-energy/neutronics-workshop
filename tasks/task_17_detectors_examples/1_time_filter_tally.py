@@ -51,15 +51,14 @@ detector_cell.fill = detector_material
 void_space_region = -sphere_surface
 void_space_cell = openmc.Cell(region=void_space_region & ~detector_region)
 
-universe = openmc.Universe(cells=[void_space_cell, detector_cell])
-my_geometry = openmc.Geometry(universe)
+my_geometry = openmc.Geometry([void_space_cell, detector_cell])
 
 
-# universe.plot(basis='xz')
+# my_geometry.plot(basis='xz')
 # plt.show()
-# universe.plot(basis='yz')
+# my_geometry.plot(basis='yz')
 # plt.show()
-# universe.plot(basis='xy')
+# my_geometry.plot(basis='xy')
 # plt.show()
 
 # SOURCE

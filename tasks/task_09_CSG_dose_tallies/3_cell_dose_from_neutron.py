@@ -55,7 +55,7 @@ for distance_from_source in distances_to_simulate:
     my_settings.particles = 500000
     my_settings.run_mode = "fixed source"
 
-    source = openmc.Source()
+    source = openmc.IndependentSource()
     source.angle = openmc.stats.Isotropic()
     source.energy = openmc.stats.Discrete([14e6], [1])
     source.space = openmc.stats.Point((0.0, 0.0, 0.0))

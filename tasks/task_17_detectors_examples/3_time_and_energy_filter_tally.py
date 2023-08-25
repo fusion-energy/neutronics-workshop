@@ -58,8 +58,7 @@ reflective_region = -sphere_surface_reflector
 reflective_cell = openmc.Cell(region=reflective_region & ~detector_region)
 reflective_cell.fill = reflective_material
 
-universe = openmc.Universe(cells=[void_space_cell, detector_cell, reflective_cell])
-geometry = openmc.Geometry(universe)
+geometry = openmc.Geometry([void_space_cell, detector_cell, reflective_cell])
 
 # SOURCE
 
