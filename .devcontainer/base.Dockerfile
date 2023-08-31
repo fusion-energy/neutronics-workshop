@@ -123,7 +123,7 @@ RUN pip install cmake\
                 scikit-optimize \
                 scikit-opt \
                 adaptive \
-                "vtk>=9.2.5"  \
+                "vtk==9.2.5"  \
                 itkwidgets \
                 pytest \
                 holoviews \
