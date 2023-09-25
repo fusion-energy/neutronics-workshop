@@ -7,6 +7,7 @@ import openmc.deplete
 import pint
 from pathlib import Path
 import math
+from matplotlib.colors import LogNorm
 
 # users might want to change these to use specific xml files to use particular decay data or transport cross sections
 # the chain file was downloaded with
@@ -113,7 +114,7 @@ model.deplete(
     # final_step=False,
     operator_kwargs={
         "normalization_mode": "source-rate",  # needed as this is a fixed source simulation
-        "chain_file": chain_file,
+        "chain_file": openmc.config['chain_file'],
         "reduce_chain_level": 5,
         "redcue_chain": True
     },
@@ -144,46 +145,80 @@ model.tallies = tallies
 cells = model.geometry.get_all_cells()
 activated_cells = [cells[uid] for uid in activated_cell_ids]
 
-activity_of_all_gamma_sources_for_step = []
-
 # this section makes the photon sources from each active material at each
 # timestep and runs the photon simulations
 results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_results.h5")
+
 for i_cool in range(len(timesteps)):
-    photon_sources_for_timestep = []
-    print(f"making photon source for timestep {i_cool}")
-    cumlative_source_strength = 0
-    for cell_uid in activated_cell_ids:
-        mat_id = cells[cell_uid].fill.id
-        mat = results[i_cool].get_material(str(mat_id))
-        energy = mat.decay_photon_energy
-
-        space = openmc.stats.Box(*cells[cell_uid].bounding_box)
-        print(f'source strength {energy.integral()}')
-        source = openmc.Source(
-            space=space,
-            energy=energy,
-            particle="photon",
-            strength=energy.integral(),
-            domains=[cells[cell_uid]],
-        )
-        photon_sources_for_timestep.append(source)
-        cumlative_source_strength=cumlative_source_strength+source.strength
-
-    # this is needed to normalise the tally results during post processing steps
-    # as tally results are per simulated source particle
-    activity_of_all_gamma_sources_for_step.append(cumlative_source_strength)
-
-    model.settings = openmc.Settings()
-    model.settings.run_mode = "fixed source"
-    model.settings.batches = 100
-    model.settings.particles = p_particles
-    model.settings.source = photon_sources_for_timestep
 
     # we skip the first step as that is an irradiation step and there is no
     # decay gamma source from the stable material at that time
+    # also there are no decay products in this first timestep for this model
     if i_cool != 0: 
-        # there are no decay products in this first timestep for this model
+
+        photon_sources_for_timestep = []
+        print(f"making photon source for timestep {i_cool}")
+        cumlative_source_strength = 0
+        for cell_uid in activated_cell_ids:
+            # gets the material id of the material filling the cell
+            mat_id = cells[cell_uid].fill.id
+            # gets the activated material using the material id
+            activated_mat = results[i_cool].get_material(str(mat_id))
+            # gets the energy and probabilities for the 
+            energy = activated_mat.decay_photon_energy
+            strength = energy.integral()
+            print(f'source strength {strength} Bq')
+
+            # one should also overwrite cell.fill with the activated material
+
+            if strength > 0.:  # only makes sources for 
+                space = openmc.stats.Box(*cells[cell_uid].bounding_box)
+                source = openmc.Source(
+                    space=space,
+                    energy=energy,
+                    particle="photon",
+                    strength=strength,
+                    domains=[cells[cell_uid]],
+                )
+                photon_sources_for_timestep.append(source)
+                cumlative_source_strength=cumlative_source_strength+source.strength
+
+        model.settings = openmc.Settings()
+        model.settings.run_mode = "fixed source"
+        model.settings.batches = 100
+        model.settings.particles = p_particles
+        model.settings.source = photon_sources_for_timestep
+
         model.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
 
-# You may wish to add a dose tally on a mesh and plot the result, but I wanted to keep this already complex example minimal so I've not added tallies to the decay gamma step.
+# You may wish to add a dose tally on a mesh and plot the result
+
+pico_to_micro = 1e-6
+seconds_to_hours = 60*60
+
+from openmc_regular_mesh_plotter import plot_mesh_tally
+for i_cool in range(len(timesteps)):
+    with openmc.StatePoint(statepoints_folder / "photons" / f"photon_at_time_{i_cool}") as statepoint:
+        photon_tally = statepoint.get_tally(name="photon_dose_on_mesh")
+
+        # normalising this tally is a little different to other examples as the source strength has been using units of photons per second.
+        # tally.mean is in units of pSv-cm3/source photon.
+        # as source strength is in photons_per_second this changes units to pSv-/second
+
+        # multiplication by pico_to_micro converts from (pico) pSv/s to (micro) uSv/s
+        # dividing by mesh voxel volume cancles out the cm3 units
+        # could do the mesh volume scaling on the plot and vtk functions but doing it here instead
+        scaling_factor = (seconds_to_hours * pico_to_micro) / mesh.volumes[0][0][0]
+
+        plot = plot_mesh_tally(
+                tally=photon_tally,
+                basis="xz",
+                # score='flux', # only one tally so can make use of default here
+                value="mean",
+                colorbar_kwargs={
+                    'label': "Decay photon dose [µSv/h]",
+                },
+                norm=LogNorm(vmin=1e5, vmax=1e-3),#1e5 NT
+                volume_normalization=False,  # this is done in the scaling_factor
+                scaling_factor=scaling_factor,
+            )
