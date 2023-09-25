@@ -7,6 +7,7 @@ import openmc.deplete
 import pint
 from pathlib import Path
 import math
+from matplotlib.colors import LogNorm
 
 # users might want to change these to use specific xml files to use particular decay data or transport cross sections
 # the chain file was downloaded with
@@ -20,7 +21,6 @@ openmc.config['chain_file'] = '/nuclear_data/chain-endf-b8.0.xml'
 n_particles = 1_00000
 p_particles = 1_000
 statepoints_folder = Path('statepoints_folder')
-
 
 # First we make a simple geometry with three cells, (two with material)
 sphere_surf_1 = openmc.Sphere(r=20, boundary_type="vacuum")
@@ -61,6 +61,8 @@ my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3])
 
 my_materials = openmc.Materials([mat_iron, mat_aluminum])
 
+pristine_mat_iron = mat_iron.clone()
+pristine_mat_aluminium = mat_aluminum.clone()
 
 # gets the cell ids of any depleted cell
 activated_cell_ids = [c.id for c in my_geometry.get_all_material_cells().values() if c.fill.depletable]
@@ -77,11 +79,11 @@ my_source.particle = "neutron"
 my_neutron_settings = openmc.Settings()
 my_neutron_settings.run_mode = "fixed source"
 my_neutron_settings.particles = n_particles
-my_neutron_settings.batches = 100
+my_neutron_settings.batches = 10
 my_neutron_settings.source = my_source
 my_neutron_settings.photon_transport = False
 
-model = openmc.Model(my_geometry, my_materials, my_neutron_settings)
+model_neutron = openmc.Model(my_geometry, my_materials, my_neutron_settings)
 
 hour_in_seconds = pint.Quantity(1.0, "hour").to("s").magnitude
 
@@ -102,9 +104,10 @@ timesteps_and_source_rates = [
 timesteps = [item[0] for item in timesteps_and_source_rates]
 source_rates = [item[1] for item in timesteps_and_source_rates]
 
-model.export_to_xml(directory=statepoints_folder)
+model_neutron.export_to_xml(directory=statepoints_folder/ "neutrons")
 
-model.deplete(
+# this does the neutron activation simulations and produces a depletion_results.h5 file
+model_neutron.deplete(
     timesteps,
     source_rates=source_rates,
     directory=statepoints_folder / "neutrons",
@@ -113,15 +116,27 @@ model.deplete(
     # final_step=False,
     operator_kwargs={
         "normalization_mode": "source-rate",  # needed as this is a fixed source simulation
-        "chain_file": chain_file,
+        "chain_file": openmc.config['chain_file'],
         "reduce_chain_level": 5,
-        "redcue_chain": True
+        "reduce_chain": True
     },
+    # todo add diff burnable material if PR gets merged in https://github.com/openmc-dev/openmc/pull/2691
 )
+
+# Now we have done the neutron activation simulations we can start the work needed for the decay gamma simulations.
+
+my_gamma_settings = openmc.Settings()
+my_gamma_settings.run_mode = "fixed source"
+my_gamma_settings.batches = 100
+my_gamma_settings.particles = p_particles
+
+
+# First we add make dose tally on a regular mesh
+
 
 # creates a regular mesh that surrounds the geometry
 mesh = openmc.RegularMesh().from_domain(
-    model.geometry,
+    my_geometry,
     dimension=[10, 10, 10],  # 10 voxels in each axis direction (x, y, z)
 )
 
@@ -139,51 +154,100 @@ flux_tally.scores = ["flux"]
 flux_tally.name = "photon_dose_on_mesh"
 
 tallies = openmc.Tallies([flux_tally])
-model.tallies = tallies
 
-cells = model.geometry.get_all_cells()
+cells = model_neutron.geometry.get_all_cells()
 activated_cells = [cells[uid] for uid in activated_cell_ids]
-
-activity_of_all_gamma_sources_for_step = []
 
 # this section makes the photon sources from each active material at each
 # timestep and runs the photon simulations
 results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_results.h5")
-for i_cool in range(len(timesteps)):
-    photon_sources_for_timestep = []
-    print(f"making photon source for timestep {i_cool}")
-    cumlative_source_strength = 0
-    for cell_uid in activated_cell_ids:
-        mat_id = cells[cell_uid].fill.id
-        mat = results[i_cool].get_material(str(mat_id))
-        energy = mat.decay_photon_energy
 
-        space = openmc.stats.Box(*cells[cell_uid].bounding_box)
-        print(f'source strength {energy.integral()}')
-        source = openmc.Source(
-            space=space,
-            energy=energy,
-            particle="photon",
-            strength=energy.integral(),
-            domains=[cells[cell_uid]],
-        )
-        photon_sources_for_timestep.append(source)
-        cumlative_source_strength=cumlative_source_strength+source.strength
+for i_cool in range(1, len(timesteps)):
 
-    # this is needed to normalise the tally results during post processing steps
-    # as tally results are per simulated source particle
-    activity_of_all_gamma_sources_for_step.append(cumlative_source_strength)
-
-    model.settings = openmc.Settings()
-    model.settings.run_mode = "fixed source"
-    model.settings.batches = 100
-    model.settings.particles = p_particles
-    model.settings.source = photon_sources_for_timestep
-
-    # we skip the first step as that is an irradiation step and there is no
+    # range starts at 1 to skip the first step as that is an irradiation step and there is no
     # decay gamma source from the stable material at that time
-    if i_cool != 0: 
-        # there are no decay products in this first timestep for this model
-        model.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
+    # also there are no decay products in this first timestep for this model
 
-# You may wish to add a dose tally on a mesh and plot the result, but I wanted to keep this already complex example minimal so I've not added tallies to the decay gamma step.
+
+        photon_sources_for_timestep = []
+        print(f"making photon source for timestep {i_cool}")
+
+        all_activated_materials_in_timestep = []
+
+        for activated_cell_id in activated_cell_ids:
+            # gets the material id of the material filling the cell
+            material_id = cells[activated_cell_id].fill.id
+
+            # gets the activated material using the material id
+            activated_mat = results[i_cool].get_material(str(material_id))
+            # gets the energy and probabilities for the 
+            energy = activated_mat.decay_photon_energy
+            strength = energy.integral()
+
+            if strength > 0.:  # only makes sources for 
+                space = openmc.stats.Box(*cells[activated_cell_id].bounding_box)
+                source = openmc.IndependentSource(
+                    space=space,
+                    energy=energy,
+                    particle="photon",
+                    strength=strength,
+                    domains=[cells[activated_cell_id]],
+                )
+                photon_sources_for_timestep.append(source)
+
+
+        my_gamma_settings.source = photon_sources_for_timestep
+
+
+        # one should also fill the cells with the activated material
+        # the activated material contains ALL the iotopes produced during activation
+        # sphere_cell_2.fill =  results[i_cool].get_material("1")
+        # sphere_cell_3.fill =  results[i_cool].get_material("2")
+        # my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3])
+
+        # however it is unlikely that they all appear in your transport cross_sections.xml
+        # so you could make use of openmc.deplete.Results.export_to_materials to export the modified activated material that
+        # just contains isotopes that appear in your cross_sections.xml
+
+        # however in this example we just use the original prisine material my_materials that were cloned earlier
+        # my_geometry is also the same as the neutron simulation
+        pristine_mat_iron.id = 1
+        pristine_mat_aluminium.id =2
+        my_materials = openmc.Materials([pristine_mat_iron, pristine_mat_aluminium])
+
+        model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, tallies)
+
+        model_gamma.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
+
+
+pico_to_micro = 1e-6
+seconds_to_hours = 60*60
+
+# You may wish to plot the dose tally on a mesh, this package makes it easy to include the geometry with the mesh tally
+from openmc_regular_mesh_plotter import plot_mesh_tally
+for i_cool in range(1, len(timesteps)):
+    with openmc.StatePoint(statepoints_folder / "photons" / f"photon_at_time_{i_cool}" / 'statepoint.100.h5') as statepoint:
+        photon_tally = statepoint.get_tally(name="photon_dose_on_mesh")
+
+        # normalising this tally is a little different to other examples as the source strength has been using units of photons per second.
+        # tally.mean is in units of pSv-cm3/source photon.
+        # as source strength is in photons_per_second this changes units to pSv-/second
+
+        # multiplication by pico_to_micro converts from (pico) pSv/s to (micro) uSv/s
+        # dividing by mesh voxel volume cancles out the cm3 units
+        # could do the mesh volume scaling on the plot and vtk functions but doing it here instead
+        scaling_factor = (seconds_to_hours * pico_to_micro) / mesh.volumes[0][0][0]
+
+        plot = plot_mesh_tally(
+                tally=photon_tally,
+                basis="xz",
+                # score='flux', # only one tally so can make use of default here
+                value="mean",
+                colorbar_kwargs={
+                    'label': "Decay photon dose [µSv/h]",
+                },
+                norm=LogNorm(),
+                volume_normalization=False,  # this is done in the scaling_factor
+                scaling_factor=scaling_factor,
+            )
+        plot.figure.savefig(f'shut_down_dose_map_timestep_{i_cool}')
