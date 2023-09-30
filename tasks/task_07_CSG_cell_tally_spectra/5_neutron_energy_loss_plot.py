@@ -25,7 +25,7 @@ def generate_tracks_file_for_material(element):
     my_settings.inactive = 0
     my_settings.particles = 20
     my_settings.run_mode = "fixed source"
-    my_source = openmc.Source()
+    my_source = openmc.IndependentSource()
     my_source.space = openmc.stats.Point((0, 0, 0))
     my_source.energy = openmc.stats.Discrete([14e6], [1])
     my_settings.source = my_source
