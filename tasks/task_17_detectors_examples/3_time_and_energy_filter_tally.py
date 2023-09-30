@@ -63,7 +63,7 @@ geometry = openmc.Geometry([void_space_cell, detector_cell, reflective_cell])
 # SOURCE
 
 # Create a neutron point source
-source = openmc.Source()
+source = openmc.IndependentSource()
 source.space = openmc.stats.Point((0, 0, 0))
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1.0])
