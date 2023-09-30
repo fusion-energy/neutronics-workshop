@@ -107,6 +107,7 @@ RUN pip install neutronics_material_maker[density] \
                 "openmc_data>=0.2.2" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter \
+                "cad_to_dagmc>=0.5.0" \
                 paramak
 
 # openmc-plasma-source needs main branch to work with openmc develop, currently unreleased
