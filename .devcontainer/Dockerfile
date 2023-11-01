@@ -13,9 +13,9 @@
 # docker run -p 8888:8888 neutronics-workshop
 
 # remote image
-FROM ghcr.io/fusion-energy/neutronics-workshop:base as base
+# FROM ghcr.io/fusion-energy/neutronics-workshop:base as base
 # local image
-# FROM neutronics-workshop:base as base
+FROM neutronics-workshop:base as base
 
 # Copy over the local repository files
 COPY tasks tasks/
@@ -29,4 +29,4 @@ FROM base as jupyter_cmd
 ENV PORT 8888
 
 # could switch to --ip='*'
-CMD ["jupyter", "lab", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+# CMD ["jupyter", "lab", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
