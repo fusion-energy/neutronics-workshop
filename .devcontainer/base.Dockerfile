@@ -120,18 +120,14 @@ RUN pip install cadquery-ocp==7.7.1 "multimethod>=1.7<2.0" nlopt typish casadi p
 RUN pip install cmake\
 # new version of cmake needed for openmc compile
                 plotly \
-                tqdm \
-                scikit-optimize \
-                scikit-opt \
-                adaptive \
                 "vtk==9.2.5"  \
                 itkwidgets \
                 pytest \
-                holoviews \
+                # holoviews \
                 ipywidgets \
 # cython is needed for moab and openmc, specific version tagged to avoid build errors
                 "cython<3.0" \
-                nest_asyncio \
+                # nest_asyncio \
                 jupyterlab \
                 jupyter-cadquery \
                 gmsh
