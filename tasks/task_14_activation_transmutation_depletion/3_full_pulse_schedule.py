@@ -1,7 +1,8 @@
 # This example performs a depletion simulation using the IndependentOperator
 # instead of the CoupledOperator used in the first examples.
 
-# This is an approximation so is less accurate but it is much faster.
+# This is an less accurate but it is much faster.
+# When simulating years of pulses this quockly becomes too computationally expensive for CoupleOperator approach.
 # This approach performs just a single transport simulation and obtains reactions rates once.
 # If the materials don't change significantly during the irradiation this is a reasonable approximation.
 # Fission fule pins would perhaps require the CoupledOperator while the majority of fusion simulations are suitable for the IndependentOperator
