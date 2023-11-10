@@ -111,16 +111,6 @@ model.deplete(
     source_rates=source_rates,
     timestep_units='s'
 )
-# # construct the integrator
-# integrator = openmc.deplete.PredictorIntegrator(
-#     operator=operator,
-#     timesteps=timesteps,
-#     source_rates=source_rates,
-#     timestep_units='s'
-# )
-
-# this runs the depltion calculations for the timesteps
-# integrator.integrate()
 
 # Loads up the results
 results = openmc.deplete.ResultsList.from_hdf5("depletion_results.h5")
