@@ -168,7 +168,6 @@ for i_cool in range(1, len(timesteps)):
     # decay gamma source from the stable material at that time
     # also there are no decay products in this first timestep for this model
 
-
         photon_sources_for_timestep = []
         print(f"making photon source for timestep {i_cool}")
 
