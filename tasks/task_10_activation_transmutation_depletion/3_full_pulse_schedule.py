@@ -67,16 +67,6 @@ plt.xscale('log')
 plt.yscale('log')
 plt.show()
 
-# constructing the operator, note we pass in the flux and micro xs
-operator = openmc.deplete.IndependentOperator(
-    materials=materials,
-    fluxes=flux_in_each_group,
-    micros=micro_xs,
-    reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
-    reduce_chain_level=5,
-    normalization_mode="source-rate"
-)
-
 # We define timesteps together with the source rate to make it clearer
 timesteps_and_source_rates = [
     (24, 1e20),
@@ -104,6 +94,16 @@ timesteps_and_source_rates = [
 # Uses list Python comprehension to get the timesteps and source_rates separately
 timesteps = [item[0] for item in timesteps_and_source_rates]
 source_rates = [item[1] for item in timesteps_and_source_rates]
+
+# constructing the operator, note we pass in the flux and micro xs
+operator = openmc.deplete.IndependentOperator(
+    materials=materials,
+    fluxes=flux_in_each_group,
+    micros=micro_xs,
+    reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
+    reduce_chain_level=5,
+    normalization_mode="source-rate"
+)
 
 # construct the integrator
 integrator = openmc.deplete.PredictorIntegrator(
