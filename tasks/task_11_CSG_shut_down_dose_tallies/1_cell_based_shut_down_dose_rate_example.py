@@ -4,7 +4,6 @@
 import numpy as np
 import openmc
 import openmc.deplete
-import pint
 from pathlib import Path
 import math
 from matplotlib.colors import LogNorm
@@ -13,7 +12,7 @@ from matplotlib.colors import LogNorm
 # the chain file was downloaded with
 # pip install openmc_data
 # download_endf_chain -r b8.0
-openmc.config['chain_file'] = '/nuclear_data/chain-endf-b8.0.xml'
+# openmc.config['chain_file'] = '/nuclear_data/chain-endf-b8.0.xml'
 # openmc.config['cross_sections'] = 'cross_sections.xml'
 
 # a few user settings
@@ -85,7 +84,7 @@ my_neutron_settings.photon_transport = False
 
 model_neutron = openmc.Model(my_geometry, my_materials, my_neutron_settings)
 
-hour_in_seconds = pint.Quantity(1.0, "hour").to("s").magnitude
+hour_in_seconds = 60*60
 
 # This section defines the neutron pulse schedule.
 # Warning, be sure to add sufficient timesteps and run the neutron simulation with enough 
@@ -180,7 +179,7 @@ for i_cool in range(1, len(timesteps)):
             # gets the activated material using the material id
             activated_mat = results[i_cool].get_material(str(material_id))
             # gets the energy and probabilities for the 
-            energy = activated_mat.decay_photon_energy
+            energy = activated_mat.get_decay_photon_energy()
             strength = energy.integral()
 
             if strength > 0.:  # only makes sources for 
@@ -199,7 +198,7 @@ for i_cool in range(1, len(timesteps)):
 
 
         # one should also fill the cells with the activated material
-        # the activated material contains ALL the iotopes produced during activation
+        # the activated material contains ALL the nuclides produced during activation
         # sphere_cell_2.fill =  results[i_cool].get_material("1")
         # sphere_cell_3.fill =  results[i_cool].get_material("2")
         # my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3])
@@ -208,7 +207,7 @@ for i_cool in range(1, len(timesteps)):
         # so you could make use of openmc.deplete.Results.export_to_materials to export the modified activated material that
         # just contains isotopes that appear in your cross_sections.xml
 
-        # however in this example we just use the original prisine material my_materials that were cloned earlier
+        # however in this example we just use the original pristine material my_materials that were cloned earlier
         # my_geometry is also the same as the neutron simulation
         pristine_mat_iron.id = 1
         pristine_mat_aluminium.id =2
