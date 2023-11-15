@@ -198,7 +198,7 @@ for i_cool in range(1, len(timesteps)):
 
 
         # one should also fill the cells with the activated material
-        # the activated material contains ALL the iotopes produced during activation
+        # the activated material contains ALL the nuclides produced during activation
         # sphere_cell_2.fill =  results[i_cool].get_material("1")
         # sphere_cell_3.fill =  results[i_cool].get_material("2")
         # my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3])
@@ -207,7 +207,7 @@ for i_cool in range(1, len(timesteps)):
         # so you could make use of openmc.deplete.Results.export_to_materials to export the modified activated material that
         # just contains isotopes that appear in your cross_sections.xml
 
-        # however in this example we just use the original prisine material my_materials that were cloned earlier
+        # however in this example we just use the original pristine material my_materials that were cloned earlier
         # my_geometry is also the same as the neutron simulation
         pristine_mat_iron.id = 1
         pristine_mat_aluminium.id =2
