@@ -60,12 +60,7 @@ flux_in_each_group, micro_xs = openmc.deplete.get_microxs_and_flux(
     energies='CCFE-709',
 )
 
-# Plotting the neutron spectra
-plt.title('neutron flux spectra')
-plt.plot(openmc.mgxs.GROUP_STRUCTURES['CCFE-709'][:-1], flux_in_each_group[0])
-plt.xscale('log')
-plt.yscale('log')
-plt.show()
+
 
 # We define timesteps together with the source rate to make it clearer
 timesteps_and_source_rates = [
@@ -97,8 +92,8 @@ source_rates = [item[1] for item in timesteps_and_source_rates]
 
 model.deplete(
     timesteps=timesteps,
-    operator_class='IndependentOperator',
     method="predictor",  # predictor is a simple but quick method
+    operator_class='IndependentOperator',
     operator_kwargs={
         "normalization_mode": "source-rate",  # needed as this is a fixed source simulation
         "chain_file": openmc.config['chain_file'],
@@ -106,6 +101,7 @@ model.deplete(
         "reduce_chain": True,
         "fluxes":flux_in_each_group,
         "micros":micro_xs,
+        "materials":materials,
     },
     # integrator_kwargs
     source_rates=source_rates,
@@ -119,6 +115,13 @@ times, number_of_Ag110_atoms = results.get_atoms(my_material, 'Ag110')
 # prints the atoms in a table
 for time, num in zip(times, number_of_Ag110_atoms):
     print(f" Time {time}s. Number of Ag110 atoms {num}")
+
+# Plotting the neutron spectra
+plt.title('neutron flux spectra')
+plt.plot(openmc.mgxs.GROUP_STRUCTURES['CCFE-709'][:-1], flux_in_each_group[0])
+plt.xscale('log')
+plt.yscale('log')
+plt.show()
 
 # plots the number of atoms as a function of time
 plt.cla()
