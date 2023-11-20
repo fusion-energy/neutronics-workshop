@@ -179,7 +179,10 @@ for i_cool in range(1, len(timesteps)):
             # gets the activated material using the material id
             activated_mat = results[i_cool].get_material(str(material_id))
             # gets the energy and probabilities for the 
-            energy = activated_mat.get_decay_photon_energy()
+            energy = activated_mat.get_decay_photon_energy(
+                clip_tolerance = 1e-6,  # cuts out a small fraction of the very low energy (and hence negligible dose contribution) photons
+                units = 'Bq',
+            )
             strength = energy.integral()
 
             if strength > 0.:  # only makes sources for 
