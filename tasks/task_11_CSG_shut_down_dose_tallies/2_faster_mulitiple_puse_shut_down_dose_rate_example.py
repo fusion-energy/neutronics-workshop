@@ -142,8 +142,9 @@ integrator = openmc.deplete.PredictorIntegrator(
 
 # this runs the depletion calculations for the timesteps
 # this does the neutron activation simulations and produces a depletion_results.h5 file
-# integrator.integrate()
+integrator.integrate(path=statepoints_folder / "neutrons" / "depletion_results.h5")
 # TODO add output dir to integrate command so we don't have to move the file like this
+# PR on openmc is open
 import os
 os.system(f'mv depletion_results.h5 {statepoints_folder / "neutrons" / "depletion_results.h5"}')
 
