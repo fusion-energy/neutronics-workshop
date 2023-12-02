@@ -139,8 +139,8 @@ flux_in_each_group, micro_xs = openmc.deplete.get_microxs_and_flux(
 )
 
 # # constructing the operator, note we pass in the flux and micro xs
-operator = openmc.deplete.IndependentOperator(
-    materials=#TODO find the materials in each mesh voxel and their volume fractions,
+operator = openmc.deplete.IndependentOperator().from_nuclides(
+    materials=#TODO find the nuclides in each mesh voxel and their volume fractions,
     fluxes=flux_in_each_group,
     micros=micro_xs,
     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
