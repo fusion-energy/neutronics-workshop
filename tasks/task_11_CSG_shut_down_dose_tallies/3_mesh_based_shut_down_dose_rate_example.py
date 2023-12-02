@@ -49,6 +49,7 @@ sphere_cell_2.fill = mat_iron
 mat_aluminum = openmc.Material()
 mat_aluminum.id = 2
 mat_aluminum.add_element("Al", 1.0)
+mat_aluminum.add_element("Fe", 1.0)
 mat_aluminum.set_density("g/cm3", 2.7)
 # must set the depletion to True to deplete the material
 mat_aluminum.depletable = True
@@ -122,29 +123,37 @@ source_rates = [item[1] for item in timesteps_and_source_rates]
 
 model_neutron.export_to_xml(directory=statepoints_folder/ "neutrons")
 
+all_nuclides = []
+for material in my_geometry.get_all_materials().values():
+    for nuclide in material.get_nuclides():
+        if nuclide not in all_nuclides:
+            all_nuclides.append(nuclide)
+# print(set(all_nuclides))
+
 # this does perform transport but just to get the flux and micro xs
 flux_in_each_group, micro_xs = openmc.deplete.get_microxs_and_flux(
     model=model_neutron,
     domains=regular_mesh,
     energies='CCFE-709', # different group structures see this file for all the groups available https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py
+    nuclides=all_nuclides
 )
 
 # # constructing the operator, note we pass in the flux and micro xs
-# operator = openmc.deplete.IndependentOperator(
-#     materials=openmc.Materials(all_depletable_materials),
-#     fluxes=flux_in_each_group,
-#     micros=micro_xs,
-#     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
-#     reduce_chain_level=5,
-#     normalization_mode="source-rate"
-# )
+operator = openmc.deplete.IndependentOperator(
+    materials=#TODO find the materials in each mesh voxel and their volume fractions,
+    fluxes=flux_in_each_group,
+    micros=micro_xs,
+    reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
+    reduce_chain_level=5,
+    normalization_mode="source-rate"
+)
 
-# integrator = openmc.deplete.PredictorIntegrator(
-#     operator=operator,
-#     timesteps=timesteps,
-#     source_rates=source_rates,
-#     timestep_units='s'
-# )
+integrator = openmc.deplete.PredictorIntegrator(
+    operator=operator,
+    timesteps=timesteps,
+    source_rates=source_rates,
+    timestep_units='s'
+)
 
 # this runs the depletion calculations for the timesteps
 # this does the neutron activation simulations and produces a depletion_results.h5 file
@@ -194,43 +203,43 @@ activated_cells = [cells[uid] for uid in activated_cell_ids]
 # timestep and runs the photon simulations
 results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_results.h5")
 
-for i_cool in range(1, len(timesteps)):
+# for i_cool in range(1, len(timesteps)):
 
-    # range starts at 1 to skip the first step as that is an irradiation step and there is no
-    # decay gamma source from the stable material at that time
-    # also there are no decay products in this first timestep for this model
+#     # range starts at 1 to skip the first step as that is an irradiation step and there is no
+#     # decay gamma source from the stable material at that time
+#     # also there are no decay products in this first timestep for this model
 
-        photon_sources_for_timestep = []
-        print(f"making photon source for timestep {i_cool}")
+#         photon_sources_for_timestep = []
+#         print(f"making photon source for timestep {i_cool}")
 
-        all_activated_materials_in_timestep = []
+#         all_activated_materials_in_timestep = []
 
-        for activated_cell_id in activated_cell_ids:
-            # gets the material id of the material filling the cell
-            material_id = cells[activated_cell_id].fill.id
+#         for activated_cell_id in activated_cell_ids:
+#             # gets the material id of the material filling the cell
+#             material_id = cells[activated_cell_id].fill.id
 
-            # gets the activated material using the material id
-            activated_mat = results[i_cool].get_material(str(material_id))
-            # gets the energy and probabilities for the 
-            energy = activated_mat.get_decay_photon_energy(
-                clip_tolerance = 1e-6,  # cuts out a small fraction of the very low energy (and hence negligible dose contribution) photons
-                units = 'Bq',
-            )
-            strength = energy.integral()
+#             # gets the activated material using the material id
+#             activated_mat = results[i_cool].get_material(str(material_id))
+#             # gets the energy and probabilities for the 
+#             energy = activated_mat.get_decay_photon_energy(
+#                 clip_tolerance = 1e-6,  # cuts out a small fraction of the very low energy (and hence negligible dose contribution) photons
+#                 units = 'Bq',
+#             )
+#             strength = energy.integral()
 
-            if strength > 0.:  # only makes sources for 
-                space = openmc.stats.Box(*cells[activated_cell_id].bounding_box)
-                source = openmc.IndependentSource(
-                    space=space,
-                    energy=energy,
-                    particle="photon",
-                    strength=strength,
-                    domains=[cells[activated_cell_id]],
-                )
-                photon_sources_for_timestep.append(source)
+#             if strength > 0.:  # only makes sources for 
+#                 space = openmc.stats.Box(*cells[activated_cell_id].bounding_box)
+#                 source = openmc.IndependentSource(
+#                     space=space,
+#                     energy=energy,
+#                     particle="photon",
+#                     strength=strength,
+#                     domains=[cells[activated_cell_id]], #this should be the mesh voxel and the material in the mesh voxel
+#                 )
+#                 photon_sources_for_timestep.append(source)
 
 
-        my_gamma_settings.source = photon_sources_for_timestep
+#         my_gamma_settings.source = photon_sources_for_timestep
 
 
         # one should also fill the cells with the activated material
@@ -245,13 +254,13 @@ for i_cool in range(1, len(timesteps)):
 
         # however in this example we just use the original pristine material my_materials that were cloned earlier
         # my_geometry is also the same as the neutron simulation
-        pristine_mat_iron.id = 1
-        pristine_mat_aluminium.id =2
-        my_materials = openmc.Materials([pristine_mat_iron, pristine_mat_aluminium])
+        # pristine_mat_iron.id = 1
+        # pristine_mat_aluminium.id =2
+        # my_materials = openmc.Materials([pristine_mat_iron, pristine_mat_aluminium])
 
-        model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, tallies)
+        # model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, tallies)
 
-        model_gamma.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
+        # model_gamma.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
 
 
 # pico_to_micro = 1e-6
