@@ -14,6 +14,7 @@ from matplotlib.colors import LogNorm
 # download_endf_chain -r b8.0
 # openmc.config['chain_file'] = '/nuclear_data/chain-endf-b8.0.xml'
 # openmc.config['cross_sections'] = 'cross_sections.xml'
+openmc.config['chain_file'] = '/home/jshimwell/ENDF-B-VIII.0-NNDC/chain-nndc-b8.0.xml'
 
 # a few user settings
 # Set up the folders to save all the data in
@@ -135,73 +136,91 @@ flux_in_each_group, micro_xs = openmc.deplete.get_microxs_and_flux(
     model=model_neutron,
     domains=regular_mesh,
     energies='CCFE-709', # different group structures see this file for all the groups available https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py
-    nuclides=all_nuclides
+    nuclides=all_nuclides,
+    chain_file=openmc.config['chain_file']
 )
 
-# # constructing the operator, note we pass in the flux and micro xs
-operator = openmc.deplete.IndependentOperator().from_nuclides(
-    materials=#TODO find the nuclides in each mesh voxel and their volume fractions,
-    fluxes=flux_in_each_group,
-    micros=micro_xs,
-    reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
-    reduce_chain_level=5,
-    normalization_mode="source-rate"
+model_neutron.export_to_model_xml()
+import openmc.lib
+openmc.lib.init()
+mesh = openmc.lib.RegularMesh()
+mesh.dimension = regular_mesh.dimension
+mesh.set_parameters(
+    lower_left=regular_mesh.lower_left,
+    upper_right=regular_mesh.upper_right
 )
 
-integrator = openmc.deplete.PredictorIntegrator(
-    operator=operator,
-    timesteps=timesteps,
-    source_rates=source_rates,
-    timestep_units='s'
-)
+vols = mesh.material_volumes(n_samples = 1000000)
 
-# this runs the depletion calculations for the timesteps
-# this does the neutron activation simulations and produces a depletion_results.h5 file
-integrator.integrate()
-# TODO add output dir to integrate command so we don't have to move the file like this
-# integrator.integrate(path=statepoints_folder / "neutrons" / "depletion_results.h5")
-# PR on openmc is open
-import os
-os.system(f'mv depletion_results.h5 {statepoints_folder / "neutrons" / "depletion_results.h5"}')
+openmc.lib.finalize()
 
-# Now we have done the neutron activation simulations we can start the work needed for the decay gamma simulations.
+# # # # constructing the operator, note we pass in the flux and micro xs
+# operator = openmc.deplete.IndependentOperator().from_nuclides(
+#     volume=
+#     nuclides=
 
-my_gamma_settings = openmc.Settings()
-my_gamma_settings.run_mode = "fixed source"
-my_gamma_settings.batches = 100
-my_gamma_settings.particles = p_particles
+#     materials=#TODO find the nuclides in each mesh voxel and their volume fractions,
+#     fluxes=flux_in_each_group,
+#     micros=micro_xs,
+#     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
+#     reduce_chain_level=5,
+#     normalization_mode="source-rate"
+# )
+
+# integrator = openmc.deplete.PredictorIntegrator(
+#     operator=operator,
+#     timesteps=timesteps,
+#     source_rates=source_rates,
+#     timestep_units='s'
+# )
+
+# # this runs the depletion calculations for the timesteps
+# # this does the neutron activation simulations and produces a depletion_results.h5 file
+# integrator.integrate()
+# # TODO add output dir to integrate command so we don't have to move the file like this
+# # integrator.integrate(path=statepoints_folder / "neutrons" / "depletion_results.h5")
+# # PR on openmc is open
+# import os
+# os.system(f'mv depletion_results.h5 {statepoints_folder / "neutrons" / "depletion_results.h5"}')
+
+# # Now we have done the neutron activation simulations we can start the work needed for the decay gamma simulations.
+
+# my_gamma_settings = openmc.Settings()
+# my_gamma_settings.run_mode = "fixed source"
+# my_gamma_settings.batches = 100
+# my_gamma_settings.particles = p_particles
 
 
-# First we add make dose tally on a regular mesh
+# # First we add make dose tally on a regular mesh
 
 
-# creates a regular mesh that surrounds the geometry
-mesh = openmc.RegularMesh().from_domain(
-    my_geometry,
-    dimension=[10, 10, 10],  # 10 voxels in each axis direction (x, y, z)
-)
+# # creates a regular mesh that surrounds the geometry
+# mesh = openmc.RegularMesh().from_domain(
+#     my_geometry,
+#     dimension=[10, 10, 10],  # 10 voxels in each axis direction (x, y, z)
+# )
 
-# adding a dose tally on a regular mesh
-# AP, PA, LLAT, RLAT, ROT, ISO are ICRP incident dose field directions, AP is front facing
-energies, pSv_cm2 = openmc.data.dose_coefficients(particle="photon", geometry="AP")
-dose_filter = openmc.EnergyFunctionFilter(
-    energies, pSv_cm2, interpolation="cubic"  # interpolation method recommended by ICRP
-)
-particle_filter = openmc.ParticleFilter(["photon"])
-mesh_filter = openmc.MeshFilter(mesh)
-flux_tally = openmc.Tally()
-flux_tally.filters = [mesh_filter, dose_filter, particle_filter]
-flux_tally.scores = ["flux"]
-flux_tally.name = "photon_dose_on_mesh"
+# # adding a dose tally on a regular mesh
+# # AP, PA, LLAT, RLAT, ROT, ISO are ICRP incident dose field directions, AP is front facing
+# energies, pSv_cm2 = openmc.data.dose_coefficients(particle="photon", geometry="AP")
+# dose_filter = openmc.EnergyFunctionFilter(
+#     energies, pSv_cm2, interpolation="cubic"  # interpolation method recommended by ICRP
+# )
+# particle_filter = openmc.ParticleFilter(["photon"])
+# mesh_filter = openmc.MeshFilter(mesh)
+# flux_tally = openmc.Tally()
+# flux_tally.filters = [mesh_filter, dose_filter, particle_filter]
+# flux_tally.scores = ["flux"]
+# flux_tally.name = "photon_dose_on_mesh"
 
-tallies = openmc.Tallies([flux_tally])
+# tallies = openmc.Tallies([flux_tally])
 
-cells = model_neutron.geometry.get_all_cells()
-activated_cells = [cells[uid] for uid in activated_cell_ids]
+# cells = model_neutron.geometry.get_all_cells()
+# activated_cells = [cells[uid] for uid in activated_cell_ids]
 
-# this section makes the photon sources from each active material at each
-# timestep and runs the photon simulations
-results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_results.h5")
+# # this section makes the photon sources from each active material at each
+# # timestep and runs the photon simulations
+# results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_results.h5")
 
 # for i_cool in range(1, len(timesteps)):
 
