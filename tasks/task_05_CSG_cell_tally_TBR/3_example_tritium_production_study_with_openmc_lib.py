@@ -86,15 +86,18 @@ tally = openmc.lib.tallies[42]
 print('tally result {tally.mean} with std. dev. {tally.std_dev}')
 
 results=[]
-enrichments = [0.07, 0.25, 0.50, 0.75, 0.99]
+enrichments = [0.0001, 0.25, 0.50, 0.75, 0.9999]
 # now we will run the simulation 5 times
 for enrichment in enrichments:  # percentage enrichment from 0% Li6 to 100% Li6
+
+    # resets the tally to 0 so we don't combine result with previous simulation
+    openmc.lib.hard_reset()
 
     # we modify the python material object here,
     # this helps get the new densities when updating the openmc.lib material
     breeder_material.remove_element('Li')
-    breeder_material.add_nuclide('Li6', enrichment)
-    breeder_material.add_nuclide('Li7', 1.-enrichment)
+    breeder_material.add_nuclide('Li6', 15.8 * enrichment)
+    breeder_material.add_nuclide('Li7', 15.8 * (1.-enrichment))
 
     # get the breeder material nuclides and densities in atom/b-cm
     new_composition = breeder_material.get_nuclide_atom_densities()
