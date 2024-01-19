@@ -45,7 +45,7 @@ source.energy = openmc.stats.Discrete([14e6], [1])
 source.particles = 'neutron'
 
 settings = openmc.Settings()
-settings.batches = 2
+settings.batches = 10
 settings.inactive = 0
 settings.particles = 1000
 settings.source = source
