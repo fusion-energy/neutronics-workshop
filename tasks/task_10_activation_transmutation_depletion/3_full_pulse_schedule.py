@@ -57,20 +57,14 @@ model = openmc.model.Model(geometry, materials, settings)
 flux_in_each_group, micro_xs = openmc.deplete.get_microxs_and_flux(
     model=model,
     domains=[shield_cell],
-    energies='CCFE-709',
+    energies=[0, 30e6], # one energy bin from 0 to 30MeV
+    chain_file=openmc.config['chain_file'],
 )
-
-# Plotting the neutron spectra
-plt.title('neutron flux spectra')
-plt.plot(openmc.mgxs.GROUP_STRUCTURES['CCFE-709'][:-1], flux_in_each_group[0])
-plt.xscale('log')
-plt.yscale('log')
-plt.show()
 
 # constructing the operator, note we pass in the flux and micro xs
 operator = openmc.deplete.IndependentOperator(
     materials=materials,
-    fluxes=flux_in_each_group,
+    fluxes=[i[0] for i in flux_in_each_group],
     micros=micro_xs,
     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
     reduce_chain_level=5,
@@ -125,7 +119,7 @@ for time, num in zip(times, number_of_Ag110_atoms):
     print(f" Time {time}s. Number of Ag110 atoms {num}")
 
 # plots the number of atoms as a function of time
-plt.cla()
-plt.clf()
 plt.plot(times, number_of_Ag110_atoms)
+plt.xlabel('Time [s]')
+plt.ylabel('Number of Ag110 atoms')
 plt.show()
