@@ -21,6 +21,8 @@ FROM ghcr.io/fusion-energy/neutronics-workshop:base as base
 COPY tasks tasks/
 COPY tests tests/
 
+RUN pip install openmc_source_plotter==0.6.6
+
 RUN mkdir tasks/half-day-workshop
 RUN cp tasks/task_01_cross_sections/1_isotope_xs_plot.ipynb tasks/half-day-workshop/task_01_isotope_xs_plot.ipynb
 RUN cp tasks/task_01_cross_sections/2_element_xs_plot.ipynb tasks/half-day-workshop/task_02_element_xs_plot.ipynb
