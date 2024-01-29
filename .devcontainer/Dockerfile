@@ -17,11 +17,12 @@ FROM ghcr.io/fusion-energy/neutronics-workshop:base as base
 # local image
 # FROM neutronics-workshop:base as base
 
+RUN pip install openmc_source_plotter==0.6.6
+
 # Copy over the local repository files
 COPY tasks tasks/
 COPY tests tests/
 
-RUN pip install openmc_source_plotter==0.6.6
 
 RUN mkdir tasks/half-day-workshop
 RUN cp tasks/task_01_cross_sections/1_isotope_xs_plot.ipynb tasks/half-day-workshop/task_01_isotope_xs_plot.ipynb
