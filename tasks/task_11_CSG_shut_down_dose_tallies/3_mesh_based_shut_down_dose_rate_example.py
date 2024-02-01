@@ -22,43 +22,51 @@ n_particles = 1_00000
 p_particles = 1_000
 statepoints_folder = Path('statepoints_folder')
 
+
+al_sphere_radius = 7
+iron_sphere_radius = 4
+
+# We make a iron material which should produce a few activation products
+mat_iron = openmc.Material()
+mat_iron.id = 1
+mat_iron.add_nuclide("Fe56", 1.0)
+mat_iron.add_nuclide("Fe57", 1.0)
+mat_iron.set_density("g/cm3", 7.7)
+# must set the depletion to True to deplete the material
+mat_iron.depletable = True
+# volume must set the volume as well as openmc calculates number of atoms
+mat_iron.volume = (4 / 3) * math.pi * math.pow(iron_sphere_radius, 3)
+
+# We make a Al material which should produce a few different activation products
+mat_aluminum = openmc.Material()
+mat_aluminum.id = 2
+mat_aluminum.add_element("Al", 1.0)
+mat_aluminum.set_density("g/cm3", 2.7)
+# must set the depletion to True to deplete the material
+mat_aluminum.depletable = True
+# volume must set the volume as well as openmc calculates number of atoms
+mat_aluminum.volume = (4 / 3) * math.pi * math.pow(al_sphere_radius, 3)
+
+
+
 # First we make a simple geometry with three cells, (two with material)
 sphere_surf_1 = openmc.Sphere(r=20, boundary_type="vacuum")
-sphere_surf_2 = openmc.Sphere(r=1, y0=10)
-sphere_surf_3 = openmc.Sphere(r=5, z0=10)
+sphere_surf_2 = openmc.Sphere(r=iron_sphere_radius, z0=10)
+sphere_surf_3 = openmc.Sphere(r=al_sphere_radius, z0=-5)
 
 sphere_region_1 = -sphere_surf_1 & +sphere_surf_2 & +sphere_surf_3  # void space
 sphere_region_2 = -sphere_surf_2
 sphere_region_3 = -sphere_surf_3
 
 sphere_cell_1 = openmc.Cell(region=sphere_region_1)
-sphere_cell_2 = openmc.Cell(region=sphere_region_2)
-sphere_cell_3 = openmc.Cell(region=sphere_region_3)
-
-# We make a iron material which should produce a few activation products
-mat_iron = openmc.Material()
-mat_iron.id = 1
-mat_iron.add_element("Fe", 1.0)
-mat_iron.set_density("g/cm3", 7.7)
-# must set the depletion to True to deplete the material
-mat_iron.depletable = True
-# volume must set the volume as well as openmc calculates number of atoms
-mat_iron.volume = (4 / 3) * math.pi * math.pow(sphere_surf_2.r, 3)
-sphere_cell_2.fill = mat_iron
-
-# We make a Al material which should produce a few different activation products
-mat_aluminum = openmc.Material()
-mat_aluminum.id = 2
-mat_aluminum.add_element("Al", 1.0)
-mat_aluminum.add_element("Fe", 1.0)
-mat_aluminum.set_density("g/cm3", 2.7)
-# must set the depletion to True to deplete the material
-mat_aluminum.depletable = True
-# volume must set the volume as well as openmc calculates number of atoms
-mat_aluminum.volume = (4 / 3) * math.pi * math.pow(sphere_surf_3.r, 3)
-sphere_cell_3.fill = mat_aluminum
+sphere_cell_2 = openmc.Cell(region=sphere_region_2,fill = mat_iron)
+sphere_cell_3 = openmc.Cell(region=sphere_region_3,fill = mat_aluminum)
 
 my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3])
+
+plot = my_geometry.plot(basis='xz')
+import matplotlib.pyplot as plt
+plt.show()
 
 my_materials = openmc.Materials([mat_iron, mat_aluminum])
 
@@ -90,7 +98,7 @@ my_neutron_settings.photon_transport = False
 # Create mesh which will be used for tally
 regular_mesh = openmc.RegularMesh().from_domain(
     my_geometry, # the corners of the mesh are being set automatically to surround the geometry
-    dimension=[10, 10, 10] # 10
+    dimension=[2, 2, 2] # 10
 )
 
 model_neutron = openmc.Model(my_geometry, my_materials, my_neutron_settings)
@@ -135,7 +143,7 @@ for material in my_geometry.get_all_materials().values():
 flux_in_each_group, micro_xs = openmc.deplete.get_microxs_and_flux(
     model=model_neutron,
     domains=regular_mesh,
-    energies='CCFE-709', # different group structures see this file for all the groups available https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py
+    energies=[0,30e6], # different group structures see this file for all the groups available https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py
     nuclides=all_nuclides,
     chain_file=openmc.config['chain_file']
 )
@@ -152,13 +160,26 @@ mesh.set_parameters(
 
 vols = mesh.material_volumes(n_samples = 1000000)
 
+mesh_voxel_material = []
+
+for i, entry in enumerate(vols):
+    print(entry)
+    for material_volume_tuple in entry:
+        material = material_volume_tuple[0]
+        if material != None:
+            volume_in_cm3 = material_volume_tuple[1]
+            print(f'   {material.id}, {volume_in_cm3}')
+            # units of material_atom_density are atom/b-cm
+            
+
 openmc.lib.finalize()
+
+
 
 # # # # constructing the operator, note we pass in the flux and micro xs
 # operator = openmc.deplete.IndependentOperator().from_nuclides(
 #     volume=
 #     nuclides=
-
 #     materials=#TODO find the nuclides in each mesh voxel and their volume fractions,
 #     fluxes=flux_in_each_group,
 #     micros=micro_xs,
