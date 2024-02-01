@@ -192,6 +192,8 @@ for i, entry in enumerate(vols):
         voxel_mat = openmc.Material.mix_materials(materials_in_voxel, norm_fracs)
     else:
         voxel_mat = openmc.Material()
+    
+    voxel_mat.volume = sum(volumes_in_voxel)
     material_in_voxel.append(voxel_mat)
 
 openmc.lib.finalize()
@@ -199,26 +201,25 @@ openmc.lib.finalize()
 
 
 # # # # constructing the operator, note we pass in the flux and micro xs
-# operator = openmc.deplete.IndependentOperator().from_nuclides(
-#     volume=volume_of_material_in_voxel
-#     materials=
-#     fluxes=flux_in_each_group,
-#     micros=micro_xs,
-#     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
-#     reduce_chain_level=5,
-#     normalization_mode="source-rate"
-# )
+operator = openmc.deplete.IndependentOperator(
+    materials=openmc.Materials(material_in_voxel),
+    fluxes=[flux[0] for flux in flux_in_each_group],
+    micros=micro_xs,
+    reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
+    reduce_chain_level=5,
+    normalization_mode="source-rate"
+)
 
-# integrator = openmc.deplete.PredictorIntegrator(
-#     operator=operator,
-#     timesteps=timesteps,
-#     source_rates=source_rates,
-#     timestep_units='s'
-# )
+integrator = openmc.deplete.PredictorIntegrator(
+    operator=operator,
+    timesteps=timesteps,
+    source_rates=source_rates,
+    timestep_units='s'
+)
 
 # # this runs the depletion calculations for the timesteps
 # # this does the neutron activation simulations and produces a depletion_results.h5 file
-# integrator.integrate()
+integrator.integrate()
 # # TODO add output dir to integrate command so we don't have to move the file like this
 # # integrator.integrate(path=statepoints_folder / "neutrons" / "depletion_results.h5")
 # # PR on openmc is open
