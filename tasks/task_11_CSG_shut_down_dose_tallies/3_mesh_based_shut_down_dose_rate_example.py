@@ -66,7 +66,7 @@ my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3])
 
 plot = my_geometry.plot(basis='xz')
 import matplotlib.pyplot as plt
-plt.show()
+# plt.show()
 
 my_materials = openmc.Materials([mat_iron, mat_aluminum])
 
@@ -162,15 +162,37 @@ vols = mesh.material_volumes(n_samples = 1000000)
 
 mesh_voxel_material = []
 
+mat_number_offset = 100
+alls_mats = my_geometry.get_all_materials()
+volume_of_material_in_voxel = []
+material_in_voxel = []
 for i, entry in enumerate(vols):
     print(entry)
+    materials_in_voxel = []
+    volumes_in_voxel = []
     for material_volume_tuple in entry:
         material = material_volume_tuple[0]
         if material != None:
             volume_in_cm3 = material_volume_tuple[1]
-            print(f'   {material.id}, {volume_in_cm3}')
-            # units of material_atom_density are atom/b-cm
-            
+            print(f'   {material.id}, {volume_in_cm3}')      
+            materials_in_voxel.append(alls_mats[material.id])
+            volumes_in_voxel.append(volume_in_cm3)
+    
+    volume_of_material_in_voxel.append(sum(volumes_in_voxel))
+
+    print(materials_in_voxel, volumes_in_voxel)
+    if len(materials_in_voxel)==1:
+        voxel_mat = materials_in_voxel[0]
+
+    elif len(materials_in_voxel)>1:
+        # todo check this volume fraction is correct
+
+        norm_fracs = [v*(1/sum(volumes_in_voxel)) for v in volumes_in_voxel]
+        print('norm_fracs',norm_fracs)
+        voxel_mat = openmc.Material.mix_materials(materials_in_voxel, norm_fracs)
+    else:
+        voxel_mat = openmc.Material()
+    material_in_voxel.append(voxel_mat)
 
 openmc.lib.finalize()
 
@@ -178,9 +200,8 @@ openmc.lib.finalize()
 
 # # # # constructing the operator, note we pass in the flux and micro xs
 # operator = openmc.deplete.IndependentOperator().from_nuclides(
-#     volume=
-#     nuclides=
-#     materials=#TODO find the nuclides in each mesh voxel and their volume fractions,
+#     volume=volume_of_material_in_voxel
+#     materials=
 #     fluxes=flux_in_each_group,
 #     micros=micro_xs,
 #     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
