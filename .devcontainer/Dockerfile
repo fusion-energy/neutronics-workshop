@@ -40,7 +40,7 @@ RUN cp tasks/task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.ip
 RUN cp tasks/task_07_CSG_cell_tally_spectra/4_example_photon_spectra.ipynb tasks/half-day-workshop/task_13_example_photon_spectra.ipynb
 RUN cp tasks/task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.ipynb tasks/half-day-workshop/task_14_example_2d_regular_mesh_tallies.ipynb
 RUN cp tasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule.ipynb tasks/half-day-workshop/task_15_full_pulse_schedule.ipynb
-RUN cp tasks/optimal_design.ipynb tasks/half-day-workshop/optimal_design.ipynb 
+RUN cp tasks/optimal_design.ipynb tasks/half-day-workshop/task_16_optimal_design.ipynb 
 
 WORKDIR /tasks
 
