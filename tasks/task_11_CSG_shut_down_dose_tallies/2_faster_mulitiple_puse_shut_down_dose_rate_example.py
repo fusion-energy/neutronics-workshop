@@ -120,13 +120,15 @@ model_neutron.export_to_xml(directory=statepoints_folder/ "neutrons")
 flux_in_each_group, micro_xs = openmc.deplete.get_microxs_and_flux(
     model=model_neutron,
     domains=all_depletable_cells,
-    energies='CCFE-709', # different group structures see this file for all the groups available https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py
+    energies=[0, 30e6], # one energy bin from 0 to 30MeV
+    chain_file=openmc.config['chain_file'],
 )
+
 
 # constructing the operator, note we pass in the flux and micro xs
 operator = openmc.deplete.IndependentOperator(
     materials=openmc.Materials(all_depletable_materials),
-    fluxes=flux_in_each_group,
+    fluxes=[i[0] for i in flux_in_each_group],
     micros=micro_xs,
     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
     reduce_chain_level=5,
@@ -142,12 +144,7 @@ integrator = openmc.deplete.PredictorIntegrator(
 
 # this runs the depletion calculations for the timesteps
 # this does the neutron activation simulations and produces a depletion_results.h5 file
-integrator.integrate()
-# TODO add output dir to integrate command so we don't have to move the file like this
-# integrator.integrate(path=statepoints_folder / "neutrons" / "depletion_results.h5")
-# PR on openmc is open
-import os
-os.system(f'mv depletion_results.h5 {statepoints_folder / "neutrons" / "depletion_results.h5"}')
+integrator.integrate(path=statepoints_folder / "neutrons" / "depletion_results.h5")
 
 # Now we have done the neutron activation simulations we can start the work needed for the decay gamma simulations.
 
