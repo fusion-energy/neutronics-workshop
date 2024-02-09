@@ -8,9 +8,7 @@ A selection of resources for learning fusion neutronics simulations with a
 particular focus on [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
 and [Paramak](https://paramak.readthedocs.io)
 
-There is a 
-[slide](https://slides.com/neutronics_workshop/neutronics_workshop) deck that introduces
-the workshop and show the expected outputs of each task.
+There is a [slide](https://fusion-energy.github.io/neutronics-workshop-slides/index.html) deck that introduces the workshop and each task.
 
 There is also a [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) space which is great for working through the workshop with colleagues.
 
