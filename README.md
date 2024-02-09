@@ -113,7 +113,13 @@ internet browser of your choice. Select and open the URL at the end of the termi
 
 <p align="center"><img src="https://user-images.githubusercontent.com/8583900/144759522-5306e61e-e30d-45e0-bb1a-ea8360e8c6da.png" width="70%" /></p>
 
-5. Some tasks require the use of Paraview to view the 3D meshes produced.
+To check the tasks run try opening the first task in the half day workshop folder and running the Jupyter Lab code (either click on the triangular run button or click on the first code cell and press shift and enter to execute that cell).
+
+# Optional Packages for Local Installation
+
+This is not required for the half day workshop but some of the more advanced tasks do require Paraview and or FreeCAD.
+
+1. Some tasks require the use of Paraview to view the 3D meshes produced.
 Parview can be download from [here](https://www.paraview.org/download/).
     <details>
       <summary><b>Expand</b> - Ubuntu terminal commands for Paraview install</summary>
@@ -122,7 +128,7 @@ Parview can be download from [here](https://www.paraview.org/download/).
         </code></pre>
     </details>
 
-6. Some tasks require the use of CAD software to view the 3D geometry produced.
+2. Some tasks require the use of CAD software to view the 3D geometry produced.
 FreeCAD is one option for this and can be downloaded [here](https://www.freecadweb.org/downloads.php).
     <details>
         <summary><b>Expand</b> - Ubuntu terminal commands for FreeCAD install</summary>
