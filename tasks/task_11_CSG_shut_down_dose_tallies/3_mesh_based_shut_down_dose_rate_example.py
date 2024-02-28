@@ -50,7 +50,7 @@ mat_aluminum.volume = (4 / 3) * math.pi * math.pow(al_sphere_radius, 3)
 
 
 # First we make a simple geometry with three cells, (two with material)
-sphere_surf_1 = openmc.Sphere(r=20, boundary_type="vacuum")
+sphere_surf_1 = openmc.Sphere(r=20)
 sphere_surf_2 = openmc.Sphere(r=iron_sphere_radius, z0=10)
 sphere_surf_3 = openmc.Sphere(r=al_sphere_radius, z0=-5)
 
@@ -62,10 +62,15 @@ sphere_cell_1 = openmc.Cell(region=sphere_region_1)
 sphere_cell_2 = openmc.Cell(region=sphere_region_2,fill = mat_iron)
 sphere_cell_3 = openmc.Cell(region=sphere_region_3,fill = mat_aluminum)
 
-my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3])
+box = openmc.model.RectangularParallelepiped(
+    xmin=-20, xmax=20, ymin=-20, ymax=20, zmin=-20, zmax=20, boundary_type="vacuum"
+)
+sphere_cell_4 = openmc.Cell(region=-box & +sphere_surf_1)
 
-plot = my_geometry.plot(basis='xz')
-import matplotlib.pyplot as plt
+my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3, sphere_cell_4])
+
+# plot = my_geometry.plot(basis='xz')
+# import matplotlib.pyplot as plt
 # plt.show()
 
 my_materials = openmc.Materials([mat_iron, mat_aluminum])
@@ -91,7 +96,7 @@ my_neutron_settings.photon_transport = False
 # Create mesh which will be used for tally
 regular_mesh = openmc.RegularMesh().from_domain(
     my_geometry, # the corners of the mesh are being set automatically to surround the geometry
-    dimension=[2, 2, 2] # 10
+    dimension=[10,10,10] # 10
 )
 
 model_neutron = openmc.Model(my_geometry, my_materials, my_neutron_settings)
@@ -124,6 +129,7 @@ timesteps = [item[0] for item in timesteps_and_source_rates]
 source_rates = [item[1] for item in timesteps_and_source_rates]
 
 model_neutron.export_to_xml(directory=statepoints_folder/ "neutrons")
+model_neutron.export_to_xml()
 
 all_nuclides = []
 for material in my_geometry.get_all_materials().values():
@@ -180,7 +186,7 @@ for i, entry in enumerate(vols):
 
     print(materials_in_voxel, volumes_in_voxel)
     if len(materials_in_voxel)==1:
-        voxel_mat = materials_in_voxel[0]#.clone() TODO find out why cloning crashes code
+        voxel_mat = materials_in_voxel[0].clone() #TODO find out why cloning crashes code
 
     elif len(materials_in_voxel)>1:
         # todo check this volume fraction is correct
@@ -194,6 +200,7 @@ for i, entry in enumerate(vols):
     
     voxel_mat.volume = sum(volumes_in_voxel)
     voxel_mat.id = i+mat_number_offset
+    # voxel_mat.depletable = True
     material_in_voxel.append(voxel_mat)
 
 openmc.lib.finalize()
@@ -206,7 +213,7 @@ operator = openmc.deplete.IndependentOperator(
     fluxes=[flux[0] for flux in flux_in_each_group],
     micros=micro_xs,
     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
-    reduce_chain_level=5,
+    reduce_chain_level=4,
     normalization_mode="source-rate"
 )
 
@@ -219,7 +226,9 @@ integrator = openmc.deplete.PredictorIntegrator(
 
 # # this runs the depletion calculations for the timesteps
 # # this does the neutron activation simulations and produces a depletion_results.h5 file
-integrator.integrate(path=statepoints_folder / "neutrons" / "depletion_results.h5")
+integrator.integrate(
+    path=statepoints_folder / "neutrons" / "depletion_results.h5"
+)
 
 # # Now we have done the neutron activation simulations we can start the work needed for the decay gamma simulations.
 
@@ -291,6 +300,7 @@ for i_cool in range(1, len(timesteps)):
                 source = openmc.IndependentSource(
                     energy=energy,
                     particle="photon",
+                    strength=strength
                 )
             else:
                 source = openmc.IndependentSource() # how to make an empty source, source strength is set to 0
@@ -298,43 +308,46 @@ for i_cool in range(1, len(timesteps)):
             photon_sources_for_timestep.append(source)
             strengths_for_timestep.append(strength)
         
-        mesh_source = openmc.MeshSource(regular_mesh, photon_sources_for_timestep)
-        mesh_source.strength = strengths_for_timestep
+        reshaped_photon_source_of_timestep = np.array(photon_sources_for_timestep).reshape(regular_mesh.dimension)
+        mesh_source = openmc.MeshSource(
+            regular_mesh, reshaped_photon_source_of_timestep
+        )
+        mesh_source.strength = 1# strengths_for_timestep
 
-
+        my_gamma_settings.source = mesh_source
         model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, my_gamma_tallies)
 
         model_gamma.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
 
 
-# pico_to_micro = 1e-6
-# seconds_to_hours = 60*60
+pico_to_micro = 1e-6
+seconds_to_hours = 60*60
 
 # # You may wish to plot the dose tally on a mesh, this package makes it easy to include the geometry with the mesh tally
-# from openmc_regular_mesh_plotter import plot_mesh_tally
-# for i_cool in range(1, len(timesteps)):
-#     with openmc.StatePoint(statepoints_folder / "photons" / f"photon_at_time_{i_cool}" / 'statepoint.100.h5') as statepoint:
-#         photon_tally = statepoint.get_tally(name="photon_dose_on_mesh")
+from openmc_regular_mesh_plotter import plot_mesh_tally
+for i_cool in range(1, len(timesteps)):
+    with openmc.StatePoint(statepoints_folder / "photons" / f"photon_at_time_{i_cool}" / f'statepoint.{my_gamma_settings.batches}.h5') as statepoint:
+        photon_tally = statepoint.get_tally(name="photon_dose_on_mesh")
 
-#         # normalising this tally is a little different to other examples as the source strength has been using units of photons per second.
-#         # tally.mean is in units of pSv-cm3/source photon.
-#         # as source strength is in photons_per_second this changes units to pSv-/second
+        # normalising this tally is a little different to other examples as the source strength has been using units of photons per second.
+        # tally.mean is in units of pSv-cm3/source photon.
+        # as source strength is in photons_per_second this changes units to pSv-/second
 
-#         # multiplication by pico_to_micro converts from (pico) pSv/s to (micro) uSv/s
-#         # dividing by mesh voxel volume cancles out the cm3 units
-#         # could do the mesh volume scaling on the plot and vtk functions but doing it here instead
-#         scaling_factor = (seconds_to_hours * pico_to_micro) / mesh.volumes[0][0][0]
+        # multiplication by pico_to_micro converts from (pico) pSv/s to (micro) uSv/s
+        # dividing by mesh voxel volume is not needed as the volume_normalization in the ploting function does this
+        # could do the mesh volume scaling on the plot and vtk functions but doing it here instead
+        scaling_factor = (seconds_to_hours * pico_to_micro)
 
-#         plot = plot_mesh_tally(
-#                 tally=photon_tally,
-#                 basis="xz",
-#                 # score='flux', # only one tally so can make use of default here
-#                 value="mean",
-#                 colorbar_kwargs={
-#                     'label': "Decay photon dose [µSv/h]",
-#                 },
-#                 norm=LogNorm(),
-#                 volume_normalization=False,  # this is done in the scaling_factor
-#                 scaling_factor=scaling_factor,
-#             )
-#         plot.figure.savefig(f'shut_down_dose_map_timestep_{i_cool}')
+        plot = plot_mesh_tally(
+            tally=photon_tally,
+            basis="xz",
+            # score='flux', # only one tally so can make use of default here
+            value="mean",
+            colorbar_kwargs={
+                'label': "Decay photon dose [µSv/h]",
+            },
+            norm=LogNorm(),
+            volume_normalization=True,  # this is done in the scaling_factor
+            scaling_factor=scaling_factor,
+        )
+        plot.figure.savefig(f'mesh_shut_down_dose_map_timestep_{i_cool}')
