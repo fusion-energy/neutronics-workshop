@@ -200,7 +200,7 @@ for i, entry in enumerate(vols):
     
     voxel_mat.volume = sum(volumes_in_voxel)
     voxel_mat.id = i+mat_number_offset
-    # voxel_mat.depletable = True
+    voxel_mat.depletable = True
     material_in_voxel.append(voxel_mat)
 
 openmc.lib.finalize()
