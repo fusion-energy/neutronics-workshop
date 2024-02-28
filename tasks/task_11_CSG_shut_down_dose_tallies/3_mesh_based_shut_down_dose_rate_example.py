@@ -65,7 +65,7 @@ sphere_cell_3 = openmc.Cell(region=sphere_region_3,fill = mat_aluminum)
 box = openmc.model.RectangularParallelepiped(
     xmin=-20, xmax=20, ymin=-20, ymax=20, zmin=-20, zmax=20, boundary_type="vacuum"
 )
-sphere_cell_4 = openmc.Cell(region=-box & +sphere_surf_1)
+sphere_cell_4 = openmc.Cell(region=-box & +sphere_surf_1, fill=mat_aluminum)
 
 my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3, sphere_cell_4])
 
@@ -101,13 +101,118 @@ regular_mesh = openmc.RegularMesh().from_domain(
 
 model_neutron = openmc.Model(my_geometry, my_materials, my_neutron_settings)
 
-hour_in_seconds = 60*60
+
+
+
+
+model_neutron.export_to_xml(directory=statepoints_folder/ "neutrons")
+model_neutron.export_to_xml()
+
+all_nuclides = []
+for material in my_geometry.get_all_materials().values():
+    for nuclide in material.get_nuclides():
+        if nuclide not in all_nuclides:
+            all_nuclides.append(nuclide)
+# print(set(all_nuclides))
+
+# this does perform transport but just to get the flux and micro xs
+flux_in_each_group, all_micro_xs = openmc.deplete.get_microxs_and_flux(
+    model=model_neutron,
+    domains=regular_mesh,
+    energies=[0,30e6], # different group structures see this file for all the groups available https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py
+    nuclides=all_nuclides,
+    chain_file=openmc.config['chain_file']
+)
+
+model_neutron.export_to_model_xml()
+
+import openmc.lib
+openmc.lib.init()
+
+
+lib_mesh = openmc.lib.RegularMesh()
+lib_mesh.dimension = regular_mesh.dimension
+lib_mesh.set_parameters(
+    lower_left=regular_mesh.lower_left,
+    upper_right=regular_mesh.upper_right
+)
+
+mesh_material_volumes = lib_mesh.material_volumes(n_samples = 1000000)
+
+mesh_voxel_material = []
+
+mat_number_offset = 100
+alls_mats = my_geometry.get_all_materials()
+volume_of_material_in_voxel = []
+material_in_voxel = []
+
+selective_flux_in_each_group = []
+selective_micro_xs = []
+
+for i, (mesh_material_volume, micro_xs, flux_in_group) in enumerate(zip(mesh_material_volumes, all_micro_xs, flux_in_each_group) ):
+    print(mesh_material_volume)
+    materials_in_voxel = []
+    volumes_in_voxel = []
+    for material_volume_tuple in mesh_material_volume:
+        material = material_volume_tuple[0]
+        if material != None:
+            volume_in_cm3 = material_volume_tuple[1]
+            print(f'   {material.id}, {volume_in_cm3}')      
+            materials_in_voxel.append(alls_mats[material.id])
+            volumes_in_voxel.append(volume_in_cm3)
+    
+    volume_of_material_in_voxel.append(sum(volumes_in_voxel))
+
+    print(materials_in_voxel, volumes_in_voxel)
+    if len(materials_in_voxel)==1:
+        print('2 materials found')
+        voxel_mat = materials_in_voxel[0].clone() #TODO find out why cloning crashes code
+        selective_flux_in_each_group.append(flux_in_group)
+        selective_micro_xs.append(micro_xs)
+
+        voxel_mat.volume = sum(volumes_in_voxel)
+        voxel_mat.id = i+mat_number_offset
+        voxel_mat.depletable = True
+        material_in_voxel.append(voxel_mat)
+
+    elif len(materials_in_voxel)>1:
+        # todo check this volume fraction is correct
+
+        norm_fracs = [v*(1/sum(volumes_in_voxel)) for v in volumes_in_voxel]
+        print('1 material found')
+        voxel_mat = openmc.Material.mix_materials(materials_in_voxel, norm_fracs)
+        selective_flux_in_each_group.append(flux_in_group)
+        selective_micro_xs.append(micro_xs)
+
+        voxel_mat.volume = sum(volumes_in_voxel)
+        voxel_mat.id = i+mat_number_offset
+        voxel_mat.depletable = True
+        material_in_voxel.append(voxel_mat)
+
+    else:
+        print('no material in voxel')
+        
+
+openmc.lib.finalize()
+
+
+
+# constructing the operator, note we pass in the flux and micro xs
+operator = openmc.deplete.IndependentOperator(
+    materials=openmc.Materials(material_in_voxel),
+    fluxes=[flux[0] for flux in selective_flux_in_each_group],
+    micros=selective_micro_xs,
+    reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
+    reduce_chain_level=4,
+    normalization_mode="source-rate"
+)
 
 # This section defines the neutron pulse schedule.
 # If the method made use of the CoupledOperator then there would need to be a
 # transport simulation for each timestep. However as the IndependentOperator is
 # used then just a single transport simulation is done, thus speeding up the
 # simulation considerably.
+hour_in_seconds = 60*60
 timesteps_and_source_rates = [
     (1, 1e18),  # 1 second
     (hour_in_seconds, 0),  # 1 hour
@@ -127,95 +232,6 @@ timesteps_and_source_rates = [
 
 timesteps = [item[0] for item in timesteps_and_source_rates]
 source_rates = [item[1] for item in timesteps_and_source_rates]
-
-model_neutron.export_to_xml(directory=statepoints_folder/ "neutrons")
-model_neutron.export_to_xml()
-
-all_nuclides = []
-for material in my_geometry.get_all_materials().values():
-    for nuclide in material.get_nuclides():
-        if nuclide not in all_nuclides:
-            all_nuclides.append(nuclide)
-# print(set(all_nuclides))
-
-# this does perform transport but just to get the flux and micro xs
-flux_in_each_group, micro_xs = openmc.deplete.get_microxs_and_flux(
-    model=model_neutron,
-    domains=regular_mesh,
-    energies=[0,30e6], # different group structures see this file for all the groups available https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py
-    nuclides=all_nuclides,
-    chain_file=openmc.config['chain_file']
-)
-
-model_neutron.export_to_model_xml()
-
-import openmc.lib
-openmc.lib.init()
-
-
-mesh = openmc.lib.RegularMesh()
-mesh.dimension = regular_mesh.dimension
-mesh.set_parameters(
-    lower_left=regular_mesh.lower_left,
-    upper_right=regular_mesh.upper_right
-)
-
-vols = mesh.material_volumes(n_samples = 1000000)
-
-mesh_voxel_material = []
-
-mat_number_offset = 100
-alls_mats = my_geometry.get_all_materials()
-volume_of_material_in_voxel = []
-material_in_voxel = []
-
-
-for i, entry in enumerate(vols):
-    print(entry)
-    materials_in_voxel = []
-    volumes_in_voxel = []
-    for material_volume_tuple in entry:
-        material = material_volume_tuple[0]
-        if material != None:
-            volume_in_cm3 = material_volume_tuple[1]
-            print(f'   {material.id}, {volume_in_cm3}')      
-            materials_in_voxel.append(alls_mats[material.id])
-            volumes_in_voxel.append(volume_in_cm3)
-    
-    volume_of_material_in_voxel.append(sum(volumes_in_voxel))
-
-    print(materials_in_voxel, volumes_in_voxel)
-    if len(materials_in_voxel)==1:
-        voxel_mat = materials_in_voxel[0].clone() #TODO find out why cloning crashes code
-
-    elif len(materials_in_voxel)>1:
-        # todo check this volume fraction is correct
-
-        norm_fracs = [v*(1/sum(volumes_in_voxel)) for v in volumes_in_voxel]
-        print('norm_fracs',norm_fracs)
-        voxel_mat = openmc.Material.mix_materials(materials_in_voxel, norm_fracs)
-    else:
-        print('no material in voxel')
-        voxel_mat = openmc.Material()
-    
-    voxel_mat.volume = sum(volumes_in_voxel)
-    voxel_mat.id = i+mat_number_offset
-    voxel_mat.depletable = True
-    material_in_voxel.append(voxel_mat)
-
-openmc.lib.finalize()
-
-
-
-# constructing the operator, note we pass in the flux and micro xs
-operator = openmc.deplete.IndependentOperator(
-    materials=openmc.Materials(material_in_voxel),
-    fluxes=[flux[0] for flux in flux_in_each_group],
-    micros=micro_xs,
-    reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
-    reduce_chain_level=4,
-    normalization_mode="source-rate"
-)
 
 integrator = openmc.deplete.PredictorIntegrator(
     operator=operator,
