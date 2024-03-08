@@ -17,8 +17,6 @@ FROM ghcr.io/fusion-energy/neutronics-workshop:base as base
 # local image
 # FROM neutronics-workshop:base as base
 
-RUN pip install openmc_source_plotter==0.6.6
-
 # Copy over the local repository files
 COPY tasks tasks/
 COPY tests tests/
