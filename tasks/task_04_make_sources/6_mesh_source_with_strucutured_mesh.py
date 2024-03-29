@@ -1,4 +1,7 @@
+# this example shows users how to make a mesh source using a cylindrical mesh and a source term for each voxel.
 
+# this is a minimal example but a more realistic example could use the voxel location to look up properties
+# of the plasma at each coordinate and customize the source energy and strength at each mesh voxel location
 
 import openmc
 import numpy as np
