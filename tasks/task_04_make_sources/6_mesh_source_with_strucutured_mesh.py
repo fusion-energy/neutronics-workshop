@@ -32,8 +32,8 @@ for i in cylindrical_mesh.indices:
     # strength for each x,y,z or r, phi, z location
     # voxel centroid can be obtained like this
     # centroid = cylindrical_mesh.centroids[mesh_index]
-    # voxel centcylindrical_coords (z, phi, r) can be obtained like this
-    # cylindrical_coords = cylindrical_mesh.vertices_cylindrical[mesh_index]
+    # voxel cylindrical_coords (z, phi, r) can be obtained like this
+    cylindrical_coords = cylindrical_mesh.vertices_cylindrical[mesh_index]
     volume = cylindrical_mesh.volumes[mesh_index]
  
     # making a source for each voxel
