@@ -4,6 +4,9 @@ import openmc
 from matplotlib.colors import LogNorm
 import openmc.deplete
 
+openmc.config['chain_file'] = '/home/j/chain-endf-b8.0.xml'
+openmc.config['cross_sections'] = '/home/j/endf-b8.0-hdf5/endfb-viii.0-hdf5/cross_sections.xml'
+
 # makes a CAD geometry to use for the neutronics geometry
 s = cq.Workplane("XY")
 sPnts = [
@@ -36,96 +39,104 @@ mesh_filter = openmc.MeshFilter(umesh)
 neutron_particle_filter = openmc.ParticleFilter(['neutron'])
 energy_filter = openmc.EnergyFilter.from_group_structure('CCFE-709')
 
-# sets up a neutron spectra tally on the unstructured mesh 
-tally = openmc.Tally(name="unstructured_mesh_neutron_spectra_tally")
-tally.filters = [mesh_filter, energy_filter, neutron_particle_filter]
-tally.scores = ["flux"]
-tally.estimator = "tracklength"
-my_tallies = openmc.Tallies([tally])
-
-my_material = openmc.Material(name='mat1')
+my_material = openmc.Material(name='mat1', material_id=1)
 my_material.add_nuclide("H1", 1, percent_type="ao")
 my_material.set_density("g/cm3", 0.001)
+my_material.depletable = True
 my_materials = openmc.Materials([my_material])
 
 universe = openmc.DAGMCUniverse("dagmc.h5m").bounded_universe()
 my_geometry = openmc.Geometry(universe)
 
 my_settings = openmc.Settings()
-my_settings.batches = 10
+my_settings.batches = 5
 my_settings.inactive = 0
 my_settings.particles = 5000
 my_settings.run_mode = "fixed source"
 
 # Create a DT point source
 my_source = openmc.IndependentSource()
-my_source.space = openmc.stats.Point((0, 0, 0))
+my_source.space = openmc.stats.Point(my_geometry.bounding_box.center)
 my_source.angle = openmc.stats.Isotropic()
 my_source.energy = openmc.stats.Discrete([14e6], [1])
 my_settings.source = my_source
 
-model = openmc.model.Model(my_geometry, my_materials, my_settings, my_tallies)
-sp_filename = model.run()
+model = openmc.model.Model(my_geometry, my_materials, my_settings)
 
-
+flux_in_each_voxel, micro_xs = openmc.deplete.get_microxs_and_flux(
+    model=model,
+    domains=umesh,
+    energies=[0, 30e6], # one energy bin from 0 to 30MeV
+    chain_file=openmc.config['chain_file'],
+    # needed otherwise the dagmc file is not found in the temp dir that mico runs
+    run_kwargs={'cwd':'/home/j/neutronics-workshop/tasks/task_18_CAD_shut_down_dose_rate'},
+    nuclides=my_material.get_nuclides()
+)
+sp_filename=f'statepoint.{my_settings.batches}.h5'
 sp = openmc.StatePoint(sp_filename)
-
-tally_result = sp.get_tally(name="unstrucutred_mesh_tally")
 
 # normally with regular meshes I would get the mesh from the tally
 # but with unstrucutred meshes the tally does not contain the mesh
 # however we can get it from the statepoint file
-# umesh = tally_result.find_filter(openmc.MeshFilter)
-umesh_from_sp = sp.meshes[1]
-
-# these trigger internal code in the mesh object so that its centroids and volumes become known.
+umesh_from_sp = sp.meshes[umesh.id]
+# reading a unstrucutred mesh from the statepoint trigger internal code in the mesh
+#  object so that its centroids and volumes become known.
 # centroids and volumes are needed for the get_values and write_data_to_vtk steps
 centroids = umesh_from_sp.centroids
 mesh_vols = umesh_from_sp.volumes
 
-flux_in_each_group_for_each_voxel = tally_result.get_values(scores=["flux"], value="mean")
+# flux_in_each_group_for_each_voxel = tally_result.get_values(scores=["flux"], value="mean")
 
 all_sources = []
 
-for flux_in_each_group, mesh_vol in zip(flux_in_each_group_for_each_voxel, mesh_vols):
-    micro_xs = openmc.deplete.MicroXS.from_multigroup_flux(
-        energies='CCFE-709',
-        multigroup_flux=flux_in_each_group,
-        temperature=294, # endf 8.0 has ['1200K', '2500K', '250K', '294K', '600K', '900K']
-        chain_file= openmc.config['chain_file'],
-        nuclides=my_material.get_nuclides()
-    )
+materials_for_every_mesh_voxel = []
+for i, vol in enumerate(mesh_vols, start=2):
+    new_mat = my_material.clone()
+    new_mat.id = i
+    new_mat.volume = i
+    materials_for_every_mesh_voxel.append(new_mat)
 
-    # constructing the operator, note we pass in the flux and micro xs
-    operator = openmc.deplete.IndependentOperator(
-        materials=my_materials,
-        fluxes=[sum(flux_in_each_group)*my_material.volume],  # Flux in each group in [n-cm/src] for each domain
-        micros=[micro_xs],
-        reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
-        reduce_chain_level=5,
-        normalization_mode="source-rate"
-    )
 
-    integrator = openmc.deplete.PredictorIntegrator(
-        operator=operator,
-        timesteps=[5, 60, 60],
-        source_rates=[1e20, 0 , 0], # a 5 second pulse of neutrons followed by 120 seconds of decay
-        timestep_units='s'
-    )
+#     # constructing the operator, note we pass in the flux and micro xs
+operator = openmc.deplete.IndependentOperator(
+    materials=openmc.Materials(materials_for_every_mesh_voxel),
+    fluxes=[flux[0] for flux in flux_in_each_voxel],  # Flux in each group in [n-cm/src] for each domain
+    micros=micro_xs,
+    reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
+    reduce_chain_level=5,
+    normalization_mode="source-rate"
+)
 
-    integrator.integrate()
+integrator = openmc.deplete.PredictorIntegrator(
+    operator=operator,
+    timesteps=[5, 60, 60],
+    source_rates=[1e20, 0 , 0], # a 5 second pulse of neutrons followed by 120 seconds of decay
+    timestep_units='s'
+)
 
-    results = openmc.deplete.Results.from_hdf5("depletion_results.h5")
-    last_time_step=result[-1]
-    activated_material = last_time_step.get_material(my_material.id)
+integrator.integrate()
 
+results = openmc.deplete.Results.from_hdf5("depletion_results.h5")
+last_time_step=results[-1]
+
+for i, (flux, mesh_vol) in enumerate(zip(flux_in_each_voxel, mesh_vols), start=2):
+    activated_material = last_time_step.get_material(str(i))
     activated_material.volume = mesh_vol
-
     energy = activated_material.get_decay_photon_energy(
         clip_tolerance = 1e-6,  # cuts out a small fraction of the very low energy (and hence negligible dose contribution) photons
         units = 'Bq',
     )
-    strength = energy.integral()
+    if energy:
+        strength = energy.integral()
+    # for the strength == None case
+    else:
+        strength = 0
+    my_source = openmc.IndependentSource(
+        energy = energy,
+        particle = "photon",
+        strength = strength
+    )
+    all_sources.append(my_source)
 
 
 mesh_source = openmc.MeshSource(
@@ -157,6 +168,8 @@ dose_tally.scores = ["flux"]
 dose_tally.name = "photon_dose_on_mesh"
 tallies = openmc.Tallies([dose_tally])
 
+# trying to hack the indices into the umesh object bt this didn't work as 
+# umesh_from_sp.indices = [i+1 for i in range(len(mesh_vols))]
 
 model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, tallies)
 
