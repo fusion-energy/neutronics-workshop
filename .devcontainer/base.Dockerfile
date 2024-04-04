@@ -246,5 +246,5 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
     rm WMP_Library_v1.1.tar.gz
 
-ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
-ENV OPENMC_CHAIN_FILE=/nuclear_data/chain-endf-b8.0.xml
+# ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
+# ENV OPENMC_CHAIN_FILE=/nuclear_data/chain-endf-b8.0.xml
