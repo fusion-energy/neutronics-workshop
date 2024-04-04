@@ -3,6 +3,7 @@ import cadquery as cq
 import openmc
 from matplotlib.colors import LogNorm
 import openmc.deplete
+import os
 
 openmc.config['chain_file'] = '/home/j/chain-endf-b8.0.xml'
 openmc.config['cross_sections'] = '/home/j/endf-b8.0-hdf5/endfb-viii.0-hdf5/cross_sections.xml'
@@ -69,7 +70,7 @@ flux_in_each_voxel, micro_xs = openmc.deplete.get_microxs_and_flux(
     energies=[0, 30e6], # one energy bin from 0 to 30MeV
     chain_file=openmc.config['chain_file'],
     # needed otherwise the dagmc file is not found in the temp dir that mico runs
-    run_kwargs={'cwd':'/home/j/neutronics-workshop/tasks/task_18_CAD_shut_down_dose_rate'},
+    run_kwargs={'cwd':os.path.dirname(__file__)},
     nuclides=my_material.get_nuclides()
 )
 sp_filename=f'statepoint.{my_settings.batches}.h5'
@@ -85,19 +86,19 @@ umesh_from_sp = sp.meshes[umesh.id]
 centroids = umesh_from_sp.centroids
 mesh_vols = umesh_from_sp.volumes
 
-# flux_in_each_group_for_each_voxel = tally_result.get_values(scores=["flux"], value="mean")
-
+# empty list to be populated with a gamma source for each mesh voxel
 all_sources = []
 
 materials_for_every_mesh_voxel = []
 for i, vol in enumerate(mesh_vols, start=2):
+    # we make a new material with a new id for every mesh voxel
     new_mat = my_material.clone()
     new_mat.id = i
     new_mat.volume = i
     materials_for_every_mesh_voxel.append(new_mat)
 
 
-#     # constructing the operator, note we pass in the flux and micro xs
+# constructing the operator, note we pass in the flux and micro xs
 operator = openmc.deplete.IndependentOperator(
     materials=openmc.Materials(materials_for_every_mesh_voxel),
     fluxes=[flux[0] for flux in flux_in_each_voxel],  # Flux in each group in [n-cm/src] for each domain
@@ -173,11 +174,11 @@ tallies = openmc.Tallies([dose_tally])
 
 model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, tallies)
 
-model_gamma.run(cwd="photons")
+gamma_sp_filename = model_gamma.run(cwd="photons")
 
 # You may wish to plot the dose tally on a mesh, this package makes it easy to include the geometry with the mesh tally
 from openmc_regular_mesh_plotter import plot_mesh_tally
-with openmc.StatePoint('photons/statepoint.100.h5') as statepoint:
+with openmc.StatePoint(gamma_sp_filename) as statepoint:
     photon_tally = statepoint.get_tally(name="photon_dose_on_mesh")
 
     # normalising this tally is a little different to other examples as the source strength has been using units of photons per second.
