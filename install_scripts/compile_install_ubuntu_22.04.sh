@@ -5,14 +5,14 @@
 
 
 sudo apt-get --yes update
-apt-get --yes upgrade
+sudo apt-get --yes upgrade
 
 
 # install dependancies
 # needed for embree
 sudo apt-get install libglfw3
 # needed for embree
-sudo apt-get install libglfw3-dev
+sudo apt-get install -y libglfw3-dev
 # needed for moab compile
 sudo apt-get install -y libopenblas-dev
 # needed for openmc compile
@@ -36,14 +36,16 @@ sudo apt-get install -y libgles2-mesa-dev
 
 # install conda, creates new python enviroment and activates it
 cd ~
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh
-conda create --name openmc-dagmc python=3.8
-conda activate openmc-dagmc
+
+wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3.sh -b -p "${HOME}/conda"
+source "${HOME}/conda/etc/profile.d/conda.sh"
+source "${HOME}/conda/etc/profile.d/mamba.sh"
+mamba create --name openmc-dagmc python=3.10
+mamba activate openmc-dagmc
 
 # install python dependancies
-conda install numpy
-conda install cython
+mamba install -y -c conda-forge numpy cython
 
 # installs embree
 cd ~
@@ -55,29 +57,24 @@ cmake .. -DCMAKE_INSTALL_PREFIX=.. -DEMBREE_ISPC_SUPPORT=OFF
 make -j
 make -j install
 
-# install moab
+# install moab and pymoab
 cd ~
 mkdir MOAB
 cd MOAB
-git clone  --single-branch --branch 5.4.1 --depth 1 https://bitbucket.org/fathomteam/moab.git
+git clone --single-branch -b 5.5.1 --depth 1 https://bitbucket.org/fathomteam/moab/
 mkdir build
 cd build
-#cmake ../moab -DENABLE_HDF5=ON -DENABLE_NETCDF=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$HOME/MOAB -DENABLE_BLASLAPACK=OFF
-cmake ../moab -DENABLE_HDF5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=$HOME/MOAB -DENABLE_FORTRAN=OFF
-make -j
-#sudo 
-make -j install
-#cmake ../moab -DENABLE_HDF5=ON -DENABLE_PYMOAB=ON -DENABLE_FORTRAN=OFF -DBUILD_SHARED_LIBS=ON -DENABLE_BLASLAPACK=OFF -DCMAKE_INSTALL_PREFIX=$HOME/MOAB
-#sudo make -j install
-#cd pymoab
-#sudo bash install.sh
-#sudo python setup.py install
+apt-get install -y libeigen3-dev
+cmake ../moab -DENABLE_PYMOAB=ON -DENABLE_HDF5=ON -DENABLE_BLASLAPACK=OFF -DENABLE_FORTRAN=OFF
+make -j2
+sudo make install
 
 
 # add to new dirs to the path
 echo 'export PATH="$HOME/MOAB/bin:$PATH"'  >> ~/.bashrc 
 echo 'export LD_LIBRARY_PATH="$HOME/MOAB/lib:$LD_LIBRARY_PATH"'  >> ~/.bashrc 
 source ~/.bashrc 
+mamba activate openmc-dagmc
 
 # install Double-Down
 cd ~
@@ -94,14 +91,14 @@ make -j install
 cd ~
 mkdir DAGMC
 cd DAGMC
-git clone --single-branch --branch v3.2.2 --depth 1 https://github.com/svalinn/DAGMC.git
+git clone --single-branch --branch v3.2.3 --depth 1 https://github.com/svalinn/DAGMC.git
 mkdir build
 cd build
-cmake ../DAGMC -DBUILD_TALLY=ON -DMOAB_DIR=$HOME/MOAB -DDOUBLE_DOWN=ON -DBUILD_STATIC_EXE=OFF -DBUILD_STATIC_LIBS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/DAGMC/ -DDOUBLE_DOWN_DIR=$HOME/double-down
-#cmake ../DAGMC -DBUILD_TALLY=ON -DMOAB_DIR=$HOME/MOAB -DCMAKE_INSTALL_PREFIX=$HOME/DAGMC  -DBUILD_STATIC_LIBS=OFF 
+cmake ../DAGMC -DBUILD_TALLY=ON -DMOAB_DIR=/usr/local -DDOUBLE_DOWN=ON -DBUILD_STATIC_EXE=OFF -DBUILD_STATIC_LIBS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/DAGMC/ -DDOUBLE_DOWN_DIR=$HOME/double-down
+#cmake ../DAGMC -DBUILD_TALLY=ON -DMOAB_DIR=/usr/local -DCMAKE_INSTALL_PREFIX=$HOME/DAGMC  -DBUILD_STATIC_LIBS=OFF 
 # or build without double down
-# cmake ../DAGMC -DBUILD_TALLY=ON -DMOAB_DIR=$HOME/MOAB -DBUILD_STATIC_EXE=OFF -DBUILD_STATIC_LIBS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/DAGMC/
-make -j install
+# cmake ../DAGMC -DBUILD_TALLY=ON -DMOAB_DIR=/usr/local -DBUILD_STATIC_EXE=OFF -DBUILD_STATIC_LIBS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/DAGMC/
+sudo make -j install
 
 # add to new dirs to the path
 echo 'export PATH="$HOME/DAGMC/bin:$PATH"'  >> ~/.bashrc 
