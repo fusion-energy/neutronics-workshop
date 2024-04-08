@@ -169,8 +169,8 @@ dose_tally.scores = ["flux"]
 dose_tally.name = "photon_dose_on_mesh"
 tallies = openmc.Tallies([dose_tally])
 
-# trying to hack the indices into the umesh object bt this didn't work as 
-# umesh_from_sp.indices = [i+1 for i in range(len(mesh_vols))]
+# adding the indices into the umesh object. In the future this won't be needed as openmc will do this internally 
+umesh_from_sp.indices = [i+1 for i in range(len(mesh_vols))]
 
 model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, tallies)
 
