@@ -1,26 +1,20 @@
 # This example makes use of a DAGMC unstructured tet mesh to produce a source with
 # a MeshSpatial distribution.
 
+
+# this section loads a CAD step file and creates an unstrucutred DAGMC tet mesh
+# the resulting mesh file (umesh.mesh) is already included in the repo
+# so this creation from step file is included for completeness but can be skipped
 from cad_to_dagmc import CadToDagmc
-
-my_model = CadToDagmc()
-
-my_model.add_stp_file('plasma_simplified_180.step')   
-# import gmsh
-# gmsh.initialize()
-
-gmshm = my_model.export_unstructured_mesh_file(filename="umesh.h5m", max_mesh_size=100, min_mesh_size=10)
-
-# perhaps trimesh can get volumes
-# import trimesh
-# trimesh_mesh_object = trimesh.load_mesh('umesh.h5m')
-# vertices = trimesh_mesh_object.vertices
+cad = CadToDagmc()
+cad.add_stp_file('plasma_simplified_180.step')   
+cad.export_unstructured_mesh_file(filename="umesh.h5m", max_mesh_size=100, min_mesh_size=10)
 
 
 import openmc
-import openmc.lib
 
-openmc.config['cross_sections'] = '/home/j/endf-b8.0-hdf5/endfb-viii.0-hdf5/cross_sections.xml'
+# setting the nuclear data path to the correct location in the docker image
+openmc.config['cross_sections'] = '/nuclear_data/cross_sections.xml'
 
 umesh = openmc.UnstructuredMesh(filename="umesh.h5m",library='moab')
 
@@ -36,18 +30,14 @@ my_source.angle = openmc.stats.Isotropic()
 my_source.energy = openmc.stats.Discrete([14e6], [1])
 # link to docs for MeshSpatial
 # https://docs.openmc.org/en/latest/pythonapi/generated/openmc.stats.MeshSpatial.html
-# the main difference between MeshSpatial and MeshSource is that in MeshSpatial
-# each mesh element has the same source with potentially a different strength
-# while in MeshSource the elements can have a different source.
-# Having a different source would allow a different energy distribution and therefore
-# MeshSources are useful for shut down dose rate simulations where each active element
-# results in a different photon emission
+# allows us to apply the same source to each element in the mesh. The source can be varied in terms of strength
 my_source.space = openmc.stats.MeshSpatial(
     mesh=umesh,
-    strengths=[1]*1104, # in a more detailed version the strength could be adjusted based on the source position.
+    #we set the strengths to sum to 1 to make post processing easier.
+    # in a more accurate plasma source the strength could be adjusted based on the source position.
+    strengths=[1/1104]*1104,
     volume_normalized=False
 )
-my_source.strength=1
 
 my_settings = openmc.Settings()
 my_settings.batches = 10
