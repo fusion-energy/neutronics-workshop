@@ -6,7 +6,8 @@
 import openmc
 import numpy as np
 
-openmc.config['cross_sections'] = '/home/j/endf-b8.0-hdf5/endfb-viii.0-hdf5/cross_sections.xml'
+# setting the nuclear data path to the correct location in the docker image
+openmc.config['cross_sections'] = '/nuclear_data/cross_sections.xml'
 
 # making a minimal geometry
 sphere_surf_1 = openmc.Sphere(r=2000)
@@ -47,6 +48,12 @@ for i in cylindrical_mesh.indices:
     all_sources.append(my_source)
 
 # creating the mesh source from the mesh and the list of sources
+# the main difference between MeshSpatial (previous example) and MeshSource is that in
+# MeshSpatial each mesh element has the same source with potentially a different
+# strength while in MeshSource the elements can have a different source.
+# Having a different source would allow a different energy distribution and therefore
+# MeshSources are useful for shut down dose rate simulations where each active element
+# results in a different photon emission
 mesh_source = openmc.MeshSource(
     mesh=cylindrical_mesh,
     sources=np.array(all_sources).reshape(cylindrical_mesh.dimension)
