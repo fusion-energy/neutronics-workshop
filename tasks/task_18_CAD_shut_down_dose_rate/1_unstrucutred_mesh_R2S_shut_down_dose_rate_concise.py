@@ -69,7 +69,7 @@ flux_in_each_voxel, micro_xs = openmc.deplete.get_microxs_and_flux(
     domains=umesh,
     energies=[0, 30e6], # one energy bin from 0 to 30MeV
     chain_file=openmc.config['chain_file'],
-    # needed otherwise the dagmc file is not found in the temp dir that mico runs
+    # needed otherwise the statepoint file is produced in an unknown temporary directory
     run_kwargs={'cwd':os.path.dirname(__file__)},
     nuclides=my_material.get_nuclides()
 )
