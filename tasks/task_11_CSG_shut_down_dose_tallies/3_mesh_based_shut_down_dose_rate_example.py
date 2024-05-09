@@ -12,9 +12,8 @@ from matplotlib.colors import LogNorm
 # the chain file was downloaded with
 # pip install openmc_data
 # download_endf_chain -r b8.0
-# openmc.config['chain_file'] = '/nuclear_data/chain-endf-b8.0.xml'
-# openmc.config['cross_sections'] = 'cross_sections.xml'
-openmc.config['chain_file'] = '/home/jshimwell/ENDF-B-VIII.0-NNDC/chain-nndc-b8.0.xml'
+openmc.config['chain_file'] = '/nuclear_data/chain-endf-b8.0.xml'
+openmc.config['cross_sections'] = '/nuclear_data/cross_sections.xml'
 
 # a few user settings
 # Set up the folders to save all the data in
@@ -50,33 +49,28 @@ mat_aluminum.volume = (4 / 3) * math.pi * math.pow(al_sphere_radius, 3)
 
 
 # First we make a simple geometry with three cells, (two with material)
-sphere_surf_1 = openmc.Sphere(r=20)
-sphere_surf_2 = openmc.Sphere(r=iron_sphere_radius, z0=10)
-sphere_surf_3 = openmc.Sphere(r=al_sphere_radius, z0=-5)
+sphere_surf_1 = openmc.Sphere(r=iron_sphere_radius, z0=10)
+sphere_surf_2 = openmc.Sphere(r=al_sphere_radius, z0=-5)
 
-sphere_region_1 = -sphere_surf_1 & +sphere_surf_2 & +sphere_surf_3  # void space
+sphere_region_1 = -sphere_surf_1
 sphere_region_2 = -sphere_surf_2
-sphere_region_3 = -sphere_surf_3
 
-sphere_cell_1 = openmc.Cell(region=sphere_region_1)
+sphere_cell_1 = openmc.Cell(region=sphere_region_1,fill = mat_aluminum)
 sphere_cell_2 = openmc.Cell(region=sphere_region_2,fill = mat_iron)
-sphere_cell_3 = openmc.Cell(region=sphere_region_3,fill = mat_aluminum)
 
 box = openmc.model.RectangularParallelepiped(
     xmin=-20, xmax=20, ymin=-20, ymax=20, zmin=-20, zmax=20, boundary_type="vacuum"
 )
-sphere_cell_4 = openmc.Cell(region=-box & +sphere_surf_1, fill=mat_aluminum)
+box_cell = openmc.Cell(region=-box & +sphere_surf_1, fill=mat_aluminum)
 
-my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3, sphere_cell_4])
+my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, box_cell])
 
+# to plot the geometry uncomment this line
 # plot = my_geometry.plot(basis='xz')
 # import matplotlib.pyplot as plt
 # plt.show()
 
 my_materials = openmc.Materials([mat_iron, mat_aluminum])
-
-pristine_mat_iron = mat_iron.clone()
-pristine_mat_aluminium = mat_aluminum.clone()
 
 # 14MeV neutron source that activates material
 my_source = openmc.IndependentSource()
@@ -93,17 +87,13 @@ my_neutron_settings.batches = 10
 my_neutron_settings.source = my_source
 my_neutron_settings.photon_transport = False
 
-# Create mesh which will be used for tally
+# Create mesh which will be used for material segmentation and activation and gamma sources
 regular_mesh = openmc.RegularMesh().from_domain(
     my_geometry, # the corners of the mesh are being set automatically to surround the geometry
     dimension=[10,10,10] # 10
 )
 
 model_neutron = openmc.Model(my_geometry, my_materials, my_neutron_settings)
-
-
-
-
 
 model_neutron.export_to_xml(directory=statepoints_folder/ "neutrons")
 model_neutron.export_to_xml()
@@ -113,95 +103,25 @@ for material in my_geometry.get_all_materials().values():
     for nuclide in material.get_nuclides():
         if nuclide not in all_nuclides:
             all_nuclides.append(nuclide)
-# print(set(all_nuclides))
 
 # this does perform transport but just to get the flux and micro xs
-flux_in_each_group, all_micro_xs = openmc.deplete.get_microxs_and_flux(
+print(f'running neutron transport to activate materials')
+flux_in_each_mesh_voxel, all_micro_xs = openmc.deplete.get_microxs_and_flux(
     model=model_neutron,
     domains=regular_mesh,
-    energies=[0,30e6], # different group structures see this file for all the groups available https://github.com/openmc-dev/openmc/blob/develop/openmc/mgxs/__init__.py
+    energies=[0,30e6],
     nuclides=all_nuclides,
     chain_file=openmc.config['chain_file']
 )
 
-model_neutron.export_to_model_xml()
-
-import openmc.lib
-openmc.lib.init()
-
-
-lib_mesh = openmc.lib.RegularMesh()
-lib_mesh.dimension = regular_mesh.dimension
-lib_mesh.set_parameters(
-    lower_left=regular_mesh.lower_left,
-    upper_right=regular_mesh.upper_right
-)
-
-mesh_material_volumes = lib_mesh.material_volumes(n_samples = 1000000)
-
-mesh_voxel_material = []
-
-mat_number_offset = 100
-alls_mats = my_geometry.get_all_materials()
-volume_of_material_in_voxel = []
-material_in_voxel = []
-
-selective_flux_in_each_group = []
-selective_micro_xs = []
-
-for i, (mesh_material_volume, micro_xs, flux_in_group) in enumerate(zip(mesh_material_volumes, all_micro_xs, flux_in_each_group) ):
-    print(mesh_material_volume)
-    materials_in_voxel = []
-    volumes_in_voxel = []
-    for material_volume_tuple in mesh_material_volume:
-        material = material_volume_tuple[0]
-        if material != None:
-            volume_in_cm3 = material_volume_tuple[1]
-            print(f'   {material.id}, {volume_in_cm3}')      
-            materials_in_voxel.append(alls_mats[material.id])
-            volumes_in_voxel.append(volume_in_cm3)
-    
-    volume_of_material_in_voxel.append(sum(volumes_in_voxel))
-
-    print(materials_in_voxel, volumes_in_voxel)
-    if len(materials_in_voxel)==1:
-        print('2 materials found')
-        voxel_mat = materials_in_voxel[0].clone() #TODO find out why cloning crashes code
-        selective_flux_in_each_group.append(flux_in_group)
-        selective_micro_xs.append(micro_xs)
-
-        voxel_mat.volume = sum(volumes_in_voxel)
-        voxel_mat.id = i+mat_number_offset
-        voxel_mat.depletable = True
-        material_in_voxel.append(voxel_mat)
-
-    elif len(materials_in_voxel)>1:
-        # todo check this volume fraction is correct
-
-        norm_fracs = [v*(1/sum(volumes_in_voxel)) for v in volumes_in_voxel]
-        print('1 material found')
-        voxel_mat = openmc.Material.mix_materials(materials_in_voxel, norm_fracs)
-        selective_flux_in_each_group.append(flux_in_group)
-        selective_micro_xs.append(micro_xs)
-
-        voxel_mat.volume = sum(volumes_in_voxel)
-        voxel_mat.id = i+mat_number_offset
-        voxel_mat.depletable = True
-        material_in_voxel.append(voxel_mat)
-
-    else:
-        print('no material in voxel')
-        
-
-openmc.lib.finalize()
-
-
+print(f'running transport to sample within the mesh and get material fractions')
+mixed_materials_in_each_mesh_voxel = regular_mesh.get_homogenized_materials(model_neutron, n_samples=1_000_000)
 
 # constructing the operator, note we pass in the flux and micro xs
 operator = openmc.deplete.IndependentOperator(
-    materials=openmc.Materials(material_in_voxel),
-    fluxes=[flux[0] for flux in selective_flux_in_each_group],
-    micros=selective_micro_xs,
+    materials=openmc.Materials(mixed_materials_in_each_mesh_voxel),
+    fluxes=[flux[0] for flux in flux_in_each_mesh_voxel],
+    micros=all_micro_xs,
     reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
     reduce_chain_level=4,
     normalization_mode="source-rate"
@@ -212,22 +132,22 @@ operator = openmc.deplete.IndependentOperator(
 # transport simulation for each timestep. However as the IndependentOperator is
 # used then just a single transport simulation is done, thus speeding up the
 # simulation considerably.
+# This pulse schedule has 1 second pulses of neutrons then a days of cooling steps in 1 hour blocks
 hour_in_seconds = 60*60
 timesteps_and_source_rates = [
-    (1, 1e18),  # 1 second
-    (hour_in_seconds, 0),  # 1 hour
-    (1, 1e18),  # 1 second
-    (hour_in_seconds, 0),  # 2 hour
-    (1, 1e18),  # 1 second
-    (hour_in_seconds, 0),  # 3 hour
-    (1, 1e18),  # 1 second
-    (hour_in_seconds, 0),  # 4 hour
-    (1, 1e18),  # 1 second
-    (hour_in_seconds, 0),  # 4 hour
-    (1, 1e18),  # 1 second
-    (hour_in_seconds, 0),  # 4 hour
-    (1, 1e18),  # 1 second
-    (hour_in_seconds, 0),  # 5 hour
+    (1, 1e18),  # 1 second of 1e18 neutrons/second
+    (2*hour_in_seconds, 0),  # 2 hours after shut down
+    (2*hour_in_seconds, 0),  # 4 hours after shut down
+    (2*hour_in_seconds, 0),  # 6 hours after shut down
+    (2*hour_in_seconds, 0),  # 8 hours after shut down
+    (2*hour_in_seconds, 0),  # 10 hours after shut down
+    (2*hour_in_seconds, 0),  # 12 hours after shut down
+    (2*hour_in_seconds, 0),  # 14 hours after shut down
+    (2*hour_in_seconds, 0),  # 16 hours after shut down
+    (2*hour_in_seconds, 0),  # 18 hours after shut down
+    (2*hour_in_seconds, 0),  # 20 hours after shut down
+    (2*hour_in_seconds, 0),  # 22 hours after shut down
+    (2*hour_in_seconds, 0),  # 24 hours after shut down
 ]
 
 timesteps = [item[0] for item in timesteps_and_source_rates]
@@ -240,29 +160,29 @@ integrator = openmc.deplete.PredictorIntegrator(
     timestep_units='s'
 )
 
-# # this runs the depletion calculations for the timesteps
-# # this does the neutron activation simulations and produces a depletion_results.h5 file
+# this runs the depletion calculations for the timesteps
+# this does the neutron activation simulations and produces a depletion_results.h5 file
 integrator.integrate(
     path=statepoints_folder / "neutrons" / "depletion_results.h5"
 )
 
-# # Now we have done the neutron activation simulations we can start the work needed for the decay gamma simulations.
+# Now we have done the neutron activation simulations we can start the work needed for the decay gamma simulations.
 
 my_gamma_settings = openmc.Settings()
 my_gamma_settings.run_mode = "fixed source"
 my_gamma_settings.batches = 100
 my_gamma_settings.particles = p_particles
 
-# # First we add make dose tally on a regular mesh
+# First we add make dose tally on a regular mesh
 
-# creates a regular mesh that surrounds the geometry
+# # creates a regular mesh that surrounds the geometry
 mesh_photon = openmc.RegularMesh().from_domain(
     my_geometry,
-    dimension=[10, 10, 10],  # 10 voxels in each axis direction (x, y, z)
+    dimension=[20, 20, 20],  # 20 voxels in each axis direction (x, y, z)
 )
 
-# adding a dose tally on a regular mesh
-# AP, PA, LLAT, RLAT, ROT, ISO are ICRP incident dose field directions, AP is front facing
+# # adding a dose tally on a regular mesh
+# # AP, PA, LLAT, RLAT, ROT, ISO are ICRP incident dose field directions, AP is front facing
 energies, pSv_cm2 = openmc.data.dose_coefficients(particle="photon", geometry="AP")
 dose_filter = openmc.EnergyFunctionFilter(
     energies, pSv_cm2, interpolation="cubic"  # interpolation method recommended by ICRP
@@ -278,92 +198,96 @@ my_gamma_tallies = openmc.Tallies([dose_tally])
 
 cells = model_neutron.geometry.get_all_cells()
 
-# # this section makes the photon sources from each active material at each
-# # timestep and runs the photon simulations
 results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_results.h5")
 
+# this section makes the photon sources from each active material at each
+# timestep and runs the photon simulations
+# range starts at 1 to skip the first step as that is an irradiation step and there is no
 for i_cool in range(1, len(timesteps)):
-
     # we can loop through the materials in each step
     # from the material ID we can get the mesh voxel id
     # then we can make a MeshSource
     # https://docs.openmc.org/en/develop/pythonapi/generated/openmc.MeshSource.html
-
-    # range starts at 1 to skip the first step as that is an irradiation step and there is no
     # decay gamma source from the stable material at that time
     # also there are no decay products in this first timestep for this model
-
-        photon_sources_for_timestep = []
-        strengths_for_timestep = []
-        print(f"making photon source for timestep {i_cool}")
-
-
-        mat_number_offset
-
-        step = results[i_cool]
-        activated_mat_ids = step.volume.keys()
-        print(activated_mat_ids)
-        for activated_mat_id in activated_mat_ids:
-            # gets the energy and probabilities for the 
-            activated_mat = step.get_material(activated_mat_id)
-            energy = activated_mat.get_decay_photon_energy(
-                clip_tolerance = 1e-6,  # cuts out a small fraction of the very low energy (and hence negligible dose contribution) photons
-                units = 'Bq',
-            )
-            strength = energy.integral()
-
-            if strength > 0.:  
-                source = openmc.IndependentSource(
-                    energy=energy,
-                    particle="photon",
-                    strength=strength
-                )
-            else:
-                source = openmc.IndependentSource() # how to make an empty source, source strength is set to 0
-
-            photon_sources_for_timestep.append(source)
-            strengths_for_timestep.append(strength)
-        
-        reshaped_photon_source_of_timestep = np.array(photon_sources_for_timestep).reshape(regular_mesh.dimension)
-        mesh_source = openmc.MeshSource(
-            regular_mesh, reshaped_photon_source_of_timestep
+    photon_sources_for_timestep = []
+    strengths_for_timestep = []
+    print(f"making photon source for timestep {i_cool}")
+    step = results[i_cool]
+    # activated_mat_ids = step.volume.keys()
+    activated_mat_ids = step.index_mat
+    # print(activated_mat_ids)
+    cumulative_strength_for_time_step = 0 # in Bq
+    for activated_mat_id in activated_mat_ids:
+        # gets the energy and probabilities for the 
+        activated_mat = step.get_material(activated_mat_id)
+        energy = activated_mat.get_decay_photon_energy(
+            clip_tolerance = 1e-6,  # cuts out a small fraction of the very low energy (and hence negligible dose contribution) photons
+            units = 'Bq',
         )
-        mesh_source.strength = 1# strengths_for_timestep
+        strength = energy.integral()
+        cumulative_strength_for_time_step = cumulative_strength_for_time_step +strength
+        if strength > 0.:  
+            source = openmc.IndependentSource(
+                energy=energy,
+                particle="photon",
+                strength=strength
+            )
+        else:
+            print('source has no gammas')
+            source = openmc.IndependentSource() # how to make an empty source, source strength is set to 0
 
-        my_gamma_settings.source = mesh_source
-        model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, my_gamma_tallies)
+        photon_sources_for_timestep.append(source)
+        strengths_for_timestep.append(strength)
+    
+    mesh_source = openmc.MeshSource(
+        regular_mesh, photon_sources_for_timestep
+    )
 
-        model_gamma.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
+    # you have options for the normalization of the source.
+    # you could set the mesh_source.strength to the total Bq of all the sources in that time step
+    # mesh_source.strength = cumulative_strength_for_time_step
+    # then use mesh_source.normalize_source_strengths() to update all element source strengths such that they sum to 1.0.
+    # or
+    # you can leave it so the individual sources have their own strength in Bq
+    # perhaps best to experiment here and check the answers, do let me know if you find one option better than the others
 
+    my_gamma_settings.source = mesh_source
+    model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, my_gamma_tallies)
 
+    print(f'running gamma transport on stimestep {i_cool}')
+    model_gamma.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
+
+# this part post processes the results to get a dose map for each time step
 pico_to_micro = 1e-6
 seconds_to_hours = 60*60
 
-# # You may wish to plot the dose tally on a mesh, this package makes it easy to include the geometry with the mesh tally
+# You may wish to plot the dose tally on a mesh, this package makes it easy to include the geometry with the mesh tally
 from openmc_regular_mesh_plotter import plot_mesh_tally
-for i_cool in range(1, len(timesteps)):
+for i_cool in range(1, len(timesteps)): # skipping the first depletion step as we just want the part where the machine is off for the shut down dose rate
     with openmc.StatePoint(statepoints_folder / "photons" / f"photon_at_time_{i_cool}" / f'statepoint.{my_gamma_settings.batches}.h5') as statepoint:
         photon_tally = statepoint.get_tally(name="photon_dose_on_mesh")
-
-        # normalising this tally is a little different to other examples as the source strength has been using units of photons per second.
+        # normalizing this tally is a little different to other examples as the source strength has been using units of photons per second.
         # tally.mean is in units of pSv-cm3/source photon.
         # as source strength is in photons_per_second this changes units to pSv-/second
-
         # multiplication by pico_to_micro converts from (pico) pSv/s to (micro) uSv/s
-        # dividing by mesh voxel volume is not needed as the volume_normalization in the ploting function does this
-        # could do the mesh volume scaling on the plot and vtk functions but doing it here instead
+        # dividing by mesh voxel volume is not needed as the volume_normalization in the plotting function does this
         scaling_factor = (seconds_to_hours * pico_to_micro)
-
+        print('max',(max(photon_tally.mean.flatten())*scaling_factor)/mesh_photon.volumes[0][0][0])
+        print('min',(min(photon_tally.mean.flatten())*scaling_factor)/mesh_photon.volumes[0][0][0])
         plot = plot_mesh_tally(
             tally=photon_tally,
             basis="xz",
-            # score='flux', # only one tally so can make use of default here
+            score='flux', # only one tally so could leave this unspecified
             value="mean",
             colorbar_kwargs={
                 'label': "Decay photon dose [µSv/h]",
             },
-            norm=LogNorm(),
-            volume_normalization=True,  # this is done in the scaling_factor
+            norm=LogNorm(), # TODO find the bounds automatically in a loop above this section
+            volume_normalization=True,  # this divides by voxel volume which is not done in the scaling_factor
             scaling_factor=scaling_factor,
+            outline=True,
+            geometry = my_geometry
         )
-        plot.figure.savefig(f'mesh_shut_down_dose_map_timestep_{i_cool}')
+        plot.title.set_text(f"timestep {sum(timesteps[1:i_cool])/(60*60)} hours after shut down")
+        plot.figure.savefig(f'mesh_shut_down_dose_map_timestep_{str(i_cool).zfill(3)}')
