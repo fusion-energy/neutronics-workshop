@@ -181,8 +181,8 @@ mesh_photon = openmc.RegularMesh().from_domain(
     dimension=[20, 20, 20],  # 20 voxels in each axis direction (x, y, z)
 )
 
-# # adding a dose tally on a regular mesh
-# # AP, PA, LLAT, RLAT, ROT, ISO are ICRP incident dose field directions, AP is front facing
+# adding a dose tally on a regular mesh
+# AP, PA, LLAT, RLAT, ROT, ISO are ICRP incident dose field directions, AP is front facing
 energies, pSv_cm2 = openmc.data.dose_coefficients(particle="photon", geometry="AP")
 dose_filter = openmc.EnergyFunctionFilter(
     energies, pSv_cm2, interpolation="cubic"  # interpolation method recommended by ICRP
