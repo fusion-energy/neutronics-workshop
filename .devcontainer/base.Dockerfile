@@ -108,7 +108,11 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_plot \
                 dagmc_geometry_slice_plotter \
                 "cad_to_dagmc>=0.5.0" \
-                paramak
+                paramak \
+                # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
+                # https://salsa.debian.org/python-team/packages/nbconvert/-/tags
+                # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068349
+                lxml[html_clean]
 
 # openmc-plasma-source needs main branch to work with openmc develop, currently unreleased
 RUN pip install git+https://github.com/fusion-energy/openmc-plasma-source
