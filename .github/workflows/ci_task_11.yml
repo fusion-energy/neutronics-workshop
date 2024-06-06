@@ -18,7 +18,7 @@ jobs:
       image: ghcr.io/fusion-energy/neutronics-workshop:base
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: test task 11
         run: |
