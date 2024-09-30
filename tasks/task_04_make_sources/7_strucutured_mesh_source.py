@@ -6,7 +6,8 @@
 import openmc
 import numpy as np
 
-# setting the nuclear data path to the correct location in the docker image
+# Setting the nuclear data path to the correct location in the docker image.
+# If you are running this outside the docker image you will have to change this path.
 openmc.config['cross_sections'] = '/nuclear_data/cross_sections.xml'
 
 # making a minimal geometry
