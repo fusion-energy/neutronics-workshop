@@ -170,7 +170,7 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 RUN mkdir MOAB && \
     cd MOAB && \
     # newer versions of moab (5.4.0, 5.4.1) don't produce an importable pymoab package!
-    # TODO try moab 5.5.0
+    # TODO try moab 5.5.0 and 5.5.1
     git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
@@ -249,6 +249,3 @@ RUN download_endf_chain -d nuclear_data -r b8.0
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
     rm WMP_Library_v1.1.tar.gz
-
-ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
-ENV OPENMC_CHAIN_FILE=/nuclear_data/chain-endf-b8.0.xml
