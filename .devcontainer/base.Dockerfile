@@ -118,7 +118,7 @@ RUN pip install neutronics_material_maker[density] \
 RUN pip install git+https://github.com/fusion-energy/openmc-plasma-source
 
 RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
-RUN pip install cadquery-ocp==7.7.1 "multimethod>=1.7<2.0" nlopt typish casadi path ezdxf nptyping==2.0.1
+RUN pip install cadquery-ocp==7.7.1 "multimethod>=1.7,<2.0" nlopt typish casadi path ezdxf nptyping==2.0.1
 
 # Python libraries used in the workshop
 RUN pip install cmake\
@@ -170,7 +170,7 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 RUN mkdir MOAB && \
     cd MOAB && \
     # newer versions of moab (5.4.0, 5.4.1) don't produce an importable pymoab package!
-    # TODO try moab 5.5.0
+    # TODO try moab 5.5.0 and 5.5.1
     git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
     mkdir build && \
     cd build && \
@@ -249,6 +249,3 @@ RUN download_endf_chain -d nuclear_data -r b8.0
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
     rm WMP_Library_v1.1.tar.gz
-
-ENV OPENMC_CROSS_SECTIONS=/nuclear_data/cross_sections.xml
-ENV OPENMC_CHAIN_FILE=/nuclear_data/chain-endf-b8.0.xml
