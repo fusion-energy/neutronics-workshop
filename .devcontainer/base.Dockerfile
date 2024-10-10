@@ -134,7 +134,8 @@ RUN pip install cmake\
                 # nest_asyncio \
                 jupyterlab \
                 jupyter-cadquery \
-                gmsh
+                gmsh \
+                pyvista
 
 # needed for openmc
 RUN pip install --upgrade numpy
