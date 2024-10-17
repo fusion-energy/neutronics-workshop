@@ -12,6 +12,10 @@ import math
 import matplotlib.pyplot as plt
 
 
+# Setting the cross section path to the correct location in the docker image.
+# If you are running this outside the docker image you will have to change this path to your local cross section path.
+openmc.config['cross_sections'] = '/nuclear_data/cross_sections.xml'
+
 # Tissue Equivalent, MS20 from PNNL
 mat_tissue = openmc.Material()
 mat_tissue.add_element("O", 0.079013)
