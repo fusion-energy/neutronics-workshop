@@ -10,6 +10,9 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Setting the cross section path to the correct location in the docker image.
+# If you are running this outside the docker image you will have to change this path to your local cross section path.
+openmc.config['cross_sections'] = '/nuclear_data/cross_sections.xml'
 
 def manual_dose_calc(
     particles_per_shot:int,
