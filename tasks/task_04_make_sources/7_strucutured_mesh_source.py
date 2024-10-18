@@ -3,11 +3,12 @@
 # this is a minimal example but a more realistic example could use the voxel location to look up properties
 # of the plasma at each coordinate and customize the source energy and strength at each mesh voxel location
 
-import openmc
 import numpy as np
 
-# Setting the nuclear data path to the correct location in the docker image.
-# If you are running this outside the docker image you will have to change this path.
+import openmc
+
+# Setting the cross section path to the correct location in the docker image.
+# If you are running this outside the docker image you will have to change this path to your local cross section path.
 openmc.config['cross_sections'] = '/nuclear_data/cross_sections.xml'
 
 # making a minimal geometry

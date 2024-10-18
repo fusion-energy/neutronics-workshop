@@ -10,10 +10,10 @@ cad = CadToDagmc()
 cad.add_stp_file('plasma_simplified_180.step')   
 cad.export_unstructured_mesh_file(filename="umesh.h5m", max_mesh_size=100, min_mesh_size=10)
 
-
 import openmc
 
-# setting the nuclear data path to the correct location in the docker image
+# Setting the cross section path to the correct location in the docker image.
+# If you are running this outside the docker image you will have to change this path to your local cross section path.
 openmc.config['cross_sections'] = '/nuclear_data/cross_sections.xml'
 
 umesh = openmc.UnstructuredMesh(filename="umesh.h5m",library='moab')
