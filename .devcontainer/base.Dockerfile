@@ -80,7 +80,13 @@ RUN apt-get --yes install libeigen3-dev \
                           # needed for gmsh
                           libxcursor-dev \
                           # needed for gmsh
-                          libxinerama-dev 
+                          libxinerama-dev  \
+                          # needed for moab via pip install
+                          libblas-dev \
+                          # needed for moab via pip install
+                          liblapack-dev \
+                          # needed for moab via pip install
+                          gfortran
                     
 RUN apt-get --yes install python3-pip python3-venv
 
@@ -104,18 +110,16 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
                 "openmc_data_downloader>=0.6.0" \
-                "openmc_data>=0.2.2" \
+                "openmc_data>=0.2.10" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter \
-                "cad_to_dagmc>=0.5.0" \
+                "cad_to_dagmc>=0.7.1" \
+                "openmc-plasma-source>=0.3.1" \
                 paramak \
                 # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
                 # https://salsa.debian.org/python-team/packages/nbconvert/-/tags
                 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068349
                 lxml[html_clean]
-
-# openmc-plasma-source needs main branch to work with openmc develop, currently unreleased
-RUN pip install git+https://github.com/fusion-energy/openmc-plasma-source
 
 RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
 RUN pip install cadquery-ocp==7.7.1 "multimethod>=1.7,<2.0" nlopt typish casadi path ezdxf nptyping==2.0.1
@@ -127,11 +131,9 @@ RUN pip install cmake\
                 "vtk==9.2.5"  \
                 itkwidgets \
                 pytest \
-                # holoviews \
                 ipywidgets \
 # cython is needed for moab and openmc, specific version tagged to avoid build errors
                 "cython<3.0" \
-                # nest_asyncio \
                 jupyterlab \
                 jupyter-cadquery \
                 gmsh \
@@ -170,21 +172,9 @@ RUN if [ "$build_double_down" = "ON" ] ; \
 # Clone and install MOAB
 RUN mkdir MOAB && \
     cd MOAB && \
-    # newer versions of moab (5.4.0, 5.4.1) don't produce an importable pymoab package!
-    # TODO try moab 5.5.0 and 5.5.1
-    git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
-    mkdir build && \
-    cd build && \
-    cmake ../moab -DENABLE_HDF5=ON \
-                  -DENABLE_NETCDF=ON \
-                  -DENABLE_FORTRAN=OFF \
-                  -DENABLE_BLASLAPACK=OFF \
-                  -DBUILD_SHARED_LIBS=ON \
-                  -DENABLE_PYMOAB=ON \
-                  -DCMAKE_INSTALL_PREFIX=/MOAB && \
-    mkdir -p MOAB/lib/pymoab/lib/python3.11/site-packages && \
-    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.11/site-packages:${PYTHONPATH} make -j && \
-    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.11/site-packages:${PYTHONPATH} make install -j
+    git clone  --single-branch --branch master --depth 1 https://bitbucket.org/fathomteam/moab/ && \
+    cd moab && \
+    pip install . --config-settings=cmake.args=-DENABLE_HDF5=ON
 
 ENV PYTHONPATH="/MOAB/lib/python3.11/site-packages/pymoab-5.3.1-py3.11-linux-x86_64.egg/"
 
@@ -214,7 +204,6 @@ RUN mkdir DAGMC && \
     mkdir build && \
     cd build && \
     cmake ../DAGMC -DBUILD_TALLY=ON \
-                   -DMOAB_DIR=/MOAB \
                    -DDOUBLE_DOWN=${build_double_down} \
                    -DBUILD_STATIC_EXE=OFF \
                    -DBUILD_STATIC_LIBS=OFF \
@@ -226,10 +215,11 @@ RUN mkdir DAGMC && \
 ENV PATH=$PATH:/DAGMC/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
-# installs OpenMc from source
-# switch back to tagged version when 0.13.3 is released as develop depletion is used
-# git clone --single-branch --branch v0.13.3 --depth 1 https://github.com/openmc-dev/openmc.git && \
-RUN git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
+# installs OpenMC from source
+# switch back to tagged version when next stable version is released
+#RUN git clone --single-branch --branch v0.13.3 --depth 1 https://github.com/openmc-dev/openmc.git && \
+#RUN git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
+RUN git clone --single-branch --branch added-subfolder-search-for-dose-txt-files --depth 1 https://github.com/shimwell/openmc.git && \
     cd openmc && \
     mkdir build && \
     cd build && \
@@ -242,9 +232,9 @@ RUN git clone --single-branch --branch develop --depth 1 https://github.com/open
     pip install .
 
 # Installs ENDF with TENDL where ENDF cross sections are not available.
-# Performed after openmc install as openmc is needed to write the cross_Sections.xml file
-RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
-RUN download_endf_chain -d nuclear_data -r b8.0
+# Performed after OpenMC install as OpenMC is needed to write the cross_Sections.xml file
+# RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
+# RUN download_endf_chain -d nuclear_data -r b8.0
 
 # install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
