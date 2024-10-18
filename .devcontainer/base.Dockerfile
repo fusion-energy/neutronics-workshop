@@ -104,18 +104,16 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
                 "openmc_data_downloader>=0.6.0" \
-                "openmc_data>=0.2.2" \
+                "openmc_data>=0.2.10" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter \
-                "cad_to_dagmc>=0.5.0" \
+                "cad_to_dagmc>=0.7.1" \
+                "openmc-plasma-source>=0.3.1" \
                 paramak \
                 # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
                 # https://salsa.debian.org/python-team/packages/nbconvert/-/tags
                 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068349
                 lxml[html_clean]
-
-# openmc-plasma-source needs main branch to work with openmc develop, currently unreleased
-RUN pip install git+https://github.com/fusion-energy/openmc-plasma-source
 
 RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
 RUN pip install cadquery-ocp==7.7.1 "multimethod>=1.7,<2.0" nlopt typish casadi path ezdxf nptyping==2.0.1
@@ -127,11 +125,9 @@ RUN pip install cmake\
                 "vtk==9.2.5"  \
                 itkwidgets \
                 pytest \
-                # holoviews \
                 ipywidgets \
 # cython is needed for moab and openmc, specific version tagged to avoid build errors
                 "cython<3.0" \
-                # nest_asyncio \
                 jupyterlab \
                 jupyter-cadquery \
                 gmsh \
@@ -226,9 +222,9 @@ RUN mkdir DAGMC && \
 ENV PATH=$PATH:/DAGMC/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
 
-# installs OpenMc from source
-# switch back to tagged version when 0.13.3 is released as develop depletion is used
-# git clone --single-branch --branch v0.13.3 --depth 1 https://github.com/openmc-dev/openmc.git && \
+# installs OpenMC from source
+# switch back to tagged version when 0.15.1 is released
+# git clone --single-branch --branch v0.15.1 --depth 1 https://github.com/openmc-dev/openmc.git && \
 RUN git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
     cd openmc && \
     mkdir build && \
