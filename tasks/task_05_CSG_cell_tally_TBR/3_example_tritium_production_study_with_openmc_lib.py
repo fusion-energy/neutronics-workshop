@@ -72,7 +72,7 @@ my_settings.source = source
 cell_filter = openmc.CellFilter(breeder_blanket_cell)
 tbr_tally = openmc.Tally(name='TBR', tally_id=42)
 tbr_tally.filters = [cell_filter]
-tbr_tally.scores = ['(n,Xt)']  # Where X is a wildcard character, this catches any tritium production
+tbr_tally.scores = ['H3-production']  # Could also use '(n,Xt)' where X is a wildcard character
 my_tallies = openmc.Tallies([tbr_tally])
 
 # RUN OPENMC
