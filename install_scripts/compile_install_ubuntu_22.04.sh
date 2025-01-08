@@ -115,7 +115,7 @@ cd build
 # cmake ..
 cmake -DOPENMC_USE_DAGMC=ON -DDAGMC_ROOT=$HOME/DAGMC -DHDF5_PREFER_PARALLEL=off .. 
 make -j
-make -j install
+sudo make -j install
 cd ..
 pip install .
 
