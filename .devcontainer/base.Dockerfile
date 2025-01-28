@@ -63,7 +63,7 @@ RUN apt-get --yes install libeigen3-dev \
                           libglfw3-dev \
                           # needed for CadQuery functionality
                           libgl1-mesa-glx \
-                          # needed for CadQuery functionality
+                          # needed for CadQuery and functionality
                           libgl1-mesa-dev \
                           # needed for CadQuery functionality
                           libglu1-mesa-dev \
@@ -80,7 +80,9 @@ RUN apt-get --yes install libeigen3-dev \
                           # needed for gmsh
                           libxcursor-dev \
                           # needed for gmsh
-                          libxinerama-dev 
+                          libxinerama-dev \
+                          # needed for pyvista functionality
+                          xvfb
                     
 RUN apt-get --yes install python3-pip python3-venv
 
@@ -97,7 +99,6 @@ RUN pip install --upgrade pip
 RUN pip install neutronics_material_maker[density] \
                 stl_to_h5m \
                 remove_dagmc_tags \
-                openmc-dagmc-wrapper \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
@@ -107,7 +108,7 @@ RUN pip install neutronics_material_maker[density] \
                 "openmc_data>=0.2.10" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter \
-                "cad_to_dagmc>=0.7.1" \
+                "cad_to_dagmc>=0.7.2" \
                 "openmc-plasma-source>=0.3.1" \
                 paramak \
                 # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
@@ -131,7 +132,9 @@ RUN pip install cmake\
                 jupyterlab \
                 jupyter-cadquery \
                 gmsh \
-                pyvista
+                pyvista[all] \
+                jupyter-server-proxy \
+                trame
 
 # needed for openmc
 RUN pip install --upgrade numpy
@@ -246,3 +249,5 @@ RUN download_endf_chain -d nuclear_data -r b8.0
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
     rm WMP_Library_v1.1.tar.gz
+
+CMD ["xvfb-run", "-s", "-screen 0 1024x768x24", "jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
