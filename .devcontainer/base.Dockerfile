@@ -109,14 +109,11 @@ RUN pip install neutronics_material_maker[density] \
                 dagmc_geometry_slice_plotter \
                 "cad_to_dagmc>=0.7.1" \
                 "openmc-plasma-source>=0.3.1" \
-                paramak \
+                "paramak==0.9.7" \
                 # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
                 # https://salsa.debian.org/python-team/packages/nbconvert/-/tags
                 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068349
                 lxml[html_clean]
-
-RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
-RUN pip install cadquery-ocp==7.7.1 "multimethod>=1.7,<2.0" nlopt typish casadi path ezdxf nptyping==2.0.1
 
 # Python libraries used in the workshop
 RUN pip install cmake\
