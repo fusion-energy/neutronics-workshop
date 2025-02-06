@@ -103,11 +103,11 @@ RUN pip install neutronics_material_maker[density] \
                 spectrum_plotter \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
-                "openmc_data_downloader>=0.6.0" \
-                "openmc_data>=0.2.10" \
+                "openmc_data_downloader>=0.6.1" \
+                "openmc_data>=2.2.12" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter \
-                "cad_to_dagmc>=0.7.1" \
+                "cad_to_dagmc>=0.8.2" \
                 "openmc-plasma-source>=0.3.1" \
                 "paramak==0.9.7" \
                 # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
