@@ -35,4 +35,3 @@ jobs:
           push: true
           file: .devcontainer/Dockerfile
           tags: ghcr.io/fusion-energy/neutronics-workshop
-          platforms: linux/amd64,linux/arm64
