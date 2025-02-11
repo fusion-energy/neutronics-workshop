@@ -97,7 +97,6 @@ RUN pip install --upgrade pip
 RUN pip install neutronics_material_maker[density] \
                 stl_to_h5m \
                 remove_dagmc_tags \
-                openmc-dagmc-wrapper \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
@@ -107,7 +106,7 @@ RUN pip install neutronics_material_maker[density] \
                 "openmc_data>=0.2.10" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter \
-                "cad_to_dagmc>=0.7.1" \
+                "cad_to_dagmc>=0.8.2" \
                 "openmc-plasma-source>=0.3.1" \
                 paramak \
                 # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
@@ -115,14 +114,11 @@ RUN pip install neutronics_material_maker[density] \
                 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068349
                 lxml[html_clean]
 
-RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
-RUN pip install cadquery-ocp==7.7.1 "multimethod>=1.7,<2.0" nlopt typish casadi path ezdxf nptyping==2.0.1
-
 # Python libraries used in the workshop
 RUN pip install cmake\
 # new version of cmake needed for openmc compile
                 plotly \
-                "vtk==9.2.5"  \
+                vtk  \
                 itkwidgets \
                 pytest \
                 ipywidgets \
@@ -138,70 +134,7 @@ RUN pip install --upgrade numpy
 
 
 ARG compile_cores=2
-ARG include_avx=false
-ARG build_double_down=OFF
 
-# Clone and install Embree
-# added following two lines to allow use on AMD CPUs see discussion
-# https://openmc.discourse.group/t/dagmc-geometry-open-mc-aborted-unexpectedly/1369/24?u=pshriwise  
-RUN if [ "$build_double_down" = "ON" ] ; \
-        then git clone --shallow-submodules --single-branch --branch v3.12.2 --depth 1 https://github.com/embree/embree.git ; \
-        cd embree ; \
-        mkdir build ; \
-        cd build ; \
-        if [ "$include_avx" = "false" ] ; \
-            then cmake .. -DEMBREE_MAX_ISA=NONE \
-                          -DEMBREE_ISA_SSE42=ON \
-                          -DCMAKE_INSTALL_PREFIX=.. \
-                          -DEMBREE_ISPC_SUPPORT=OFF ; \
-        fi ; \
-        if [ "$include_avx" = "true" ] ; \
-            then cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-                        -DEMBREE_ISPC_SUPPORT=OFF ; \
-        fi ; \
-        make -j"$compile_cores" ; \
-        make -j"$compile_cores" install ; \
-    fi
-
-# Clone and install MOAB
-RUN mkdir MOAB && \
-    cd MOAB && \
-    # newer versions of moab (5.4.0, 5.4.1) don't produce an importable pymoab package!
-    # TODO try moab 5.5.0 and 5.5.1
-    git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
-    mkdir build && \
-    cd build && \
-    cmake ../moab -DENABLE_HDF5=ON \
-                  -DENABLE_NETCDF=ON \
-                  -DENABLE_FORTRAN=OFF \
-                  -DENABLE_BLASLAPACK=OFF \
-                  -DBUILD_SHARED_LIBS=ON \
-                  -DENABLE_PYMOAB=ON \
-                  -DCMAKE_INSTALL_PREFIX=/MOAB && \
-    mkdir -p MOAB/lib/pymoab/lib/python3.11/site-packages && \
-    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.11/site-packages:${PYTHONPATH} make -j && \
-    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.11/site-packages:${PYTHONPATH} make install -j
-
-ENV PYTHONPATH="/MOAB/lib/python3.11/site-packages/pymoab-5.3.1-py3.11-linux-x86_64.egg/"
-
-RUN python -c "import pymoab"
-
-ENV PATH=$PATH:/MOAB/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
-
-# Clone and install Double-Down
-RUN if [ "$build_double_down" = "ON" ] ; \
-        then git clone --shallow-submodules --single-branch --branch v1.0.0 --depth 1 https://github.com/pshriwise/double-down.git && \
-        cd double-down ; \
-        mkdir build ; \
-        cd build ; \
-        cmake .. -DMOAB_DIR=/MOAB \
-                 -DCMAKE_INSTALL_PREFIX=.. \
-                 -DEMBREE_DIR=/embree ; \
-        make -j"$compile_cores" ; \
-        make -j"$compile_cores" install ; \
-        rm -rf /double-down/build /double-down/double-down ; \
-    fi
 
 # DAGMC version develop install from source
 RUN mkdir DAGMC && \
