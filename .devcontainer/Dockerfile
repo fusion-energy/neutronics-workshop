@@ -37,9 +37,11 @@ RUN cp tasks/task_06_CSG_cell_tally_DPA/1_find_dpa.ipynb tasks/half-day-workshop
 RUN cp tasks/task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.ipynb tasks/half-day-workshop/task_12_example_neutron_spectra_on_cell.ipynb
 RUN cp tasks/task_07_CSG_cell_tally_spectra/4_example_photon_spectra.ipynb tasks/half-day-workshop/task_13_example_photon_spectra.ipynb
 RUN cp tasks/task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.ipynb tasks/half-day-workshop/task_14_example_2d_regular_mesh_tallies.ipynb
-RUN cp tasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule.ipynb tasks/half-day-workshop/task_15_full_pulse_schedule.ipynb
-RUN cp tasks/task_19_design_task/1_optimal_design.ipynb tasks/half-day-workshop/task_16_optimal_design.ipynb 
-RUN cp tasks/task_19_design_task/1_optimal_design_with_hints.ipynb tasks/half-day-workshop/task_16_optimal_designs_with_hints.ipynb 
+RUN cp tasks/task_14_variance_reduction/2_shielded_room_single_ww.ipynb tasks/half-day-workshop/task_15_example_variane_shielded_room_ww_single_iteration.ipynb
+RUN cp tasks/task_14_variance_reduction/3_sphere_iterative_per_run_ww.ipynb tasks/half-day-workshop/task_16_example_variance_reduction_sphere_ww_multiple_iterations.ipynb
+RUN cp tasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule.ipynb tasks/half-day-workshop/task_17_full_pulse_schedule.ipynb
+RUN cp tasks/task_19_design_task/1_optimal_design.ipynb tasks/half-day-workshop/task_18_optimal_design.ipynb 
+RUN cp tasks/task_19_design_task/1_optimal_design_with_hints.ipynb tasks/half-day-workshop/task_18_optimal_designs_with_hints.ipynb 
 
 WORKDIR /tasks
 

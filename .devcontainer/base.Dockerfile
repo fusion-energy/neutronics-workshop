@@ -97,7 +97,6 @@ RUN pip install --upgrade pip
 RUN pip install neutronics_material_maker[density] \
                 stl_to_h5m \
                 remove_dagmc_tags \
-                openmc-dagmc-wrapper \
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
