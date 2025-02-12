@@ -42,8 +42,6 @@ RUN apt-get --yes update && apt-get --yes upgrade
 
                           # eigen3 needed for DAGMC
 RUN apt-get --yes install libeigen3-dev \
-                        #   sudo  \
-                          # sudo is needed during the NJOY install
                           git \
                           wget \
                           gfortran \
@@ -92,7 +90,6 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 RUN pip install --upgrade pip
 
-
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
                 stl_to_h5m \
@@ -109,15 +106,15 @@ RUN pip install neutronics_material_maker[density] \
                 "cad_to_dagmc>=0.8.2" \
                 "openmc-plasma-source>=0.3.1" \
                 paramak --no-deps \
+                mpmath \
+                sympy \
                 # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
                 # https://salsa.debian.org/python-team/packages/nbconvert/-/tags
                 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068349
                 lxml[html_clean]
 
 # Python libraries used in the workshop
-RUN pip install cmake\
-                # new version of cmake needed for openmc compile
-                plotly \
+RUN pip install plotly \
                 # vtk \
                 itkwidgets \
                 pytest \
@@ -125,46 +122,25 @@ RUN pip install cmake\
                 # cython is needed for moab and openmc, specific version tagged to avoid build errors
                 "cython<3.0" \
                 jupyterlab \
-                jupyter-cadquery \
-                gmsh
+                jupyter-cadquery
 
-
-ARG compile_cores=2
-
-# tempory wheels for openmc and moab hosted on github repo https://github.com/shimwell/wheels
+# temporary wheels for moab hosted on github repo https://github.com/shimwell/wheels
 RUN pip install https://github.com/shimwell/wheels/raw/refs/heads/main/moab/moab-wheels-ubuntu-latest/moab-5.5.1-cp311-cp311-manylinux_2_28_x86_64.whl
-RUN python -c "import pymoab"
 
+# temporary wheels for openmc hosted on github repo https://github.com/shimwell/wheels
 RUN pip install https://github.com/shimwell/wheels/raw/refs/heads/main/openmc/openmc-0.15.1.dev0-cp311-cp311-manylinux_2_28_x86_64.whl
-RUN python -c "import openmc"
-RUN python -c "import openmc.lib"
 
-
-# # RUN pip install cadquery
-
-# RUN pip uninstall vtk -y
+# the order of these install appears to matter when it comes to jupyter vtk rendering
 RUN pip install cadquery-vtk
 RUN pip install git+https://github.com/CadQuery/cadquery.git@7cade87e68f2755fe7a121d797428c7b3d41b1be
-RUN python -c "import cadquery"
-# --no-deps
-# RUN pip install cadquery-ocp==7.8.1 "multimethod>=1.11,<2.0" nlopt typish casadi path ezdxf nptyping==2.0.1
+
 
 # Installs ENDF with TENDL where ENDF cross sections are not available.
 # Performed after openmc install as openmc is needed to write the cross_Sections.xml file
-# RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e W Li -i H3 --no-overwrite
-# # RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
-# RUN download_endf_chain -d nuclear_data -r b8.0
+RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
+RUN download_endf_chain -d nuclear_data -r b8.0
 
-# # install WMP nuclear data
-# RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
-#     tar -xf WMP_Library_v1.1.tar.gz -C /  && \
-#     rm WMP_Library_v1.1.tar.gz
-
-# RUN pip install "vtk==9.3.1"
-
-#  ipywidgets cadquery-vtk
-
-ENV PORT 8888
-
-# could switch to --ip='*'
-CMD ["jupyter", "lab", "--notebook-dir=/", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+# install WMP nuclear data
+RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
+    tar -xf WMP_Library_v1.1.tar.gz -C /  && \
+    rm WMP_Library_v1.1.tar.gz
