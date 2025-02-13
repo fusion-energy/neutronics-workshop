@@ -100,6 +100,7 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
                 "openmc_data_downloader>=0.6.0" \
+                retry \
                 "openmc_data>=0.2.10" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter \
@@ -133,7 +134,6 @@ RUN pip install https://github.com/shimwell/wheels/raw/refs/heads/main/openmc/op
 # the order of these install appears to matter when it comes to jupyter vtk rendering
 RUN pip install cadquery-vtk
 RUN pip install git+https://github.com/CadQuery/cadquery.git@7cade87e68f2755fe7a121d797428c7b3d41b1be
-
 
 # Installs ENDF with TENDL where ENDF cross sections are not available.
 # Performed after openmc install as openmc is needed to write the cross_Sections.xml file
