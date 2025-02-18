@@ -42,8 +42,6 @@ RUN apt-get --yes update && apt-get --yes upgrade
 
                           # eigen3 needed for DAGMC
 RUN apt-get --yes install libeigen3-dev \
-                        #   sudo  \
-                          # sudo is needed during the NJOY install
                           git \
                           wget \
                           gfortran \
@@ -84,7 +82,6 @@ RUN apt-get --yes install libeigen3-dev \
                     
 RUN apt-get --yes install python3-pip python3-venv
 
-
 # Enabling a venv within Docker is needed to avoid system wide installs
 # https://pythonspeed.com/articles/activate-virtualenv-dockerfile/
 ENV VIRTUAL_ENV=/opt/venv
@@ -103,138 +100,40 @@ RUN pip install neutronics_material_maker[density] \
                 openmc_source_plotter \
                 openmc_depletion_plotter \
                 "openmc_data_downloader>=0.6.0" \
+                retry \
                 "openmc_data>=0.2.10" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter \
-                "cad_to_dagmc>=0.7.1" \
+                "cad_to_dagmc>=0.8.2" \
                 "openmc-plasma-source>=0.3.1" \
-                paramak \
+                paramak --no-deps \
+                mpmath \
+                sympy \
                 # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
                 # https://salsa.debian.org/python-team/packages/nbconvert/-/tags
                 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068349
                 lxml[html_clean]
 
-RUN pip install git+https://github.com/CadQuery/cadquery.git@bc82cb04c59668a1369d9ce648361c8786bbd1c8 --no-deps
-RUN pip install cadquery-ocp==7.7.1 "multimethod>=1.7,<2.0" nlopt typish casadi path ezdxf nptyping==2.0.1
-
 # Python libraries used in the workshop
-RUN pip install cmake\
-# new version of cmake needed for openmc compile
-                plotly \
-                "vtk==9.2.5"  \
+RUN pip install plotly \
+                # vtk \
                 itkwidgets \
                 pytest \
                 ipywidgets \
-# cython is needed for moab and openmc, specific version tagged to avoid build errors
+                # cython is needed for moab and openmc, specific version tagged to avoid build errors
                 "cython<3.0" \
                 jupyterlab \
-                jupyter-cadquery \
-                gmsh \
-                pyvista
+                jupyter-cadquery
 
-# needed for openmc
-RUN pip install --upgrade numpy
+# temporary wheels for moab hosted on github repo https://github.com/shimwell/wheels
+RUN pip install https://github.com/shimwell/wheels/raw/refs/heads/main/moab/moab-wheels-ubuntu-latest/moab-5.5.1-cp311-cp311-manylinux_2_28_x86_64.whl
 
+# temporary wheels for openmc hosted on github repo https://github.com/shimwell/wheels
+RUN pip install https://github.com/shimwell/wheels/raw/refs/heads/main/openmc/openmc-0.15.1.dev0-cp311-cp311-manylinux_2_28_x86_64.whl
 
-ARG compile_cores=2
-ARG include_avx=false
-ARG build_double_down=OFF
-
-# Clone and install Embree
-# added following two lines to allow use on AMD CPUs see discussion
-# https://openmc.discourse.group/t/dagmc-geometry-open-mc-aborted-unexpectedly/1369/24?u=pshriwise  
-RUN if [ "$build_double_down" = "ON" ] ; \
-        then git clone --shallow-submodules --single-branch --branch v3.12.2 --depth 1 https://github.com/embree/embree.git ; \
-        cd embree ; \
-        mkdir build ; \
-        cd build ; \
-        if [ "$include_avx" = "false" ] ; \
-            then cmake .. -DEMBREE_MAX_ISA=NONE \
-                          -DEMBREE_ISA_SSE42=ON \
-                          -DCMAKE_INSTALL_PREFIX=.. \
-                          -DEMBREE_ISPC_SUPPORT=OFF ; \
-        fi ; \
-        if [ "$include_avx" = "true" ] ; \
-            then cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-                        -DEMBREE_ISPC_SUPPORT=OFF ; \
-        fi ; \
-        make -j"$compile_cores" ; \
-        make -j"$compile_cores" install ; \
-    fi
-
-# Clone and install MOAB
-RUN mkdir MOAB && \
-    cd MOAB && \
-    # newer versions of moab (5.4.0, 5.4.1) don't produce an importable pymoab package!
-    # TODO try moab 5.5.0 and 5.5.1
-    git clone  --single-branch --branch 5.3.1 --depth 1 https://bitbucket.org/fathomteam/moab.git && \
-    mkdir build && \
-    cd build && \
-    cmake ../moab -DENABLE_HDF5=ON \
-                  -DENABLE_NETCDF=ON \
-                  -DENABLE_FORTRAN=OFF \
-                  -DENABLE_BLASLAPACK=OFF \
-                  -DBUILD_SHARED_LIBS=ON \
-                  -DENABLE_PYMOAB=ON \
-                  -DCMAKE_INSTALL_PREFIX=/MOAB && \
-    mkdir -p MOAB/lib/pymoab/lib/python3.11/site-packages && \
-    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.11/site-packages:${PYTHONPATH} make -j && \
-    PYTHONPATH=/MOAB/lib/pymoab/lib/python3.11/site-packages:${PYTHONPATH} make install -j
-
-ENV PYTHONPATH="/MOAB/lib/python3.11/site-packages/pymoab-5.3.1-py3.11-linux-x86_64.egg/"
-
-RUN python -c "import pymoab"
-
-ENV PATH=$PATH:/MOAB/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MOAB/lib
-
-# Clone and install Double-Down
-RUN if [ "$build_double_down" = "ON" ] ; \
-        then git clone --shallow-submodules --single-branch --branch v1.0.0 --depth 1 https://github.com/pshriwise/double-down.git && \
-        cd double-down ; \
-        mkdir build ; \
-        cd build ; \
-        cmake .. -DMOAB_DIR=/MOAB \
-                 -DCMAKE_INSTALL_PREFIX=.. \
-                 -DEMBREE_DIR=/embree ; \
-        make -j"$compile_cores" ; \
-        make -j"$compile_cores" install ; \
-        rm -rf /double-down/build /double-down/double-down ; \
-    fi
-
-# DAGMC version develop install from source
-RUN mkdir DAGMC && \
-    cd DAGMC && \
-    git clone --single-branch --branch v3.2.2 --depth 1 https://github.com/svalinn/DAGMC.git && \
-    mkdir build && \
-    cd build && \
-    cmake ../DAGMC -DBUILD_TALLY=ON \
-                   -DMOAB_DIR=/MOAB \
-                   -DDOUBLE_DOWN=${build_double_down} \
-                   -DBUILD_STATIC_EXE=OFF \
-                   -DBUILD_STATIC_LIBS=OFF \
-                   -DCMAKE_INSTALL_PREFIX=/DAGMC/ \
-                   -DDOUBLE_DOWN_DIR=/double-down && \
-    make -j"$compile_cores" install && \
-    rm -rf /DAGMC/DAGMC /DAGMC/build
-
-ENV PATH=$PATH:/DAGMC/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/DAGMC/lib
-
-# installs OpenMC from source
-# switch back to tagged version when 0.15.1 is released
-# git clone --single-branch --branch v0.15.1 --depth 1 https://github.com/openmc-dev/openmc.git && \
-RUN git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git && \
-    cd openmc && \
-    mkdir build && \
-    cd build && \
-    cmake -DOPENMC_USE_DAGMC=ON \
-          -DDAGMC_ROOT=/DAGMC \
-          -DHDF5_PREFER_PARALLEL=OFF .. && \
-    make -j"$compile_cores" && \
-    make -j"$compile_cores" install && \
-    cd /openmc/ && \
-    pip install .
+# the order of these install appears to matter when it comes to jupyter vtk rendering
+RUN pip install cadquery-vtk
+RUN pip install git+https://github.com/CadQuery/cadquery.git@7cade87e68f2755fe7a121d797428c7b3d41b1be
 
 # Installs ENDF with TENDL where ENDF cross sections are not available.
 # Performed after openmc install as openmc is needed to write the cross_Sections.xml file
