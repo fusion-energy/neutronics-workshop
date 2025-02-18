@@ -21,3 +21,8 @@ my_model.export_dagmc_h5m_file(
     max_mesh_size=10,
     min_mesh_size=2,
 )
+my_model.export_unstructured_mesh_file(
+    filename="dagmc.vtk",
+    max_mesh_size=10,
+    min_mesh_size=2,
+)
