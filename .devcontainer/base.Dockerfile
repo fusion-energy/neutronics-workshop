@@ -109,6 +109,7 @@ RUN pip install neutronics_material_maker[density] \
                 paramak --no-deps \
                 mpmath \
                 sympy \
+                git+https://github.com/svalinn/pydagmc@c6621b77428b2ebb04c5cd6b7a8837655ab35800 \
                 # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
                 # https://salsa.debian.org/python-team/packages/nbconvert/-/tags
                 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068349
