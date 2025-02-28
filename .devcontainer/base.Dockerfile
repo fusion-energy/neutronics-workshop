@@ -32,7 +32,7 @@
 
 # FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
 # FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.10-bullseye as dependencies
-FROM mcr.microsoft.com/devcontainers/base:bookworm as dependencies
+FROM mcr.microsoft.com/devcontainers/base:bookworm AS dependencies
 
 RUN apt-get --allow-releaseinfo-change update
 RUN apt-get --yes update && apt-get --yes upgrade
@@ -109,11 +109,16 @@ RUN pip install neutronics_material_maker[density] \
                 paramak --no-deps \
                 mpmath \
                 sympy \
-                git+https://github.com/svalinn/pydagmc@c6621b77428b2ebb04c5cd6b7a8837655ab35800 \
+                asteval \
+                # pyvist \ # TODO add in pyvist but check it doesn't break the vtk/cad vis
+                gmsh \
+                pint \
                 # 6.5.3-5 nbconvert is needed to avoid an error and that requires trixie debian OS
                 # https://salsa.debian.org/python-team/packages/nbconvert/-/tags
                 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068349
                 lxml[html_clean]
+
+RUN pip install git+https://github.com/svalinn/pydagmc@c6621b77428b2ebb04c5cd6b7a8837655ab35800
 
 # Python libraries used in the workshop
 RUN pip install plotly \
