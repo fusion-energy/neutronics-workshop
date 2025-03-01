@@ -13,7 +13,7 @@
 # docker run -p 8888:8888 neutronics-workshop
 
 # remote image
-FROM ghcr.io/fusion-energy/neutronics-workshop:base as base
+FROM ghcr.io/fusion-energy/neutronics-workshop:base AS base
 # local image
 # FROM neutronics-workshop:base as base
 
@@ -46,9 +46,24 @@ RUN cp tasks/task_21_design_task/1_optimal_design_with_hints.ipynb tasks/half-da
 WORKDIR /tasks
 
 # this sets the port, gcr looks for this varible
-FROM base as jupyter_cmd
+FROM base AS jupyter_cmd
 
-ENV PORT 8888
+RUN apt-get update && apt-get install -y \
+    xvfb \
+    libgl1-mesa-glx \
+    libgl1-mesa-dri \
+    libosmesa6-dev \
+    libgl1-mesa-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
+RUN pip install pyvista panel
+RUN pip install pyvista trame-vtk trame ipywidgets itkwidgets
+
+ENV DISPLAY=:99
+ENV PORT=8888
 
 # could switch to --ip='*'
 CMD ["jupyter", "lab", "--notebook-dir=/tasks", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
