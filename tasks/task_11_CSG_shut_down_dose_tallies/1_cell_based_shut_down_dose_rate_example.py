@@ -12,8 +12,8 @@ from matplotlib.colors import LogNorm
 # the chain file was downloaded with
 # pip install openmc_data
 # download_endf_chain -r b8.0
-# openmc.config['chain_file'] = '/nuclear_data/chain-endf-b8.0.xml'
-# openmc.config['cross_sections'] = 'cross_sections.xml'
+# openmc.config['chain_file'] = Path.home() / 'nuclear_data' / 'chain-endf-b8.0.xml'
+# openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections.xml'
 
 # a few user settings
 # Set up the folders to save all the data in

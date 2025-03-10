@@ -7,10 +7,11 @@
 
 
 import openmc
+from pathlib import Path
 
 # Setting the cross section path to the correct location in the docker image.
 # If you are running this outside the docker image you will have to change this path to your local cross section path.
-openmc.config['cross_sections'] = '/nuclear_data/cross_sections.xml'
+openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections.xml'
 
 import math
 import matplotlib.pyplot as plt
