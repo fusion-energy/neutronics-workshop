@@ -63,6 +63,44 @@ more effort than clicking a link but provide more computing power.
 
 # Local Installation
 
+There are several ways to run the neutronics-workshop tasks including Conda, Docker and Codespaces.
+
+## Install with Conda
+
+It is also possible to install all the dependencies with Conda / Mamba in a new environment.
+
+First install Miniconda or Anaconda, or Miniforge
+
+- [Miniforge](https://github.com/conda-forge/miniforge) recommended as it includes Mamba 
+- [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
+- [Anaconda](https://www.anaconda.com)
+
+Once you have a version of Mamba or Conda installed then proceed with cloning the repository.
+```bash
+sudo apt-get install git
+git clone https://github.com/fusion-energy/neutronics-workshop.git
+```
+
+Then create the environment with Conda. If you have Mamba installed you could substitute mamba in for conda in the following command.
+
+```bash
+conda env create --name neutronicsworkshop --file=environment.yml
+```
+
+Then activate the environment with  
+```bash
+conda activate neutronicsworkshop
+```
+
+Then you should be able to run the ```jupyterlab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
+
+```bash
+jupyterlab
+``` 
+
+
+## Install with Docker
+
 There are video tutorials for this section which accompany the step by step
 instructions below.
 - Ubuntu installation video :point_right: <p align="center"><a href="https://youtu.be/qJLmt_dAaC0" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/114008054-c9cb7e80-9859-11eb-8e07-32e95c600667.png" height="70" /></a></p>
@@ -134,6 +172,7 @@ FreeCAD is one option for this and can be downloaded [here](https://www.freecadw
             sudo apt update && sudo apt-get install freecad
             </code></pre>
     </details>
+
 
 # Run in the cloud
 
