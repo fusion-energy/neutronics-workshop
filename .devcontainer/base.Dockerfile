@@ -141,12 +141,14 @@ RUN pip install https://github.com/shimwell/wheels/raw/refs/heads/main/openmc/op
 RUN pip install cadquery-vtk
 RUN pip install git+https://github.com/CadQuery/cadquery.git@7cade87e68f2755fe7a121d797428c7b3d41b1be
 
+RUN mkdir -p ~/nuclear_data
+
 # Installs ENDF with TENDL where ENDF cross sections are not available.
 # Performed after openmc install as openmc is needed to write the cross_Sections.xml file
-RUN openmc_data_downloader -d nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
-RUN download_endf_chain -d nuclear_data -r b8.0
+RUN openmc_data_downloader -d ~/nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
+RUN download_endf_chain -d ~/nuclear_data -r b8.0
 
 # install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
-    tar -xf WMP_Library_v1.1.tar.gz -C /  && \
+    tar -xf WMP_Library_v1.1.tar.gz -C ~/nuclear_data /  && \
     rm WMP_Library_v1.1.tar.gz

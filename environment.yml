@@ -3,15 +3,15 @@ channels:
   - conda-forge
 dependencies:
   - python=3.12
-  - paramak
   - cadquery
+  - jupyterlab
   - openmc
+  - paramak
   - remove_dagmc_tags
   - pytest # used for testing with pytest
   - nbformat  # used for testing with pytest
   - nbconvert  # used for testing with pytest
   - ipykernel  # used for testing with pytest
-  - jupyterlab
   - pip
   - pip:
     - openmc_source_plotter

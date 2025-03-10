@@ -87,6 +87,11 @@ Then create the environment with Conda. If you have Mamba installed you could su
 conda env create --name neutronicsworkshop --file=environment.yml
 ```
 
+The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations
+```bash
+bash postBuild
+```
+
 Then activate the environment with  
 ```bash
 conda activate neutronicsworkshop
