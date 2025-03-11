@@ -1,5 +1,7 @@
+# This dockerfile is used by mybinder.org and other dockerfiles are located in the .devcontainer folder
+
 # Pull your prebuilt image from GHCR
-FROM ghcr.io/fusion-energy/neutronics-workshop
+FROM ghcr.io/fusion-energy/neutronics-workshop:latest
 
 # Define arguments for the non-root user (required by MyBinder)
 ARG NB_USER=jovyan
