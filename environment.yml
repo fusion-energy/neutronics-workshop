@@ -21,4 +21,5 @@ dependencies:
     - dagmc_geometry_slice_plotter
     - cad_to_dagmc
     - openmc-plasma-source
+    - neutronics_material_maker
     - git+https://github.com/shimwell/pydagmc@packaging-update
