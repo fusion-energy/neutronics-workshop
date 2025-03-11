@@ -1,4 +1,4 @@
-# This Dockerfile creates an enviroment / dependancies needed to run the
+# This Dockerfile creates an enviroment / dependencies needed to run the
 # neutronics-workshop.
 
 # This Dockerfile can be build locally or a prebuild image can be downloaded
@@ -9,29 +9,9 @@
 # To build this Dockerfile into a docker image:
 # docker build -t neutronics-workshop:base -f .devcontainer/base.Dockerfile .
 
-
-# To build this Dockerfile with different options --build-arg can be used
-# --build-arg compile_cores=1
-#   int
-#   number of cores to compile codes with
-# --build-arg build_double_down=OFF
-#   ON OFF
-#   controls if DAGMC is built with double down (ON) or not (OFF). Note that if double down is OFF then Embree is not included
-# --build-arg include_avx=true
-#   true false
-#   controls if the Embree is built to use AVX instruction set (true) or not (false). AVX is not supported by all CPUs 
-
-#  docker build -t neutronics-workshop:base --build-arg compile_cores=7 --build-arg build_double_down=OFF .
-#  docker build -t neutronics-workshop:base:embree --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=true .
-#  docker build -t neutronics-workshop:base:embree-avx --build-arg compile_cores=7 --build-arg build_double_down=ON --build-arg include_avx=false .
-
-# for local testing I tend to use this build command
-# docker build -t neutronics-workshop:base --build-arg compile_cores=14 -f .devcontainer/base.Dockerfile .
 # and then run with this command
 # docker run -it neutronics-workshop:base
 
-# FROM mcr.microsoft.com/vscode/devcontainers/miniconda:0-3 as dependencies
-# FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.10-bullseye as dependencies
 FROM mcr.microsoft.com/devcontainers/base:bookworm AS dependencies
 
 RUN apt-get --allow-releaseinfo-change update
@@ -141,14 +121,29 @@ RUN pip install https://github.com/shimwell/wheels/raw/refs/heads/main/openmc/op
 RUN pip install cadquery-vtk
 RUN pip install git+https://github.com/CadQuery/cadquery.git@7cade87e68f2755fe7a121d797428c7b3d41b1be
 
-RUN mkdir -p ~/nuclear_data
+RUN apt-get update && apt-get install -y \
+    xvfb \
+    libgl1-mesa-glx \
+    libgl1-mesa-dri \
+    libosmesa6-dev \
+    libgl1-mesa-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
+RUN pip install pyvista panel
+RUN pip install pyvista trame-vtk trame ipywidgets itkwidgets
+
+# Path.home is /root
+RUN mkdir -p /root/nuclear_data
 
 # Installs ENDF with TENDL where ENDF cross sections are not available.
 # Performed after openmc install as openmc is needed to write the cross_Sections.xml file
-RUN openmc_data_downloader -d ~/nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
-RUN download_endf_chain -d ~/nuclear_data -r b8.0
+RUN openmc_data_downloader -d /root/nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
+RUN download_endf_chain -d /root/nuclear_data -r b8.0
 
 # install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
-    tar -xf WMP_Library_v1.1.tar.gz -C ~/nuclear_data /  && \
+    tar -xf WMP_Library_v1.1.tar.gz -C /root/nuclear_data  && \
     rm WMP_Library_v1.1.tar.gz
