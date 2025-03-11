@@ -8,6 +8,7 @@ dependencies:
   - openmc
   - paramak
   - remove_dagmc_tags
+  - pyvista
   - pytest # used for testing with pytest
   - nbformat  # used for testing with pytest
   - nbconvert  # used for testing with pytest
@@ -21,5 +22,5 @@ dependencies:
     - dagmc_geometry_slice_plotter
     - cad_to_dagmc
     - openmc-plasma-source
-    - neutronics_material_maker
+    - neutronics_material_maker[density]
     - git+https://github.com/shimwell/pydagmc@packaging-update
