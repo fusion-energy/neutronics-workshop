@@ -15,7 +15,7 @@
 # remote image
 FROM ghcr.io/fusion-energy/neutronics-workshop:base AS base
 # local image
-# FROM neutronics-workshop:base as base
+# FROM neutronics-workshop:base AS base
 
 # Copy over the local repository files
 COPY tasks tasks/
@@ -45,22 +45,9 @@ RUN cp tasks/task_21_design_task/1_optimal_design_with_hints.ipynb tasks/half-da
 
 WORKDIR /tasks
 
-# this sets the port, gcr looks for this varible
+# this sets the port, gcr looks for this variable
 FROM base AS jupyter_cmd
 
-RUN apt-get update && apt-get install -y \
-    xvfb \
-    libgl1-mesa-glx \
-    libgl1-mesa-dri \
-    libosmesa6-dev \
-    libgl1-mesa-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
-    && rm -rf /var/lib/apt/lists/*
-RUN pip install pyvista panel
-RUN pip install pyvista trame-vtk trame ipywidgets itkwidgets
 
 ENV DISPLAY=:99
 ENV PORT=8888
