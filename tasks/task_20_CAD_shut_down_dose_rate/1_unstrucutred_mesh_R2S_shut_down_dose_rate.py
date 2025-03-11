@@ -3,6 +3,10 @@ import cadquery as cq
 import openmc
 from matplotlib.colors import LogNorm
 import openmc.deplete
+from pathlib import Path
+
+openmc.config['chain_file'] = Path.home() / 'nuclear_data' / 'chain-endf-b8.0.xml'
+openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections.xml'
 
 # makes a CAD geometry to use for the neutronics geometry
 s = cq.Workplane("XY")

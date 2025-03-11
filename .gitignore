@@ -33,3 +33,6 @@ __pycache__/
 *.stp
 *.svg
 *.png
+
+# compressed files
+*.tar.gz*

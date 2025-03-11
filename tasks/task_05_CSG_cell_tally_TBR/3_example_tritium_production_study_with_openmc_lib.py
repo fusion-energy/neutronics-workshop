@@ -13,10 +13,10 @@ control of the loading of the data, accessing the tallies and changing materials
 """
 
 import openmc
-
+from pathlib import Path
 # Setting the cross section path to the correct location in the docker image.
 # If you are running this outside the docker image you will have to change this path to your local cross section path.
-openmc.config['cross_sections'] = '/nuclear_data/cross_sections.xml'
+openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections.xml'
 
 # make some python materials
 breeder_material = openmc.Material(material_id = 12)  # Pb84.2Li15.8
