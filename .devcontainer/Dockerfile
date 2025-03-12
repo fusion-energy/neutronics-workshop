@@ -175,7 +175,6 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
 
 # Copy over the local repository files
 COPY tasks ${HOME}/tasks/
-COPY tests ${HOME}/tests/
 
 RUN mkdir -p ${HOME}/tasks/half-day-workshop
 
