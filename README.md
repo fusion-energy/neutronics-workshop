@@ -3,6 +3,8 @@
 
 [![docker-publish-release](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml)
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/HEAD)
+
 # Fusion Neutronics workshop
 A selection of resources for learning fusion neutronics simulations with a
 particular focus on [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
