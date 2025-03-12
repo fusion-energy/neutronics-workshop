@@ -12,16 +12,6 @@
 # then run with this command
 # docker run -p 8888:8888 neutronics-workshop
 
-# To download the prebuild image
-# docker pull ghcr.io/fusion-energy/neutronics-workshop:base
-
-# To build this Dockerfile into a docker image:
-# docker build -t neutronics-workshop:base -f .devcontainer/base.Dockerfile .
-
-# and then run with this command
-# docker run -it neutronics-workshop
-# 
-
 
 FROM mcr.microsoft.com/devcontainers/base:bookworm AS dependencies
 
@@ -173,6 +163,7 @@ RUN mkdir -p ${HOME}/nuclear_data
 # Installs ENDF with TENDL where ENDF cross sections are not available.
 # Performed after openmc install as openmc is needed to write the cross_Sections.xml file
 RUN openmc_data_downloader -d ${HOME}/nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
+# other options for downloading cross section data
 # RUN openmc_data_downloader -d ${HOME}/nuclear_data -l ENDFB-8.0-NNDC -p neutron -e Fe Li -i H3 --no-overwrite
 # RUN download_endf -d ${HOME}/nuclear_data -r b8.0
 RUN download_endf_chain -d ${HOME}/nuclear_data -r b8.0
@@ -214,5 +205,3 @@ USER ${NB_USER}
 
 # could switch to --ip='*'
 CMD ["jupyter", "lab", "--notebook-dir=/home/jovyan", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
-
-# , "--NotebookApp.token=''"
