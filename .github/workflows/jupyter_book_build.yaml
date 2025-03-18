@@ -42,8 +42,8 @@ jobs:
     - name: Cache nuclear data
       uses: actions/cache@v4
       with:
-      path: nuclear_data
-      key: nuclear-data-${{ hashFiles('postBuild') }}
+        path: nuclear_data
+        key: nuclear-data-${{ hashFiles('postBuild') }}
 
     - name: Download nuclear data
       if: steps.cache.outputs.cache-hit != 'true'
