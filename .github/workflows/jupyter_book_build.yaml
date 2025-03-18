@@ -22,6 +22,9 @@ jobs:
     permissions:
       pages: write
       id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}  
     steps:
     - uses: actions/checkout@v4
 
@@ -53,25 +56,25 @@ jobs:
       run: |
         jupyter-book build .
 
-    - name: Deploy docs to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        publish_branch: gh-pages
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: _build
-        # with next rlease of actions-gh-pages
-        # issue to allow force_orphan will be fixed
-        # https://github.com/peaceiris/actions-gh-pages/issues/455
-        # force_orphan: true
-        keep_files: true
-
-    # # Upload the book's HTML as an artifact
-    # - name: Upload artifact
-    #   uses: actions/upload-pages-artifact@v3
+    # - name: Deploy docs to GitHub Pages
+    #   uses: peaceiris/actions-gh-pages@v4
     #   with:
-    #     path: "_build/html"
+    #     publish_branch: gh-pages
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: _build/html
+    #     # with next rlease of actions-gh-pages
+    #     # issue to allow force_orphan will be fixed
+    #     # https://github.com/peaceiris/actions-gh-pages/issues/455
+    #     # force_orphan: true
+    #     keep_files: false
 
-    # # Deploy the book's HTML to GitHub Pages
-    # - name: Deploy to GitHub Pages
-    #   id: deployment
-    #   uses: actions/deploy-pages@v4
+    # Upload the book's HTML as an artifact
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: "_build/html"
+
+    # Deploy the book's HTML to GitHub Pages
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
