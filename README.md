@@ -1,5 +1,4 @@
-
-
+[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://fusion-energy.github.io/neutronics-workshop/)
 
 [![docker-publish-release](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml)
 
@@ -70,12 +69,13 @@ There are several ways to run the neutronics-workshop tasks including Conda, Doc
 ## Install with pip
 
 To install with pip first create a python 3.11 environment, then activate the
-environment and install all the required packages.
+environment and install all the required packages. Currently just python 3.11
+is supported, in the future other versions will be supported
 
 ```bash
-python3.11 -m venv neutronicsworkshop
-source neutronicsworkshop/bin/activate
-pip install -r requirements.txt 
+python3.11 -m venv .neutronicsworkshop
+source .neutronicsworkshop/bin/activate
+python3.11 -m pip install -r requirements.txt 
 ```
 
 ## Install with Conda
