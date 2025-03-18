@@ -1,4 +1,3 @@
-
 ## Task 3 - CSG geometry
 
 Please allow 25 minutes for this task.
