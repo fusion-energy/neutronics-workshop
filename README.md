@@ -5,7 +5,7 @@
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/HEAD)
 
-# Fusion Neutronics workshop
+# Fusion Energy Neutronics Workshop
 A selection of resources for learning fusion neutronics simulations with a
 particular focus on [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
 and [Paramak](https://paramak.readthedocs.io)
@@ -15,7 +15,7 @@ There is a [slide](https://fusion-energy.github.io/neutronics-workshop-slides/in
 There is also a [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) space which is great for working through the workshop with colleagues.
 
 These examples require specific versions of software packages and nuclear data to run correctly.
-Therefore **I highly recommend making use of the containerized environment** to run these example notebooks.
+Therefore **I recommend making use of the Docker container or the conda environment** to run these example notebooks.
 
 The repository has benefited greatly from user feedback. Please feel free to
 raise GitHub [issues](https://github.com/fusion-energy/neutronics-workshop/issues)
@@ -103,7 +103,7 @@ Then you should be able to run the ```jupyterlab``` command and within Jupyter L
 
 ```bash
 jupyterlab
-``` 
+```
 
 
 ## Install with Docker
@@ -192,3 +192,12 @@ without installing anything locally.
 - Then follow :point_right: [this link](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=386229912) to config a compute instance :point_right: <p align="center"><a href="https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=386229912" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/179179958-cc7f0700-6df5-47e9-a10f-67a9c1e556c6.png" height="150" /></a></p>
 
 - VS Code will then launch in the browser, once loaded you must select the conda python interpreter to enable the correct Python environment.
+
+
+# Build the book
+
+To create the jupyter book ensure you have the required environment then build with Jupyter book.
+
+```bash
+jupyter-book build tasks
+```
