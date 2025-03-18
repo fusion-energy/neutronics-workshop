@@ -1,4 +1,3 @@
-
 ## Task 2 - Materials
 
 Please allow 20 minutes for this task.

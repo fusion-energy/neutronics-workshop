@@ -1,0 +1,55 @@
+# Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
+
+title: Fusion Energy Neutronics Workshop
+author: Jon Shimwell
+logo: logo.png
+
+# Force re-execution of notebooks on each build.
+# See https://jupyterbook.org/content/execute.html
+execute:
+  execute_notebooks: auto
+
+# Define the name of the latex output file for PDF builds
+latex:
+  latex_documents:
+    targetname: book.tex
+
+# Add a bibtex file so that we can create citations
+bibtex_bibfiles:
+  - references.bib
+
+# Information about where the book exists on the web
+repository:
+  url: https://github.com/executablebooks/jupyter-book  # Online location of your book
+  path_to_book: .  # Optional path to your book, relative to the repository root
+  branch: main  # Which branch of the repository should be used when creating links (optional)
+
+launch_buttons:
+  binderhub_url: "https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/HEAD"  # The URL for your BinderHub (e.g., https://mybinder.org)
+
+# Add GitHub buttons to your book
+# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+html:
+  use_issues_button: true
+  use_repository_button: true
+
+exclude_patterns:
+  - tasks/task_05*/*.ipynb
+  - tasks/task_06*/*.ipynb
+  - tasks/task_07*/*.ipynb
+  - tasks/task_08*/*.ipynb
+  - tasks/task_09*/*.ipynb
+  - tasks/task_10*/*.ipynb
+  - tasks/task_11*/*.ipynb
+  - tasks/task_12*/*.ipynb
+  - tasks/task_13*/*.ipynb
+  - tasks/task_14*/*.ipynb
+  - tasks/task_15*/*.ipynb
+  - tasks/task_16*/*.ipynb
+  - tasks/task_17*/*.ipynb
+  - tasks/task_18*/*.ipynb
+  - tasks/task_19*/*.ipynb
+  - tasks/task_20*/*.ipynb
+  - tasks/task_21*/*.ipynb
+  - .neutronicsworkshop/*

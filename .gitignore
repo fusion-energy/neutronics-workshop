@@ -36,3 +36,5 @@ __pycache__/
 
 # compressed files
 *.tar.gz*
+
+**_build

@@ -1,0 +1,35 @@
+format: jb-book
+root: index
+parts:
+  - caption: Installation options
+    chapters:
+    - file: install
+  - caption: Cross Sections
+    chapters:
+    - file: tasks/task_01_cross_sections/README
+    - file: tasks/task_01_cross_sections/1_isotope_xs_plot
+    - file: tasks/task_01_cross_sections/2_element_xs_plot
+    - file: tasks/task_01_cross_sections/3_material_xs_plot
+  - caption: Materials
+    chapters:
+    - file: tasks/task_02_making_materials/README
+    - file: tasks/task_02_making_materials/1_example_materials_from_isotopes
+    - file: tasks/task_02_making_materials/2_example_materials_from_elements
+    - file: tasks/task_02_making_materials/3_example_materials_from_material_maker
+    - file: tasks/task_02_making_materials/4_example_materials_parameter_study
+    - file: tasks/task_02_making_materials/5_example_materials_from_materials
+  - caption: Making CSG Geometry
+    chapters:
+    - file: tasks/task_03_making_CSG_geometry/1_simple_csg_geometry
+    - file: tasks/task_03_making_CSG_geometry/2_intermediate_csg_geometry
+    - file: tasks/task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk
+  - caption: Making source terms
+    chapters:
+    - file: tasks/task_04_make_sources/1_point_source_plots
+    - file: tasks/task_04_make_sources/2_ring_source
+    - file: tasks/task_04_make_sources/3_plasma_source_plots
+    - file: tasks/task_04_make_sources/4_neutron_tracks
+    - file: tasks/task_04_make_sources/5_gamma_source_example
+    # need converting to notebooks
+    # - file: tasks/task_04_make_sources/6_unstructured_mesh_spatial_source.py
+    # - file: tasks/task_04_make_sources/7_strucutured_mesh_source.py

@@ -1,11 +1,10 @@
-
-
+[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://fusion-energy.github.io/neutronics-workshop/)
 
 [![docker-publish-release](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml)
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/HEAD)
 
-# Fusion Neutronics workshop
+# Fusion Energy Neutronics Workshop
 A selection of resources for learning fusion neutronics simulations with a
 particular focus on [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
 and [Paramak](https://paramak.readthedocs.io)
@@ -15,7 +14,7 @@ There is a [slide](https://fusion-energy.github.io/neutronics-workshop-slides/in
 There is also a [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) space which is great for working through the workshop with colleagues.
 
 These examples require specific versions of software packages and nuclear data to run correctly.
-Therefore **I highly recommend making use of the containerized environment** to run these example notebooks.
+Therefore **I recommend making use of the either the pip environment, conda environment or Docker container ** to run these example notebooks.
 
 The repository has benefited greatly from user feedback. Please feel free to
 raise GitHub [issues](https://github.com/fusion-energy/neutronics-workshop/issues)
@@ -67,6 +66,16 @@ more effort than clicking a link but provide more computing power.
 
 There are several ways to run the neutronics-workshop tasks including Conda, Docker and Codespaces.
 
+## Install with pip
+
+To install with pip first create a python 3.11 environment, then activate the
+environment and install all the required packages. Currently just python 3.11
+is supported, in the future other versions will be supported
+
+
+
+```bash
+python3.11 -m venv .neutronicsworkshop
 ## Install with Conda
 
 It is also possible to install all the dependencies with Conda / Mamba in a new environment.
@@ -103,7 +112,7 @@ Then you should be able to run the ```jupyterlab``` command and within Jupyter L
 
 ```bash
 jupyterlab
-``` 
+```
 
 
 ## Install with Docker
@@ -192,3 +201,12 @@ without installing anything locally.
 - Then follow :point_right: [this link](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=386229912) to config a compute instance :point_right: <p align="center"><a href="https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=386229912" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/179179958-cc7f0700-6df5-47e9-a10f-67a9c1e556c6.png" height="150" /></a></p>
 
 - VS Code will then launch in the browser, once loaded you must select the conda python interpreter to enable the correct Python environment.
+
+
+# Build the book
+
+To create the jupyter book ensure you have the required environment then build with Jupyter-book. From the root directory of the repository
+
+```bash
+jupyter-book build .
+```
