@@ -39,12 +39,12 @@ jobs:
       run: pip install -r requirements.txt
     
       # TODO cache this step
-    - name: Cache nuclear data
-      id: cache-nuclear-data
-      uses: actions/cache@v4
-      with:
-        path: nuclear_data
-        key: nuclear-data-${{ hashFiles('postBuild') }}
+#    - name: Cache nuclear data
+#      id: cache-nuclear-data
+#      uses: actions/cache@v4
+#      with:
+#        path: nuclear_data
+#        key: nuclear-data-${{ hashFiles('postBuild') }}
 
     - name: Download nuclear data
       if: steps.cache-nuclear-data.outputs.cache-hit != 'true'
