@@ -14,7 +14,7 @@ There is a [slide](https://fusion-energy.github.io/neutronics-workshop-slides/in
 There is also a [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) space which is great for working through the workshop with colleagues.
 
 These examples require specific versions of software packages and nuclear data to run correctly.
-Therefore **I recommend making use of the Docker container or the conda environment** to run these example notebooks.
+Therefore **I recommend making use of the either the pip environment, conda environment or Docker container ** to run these example notebooks.
 
 The repository has benefited greatly from user feedback. Please feel free to
 raise GitHub [issues](https://github.com/fusion-energy/neutronics-workshop/issues)
@@ -72,12 +72,10 @@ To install with pip first create a python 3.11 environment, then activate the
 environment and install all the required packages. Currently just python 3.11
 is supported, in the future other versions will be supported
 
+
+
 ```bash
 python3.11 -m venv .neutronicsworkshop
-source .neutronicsworkshop/bin/activate
-python3.11 -m pip install -r requirements.txt 
-```
-
 ## Install with Conda
 
 It is also possible to install all the dependencies with Conda / Mamba in a new environment.
@@ -207,8 +205,8 @@ without installing anything locally.
 
 # Build the book
 
-To create the jupyter book ensure you have the required environment then build with Jupyter book.
+To create the jupyter book ensure you have the required environment then build with Jupyter-book. From the root directory of the repository
 
 ```bash
-jupyter-book build tasks
+jupyter-book build .
 ```
