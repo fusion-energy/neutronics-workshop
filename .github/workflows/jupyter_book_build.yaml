@@ -40,13 +40,14 @@ jobs:
     
       # TODO cache this step
     - name: Cache nuclear data
+      id: cache-nuclear-data
       uses: actions/cache@v4
       with:
         path: nuclear_data
         key: nuclear-data-${{ hashFiles('postBuild') }}
 
     - name: Download nuclear data
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache-nuclear-data.outputs.cache-hit != 'true'
       run: bash postBuild
 
     # (optional) Cache your executed notebooks between runs
@@ -70,17 +71,17 @@ jobs:
     #     publish_branch: gh-pages
     #     github_token: ${{ secrets.GITHUB_TOKEN }}
     #     publish_dir: _build/html
-    #     # with next rlease of actions-gh-pages
+    #     # with next release of actions-gh-pages
     #     # issue to allow force_orphan will be fixed
     #     # https://github.com/peaceiris/actions-gh-pages/issues/455
     #     # force_orphan: true
     #     keep_files: false
 
     # Upload the book's HTML as an artifact
-    # - name: Upload artifact
-    #   uses: actions/upload-pages-artifact@v3
-    #   with:
-    #     path: "_build/html"
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: "_build/html"
 
     # Deploy the book's HTML to GitHub Pages
     - name: Deploy to GitHub Pages
