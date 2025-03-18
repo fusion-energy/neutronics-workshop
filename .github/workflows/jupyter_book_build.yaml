@@ -38,6 +38,7 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
     
+      # TODO cache this step
     - name: download nuclear data
       run: bash postBuild
 
