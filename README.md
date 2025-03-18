@@ -67,6 +67,17 @@ more effort than clicking a link but provide more computing power.
 
 There are several ways to run the neutronics-workshop tasks including Conda, Docker and Codespaces.
 
+## Install with pip
+
+To install with pip first create a python 3.11 environment, then activate the
+environment and install all the required packages.
+
+```bash
+python3.11 -m venv neutronicsworkshop
+source neutronicsworkshop/bin/activate
+pip install -r tasks/requirements.txt 
+```
+
 ## Install with Conda
 
 It is also possible to install all the dependencies with Conda / Mamba in a new environment.
