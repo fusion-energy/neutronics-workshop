@@ -32,21 +32,21 @@ html:
   use_repository_button: true
 
 exclude_patterns:
-  - task_04*/*.ipynb
-  - task_05*/*.ipynb
-  - task_06*/*.ipynb
-  - task_07*/*.ipynb
-  - task_08*/*.ipynb
-  - task_09*/*.ipynb
-  - task_10*/*.ipynb
-  - task_11*/*.ipynb
-  - task_12*/*.ipynb
-  - task_13*/*.ipynb
-  - task_14*/*.ipynb
-  - task_15*/*.ipynb
-  - task_16*/*.ipynb
-  - task_17*/*.ipynb
-  - task_18*/*.ipynb
-  - task_19*/*.ipynb
-  - task_20*/*.ipynb
-  - task_21*/*.ipynb
+  - tasks/task_04*/*.ipynb
+  - tasks/task_05*/*.ipynb
+  - tasks/task_06*/*.ipynb
+  - tasks/task_07*/*.ipynb
+  - tasks/task_08*/*.ipynb
+  - tasks/task_09*/*.ipynb
+  - tasks/task_10*/*.ipynb
+  - tasks/task_11*/*.ipynb
+  - tasks/task_12*/*.ipynb
+  - tasks/task_13*/*.ipynb
+  - tasks/task_14*/*.ipynb
+  - tasks/task_15*/*.ipynb
+  - tasks/task_16*/*.ipynb
+  - tasks/task_17*/*.ipynb
+  - tasks/task_18*/*.ipynb
+  - tasks/task_19*/*.ipynb
+  - tasks/task_20*/*.ipynb
+  - tasks/task_21*/*.ipynb

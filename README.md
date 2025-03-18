@@ -75,7 +75,7 @@ environment and install all the required packages.
 ```bash
 python3.11 -m venv neutronicsworkshop
 source neutronicsworkshop/bin/activate
-pip install -r tasks/requirements.txt 
+pip install -r requirements.txt 
 ```
 
 ## Install with Conda
