@@ -32,7 +32,6 @@ html:
   use_repository_button: true
 
 exclude_patterns:
-  - tasks/task_04*/*.ipynb
   - tasks/task_05*/*.ipynb
   - tasks/task_06*/*.ipynb
   - tasks/task_07*/*.ipynb
