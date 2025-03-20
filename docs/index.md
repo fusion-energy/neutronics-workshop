@@ -11,6 +11,8 @@ There is a [slide](https://fusion-energy.github.io/neutronics-workshop-slides/in
 
 There is also a [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) space which is great for working through the workshop with colleagues.
 
+There are several ways to use this resource with local installation (pip, Conda, Mamba) options cloud based options (Binder, Codespaces) both of which let you run the modify and run the notebook example simulations.
+
 The repository has benefited greatly from user feedback. Please feel free to
 raise GitHub [issues](https://github.com/fusion-energy/neutronics-workshop/issues)
 or reach out in the [discussions](https://github.com/fusion-energy/neutronics-workshop/discussions)

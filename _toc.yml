@@ -1,9 +1,15 @@
 format: jb-book
-root: index
+root: docs/index
 parts:
   - caption: Installation options
     chapters:
-    - file: install
+    - file: docs/install_pip
+    - file: docs/install_conda
+    - file: docs/install_mamba
+    - file: docs/install_docker
+    - file: docs/install_extras
+    - file: docs/install_cloud_binder
+    - file: docs/install_cloud_codespaces
   - caption: Cross Sections
     chapters:
     - file: tasks/task_01_cross_sections/README
