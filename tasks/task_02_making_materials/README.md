@@ -1,4 +1,4 @@
-## Task 2 - Materials
+# Task 2 - Materials
 
 Please allow 20 minutes for this task.
 
@@ -6,7 +6,7 @@ Expected outputs from this task are in the [presentation](https://slides.com/neu
 
 In this task you will use OpenMC and the neutronics material maker to create a variety of neutronics-ready materials.
 
-### Learning Outcomes
+## Learning Outcomes
 
 - Materials can be made in OpenMC using isotope and element fractions, and densities.
 - The neutronics material maker provides an easy way to make materials and account for isotopic enrichment, temperature and pressure effects.
