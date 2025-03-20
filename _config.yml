@@ -8,7 +8,7 @@ logo: logo.png
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: auto
+  execute_notebooks: force
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -35,21 +35,4 @@ html:
   use_repository_button: true
 
 exclude_patterns:
-  - tasks/task_05*/*.ipynb
-  - tasks/task_06*/*.ipynb
-  - tasks/task_07*/*.ipynb
-  - tasks/task_08*/*.ipynb
-  - tasks/task_09*/*.ipynb
-  - tasks/task_10*/*.ipynb
-  - tasks/task_11*/*.ipynb
-  - tasks/task_12*/*.ipynb
-  - tasks/task_13*/*.ipynb
-  - tasks/task_14*/*.ipynb
-  - tasks/task_15*/*.ipynb
-  - tasks/task_16*/*.ipynb
-  - tasks/task_17*/*.ipynb
-  - tasks/task_18*/*.ipynb
-  - tasks/task_19*/*.ipynb
-  - tasks/task_20*/*.ipynb
-  - tasks/task_21*/*.ipynb
-  - .neutronicsworkshop/*
+  - CODE_OF_CONDUCT

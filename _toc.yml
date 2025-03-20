@@ -17,7 +17,7 @@ parts:
     - file: tasks/task_02_making_materials/2_example_materials_from_elements
     - file: tasks/task_02_making_materials/3_example_materials_from_material_maker
     - file: tasks/task_02_making_materials/4_example_materials_parameter_study
-    - file: tasks/task_02_making_materials/5_example_materials_from_materials
+    - file: tasks/task_02_making_materials/5_example_materials_mixed
   - caption: Making CSG Geometry
     chapters:
     - file: tasks/task_03_making_CSG_geometry/README
@@ -103,7 +103,7 @@ parts:
       - file: tasks/task_14_variance_reduction/4_sphere_iterative_per_batch_ww
   - caption: Making CAD geometry
     chapters:
-      - file: tasks/task_15_making_CAD_geometry/
+      - file: tasks/task_15_making_CAD_geometry/README
       - file: tasks/task_15_making_CAD_geometry/1_making_cad_with_cadquery
       - file: tasks/task_15_making_CAD_geometry/2_making_cad_with_paramak
   - caption: Converting CAD Geometry
