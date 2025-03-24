@@ -78,7 +78,7 @@ mamba activate openmc-dagmc
 
 # install Double-Down
 cd ~
-git clone --shallow-submodules --single-branch --branch v1.0.0 --depth 1 https://github.com/pshriwise/double-down.git
+git clone --shallow-submodules --single-branch --branch v1.1.0 --depth 1 https://github.com/pshriwise/double-down.git
 cd double-down
 mkdir build
 cd build
