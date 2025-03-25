@@ -1,4 +1,4 @@
-Varience reduction examples
+# Variance Reduction Examples
 
 Currently OpenMC supports two types of variance reduction.
 A detailed description of each method can be found in the [documentation](https://docs.openmc.org/en/stable/methods/neutron_physics.html?highlight=survival#variance-reduction-techniques).
