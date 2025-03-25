@@ -65,6 +65,7 @@ jobs:
     # Build the book
     - name: Build the book
       run: |
+        pip install jupyter-book
         jupyter-book build .
 
     # - name: Deploy docs to GitHub Pages
