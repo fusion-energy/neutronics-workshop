@@ -1,5 +1,5 @@
 
-## Task 10 - Making CAD geometry
+# Making CAD geometry
 
 Please allow 10 minutes for this task.
 

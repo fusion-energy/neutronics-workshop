@@ -1,5 +1,5 @@
 
-## Task 7 - Neutron and photon spectra
+# Neutron and photon spectra
 
 Please allow 15 minutes for this task.
 
