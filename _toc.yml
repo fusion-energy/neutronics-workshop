@@ -99,10 +99,12 @@ parts:
     # - file: task_12_detectors_examples/3_time_and_energy_filter_tally.py
   - caption: Volume Calculations
     chapters:
+      - file: tasks/task_13_volume_calculations/README
       - file: tasks/task_13_volume_calculations/1_find_volume_of_csg_cell
       - file: tasks/task_13_volume_calculations/2_find_volume_of_dagmc_cell
   - caption: Variance Reduction
     chapters:
+      - file: tasks/task_14_variance_reduction/README
       - file: tasks/task_14_variance_reduction/1_shielded_room_survival_biasing
       - file: tasks/task_14_variance_reduction/2_shielded_room_single_ww
       - file: tasks/task_14_variance_reduction/3_sphere_iterative_per_run_ww

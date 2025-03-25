@@ -1,5 +1,4 @@
-
-## Task 4 - Making sources
+# Making sources
 
 Please allow 20 minutes for this task.
 

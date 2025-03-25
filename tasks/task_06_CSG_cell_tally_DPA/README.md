@@ -1,5 +1,4 @@
-
-## Task 6 - DPA
+# Displacements Per Atom
 
 Please allow 15 minutes for this task.
 
