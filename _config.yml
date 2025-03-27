@@ -38,3 +38,4 @@ html:
 exclude_patterns:
   - CODE_OF_CONDUCT
   - tasks/task_21_design_task/1_optimal_design
+  - tasks/task_21_design_task/1_optimal_design_with_hints
