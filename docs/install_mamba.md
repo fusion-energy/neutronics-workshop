@@ -1,6 +1,6 @@
-# Install with Conda
+# Install with Mamba
 
-It is also possible to install all the dependencies with Conda in a new environment.
+It is also possible to install all the dependencies with Mamba in a new environment.
 
 This installation option supports Linux and has been tested most on Ubuntu
 
