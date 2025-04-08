@@ -4,9 +4,9 @@
 
 # Fusion Energy Neutronics Workshop
 
-A selection of resources for learning fusion neutronics simulations with a 
+A selection of resources for learning fusion neutronics simulations with a
 particular focus on [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
-and [Paramak](https://paramak.readthedocs.io)
+and [Paramak](https://fusion-energy.github.io/paramak/stable/index.html)
 
 ## See the :point_right: [online documentation](https://fusion-energy.github.io/neutronics-workshop/) :point_left: for installation options, usage recommendations and rendered notebooks.
 
