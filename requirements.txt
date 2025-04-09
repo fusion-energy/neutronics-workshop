@@ -18,4 +18,4 @@ dagmc_geometry_slice_plotter
 cad_to_dagmc
 openmc-plasma-source
 neutronics_material_maker[density]
-git+https://github.com/shimwell/pydagmc@packaging-update
+git+https://github.com/svalinn/pydagmc

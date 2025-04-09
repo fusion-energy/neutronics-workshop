@@ -36,6 +36,7 @@ html:
   use_repository_button: true
 
 exclude_patterns:
+  - README
   - CODE_OF_CONDUCT
   - tasks/task_21_design_task/1_optimal_design
   - tasks/task_21_design_task/1_optimal_design_with_hints
