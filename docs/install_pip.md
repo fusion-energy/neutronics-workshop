@@ -7,12 +7,24 @@ This installation option supports Linux and has been tested most on Ubuntu
 
 Currently just python 3.11 is supported, in the future other versions will be supported
 
+You will need Python installed which comes pre installed on most Linux distributions
 
+In addition to install with pip you will need pip installed.
+```
+sudo apt-get --yes install python3-pip
+```
+
+I would also recommend installing python3-venv so that the dependencies can be installed into a virtual environment.
+```
+sudo apt-get --yes install python3-venv
+```
+
+You should then be able to make a virtual environment.
 ```bash
 python3.11 -m venv .neutronicsworkshop
 ```
 
-Activate the virtual environmmet
+Activate the virtual environment
 ```bash
 source .neutronicsworkshop/bin/activate
 ```
