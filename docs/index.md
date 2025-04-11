@@ -19,6 +19,8 @@ or reach out in the [discussions](https://github.com/fusion-energy/neutronics-wo
 section if you spot anything that needs fixing or think of an improvement.
 Pull requests are very welcome.
 
+Please note I am currently converting Python scripts and making notebooks compatible with this new Juypter book layout. I've not ported everything across yet. There are currently more tasks in the [tasks folder of the repo](https://github.com/fusion-energy/neutronics-workshop/tree/main/tasks) then on this Jupyer book.
+
 The video below gives a brief explainer of what to expect in the workshop and some motivation for learning neutronics.
 
 <p align="center"><a href="https://youtu.be/HH-poTG-FxM" target="_blank"><img src="https://user-images.githubusercontent.com/8583900/144746742-3e31e0ee-6380-4db7-b8ea-0b1c302d497b.png" height="400" /></a></p>
