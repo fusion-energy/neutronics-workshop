@@ -38,9 +38,8 @@ parts:
     - file: tasks/task_04_make_sources/3_plasma_source_plots
     - file: tasks/task_04_make_sources/4_neutron_tracks
     - file: tasks/task_04_make_sources/5_gamma_source_example
-    # TODO need converting to notebooks
-    # - file: tasks/task_04_make_sources/6_unstructured_mesh_spatial_source.py
-    # - file: tasks/task_04_make_sources/7_strucutured_mesh_source.py
+    - file: tasks/task_04_make_sources/6_unstructured_mesh_spatial_source
+    - file: tasks/task_04_make_sources/7_structured_mesh_source
   - caption: CSG cell TBR tally
     chapters:
     - file: tasks/task_05_CSG_cell_tally_TBR/README
