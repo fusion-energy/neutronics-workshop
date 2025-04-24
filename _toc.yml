@@ -108,6 +108,7 @@ parts:
       - file: tasks/task_14_variance_reduction/2_shielded_room_single_ww
       - file: tasks/task_14_variance_reduction/3_sphere_iterative_per_run_ww
       - file: tasks/task_14_variance_reduction/4_sphere_iterative_per_batch_ww
+      - file: tasks/task_14_variance_reduction/5_shielded_room_fw_cadis.ipynb
   - caption: Making CAD geometry
     chapters:
       - file: tasks/task_15_making_CAD_geometry/README
