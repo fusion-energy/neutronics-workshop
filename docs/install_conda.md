@@ -10,11 +10,12 @@ First install Miniconda or Anaconda, or Miniforge
 - [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
 - [Anaconda](https://www.anaconda.com)
 
-Once you have a version of Conda installed then proceed with cloning the repository.
+Once you have a version of Conda installed then proceed with cloning or [download](https://github.com/fusion-energy/neutronics-workshop/archive/refs/heads/main.zip) the repository.
 
 ```bash
 sudo apt-get install git
 git clone https://github.com/fusion-energy/neutronics-workshop.git
+cd neutronics-workshop
 ```
 
 Then create the environment with Conda.
@@ -23,22 +24,16 @@ Then create the environment with Conda.
 conda env create --name neutronicsworkshop --file=environment.yml
 ```
 
-The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations
-```bash
-bash postBuild
-```
-
 Then activate the environment with  
 ```bash
 conda activate neutronicsworkshop
 ```
 
-Clone or otherwise [download](https://github.com/fusion-energy/neutronics-workshop/archive/refs/heads/main.zip) the repository and cd into the repository directory.
-
+The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations
 ```bash
-git clone https://github.com/fusion-energy/neutronics-workshop.git
-cd neutronics-workshop
+bash postBuild
 ```
+
 
 Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
 

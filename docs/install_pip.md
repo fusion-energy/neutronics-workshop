@@ -18,6 +18,14 @@ I would also recommend installing python3-venv so that the dependencies can be i
 sudo apt-get --yes install python3-venv
 ```
 
+Once you have a version of Conda installed then proceed with cloning or [download](https://github.com/fusion-energy/neutronics-workshop/archive/refs/heads/main.zip) the repository.
+
+```bash
+sudo apt-get install git
+git clone https://github.com/fusion-energy/neutronics-workshop.git
+cd neutronics-workshop
+```
+
 You should then be able to make a virtual environment.
 ```bash
 python3.11 -m venv .neutronicsworkshop
@@ -37,14 +45,6 @@ The download the nuclear data. This will create a ```nuclear_data``` folder in y
 
 ```bash
 bash postBuild
-```
-
-
-Clone or otherwise [download](https://github.com/fusion-energy/neutronics-workshop/archive/refs/heads/main.zip) the repository and cd into the repository directory.
-
-```bash
-git clone https://github.com/fusion-energy/neutronics-workshop.git
-cd neutronics-workshop
 ```
 
 Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.

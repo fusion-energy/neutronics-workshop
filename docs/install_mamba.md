@@ -15,11 +15,12 @@ If you chose Anaconda or Miniconda you will have to also install Mamba.
 conda install-c conda-forge mamba
 ```
 
-Once you have a version of Mamba installed then proceed with cloning the repository.
+Once you have a version of Conda installed then proceed with cloning or [download](https://github.com/fusion-energy/neutronics-workshop/archive/refs/heads/main.zip) the repository.
 
 ```bash
 sudo apt-get install git
 git clone https://github.com/fusion-energy/neutronics-workshop.git
+cd neutronics-workshop
 ```
 
 Then create the environment with Mamba.
@@ -28,15 +29,15 @@ Then create the environment with Mamba.
 mamba env create --name neutronicsworkshop --file=environment.yml
 ```
 
+Then activate the environment with  
+```bash
+mamba activate neutronicsworkshop
+```
+
 The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations.
 
 ```bash
 bash postBuild
-```
-
-Then activate the environment with  
-```bash
-mamba activate neutronicsworkshop
 ```
 
 Clone or otherwise [download](https://github.com/fusion-energy/neutronics-workshop/archive/refs/heads/main.zip) the repository and cd into the repository directory.
