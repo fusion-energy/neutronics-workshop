@@ -33,6 +33,13 @@ Then install the dependencies.
 python3.11 -m pip install -r https://raw.githubusercontent.com/fusion-energy/neutronics-workshop/refs/heads/main/requirements.txt
 ```
 
+The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations.
+
+```bash
+bash postBuild
+```
+
+
 Clone or otherwise [download](https://github.com/fusion-energy/neutronics-workshop/archive/refs/heads/main.zip) the repository and cd into the repository directory.
 
 ```bash
