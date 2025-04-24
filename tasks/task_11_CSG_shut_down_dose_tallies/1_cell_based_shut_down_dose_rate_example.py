@@ -117,7 +117,6 @@ model_neutron.deplete(
         "normalization_mode": "source-rate",  # needed as this is a fixed source simulation
         "chain_file": openmc.config['chain_file'],
         "reduce_chain_level": 5,
-        "reduce_chain": True
     },
     # todo add diff burnable material if PR gets merged in https://github.com/openmc-dev/openmc/pull/2691
 )

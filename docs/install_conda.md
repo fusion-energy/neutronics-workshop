@@ -33,10 +33,17 @@ Then activate the environment with
 conda activate neutronicsworkshop
 ```
 
-Then you should be able to run the ```jupyterlab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
+Clone or otherwise [download](https://github.com/fusion-energy/neutronics-workshop/archive/refs/heads/main.zip) the repository and cd into the repository directory.
 
 ```bash
-jupyterlab
+git clone https://github.com/fusion-energy/neutronics-workshop.git
+cd neutronics-workshop
+```
+
+Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
+
+```bash
+jupyter lab
 ```
 
 Then navigate to the task that you want to run in the tasks folder.
