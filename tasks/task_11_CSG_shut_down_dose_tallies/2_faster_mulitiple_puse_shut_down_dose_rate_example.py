@@ -130,7 +130,6 @@ operator = openmc.deplete.IndependentOperator(
     materials=openmc.Materials(all_depletable_materials),
     fluxes=[i[0] for i in flux_in_each_group],
     micros=micro_xs,
-    reduce_chain=True,  # reduced to only the isotopes present in depletable materials and their possible progeny
     reduce_chain_level=5,
     normalization_mode="source-rate"
 )
