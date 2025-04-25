@@ -16,6 +16,17 @@ openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections
 # download_endf_chain -r b8.0
 openmc.config['chain_file'] = Path.home() / 'nuclear_data' / 'chain-endf-b8.0.xml'
 
+# We make a iron material which should produce a few activation products
+mat_iron = openmc.Material()
+mat_iron.add_element("Fe", 1.0)
+mat_iron.set_density("g/cm3", 8.0)
+mat_iron.volume = 500
+
+# We make a Al material which should produce a few different activation products
+mat_aluminum = openmc.Material()
+mat_aluminum.add_element("Al", 1.0)
+mat_aluminum.set_density("g/cm3", 2.7)
+mat_aluminum.volume = 500
 
 # First we make a simple geometry with three cells, (two with material)
 sphere_surf_1 = openmc.Sphere(r=20, boundary_type="vacuum")
@@ -26,19 +37,10 @@ sphere_region_1 = -sphere_surf_1 & +sphere_surf_2 & +sphere_surf_3  # void space
 sphere_region_2 = -sphere_surf_2
 sphere_region_3 = -sphere_surf_3
 
-sphere_cell_1 = openmc.Cell(region=sphere_region_1)
-sphere_cell_2 = openmc.Cell(region=sphere_region_2)
+sphere_cell_1 = openmc.Cell(region=sphere_region_1, fill=mat_iron)
+sphere_cell_2 = openmc.Cell(region=sphere_region_2, fill=mat_aluminum)
 sphere_cell_3 = openmc.Cell(region=sphere_region_3)
 
-# We make a iron material which should produce a few activation products
-mat_iron = openmc.Material()
-mat_iron.add_element("Fe", 1.0)
-mat_iron.set_density("g/cm3", 7.7)
-
-# We make a Al material which should produce a few different activation products
-mat_aluminum = openmc.Material()
-mat_aluminum.add_element("Al", 1.0)
-mat_aluminum.set_density("g/cm3", 2.7)
 
 my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3])
 
@@ -54,7 +56,7 @@ my_source.particle = "neutron"
 # settings for the neutron simulation(s)
 settings = openmc.Settings()
 settings.run_mode = "fixed source"
-settings.particles = 1000
+settings.particles = 100000
 settings.batches = 10
 settings.source = my_source
 settings.photon_transport = True
@@ -66,7 +68,7 @@ settings.use_decay_photons = True
 # creates a regular mesh that surrounds the geometry
 mesh = openmc.RegularMesh().from_domain(
     my_geometry,
-    dimension=[10, 10, 10],  # 10 voxels in each axis direction (x, y, z)
+    dimension=[2, 2, 2],  # 2 voxels in each axis direction (x, y, z)
 )
 
 # adding a dose tally on a regular mesh
@@ -78,7 +80,7 @@ dose_filter = openmc.EnergyFunctionFilter(
 particle_filter = openmc.ParticleFilter(["photon"])
 mesh_filter = openmc.MeshFilter(mesh)
 dose_tally = openmc.Tally()
-dose_tally.filters = [particle_filter] # TODO add more filters dose_filter mesh_filter
+dose_tally.filters = [particle_filter, mesh_filter] # TODO add more filters dose_filter mesh_filter
 dose_tally.scores = ["flux"]
 dose_tally.name = "photon_dose_on_mesh"
 
