@@ -170,12 +170,12 @@ dose_filter = openmc.EnergyFunctionFilter(
 )
 particle_filter = openmc.ParticleFilter(["photon"])
 mesh_filter = openmc.MeshFilter(mesh)
-flux_tally = openmc.Tally()
-flux_tally.filters = [mesh_filter, dose_filter, particle_filter]
-flux_tally.scores = ["flux"]
-flux_tally.name = "photon_dose_on_mesh"
+dose_tally = openmc.Tally()
+dose_tally.filters = [mesh_filter, dose_filter, particle_filter]
+dose_tally.scores = ["flux"]
+dose_tally.name = "photon_dose_on_mesh"
 
-tallies = openmc.Tallies([flux_tally])
+tallies = openmc.Tallies([dose_tally])
 
 cells = model_neutron.geometry.get_all_cells()
 activated_cells = [cells[uid] for uid in activated_cell_ids]
