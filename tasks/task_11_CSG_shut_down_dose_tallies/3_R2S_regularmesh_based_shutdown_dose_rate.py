@@ -1,5 +1,6 @@
 # This script simulates R2S method of shut down dose rate
 # on a simple sphere model.
+# TODO needs cell fractions in mesh volumes adding to complete the example
 
 import numpy as np
 import openmc
