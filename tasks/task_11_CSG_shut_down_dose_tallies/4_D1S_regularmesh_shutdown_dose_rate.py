@@ -56,7 +56,7 @@ my_source.particle = "neutron"
 # settings for the neutron simulation(s)
 settings = openmc.Settings()
 settings.run_mode = "fixed source"
-settings.particles = 100000
+settings.particles = 10000
 settings.batches = 10
 settings.source = my_source
 settings.photon_transport = True
@@ -68,7 +68,7 @@ settings.use_decay_photons = True
 # creates a regular mesh that surrounds the geometry
 mesh = openmc.RegularMesh().from_domain(
     my_geometry,
-    dimension=[2, 2, 2],  # 2 voxels in each axis direction (x, y, z)
+    dimension=[10, 10, 1],  # 10 voxels in each axis direction (x, y, z)
 )
 
 # adding a dose tally on a regular mesh
@@ -125,6 +125,8 @@ with openmc.StatePoint(output_path) as sp:
     dose_tally_from_sp = sp.get_tally(name='photon_dose_on_mesh')
 
 
+import matplotlib.pyplot as plt
+    
 for i_cool in range(len(timesteps)):
 
     # Apply time correction factors
@@ -134,9 +136,22 @@ for i_cool in range(len(timesteps)):
         index=i_cool,
         sum_nuclides=True
     )
-    
-    print(corrected_tally.mean)  # <---- this gives zero values
 
+    # get a slice of mean values on the xy basis mid z axis
+    corrected_tally_mean = corrected_tally.get_reshaped_data(value='mean', expand_dims=True).squeeze()
+    # create a plot of the mean flux values
+    plt.imshow(
+        corrected_tally_mean.T,
+        origin="lower",
+        extent=mesh.bounding_box.extent['xy'],
+        norm=LogNorm(),
+    )
+    print(corrected_tally_mean)
+    plt.colorbar(label="Flux [pSv-cm3/source photon]")
+    plt.title("Flux Mean")
+
+    plt.savefig(f'shut_down_dose_map_timestep_{i_cool}')
+    plt.close()
 
     # normalising this tally is a little different to other examples as the source strength has been using units of photons per second.
     # tally.mean is in units of pSv-cm3/source photon.
@@ -148,6 +163,12 @@ for i_cool in range(len(timesteps)):
     pico_to_micro = 1e-6
     seconds_to_hours = 60*60
     scaling_factor = (seconds_to_hours * pico_to_micro) / mesh.volumes[0][0][0]
+
+
+
+
+
+
 
     # # You may wish to plot the dose tally on a mesh, this package makes it easy to include the geometry with the mesh tally
     # from openmc_regular_mesh_plotter import plot_mesh_tally
