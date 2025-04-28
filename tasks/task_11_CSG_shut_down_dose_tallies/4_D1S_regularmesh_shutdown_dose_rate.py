@@ -4,6 +4,7 @@
 import openmc
 from openmc.deplete import d1s
 from pathlib import Path
+import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 
 import openmc
@@ -80,7 +81,7 @@ dose_filter = openmc.EnergyFunctionFilter(
 particle_filter = openmc.ParticleFilter(["photon"])
 mesh_filter = openmc.MeshFilter(mesh)
 dose_tally = openmc.Tally()
-dose_tally.filters = [particle_filter, mesh_filter] # TODO add more filters dose_filter mesh_filter
+dose_tally.filters = [particle_filter, mesh_filter, dose_filter]
 dose_tally.scores = ["flux"]
 dose_tally.name = "photon_dose_on_mesh"
 
@@ -99,12 +100,16 @@ output_path = model.run()
 # half lives of the main unstable nuclides, this helps me check the solution is stable.
 timesteps_and_source_rates = [
     (1, 1e18),  # 1 second
-    (1, 1e18),  # 1 second
     (60*60, 0),  # 1 hour
     (60*60, 0),  # 2 hour
     (60*60, 0),  # 3 hour
     (60*60, 0),  # 4 hour
     (60*60, 0),  # 5 hour
+    (60*60, 0),  # 6 hour
+    (60*60, 0),  # 7 hour
+    (60*60, 0),  # 8 hour
+    (60*60, 0),  # 9 hour
+    (60*60, 0),  # 10 hour
 ]
 
 timesteps = [item[0] for item in timesteps_and_source_rates]
@@ -117,7 +122,8 @@ radionuclides = d1s.prepare_tallies(model)
 time_factors = d1s.time_correction_factors(
     nuclides=radionuclides,
     timesteps=timesteps,
-    source_rates=source_rates
+    source_rates=source_rates,
+    timestep_units = 's'
 )
 
 # Get tally from statepoint
@@ -125,9 +131,18 @@ with openmc.StatePoint(output_path) as sp:
     dose_tally_from_sp = sp.get_tally(name='photon_dose_on_mesh')
 
 
-import matplotlib.pyplot as plt
-    
-for i_cool in range(len(timesteps)):
+
+# tally.mean is in units of pSv-cm3/source neutron
+# multiplication by neutrons_per_second changes units to neutron to pSv-cm3/second
+neutrons_per_second = 1e8
+
+# multiplication by pico_to_milli converts from (pico) pSv/second to (milli) mSv/second
+pico_to_milli = 1e-9
+
+# multiplication by mesh element volume converts from dose-cm3/second to dose/second
+volume_normalization = mesh.volumes[0][0][0]
+
+for i_cool in range(1, len(timesteps)):  # missing the first timestep as it is the irradiation step
 
     # Apply time correction factors
     corrected_tally = d1s.apply_time_correction(
@@ -136,21 +151,31 @@ for i_cool in range(len(timesteps)):
         index=i_cool,
         sum_nuclides=True
     )
+    
+    # this section simply gets the maximum value of the mean tally across all time steps
+    # and uses this to set the max value of the color bar in the plots
+    if i_cool == 1:
+        max_tally_value = max(corrected_tally.mean).flatten()
+        scaled_max_tally_value = (max_tally_value * pico_to_milli * neutrons_per_second) / volume_normalization
 
     # get a slice of mean values on the xy basis mid z axis
     corrected_tally_mean = corrected_tally.get_reshaped_data(value='mean', expand_dims=True).squeeze()
     # create a plot of the mean flux values
+    
+    scaled_corrected_tally_mean = (corrected_tally_mean * pico_to_milli * neutrons_per_second) / volume_normalization
+    
     plt.imshow(
-        corrected_tally_mean.T,
+        X=scaled_corrected_tally_mean.T,
         origin="lower",
         extent=mesh.bounding_box.extent['xy'],
-        norm=LogNorm(),
+        norm=LogNorm(vmin=10e5, vmax=scaled_max_tally_value)
     )
-    print(corrected_tally_mean)
-    plt.colorbar(label="Flux [pSv-cm3/source photon]")
-    plt.title("Flux Mean")
-
-    plt.savefig(f'shut_down_dose_map_timestep_{i_cool}')
+    # print(corrected_tally_mean)
+    plt.xlabel("x [cm]")
+    plt.ylabel("y [cm]")
+    plt.colorbar(label="Dose [milli Sv per second]")
+    plt.title(f"Dose Rate at time {round(sum(timesteps[1:i_cool+1])/(60*60),2)} hours after irradiation")
+    plt.savefig(f'shut_down_dose_map_timestep_{i_cool}.png')
     plt.close()
 
     # normalising this tally is a little different to other examples as the source strength has been using units of photons per second.
@@ -163,25 +188,3 @@ for i_cool in range(len(timesteps)):
     pico_to_micro = 1e-6
     seconds_to_hours = 60*60
     scaling_factor = (seconds_to_hours * pico_to_micro) / mesh.volumes[0][0][0]
-
-
-
-
-
-
-
-    # # You may wish to plot the dose tally on a mesh, this package makes it easy to include the geometry with the mesh tally
-    # from openmc_regular_mesh_plotter import plot_mesh_tally
-    # plot = plot_mesh_tally(
-    #         tally=corrected_tally,
-    #         basis="xz",
-    #         # score='flux', # only one tally so can make use of default here
-    #         value="mean",
-    #         colorbar_kwargs={
-    #             'label': "Decay photon dose [µSv/h]",
-    #         },
-    #         # norm=LogNorm(),
-    #         volume_normalization=False,  # this is done in the scaling_factor
-    #         scaling_factor=scaling_factor,
-    #     )
-    # plot.figure.savefig(f'shut_down_dose_map_timestep_{i_cool}')

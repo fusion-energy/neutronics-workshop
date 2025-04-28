@@ -11,8 +11,6 @@ nbconvert
 ipykernel
 jupyter-book
 openmc_source_plotter
-openmc_regular_mesh_plotter
-openmc_cylindrical_mesh_plotter
 openmc_depletion_plotter
 openmc_data_downloader
 openmc_data
