@@ -83,10 +83,10 @@ parts:
     - file: tasks/task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up
     - file: tasks/task_10_activation_transmutation_depletion/2_example_tally_change_with_burnup
     - file: tasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule
-  - caption: CSG shut down dose tallies
+  - caption: CSG shutdown dose tallies
     chapters:
     - file: tasks/task_11_CSG_shut_down_dose_tallies/README
-    - file: task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate
+    - file: tasks/task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate
       # TODO convert to notebooks
       # task_11_CSG_shut_down_dose_tallies/1_cell_based_shut_down_dose_rate_example.py
       # task_11_CSG_shut_down_dose_tallies/2_faster_mulitiple_puse_shut_down_dose_rate_example.py
@@ -130,7 +130,7 @@ parts:
     chapters:
     - file: tasks/task_18_CAD_mesh_fast_flux/README
     - file: tasks/task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad
-  - caption: CAD mesh fast flux simulation
+  - caption: CAD shutdown dose tallies
     chapters:
     - file: tasks/task_20_CAD_shut_down_dose_rate/README
   # - caption: CAD mesh fast flux simulation
