@@ -1,11 +1,12 @@
-# This script simulates R2S method of shut down dose rate
-# on a simple sphere model.
+# This script simulates D1S method of shut down dose rate
+# on a simple model with and one aluminum sphere and one iron sphere.
 
 import openmc
 from openmc.deplete import d1s
 from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
+import math
 
 import openmc
 from pathlib import Path
@@ -21,25 +22,30 @@ openmc.config['chain_file'] = Path.home() / 'nuclear_data' / 'chain-endf-b8.0.xm
 mat_iron = openmc.Material()
 mat_iron.add_element("Fe", 1.0)
 mat_iron.set_density("g/cm3", 8.0)
-mat_iron.volume = 500
+mat_iron.volume = 2* (4/3) * math.pi**3
 
 # We make a Al material which should produce a few different activation products
 mat_aluminum = openmc.Material()
 mat_aluminum.add_element("Al", 1.0)
 mat_aluminum.set_density("g/cm3", 2.7)
-mat_aluminum.volume = 500
+mat_aluminum.volume = 3* (4/3) * math.pi**3
 
 # First we make a simple geometry with three cells, (two with material)
-sphere_surf_1 = openmc.Sphere(r=20, boundary_type="vacuum")
-sphere_surf_2 = openmc.Sphere(r=1, y0=10)
-sphere_surf_3 = openmc.Sphere(r=5, z0=10)
-
-sphere_region_1 = -sphere_surf_1 & +sphere_surf_2 & +sphere_surf_3  # void space
-sphere_region_2 = -sphere_surf_2
-sphere_region_3 = -sphere_surf_3
-
+sphere_surf_1 = openmc.Sphere(r=2, y0=10, x0=-10)
+sphere_region_1 = -sphere_surf_1
 sphere_cell_1 = openmc.Cell(region=sphere_region_1, fill=mat_iron)
+
+sphere_surf_2 = openmc.Sphere(r=3, y0=-10, x0=10)
+sphere_region_2 = -sphere_surf_2
 sphere_cell_2 = openmc.Cell(region=sphere_region_2, fill=mat_aluminum)
+
+xplane_surf_1 = openmc.XPlane(x0=-20, boundary_type='vacuum')
+xplane_surf_2 = openmc.XPlane(x0=20, boundary_type='vacuum')
+yplane_surf_1 = openmc.YPlane(y0=-20, boundary_type='vacuum')
+yplane_surf_2 = openmc.YPlane(y0=20, boundary_type='vacuum')
+zplane_surf_1 = openmc.ZPlane(z0=-20, boundary_type='vacuum')
+zplane_surf_2 = openmc.ZPlane(z0=20, boundary_type='vacuum')
+sphere_region_3 = +xplane_surf_1 & -xplane_surf_2 & +yplane_surf_1 & -yplane_surf_2  & +zplane_surf_1 & -zplane_surf_2 & +sphere_surf_1 & +sphere_surf_2  # void space
 sphere_cell_3 = openmc.Cell(region=sphere_region_3)
 
 
@@ -47,17 +53,17 @@ my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, sphere_cell_3])
 
 my_materials = openmc.Materials([mat_iron, mat_aluminum])
 
-# 14MeV neutron source that activates material
+# 14MeV neutron source that activates material, located in the center of the geometry
 my_source = openmc.IndependentSource()
 my_source.space = openmc.stats.Point((0, 0, 0))
 my_source.angle = openmc.stats.Isotropic()
 my_source.energy = openmc.stats.Discrete([14.06e6], [1])
 my_source.particle = "neutron"
 
-# settings for the neutron simulation(s)
+# settings for the neutron simulation with decay photons
 settings = openmc.Settings()
 settings.run_mode = "fixed source"
-settings.particles = 10000
+settings.particles = 1000000
 settings.batches = 10
 settings.source = my_source
 settings.photon_transport = True
@@ -66,10 +72,11 @@ settings.photon_transport = True
 settings.use_decay_photons = True
 
 
-# creates a regular mesh that surrounds the geometry
+# creates a regular mesh that surrounds the geometry for the tally
 mesh = openmc.RegularMesh().from_domain(
     my_geometry,
-    dimension=[10, 10, 1],  # 10 voxels in each axis direction (x, y, z)
+    dimension=[100, 100, 1],
+    # 100 voxels in x and y axis directions and 1 voxel in z as we want a xy plot
 )
 
 # adding a dose tally on a regular mesh
@@ -95,9 +102,7 @@ output_path = model.run()
 
 # This section defines the neutron pulse schedule.
 # Warning, be sure to add sufficient timesteps and run the neutron simulation with enough 
-# batches/particles as the solver can produce unstable results otherwise. I typically plot
-# activity of gamma sources as a function of step to see if they decay according to the
-# half lives of the main unstable nuclides, this helps me check the solution is stable.
+# batches/particles as the solver can produce unstable results otherwise.
 timesteps_and_source_rates = [
     (1, 1e18),  # 1 second
     (60*60, 0),  # 1 hour
@@ -170,21 +175,10 @@ for i_cool in range(1, len(timesteps)):  # missing the first timestep as it is t
         extent=mesh.bounding_box.extent['xy'],
         norm=LogNorm(vmin=10e5, vmax=scaled_max_tally_value)
     )
-    # print(corrected_tally_mean)
+
     plt.xlabel("x [cm]")
     plt.ylabel("y [cm]")
     plt.colorbar(label="Dose [milli Sv per second]")
     plt.title(f"Dose Rate at time {round(sum(timesteps[1:i_cool+1])/(60*60),2)} hours after irradiation")
     plt.savefig(f'shut_down_dose_map_timestep_{i_cool}.png')
     plt.close()
-
-    # normalising this tally is a little different to other examples as the source strength has been using units of photons per second.
-    # tally.mean is in units of pSv-cm3/source photon.
-    # as source strength is in photons_per_second this changes units to pSv-/second
-
-    # multiplication by pico_to_micro converts from (pico) pSv/s to (micro) uSv/s
-    # dividing by mesh voxel volume cancles out the cm3 units
-    # could do the mesh volume scaling on the plot and vtk functions but doing it here instead
-    pico_to_micro = 1e-6
-    seconds_to_hours = 60*60
-    scaling_factor = (seconds_to_hours * pico_to_micro) / mesh.volumes[0][0][0]

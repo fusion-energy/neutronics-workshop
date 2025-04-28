@@ -43,3 +43,6 @@ __pycache__/
 
 # virtual environment
 .neutronicsworkshop
+
+# plot files
+*.pkl
