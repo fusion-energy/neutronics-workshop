@@ -75,6 +75,7 @@ RUN pip install --upgrade pip
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
+                coolprop \
                 stl_to_h5m \
                 remove_dagmc_tags \
                 openmc-tally-unit-converter \
@@ -87,7 +88,7 @@ RUN pip install neutronics_material_maker[density] \
                 "openmc_data>=0.2.10" \
                 openmc_plot \
                 dagmc_geometry_slice_plotter \
-                "cad_to_dagmc>=0.8.2" \
+                "cad_to_dagmc>=0.9.0" \
                 "openmc-plasma-source>=0.3.1" \
                 paramak --no-deps \
                 mpmath \
@@ -102,7 +103,7 @@ RUN pip install neutronics_material_maker[density] \
                 lxml[html_clean]
 
 
-RUN pip install git+https://github.com/shimwell/pydagmc@packaging-update
+RUN pip install git+https://github.com/svalinn/pydagmc
 
 # Python libraries used in the workshop
 RUN pip install plotly \
@@ -127,8 +128,6 @@ RUN pip install git+https://github.com/CadQuery/cadquery.git@7cade87e68f2755fe7a
 
 
 RUN pip install pyvista panel trame-vtk trame ipywidgets itkwidgets
-
-
 
 
 ENV DISPLAY=:99
@@ -157,16 +156,19 @@ WORKDIR ${HOME}/tasks
 
 RUN echo ${HOME}
 
-# Path.home is ${HOME}
-RUN mkdir -p ${HOME}/nuclear_data
+RUN mkdir -p ~/nuclear_data
 
-# Installs ENDF with TENDL where ENDF cross sections are not available.
-# Performed after openmc install as openmc is needed to write the cross_Sections.xml file
-RUN openmc_data_downloader -d ${HOME}/nuclear_data -l ENDFB-8.0-NNDC TENDL-2019 -p neutron photon -e all -i H3 --no-overwrite
-# other options for downloading cross section data
-# RUN openmc_data_downloader -d ${HOME}/nuclear_data -l ENDFB-8.0-NNDC -p neutron -e Fe Li -i H3 --no-overwrite
-# RUN download_endf -d ${HOME}/nuclear_data -r b8.0
-RUN download_endf_chain -d ${HOME}/nuclear_data -r b8.0
+# Download and extract ENDF/b 8.0 chain file
+RUN download_endf_chain -r b8.0 -d ~/nuclear_data -f chain-endf-b8.0.xml
+
+# Download and extract ENDF/b 8.0 cross section files
+RUN wget -q -O - https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz | tar -C ~/nuclear_data -xJ
+RUN mv ~/nuclear_data/endfb-viii.0-hdf5/* ~/nuclear_data
+
+# Download and extract WMP Library
+RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz -O ~/nuclear_data/WMP_Library_v1.1.tar.gz
+RUN tar -xzf ~/nuclear_data/WMP_Library_v1.1.tar.gz -C ~/nuclear_data
+
 
 # install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
