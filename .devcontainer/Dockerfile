@@ -117,17 +117,13 @@ RUN pip install plotly \
                 jupyter-cadquery
 
 # temporary wheels for moab hosted on github repo https://github.com/shimwell/wheels
-RUN pip install https://github.com/shimwell/wheels/raw/refs/heads/main/moab/moab-wheels-ubuntu-latest/moab-5.5.1-cp311-cp311-manylinux_2_28_x86_64.whl
-
-# temporary wheels for openmc hosted on github repo https://github.com/shimwell/wheels
-RUN pip install https://github.com/shimwell/wheels/raw/refs/heads/main/openmc/openmc-0.15.1.dev0-cp311-cp311-manylinux_2_28_x86_64.whl
-
-# the order of these install appears to matter when it comes to jupyter vtk rendering
-RUN pip install cadquery-vtk
-RUN pip install git+https://github.com/CadQuery/cadquery.git@7cade87e68f2755fe7a121d797428c7b3d41b1be
-
-
-RUN pip install pyvista panel trame-vtk trame ipywidgets itkwidgets
+RUN pip install https://github.com/shimwell/wheels/raw/refs/heads/main/moab/moab-wheels-ubuntu-latest/moab-5.5.1-cp311-cp311-manylinux_2_28_x86_64.whl  && \
+    # temporary wheels for openmc hosted on github repo https://github.com/shimwell/wheels
+    pip install https://github.com/shimwell/wheels/raw/refs/heads/main/openmc/openmc-0.15.3-cp311-cp311-manylinux_2_28_x86_64.whl && \
+    # the order of these install appears to matter when it comes to jupyter vtk rendering
+    pip install cadquery-vtk && \
+    pip install git+https://github.com/CadQuery/cadquery.git@7cade87e68f2755fe7a121d797428c7b3d41b1be && \
+    pip install pyvista panel trame-vtk trame ipywidgets itkwidgets
 
 
 ENV DISPLAY=:99
@@ -162,17 +158,20 @@ RUN mkdir -p ~/nuclear_data
 RUN download_endf_chain -r b8.0 -d ~/nuclear_data -f chain-endf-b8.0.xml
 
 # Download and extract ENDF/b 8.0 cross section files
-RUN wget -q -O - https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz | tar -C ~/nuclear_data -xJ
-RUN mv ~/nuclear_data/endfb-viii.0-hdf5/* ~/nuclear_data
+RUN wget -q -O - https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz | tar -C ~/nuclear_data -xJ  && \
+    mv ~/nuclear_data/endfb-viii.0-hdf5/* ~/nuclear_data && \
+    rm -rf ~/nuclear_data/endfb-viii.0-hdf5
+
 
 # Download and extract WMP Library
-RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz -O ~/nuclear_data/WMP_Library_v1.1.tar.gz
-RUN tar -xzf ~/nuclear_data/WMP_Library_v1.1.tar.gz -C ~/nuclear_data
+RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz -O ~/nuclear_data/WMP_Library_v1.1.tar.gz  && \
+    tar -xzf ~/nuclear_data/WMP_Library_v1.1.tar.gz -C ~/nuclear_data && \
+    rm ~/nuclear_data/WMP_Library_v1.1.tar.gz
 
 
 # install WMP nuclear data
 RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
-    tar -xf WMP_Library_v1.1.tar.gz -C ${HOME}/nuclear_data  && \
+    tar -xf WMP_Library_v1.1.tar.gz -C ${HOME}/nuclear_data && \
     rm WMP_Library_v1.1.tar.gz
 
 # Copy over the local repository files
@@ -180,25 +179,25 @@ COPY tasks ${HOME}/tasks/
 
 RUN mkdir -p ${HOME}/tasks/half-day-workshop
 
-RUN cp ${HOME}/tasks/task_01_cross_sections/1_isotope_xs_plot.ipynb ${HOME}/tasks/half-day-workshop/task_01_isotope_xs_plot.ipynb
-RUN cp ${HOME}/tasks/task_01_cross_sections/2_element_xs_plot.ipynb ${HOME}/tasks/half-day-workshop/task_02_element_xs_plot.ipynb
-RUN cp ${HOME}/tasks/task_01_cross_sections/3_material_xs_plot.ipynb ${HOME}/tasks/half-day-workshop/task_03_material_xs_plot.ipynb
-RUN cp ${HOME}/tasks/task_02_making_materials/1_example_materials_from_isotopes.ipynb ${HOME}/tasks/half-day-workshop/task_04_example_materials_from_isotopes.ipynb
-RUN cp ${HOME}/tasks/task_02_making_materials/2_example_materials_from_elements.ipynb ${HOME}/tasks/half-day-workshop/task_05_example_materials_from_elements.ipynb
-RUN cp ${HOME}/tasks/task_03_making_CSG_geometry/1_simple_csg_geometry.ipynb ${HOME}/tasks/half-day-workshop/task_06_simple_csg_geometry.ipynb
-RUN cp ${HOME}/tasks/task_04_make_sources/1_point_source_plots.ipynb ${HOME}/tasks/half-day-workshop/task_07_point_source_plots.ipynb
-RUN cp ${HOME}/tasks/task_04_make_sources/2_ring_source.ipynb ${HOME}/tasks/half-day-workshop/task_08_ring_source.ipynb
-RUN cp ${HOME}/tasks/task_04_make_sources/3_plasma_source_plots.ipynb ${HOME}/tasks/half-day-workshop/task_09_plasma_source_plots.ipynb
-RUN cp ${HOME}/tasks/task_05_CSG_cell_tally_TBR/1_example_tritium_production.ipynb ${HOME}/tasks/half-day-workshop/task_10_example_tritium_production.ipynb
-RUN cp ${HOME}/tasks/task_06_CSG_cell_tally_DPA/1_find_dpa.ipynb ${HOME}/tasks/half-day-workshop/task_11_find_dpa.ipynb
-RUN cp ${HOME}/tasks/task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.ipynb ${HOME}/tasks/half-day-workshop/task_12_example_neutron_spectra_on_cell.ipynb
-RUN cp ${HOME}/tasks/task_07_CSG_cell_tally_spectra/4_example_photon_spectra.ipynb ${HOME}/tasks/half-day-workshop/task_13_example_photon_spectra.ipynb
-RUN cp ${HOME}/tasks/task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.ipynb ${HOME}/tasks/half-day-workshop/task_14_example_2d_regular_mesh_tallies.ipynb
-RUN cp ${HOME}/tasks/task_14_variance_reduction/2_shielded_room_single_ww.ipynb ${HOME}/tasks/half-day-workshop/task_15_example_variane_shielded_room_ww_single_iteration.ipynb
-RUN cp ${HOME}/tasks/task_14_variance_reduction/3_sphere_iterative_per_run_ww.ipynb ${HOME}/tasks/half-day-workshop/task_16_example_variance_reduction_sphere_ww_multiple_iterations.ipynb
-RUN cp ${HOME}/tasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule.ipynb ${HOME}/tasks/half-day-workshop/task_17_full_pulse_schedule.ipynb
-RUN cp ${HOME}/tasks/task_21_design_task/1_optimal_design.ipynb ${HOME}/tasks/half-day-workshop/task_18_optimal_design.ipynb 
-RUN cp ${HOME}/tasks/task_21_design_task/1_optimal_design_with_hints.ipynb ${HOME}/tasks/half-day-workshop/task_18_optimal_designs_with_hints.ipynb 
+RUN cp ${HOME}/tasks/task_01_cross_sections/1_isotope_xs_plot.ipynb ${HOME}/tasks/half-day-workshop/task_01_isotope_xs_plot.ipynb  && \
+    cp ${HOME}/tasks/task_01_cross_sections/2_element_xs_plot.ipynb ${HOME}/tasks/half-day-workshop/task_02_element_xs_plot.ipynb  && \
+    cp ${HOME}/tasks/task_01_cross_sections/3_material_xs_plot.ipynb ${HOME}/tasks/half-day-workshop/task_03_material_xs_plot.ipynb  && \
+    cp ${HOME}/tasks/task_02_making_materials/1_example_materials_from_isotopes.ipynb ${HOME}/tasks/half-day-workshop/task_04_example_materials_from_isotopes.ipynb && \
+    cp ${HOME}/tasks/task_02_making_materials/2_example_materials_from_elements.ipynb ${HOME}/tasks/half-day-workshop/task_05_example_materials_from_elements.ipynb && \
+    cp ${HOME}/tasks/task_03_making_CSG_geometry/1_simple_csg_geometry.ipynb ${HOME}/tasks/half-day-workshop/task_06_simple_csg_geometry.ipynb && \
+    cp ${HOME}/tasks/task_04_make_sources/1_point_source_plots.ipynb ${HOME}/tasks/half-day-workshop/task_07_point_source_plots.ipynb && \
+    cp ${HOME}/tasks/task_04_make_sources/2_ring_source.ipynb ${HOME}/tasks/half-day-workshop/task_08_ring_source.ipynb && \
+    cp ${HOME}/tasks/task_04_make_sources/3_plasma_source_plots.ipynb ${HOME}/tasks/half-day-workshop/task_09_plasma_source_plots.ipynb && \
+    cp ${HOME}/tasks/task_05_CSG_cell_tally_TBR/1_example_tritium_production.ipynb ${HOME}/tasks/half-day-workshop/task_10_example_tritium_production.ipynb && \
+    cp ${HOME}/tasks/task_06_CSG_cell_tally_DPA/1_find_dpa.ipynb ${HOME}/tasks/half-day-workshop/task_11_find_dpa.ipynb && \
+    cp ${HOME}/tasks/task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.ipynb ${HOME}/tasks/half-day-workshop/task_12_example_neutron_spectra_on_cell.ipynb && \
+    cp ${HOME}/tasks/task_07_CSG_cell_tally_spectra/4_example_photon_spectra.ipynb ${HOME}/tasks/half-day-workshop/task_13_example_photon_spectra.ipynb && \
+    cp ${HOME}/tasks/task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.ipynb ${HOME}/tasks/half-day-workshop/task_14_example_2d_regular_mesh_tallies.ipynb && \
+    cp ${HOME}/tasks/task_14_variance_reduction/2_shielded_room_single_ww.ipynb ${HOME}/tasks/half-day-workshop/task_15_example_variane_shielded_room_ww_single_iteration.ipynb && \
+    cp ${HOME}/tasks/task_14_variance_reduction/3_sphere_iterative_per_run_ww.ipynb ${HOME}/tasks/half-day-workshop/task_16_example_variance_reduction_sphere_ww_multiple_iterations.ipynb && \
+    cp ${HOME}/tasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule.ipynb ${HOME}/tasks/half-day-workshop/task_17_full_pulse_schedule.ipynb && \
+    cp ${HOME}/tasks/task_21_design_task/1_optimal_design.ipynb ${HOME}/tasks/half-day-workshop/task_18_optimal_design.ipynb  && \
+    cp ${HOME}/tasks/task_21_design_task/1_optimal_design_with_hints.ipynb ${HOME}/tasks/half-day-workshop/task_18_optimal_designs_with_hints.ipynb 
 
 RUN chown -R ${NB_UID}:${NB_UID} /root
 RUN chown -R ${NB_UID}:${NB_UID} ${HOME}/tasks
