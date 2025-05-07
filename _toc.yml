@@ -67,13 +67,13 @@ parts:
     - file: tasks/task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies
   - caption: CSG cell instantaneous dose tally
     chapters:
-    - file: tasks/task_09_CSG_instantaneous_dose_talliestask_09_CSG_instantaneous_dose_tallies/README
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/README
     - file: tasks/task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source
     - file: tasks/task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons
     # TODO need converting to notebooks
     # - file: tasks/task_09_CSG_instantaneous_dose_tallies/3_cell_dose_from_neutron
     # - file: tasks/task_09_CSG_instantaneous_dose_tallies/4_cell_dose_from_photon
-    # - file: tasks/task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons
     # - file: tasks/task_09_CSG_instantaneous_dose_tallies/compare_dose_simulation_with_back_of_envelope
   - caption: Activation Transmutation Depletion
     chapters:
