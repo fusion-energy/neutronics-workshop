@@ -11,7 +11,7 @@ on:
 
 jobs:
   build_and_push_dependencies:
-    runs-on: self-hosted
+    runs-on: neutron1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
