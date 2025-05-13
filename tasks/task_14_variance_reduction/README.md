@@ -1,7 +1,11 @@
-# Variance Reduction Examples
+# Task Introduction
 
-Currently OpenMC supports two types of variance reduction.
+Currently OpenMC supports two types of variance reduction (survival biasing and weight windows).
 A detailed description of each method can be found in the [documentation](https://docs.openmc.org/en/stable/methods/neutron_physics.html?highlight=survival#variance-reduction-techniques).
+
+OpenMC also supports methods of generating weight windows including the [Magic Method and FW-CADIS](https://docs.openmc.org/en/stable/methods/variance_reduction.html?highlight=magic)
+
+The notebooks contain all the methods for completeness, however ff you just have time to learn one method then I would recommend the FW-CADIS approach.
 
 The workshop contains the following variance reduction examples:
 

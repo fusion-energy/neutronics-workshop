@@ -1,11 +1,10 @@
-
-# Activation and Transmutation
+# Task Introduction
 
 Please allow 20 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/15).
 
-In this task you will be using OpenMC to simulate transmutations within a material under neutron irradiation.
+In this task you will be using OpenMC to simulate transmutations / activation / depletion within a material under neutron irradiation.
 
 
 **Learning Outcomes**

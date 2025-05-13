@@ -1,11 +1,10 @@
-
-# CSG Instantaneous Dose
+# Task Introduction
 
 Please allow 20 minutes for this task.
 
 Expected outputs from this task are also in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/10).
 
-In this task you will use OpenMC to calculate the dose administered to cells and materials in a geometry.
+In this task you will use OpenMC to calculate the instantaneous dose administered to cells, materials and meshes in a geometry.
 
 **Learning Outcomes**
 

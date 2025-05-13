@@ -1,11 +1,8 @@
-
-# CSG Mesh tallies
+# Task Introduction
 
 Please allow 15 minutes for this task.
 
-Expected outputs from this task are also in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/9)
-
-In this task you will use OpenMC to tally interactions in a geometry using 2D and 3D mesh tallies.
+In this task you will use OpenMC to tally interactions in a geometry using 2D and 3D mesh tallies. Note that unstructured mesh simulations can be found in the CAD part of the workshop.
 
 **Learning Outcomes**
 
