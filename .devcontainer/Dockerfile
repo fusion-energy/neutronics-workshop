@@ -168,12 +168,6 @@ RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Libr
     tar -xzf ~/nuclear_data/WMP_Library_v1.1.tar.gz -C ~/nuclear_data && \
     rm ~/nuclear_data/WMP_Library_v1.1.tar.gz
 
-
-# install WMP nuclear data
-RUN wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz && \
-    tar -xf WMP_Library_v1.1.tar.gz -C ${HOME}/nuclear_data && \
-    rm WMP_Library_v1.1.tar.gz
-
 # Copy over the local repository files
 COPY tasks ${HOME}/tasks/
 
