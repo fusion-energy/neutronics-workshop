@@ -4,7 +4,6 @@ import openmc
 from matplotlib.colors import LogNorm
 import openmc.deplete
 from pathlib import Path
-import pydagmc
 import numpy as np
 
 openmc.config['chain_file'] = Path.home() / 'nuclear_data' / 'chain-endf-b8.0.xml'
@@ -58,7 +57,9 @@ my_materials = openmc.Materials([my_material])
 universe = openmc.DAGMCUniverse("dagmc.h5m").bounded_universe()
 my_geometry = openmc.Geometry(universe)
 
+# Get the bounding box of the geometry  
 box = my_geometry.bounding_box
+# Get the center of the bounding box
 box.center
 
 my_settings = openmc.Settings()
