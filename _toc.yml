@@ -133,10 +133,7 @@ parts:
   - caption: CAD shutdown dose tallies
     chapters:
     - file: tasks/task_20_CAD_shut_down_dose_rate/README
-  # - caption: CAD mesh fast flux simulation
-  #   chapters:
-  #   - file: tasks/task_20_CAD_shut_down_dose_rate/1_unstrucutred_mesh_R2S_shut_down_dose_rate_concise
-  #   1_unstrucutred_mesh_R2S_shut_down_dose_rate.py
+    - file: tasks/1_unstructured_mesh_R2S_shutdown_dose_rate
   - caption: Design study
     chapters:
     - file: tasks/task_21_design_task/README
