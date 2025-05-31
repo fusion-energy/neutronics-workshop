@@ -9,7 +9,7 @@ logo: docs/logo.png
 # See https://jupyterbook.org/content/execute.html
 execute:
   execute_notebooks: auto
-  timeout: 300
+  timeout: 1000
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -27,6 +27,7 @@ repository:
   branch: main  # Which branch of the repository should be used when creating links (optional)
 
 launch_buttons:
+  notebook_interface: "jupyterlab"
   binderhub_url: https://mybinder.org  # The URL for your BinderHub (e.g., https://mybinder.org)
 
 # Add GitHub buttons to your book

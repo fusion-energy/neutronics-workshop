@@ -1,9 +1,6 @@
-
-# Neutron and photon spectra
+# Task Introduction
 
 Please allow 15 minutes for this task.
-
-Expected outputs from this task are also in the [presentation](https://slides.com/neutronics_workshop/neutronics_workshop#/8).
 
 In this task you will use OpenMC to tally neutron and photon spectra on different surfaces and cells in a geometry.
 
