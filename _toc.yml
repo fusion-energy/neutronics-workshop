@@ -16,6 +16,7 @@ parts:
     - file: tasks/task_01_cross_sections/1_isotope_xs_plot
     - file: tasks/task_01_cross_sections/2_element_xs_plot
     - file: tasks/task_01_cross_sections/3_material_xs_plot
+    - file: tasks/task_01_cross_sections/4_Doppler_broadening
   - caption: Materials
     chapters:
     - file: tasks/task_02_making_materials/README
@@ -133,7 +134,7 @@ parts:
   - caption: CAD shutdown dose tallies
     chapters:
     - file: tasks/task_20_CAD_shut_down_dose_rate/README
-    - file: tasks/1_unstructured_mesh_R2S_shutdown_dose_rate
+    - file: tasks/task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate
   - caption: Design study
     chapters:
     - file: tasks/task_21_design_task/README
