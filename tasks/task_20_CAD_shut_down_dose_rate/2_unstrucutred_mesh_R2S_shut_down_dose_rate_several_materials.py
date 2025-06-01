@@ -120,7 +120,7 @@ centroids = umesh_from_sp.centroids
 mesh_vols = umesh_from_sp.volumes
 
 # get material volumes for each mesh element from the unstructured mesh
-mat_vol = umesh_from_sp.material_volumes(model,1_000_000)
+mat_vol = umesh_from_sp.material_volumes(model=model,n_samples=1_000_000)
 
 # Get all volumes for material ID 10
 # Get material IDs from my_materials object
