@@ -133,8 +133,8 @@ total_volumes = {mid: np.sum(nvol) for mid, nvol in nonzero_volumes.items()}
 for mat, mat_id in zip(my_materials, material_ids):
     mat.volume = total_volumes[mat_id]
 
-#flux in each group for each voxel return a array that is energy_groups x mesh_elements x 1 x 1
-#reshape to energy_groups x mesh_elements
+# flux in each group for each voxel return a array that is energy_groups x mesh_elements x 1 x 1
+# reshape to energy_groups x mesh_elements
 flux_in_each_group_for_each_voxel = tally_result.get_values(scores=["flux"], value="mean")
 flux_in_each_group_for_each_voxel = flux_in_each_group_for_each_voxel.reshape(mesh_vols.size, energy_filter.num_bins)
 
