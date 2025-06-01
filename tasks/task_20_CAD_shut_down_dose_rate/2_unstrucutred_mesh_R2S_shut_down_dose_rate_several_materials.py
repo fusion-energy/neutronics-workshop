@@ -224,7 +224,7 @@ for i_cool in range(1, len(timesteps)):
             all_sources.append(my_source)
     #%%
     photon_folder = Path('photons')
-    # photon_folder.mkdir(exist_ok=True)
+    photon_folder.mkdir(exist_ok=True)
 
     mesh_source = openmc.MeshSource(
         mesh=umesh_from_sp,
