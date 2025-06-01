@@ -260,7 +260,6 @@ for i_cool in range(1, len(timesteps)):
     model_gamma = openmc.Model(my_geometry, my_gamma_materials, my_gamma_settings, tallies)
     model_gamma.export_to_xml(photon_folder / f"photon_at_time_{i_cool}")
     model_gamma.run(cwd=photon_folder / f"photon_at_time_{i_cool}")
-#%%
 for i_cool in range(1, len(timesteps)):
     from openmc_regular_mesh_plotter import plot_mesh_tally
     with openmc.StatePoint(photon_folder / f"photon_at_time_{i_cool}" / 'statepoint.100.h5') as statepoint:
