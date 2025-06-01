@@ -174,7 +174,6 @@ for i_cool in range(1, len(timesteps)):
                 materials=[current_material],  # Only use the material present in this element
                 fluxes=[sum(flux_in_each_group)*mesh_vol],
                 micros=[micro_xs],
-                reduce_chain=True,
                 reduce_chain_level=5,
                 normalization_mode="source-rate"
             )
