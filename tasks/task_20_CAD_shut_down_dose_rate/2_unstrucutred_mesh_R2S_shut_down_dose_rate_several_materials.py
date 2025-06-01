@@ -108,7 +108,6 @@ sp_filename = model.run()
 sp = openmc.StatePoint(sp_filename)
 
 tally_result = sp.get_tally(name="unstructured_mesh_neutron_spectra_tally")
-#%%
 # normally with regular meshes I would get the mesh from the tally
 # but with unstrucutred meshes the tally does not contain the mesh
 # however we can get it from the statepoint file
