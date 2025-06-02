@@ -24,15 +24,15 @@ my_model.add_cadquery_object(
     ],  # 3 volumes one for each letter
 )
 
-my_model.export_dagmc_h5m_file(
+# this makes the tet mesh used for the unstructured mesh tally which is overlaid on the geometry
+# this also makes the surface mesh used for the material volume
+# the outer surface for both mesh have the same mesh nodes, they are conformal
+dagmc_filename, umesh_filename = my_model.export_dagmc_h5m_file(
     filename="dagmc.h5m",
     max_mesh_size=10,
     min_mesh_size=2,
-)
-my_model.export_unstructured_mesh_file(
-    filename="umesh.vtk",
-    max_mesh_size=10,
-    min_mesh_size=2,
+    unstructured_volumes=[3],
+    umesh_filename="umesh.vtk",
 )
 
 # the unstructured mesh to overlay on the DAGMC geometry
