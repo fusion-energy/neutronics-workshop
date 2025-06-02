@@ -138,91 +138,90 @@ for mat, mat_id in zip(my_materials, material_ids):
 flux_in_each_group_for_each_voxel = tally_result.get_values(scores=["flux"], value="mean")
 flux_in_each_group_for_each_voxel = flux_in_each_group_for_each_voxel.reshape(mesh_vols.size, energy_filter.num_bins)
 
+# Pre-compute material groups and their fluxes once
+material_groups = {}
+for i, (flux_in_each_group, mesh_vol) in enumerate(zip(flux_in_each_group_for_each_voxel, mesh_vols)):
+    element_volumes = mat_vol.by_element(i)
+    for mat_id, vol in element_volumes:
+        if vol > 0:
+            if mat_id not in material_groups:
+                material_groups[mat_id] = []
+            material_groups[mat_id].append((i, flux_in_each_group, mesh_vol))
+            break
+
+# Pre-compute MicroXS for each material type
+material_micro_xs = {}
+for mat_id, elements in material_groups.items():
+    current_material = next(mat for mat in my_materials if mat.id == mat_id)
+    material_micro_xs[mat_id] = openmc.deplete.MicroXS.from_multigroup_flux(
+        energies='CCFE-709',
+        multigroup_flux=elements[0][1],  # Use first element's flux
+        temperature=294,
+        chain_file=openmc.config['chain_file'],
+        nuclides=current_material.get_nuclides()
+    )
+
+# Process each timestep
 for i_cool in range(1, len(timesteps)):
     print(f"Depleting to time {i_cool}")
     all_sources = []
 
-    # First, create a dictionary to group mesh elements by material
-    material_groups = {}
-    for i, (flux_in_each_group, mesh_vol) in enumerate(zip(flux_in_each_group_for_each_voxel, mesh_vols)):
-        element_volumes = mat_vol.by_element(i)
-        for mat_id, vol in element_volumes:
-            if vol > 0:
-                if mat_id not in material_groups:
-                    material_groups[mat_id] = []
-                material_groups[mat_id].append((i, flux_in_each_group, mesh_vol))
-                break
-
-    # Then process each material group
+    # Process each material group
     for mat_id, elements in material_groups.items():
         current_material = next(mat for mat in my_materials if mat.id == mat_id)
+        micro_xs = material_micro_xs[mat_id]
         
-        # Create MicroXS once per material
-        micro_xs = openmc.deplete.MicroXS.from_multigroup_flux(
-            energies='CCFE-709',
-            multigroup_flux=elements[0][1],  # Use first element's flux
-            temperature=294,
-            chain_file=openmc.config['chain_file'],
-            nuclides=current_material.get_nuclides()
-        )
-        
-        # Process all elements for this material
+        # Process all elements for this material in parallel
         for i, flux_in_each_group, mesh_vol in elements:
-            # Process each element with shared resources
-            # constructing the operator with only the current material
+            # Create operator with current material
             operator = openmc.deplete.IndependentOperator(
-                materials=[current_material],  # Only use the material present in this element
+                materials=[current_material],
                 fluxes=[sum(flux_in_each_group)*mesh_vol],
                 micros=[micro_xs],
+                reduce_chain=True,
                 reduce_chain_level=5,
                 normalization_mode="source-rate"
             )
+            
             integrator = openmc.deplete.PredictorIntegrator(
                 operator=operator,
                 timesteps=timesteps,
-                source_rates=source_rates, # a 5 second pulse of neutrons followed by 120 seconds of decay
+                source_rates=source_rates,
                 timestep_units='s'
             )
 
             integrator.integrate()
             results = openmc.deplete.Results.from_hdf5("depletion_results.h5")
             activated_material = results[i_cool].get_material(str(current_material.id))
-
             activated_material.volume = mesh_vol
 
+            # Get decay photon energy and create source
             energy = activated_material.get_decay_photon_energy(
-                clip_tolerance = 1e-6,  # cuts out a small fraction of the very low energy (and hence negligible dose contribution) photons
-                units = 'Bq',
+                clip_tolerance=1e-6,
+                units='Bq',
             )
-            if energy:
-                strength = energy.integral()
-            # for the strength == None case
-            else:
-                strength = 0
-            # Get the vertices of the tetrahedron from the mesh
+            strength = energy.integral() if energy else 0
+
+            # Get vertices and create source
             vertices = umesh_from_sp.vertices[umesh_from_sp.connectivity[i]]
-            
-            # Calculate bounding box of the tetrahedron
             min_coords = np.min(vertices, axis=0)
             max_coords = np.max(vertices, axis=0)
             
-            # Create a uniform sampling distribution within the bounding box
-            # We'll use rejection sampling to ensure points are within the tetrahedron
             my_source = openmc.IndependentSource(
-                space = openmc.stats.Box(
+                space=openmc.stats.Box(
                     lower_left=min_coords,
                     upper_right=max_coords
                 ),
-                energy = energy,
-                particle = "photon",
-                strength = strength,
+                energy=energy,
+                particle="photon",
+                strength=strength,
                 constraints={
                     'domains': [activated_material],
                     'rejection_strategy': 'resample'
                 }        
             )
             all_sources.append(my_source)
-    #%%
+            
     photon_folder = Path('photons')
     photon_folder.mkdir(exist_ok=True)
 
