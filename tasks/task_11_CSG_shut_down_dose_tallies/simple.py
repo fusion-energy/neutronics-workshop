@@ -95,7 +95,7 @@ flux_in_each_mesh_voxel, all_micro_xs = openmc.deplete.get_microxs_and_flux(
     domains=mmf,
     energies=[0,30e6],
     nuclides=all_nuclides,
-    chain_file=openmc.config['chain_file']
+    chain_file=openmc.config['chain_file'],
 )
 
 # no longer using this function as we can make the homogenized materials from the MeshMaterialFilter.from_volumes
@@ -127,8 +127,8 @@ operator = openmc.deplete.IndependentOperator(
     materials=openmc.Materials(mixed_materials_in_each_mesh_voxel),
     fluxes=[flux[0] for flux in flux_in_each_mesh_voxel],
     micros=all_micro_xs,
-    reduce_chain_level=4,
-    normalization_mode="source-rate"
+    reduce_chain_level=5,
+    normalization_mode="source-rate",
 )
 
 # This section defines the neutron pulse schedule.
@@ -143,16 +143,16 @@ timesteps_and_source_rates = [
     (1, 1e18),  # 1 second of 1e18 neutrons/second
     (2*hour_in_seconds, 0),  # 2 hours after shut down
     (2*hour_in_seconds, 0),  # 4 hours after shut down
-    (2*hour_in_seconds, 0),  # 6 hours after shut down
-    (2*hour_in_seconds, 0),  # 8 hours after shut down
-    (2*hour_in_seconds, 0),  # 10 hours after shut down
-    (2*hour_in_seconds, 0),  # 12 hours after shut down
-    (2*hour_in_seconds, 0),  # 14 hours after shut down
-    (2*hour_in_seconds, 0),  # 16 hours after shut down
-    (2*hour_in_seconds, 0),  # 18 hours after shut down
-    (2*hour_in_seconds, 0),  # 20 hours after shut down
-    (2*hour_in_seconds, 0),  # 22 hours after shut down
-    (2*hour_in_seconds, 0),  # 24 hours after shut down
+#     (2*hour_in_seconds, 0),  # 6 hours after shut down
+#     (2*hour_in_seconds, 0),  # 8 hours after shut down
+#     (2*hour_in_seconds, 0),  # 10 hours after shut down
+#     (2*hour_in_seconds, 0),  # 12 hours after shut down
+#     (2*hour_in_seconds, 0),  # 14 hours after shut down
+#     (2*hour_in_seconds, 0),  # 16 hours after shut down
+#     (2*hour_in_seconds, 0),  # 18 hours after shut down
+#     (2*hour_in_seconds, 0),  # 20 hours after shut down
+#     (2*hour_in_seconds, 0),  # 22 hours after shut down
+#     (2*hour_in_seconds, 0),  # 24 hours after shut down
 ]
 
 timesteps = [item[0] for item in timesteps_and_source_rates]
@@ -162,7 +162,7 @@ integrator = openmc.deplete.PredictorIntegrator(
     operator=operator,
     timesteps=timesteps,
     source_rates=source_rates,
-    timestep_units='s'
+    timestep_units='s',
 )
 
 # this runs the depletion calculations for the timesteps
@@ -201,95 +201,135 @@ cells = model_neutron.geometry.get_all_cells()
 results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_results.h5")
 
 
+blank_source = openmc.IndependentSource()
+blank_source.strength = 0
 
-# # this section makes the photon sources from each active material at each
-# # timestep and runs the photon simulations
-# # range starts at 1 to skip the first step as that is an irradiation step and there is no
-# for i_cool in range(1, len(timesteps)):
-#     # we can loop through the materials in each step
-#     # from the material ID we can get the mesh voxel id
-#     # then we can make a MeshSource
-#     # https://docs.openmc.org/en/develop/pythonapi/generated/openmc.MeshSource.html
-#     # decay gamma source from the stable material at that time
-#     # also there are no decay products in this first timestep for this model
-#     photon_sources_for_timestep = []
-#     strengths_for_timestep = []
-#     print(f"making photon source for timestep {i_cool}")
-#     step = results[i_cool]
-#     # activated_mat_ids = step.volume.keys()
-#     activated_mat_ids = step.index_mat
-#     # print(activated_mat_ids)
-#     cumulative_strength_for_time_step = 0 # in Bq
-#     for activated_mat_id in activated_mat_ids:
-#         # gets the energy and probabilities for the 
-#         activated_mat = step.get_material(activated_mat_id)
-#         energy = activated_mat.get_decay_photon_energy(
-#             clip_tolerance = 1e-6,  # cuts out a small fraction of the very low energy (and hence negligible dose contribution) photons
-#             units = 'Bq',
-#         )
-#         strength = energy.integral()
-#         cumulative_strength_for_time_step = cumulative_strength_for_time_step +strength
-#         if strength > 0.:  
-#             source = openmc.IndependentSource(
-#                 energy=energy,
-#                 particle="photon",
-#                 strength=strength
-#             )
-#         else:
-#             print('source has no gammas')
-#             source = openmc.IndependentSource() # how to make an empty source, source strength is set to 0
+# this section makes the photon sources from each active material at each
+# timestep and runs the photon simulations
+# range starts at 1 to skip the first step as that is an irradiation step and there is no
+for i_cool in range(1, len(timesteps)):
+    # we can loop through the materials in each step
+    # from the material ID we can get the mesh voxel id
+    # then we can make a MeshSource
+    # https://docs.openmc.org/en/develop/pythonapi/generated/openmc.MeshSource.html
+    # decay gamma source from the stable material at that time
+    # also there are no decay products in this first timestep for this model
+    photon_sources_for_timestep = []
+    strengths_for_timestep = []
+    print(f"making photon source for timestep {i_cool}")
+    step = results[i_cool]
+    # activated_mat_ids = step.volume.keys()
+    activated_mat_ids = step.index_mat
+    # print(activated_mat_ids)
+    cumulative_strength_for_time_step = 0 # in Bq
+    for activated_mat_id in activated_mat_ids:
+        # gets the energy and probabilities for the 
+        activated_mat = step.get_material(activated_mat_id)
+        energy = activated_mat.get_decay_photon_energy(
+            clip_tolerance = 1e-6,  # cuts out a small fraction of the very low energy (and hence negligible dose contribution) photons
+            units = 'Bq',
+        )
+        strength = energy.integral()
+        cumulative_strength_for_time_step = cumulative_strength_for_time_step +strength
+        if strength > 0.:  
+            source = openmc.IndependentSource(
+                energy=energy,
+                particle="photon",
+                strength=strength
+            )
 
-#         photon_sources_for_timestep.append(source)
-#         strengths_for_timestep.append(strength)
+            photon_sources_for_timestep.append(source)
+            strengths_for_timestep.append(strength)
+
+    index_to_obj = dict(zip(mesh_indices_with_volumes, photon_sources_for_timestep))
+    photon_sources_for_timestep = [index_to_obj.get(i, blank_source) for i in range(regular_mesh.num_mesh_cells)]
     
-#     mesh_source = openmc.MeshSource(
-#         regular_mesh, photon_sources_for_timestep
-#     )
+    mesh_source = openmc.MeshSource(
+        regular_mesh, photon_sources_for_timestep
+    )
 
     # you have options for the normalization of the source.
     # you could set the mesh_source.strength to the total Bq of all the sources in that time step
-    # mesh_source.strength = cumulative_strength_for_time_step
+    mesh_source.strength = cumulative_strength_for_time_step
     # then use mesh_source.normalize_source_strengths() to update all element source strengths such that they sum to 1.0.
     # or
     # you can leave it so the individual sources have their own strength in Bq
     # perhaps best to experiment here and check the answers, do let me know if you find one option better than the others
 
-    # my_gamma_settings.source = mesh_source
-    # model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, my_gamma_tallies)
+    my_gamma_settings.source = mesh_source
+    model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, my_gamma_tallies)
 
-    # print(f'running gamma transport on stimestep {i_cool}')
-    # model_gamma.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
+    print(f'running gamma transport on stimestep {i_cool}')
+    model_gamma.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
 
-# # this part post processes the results to get a dose map for each time step
-# pico_to_micro = 1e-6
-# seconds_to_hours = 60*60
+# this part post processes the results to get a dose map for each time step
+pico_to_micro = 1e-6
+seconds_to_hours = 60*60
 
-# # You may wish to plot the dose tally on a mesh, this package makes it easy to include the geometry with the mesh tally
-# from openmc_regular_mesh_plotter import plot_mesh_tally
-# for i_cool in range(1, len(timesteps)): # skipping the first depletion step as we just want the part where the machine is off for the shut down dose rate
-#     with openmc.StatePoint(statepoints_folder / "photons" / f"photon_at_time_{i_cool}" / f'statepoint.{my_gamma_settings.batches}.h5') as statepoint:
-#         photon_tally = statepoint.get_tally(name="photon_dose_on_mesh")
-#         # normalizing this tally is a little different to other examples as the source strength has been using units of photons per second.
-#         # tally.mean is in units of pSv-cm3/source photon.
-#         # as source strength is in photons_per_second this changes units to pSv-/second
-#         # multiplication by pico_to_micro converts from (pico) pSv/s to (micro) uSv/s
-#         # dividing by mesh voxel volume is not needed as the volume_normalization in the plotting function does this
-#         scaling_factor = (seconds_to_hours * pico_to_micro)
-#         print('max',(max(photon_tally.mean.flatten())*scaling_factor)/mesh_photon.volumes[0][0][0])
-#         print('min',(min(photon_tally.mean.flatten())*scaling_factor)/mesh_photon.volumes[0][0][0])
-#         plot = plot_mesh_tally(
-#             tally=photon_tally,
-#             basis="xz",
-#             score='flux', # only one tally so could leave this unspecified
-#             value="mean",
-#             colorbar_kwargs={
-#                 'label': "Decay photon dose [µSv/h]",
-#             },
-#             norm=LogNorm(), # TODO find the bounds automatically in a loop above this section
-#             volume_normalization=True,  # this divides by voxel volume which is not done in the scaling_factor
-#             scaling_factor=scaling_factor,
-#             outline=True,
-#             geometry = my_geometry
-#         )
-#         plot.title.set_text(f"timestep {sum(timesteps[1:i_cool])/(60*60)} hours after shut down")
-#         plot.figure.savefig(f'mesh_shut_down_dose_map_timestep_{str(i_cool).zfill(3)}')
+for i_cool in range(1, len(timesteps)): # skipping the first depletion step as we just want the part where the machine is off for the shut down dose rate
+    with openmc.StatePoint(statepoints_folder / "photons" / f"photon_at_time_{i_cool}" / f'statepoint.{my_gamma_settings.batches}.h5') as statepoint:
+        my_mesh_tally_result = statepoint.get_tally(name="photon_dose_on_mesh")
+
+
+        # this part of the script plots the images
+        tally_slice = my_mesh_tally_result.get_slice(scores=['flux'])
+
+        tally_data = tally_slice.get_reshaped_data(
+            expand_dims=True, value='mean'
+        ).squeeze()
+
+        # gets a 2d slice of data to later plot
+        data_slice = tally_data[:,:,5]
+
+        # tally.mean is in units of pSv-cm3/source neutron
+        # multiplication by neutrons_per_pulse changes units to neutron to pSv-cm3/pulse
+        neutrons_per_pulse = 1e8  # units of neutrons per pulse
+
+        # multiplication by pico_to_milli converts from (pico) pSv-cm3/pulse to (milli) mSv-cm3/pulse
+        pico_to_milli = 1e-9
+
+        # dividing by the mesh volume gives the units of mSv/pulse
+        mesh_voxel_volume = regular_mesh.volumes[0][0][0]
+
+        # converts the units
+        data_slice = (data_slice * neutrons_per_pulse * pico_to_milli) / mesh_voxel_volume
+
+        meter_scaled_extent = [i/100 for i in my_geometry.bounding_box.extent['xy']]
+
+        # First plot (ax1)
+        fig, ax1 = plt.subplots(figsize=(10, 8))
+        # plot_1 = ax1.imshow(
+        #     np.rot90(data_slice, -3),
+        #     extent=meter_scaled_extent,
+        #     interpolation=None,
+        #     norm=LogNorm(
+        #         vmin=np.min(data_slice[data_slice > 0]),  # Smallest non-zero value
+        #         vmax=np.max(data_slice),
+        #     ),
+        # )
+        ax1.set_xlabel("X (cm)")
+        ax1.set_ylabel("Y (cm)")
+        # cbar = plt.colorbar(plot_1, ax=ax1)
+        # cbar.set_label("Dose [milli Sv per pulse]")  # Label for the color bar
+
+        X = np.linspace(meter_scaled_extent[0], meter_scaled_extent[1], data_slice.shape[1])
+        Y = np.linspace(meter_scaled_extent[2], meter_scaled_extent[3], data_slice.shape[0])
+        X, Y = np.meshgrid(X, Y)
+
+        # Second plot (ax2) overlaid on ax1
+        ax2 = my_geometry.plot(
+            outline='only',
+            extent=my_geometry.bounding_box.extent['xy'],
+            # axes=ax1,  # Use the same axis as ax1
+            color_by='material',
+            axis_units='m',
+            pixels=10_000_00,  #avoids rounded corners on outline
+        )
+        # ax2.set_title(f"Dose map with at time step {i_cool}")
+        # ax2.set_xlim(ax1.get_xlim())
+        # ax2.set_ylim(ax1.get_ylim())
+        # ax2.set_aspect(ax1.get_aspect())  # Match aspect ratio
+
+        # Show the combined plot
+        # plt.show()
+        plt.savefig(f'dose_map_{str(i_cool).zfill(2)}.png')
