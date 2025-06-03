@@ -87,7 +87,7 @@ vols = regular_mesh.material_volumes(model_neutron, n_samples=10_000,max_materia
 # MeshMaterialFilter with corresponding bins
 mmf = openmc.MeshMaterialFilter.from_volumes(mesh=regular_mesh, volumes=vols)
 
-
+mesh_indices_with_volumes = [int(i[0]) for i in mmf.bins]
 # # this does perform transport but just to get the flux and micro xs
 # print(f'running neutron transport to activate materials')
 flux_in_each_mesh_voxel, all_micro_xs = openmc.deplete.get_microxs_and_flux(
