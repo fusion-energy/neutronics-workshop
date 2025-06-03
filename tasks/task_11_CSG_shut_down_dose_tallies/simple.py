@@ -1,7 +1,3 @@
-# This script simulates R2S method of shut down dose rate
-# on a simple sphere model.
-# TODO needs cell fractions in mesh volumes adding to complete the example
-
 import numpy as np
 import openmc
 import openmc.deplete
@@ -19,14 +15,10 @@ openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections
 # download_endf_chain -r b8.0
 openmc.config['chain_file'] = Path.home() / 'nuclear_data' / 'chain-endf-b8.0.xml'
 
-# a few user settings
-# Set up the folders to save all the data in
-n_particles = 1_00000
-p_particles = 1_000
+
 statepoints_folder = Path('statepoints_folder')
 statepoints_folder.mkdir(exist_ok=True)
 
-al_sphere_radius = 4
 iron_sphere_radius = 4
 
 # We make a iron material which should produce a few activation products
@@ -40,40 +32,26 @@ mat_iron.depletable = True
 # volume must set the volume as well as openmc calculates number of atoms
 mat_iron.volume = (4 / 3) * math.pi * math.pow(iron_sphere_radius, 3)
 
-# We make a Al material which should produce a few different activation products
-mat_aluminum = openmc.Material()
-mat_aluminum.id = 2
-mat_aluminum.add_element("Al", 1.0)
-mat_aluminum.set_density("g/cm3", 2.7)
-# must set the depletion to True to deplete the material
-mat_aluminum.depletable = True
-# volume must set the volume as well as openmc calculates number of atoms
-mat_aluminum.volume = (4 / 3) * math.pi * math.pow(al_sphere_radius, 3)
-
-
 
 # First we make a simple geometry with three cells, (two with material)
 sphere_surf_1 = openmc.Sphere(r=iron_sphere_radius, z0=10)
-sphere_surf_2 = openmc.Sphere(r=al_sphere_radius, z0=-5)
 
 sphere_region_1 = -sphere_surf_1
-sphere_region_2 = -sphere_surf_2
 
-sphere_cell_1 = openmc.Cell(region=sphere_region_1,fill = mat_aluminum)
-sphere_cell_2 = openmc.Cell(region=sphere_region_2,fill = mat_iron)
+sphere_cell_1 = openmc.Cell(region=sphere_region_1,fill = mat_iron)
 
 box = openmc.model.RectangularParallelepiped(
     xmin=-20, xmax=20, ymin=-20, ymax=20, zmin=-20, zmax=20, boundary_type="vacuum"
 )
-box_cell = openmc.Cell(region=-box & +sphere_surf_1 &+sphere_surf_2, fill=mat_aluminum)
+box_cell = openmc.Cell(region=-box & +sphere_surf_1)
 
-my_geometry = openmc.Geometry([sphere_cell_1, sphere_cell_2, box_cell])
+my_geometry = openmc.Geometry([sphere_cell_1, box_cell])
 
 
 plot = my_geometry.plot(basis='xz')
 plt.savefig('xz_geometry_plot.png')
 
-my_materials = openmc.Materials([mat_iron, mat_aluminum])
+my_materials = openmc.Materials([mat_iron])
 
 # 14MeV neutron source that activates material
 my_source = openmc.IndependentSource()
@@ -85,8 +63,8 @@ my_source.particle = "neutron"
 # settings for the neutron simulation(s)
 my_neutron_settings = openmc.Settings()
 my_neutron_settings.run_mode = "fixed source"
-my_neutron_settings.particles = n_particles
-my_neutron_settings.batches = 3
+my_neutron_settings.particles = 1000
+my_neutron_settings.batches = 2
 my_neutron_settings.source = my_source
 my_neutron_settings.photon_transport = False
 
@@ -124,22 +102,25 @@ flux_in_each_mesh_voxel, all_micro_xs = openmc.deplete.get_microxs_and_flux(
 # mixed_materials_in_each_mesh_voxel = regular_mesh.get_homogenized_materials(model_neutron, n_samples=1_000_000, include_void=False)
 
 # this section makes a mixed material for each voxel
+all_materials = my_geometry.get_all_materials()
 mixed_materials_in_each_mesh_voxel = []
 for i in range(regular_mesh.num_mesh_cells):
     mix_fractions = vols.by_element(i)
     materials = []
     fracts = []
-    for mat_id, mat_volume in mix_fractions:
-        all_materials = my_geometry.get_all_materials()
-        material = all_materials[mat_id]
-        materials.append(material)
-        fracts.append(mat_volume)
-    assert(sum(fracts)<100)
 
-    mixed_material = openmc.Material.mix_materials(
-        materials, fracts, 'vo'
-    )
-    mixed_materials_in_each_mesh_voxel.append(mixed_material)
+    for mat_id, mat_volume in mix_fractions:
+        if mat_id is not None:
+            material = all_materials[mat_id]
+            materials.append(material)
+            fracts.append(mat_volume)
+
+    if len(materials) > 0:
+        mixed_material = openmc.Material.mix_materials(
+            materials, fracts, 'vo'
+        )
+        mixed_material.volume = sum(fracts)
+        mixed_materials_in_each_mesh_voxel.append(mixed_material)
 
 # # constructing the operator, note we pass in the flux and micro xs
 operator = openmc.deplete.IndependentOperator(
@@ -195,7 +176,7 @@ integrator.integrate(
 my_gamma_settings = openmc.Settings()
 my_gamma_settings.run_mode = "fixed source"
 my_gamma_settings.batches = 100
-my_gamma_settings.particles = p_particles
+my_gamma_settings.particles = 10000
 
 # First we add make dose tally on a regular mesh
 
@@ -207,7 +188,7 @@ dose_filter = openmc.EnergyFunctionFilter(
     energies, pSv_cm2, interpolation="cubic"  # interpolation method recommended by ICRP
 )
 particle_filter = openmc.ParticleFilter(["photon"])
-mesh_filter = openmc.MeshFilter(mesh_photon)
+mesh_filter = openmc.MeshFilter(regular_mesh)
 dose_tally = openmc.Tally()
 dose_tally.filters = [mesh_filter, dose_filter, particle_filter]
 dose_tally.scores = ["flux"]
@@ -218,10 +199,6 @@ my_gamma_tallies = openmc.Tallies([dose_tally])
 cells = model_neutron.geometry.get_all_cells()
 
 results = openmc.deplete.Results(statepoints_folder / "neutrons" / "depletion_results.h5")
-
-# Determine materials present in each mesh element
-mat_vols = regular_mesh.material_volumes(model_neutron, ...)
-
 
 
 
@@ -269,19 +246,19 @@ mat_vols = regular_mesh.material_volumes(model_neutron, ...)
 #         regular_mesh, photon_sources_for_timestep
 #     )
 
-#     # you have options for the normalization of the source.
-#     # you could set the mesh_source.strength to the total Bq of all the sources in that time step
-#     # mesh_source.strength = cumulative_strength_for_time_step
-#     # then use mesh_source.normalize_source_strengths() to update all element source strengths such that they sum to 1.0.
-#     # or
-#     # you can leave it so the individual sources have their own strength in Bq
-#     # perhaps best to experiment here and check the answers, do let me know if you find one option better than the others
+    # you have options for the normalization of the source.
+    # you could set the mesh_source.strength to the total Bq of all the sources in that time step
+    # mesh_source.strength = cumulative_strength_for_time_step
+    # then use mesh_source.normalize_source_strengths() to update all element source strengths such that they sum to 1.0.
+    # or
+    # you can leave it so the individual sources have their own strength in Bq
+    # perhaps best to experiment here and check the answers, do let me know if you find one option better than the others
 
-#     my_gamma_settings.source = mesh_source
-#     model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, my_gamma_tallies)
+    # my_gamma_settings.source = mesh_source
+    # model_gamma = openmc.Model(my_geometry, my_materials, my_gamma_settings, my_gamma_tallies)
 
-#     print(f'running gamma transport on stimestep {i_cool}')
-#     model_gamma.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
+    # print(f'running gamma transport on stimestep {i_cool}')
+    # model_gamma.run(cwd=statepoints_folder / "photons" / f"photon_at_time_{i_cool}")
 
 # # this part post processes the results to get a dose map for each time step
 # pico_to_micro = 1e-6
