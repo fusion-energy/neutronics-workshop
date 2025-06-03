@@ -1,4 +1,3 @@
-
 from cad_to_dagmc import CadToDagmc
 import cadquery as cq
 import openmc
@@ -6,7 +5,6 @@ from matplotlib.colors import LogNorm
 import openmc.deplete
 from pathlib import Path
 import numpy as np
-
 
 openmc.config['chain_file'] = Path.home() / 'nuclear_data' / 'chain-endf-b8.0.xml'
 openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections.xml'
@@ -73,10 +71,6 @@ my_materials = openmc.Materials([fe_material, Li4SiO4_mat, water_mat])
 universe = openmc.DAGMCUniverse("dagmc.h5m").bounded_universe()
 my_geometry = openmc.Geometry(universe)
 
-# Get the bounding box of the geometry and find its center for source positioning
-box = my_geometry.bounding_box
-geometry_center = box.center
-
 my_settings = openmc.Settings()
 my_settings.batches = 10
 my_settings.inactive = 0
@@ -86,7 +80,7 @@ my_settings.output = {'tallies': False}
 
 # Create a DT point source
 my_source = openmc.IndependentSource()
-my_source.space = openmc.stats.Point(geometry_center)
+my_source.space = openmc.stats.Point(my_geometry.bounding_box.center)
 my_source.angle = openmc.stats.Isotropic()
 my_source.energy = openmc.stats.Discrete([14e6], [1])
 my_settings.source = my_source
@@ -149,7 +143,7 @@ for i, (flux_in_each_group, mesh_vol) in enumerate(zip(flux_in_each_group_for_ea
             material_groups[mat_id].append((i, flux_in_each_group, mesh_vol))
             break
 
-# Pre-compute MicroXS for each material type
+# Pre-compute MicroXS for each material
 material_micro_xs = {}
 for mat_id, elements in material_groups.items():
     current_material = next(mat for mat in my_materials if mat.id == mat_id)
@@ -160,7 +154,6 @@ for mat_id, elements in material_groups.items():
         chain_file=openmc.config['chain_file'],
         nuclides=current_material.get_nuclides()
     )
-
 # Process each timestep
 for i_cool in range(1, len(timesteps)):
     print(f"Depleting to time {i_cool}")
@@ -171,57 +164,54 @@ for i_cool in range(1, len(timesteps)):
         current_material = next(mat for mat in my_materials if mat.id == mat_id)
         micro_xs = material_micro_xs[mat_id]
         
-        # Process all elements for this material in parallel
-        for i, flux_in_each_group, mesh_vol in elements:
-            # Create operator with current material
-            operator = openmc.deplete.IndependentOperator(
-                materials=[current_material],
-                fluxes=[sum(flux_in_each_group)*mesh_vol],
-                micros=[micro_xs],
-                reduce_chain=True,
-                reduce_chain_level=5,
-                normalization_mode="source-rate"
-            )
-            
-            integrator = openmc.deplete.PredictorIntegrator(
-                operator=operator,
-                timesteps=timesteps,
-                source_rates=source_rates,
-                timestep_units='s'
-            )
+        operator = openmc.deplete.IndependentOperator(
+            materials=[current_material],
+            fluxes=[sum(flux_in_each_group)*mesh_vol],
+            micros=[micro_xs],
+            reduce_chain=True,
+            reduce_chain_level=5,
+            normalization_mode="source-rate"
+        )
+        
+        integrator = openmc.deplete.PredictorIntegrator(
+            operator=operator,
+            timesteps=timesteps,
+            source_rates=source_rates,
+            timestep_units='s'
+        )
 
-            integrator.integrate()
-            results = openmc.deplete.Results.from_hdf5("depletion_results.h5")
-            activated_material = results[i_cool].get_material(str(current_material.id))
-            activated_material.volume = mesh_vol
+        integrator.integrate()
+        results = openmc.deplete.Results.from_hdf5("depletion_results.h5")
+        activated_material = results[i_cool].get_material(str(current_material.id))
+        activated_material.volume = mesh_vol
 
-            # Get decay photon energy and create source
-            energy = activated_material.get_decay_photon_energy(
-                clip_tolerance=1e-6,
-                units='Bq',
-            )
-            strength = energy.integral() if energy else 0
+        # Get decay photon energy and create source
+        energy = activated_material.get_decay_photon_energy(
+            clip_tolerance=1e-6,
+            units='Bq',
+        )
+        strength = energy.integral() if energy else 0
 
-            # Get vertices and create source
-            vertices = umesh_from_sp.vertices[umesh_from_sp.connectivity[i]]
-            min_coords = np.min(vertices, axis=0)
-            max_coords = np.max(vertices, axis=0)
-            
-            my_source = openmc.IndependentSource(
-                space=openmc.stats.Box(
-                    lower_left=min_coords,
-                    upper_right=max_coords
-                ),
-                energy=energy,
-                particle="photon",
-                strength=strength,
-                constraints={
-                    'domains': [activated_material],
-                    'rejection_strategy': 'resample'
-                }        
-            )
-            all_sources.append(my_source)
-            
+        # Get vertices and create source
+        vertices = umesh_from_sp.vertices[umesh_from_sp.connectivity[i]]
+        min_coords = np.min(vertices, axis=0)
+        max_coords = np.max(vertices, axis=0)
+        
+        my_source = openmc.IndependentSource(
+            space=openmc.stats.Box(
+                lower_left=min_coords,
+                upper_right=max_coords
+            ),
+            energy=energy,
+            particle="photon",
+            strength=strength,
+            constraints={
+                'domains': [activated_material],
+                'rejection_strategy': 'resample'
+            }        
+        )
+        all_sources.append(my_source)
+
     photon_folder = Path('photons')
     photon_folder.mkdir(exist_ok=True)
 
@@ -259,7 +249,7 @@ for i_cool in range(1, len(timesteps)):
     model_gamma = openmc.Model(my_geometry, my_gamma_materials, my_gamma_settings, tallies)
     model_gamma.export_to_xml(photon_folder / f"photon_at_time_{i_cool}")
     model_gamma.run(cwd=photon_folder / f"photon_at_time_{i_cool}")
-for i_cool in range(1, len(timesteps)):
+
     from openmc_regular_mesh_plotter import plot_mesh_tally
     with openmc.StatePoint(photon_folder / f"photon_at_time_{i_cool}" / 'statepoint.100.h5') as statepoint:
         photon_tally = statepoint.get_tally(name="photon_dose_on_mesh")
