@@ -75,13 +75,13 @@ RUN pip install --upgrade pip
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
-                coolprop \
-                stl_to_h5m \
-                remove_dagmc_tags \
+                # coolprop \  failing to find 
+                # stl_to_h5m \  failing to find 
+                # remove_dagmc_tags \  failing to find 
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
-                openmc_source_plotter \
+                # openmc_source_plotter \  failing to find 
                 openmc_depletion_plotter \
                 "openmc_data_downloader>=0.6.0" \
                 retry \
