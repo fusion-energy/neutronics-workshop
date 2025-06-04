@@ -6,6 +6,8 @@ This installation option supports Linux and has been tested most on Ubuntu.
 
 Currently just python 3.11 is supported, in the future other versions will be supported.
 
+If you need a different version of Python then as a tempory solution there are some Python wheels [here](https://github.com/shimwell/wheels)
+
 You will need Python installed which comes pre installed on most Linux distributions.
 
 In addition to install with pip you will need pip installed.
