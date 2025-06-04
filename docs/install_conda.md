@@ -2,6 +2,8 @@
 
 It is also possible to install all the dependencies with Conda in a new environment.
 
+Please note this method uses the latest stable Conda release of OpenMC. **Some of the tasks require the development version of OpenMC**. The PIP or Docker method make use of this newer development version of OpenMC.
+
 This installation option supports Linux and has been tested most on Ubuntu
 
 First install Miniconda or Anaconda, or Miniforge
