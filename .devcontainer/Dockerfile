@@ -7,11 +7,19 @@
 # docker pull ghcr.io/fusion-energy/neutronics-workshop
 
 # To build this Dockerfile into a docker image:
-# docker build -t neutronics-workshop -f .devcontainer/Dockerfile .
+# docker build -t ghcr.io/fusion-energy/neutronics-workshop -f .devcontainer/Dockerfile .
 
-# then run with this command
-# docker run -p 8888:8888 neutronics-workshop
+# to launch the docker image run with this command
+# docker run -p 8888:8888 ghcr.io/fusion-energy/neutronics-workshop
 
+# to push to github container repository, generate an access token
+# https://github.com/settings/tokens
+
+# login to ghcr
+# echo ghp_yourgithubtoken | docker login ghcr.io -u yourgithubusername --password-stdin
+
+# push the docker image to ghcr 
+# docker push ghcr.io/fusion-energy/neutronics-workshop
 
 FROM mcr.microsoft.com/devcontainers/base:bookworm AS dependencies
 
