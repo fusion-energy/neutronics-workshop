@@ -39,5 +39,6 @@ html:
 exclude_patterns:
   - README
   - CODE_OF_CONDUCT
-  - tasks/task_21_design_task/1_optimal_design
+  - CONTRIBUTING
+  - install_scripts/README.md
   - tasks/task_21_design_task/1_optimal_design_with_hints
