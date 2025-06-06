@@ -10,3 +10,5 @@ In this task you will use OpenMC to run simple neutronics simulations to tally T
 
 - OpenMC can be used to run simple neutronics simulations and tally TBR.
 - Simple methods of increasing the TBR using Lithium enrichment.
+
+[![Watch the video](https://img.youtube.com/vi/Vc7Qy7QW4o8/0.jpg)](https://www.youtube.com/watch?v=Vc7Qy7QW4o8)
