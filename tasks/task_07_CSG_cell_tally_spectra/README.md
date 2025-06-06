@@ -8,3 +8,5 @@ In this task you will use OpenMC to tally neutron and photon spectra on differen
 
 - Plotting neutron / photon spectra for cells and surfaces and observing the changing neutron energy at different locations in the reactor.
 - Performing coupled neutron photon simulations where photons are created from neutron interactions.
+
+[![Watch the video](https://img.youtube.com/vi/qHqAuqMLYPA/0.jpg)](https://www.youtube.com/watch?v=qHqAuqMLYPA)

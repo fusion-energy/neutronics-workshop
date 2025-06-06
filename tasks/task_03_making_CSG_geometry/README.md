@@ -9,4 +9,7 @@ In this task you will use OpenMC to construct and view simple geometries, and as
 **Learning Outcomes**
 
 - Using OpenMC to construct simple Constructive Solid Geometry (CSG) geometry.
-- Visualisation of models using 2D slices and 3D cube geometry.
+- Visualization of models using 2D slices and 3D cube geometry.
+
+
+[![Watch the video](https://img.youtube.com/vi/Ovr7oYukYRw/0.jpg)](https://www.youtube.com/watch?v=Ovr7oYukYRw)

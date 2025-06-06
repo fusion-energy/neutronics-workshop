@@ -15,3 +15,12 @@ In this task you will be using OpenMC to plot interaction cross sections for iso
 - Lithium 6 has the highest probability of producing tritium at low neutron energies.
 - Lithium-6 enrichment increases tritium production from low energy neutrons.
 - The relative motion of colliding nuclei causes Doppler broadening of resonance peaks in interaction cross sections.
+
+
+[![Watch the video](https://img.youtube.com/vi/eBZ2lY_2v7IA/0.jpg)](https://www.youtube.com/watch?v=eBZ2lY_2v7IA)
+
+[![Watch the video](https://img.youtube.com/vi/ELZNeIdSuMY/0.jpg)](https://www.youtube.com/watch?v=ELZNeIdSuMY)
+
+[![Watch the video](https://img.youtube.com/vi/ec5BLLL6Q_g/0.jpg)](https://www.youtube.com/watch?v=ec5BLLL6Q_g)
+
+[![Watch the video](https://img.youtube.com/vi/mkl1mVnTO6g/0.jpg)](https://www.youtube.com/watch?v=mkl1mVnTO6g)
