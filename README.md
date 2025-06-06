@@ -1,5 +1,5 @@
 [![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://fusion-energy.github.io/neutronics-workshop/)
-[![docker-publish-release](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fusion-energy/neutronics-workshop/actions/workflows/docker-publish.yml)
+
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/HEAD)
 
 # Fusion Energy Neutronics Workshop

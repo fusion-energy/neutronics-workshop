@@ -7,11 +7,19 @@
 # docker pull ghcr.io/fusion-energy/neutronics-workshop
 
 # To build this Dockerfile into a docker image:
-# docker build -t neutronics-workshop -f .devcontainer/Dockerfile .
+# docker build -t ghcr.io/fusion-energy/neutronics-workshop -f .devcontainer/Dockerfile .
 
-# then run with this command
-# docker run -p 8888:8888 neutronics-workshop
+# to launch the docker image run with this command
+# docker run -p 8888:8888 ghcr.io/fusion-energy/neutronics-workshop
 
+# to push to github container repository, generate an access token
+# https://github.com/settings/tokens
+
+# login to ghcr
+# echo ghp_yourgithubtoken | docker login ghcr.io -u yourgithubusername --password-stdin
+
+# push the docker image to ghcr 
+# docker push ghcr.io/fusion-energy/neutronics-workshop
 
 FROM mcr.microsoft.com/devcontainers/base:bookworm AS dependencies
 
@@ -75,13 +83,13 @@ RUN pip install --upgrade pip
 
 # python packages from the neutronics workflow
 RUN pip install neutronics_material_maker[density] \
-                coolprop \
-                stl_to_h5m \
-                remove_dagmc_tags \
+                # coolprop \  failing to find 
+                # stl_to_h5m \  failing to find 
+                # remove_dagmc_tags \  failing to find 
                 openmc-tally-unit-converter \
                 regular_mesh_plotter \
                 spectrum_plotter \
-                openmc_source_plotter \
+                # openmc_source_plotter \  failing to find 
                 openmc_depletion_plotter \
                 "openmc_data_downloader>=0.6.0" \
                 retry \
