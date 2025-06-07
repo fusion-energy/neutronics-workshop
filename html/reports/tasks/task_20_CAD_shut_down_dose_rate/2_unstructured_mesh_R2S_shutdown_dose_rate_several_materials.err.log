@@ -1,0 +1,201 @@
+Traceback (most recent call last):
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 154, in wrapped
+    asyncio.get_running_loop()
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 158, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+all_nuclides = set()
+for material in my_materials:
+    all_nuclides.update(material.get_nuclides())
+
+flux_in_each_voxel, micro_xs = openmc.deplete.get_microxs_and_flux(
+    model=model,
+    domains=umesh,
+    energies=[0, 30e6], # one energy bin from 0 to 30MeV
+    chain_file=openmc.config['chain_file'],
+    # needed otherwise the statepoint file is produced in an unknown temporary directory
+    run_kwargs={'cwd':'.'},
+    nuclides=list(all_nuclides)  # Convert set to list
+)
+------------------
+
+----- stdout -----
+                                %%%%%%%%%%%%%%%
+                           %%%%%%%%%%%%%%%%%%%%%%%%
+                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                    %%%%%%%%%%%%%%%%%%%%%%%%
+                                     %%%%%%%%%%%%%%%%%%%%%%%%
+                 ###############      %%%%%%%%%%%%%%%%%%%%%%%%
+                ##################     %%%%%%%%%%%%%%%%%%%%%%%
+                ###################     %%%%%%%%%%%%%%%%%%%%%%%
+                ####################     %%%%%%%%%%%%%%%%%%%%%%
+                #####################     %%%%%%%%%%%%%%%%%%%%%
+                ######################     %%%%%%%%%%%%%%%%%%%%
+                #######################     %%%%%%%%%%%%%%%%%%
+                 #######################     %%%%%%%%%%%%%%%%%
+                 ######################     %%%%%%%%%%%%%%%%%
+                  ####################     %%%%%%%%%%%%%%%%%
+                    #################     %%%%%%%%%%%%%%%%%
+                     ###############     %%%%%%%%%%%%%%%%
+                       ############     %%%%%%%%%%%%%%%
+                          ########     %%%%%%%%%%%%%%
+                                      %%%%%%%%%%%
+
+                 | The OpenMC Monte Carlo Code
+       Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
+         License | https://docs.openmc.org/en/latest/license.html
+         Version | 0.15.3-dev144
+     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
+       Date/Time | 2025-06-07 10:53:08
+  OpenMP Threads | 16
+
+ Reading model XML file 'model.xml' ...
+ WARNING: Other XML file input(s) are present. These files may be ignored in
+          favor of the model.xml file.
+ Reading chain file: /home/jon/nuclear_data/chain-endf-b8.0.xml...
+----- stdout -----
+ Reading cross sections XML file...
+Using the DOUBLE-DOWN interface to Embree.
+Loading file /home/jon/neutronics-workshop/tasks/task_20_CAD_shut_down_dose_rate/dagmc.h5m
+Initializing the GeomQueryTool...
+Using faceting tolerance: 5.07038e-315
+Building acceleration data structures...
+ Reading Fe56 from /home/jon/nuclear_data/neutron/Fe56.h5
+----- stdout -----
+ Reading Li6 from /home/jon/nuclear_data/neutron/Li6.h5
+ Reading Li7 from /home/jon/nuclear_data/neutron/Li7.h5
+ Reading Si28 from /home/jon/nuclear_data/neutron/Si28.h5
+----- stdout -----
+ Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
+----- stdout -----
+ Reading Si30 from /home/jon/nuclear_data/neutron/Si30.h5
+ Reading O16 from /home/jon/nuclear_data/neutron/O16.h5
+----- stdout -----
+ Reading O17 from /home/jon/nuclear_data/neutron/O17.h5
+ Reading O18 from /home/jon/nuclear_data/neutron/O18.h5
+ Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
+ Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
+ Minimum neutron data temperature: 294.0 K
+ Maximum neutron data temperature: 294.0 K
+ Getting tet adjacencies...
+ Building adaptive k-d tree for tet mesh with ID 1...
+----- stdout -----
+ Preparing distributed cell instances...
+ Maximum neutron transport energy: 20000000.0 eV for Li6
+
+ ===============>     FIXED SOURCE TRANSPORT SIMULATION     <===============
+
+ Simulating batch 1
+----- stdout -----
+ Simulating batch 2
+----- stdout -----
+ Simulating batch 3
+----- stdout -----
+ Simulating batch 4
+----- stdout -----
+ Simulating batch 5
+----- stdout -----
+ Creating state point statepoint.5.h5...
+HDF5-DIAG: Error detected in HDF5 (1.14.4-3) thread 0:
+  #000: /root/hdf5/src/H5F.c line 660 in H5Fcreate(): unable to synchronously create file
+    major: File accessibility
+    minor: Unable to create file
+  #001: /root/hdf5/src/H5F.c line 614 in H5F__create_api_common(): unable to create file
+    major: File accessibility
+    minor: Unable to open file
+  #002: /root/hdf5/src/H5VLcallback.c line 3605 in H5VL_file_create(): file create failed
+    major: Virtual Object Layer
+    minor: Unable to create file
+  #003: /root/hdf5/src/H5VLcallback.c line 3571 in H5VL__file_create(): file create failed
+    major: Virtual Object Layer
+    minor: Unable to create file
+  #004: /root/hdf5/src/H5VLnative_file.c line 94 in H5VL__native_file_create(): unable to create file
+    major: File accessibility
+    minor: Unable to open file
+  #005: /root/hdf5/src/H5Fint.c line 1960 in H5F_open(): unable to lock the file
+    major: File accessibility
+    minor: Unable to lock file
+  #006: /root/hdf5/src/H5FD.c line 2411 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Unable to lock file
+  #007: /root/hdf5/src/H5FDsec2.c line 941 in H5FD__sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: Virtual File Layer
+    minor: Unable to lock file
+ ERROR: Failed to open HDF5 file with mode 'w': statepoint.5.h5
+------------------
+
+[31m---------------------------------------------------------------------------[39m
+[31mRuntimeError[39m                              Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[10][39m[32m, line 5[39m
+[32m      2[39m [38;5;28;01mfor[39;00m material [38;5;129;01min[39;00m my_materials:
+[32m      3[39m     all_nuclides.update(material.get_nuclides())
+[32m----> [39m[32m5[39m flux_in_each_voxel, micro_xs = [43mopenmc[49m[43m.[49m[43mdeplete[49m[43m.[49m[43mget_microxs_and_flux[49m[43m([49m
+[32m      6[39m [43m    [49m[43mmodel[49m[43m=[49m[43mmodel[49m[43m,[49m
+[32m      7[39m [43m    [49m[43mdomains[49m[43m=[49m[43mumesh[49m[43m,[49m
+[32m      8[39m [43m    [49m[43menergies[49m[43m=[49m[43m[[49m[32;43m0[39;49m[43m,[49m[43m [49m[32;43m30e6[39;49m[43m][49m[43m,[49m[43m [49m[38;5;66;43;03m# one energy bin from 0 to 30MeV[39;49;00m
+[32m      9[39m [43m    [49m[43mchain_file[49m[43m=[49m[43mopenmc[49m[43m.[49m[43mconfig[49m[43m[[49m[33;43m'[39;49m[33;43mchain_file[39;49m[33;43m'[39;49m[43m][49m[43m,[49m
+[32m     10[39m [43m    [49m[38;5;66;43;03m# needed otherwise the statepoint file is produced in an unknown temporary directory[39;49;00m
+[32m     11[39m [43m    [49m[43mrun_kwargs[49m[43m=[49m[43m{[49m[33;43m'[39;49m[33;43mcwd[39;49m[33;43m'[39;49m[43m:[49m[33;43m'[39;49m[33;43m.[39;49m[33;43m'[39;49m[43m}[49m[43m,[49m
+[32m     12[39m [43m    [49m[43mnuclides[49m[43m=[49m[38;5;28;43mlist[39;49m[43m([49m[43mall_nuclides[49m[43m)[49m[43m  [49m[38;5;66;43;03m# Convert set to list[39;49;00m
+[32m     13[39m [43m)[49m
+
+[36mFile [39m[32m~/.neutronicsworkshop/lib/python3.11/site-packages/openmc/deplete/microxs.py:144[39m, in [36mget_microxs_and_flux[39m[34m(model, domains, nuclides, reactions, energies, chain_file, run_kwargs)[39m
+[32m    142[39m     run_kwargs = [38;5;28mdict[39m(run_kwargs)
+[32m    143[39m run_kwargs.setdefault([33m'[39m[33mcwd[39m[33m'[39m, temp_dir)
+[32m--> [39m[32m144[39m statepoint_path = [43mmodel[49m[43m.[49m[43mrun[49m[43m([49m[43m*[49m[43m*[49m[43mrun_kwargs[49m[43m)[49m
+[32m    146[39m [38;5;28;01mif[39;00m comm.rank == [32m0[39m:
+[32m    147[39m     [38;5;28;01mwith[39;00m StatePoint(statepoint_path) [38;5;28;01mas[39;00m sp:
+
+[36mFile [39m[32m~/.neutronicsworkshop/lib/python3.11/site-packages/openmc/model/model.py:750[39m, in [36mModel.run[39m[34m(self, particles, threads, geometry_debug, restart_file, tracks, output, cwd, openmc_exec, mpi_args, event_based, export_model_xml, apply_tally_results, **export_kwargs)[39m
+[32m    748[39m         [38;5;28mself[39m.export_to_xml(**export_kwargs)
+[32m    749[39m     path_input = export_kwargs.get([33m"[39m[33mpath[39m[33m"[39m, [38;5;28;01mNone[39;00m)
+[32m--> [39m[32m750[39m     [43mopenmc[49m[43m.[49m[43mrun[49m[43m([49m[43mparticles[49m[43m,[49m[43m [49m[43mthreads[49m[43m,[49m[43m [49m[43mgeometry_debug[49m[43m,[49m[43m [49m[43mrestart_file[49m[43m,[49m
+[32m    751[39m [43m               [49m[43mtracks[49m[43m,[49m[43m [49m[43moutput[49m[43m,[49m[43m [49m[43mPath[49m[43m([49m[33;43m'[39;49m[33;43m.[39;49m[33;43m'[39;49m[43m)[49m[43m,[49m[43m [49m[43mopenmc_exec[49m[43m,[49m[43m [49m[43mmpi_args[49m[43m,[49m
+[32m    752[39m [43m               [49m[43mevent_based[49m[43m,[49m[43m [49m[43mpath_input[49m[43m)[49m
+[32m    754[39m [38;5;66;03m# Get output directory and return the last statepoint written[39;00m
+[32m    755[39m [38;5;28;01mif[39;00m [38;5;28mself[39m.settings.output [38;5;129;01mand[39;00m [33m'[39m[33mpath[39m[33m'[39m [38;5;129;01min[39;00m [38;5;28mself[39m.settings.output:
+
+[36mFile [39m[32m~/.neutronicsworkshop/lib/python3.11/site-packages/openmc/executor.py:314[39m, in [36mrun[39m[34m(particles, threads, geometry_debug, restart_file, tracks, output, cwd, openmc_exec, mpi_args, event_based, path_input)[39m
+[32m    261[39m [38;5;250m[39m[33;03m"""Run an OpenMC simulation.[39;00m
+[32m    262[39m 
+[32m    263[39m [33;03mParameters[39;00m
+[32m   (...)[39m[32m    305[39m 
+[32m    306[39m [33;03m"""[39;00m
+[32m    308[39m args = _process_CLI_arguments(
+[32m    309[39m     volume=[38;5;28;01mFalse[39;00m, geometry_debug=geometry_debug, particles=particles,
+[32m    310[39m     restart_file=restart_file, threads=threads, tracks=tracks,
+[32m    311[39m     event_based=event_based, openmc_exec=openmc_exec, mpi_args=mpi_args,
+[32m    312[39m     path_input=path_input)
+[32m--> [39m[32m314[39m [43m_run[49m[43m([49m[43margs[49m[43m,[49m[43m [49m[43moutput[49m[43m,[49m[43m [49m[43mcwd[49m[43m)[49m
+
+[36mFile [39m[32m~/.neutronicsworkshop/lib/python3.11/site-packages/openmc/executor.py:125[39m, in [36m_run[39m[34m(args, output, cwd)[39m
+[32m    122[39m     error_msg = [33m'[39m[33mOpenMC aborted unexpectedly.[39m[33m'[39m
+[32m    123[39m error_msg = [33m'[39m[33m [39m[33m'[39m.join(error_msg.split())
+[32m--> [39m[32m125[39m [38;5;28;01mraise[39;00m [38;5;167;01mRuntimeError[39;00m(error_msg)
+
+[31mRuntimeError[39m: Failed to open HDF5 file with mode 'w': statepoint.5.h5
+

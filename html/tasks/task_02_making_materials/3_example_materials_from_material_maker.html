@@ -1,0 +1,864 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Making materials from a library &#8212; Fusion Energy Neutronics Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tasks/task_02_making_materials/3_example_materials_from_material_maker';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Changing materials" href="4_example_materials_parameter_study.html" />
+    <link rel="prev" title="Making materials from elements" href="2_example_materials_from_elements.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../docs/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Fusion Energy Neutronics Workshop - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Fusion Energy Neutronics Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../docs/index.html">
+                    Fusion Energy Neutronics Workshop
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Installation options</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_pip.html">Install with pip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_conda.html">Install with Conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_mamba.html">Install with Mamba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_docker.html">Install with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_extras.html">Install optional extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_binder.html">Install in the Cloud (binder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_codespaces.html">Install in the cloud</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cross Sections</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/1_isotope_xs_plot.html">Plotting isotope cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/2_element_xs_plot.html">Plotting element cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/3_material_xs_plot.html">Plotting material cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/4_Doppler_broadening.html">Plotting Doppler broadened cross sections</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_example_materials_from_isotopes.html">Making materials from isotopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_example_materials_from_elements.html">Making materials from elements</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Making materials from a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_example_materials_parameter_study.html">Changing materials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_example_materials_mixed.html">Mixing materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CSG Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/1_simple_csg_geometry.html">Constructing simple CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/2_intermediate_csg_geometry.html">Constructing CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk.html">3D Geometry viewing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making source terms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/1_point_source_plots.html">Point source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/2_ring_source.html">Ring source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/3_plasma_source_plots.html">Plasma source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/4_neutron_tracks.html">Visualising Particle Tracks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/5_gamma_source_example.html">Gamma sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/6_unstructured_mesh_spatial_source.html">Unstructured mesh source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/7_structured_mesh_source.html">Structured mesh source</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell TBR tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/1_example_tritium_production.html">Performing Tritium Breeding Ratio (TBR) simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/2_example_tritium_production_study.html">Simulating TBR as a function of Lithium enrichment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell DPA tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/1_find_dpa.html">Simulating Displacements Per Atom (DPA)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell spectra tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/1_example_neutron_flux_and_units.html">Neutron flux and units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.html">Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.html">Plotting neutron lethargy energy spectra across a surface with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/4_example_photon_spectra.html">Plotting photon and neutron energy spectra in a cell with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/5_neutron_energy_loss_plot.html">Plotting energy loss per collision</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell mesh tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.html">2D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/2_example_3d_regular_mesh_tallies.html">3D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies.html">Cylinder mesh tallies</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell instantaneous dose tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source.html">Simulations of effective dose on a surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study.html">Simulations of effective dose as a function of distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons.html">Dose map from neutron pulse</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Activation Transmutation Depletion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.html">Nuclide Build Up During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/2_example_tally_change_with_burnup.html">Tally Value Change During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/3_full_pulse_schedule.html">Full pulse schedule depletion simulation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate.html">Shutdown dose rate D1S method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.html">Shutdown dose rate D1S method different sources (DD+DT)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Volume Calculations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/1_find_volume_of_csg_cell.html">Finding Volume of a Cell by sampling simulation.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/2_find_volume_of_dagmc_cell.html">Finding Volume of DAGMC Cell</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variance Reduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/1_shielded_room_survival_biasing.html">Survival Biasing Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/2_shielded_room_single_ww.html">Variance Reduction - Weight Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/3_sphere_iterative_per_run_ww.html">Magic Method Iterative Weight Windows per run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/4_sphere_iterative_per_batch_ww.html">Magic Method Iterative Weight Windows per Batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/5_shielded_room_fw_cadis.html">FW CADIS Weight Windows</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CAD geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/1_making_cad_with_cadquery.html">Making CAD with CadQuery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/2_making_cad_with_paramak.html">Making CAD geometry with Paramak</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Converting CAD Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/1_converting_cad_files.html">Converting CAD geometry to neutronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.html">CAD conversion in memory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using DAGMC models in OpenMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/1_cad_model_simulation_minimal.html">Simple CAD model simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/2_cad_model_simulation_with_boundary_types.html">Adding boundary conditions to a CAD model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/3_cad_model_simulation_with_hybrid_csg.html">Making a hybrid CAD CSG model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD mesh fast flux simulation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad.html">Simulation of fast neutron flux</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/1_optimal_design.html">Design your own tokamak</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/main?urlpath=lab/tree/./tasks/task_02_making_materials/3_example_materials_from_material_maker.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop/issues/new?title=Issue%20on%20page%20%2Ftasks/task_02_making_materials/3_example_materials_from_material_maker.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tasks/task_02_making_materials/3_example_materials_from_material_maker.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Making materials from a library</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="making-materials-from-a-library">
+<h1>Making materials from a library<a class="headerlink" href="#making-materials-from-a-library" title="Link to this heading">#</a></h1>
+<p>As we have seen in Parts 1 and 2, materials can be defined in OpenMC using isotopes and elements.</p>
+<p>The problem with this is that to construct some materials the user would be required to input many lines of code. As a result, there is opportunity for errors and the code becomes harder to maintain.</p>
+<p>Wouldn’t it be great if someone had made a nice collection of the material definitions used in fusion neutronics that could simply be used without having to remember all of the isotopes or elements that go into each one? It would be even better if the density was automatically adjusted to account for isotopic enrichment, temperature and pressure effects.</p>
+<p>Fortunately, there is an app for that called the Neutronics Material Maker which makes material making very convenient. Full transparency - the author of this package is also the author of this OpenMC workshop :-)</p>
+<p>Further details on this open-source Python package are available here:
+<a class="github reference external" href="https://github.com/fusion-energy/neutronics_material_maker">fusion-energy/neutronics_material_maker</a>
+<a class="reference external" href="https://neutronics-material-maker.readthedocs.io/en/latest/">https://neutronics-material-maker.readthedocs.io/en/latest/</a>
+<a class="reference external" href="https://pypi.org/project/neutronics-material-maker/">https://pypi.org/project/neutronics-material-maker/</a></p>
+<p>This python notebook allows users to create different materials using the Neutronics Material Maker.</p>
+<p>The following code block is a simple example of importing the package and using it to create Eurofer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># example material from the library</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">neutronics_material_maker</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmm</span>
+
+<span class="n">eurofer_mat</span> <span class="o">=</span> <span class="n">nmm</span><span class="o">.</span><span class="n">Material</span><span class="o">.</span><span class="n">from_library</span><span class="p">(</span><span class="s1">&#39;eurofer&#39;</span><span class="p">)</span>
+
+<span class="n">eurofer_mat</span><span class="o">.</span><span class="n">openmc_material</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Material
+	ID             =	2
+	Name           =	eurofer
+	Temperature    =	None
+	Density        =	7.78 [g/cm3]
+	Volume         =	None [cm^3]
+	Depletable     =	False
+	S(a,b) Tables  
+	Nuclides       
+	Al27           =	4e-05        [ao]
+	B10            =	1.982e-06    [ao]
+	B11            =	8.018e-06    [ao]
+	C12            =	0.0010383680999999998 [ao]
+	C13            =	1.1631899999999998e-05 [ao]
+	Co59           =	5e-05        [ao]
+	Cr50           =	0.0039105    [ao]
+	Cr52           =	0.0754101    [ao]
+	Cr53           =	0.0085509    [ao]
+	Cr54           =	0.0021285    [ao]
+	Cu63           =	2.0745000000000002e-05 [ao]
+	Cu65           =	9.255e-06    [ao]
+	Fe54           =	0.05191587450000001 [ao]
+	Fe56           =	0.8149682034000001 [ao]
+	Fe57           =	0.0188211699 [ao]
+	Fe58           =	0.0025047522000000003 [ao]
+	Mn55           =	0.0055       [ao]
+	Mo100          =	2.9232000000000002e-06 [ao]
+	Mo92           =	4.3947000000000005e-06 [ao]
+	Mo94           =	2.7560999999999998e-06 [ao]
+	Mo95           =	4.7619e-06   [ao]
+	Mo96           =	5.0018999999999995e-06 [ao]
+	Mo97           =	2.8746e-06   [ao]
+	Mo98           =	7.2876e-06   [ao]
+	N14            =	0.00039853480000000003 [ao]
+	N15            =	1.4652000000000002e-06 [ao]
+	Nb93           =	5e-05        [ao]
+	Ni58           =	6.80769e-05  [ao]
+	Ni60           =	2.62231e-05  [ao]
+	Ni61           =	1.1399e-06   [ao]
+	Ni62           =	3.6345000000000005e-06 [ao]
+	Ni64           =	9.256000000000001e-07 [ao]
+	O16            =	9.976206000000001e-06 [ao]
+	O17            =	3.79e-09     [ao]
+	O18            =	2.0003999999999998e-08 [ao]
+	P31            =	2e-05        [ao]
+	S32            =	2.8512222e-05 [ao]
+	S33            =	2.2460700000000002e-07 [ao]
+	S34            =	1.258797e-06 [ao]
+	S36            =	4.374e-09    [ao]
+	Si28           =	0.000239797168 [ao]
+	Si29           =	1.2176216e-05 [ao]
+	Si30           =	8.026615999999999e-06 [ao]
+	Ta180          =	1.4412e-07   [ao]
+	Ta181          =	0.0011998558799999998 [ao]
+	Ti46           =	8.250000000000001e-07 [ao]
+	Ti47           =	7.44e-07     [ao]
+	Ti48           =	7.372e-06    [ao]
+	Ti49           =	5.410000000000001e-07 [ao]
+	Ti50           =	5.180000000000001e-07 [ao]
+	V50            =	5e-06        [ao]
+	V51            =	0.0019950000000000002 [ao]
+	W180           =	1.3199999999999997e-05 [ao]
+	W182           =	0.002915     [ao]
+	W183           =	0.0015741    [ao]
+	W184           =	0.0033704    [ao]
+	W186           =	0.0031273    [ao]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Some materials require additional arguments to correctly calculate material properties.</p>
+<p>Coolants such as water, helium, CO2 and others require temperature and density information to find the density.</p>
+<p>This code block creates H2O at a particular temperature and pressure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Water requires temperature and pressure arguments to be passed</span>
+<span class="n">water</span> <span class="o">=</span> <span class="n">nmm</span><span class="o">.</span><span class="n">Material</span><span class="o">.</span><span class="n">from_library</span><span class="p">(</span><span class="s1">&#39;H2O&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">pressure</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+
+<span class="n">water</span><span class="o">.</span><span class="n">openmc_material</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Material
+	ID             =	4
+	Name           =	H2O
+	Temperature    =	300
+	Density        =	0.9965563403888981 [g/cm3]
+	Volume         =	None [cm^3]
+	Depletable     =	False
+	S(a,b) Tables  
+	Nuclides       
+	H1             =	0.66656284   [ao]
+	H2             =	0.00010382666666666666 [ao]
+	O16            =	0.33254019999999995 [ao]
+	O17            =	0.00012633333333333333 [ao]
+	O18            =	0.0006667999999999999 [ao]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Some materials can also take enrichment arguments which adjust the material density.</p>
+<p>The following code blocks create Li4SiO4 materials with different enrichments and packing fractions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lithium Orthosilicate (Li4SiO4) can take arguments of &#39;enrichment&#39;, &#39;enrichment_target&#39;, &#39;enrichment_type&#39; and &#39;packing_fraction&#39;</span>
+<span class="c1"># Note: for some lithium crystals, &#39;enrichment_target&#39; and &#39;enrichment_type&#39; are defined by default, but can be changed</span>
+
+<span class="n">default_Li4SiO4</span> <span class="o">=</span> <span class="n">nmm</span><span class="o">.</span><span class="n">Material</span><span class="o">.</span><span class="n">from_library</span><span class="p">(</span><span class="s1">&#39;Li4SiO4&#39;</span><span class="p">)</span>
+<span class="n">default_Li4SiO4</span><span class="o">.</span><span class="n">openmc_material</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Material
+	ID             =	6
+	Name           =	Li4SiO4
+	Temperature    =	None
+	Density        =	2.3189999321461983 [g/cm3]
+	Volume         =	None [cm^3]
+	Depletable     =	False
+	S(a,b) Tables  
+	Nuclides       
+	Li6            =	0.033728888888888885 [ao]
+	Li7            =	0.4107155555555555 [ao]
+	O16            =	0.4433869333333333 [ao]
+	O17            =	0.00016844444444444442 [ao]
+	O18            =	0.0008890666666666665 [ao]
+	Si28           =	0.10247742222222223 [ao]
+	Si29           =	0.005203511111111111 [ao]
+	Si30           =	0.0034301777777777775 [ao]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the following command creates Li4SiO4 with respect to given arguments but uses the default values for enrichment_target and enrichment_type</span>
+<span class="c1"># enrichment_target=&#39;Li6&#39;, enrichment_type=&#39;ao&#39; defined by default</span>
+
+<span class="n">enriched_and_packed_Li4SiO4</span> <span class="o">=</span> <span class="n">nmm</span><span class="o">.</span><span class="n">Material</span><span class="o">.</span><span class="n">from_library</span><span class="p">(</span>
+    <span class="s1">&#39;Li4SiO4&#39;</span><span class="p">,</span>
+    <span class="n">enrichment</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+    <span class="n">packing_fraction</span><span class="o">=</span><span class="mf">0.64</span>
+<span class="p">)</span>   
+<span class="n">enriched_and_packed_Li4SiO4</span><span class="o">.</span><span class="n">openmc_material</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Material
+	ID             =	8
+	Name           =	Li4SiO4
+	Temperature    =	None
+	Density        =	1.458174312154359 [g/cm3]
+	Volume         =	None [cm^3]
+	Depletable     =	False
+	S(a,b) Tables  
+	Nuclides       
+	Li6            =	0.26666666666666666 [ao]
+	Li7            =	0.17777777777777778 [ao]
+	O16            =	0.4433869333333333 [ao]
+	O17            =	0.00016844444444444442 [ao]
+	O18            =	0.0008890666666666665 [ao]
+	Si28           =	0.10247742222222223 [ao]
+	Si29           =	0.005203511111111111 [ao]
+	Si30           =	0.0034301777777777775 [ao]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The Neutronics Material Maker is a powerful tool which allows complicated materials to be created easily, but what about fine tuning these materials or mixing them together? These are covered in the next parts.</p>
+<p><strong>Learning Outcomes for Part 3:</strong></p>
+<ul class="simple">
+<li><p>The Neutronics Material Maker is a python package which can be used to create neutronics materials easily.</p></li>
+<li><p>The package makes it easy to account for isotopic enrichment, temperature and pressure effects.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tasks/task_02_making_materials"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2_example_materials_from_elements.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Making materials from elements</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="4_example_materials_parameter_study.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Changing materials</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jon Shimwell
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

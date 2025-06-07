@@ -1,0 +1,936 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Plotting neutron lethargy energy spectra across a surface with a energy group structure &#8212; Fusion Energy Neutronics Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tasks/task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Plotting photon and neutron energy spectra in a cell with a energy group structure" href="4_example_photon_spectra.html" />
+    <link rel="prev" title="Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques" href="2_example_neutron_spectra_on_cell.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../docs/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Fusion Energy Neutronics Workshop - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Fusion Energy Neutronics Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../docs/index.html">
+                    Fusion Energy Neutronics Workshop
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Installation options</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_pip.html">Install with pip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_conda.html">Install with Conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_mamba.html">Install with Mamba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_docker.html">Install with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_extras.html">Install optional extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_binder.html">Install in the Cloud (binder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_codespaces.html">Install in the cloud</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cross Sections</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/1_isotope_xs_plot.html">Plotting isotope cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/2_element_xs_plot.html">Plotting element cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/3_material_xs_plot.html">Plotting material cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/4_Doppler_broadening.html">Plotting Doppler broadened cross sections</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/1_example_materials_from_isotopes.html">Making materials from isotopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/2_example_materials_from_elements.html">Making materials from elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/3_example_materials_from_material_maker.html">Making materials from a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/4_example_materials_parameter_study.html">Changing materials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/5_example_materials_mixed.html">Mixing materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CSG Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/1_simple_csg_geometry.html">Constructing simple CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/2_intermediate_csg_geometry.html">Constructing CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk.html">3D Geometry viewing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making source terms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/1_point_source_plots.html">Point source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/2_ring_source.html">Ring source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/3_plasma_source_plots.html">Plasma source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/4_neutron_tracks.html">Visualising Particle Tracks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/5_gamma_source_example.html">Gamma sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/6_unstructured_mesh_spatial_source.html">Unstructured mesh source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/7_structured_mesh_source.html">Structured mesh source</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell TBR tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/1_example_tritium_production.html">Performing Tritium Breeding Ratio (TBR) simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/2_example_tritium_production_study.html">Simulating TBR as a function of Lithium enrichment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell DPA tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/1_find_dpa.html">Simulating Displacements Per Atom (DPA)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell spectra tally</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_example_neutron_flux_and_units.html">Neutron flux and units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_example_neutron_spectra_on_cell.html">Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Plotting neutron lethargy energy spectra across a surface with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_example_photon_spectra.html">Plotting photon and neutron energy spectra in a cell with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_neutron_energy_loss_plot.html">Plotting energy loss per collision</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell mesh tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.html">2D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/2_example_3d_regular_mesh_tallies.html">3D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies.html">Cylinder mesh tallies</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell instantaneous dose tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source.html">Simulations of effective dose on a surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study.html">Simulations of effective dose as a function of distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons.html">Dose map from neutron pulse</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Activation Transmutation Depletion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.html">Nuclide Build Up During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/2_example_tally_change_with_burnup.html">Tally Value Change During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/3_full_pulse_schedule.html">Full pulse schedule depletion simulation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate.html">Shutdown dose rate D1S method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.html">Shutdown dose rate D1S method different sources (DD+DT)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Volume Calculations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/1_find_volume_of_csg_cell.html">Finding Volume of a Cell by sampling simulation.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/2_find_volume_of_dagmc_cell.html">Finding Volume of DAGMC Cell</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variance Reduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/1_shielded_room_survival_biasing.html">Survival Biasing Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/2_shielded_room_single_ww.html">Variance Reduction - Weight Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/3_sphere_iterative_per_run_ww.html">Magic Method Iterative Weight Windows per run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/4_sphere_iterative_per_batch_ww.html">Magic Method Iterative Weight Windows per Batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/5_shielded_room_fw_cadis.html">FW CADIS Weight Windows</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CAD geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/1_making_cad_with_cadquery.html">Making CAD with CadQuery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/2_making_cad_with_paramak.html">Making CAD geometry with Paramak</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Converting CAD Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/1_converting_cad_files.html">Converting CAD geometry to neutronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.html">CAD conversion in memory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using DAGMC models in OpenMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/1_cad_model_simulation_minimal.html">Simple CAD model simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/2_cad_model_simulation_with_boundary_types.html">Adding boundary conditions to a CAD model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/3_cad_model_simulation_with_hybrid_csg.html">Making a hybrid CAD CSG model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD mesh fast flux simulation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad.html">Simulation of fast neutron flux</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/1_optimal_design.html">Design your own tokamak</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/main?urlpath=lab/tree/./tasks/task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop/issues/new?title=Issue%20on%20page%20%2Ftasks/task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tasks/task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Plotting neutron lethargy energy spectra across a surface with a energy group structure</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="plotting-neutron-lethargy-energy-spectra-across-a-surface-with-a-energy-group-structure">
+<h1>Plotting neutron lethargy energy spectra across a surface with a energy group structure<a class="headerlink" href="#plotting-neutron-lethargy-energy-spectra-across-a-surface-with-a-energy-group-structure" title="Link to this heading">#</a></h1>
+<p>This example creates a simple sphere of water and tallies the neutrons crossing a surface:</p>
+<p>We are also making use of an energy group structure for the spectrum instead of the linear energy group bins in the previous example.</p>
+<p>Group structures provide a list of energy bins which are non uniformly spaced and this helps get details from the tally.</p>
+<p>Current per unit lethargy is also plotted instead of</p>
+<p>First import OpenMC and configure the nuclear data path</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openmc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="c1"># Setting the cross section path to the correct location in the docker image.</span>
+<span class="c1"># If you are running this outside the docker image you will have to change this path to your local cross section path.</span>
+<span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;cross_sections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;nuclear_data&#39;</span> <span class="o">/</span> <span class="s1">&#39;cross_sections.xml&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This section creates a simple material, geometry and settings. This model is used in both the neutron current tally and the neutron flux tally.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MATERIALS</span>
+
+<span class="c1"># Due to the hydrogen content water is a very good neutron moderator</span>
+<span class="n">my_material</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Material</span><span class="p">()</span>
+<span class="n">my_material</span><span class="o">.</span><span class="n">add_element</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">percent_type</span><span class="o">=</span><span class="s1">&#39;ao&#39;</span><span class="p">)</span>
+<span class="n">my_material</span><span class="o">.</span><span class="n">add_element</span><span class="p">(</span><span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">percent_type</span><span class="o">=</span><span class="s1">&#39;ao&#39;</span><span class="p">)</span>
+<span class="n">my_material</span><span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="s1">&#39;g/cm3&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">my_materials</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Materials</span><span class="p">([</span><span class="n">my_material</span><span class="p">])</span>
+
+
+<span class="c1"># GEOMETRY</span>
+
+<span class="c1"># surfaces</span>
+<span class="n">inner_surface</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">mid_surface</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># Currently it is not possible to tally on boundary_type=&#39;vacuum&#39; surfaces</span>
+<span class="n">outer_surface</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s1">&#39;vacuum&#39;</span><span class="p">)</span>
+
+<span class="c1"># three cells of the same material</span>
+<span class="n">inner_cell</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">region</span><span class="o">=-</span><span class="n">inner_surface</span><span class="p">)</span>
+<span class="n">inner_cell</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="n">my_material</span>
+
+<span class="n">mid_cell</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">region</span><span class="o">=-</span><span class="n">mid_surface</span> <span class="o">&amp;</span> <span class="o">+</span><span class="n">inner_surface</span><span class="p">)</span>
+<span class="n">mid_cell</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="n">my_material</span>
+
+<span class="n">outer_vessel_cell</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">region</span><span class="o">=+</span><span class="n">mid_surface</span> <span class="o">&amp;</span> <span class="o">-</span><span class="n">outer_surface</span><span class="p">)</span>
+<span class="n">mid_cell</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="n">my_material</span>
+
+<span class="n">my_geometry</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Geometry</span><span class="p">([</span><span class="n">inner_cell</span><span class="p">,</span><span class="n">mid_cell</span><span class="p">,</span> <span class="n">outer_vessel_cell</span><span class="p">])</span>
+
+
+<span class="c1"># SIMULATION SETTINGS</span>
+
+<span class="c1"># Instantiate a Settings object</span>
+<span class="n">my_settings</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Settings</span><span class="p">()</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">batches</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">particles</span> <span class="o">=</span> <span class="mi">200000</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">run_mode</span> <span class="o">=</span> <span class="s1">&#39;fixed source&#39;</span>
+
+<span class="c1"># Create a DT point source</span>
+<span class="n">my_source</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">IndependentSource</span><span class="p">()</span>
+<span class="n">my_source</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Point</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">my_source</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Isotropic</span><span class="p">()</span>
+<span class="n">my_source</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Discrete</span><span class="p">([</span><span class="mf">14e6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">my_source</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This section section adds a tally for the average neutron flux across a cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#creates an empty tally object</span>
+<span class="n">my_tallies</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Tallies</span><span class="p">()</span>
+
+<span class="c1"># sets up filters for the tallies</span>
+<span class="n">neutron_particle_filter</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">ParticleFilter</span><span class="p">([</span><span class="s1">&#39;neutron&#39;</span><span class="p">])</span>
+
+<span class="c1"># creates an array of energy bins to use for the tally</span>
+<span class="c1"># these are not linearly spaced as they have extra bins in key energy ranges</span>
+<span class="c1"># A full list of energy structures is available here</span>
+<span class="c1"># https://github.com/openmc-dev/openmc/blob/6254be37582e09acff038f5656332b89e53e4eae/openmc/mgxs/__init__.py#L50-L420</span>
+<span class="n">energy_filter</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">EnergyFilter</span><span class="o">.</span><span class="n">from_group_structure</span><span class="p">(</span><span class="s1">&#39;CCFE-709&#39;</span><span class="p">)</span>
+
+<span class="c1"># setup the filters for the cell tally</span>
+<span class="n">inner_surface_filter</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">SurfaceFilter</span><span class="p">(</span><span class="n">inner_surface</span><span class="p">)</span>
+<span class="n">mid_surface_filter</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">SurfaceFilter</span><span class="p">(</span><span class="n">mid_surface</span><span class="p">)</span> 
+
+<span class="c1"># in openmc a surface current includes positive contributions from neutrons</span>
+<span class="c1"># passing in one direction and negative contributions from neutrons passing</span>
+<span class="c1"># in the other direction. A openmc.CellFromFilter can be used to get</span>
+<span class="c1"># contributions from a single direction.</span>
+
+<span class="c1"># create the tally</span>
+<span class="n">inner_surface_spectra_tally</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Tally</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;inner_surface_spectra_tally&#39;</span><span class="p">)</span>
+<span class="n">inner_surface_spectra_tally</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;current&#39;</span><span class="p">]</span>
+<span class="n">inner_surface_spectra_tally</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="p">[</span><span class="n">inner_surface_filter</span><span class="p">,</span> <span class="n">neutron_particle_filter</span><span class="p">,</span> <span class="n">energy_filter</span><span class="p">]</span>
+<span class="n">my_tallies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inner_surface_spectra_tally</span><span class="p">)</span>
+
+<span class="n">mid_surface_spectra_tally</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Tally</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;mid_surface_spectra_tally&#39;</span><span class="p">)</span>
+<span class="n">mid_surface_spectra_tally</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;current&#39;</span><span class="p">]</span>
+<span class="n">mid_surface_spectra_tally</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="p">[</span><span class="n">mid_surface_filter</span><span class="p">,</span> <span class="n">neutron_particle_filter</span><span class="p">,</span> <span class="n">energy_filter</span><span class="p">]</span>
+<span class="n">my_tallies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mid_surface_spectra_tally</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This section adds two surface current tallies - one on the inner sphere surface and one on the outer sphere surface.</p>
+<p>This section runs the simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># combine all the required parts to make a model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">my_geometry</span><span class="p">,</span> <span class="n">my_materials</span><span class="p">,</span> <span class="n">my_settings</span><span class="p">,</span> <span class="n">my_tallies</span><span class="p">)</span>
+
+<span class="c1"># remove old files and runs OpenMC</span>
+<span class="o">!</span>rm<span class="w"> </span>*.h5<span class="w"> </span><span class="o">||</span><span class="w"> </span>true
+<span class="n">results_filename</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                %%%%%%%%%%%%%%%
+                           %%%%%%%%%%%%%%%%%%%%%%%%
+                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                    %%%%%%%%%%%%%%%%%%%%%%%%
+                                     %%%%%%%%%%%%%%%%%%%%%%%%
+                 ###############      %%%%%%%%%%%%%%%%%%%%%%%%
+                ##################     %%%%%%%%%%%%%%%%%%%%%%%
+                ###################     %%%%%%%%%%%%%%%%%%%%%%%
+                ####################     %%%%%%%%%%%%%%%%%%%%%%
+                #####################     %%%%%%%%%%%%%%%%%%%%%
+                ######################     %%%%%%%%%%%%%%%%%%%%
+                #######################     %%%%%%%%%%%%%%%%%%
+                 #######################     %%%%%%%%%%%%%%%%%
+                 ######################     %%%%%%%%%%%%%%%%%
+                  ####################     %%%%%%%%%%%%%%%%%
+                    #################     %%%%%%%%%%%%%%%%%
+                     ###############     %%%%%%%%%%%%%%%%
+                       ############     %%%%%%%%%%%%%%%
+                          ########     %%%%%%%%%%%%%%
+                                      %%%%%%%%%%%
+
+                 | The OpenMC Monte Carlo Code
+       Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
+         License | https://docs.openmc.org/en/latest/license.html
+         Version | 0.15.3-dev144
+     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
+       Date/Time | 2025-06-07 10:50:24
+  OpenMP Threads | 16
+
+ Reading model XML file &#39;model.xml&#39; ...
+ Reading cross sections XML file...
+ Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
+ Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
+ Reading O16 from /home/jon/nuclear_data/neutron/O16.h5
+ Reading O17 from /home/jon/nuclear_data/neutron/O17.h5
+ Reading O18 from /home/jon/nuclear_data/neutron/O18.h5
+ Minimum neutron data temperature: 294.0 K
+ Maximum neutron data temperature: 294.0 K
+ Preparing distributed cell instances...
+ Writing summary.h5 file...
+ Maximum neutron transport energy: 20000000.0 eV for H1
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
+ Simulating batch 5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+ Simulating batch 10
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 1.7864e-01 seconds
+   Reading cross sections          = 1.6784e-01 seconds
+ Total time in simulation          = 2.0787e+00 seconds
+   Time in transport only          = 2.0140e+00 seconds
+   Time in active batches          = 2.0787e+00 seconds
+   Time accumulating tallies       = 3.9811e-02 seconds
+   Time writing statepoints        = 2.1597e-02 seconds
+ Total time for finalization       = 5.0307e-03 seconds
+ Total time elapsed                = 2.2635e+00 seconds
+ Calculation Rate (active)         = 962159.0 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.93138 +/- 0.00024
+</pre></div>
+</div>
+</div>
+</div>
+<p>This section extracts the cell tally data from the results file and plots neutron flux across the cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># open the results file</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">StatePoint</span><span class="p">(</span><span class="n">results_filename</span><span class="p">)</span>
+
+<span class="c1">#extracts the tally values from the simulation results</span>
+<span class="n">inner_surface_tally</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_tally</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;inner_surface_spectra_tally&#39;</span><span class="p">)</span>
+<span class="n">mid_surface_tally</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_tally</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;mid_surface_spectra_tally&#39;</span><span class="p">)</span>
+
+<span class="c1"># these are the widths of each energy bin (energy bins vary in size to get detail in specific areas of the spectrum)</span>
+<span class="n">bin_boundaries</span> <span class="o">=</span> <span class="n">energy_filter</span><span class="o">.</span><span class="n">lethargy_bin_width</span>
+
+<span class="n">inner_current</span> <span class="o">=</span> <span class="n">inner_surface_tally</span><span class="o">.</span><span class="n">mean</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">mid_current</span> <span class="o">=</span> <span class="n">mid_surface_tally</span><span class="o">.</span><span class="n">mean</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="n">normalised_inner_current</span> <span class="o">=</span> <span class="n">inner_current</span> <span class="o">/</span> <span class="n">bin_boundaries</span>
+<span class="n">normalised_mid_current</span> <span class="o">=</span> <span class="n">mid_current</span> <span class="o">/</span> <span class="n">bin_boundaries</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">energy_filter</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">normalised_mid_current</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;mid surface&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">energy_filter</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">normalised_inner_current</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;inner surface&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Neutron current per unit lethargy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Neutron Energy [eV]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/588b082023f025fece14cc7a7c11c305b4acf56dfb59788861b0a3adfd680633.png" src="../../_images/588b082023f025fece14cc7a7c11c305b4acf56dfb59788861b0a3adfd680633.png" />
+</div>
+</div>
+<p>This section extracts the surface tally data from the results file and plots neutron current through the inner and outer surfaces.</p>
+<p><strong>Additional notes</strong></p>
+<ul class="simple">
+<li><p>The current tally has a direction so particles can be +ve or -ve contributors.</p></li>
+<li><p>Sometimes an additional cellFromFilter is needed to detect the current in a certain direction.</p></li>
+<li><p>When comparing these results with other codes it might be necessary to scale them:</p>
+<ul>
+<li><p>The OpenMC surface current needs to be divided by the surface area when comparing with MCNP.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Learning Outcomes for Part 1:</strong></p>
+<ul class="simple">
+<li><p>Neutron spectra can be tallied in OpenMC using current tallies, and energy bins.</p></li>
+<li><p>Neutrons get moderated as they pass through a geometry and the thermal neutron distribution can be seen.</p></li>
+<li><p>To clearly identify the thermal neutron distribution extra energy bins are needed to resolve the structure.</p></li>
+<li><p>OpenMC has lots of group structure built in which can be accessed with the <code class="docutils literal notranslate"><span class="pre">from_group_structure</span></code> method</p></li>
+</ul>
+<p>Can you think of a case where the neutron flux might increase in the first few cm of material, can you model it and show this to be the case</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tasks/task_07_CSG_cell_tally_spectra"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2_example_neutron_spectra_on_cell.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="4_example_photon_spectra.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Plotting photon and neutron energy spectra in a cell with a energy group structure</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jon Shimwell
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

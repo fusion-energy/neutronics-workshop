@@ -1,0 +1,1036 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Simulating Displacements Per Atom (DPA) &#8212; Fusion Energy Neutronics Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tasks/task_06_CSG_cell_tally_DPA/1_find_dpa';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Task Introduction" href="../task_07_CSG_cell_tally_spectra/README.html" />
+    <link rel="prev" title="Task Introduction" href="README.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../docs/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Fusion Energy Neutronics Workshop - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Fusion Energy Neutronics Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../docs/index.html">
+                    Fusion Energy Neutronics Workshop
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Installation options</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_pip.html">Install with pip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_conda.html">Install with Conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_mamba.html">Install with Mamba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_docker.html">Install with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_extras.html">Install optional extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_binder.html">Install in the Cloud (binder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_codespaces.html">Install in the cloud</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cross Sections</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/1_isotope_xs_plot.html">Plotting isotope cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/2_element_xs_plot.html">Plotting element cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/3_material_xs_plot.html">Plotting material cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/4_Doppler_broadening.html">Plotting Doppler broadened cross sections</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/1_example_materials_from_isotopes.html">Making materials from isotopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/2_example_materials_from_elements.html">Making materials from elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/3_example_materials_from_material_maker.html">Making materials from a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/4_example_materials_parameter_study.html">Changing materials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/5_example_materials_mixed.html">Mixing materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CSG Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/1_simple_csg_geometry.html">Constructing simple CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/2_intermediate_csg_geometry.html">Constructing CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk.html">3D Geometry viewing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making source terms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/1_point_source_plots.html">Point source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/2_ring_source.html">Ring source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/3_plasma_source_plots.html">Plasma source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/4_neutron_tracks.html">Visualising Particle Tracks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/5_gamma_source_example.html">Gamma sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/6_unstructured_mesh_spatial_source.html">Unstructured mesh source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/7_structured_mesh_source.html">Structured mesh source</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell TBR tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/1_example_tritium_production.html">Performing Tritium Breeding Ratio (TBR) simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/2_example_tritium_production_study.html">Simulating TBR as a function of Lithium enrichment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell DPA tally</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Task Introduction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Simulating Displacements Per Atom (DPA)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell spectra tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/1_example_neutron_flux_and_units.html">Neutron flux and units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.html">Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.html">Plotting neutron lethargy energy spectra across a surface with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/4_example_photon_spectra.html">Plotting photon and neutron energy spectra in a cell with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/5_neutron_energy_loss_plot.html">Plotting energy loss per collision</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell mesh tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.html">2D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/2_example_3d_regular_mesh_tallies.html">3D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies.html">Cylinder mesh tallies</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell instantaneous dose tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source.html">Simulations of effective dose on a surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study.html">Simulations of effective dose as a function of distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons.html">Dose map from neutron pulse</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Activation Transmutation Depletion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.html">Nuclide Build Up During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/2_example_tally_change_with_burnup.html">Tally Value Change During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/3_full_pulse_schedule.html">Full pulse schedule depletion simulation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate.html">Shutdown dose rate D1S method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.html">Shutdown dose rate D1S method different sources (DD+DT)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Volume Calculations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/1_find_volume_of_csg_cell.html">Finding Volume of a Cell by sampling simulation.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/2_find_volume_of_dagmc_cell.html">Finding Volume of DAGMC Cell</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variance Reduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/1_shielded_room_survival_biasing.html">Survival Biasing Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/2_shielded_room_single_ww.html">Variance Reduction - Weight Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/3_sphere_iterative_per_run_ww.html">Magic Method Iterative Weight Windows per run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/4_sphere_iterative_per_batch_ww.html">Magic Method Iterative Weight Windows per Batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/5_shielded_room_fw_cadis.html">FW CADIS Weight Windows</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CAD geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/1_making_cad_with_cadquery.html">Making CAD with CadQuery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/2_making_cad_with_paramak.html">Making CAD geometry with Paramak</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Converting CAD Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/1_converting_cad_files.html">Converting CAD geometry to neutronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.html">CAD conversion in memory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using DAGMC models in OpenMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/1_cad_model_simulation_minimal.html">Simple CAD model simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/2_cad_model_simulation_with_boundary_types.html">Adding boundary conditions to a CAD model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/3_cad_model_simulation_with_hybrid_csg.html">Making a hybrid CAD CSG model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD mesh fast flux simulation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad.html">Simulation of fast neutron flux</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/1_optimal_design.html">Design your own tokamak</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/main?urlpath=lab/tree/./tasks/task_06_CSG_cell_tally_DPA/1_find_dpa.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop/issues/new?title=Issue%20on%20page%20%2Ftasks/task_06_CSG_cell_tally_DPA/1_find_dpa.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tasks/task_06_CSG_cell_tally_DPA/1_find_dpa.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Simulating Displacements Per Atom (DPA)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="simulating-displacements-per-atom-dpa">
+<h1>Simulating Displacements Per Atom (DPA)<a class="headerlink" href="#simulating-displacements-per-atom-dpa" title="Link to this heading">#</a></h1>
+<p>Displacements per atom (DPA) is one measure of damage within materials exposed to neutron irradiation. Damage energy can be tallied in OpenMC with MT reaction number 444 and DPA can be estimated.</p>
+<p>In the case of DPA a neutronics code alone can’t fully calculate the value as material science techniques are needed to account for the material and recombination effects. For example, after a displacement there is a chance that the atom relocates to it’s original lattice position (recombination) and different atoms require different amounts of energy to <a class="reference external" href="https://fispact.ukaea.uk/wiki/Output_interpretation#DPA_and_KERMA">displace</a>. The DPA tally from neutronics is therefore only an estimate of the DPA.</p>
+<p>The MT 444 / damage energy tally is in units of eV per source particle. Therefore the result needs scaling by the source intensity (in neutrons per second), the irradiation duration (in seconds) and the number of atoms in the volume.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">IFrame</span>
+<span class="n">IFrame</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s2">&quot;https://www.youtube.com/embed/VLn59FSc4GA&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">560</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">340</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+        <iframe
+            width="560"
+            height="340"
+            src="https://www.youtube.com/embed/VLn59FSc4GA"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        </div></div>
+</div>
+<p>First import OpenMC and configure the nuclear data path</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openmc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="c1"># Setting the cross section path to the correct location in the docker image.</span>
+<span class="c1"># If you are running this outside the docker image you will have to change this path to your local cross section path.</span>
+<span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;cross_sections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;nuclear_data&#39;</span> <span class="o">/</span> <span class="s1">&#39;cross_sections.xml&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This first stage sets up the geometry and materials for the simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MATERIALS</span>
+
+<span class="n">density_of_iron_in_g_per_cm3</span> <span class="o">=</span> <span class="mf">7.75</span>
+<span class="n">mat_iron</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Material</span><span class="p">()</span>
+<span class="n">mat_iron</span><span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="s1">&#39;g/cm3&#39;</span><span class="p">,</span> <span class="n">density_of_iron_in_g_per_cm3</span><span class="p">)</span>
+<span class="n">mat_iron</span><span class="o">.</span><span class="n">add_element</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">percent_type</span><span class="o">=</span><span class="s1">&#39;wo&#39;</span><span class="p">)</span>
+<span class="n">mat_iron</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># the id is set so that is can be accessed later from the volume calculation</span>
+<span class="n">my_materials</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Materials</span><span class="p">([</span><span class="n">mat_iron</span><span class="p">])</span>
+
+
+<span class="c1"># GEOMETRY</span>
+
+<span class="c1"># surfaces</span>
+<span class="n">outer_surface</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s1">&#39;vacuum&#39;</span><span class="p">)</span>
+
+<span class="c1"># cells</span>
+<span class="n">vessel_region</span> <span class="o">=</span> <span class="o">-</span><span class="n">outer_surface</span>
+<span class="n">vessel_cell</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">vessel_region</span><span class="p">)</span>
+<span class="n">vessel_cell</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># the id is set so that is can be accessed later from the volume calculation</span>
+<span class="n">vessel_cell</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="n">mat_iron</span>
+
+<span class="n">my_geometry</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Geometry</span><span class="p">([</span><span class="n">vessel_cell</span><span class="p">])</span>
+
+
+<span class="c1"># SIMULATION SETTINGS</span>
+
+<span class="c1"># Instantiate a Settings object</span>
+<span class="n">my_settings</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Settings</span><span class="p">()</span>
+<span class="n">batches</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">batches</span> <span class="o">=</span> <span class="n">batches</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">inactive</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">particles</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">run_mode</span> <span class="o">=</span> <span class="s1">&#39;fixed source&#39;</span>
+
+<span class="c1"># Create a DT point source</span>
+<span class="n">my_source</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">IndependentSource</span><span class="p">()</span>
+<span class="n">my_source</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Point</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">my_source</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Isotropic</span><span class="p">()</span>
+<span class="n">my_source</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Discrete</span><span class="p">([</span><span class="mf">14e6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">my_source</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another Material instance already exists with id=1.
+  warn(msg, IDWarning)
+/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another Cell instance already exists with id=1.
+  warn(msg, IDWarning)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This sets up the damage energy tally using the score name ‘damage-energy’ which the same as the ENDF MT number 444. A list of MT numbers including their reaction discription can be found <a class="reference external" href="https://t2.lanl.gov/nis/endf/mts.html">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># added a cell tally for DPA to the iron vessel cell</span>
+<span class="n">cell_filter</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">CellFilter</span><span class="p">(</span><span class="n">vessel_cell</span><span class="p">)</span>
+<span class="n">dpa_reaction_tally</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Tally</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;DPA&#39;</span><span class="p">)</span>
+<span class="n">dpa_reaction_tally</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="p">[</span><span class="n">cell_filter</span><span class="p">]</span>
+<span class="n">dpa_reaction_tally</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;damage-energy&#39;</span><span class="p">]</span>  <span class="c1"># Could use &#39;444&#39; instead, which is the MT reaction number for damage energy more MT numbers here https://t2.lanl.gov/nis/endf/mts.html</span>
+<span class="n">dpa_reaction_tally</span><span class="o">.</span><span class="n">nuclides</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Fe54&#39;</span><span class="p">,</span> <span class="s1">&#39;Fe56&#39;</span><span class="p">,</span> <span class="s1">&#39;Fe57&#39;</span><span class="p">,</span> <span class="s1">&#39;Fe58&#39;</span><span class="p">]</span> <span class="c1"># this records the tally for each nuclide in the list</span>
+<span class="n">my_tallies</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Tallies</span><span class="p">([</span><span class="n">dpa_reaction_tally</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This runs the simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">my_geometry</span><span class="p">,</span> <span class="n">my_materials</span><span class="p">,</span> <span class="n">my_settings</span><span class="p">,</span> <span class="n">my_tallies</span><span class="p">)</span>
+<span class="o">!</span>rm<span class="w"> </span>*.h5
+<span class="n">sp_filename</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                %%%%%%%%%%%%%%%
+                           %%%%%%%%%%%%%%%%%%%%%%%%
+                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                    %%%%%%%%%%%%%%%%%%%%%%%%
+                                     %%%%%%%%%%%%%%%%%%%%%%%%
+                 ###############      %%%%%%%%%%%%%%%%%%%%%%%%
+                ##################     %%%%%%%%%%%%%%%%%%%%%%%
+                ###################     %%%%%%%%%%%%%%%%%%%%%%%
+                ####################     %%%%%%%%%%%%%%%%%%%%%%
+                #####################     %%%%%%%%%%%%%%%%%%%%%
+                ######################     %%%%%%%%%%%%%%%%%%%%
+                #######################     %%%%%%%%%%%%%%%%%%
+                 #######################     %%%%%%%%%%%%%%%%%
+                 ######################     %%%%%%%%%%%%%%%%%
+                  ####################     %%%%%%%%%%%%%%%%%
+                    #################     %%%%%%%%%%%%%%%%%
+                     ###############     %%%%%%%%%%%%%%%%
+                       ############     %%%%%%%%%%%%%%%
+                          ########     %%%%%%%%%%%%%%
+                                      %%%%%%%%%%%
+
+                 | The OpenMC Monte Carlo Code
+       Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
+         License | https://docs.openmc.org/en/latest/license.html
+         Version | 0.15.3-dev144
+     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
+       Date/Time | 2025-06-06 15:45:36
+  OpenMP Threads | 16
+
+ Reading model XML file &#39;model.xml&#39; ...
+ Reading cross sections XML file...
+ Reading Fe54 from /home/jon/nuclear_data/neutron/Fe54.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Fe56 from /home/jon/nuclear_data/neutron/Fe56.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Fe57 from /home/jon/nuclear_data/neutron/Fe57.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Fe58 from /home/jon/nuclear_data/neutron/Fe58.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Minimum neutron data temperature: 294.0 K
+ Maximum neutron data temperature: 294.0 K
+ Preparing distributed cell instances...
+ Writing summary.h5 file...
+ Maximum neutron transport energy: 150000000.0 eV for Fe54
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 1.3522e+00 seconds
+   Reading cross sections          = 1.3376e+00 seconds
+ Total time in simulation          = 7.9569e+00 seconds
+   Time in transport only          = 7.9354e+00 seconds
+   Time in active batches          = 7.9569e+00 seconds
+   Time accumulating tallies       = 5.1127e-03 seconds
+   Time writing statepoints        = 1.0609e-02 seconds
+ Total time for finalization       = 5.2099e-04 seconds
+ Total time elapsed                = 9.3141e+00 seconds
+ Calculation Rate (active)         = 12567.8 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.55046 +/- 0.00152
+</pre></div>
+</div>
+</div>
+</div>
+<p>This extracts the simulation results and displays the damage-energy (444 MT number tally) for each nuclide</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">StatePoint</span><span class="p">(</span><span class="n">sp_filename</span><span class="p">)</span>
+
+<span class="c1"># access the tally</span>
+<span class="n">tally</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">get_tally</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;DPA&#39;</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">tally</span><span class="o">.</span><span class="n">get_pandas_dataframe</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   cell nuclide          score     mean  std. dev.
+0     1    Fe54  damage-energy 6.23e+04   1.65e+02
+1     1    Fe56  damage-energy 5.70e+05   1.35e+03
+2     1    Fe57  damage-energy 2.19e+04   5.44e+01
+3     1    Fe58  damage-energy 3.57e+03   9.09e+00
+</pre></div>
+</div>
+</div>
+</div>
+<p>The damage-energy (<span class="math notranslate nohighlight">\(T_{d}\)</span>) represents the the kinetic energy available for creating atomic displacements. This variable can be used to compute the total number of displacements per atom - or DPA. The current international standard [1] for quantifying DPA is based on the Kinchin-Pease model or NRT equation [2], which states that the number of Frenkel pairs produced <span class="math notranslate nohighlight">\(N_{d}\)</span> in a material with displacement energy <span class="math notranslate nohighlight">\(E_{d}\)</span> for a nuclear deposited energy <span class="math notranslate nohighlight">\(T_{d}\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[N_{d} = \dfrac{0.8T_{d}}{2E_d},\]</div>
+<p>where the factor 0.8 was introduced by the authors to allow for realistic atomic scattering instead of the hard core approximation.</p>
+<p>[1] ASTM Standard E693-94, ‘Standard practice for characterising neutron exposure in iron and low alloy steels in terms of displacements per atom (dpa)’, 1994</p>
+<p>[2] <a class="reference external" href="https://doi.org/10.1016%2F0029-5493%2875%2990035-7">https://doi.org/10.1016%2F0029-5493(75)90035-7</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">damage_energy_in_ev</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1">#T_D in NRT equation</span>
+<span class="n">E_D</span> <span class="o">=</span> <span class="mi">40</span> <span class="c1"># threshold displacement energy of Fe in eV</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Damage energy deposited per source neutron = &#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">damage_energy_in_ev</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;eV</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Two times the threshold energy of 40eV is needed to displace an atom&#39;</span><span class="p">)</span>
+<span class="n">displacements_per_source_neutron</span> <span class="o">=</span> <span class="mf">0.8</span><span class="o">*</span><span class="n">damage_energy_in_ev</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">E_D</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;(NRT) Displacements per source neutron = &#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">displacements_per_source_neutron</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Damage energy deposited per source neutron =  657690.61 eV
+
+Two times the threshold energy of 40eV is needed to displace an atom
+(NRT) Displacements per source neutron =  6576.91 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fusion_power</span> <span class="o">=</span> <span class="mf">3e9</span>  <span class="c1"># units Watts</span>
+<span class="n">energy_per_fusion_reaction</span> <span class="o">=</span> <span class="mf">17.6e6</span>  <span class="c1"># units eV</span>
+<span class="n">eV_to_Joules</span> <span class="o">=</span> <span class="mf">1.60218e-19</span>  <span class="c1"># multiplication factor to convert eV to Joules</span>
+<span class="n">number_of_neutrons_per_second</span> <span class="o">=</span> <span class="n">fusion_power</span> <span class="o">/</span> <span class="p">(</span><span class="n">energy_per_fusion_reaction</span> <span class="o">*</span> <span class="n">eV_to_Joules</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of neutrons per second&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">number_of_neutrons_per_second</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">number_of_neutrons_per_year</span> <span class="o">=</span> <span class="n">number_of_neutrons_per_second</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mf">365.25</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of neutrons per full power year &#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">number_of_neutrons_per_year</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">displacements_for_all_atoms</span> <span class="o">=</span> <span class="n">number_of_neutrons_per_year</span> <span class="o">*</span> <span class="n">displacements_per_source_neutron</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;(NRT) Displacements for all atoms in the volume &#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">displacements_for_all_atoms</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Now the number of atoms in the volume must be found to find displacements per atom (DPA)&#39;</span><span class="p">)</span>
+
+<span class="n">volume_of_firstwall_cell</span> <span class="o">=</span> <span class="mf">4.18879e6</span>  <span class="c1"># 4/3PiR^3 with R=100</span>
+
+<span class="n">iron_atomic_mass_in_g</span> <span class="o">=</span> <span class="mf">55.845</span><span class="o">*</span><span class="mf">1.66054E-24</span>  <span class="c1"># molar mass multiplier by the atomic mass unit (u)</span>
+<span class="n">number_of_iron_atoms</span> <span class="o">=</span> <span class="n">volume_of_firstwall_cell</span> <span class="o">*</span> <span class="n">density_of_iron_in_g_per_cm3</span> <span class="o">/</span> <span class="p">(</span><span class="n">iron_atomic_mass_in_g</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of iron atoms in the firstwall &#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">number_of_iron_atoms</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of neutrons per second 1.06e+21 
+
+Number of neutrons per full power year  3.36e+28
+(NRT) Displacements for all atoms in the volume  2.21e+32 
+
+Now the number of atoms in the volume must be found to find displacements per atom (DPA)
+Number of iron atoms in the firstwall  3.50e+29
+</pre></div>
+</div>
+</div>
+</div>
+<p>Therefore, as the total number of atoms and the total number of displacements is known, NRT-DPA can be found.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DPA_NRT</span> <span class="o">=</span> <span class="n">displacements_for_all_atoms</span> <span class="o">/</span> <span class="n">number_of_iron_atoms</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NRT-DPA =&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DPA_NRT</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NRT-DPA = 630.76
+</pre></div>
+</div>
+</div>
+</div>
+<p>Recently, a new method [3] was proposed in 2018 to solve the limitations of NRT equation. Namely, experiments have shown that “the number of radiation defects produced in energetic cascades in metals is only ~1/3 the NRT-DPA prediction”. The arc-DPA (athermal recombination corrected) extends the NRT-DPA approach by assuming that, after the so-called ‘thermal spike’, “almost all atoms regain positions in the perfect lattice sites […] only interstitials transported to the cascade outer periphery will result in stable defects”.</p>
+<p>Hence, in order to account for this behaviour, the authors modified the original NRT equation as follows:</p>
+<div class="math notranslate nohighlight">
+\[N_{d} = \dfrac{0.8T_{D}}{2E_d} \cdot \xi(T_d)= \dfrac{0.8T_{D}}{2E_d}\left( \dfrac{1-c}{{(2E_D/0.8)}^b} {T_D}^b + c\right),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\xi\)</span> is a surviving defect fraction factor and <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span> are constants for a given metal. For Fe, <span class="math notranslate nohighlight">\(b=−0.568\)</span> and <span class="math notranslate nohighlight">\(c=0.286\)</span>.</p>
+<p>[3] DOI: 10.1038/s41467-018-03415-5</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.568</span> <span class="c1"># constant for Fe</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">0.286</span>
+
+<span class="n">surviving_defect_fraction_factor</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">c</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">displacements_per_source_neutron</span><span class="p">)</span><span class="o">**</span><span class="n">b</span><span class="o">+</span><span class="n">c</span>
+<span class="n">displacements_per_source_neutron_arc</span> <span class="o">=</span> <span class="n">displacements_per_source_neutron</span><span class="o">*</span><span class="n">surviving_defect_fraction_factor</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;(arc) Displacements per source neutron = &#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">displacements_per_source_neutron_arc</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">displacements_for_all_atoms_arc</span> <span class="o">=</span> <span class="n">number_of_neutrons_per_year</span> <span class="o">*</span> <span class="n">displacements_per_source_neutron_arc</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;(arc) Displacements for all atoms in the volume &#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">displacements_for_all_atoms_arc</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">arc_NRT</span> <span class="o">=</span> <span class="n">displacements_for_all_atoms_arc</span> <span class="o">/</span> <span class="n">number_of_iron_atoms</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;arc-DPA =&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">arc_NRT</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;arc/NRT =&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">arc_NRT</span><span class="o">/</span><span class="n">DPA_NRT</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(arc) Displacements per source neutron =  1912.84 
+
+(arc) Displacements for all atoms in the volume  6.42e+31 
+
+arc-DPA = 183.45 
+
+arc/NRT = 0.29
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this task we knew the volume of the cell as it was a sphere of radius 100. If you don’t know the volume of the cell there is a stochastic volume task that might be of interest as it shows you how OpenMC can find the volume of more complex cells.</p>
+<p>**Extra topics
+There are better methods of predicting DPA, further reading <a class="reference external" href="https://www.nature.com/articles/s41467-018-03415-5/">https://www.nature.com/articles/s41467-018-03415-5/</a></p>
+<p><strong>Learning Outcomes for Task 6:</strong></p>
+<ul class="simple">
+<li><p>Damage energy deposited can be found with the OpenMC MT 444 tally.</p></li>
+<li><p>Post tally calculations are sometimes required to convert neutronics numbers into something more useful.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tasks/task_06_CSG_cell_tally_DPA"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="README.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Task Introduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../task_07_CSG_cell_tally_spectra/README.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Task Introduction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jon Shimwell
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

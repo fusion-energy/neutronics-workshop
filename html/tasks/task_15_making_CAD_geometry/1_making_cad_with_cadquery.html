@@ -1,0 +1,1663 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Making CAD with CadQuery &#8212; Fusion Energy Neutronics Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tasks/task_15_making_CAD_geometry/1_making_cad_with_cadquery';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Making CAD geometry with Paramak" href="2_making_cad_with_paramak.html" />
+    <link rel="prev" title="Task Introduction" href="README.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../docs/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Fusion Energy Neutronics Workshop - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Fusion Energy Neutronics Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../docs/index.html">
+                    Fusion Energy Neutronics Workshop
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Installation options</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_pip.html">Install with pip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_conda.html">Install with Conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_mamba.html">Install with Mamba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_docker.html">Install with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_extras.html">Install optional extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_binder.html">Install in the Cloud (binder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_codespaces.html">Install in the cloud</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cross Sections</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/1_isotope_xs_plot.html">Plotting isotope cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/2_element_xs_plot.html">Plotting element cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/3_material_xs_plot.html">Plotting material cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/4_Doppler_broadening.html">Plotting Doppler broadened cross sections</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/1_example_materials_from_isotopes.html">Making materials from isotopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/2_example_materials_from_elements.html">Making materials from elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/3_example_materials_from_material_maker.html">Making materials from a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/4_example_materials_parameter_study.html">Changing materials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/5_example_materials_mixed.html">Mixing materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CSG Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/1_simple_csg_geometry.html">Constructing simple CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/2_intermediate_csg_geometry.html">Constructing CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk.html">3D Geometry viewing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making source terms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/1_point_source_plots.html">Point source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/2_ring_source.html">Ring source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/3_plasma_source_plots.html">Plasma source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/4_neutron_tracks.html">Visualising Particle Tracks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/5_gamma_source_example.html">Gamma sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/6_unstructured_mesh_spatial_source.html">Unstructured mesh source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/7_structured_mesh_source.html">Structured mesh source</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell TBR tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/1_example_tritium_production.html">Performing Tritium Breeding Ratio (TBR) simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/2_example_tritium_production_study.html">Simulating TBR as a function of Lithium enrichment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell DPA tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/1_find_dpa.html">Simulating Displacements Per Atom (DPA)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell spectra tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/1_example_neutron_flux_and_units.html">Neutron flux and units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.html">Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.html">Plotting neutron lethargy energy spectra across a surface with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/4_example_photon_spectra.html">Plotting photon and neutron energy spectra in a cell with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/5_neutron_energy_loss_plot.html">Plotting energy loss per collision</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell mesh tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.html">2D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/2_example_3d_regular_mesh_tallies.html">3D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies.html">Cylinder mesh tallies</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell instantaneous dose tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source.html">Simulations of effective dose on a surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study.html">Simulations of effective dose as a function of distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons.html">Dose map from neutron pulse</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Activation Transmutation Depletion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.html">Nuclide Build Up During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/2_example_tally_change_with_burnup.html">Tally Value Change During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/3_full_pulse_schedule.html">Full pulse schedule depletion simulation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate.html">Shutdown dose rate D1S method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.html">Shutdown dose rate D1S method different sources (DD+DT)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Volume Calculations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/1_find_volume_of_csg_cell.html">Finding Volume of a Cell by sampling simulation.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/2_find_volume_of_dagmc_cell.html">Finding Volume of DAGMC Cell</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variance Reduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/1_shielded_room_survival_biasing.html">Survival Biasing Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/2_shielded_room_single_ww.html">Variance Reduction - Weight Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/3_sphere_iterative_per_run_ww.html">Magic Method Iterative Weight Windows per run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/4_sphere_iterative_per_batch_ww.html">Magic Method Iterative Weight Windows per Batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/5_shielded_room_fw_cadis.html">FW CADIS Weight Windows</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CAD geometry</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Task Introduction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Making CAD with CadQuery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_making_cad_with_paramak.html">Making CAD geometry with Paramak</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Converting CAD Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/1_converting_cad_files.html">Converting CAD geometry to neutronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.html">CAD conversion in memory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using DAGMC models in OpenMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/1_cad_model_simulation_minimal.html">Simple CAD model simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/2_cad_model_simulation_with_boundary_types.html">Adding boundary conditions to a CAD model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/3_cad_model_simulation_with_hybrid_csg.html">Making a hybrid CAD CSG model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD mesh fast flux simulation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad.html">Simulation of fast neutron flux</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/1_optimal_design.html">Design your own tokamak</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/main?urlpath=lab/tree/./tasks/task_15_making_CAD_geometry/1_making_cad_with_cadquery.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop/issues/new?title=Issue%20on%20page%20%2Ftasks/task_15_making_CAD_geometry/1_making_cad_with_cadquery.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tasks/task_15_making_CAD_geometry/1_making_cad_with_cadquery.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Making CAD with CadQuery</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="making-cad-with-cadquery">
+<h1>Making CAD with CadQuery<a class="headerlink" href="#making-cad-with-cadquery" title="Link to this heading">#</a></h1>
+<p>CadQuery is an intuitive, easy-to-use Python module for building parametric 3D CAD models. Using CadQuery, you can write short, simple scripts that produce high quality CAD models. It is easy to make many different objects using a single script that can be customized.</p>
+<p>More details can be found</p>
+<ul class="simple">
+<li><p>On the documentation <a class="reference external" href="https://cadquery.readthedocs.io/en/latest/">https://cadquery.readthedocs.io/en/latest/</a></p></li>
+<li><p>On GitHub <a class="github reference external" href="https://github.com/CadQuery/cadquery/">CadQuery/cadquery</a></p></li>
+</ul>
+<p>CadQuery is particular well suited to fusion neutronics:</p>
+<ul class="simple">
+<li><p>CadQuery is used by <a class="reference external" href="https://github.com/fusion-energy/cad_to_dagmc">cad-to-dagmc</a> to convert CAD geometry to DAGMC neutronics geometry</p></li>
+<li><p>Cadquery can pass geometry in memory to popular meshing software GMsh</p></li>
+<li><p>CadQuery can tag surfaces and volumes so that their tags appear in the meshes and can automate boundary condition assignment in engineering workflows</p></li>
+<li><p>CadQuery is easy to install with pip or conda</p></li>
+</ul>
+<p>In this task we are going start by making a few simple CAD shapes</p>
+<p>First we import cadquery</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cadquery</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cq</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circle_solid</span> <span class="o">=</span> <span class="n">cq</span><span class="o">.</span><span class="n">Workplane</span><span class="p">(</span><span class="s2">&quot;XY&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span><span class="o">.</span><span class="n">extrude</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
+
+<span class="n">circle_solid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2025-06-07 10:50:36.055 (   0.698s) [    753DDF332740]vtkDemandDrivenPipeline:675    ERR| vtkCompositeDataPipeline (0x55a5aac45e60): Input port 0 of algorithm vtkTriangleFilter (0x55a5ab45b600) has 0 connections but is not optional.</span>
+</pre></div>
+</div>
+<script type="application/javascript">
+
+function render(data, parent_element, ratio){
+    
+    // Initial setup
+    const renderWindow = vtk.Rendering.Core.vtkRenderWindow.newInstance();
+    const renderer = vtk.Rendering.Core.vtkRenderer.newInstance({ background: [1, 1, 1 ] });
+    renderWindow.addRenderer(renderer);
+        
+    // iterate over all children children
+    for (var el of data){ 
+        var trans = el.position;
+        var rot = el.orientation;
+        var rgba = el.color;
+        var shape = el.shape;
+        
+        // load the inline data
+        var reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
+        const textEncoder = new TextEncoder();
+        reader.parseAsArrayBuffer(textEncoder.encode(shape));
+
+        // setup actor,mapper and add
+        const mapper = vtk.Rendering.Core.vtkMapper.newInstance();
+        mapper.setInputConnection(reader.getOutputPort());
+        mapper.setResolveCoincidentTopologyToPolygonOffset();
+        mapper.setResolveCoincidentTopologyPolygonOffsetParameters(0.9,20);
+
+        const actor = vtk.Rendering.Core.vtkActor.newInstance();
+        actor.setMapper(mapper);
+
+        // set color and position
+        actor.getProperty().setColor(rgba.slice(0,3));
+        actor.getProperty().setOpacity(rgba[3]);
+        
+        actor.rotateZ(rot[2]*180/Math.PI);
+        actor.rotateY(rot[1]*180/Math.PI);
+        actor.rotateX(rot[0]*180/Math.PI);
+        
+        actor.setPosition(trans);
+
+        renderer.addActor(actor);
+
+    };
+    
+    renderer.resetCamera();
+    
+    const openglRenderWindow = vtk.Rendering.OpenGL.vtkRenderWindow.newInstance();
+    renderWindow.addView(openglRenderWindow);
+
+    // Add output to the "parent element"
+    var container;
+    var dims;
+    
+    if(typeof(parent_element.appendChild) !== "undefined"){
+        container = document.createElement("div");
+        parent_element.appendChild(container);
+        dims = parent_element.getBoundingClientRect();
+    }else{
+        container = parent_element.append("<div/>").children("div:last-child").get(0);
+        dims = parent_element.get(0).getBoundingClientRect();
+    };
+
+    openglRenderWindow.setContainer(container);
+    
+    // handle size
+    if (ratio){
+        openglRenderWindow.setSize(dims.width, dims.width*ratio);
+    }else{
+        openglRenderWindow.setSize(dims.width, dims.height);
+    };
+    
+    // Interaction setup
+    const interact_style = vtk.Interaction.Style.vtkInteractorStyleManipulator.newInstance();
+
+    const manips = {
+        rot: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRotateManipulator.newInstance(),
+        pan: vtk.Interaction.Manipulators.vtkMouseCameraTrackballPanManipulator.newInstance(),
+        zoom1: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        zoom2: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        roll: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRollManipulator.newInstance(),
+    };
+
+    manips.zoom1.setControl(true);
+    manips.zoom2.setScrollEnabled(true);
+    manips.roll.setShift(true);
+    manips.pan.setButton(2);
+
+    for (var k in manips){
+        interact_style.addMouseManipulator(manips[k]);
+    };
+
+    const interactor = vtk.Rendering.Core.vtkRenderWindowInteractor.newInstance();
+    interactor.setView(openglRenderWindow);
+    interactor.initialize();
+    interactor.bindEvents(container);
+    interactor.setInteractorStyle(interact_style);
+
+    // Orientation marker
+
+    const axes = vtk.Rendering.Core.vtkAnnotatedCubeActor.newInstance();
+    axes.setXPlusFaceProperty({text: '+X'});
+    axes.setXMinusFaceProperty({text: '-X'});
+    axes.setYPlusFaceProperty({text: '+Y'});
+    axes.setYMinusFaceProperty({text: '-Y'});
+    axes.setZPlusFaceProperty({text: '+Z'});
+    axes.setZMinusFaceProperty({text: '-Z'});
+
+    const orientationWidget = vtk.Interaction.Widgets.vtkOrientationMarkerWidget.newInstance({
+        actor: axes,
+        interactor: interactor });
+    orientationWidget.setEnabled(true);
+    orientationWidget.setViewportCorner(vtk.Interaction.Widgets.vtkOrientationMarkerWidget.Corners.BOTTOM_LEFT);
+    orientationWidget.setViewportSize(0.2);
+
+};
+
+
+function load_and_render(parent_element)
+{
+new Promise(
+  function(resolve, reject)
+  {
+    if (typeof(require) !== "undefined" ){
+        require.config({
+         "paths": {"vtk": "https://unpkg.com/vtk"},
+        });
+        require(["vtk"], resolve, reject);
+    } else if ( typeof(vtk) === "undefined" ){
+        var script = document.createElement("script");
+    	script.onload = resolve;
+    	script.onerror = reject;
+    	script.src = "https://unpkg.com/vtk.js";
+    	document.head.appendChild(script);
+    } else { resolve() };
+ }
+).then(() => {
+    var data = [{"shape": "<?xml version=\"1.0\"?>\n<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\" header_type=\"UInt32\" compressor=\"vtkZLibDataCompressor\">\n  <PolyData>\n    <Piece NumberOfPoints=\"0\"                    NumberOfVerts=\"0\"                    NumberOfLines=\"0\"                    NumberOfStrips=\"0\"                    NumberOfPolys=\"0\"                   >\n      <PointData>\n      </PointData>\n      <CellData>\n      </CellData>\n      <Points>\n      </Points>\n      <Verts>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"0\"                   />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"16\"                  />\n      </Verts>\n      <Lines>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"32\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"48\"                  />\n      </Lines>\n      <Strips>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"64\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"80\"                  />\n      </Strips>\n      <Polys>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"96\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"112\"                 />\n      </Polys>\n    </Piece>\n  </PolyData>\n  <AppendedData encoding=\"base64\">\n   _AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA\n  </AppendedData>\n</VTKFile>\n", "color": [1, 0.8, 0, 1], "position": [0, 0, 0], "orientation": [0, 0, 0]}];
+    render(data, parent_element, 0.5);
+});
+}
+
+load_and_render(element);
+</script></div>
+</div>
+<p>More complex shapes can be made that include splines. These types of curves are not available with traditional CSG geometry</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xyz_coordinates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">),</span>
+    <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">spine_solid</span> <span class="o">=</span> <span class="n">cq</span><span class="o">.</span><span class="n">Workplane</span><span class="p">(</span><span class="s2">&quot;XY&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">spline</span><span class="p">(</span><span class="n">listOfXYTuple</span><span class="o">=</span><span class="n">xyz_coordinates</span><span class="p">,</span> <span class="n">periodic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span><span class="o">.</span><span class="n">extrude</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">spine_solid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2025-06-07 10:50:36.103 (   0.746s) [    753DDF332740]vtkDemandDrivenPipeline:675    ERR| vtkCompositeDataPipeline (0x55a5aac3e300): Input port 0 of algorithm vtkTriangleFilter (0x55a5ab6f32c0) has 0 connections but is not optional.</span>
+</pre></div>
+</div>
+<script type="application/javascript">
+
+function render(data, parent_element, ratio){
+    
+    // Initial setup
+    const renderWindow = vtk.Rendering.Core.vtkRenderWindow.newInstance();
+    const renderer = vtk.Rendering.Core.vtkRenderer.newInstance({ background: [1, 1, 1 ] });
+    renderWindow.addRenderer(renderer);
+        
+    // iterate over all children children
+    for (var el of data){ 
+        var trans = el.position;
+        var rot = el.orientation;
+        var rgba = el.color;
+        var shape = el.shape;
+        
+        // load the inline data
+        var reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
+        const textEncoder = new TextEncoder();
+        reader.parseAsArrayBuffer(textEncoder.encode(shape));
+
+        // setup actor,mapper and add
+        const mapper = vtk.Rendering.Core.vtkMapper.newInstance();
+        mapper.setInputConnection(reader.getOutputPort());
+        mapper.setResolveCoincidentTopologyToPolygonOffset();
+        mapper.setResolveCoincidentTopologyPolygonOffsetParameters(0.9,20);
+
+        const actor = vtk.Rendering.Core.vtkActor.newInstance();
+        actor.setMapper(mapper);
+
+        // set color and position
+        actor.getProperty().setColor(rgba.slice(0,3));
+        actor.getProperty().setOpacity(rgba[3]);
+        
+        actor.rotateZ(rot[2]*180/Math.PI);
+        actor.rotateY(rot[1]*180/Math.PI);
+        actor.rotateX(rot[0]*180/Math.PI);
+        
+        actor.setPosition(trans);
+
+        renderer.addActor(actor);
+
+    };
+    
+    renderer.resetCamera();
+    
+    const openglRenderWindow = vtk.Rendering.OpenGL.vtkRenderWindow.newInstance();
+    renderWindow.addView(openglRenderWindow);
+
+    // Add output to the "parent element"
+    var container;
+    var dims;
+    
+    if(typeof(parent_element.appendChild) !== "undefined"){
+        container = document.createElement("div");
+        parent_element.appendChild(container);
+        dims = parent_element.getBoundingClientRect();
+    }else{
+        container = parent_element.append("<div/>").children("div:last-child").get(0);
+        dims = parent_element.get(0).getBoundingClientRect();
+    };
+
+    openglRenderWindow.setContainer(container);
+    
+    // handle size
+    if (ratio){
+        openglRenderWindow.setSize(dims.width, dims.width*ratio);
+    }else{
+        openglRenderWindow.setSize(dims.width, dims.height);
+    };
+    
+    // Interaction setup
+    const interact_style = vtk.Interaction.Style.vtkInteractorStyleManipulator.newInstance();
+
+    const manips = {
+        rot: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRotateManipulator.newInstance(),
+        pan: vtk.Interaction.Manipulators.vtkMouseCameraTrackballPanManipulator.newInstance(),
+        zoom1: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        zoom2: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        roll: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRollManipulator.newInstance(),
+    };
+
+    manips.zoom1.setControl(true);
+    manips.zoom2.setScrollEnabled(true);
+    manips.roll.setShift(true);
+    manips.pan.setButton(2);
+
+    for (var k in manips){
+        interact_style.addMouseManipulator(manips[k]);
+    };
+
+    const interactor = vtk.Rendering.Core.vtkRenderWindowInteractor.newInstance();
+    interactor.setView(openglRenderWindow);
+    interactor.initialize();
+    interactor.bindEvents(container);
+    interactor.setInteractorStyle(interact_style);
+
+    // Orientation marker
+
+    const axes = vtk.Rendering.Core.vtkAnnotatedCubeActor.newInstance();
+    axes.setXPlusFaceProperty({text: '+X'});
+    axes.setXMinusFaceProperty({text: '-X'});
+    axes.setYPlusFaceProperty({text: '+Y'});
+    axes.setYMinusFaceProperty({text: '-Y'});
+    axes.setZPlusFaceProperty({text: '+Z'});
+    axes.setZMinusFaceProperty({text: '-Z'});
+
+    const orientationWidget = vtk.Interaction.Widgets.vtkOrientationMarkerWidget.newInstance({
+        actor: axes,
+        interactor: interactor });
+    orientationWidget.setEnabled(true);
+    orientationWidget.setViewportCorner(vtk.Interaction.Widgets.vtkOrientationMarkerWidget.Corners.BOTTOM_LEFT);
+    orientationWidget.setViewportSize(0.2);
+
+};
+
+
+function load_and_render(parent_element)
+{
+new Promise(
+  function(resolve, reject)
+  {
+    if (typeof(require) !== "undefined" ){
+        require.config({
+         "paths": {"vtk": "https://unpkg.com/vtk"},
+        });
+        require(["vtk"], resolve, reject);
+    } else if ( typeof(vtk) === "undefined" ){
+        var script = document.createElement("script");
+    	script.onload = resolve;
+    	script.onerror = reject;
+    	script.src = "https://unpkg.com/vtk.js";
+    	document.head.appendChild(script);
+    } else { resolve() };
+ }
+).then(() => {
+    var data = [{"shape": "<?xml version=\"1.0\"?>\n<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\" header_type=\"UInt32\" compressor=\"vtkZLibDataCompressor\">\n  <PolyData>\n    <Piece NumberOfPoints=\"0\"                    NumberOfVerts=\"0\"                    NumberOfLines=\"0\"                    NumberOfStrips=\"0\"                    NumberOfPolys=\"0\"                   >\n      <PointData>\n      </PointData>\n      <CellData>\n      </CellData>\n      <Points>\n      </Points>\n      <Verts>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"0\"                   />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"16\"                  />\n      </Verts>\n      <Lines>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"32\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"48\"                  />\n      </Lines>\n      <Strips>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"64\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"80\"                  />\n      </Strips>\n      <Polys>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"96\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"112\"                 />\n      </Polys>\n    </Piece>\n  </PolyData>\n  <AppendedData encoding=\"base64\">\n   _AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA\n  </AppendedData>\n</VTKFile>\n", "color": [1, 0.8, 0, 1], "position": [0, 0, 0], "orientation": [0, 0, 0]}];
+    render(data, parent_element, 0.5);
+});
+}
+
+load_and_render(element);
+</script></div>
+</div>
+<p>Boolean operations are also supported</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cut_spline</span> <span class="o">=</span> <span class="n">spine_solid</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">circle_solid</span><span class="p">)</span>
+<span class="n">cut_spline</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2025-06-07 10:50:36.164 (   0.807s) [    753DDF332740]vtkDemandDrivenPipeline:675    ERR| vtkCompositeDataPipeline (0x55a5ab6e64d0): Input port 0 of algorithm vtkTriangleFilter (0x55a5ab674fb0) has 0 connections but is not optional.</span>
+</pre></div>
+</div>
+<script type="application/javascript">
+
+function render(data, parent_element, ratio){
+    
+    // Initial setup
+    const renderWindow = vtk.Rendering.Core.vtkRenderWindow.newInstance();
+    const renderer = vtk.Rendering.Core.vtkRenderer.newInstance({ background: [1, 1, 1 ] });
+    renderWindow.addRenderer(renderer);
+        
+    // iterate over all children children
+    for (var el of data){ 
+        var trans = el.position;
+        var rot = el.orientation;
+        var rgba = el.color;
+        var shape = el.shape;
+        
+        // load the inline data
+        var reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
+        const textEncoder = new TextEncoder();
+        reader.parseAsArrayBuffer(textEncoder.encode(shape));
+
+        // setup actor,mapper and add
+        const mapper = vtk.Rendering.Core.vtkMapper.newInstance();
+        mapper.setInputConnection(reader.getOutputPort());
+        mapper.setResolveCoincidentTopologyToPolygonOffset();
+        mapper.setResolveCoincidentTopologyPolygonOffsetParameters(0.9,20);
+
+        const actor = vtk.Rendering.Core.vtkActor.newInstance();
+        actor.setMapper(mapper);
+
+        // set color and position
+        actor.getProperty().setColor(rgba.slice(0,3));
+        actor.getProperty().setOpacity(rgba[3]);
+        
+        actor.rotateZ(rot[2]*180/Math.PI);
+        actor.rotateY(rot[1]*180/Math.PI);
+        actor.rotateX(rot[0]*180/Math.PI);
+        
+        actor.setPosition(trans);
+
+        renderer.addActor(actor);
+
+    };
+    
+    renderer.resetCamera();
+    
+    const openglRenderWindow = vtk.Rendering.OpenGL.vtkRenderWindow.newInstance();
+    renderWindow.addView(openglRenderWindow);
+
+    // Add output to the "parent element"
+    var container;
+    var dims;
+    
+    if(typeof(parent_element.appendChild) !== "undefined"){
+        container = document.createElement("div");
+        parent_element.appendChild(container);
+        dims = parent_element.getBoundingClientRect();
+    }else{
+        container = parent_element.append("<div/>").children("div:last-child").get(0);
+        dims = parent_element.get(0).getBoundingClientRect();
+    };
+
+    openglRenderWindow.setContainer(container);
+    
+    // handle size
+    if (ratio){
+        openglRenderWindow.setSize(dims.width, dims.width*ratio);
+    }else{
+        openglRenderWindow.setSize(dims.width, dims.height);
+    };
+    
+    // Interaction setup
+    const interact_style = vtk.Interaction.Style.vtkInteractorStyleManipulator.newInstance();
+
+    const manips = {
+        rot: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRotateManipulator.newInstance(),
+        pan: vtk.Interaction.Manipulators.vtkMouseCameraTrackballPanManipulator.newInstance(),
+        zoom1: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        zoom2: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        roll: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRollManipulator.newInstance(),
+    };
+
+    manips.zoom1.setControl(true);
+    manips.zoom2.setScrollEnabled(true);
+    manips.roll.setShift(true);
+    manips.pan.setButton(2);
+
+    for (var k in manips){
+        interact_style.addMouseManipulator(manips[k]);
+    };
+
+    const interactor = vtk.Rendering.Core.vtkRenderWindowInteractor.newInstance();
+    interactor.setView(openglRenderWindow);
+    interactor.initialize();
+    interactor.bindEvents(container);
+    interactor.setInteractorStyle(interact_style);
+
+    // Orientation marker
+
+    const axes = vtk.Rendering.Core.vtkAnnotatedCubeActor.newInstance();
+    axes.setXPlusFaceProperty({text: '+X'});
+    axes.setXMinusFaceProperty({text: '-X'});
+    axes.setYPlusFaceProperty({text: '+Y'});
+    axes.setYMinusFaceProperty({text: '-Y'});
+    axes.setZPlusFaceProperty({text: '+Z'});
+    axes.setZMinusFaceProperty({text: '-Z'});
+
+    const orientationWidget = vtk.Interaction.Widgets.vtkOrientationMarkerWidget.newInstance({
+        actor: axes,
+        interactor: interactor });
+    orientationWidget.setEnabled(true);
+    orientationWidget.setViewportCorner(vtk.Interaction.Widgets.vtkOrientationMarkerWidget.Corners.BOTTOM_LEFT);
+    orientationWidget.setViewportSize(0.2);
+
+};
+
+
+function load_and_render(parent_element)
+{
+new Promise(
+  function(resolve, reject)
+  {
+    if (typeof(require) !== "undefined" ){
+        require.config({
+         "paths": {"vtk": "https://unpkg.com/vtk"},
+        });
+        require(["vtk"], resolve, reject);
+    } else if ( typeof(vtk) === "undefined" ){
+        var script = document.createElement("script");
+    	script.onload = resolve;
+    	script.onerror = reject;
+    	script.src = "https://unpkg.com/vtk.js";
+    	document.head.appendChild(script);
+    } else { resolve() };
+ }
+).then(() => {
+    var data = [{"shape": "<?xml version=\"1.0\"?>\n<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\" header_type=\"UInt32\" compressor=\"vtkZLibDataCompressor\">\n  <PolyData>\n    <Piece NumberOfPoints=\"0\"                    NumberOfVerts=\"0\"                    NumberOfLines=\"0\"                    NumberOfStrips=\"0\"                    NumberOfPolys=\"0\"                   >\n      <PointData>\n      </PointData>\n      <CellData>\n      </CellData>\n      <Points>\n      </Points>\n      <Verts>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"0\"                   />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"16\"                  />\n      </Verts>\n      <Lines>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"32\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"48\"                  />\n      </Lines>\n      <Strips>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"64\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"80\"                  />\n      </Strips>\n      <Polys>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"96\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"112\"                 />\n      </Polys>\n    </Piece>\n  </PolyData>\n  <AppendedData encoding=\"base64\">\n   _AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA\n  </AppendedData>\n</VTKFile>\n", "color": [1, 0.8, 0, 1], "position": [0, 0, 0], "orientation": [0, 0, 0]}];
+    render(data, parent_element, 0.5);
+});
+}
+
+load_and_render(element);
+</script></div>
+</div>
+<p>Assemblies can also be built up to contain several shapes</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">assembly</span> <span class="o">=</span> <span class="n">cq</span><span class="o">.</span><span class="n">Assembly</span><span class="p">()</span>
+<span class="n">assembly</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">circle_solid</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cq</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">))</span>
+<span class="n">assembly</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">cut_spline</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cq</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">))</span>
+<span class="n">assembly</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2025-06-07 10:50:36.197 (   0.840s) [    753DDF332740]vtkDemandDrivenPipeline:675    ERR| vtkCompositeDataPipeline (0x55a5aac45e60): Input port 0 of algorithm vtkTriangleFilter (0x55a5ab674fb0) has 0 connections but is not optional.</span>
+<span class=" -Color -Color-Red">2025-06-07 10:50:36.229 (   0.872s) [    753DDF332740]vtkDemandDrivenPipeline:675    ERR| vtkCompositeDataPipeline (0x55a5ab6e64d0): Input port 0 of algorithm vtkTriangleFilter (0x55a5ab674fb0) has 0 connections but is not optional.</span>
+</pre></div>
+</div>
+<script type="application/javascript">
+
+function render(data, parent_element, ratio){
+    
+    // Initial setup
+    const renderWindow = vtk.Rendering.Core.vtkRenderWindow.newInstance();
+    const renderer = vtk.Rendering.Core.vtkRenderer.newInstance({ background: [1, 1, 1 ] });
+    renderWindow.addRenderer(renderer);
+        
+    // iterate over all children children
+    for (var el of data){ 
+        var trans = el.position;
+        var rot = el.orientation;
+        var rgba = el.color;
+        var shape = el.shape;
+        
+        // load the inline data
+        var reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
+        const textEncoder = new TextEncoder();
+        reader.parseAsArrayBuffer(textEncoder.encode(shape));
+
+        // setup actor,mapper and add
+        const mapper = vtk.Rendering.Core.vtkMapper.newInstance();
+        mapper.setInputConnection(reader.getOutputPort());
+        mapper.setResolveCoincidentTopologyToPolygonOffset();
+        mapper.setResolveCoincidentTopologyPolygonOffsetParameters(0.9,20);
+
+        const actor = vtk.Rendering.Core.vtkActor.newInstance();
+        actor.setMapper(mapper);
+
+        // set color and position
+        actor.getProperty().setColor(rgba.slice(0,3));
+        actor.getProperty().setOpacity(rgba[3]);
+        
+        actor.rotateZ(rot[2]*180/Math.PI);
+        actor.rotateY(rot[1]*180/Math.PI);
+        actor.rotateX(rot[0]*180/Math.PI);
+        
+        actor.setPosition(trans);
+
+        renderer.addActor(actor);
+
+    };
+    
+    renderer.resetCamera();
+    
+    const openglRenderWindow = vtk.Rendering.OpenGL.vtkRenderWindow.newInstance();
+    renderWindow.addView(openglRenderWindow);
+
+    // Add output to the "parent element"
+    var container;
+    var dims;
+    
+    if(typeof(parent_element.appendChild) !== "undefined"){
+        container = document.createElement("div");
+        parent_element.appendChild(container);
+        dims = parent_element.getBoundingClientRect();
+    }else{
+        container = parent_element.append("<div/>").children("div:last-child").get(0);
+        dims = parent_element.get(0).getBoundingClientRect();
+    };
+
+    openglRenderWindow.setContainer(container);
+    
+    // handle size
+    if (ratio){
+        openglRenderWindow.setSize(dims.width, dims.width*ratio);
+    }else{
+        openglRenderWindow.setSize(dims.width, dims.height);
+    };
+    
+    // Interaction setup
+    const interact_style = vtk.Interaction.Style.vtkInteractorStyleManipulator.newInstance();
+
+    const manips = {
+        rot: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRotateManipulator.newInstance(),
+        pan: vtk.Interaction.Manipulators.vtkMouseCameraTrackballPanManipulator.newInstance(),
+        zoom1: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        zoom2: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        roll: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRollManipulator.newInstance(),
+    };
+
+    manips.zoom1.setControl(true);
+    manips.zoom2.setScrollEnabled(true);
+    manips.roll.setShift(true);
+    manips.pan.setButton(2);
+
+    for (var k in manips){
+        interact_style.addMouseManipulator(manips[k]);
+    };
+
+    const interactor = vtk.Rendering.Core.vtkRenderWindowInteractor.newInstance();
+    interactor.setView(openglRenderWindow);
+    interactor.initialize();
+    interactor.bindEvents(container);
+    interactor.setInteractorStyle(interact_style);
+
+    // Orientation marker
+
+    const axes = vtk.Rendering.Core.vtkAnnotatedCubeActor.newInstance();
+    axes.setXPlusFaceProperty({text: '+X'});
+    axes.setXMinusFaceProperty({text: '-X'});
+    axes.setYPlusFaceProperty({text: '+Y'});
+    axes.setYMinusFaceProperty({text: '-Y'});
+    axes.setZPlusFaceProperty({text: '+Z'});
+    axes.setZMinusFaceProperty({text: '-Z'});
+
+    const orientationWidget = vtk.Interaction.Widgets.vtkOrientationMarkerWidget.newInstance({
+        actor: axes,
+        interactor: interactor });
+    orientationWidget.setEnabled(true);
+    orientationWidget.setViewportCorner(vtk.Interaction.Widgets.vtkOrientationMarkerWidget.Corners.BOTTOM_LEFT);
+    orientationWidget.setViewportSize(0.2);
+
+};
+
+
+function load_and_render(parent_element)
+{
+new Promise(
+  function(resolve, reject)
+  {
+    if (typeof(require) !== "undefined" ){
+        require.config({
+         "paths": {"vtk": "https://unpkg.com/vtk"},
+        });
+        require(["vtk"], resolve, reject);
+    } else if ( typeof(vtk) === "undefined" ){
+        var script = document.createElement("script");
+    	script.onload = resolve;
+    	script.onerror = reject;
+    	script.src = "https://unpkg.com/vtk.js";
+    	document.head.appendChild(script);
+    } else { resolve() };
+ }
+).then(() => {
+    var data = [{"shape": "<?xml version=\"1.0\"?>\n<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\" header_type=\"UInt32\" compressor=\"vtkZLibDataCompressor\">\n  <PolyData>\n    <Piece NumberOfPoints=\"0\"                    NumberOfVerts=\"0\"                    NumberOfLines=\"0\"                    NumberOfStrips=\"0\"                    NumberOfPolys=\"0\"                   >\n      <PointData>\n      </PointData>\n      <CellData>\n      </CellData>\n      <Points>\n      </Points>\n      <Verts>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"0\"                   />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"16\"                  />\n      </Verts>\n      <Lines>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"32\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"48\"                  />\n      </Lines>\n      <Strips>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"64\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"80\"                  />\n      </Strips>\n      <Polys>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"96\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"112\"                 />\n      </Polys>\n    </Piece>\n  </PolyData>\n  <AppendedData encoding=\"base64\">\n   _AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA\n  </AppendedData>\n</VTKFile>\n", "color": [1.0, 0.0, 0.0, 1.0], "position": [0.0, 0.0, 0.0], "orientation": [0.0, -0.0, 0.0]}, {"shape": "<?xml version=\"1.0\"?>\n<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\" header_type=\"UInt32\" compressor=\"vtkZLibDataCompressor\">\n  <PolyData>\n    <Piece NumberOfPoints=\"0\"                    NumberOfVerts=\"0\"                    NumberOfLines=\"0\"                    NumberOfStrips=\"0\"                    NumberOfPolys=\"0\"                   >\n      <PointData>\n      </PointData>\n      <CellData>\n      </CellData>\n      <Points>\n      </Points>\n      <Verts>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"0\"                   />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"16\"                  />\n      </Verts>\n      <Lines>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"32\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"48\"                  />\n      </Lines>\n      <Strips>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"64\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"80\"                  />\n      </Strips>\n      <Polys>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"96\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"112\"                 />\n      </Polys>\n    </Piece>\n  </PolyData>\n  <AppendedData encoding=\"base64\">\n   _AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA\n  </AppendedData>\n</VTKFile>\n", "color": [0.0, 0.0, 1.0, 1.0], "position": [0.0, 0.0, 0.0], "orientation": [0.0, -0.0, 0.0]}];
+    render(data, parent_element, 0.5);
+});
+}
+
+load_and_render(element);
+</script></div>
+</div>
+<p>CAD geometry can also be save to STEP files which are a well supported open standard CAD file format</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">assembly</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;my-cad-geometry.step&#39;</span><span class="p">)</span>
+
+<span class="o">!</span>ls<span class="w"> </span>*.step
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cad_geometry.step  my-cad-geometry.step
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also load CAD files with CadQuery</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loaded_shape</span> <span class="o">=</span> <span class="n">cq</span><span class="o">.</span><span class="n">importers</span><span class="o">.</span><span class="n">importStep</span><span class="p">(</span><span class="s1">&#39;my-cad-geometry.step&#39;</span><span class="p">)</span>
+<span class="n">loaded_shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2025-06-07 10:50:36.459 (   1.102s) [    753DDF332740]vtkDemandDrivenPipeline:675    ERR| vtkCompositeDataPipeline (0x55a5ab753080): Input port 0 of algorithm vtkTriangleFilter (0x55a5ab74fa70) has 0 connections but is not optional.</span>
+</pre></div>
+</div>
+<script type="application/javascript">
+
+function render(data, parent_element, ratio){
+    
+    // Initial setup
+    const renderWindow = vtk.Rendering.Core.vtkRenderWindow.newInstance();
+    const renderer = vtk.Rendering.Core.vtkRenderer.newInstance({ background: [1, 1, 1 ] });
+    renderWindow.addRenderer(renderer);
+        
+    // iterate over all children children
+    for (var el of data){ 
+        var trans = el.position;
+        var rot = el.orientation;
+        var rgba = el.color;
+        var shape = el.shape;
+        
+        // load the inline data
+        var reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
+        const textEncoder = new TextEncoder();
+        reader.parseAsArrayBuffer(textEncoder.encode(shape));
+
+        // setup actor,mapper and add
+        const mapper = vtk.Rendering.Core.vtkMapper.newInstance();
+        mapper.setInputConnection(reader.getOutputPort());
+        mapper.setResolveCoincidentTopologyToPolygonOffset();
+        mapper.setResolveCoincidentTopologyPolygonOffsetParameters(0.9,20);
+
+        const actor = vtk.Rendering.Core.vtkActor.newInstance();
+        actor.setMapper(mapper);
+
+        // set color and position
+        actor.getProperty().setColor(rgba.slice(0,3));
+        actor.getProperty().setOpacity(rgba[3]);
+        
+        actor.rotateZ(rot[2]*180/Math.PI);
+        actor.rotateY(rot[1]*180/Math.PI);
+        actor.rotateX(rot[0]*180/Math.PI);
+        
+        actor.setPosition(trans);
+
+        renderer.addActor(actor);
+
+    };
+    
+    renderer.resetCamera();
+    
+    const openglRenderWindow = vtk.Rendering.OpenGL.vtkRenderWindow.newInstance();
+    renderWindow.addView(openglRenderWindow);
+
+    // Add output to the "parent element"
+    var container;
+    var dims;
+    
+    if(typeof(parent_element.appendChild) !== "undefined"){
+        container = document.createElement("div");
+        parent_element.appendChild(container);
+        dims = parent_element.getBoundingClientRect();
+    }else{
+        container = parent_element.append("<div/>").children("div:last-child").get(0);
+        dims = parent_element.get(0).getBoundingClientRect();
+    };
+
+    openglRenderWindow.setContainer(container);
+    
+    // handle size
+    if (ratio){
+        openglRenderWindow.setSize(dims.width, dims.width*ratio);
+    }else{
+        openglRenderWindow.setSize(dims.width, dims.height);
+    };
+    
+    // Interaction setup
+    const interact_style = vtk.Interaction.Style.vtkInteractorStyleManipulator.newInstance();
+
+    const manips = {
+        rot: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRotateManipulator.newInstance(),
+        pan: vtk.Interaction.Manipulators.vtkMouseCameraTrackballPanManipulator.newInstance(),
+        zoom1: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        zoom2: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        roll: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRollManipulator.newInstance(),
+    };
+
+    manips.zoom1.setControl(true);
+    manips.zoom2.setScrollEnabled(true);
+    manips.roll.setShift(true);
+    manips.pan.setButton(2);
+
+    for (var k in manips){
+        interact_style.addMouseManipulator(manips[k]);
+    };
+
+    const interactor = vtk.Rendering.Core.vtkRenderWindowInteractor.newInstance();
+    interactor.setView(openglRenderWindow);
+    interactor.initialize();
+    interactor.bindEvents(container);
+    interactor.setInteractorStyle(interact_style);
+
+    // Orientation marker
+
+    const axes = vtk.Rendering.Core.vtkAnnotatedCubeActor.newInstance();
+    axes.setXPlusFaceProperty({text: '+X'});
+    axes.setXMinusFaceProperty({text: '-X'});
+    axes.setYPlusFaceProperty({text: '+Y'});
+    axes.setYMinusFaceProperty({text: '-Y'});
+    axes.setZPlusFaceProperty({text: '+Z'});
+    axes.setZMinusFaceProperty({text: '-Z'});
+
+    const orientationWidget = vtk.Interaction.Widgets.vtkOrientationMarkerWidget.newInstance({
+        actor: axes,
+        interactor: interactor });
+    orientationWidget.setEnabled(true);
+    orientationWidget.setViewportCorner(vtk.Interaction.Widgets.vtkOrientationMarkerWidget.Corners.BOTTOM_LEFT);
+    orientationWidget.setViewportSize(0.2);
+
+};
+
+
+function load_and_render(parent_element)
+{
+new Promise(
+  function(resolve, reject)
+  {
+    if (typeof(require) !== "undefined" ){
+        require.config({
+         "paths": {"vtk": "https://unpkg.com/vtk"},
+        });
+        require(["vtk"], resolve, reject);
+    } else if ( typeof(vtk) === "undefined" ){
+        var script = document.createElement("script");
+    	script.onload = resolve;
+    	script.onerror = reject;
+    	script.src = "https://unpkg.com/vtk.js";
+    	document.head.appendChild(script);
+    } else { resolve() };
+ }
+).then(() => {
+    var data = [{"shape": "<?xml version=\"1.0\"?>\n<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\" header_type=\"UInt32\" compressor=\"vtkZLibDataCompressor\">\n  <PolyData>\n    <Piece NumberOfPoints=\"0\"                    NumberOfVerts=\"0\"                    NumberOfLines=\"0\"                    NumberOfStrips=\"0\"                    NumberOfPolys=\"0\"                   >\n      <PointData>\n      </PointData>\n      <CellData>\n      </CellData>\n      <Points>\n      </Points>\n      <Verts>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"0\"                   />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"16\"                  />\n      </Verts>\n      <Lines>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"32\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"48\"                  />\n      </Lines>\n      <Strips>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"64\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"80\"                  />\n      </Strips>\n      <Polys>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"96\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"112\"                 />\n      </Polys>\n    </Piece>\n  </PolyData>\n  <AppendedData encoding=\"base64\">\n   _AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA\n  </AppendedData>\n</VTKFile>\n", "color": [1, 0.8, 0, 1], "position": [0, 0, 0], "orientation": [0, 0, 0]}];
+    render(data, parent_element, 0.5);
+});
+}
+
+load_and_render(element);
+</script></div>
+</div>
+<p>The benefits of CAD geometry over CSG are:</p>
+<ul class="simple">
+<li><p>CAD can be used to make more complex geometry</p></li>
+<li><p>CAD can be used by other disciplines (e.g. mechanical engineering)</p></li>
+<li><p>The void space does not need to be defined when we convert the geometry to a neutronics geomeyty. More on this later</p></li>
+</ul>
+<p>The potential disadvantage is that simulations might be slower. However understanding neutron transport algorthiums and building geometry well can help minimise this disadvantage.</p>
+<p>For more information on CadQuery take a look at the CadQuery examples</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cadquery.readthedocs.io/en/latest/examples.html">https://cadquery.readthedocs.io/en/latest/examples.html</a></p></li>
+<li><p><a class="reference external" href="https://cadquery.readthedocs.io/en/latest/free-func.html">https://cadquery.readthedocs.io/en/latest/free-func.html</a></p></li>
+<li><p><a class="reference external" href="https://cadquery.readthedocs.io/en/latest/sketch.html">https://cadquery.readthedocs.io/en/latest/sketch.html</a></p></li>
+<li><p><a class="reference external" href="https://cadquery.readthedocs.io/en/latest/assy.html">https://cadquery.readthedocs.io/en/latest/assy.html</a></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="n">cq</span><span class="o">.</span><span class="n">Workplane</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">txt</span><span class="o">=</span><span class="s2">&quot;GitHub stars are appreciated &quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">text</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;cad_geometry.step&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fontconfig error: Cannot load default config file: No such file: (null)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2025-06-07 10:50:37.357 (   2.000s) [    753DDF332740]vtkDemandDrivenPipeline:675    ERR| vtkCompositeDataPipeline (0x55a5ab75a5a0): Input port 0 of algorithm vtkTriangleFilter (0x55a5ab724490) has 0 connections but is not optional.</span>
+</pre></div>
+</div>
+<script type="application/javascript">
+
+function render(data, parent_element, ratio){
+    
+    // Initial setup
+    const renderWindow = vtk.Rendering.Core.vtkRenderWindow.newInstance();
+    const renderer = vtk.Rendering.Core.vtkRenderer.newInstance({ background: [1, 1, 1 ] });
+    renderWindow.addRenderer(renderer);
+        
+    // iterate over all children children
+    for (var el of data){ 
+        var trans = el.position;
+        var rot = el.orientation;
+        var rgba = el.color;
+        var shape = el.shape;
+        
+        // load the inline data
+        var reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
+        const textEncoder = new TextEncoder();
+        reader.parseAsArrayBuffer(textEncoder.encode(shape));
+
+        // setup actor,mapper and add
+        const mapper = vtk.Rendering.Core.vtkMapper.newInstance();
+        mapper.setInputConnection(reader.getOutputPort());
+        mapper.setResolveCoincidentTopologyToPolygonOffset();
+        mapper.setResolveCoincidentTopologyPolygonOffsetParameters(0.9,20);
+
+        const actor = vtk.Rendering.Core.vtkActor.newInstance();
+        actor.setMapper(mapper);
+
+        // set color and position
+        actor.getProperty().setColor(rgba.slice(0,3));
+        actor.getProperty().setOpacity(rgba[3]);
+        
+        actor.rotateZ(rot[2]*180/Math.PI);
+        actor.rotateY(rot[1]*180/Math.PI);
+        actor.rotateX(rot[0]*180/Math.PI);
+        
+        actor.setPosition(trans);
+
+        renderer.addActor(actor);
+
+    };
+    
+    renderer.resetCamera();
+    
+    const openglRenderWindow = vtk.Rendering.OpenGL.vtkRenderWindow.newInstance();
+    renderWindow.addView(openglRenderWindow);
+
+    // Add output to the "parent element"
+    var container;
+    var dims;
+    
+    if(typeof(parent_element.appendChild) !== "undefined"){
+        container = document.createElement("div");
+        parent_element.appendChild(container);
+        dims = parent_element.getBoundingClientRect();
+    }else{
+        container = parent_element.append("<div/>").children("div:last-child").get(0);
+        dims = parent_element.get(0).getBoundingClientRect();
+    };
+
+    openglRenderWindow.setContainer(container);
+    
+    // handle size
+    if (ratio){
+        openglRenderWindow.setSize(dims.width, dims.width*ratio);
+    }else{
+        openglRenderWindow.setSize(dims.width, dims.height);
+    };
+    
+    // Interaction setup
+    const interact_style = vtk.Interaction.Style.vtkInteractorStyleManipulator.newInstance();
+
+    const manips = {
+        rot: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRotateManipulator.newInstance(),
+        pan: vtk.Interaction.Manipulators.vtkMouseCameraTrackballPanManipulator.newInstance(),
+        zoom1: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        zoom2: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        roll: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRollManipulator.newInstance(),
+    };
+
+    manips.zoom1.setControl(true);
+    manips.zoom2.setScrollEnabled(true);
+    manips.roll.setShift(true);
+    manips.pan.setButton(2);
+
+    for (var k in manips){
+        interact_style.addMouseManipulator(manips[k]);
+    };
+
+    const interactor = vtk.Rendering.Core.vtkRenderWindowInteractor.newInstance();
+    interactor.setView(openglRenderWindow);
+    interactor.initialize();
+    interactor.bindEvents(container);
+    interactor.setInteractorStyle(interact_style);
+
+    // Orientation marker
+
+    const axes = vtk.Rendering.Core.vtkAnnotatedCubeActor.newInstance();
+    axes.setXPlusFaceProperty({text: '+X'});
+    axes.setXMinusFaceProperty({text: '-X'});
+    axes.setYPlusFaceProperty({text: '+Y'});
+    axes.setYMinusFaceProperty({text: '-Y'});
+    axes.setZPlusFaceProperty({text: '+Z'});
+    axes.setZMinusFaceProperty({text: '-Z'});
+
+    const orientationWidget = vtk.Interaction.Widgets.vtkOrientationMarkerWidget.newInstance({
+        actor: axes,
+        interactor: interactor });
+    orientationWidget.setEnabled(true);
+    orientationWidget.setViewportCorner(vtk.Interaction.Widgets.vtkOrientationMarkerWidget.Corners.BOTTOM_LEFT);
+    orientationWidget.setViewportSize(0.2);
+
+};
+
+
+function load_and_render(parent_element)
+{
+new Promise(
+  function(resolve, reject)
+  {
+    if (typeof(require) !== "undefined" ){
+        require.config({
+         "paths": {"vtk": "https://unpkg.com/vtk"},
+        });
+        require(["vtk"], resolve, reject);
+    } else if ( typeof(vtk) === "undefined" ){
+        var script = document.createElement("script");
+    	script.onload = resolve;
+    	script.onerror = reject;
+    	script.src = "https://unpkg.com/vtk.js";
+    	document.head.appendChild(script);
+    } else { resolve() };
+ }
+).then(() => {
+    var data = [{"shape": "<?xml version=\"1.0\"?>\n<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\" header_type=\"UInt32\" compressor=\"vtkZLibDataCompressor\">\n  <PolyData>\n    <Piece NumberOfPoints=\"0\"                    NumberOfVerts=\"0\"                    NumberOfLines=\"0\"                    NumberOfStrips=\"0\"                    NumberOfPolys=\"0\"                   >\n      <PointData>\n      </PointData>\n      <CellData>\n      </CellData>\n      <Points>\n      </Points>\n      <Verts>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"0\"                   />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"16\"                  />\n      </Verts>\n      <Lines>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"32\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"48\"                  />\n      </Lines>\n      <Strips>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"64\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"80\"                  />\n      </Strips>\n      <Polys>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"96\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"112\"                 />\n      </Polys>\n    </Piece>\n  </PolyData>\n  <AppendedData encoding=\"base64\">\n   _AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA\n  </AppendedData>\n</VTKFile>\n", "color": [1, 0.8, 0, 1], "position": [0, 0, 0], "orientation": [0, 0, 0]}];
+    render(data, parent_element, 0.5);
+});
+}
+
+load_and_render(element);
+</script></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tasks/task_15_making_CAD_geometry"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="README.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Task Introduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2_making_cad_with_paramak.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Making CAD geometry with Paramak</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jon Shimwell
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,2537 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Full pulse schedule depletion simulation &#8212; Fusion Energy Neutronics Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Task Introduction" href="../task_11_CSG_shut_down_dose_tallies/README.html" />
+    <link rel="prev" title="Tally Value Change During Depletion Simulation" href="2_example_tally_change_with_burnup.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../docs/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Fusion Energy Neutronics Workshop - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Fusion Energy Neutronics Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../docs/index.html">
+                    Fusion Energy Neutronics Workshop
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Installation options</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_pip.html">Install with pip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_conda.html">Install with Conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_mamba.html">Install with Mamba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_docker.html">Install with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_extras.html">Install optional extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_binder.html">Install in the Cloud (binder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_codespaces.html">Install in the cloud</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cross Sections</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/1_isotope_xs_plot.html">Plotting isotope cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/2_element_xs_plot.html">Plotting element cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/3_material_xs_plot.html">Plotting material cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/4_Doppler_broadening.html">Plotting Doppler broadened cross sections</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/1_example_materials_from_isotopes.html">Making materials from isotopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/2_example_materials_from_elements.html">Making materials from elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/3_example_materials_from_material_maker.html">Making materials from a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/4_example_materials_parameter_study.html">Changing materials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/5_example_materials_mixed.html">Mixing materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CSG Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/1_simple_csg_geometry.html">Constructing simple CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/2_intermediate_csg_geometry.html">Constructing CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk.html">3D Geometry viewing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making source terms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/1_point_source_plots.html">Point source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/2_ring_source.html">Ring source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/3_plasma_source_plots.html">Plasma source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/4_neutron_tracks.html">Visualising Particle Tracks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/5_gamma_source_example.html">Gamma sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/6_unstructured_mesh_spatial_source.html">Unstructured mesh source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/7_structured_mesh_source.html">Structured mesh source</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell TBR tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/1_example_tritium_production.html">Performing Tritium Breeding Ratio (TBR) simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/2_example_tritium_production_study.html">Simulating TBR as a function of Lithium enrichment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell DPA tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/1_find_dpa.html">Simulating Displacements Per Atom (DPA)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell spectra tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/1_example_neutron_flux_and_units.html">Neutron flux and units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.html">Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.html">Plotting neutron lethargy energy spectra across a surface with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/4_example_photon_spectra.html">Plotting photon and neutron energy spectra in a cell with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/5_neutron_energy_loss_plot.html">Plotting energy loss per collision</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell mesh tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.html">2D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/2_example_3d_regular_mesh_tallies.html">3D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies.html">Cylinder mesh tallies</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell instantaneous dose tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source.html">Simulations of effective dose on a surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study.html">Simulations of effective dose as a function of distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons.html">Dose map from neutron pulse</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Activation Transmutation Depletion</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_example_transmutation_isotope_build_up.html">Nuclide Build Up During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_example_tally_change_with_burnup.html">Tally Value Change During Depletion Simulation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Full pulse schedule depletion simulation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate.html">Shutdown dose rate D1S method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.html">Shutdown dose rate D1S method different sources (DD+DT)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Volume Calculations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/1_find_volume_of_csg_cell.html">Finding Volume of a Cell by sampling simulation.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/2_find_volume_of_dagmc_cell.html">Finding Volume of DAGMC Cell</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variance Reduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/1_shielded_room_survival_biasing.html">Survival Biasing Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/2_shielded_room_single_ww.html">Variance Reduction - Weight Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/3_sphere_iterative_per_run_ww.html">Magic Method Iterative Weight Windows per run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/4_sphere_iterative_per_batch_ww.html">Magic Method Iterative Weight Windows per Batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/5_shielded_room_fw_cadis.html">FW CADIS Weight Windows</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CAD geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/1_making_cad_with_cadquery.html">Making CAD with CadQuery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/2_making_cad_with_paramak.html">Making CAD geometry with Paramak</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Converting CAD Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/1_converting_cad_files.html">Converting CAD geometry to neutronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.html">CAD conversion in memory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using DAGMC models in OpenMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/1_cad_model_simulation_minimal.html">Simple CAD model simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/2_cad_model_simulation_with_boundary_types.html">Adding boundary conditions to a CAD model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/3_cad_model_simulation_with_hybrid_csg.html">Making a hybrid CAD CSG model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD mesh fast flux simulation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad.html">Simulation of fast neutron flux</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/1_optimal_design.html">Design your own tokamak</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/main?urlpath=lab/tree/./tasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop/issues/new?title=Issue%20on%20page%20%2Ftasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Full pulse schedule depletion simulation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="full-pulse-schedule-depletion-simulation">
+<h1>Full pulse schedule depletion simulation<a class="headerlink" href="#full-pulse-schedule-depletion-simulation" title="Link to this heading">#</a></h1>
+<p>This example performs a depletion/transmutation/activation simulation</p>
+<p>The simulation has been accelerated by making use of the IndependentOperator instead of the CoupledOperator.</p>
+<p>This is an approximation so is less accurate but it is much faster.</p>
+<p>This approach performs just a single transport simulation and obtains reactions rates once and assumes that they remain constant.</p>
+<p>If the materials don’t change significantly during the irradiation this is a reasonable approximation.</p>
+<p>Fission fuel pins would perhaps require the full CoupledOperator while the majority of fusion simulations are suitable for the IndependentOperator</p>
+<p>More details on both Operators in the docs
+<a class="reference external" href="https://docs.openmc.org/en/stable/usersguide/depletion.html#transport-independent-depletion">https://docs.openmc.org/en/stable/usersguide/depletion.html#transport-independent-depletion</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove any old files</span>
+<span class="o">!</span>rm<span class="w"> </span>settings.xm<span class="w"> </span>model.xml<span class="w"> </span>materials.xml<span class="w"> </span>geometry.xml<span class="w"> </span>settings.xml
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">openmc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">openmc.deplete</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="c1"># Setting the cross section path to the correct location in the docker image.</span>
+<span class="c1"># If you are running this outside the docker image you will have to change this path to your local cross section path.</span>
+<span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;cross_sections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;nuclear_data&#39;</span> <span class="o">/</span> <span class="s1">&#39;cross_sections.xml&#39;</span>
+<span class="c1"># This chain file was downloaded using the download_endf_chain script that is included in the openmc_data package https://github.com/openmc-data-storage/openmc_data\n&quot;,</span>
+<span class="c1"># this file tells openmc the decay paths between isotopes including probabilities of different routes and half lives</span>
+<span class="c1"># To download this xml file you can run these commands</span>
+<span class="c1"># pip install openmc_data</span>
+<span class="c1"># download_endf_chain -d nuclear_data -r b8.0</span>
+<span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;chain_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;nuclear_data&#39;</span> <span class="o">/</span> <span class="s1">&#39;chain-endf-b8.0.xml&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rm: cannot remove &#39;settings.xm&#39;: No such file or directory
+rm: cannot remove &#39;model.xml&#39;: No such file or directory
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creates a simple material which we will deplete</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_material</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="n">material_id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
+<span class="n">my_material</span><span class="o">.</span><span class="n">add_element</span><span class="p">(</span><span class="s1">&#39;Ag&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">percent_type</span><span class="o">=</span><span class="s1">&#39;ao&#39;</span><span class="p">)</span>
+<span class="n">my_material</span><span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="s1">&#39;g/cm3&#39;</span><span class="p">,</span> <span class="mf">10.49</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we are doing a depletion simulation we must set the material volume and the .depletion to True</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sphere_radius</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">volume_of_sphere</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">sphere_radius</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">my_material</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="n">volume_of_sphere</span>  <span class="c1"># a volume is needed so openmc can find the number of atoms in the cell/material</span>
+<span class="n">my_material</span><span class="o">.</span><span class="n">depletable</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># depletable = True is needed to tell openmc to update the material with each time step</span>
+<span class="n">materials</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Materials</span><span class="p">([</span><span class="n">my_material</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>makes a simple sphere surface and cell</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sph1</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">sphere_radius</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s1">&#39;vacuum&#39;</span><span class="p">)</span>
+<span class="n">shield_cell</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">region</span><span class="o">=-</span><span class="n">sph1</span><span class="p">)</span>
+<span class="n">shield_cell</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="n">my_material</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Geometry</span><span class="p">([</span><span class="n">shield_cell</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>creates a simple point source</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">IndependentSource</span><span class="p">()</span>
+<span class="n">source</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Point</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">source</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Isotropic</span><span class="p">()</span>
+<span class="n">source</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Discrete</span><span class="p">([</span><span class="mf">14e6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">source</span><span class="o">.</span><span class="n">particles</span> <span class="o">=</span> <span class="s1">&#39;neutron&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>defines the simulation settings</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">settings</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Settings</span><span class="p">()</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">batches</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">inactive</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">particles</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">run_mode</span> <span class="o">=</span> <span class="s1">&#39;fixed source&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>builds the model combining the materials, geometry and settings into one object</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="n">materials</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>this does perform particle transport but just to get the flux and micro xs</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flux_in_each_group</span><span class="p">,</span> <span class="n">micro_xs</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">deplete</span><span class="o">.</span><span class="n">get_microxs_and_flux</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="n">domains</span><span class="o">=</span><span class="p">[</span><span class="n">shield_cell</span><span class="p">],</span>
+    <span class="n">energies</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">30e6</span><span class="p">],</span> <span class="c1"># one energy bin from 0 to 30MeV</span>
+    <span class="n">chain_file</span><span class="o">=</span><span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;chain_file&#39;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                %%%%%%%%%%%%%%%
+                           %%%%%%%%%%%%%%%%%%%%%%%%
+                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                    %%%%%%%%%%%%%%%%%%%%%%%%
+                                     %%%%%%%%%%%%%%%%%%%%%%%%
+                 ###############      %%%%%%%%%%%%%%%%%%%%%%%%
+                ##################     %%%%%%%%%%%%%%%%%%%%%%%
+                ###################     %%%%%%%%%%%%%%%%%%%%%%%
+                ####################     %%%%%%%%%%%%%%%%%%%%%%
+                #####################     %%%%%%%%%%%%%%%%%%%%%
+                ######################     %%%%%%%%%%%%%%%%%%%%
+                #######################     %%%%%%%%%%%%%%%%%%
+                 #######################     %%%%%%%%%%%%%%%%%
+                 ######################     %%%%%%%%%%%%%%%%%
+                  ####################     %%%%%%%%%%%%%%%%%
+                    #################     %%%%%%%%%%%%%%%%%
+                     ###############     %%%%%%%%%%%%%%%%
+                       ############     %%%%%%%%%%%%%%%
+                          ########     %%%%%%%%%%%%%%
+                                      %%%%%%%%%%%
+
+                 | The OpenMC Monte Carlo Code
+       Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
+         License | https://docs.openmc.org/en/latest/license.html
+         Version | 0.15.3-dev144
+     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
+       Date/Time | 2025-06-06 15:50:39
+  OpenMP Threads | 16
+
+ Reading model XML file &#39;model.xml&#39; ...
+ Reading chain file: /home/jon/nuclear_data/chain-endf-b8.0.xml...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading cross sections XML file...
+ Reading Ag107 from /home/jon/nuclear_data/neutron/Ag107.h5
+ Reading Ag109 from /home/jon/nuclear_data/neutron/Ag109.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Minimum neutron data temperature: 294.0 K
+ Maximum neutron data temperature: 294.0 K
+ Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
+ Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
+ Reading H3 from /home/jon/nuclear_data/neutron/H3.h5
+ Reading He3 from /home/jon/nuclear_data/neutron/He3.h5
+ Reading He4 from /home/jon/nuclear_data/neutron/He4.h5
+ Reading Li6 from /home/jon/nuclear_data/neutron/Li6.h5
+ Reading Li7 from /home/jon/nuclear_data/neutron/Li7.h5
+ Reading Be7 from /home/jon/nuclear_data/neutron/Be7.h5
+ Reading Be9 from /home/jon/nuclear_data/neutron/Be9.h5
+ Reading B10 from /home/jon/nuclear_data/neutron/B10.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading B11 from /home/jon/nuclear_data/neutron/B11.h5
+ Reading C12 from /home/jon/nuclear_data/neutron/C12.h5
+ Reading C13 from /home/jon/nuclear_data/neutron/C13.h5
+ Reading N14 from /home/jon/nuclear_data/neutron/N14.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading N15 from /home/jon/nuclear_data/neutron/N15.h5
+ Reading O16 from /home/jon/nuclear_data/neutron/O16.h5
+ Reading O17 from /home/jon/nuclear_data/neutron/O17.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading O18 from /home/jon/nuclear_data/neutron/O18.h5
+ Reading F19 from /home/jon/nuclear_data/neutron/F19.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ne20 from /home/jon/nuclear_data/neutron/Ne20.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ne21 from /home/jon/nuclear_data/neutron/Ne21.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ne22 from /home/jon/nuclear_data/neutron/Ne22.h5
+ Reading Na22 from /home/jon/nuclear_data/neutron/Na22.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Na22 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Na22 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Na22 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Na22 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Na22 at 1200K
+ WARNING: Negative value(s) found on probability table for nuclide Na22 at 2500K
+ Reading Na23 from /home/jon/nuclear_data/neutron/Na23.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mg24 from /home/jon/nuclear_data/neutron/Mg24.h5
+ Reading Mg25 from /home/jon/nuclear_data/neutron/Mg25.h5
+ Reading Mg26 from /home/jon/nuclear_data/neutron/Mg26.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Al26_m1 from /home/jon/nuclear_data/neutron/Al26_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Al27 from /home/jon/nuclear_data/neutron/Al27.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si28 from /home/jon/nuclear_data/neutron/Si28.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si30 from /home/jon/nuclear_data/neutron/Si30.h5
+ Reading Si31 from /home/jon/nuclear_data/neutron/Si31.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si32 from /home/jon/nuclear_data/neutron/Si32.h5
+ Reading P31 from /home/jon/nuclear_data/neutron/P31.h5
+ Reading S32 from /home/jon/nuclear_data/neutron/S32.h5
+ Reading S33 from /home/jon/nuclear_data/neutron/S33.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading S34 from /home/jon/nuclear_data/neutron/S34.h5
+ Reading S35 from /home/jon/nuclear_data/neutron/S35.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading S36 from /home/jon/nuclear_data/neutron/S36.h5
+ Reading Cl35 from /home/jon/nuclear_data/neutron/Cl35.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cl36 from /home/jon/nuclear_data/neutron/Cl36.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cl37 from /home/jon/nuclear_data/neutron/Cl37.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ar36 from /home/jon/nuclear_data/neutron/Ar36.h5
+ WARNING: Negative value(s) found on probability table for nuclide Ar36 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Ar36 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Ar36 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Ar36 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Ar36 at 1200K
+ WARNING: Negative value(s) found on probability table for nuclide Ar36 at 2500K
+ Reading Ar37 from /home/jon/nuclear_data/neutron/Ar37.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ar38 from /home/jon/nuclear_data/neutron/Ar38.h5
+ Reading Ar39 from /home/jon/nuclear_data/neutron/Ar39.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ar40 from /home/jon/nuclear_data/neutron/Ar40.h5
+ Reading Ar41 from /home/jon/nuclear_data/neutron/Ar41.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading K39 from /home/jon/nuclear_data/neutron/K39.h5
+ Reading K40 from /home/jon/nuclear_data/neutron/K40.h5
+ Reading K41 from /home/jon/nuclear_data/neutron/K41.h5
+ Reading Ca40 from /home/jon/nuclear_data/neutron/Ca40.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca41 from /home/jon/nuclear_data/neutron/Ca41.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca42 from /home/jon/nuclear_data/neutron/Ca42.h5
+ Reading Ca43 from /home/jon/nuclear_data/neutron/Ca43.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca44 from /home/jon/nuclear_data/neutron/Ca44.h5
+ Reading Ca45 from /home/jon/nuclear_data/neutron/Ca45.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca46 from /home/jon/nuclear_data/neutron/Ca46.h5
+ Reading Ca47 from /home/jon/nuclear_data/neutron/Ca47.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca48 from /home/jon/nuclear_data/neutron/Ca48.h5
+ Reading Sc45 from /home/jon/nuclear_data/neutron/Sc45.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ti46 from /home/jon/nuclear_data/neutron/Ti46.h5
+ Reading Ti47 from /home/jon/nuclear_data/neutron/Ti47.h5
+ Reading Ti48 from /home/jon/nuclear_data/neutron/Ti48.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ti49 from /home/jon/nuclear_data/neutron/Ti49.h5
+ Reading Ti50 from /home/jon/nuclear_data/neutron/Ti50.h5
+ Reading V49 from /home/jon/nuclear_data/neutron/V49.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading V50 from /home/jon/nuclear_data/neutron/V50.h5
+ Reading V51 from /home/jon/nuclear_data/neutron/V51.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cr50 from /home/jon/nuclear_data/neutron/Cr50.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cr51 from /home/jon/nuclear_data/neutron/Cr51.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cr52 from /home/jon/nuclear_data/neutron/Cr52.h5
+ Reading Cr53 from /home/jon/nuclear_data/neutron/Cr53.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cr54 from /home/jon/nuclear_data/neutron/Cr54.h5
+ Reading Mn54 from /home/jon/nuclear_data/neutron/Mn54.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mn55 from /home/jon/nuclear_data/neutron/Mn55.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Fe54 from /home/jon/nuclear_data/neutron/Fe54.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Fe55 from /home/jon/nuclear_data/neutron/Fe55.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Fe56 from /home/jon/nuclear_data/neutron/Fe56.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Fe57 from /home/jon/nuclear_data/neutron/Fe57.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Fe58 from /home/jon/nuclear_data/neutron/Fe58.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Co58 from /home/jon/nuclear_data/neutron/Co58.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Co58_m1 from /home/jon/nuclear_data/neutron/Co58_m1.h5
+ Reading Co59 from /home/jon/nuclear_data/neutron/Co59.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ni58 from /home/jon/nuclear_data/neutron/Ni58.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ni59 from /home/jon/nuclear_data/neutron/Ni59.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ni60 from /home/jon/nuclear_data/neutron/Ni60.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ni61 from /home/jon/nuclear_data/neutron/Ni61.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ni62 from /home/jon/nuclear_data/neutron/Ni62.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ni63 from /home/jon/nuclear_data/neutron/Ni63.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ni64 from /home/jon/nuclear_data/neutron/Ni64.h5
+ Reading Cu63 from /home/jon/nuclear_data/neutron/Cu63.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cu64 from /home/jon/nuclear_data/neutron/Cu64.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cu65 from /home/jon/nuclear_data/neutron/Cu65.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zn64 from /home/jon/nuclear_data/neutron/Zn64.h5
+ Reading Zn65 from /home/jon/nuclear_data/neutron/Zn65.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zn66 from /home/jon/nuclear_data/neutron/Zn66.h5
+ Reading Zn67 from /home/jon/nuclear_data/neutron/Zn67.h5
+ Reading Zn68 from /home/jon/nuclear_data/neutron/Zn68.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zn69 from /home/jon/nuclear_data/neutron/Zn69.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zn70 from /home/jon/nuclear_data/neutron/Zn70.h5
+ Reading Ga69 from /home/jon/nuclear_data/neutron/Ga69.h5
+ Reading Ga70 from /home/jon/nuclear_data/neutron/Ga70.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ga71 from /home/jon/nuclear_data/neutron/Ga71.h5
+ Reading Ge70 from /home/jon/nuclear_data/neutron/Ge70.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ge71 from /home/jon/nuclear_data/neutron/Ge71.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ge72 from /home/jon/nuclear_data/neutron/Ge72.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ge73 from /home/jon/nuclear_data/neutron/Ge73.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ge74 from /home/jon/nuclear_data/neutron/Ge74.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ge75 from /home/jon/nuclear_data/neutron/Ge75.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ge76 from /home/jon/nuclear_data/neutron/Ge76.h5
+ Reading As73 from /home/jon/nuclear_data/neutron/As73.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading As74 from /home/jon/nuclear_data/neutron/As74.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading As75 from /home/jon/nuclear_data/neutron/As75.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Se74 from /home/jon/nuclear_data/neutron/Se74.h5
+ Reading Se75 from /home/jon/nuclear_data/neutron/Se75.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Se76 from /home/jon/nuclear_data/neutron/Se76.h5
+ Reading Se77 from /home/jon/nuclear_data/neutron/Se77.h5
+ Reading Se78 from /home/jon/nuclear_data/neutron/Se78.h5
+ Reading Se79 from /home/jon/nuclear_data/neutron/Se79.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Se79 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Se79 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Se79 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Se79 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Se79 at 1200K
+ Reading Se80 from /home/jon/nuclear_data/neutron/Se80.h5
+ Reading Se81 from /home/jon/nuclear_data/neutron/Se81.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Se82 from /home/jon/nuclear_data/neutron/Se82.h5
+ Reading Br79 from /home/jon/nuclear_data/neutron/Br79.h5
+ Reading Br80 from /home/jon/nuclear_data/neutron/Br80.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Br81 from /home/jon/nuclear_data/neutron/Br81.h5
+ Reading Kr78 from /home/jon/nuclear_data/neutron/Kr78.h5
+ Reading Kr79 from /home/jon/nuclear_data/neutron/Kr79.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Kr80 from /home/jon/nuclear_data/neutron/Kr80.h5
+ Reading Kr81 from /home/jon/nuclear_data/neutron/Kr81.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Kr82 from /home/jon/nuclear_data/neutron/Kr82.h5
+ Reading Kr83 from /home/jon/nuclear_data/neutron/Kr83.h5
+ Reading Kr84 from /home/jon/nuclear_data/neutron/Kr84.h5
+ Reading Kr85 from /home/jon/nuclear_data/neutron/Kr85.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Kr86 from /home/jon/nuclear_data/neutron/Kr86.h5
+ Reading Rb85 from /home/jon/nuclear_data/neutron/Rb85.h5
+ Reading Rb86 from /home/jon/nuclear_data/neutron/Rb86.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Rb87 from /home/jon/nuclear_data/neutron/Rb87.h5
+ Reading Sr84 from /home/jon/nuclear_data/neutron/Sr84.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sr85 from /home/jon/nuclear_data/neutron/Sr85.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sr86 from /home/jon/nuclear_data/neutron/Sr86.h5
+ Reading Sr87 from /home/jon/nuclear_data/neutron/Sr87.h5
+ Reading Sr88 from /home/jon/nuclear_data/neutron/Sr88.h5
+ Reading Sr89 from /home/jon/nuclear_data/neutron/Sr89.h5
+ Reading Sr90 from /home/jon/nuclear_data/neutron/Sr90.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Y89 from /home/jon/nuclear_data/neutron/Y89.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Y90 from /home/jon/nuclear_data/neutron/Y90.h5
+ Reading Y91 from /home/jon/nuclear_data/neutron/Y91.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr90 from /home/jon/nuclear_data/neutron/Zr90.h5
+ Reading Zr91 from /home/jon/nuclear_data/neutron/Zr91.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr92 from /home/jon/nuclear_data/neutron/Zr92.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr93 from /home/jon/nuclear_data/neutron/Zr93.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr94 from /home/jon/nuclear_data/neutron/Zr94.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr95 from /home/jon/nuclear_data/neutron/Zr95.h5
+ Reading Zr96 from /home/jon/nuclear_data/neutron/Zr96.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Zr96 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Zr96 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Zr96 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Zr96 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Zr96 at 1200K
+ WARNING: Negative value(s) found on probability table for nuclide Zr96 at 2500K
+ Reading Nb93 from /home/jon/nuclear_data/neutron/Nb93.h5
+ Reading Nb94 from /home/jon/nuclear_data/neutron/Nb94.h5
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 1200K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 2500K
+ Reading Nb95 from /home/jon/nuclear_data/neutron/Nb95.h5
+ WARNING: Negative value(s) found on probability table for nuclide Nb95 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Nb95 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Nb95 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Nb95 at 900K
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Nb95 at 1200K
+ Reading Mo92 from /home/jon/nuclear_data/neutron/Mo92.h5
+ Reading Mo93 from /home/jon/nuclear_data/neutron/Mo93.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mo94 from /home/jon/nuclear_data/neutron/Mo94.h5
+ Reading Mo95 from /home/jon/nuclear_data/neutron/Mo95.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mo96 from /home/jon/nuclear_data/neutron/Mo96.h5
+ Reading Mo97 from /home/jon/nuclear_data/neutron/Mo97.h5
+ Reading Mo98 from /home/jon/nuclear_data/neutron/Mo98.h5
+ Reading Mo99 from /home/jon/nuclear_data/neutron/Mo99.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Mo99 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Mo99 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Mo99 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Mo99 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Mo99 at 1200K
+ WARNING: Negative value(s) found on probability table for nuclide Mo99 at 2500K
+ Reading Mo100 from /home/jon/nuclear_data/neutron/Mo100.h5
+ Reading Tc98 from /home/jon/nuclear_data/neutron/Tc98.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Tc99 from /home/jon/nuclear_data/neutron/Tc99.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ru96 from /home/jon/nuclear_data/neutron/Ru96.h5
+ Reading Ru97 from /home/jon/nuclear_data/neutron/Ru97.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ru98 from /home/jon/nuclear_data/neutron/Ru98.h5
+ Reading Ru99 from /home/jon/nuclear_data/neutron/Ru99.h5
+ Reading Ru100 from /home/jon/nuclear_data/neutron/Ru100.h5
+ Reading Ru101 from /home/jon/nuclear_data/neutron/Ru101.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ru102 from /home/jon/nuclear_data/neutron/Ru102.h5
+ Reading Ru103 from /home/jon/nuclear_data/neutron/Ru103.h5
+ Reading Ru104 from /home/jon/nuclear_data/neutron/Ru104.h5
+ Reading Ru105 from /home/jon/nuclear_data/neutron/Ru105.h5
+ Reading Ru106 from /home/jon/nuclear_data/neutron/Ru106.h5
+ Reading Rh103 from /home/jon/nuclear_data/neutron/Rh103.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Rh104 from /home/jon/nuclear_data/neutron/Rh104.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Rh105 from /home/jon/nuclear_data/neutron/Rh105.h5
+ Reading Pd102 from /home/jon/nuclear_data/neutron/Pd102.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd103 from /home/jon/nuclear_data/neutron/Pd103.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd104 from /home/jon/nuclear_data/neutron/Pd104.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd105 from /home/jon/nuclear_data/neutron/Pd105.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd106 from /home/jon/nuclear_data/neutron/Pd106.h5
+ Reading Pd107 from /home/jon/nuclear_data/neutron/Pd107.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd108 from /home/jon/nuclear_data/neutron/Pd108.h5
+ Reading Pd109 from /home/jon/nuclear_data/neutron/Pd109.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd110 from /home/jon/nuclear_data/neutron/Pd110.h5
+ Reading Ag108 from /home/jon/nuclear_data/neutron/Ag108.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ag110_m1 from /home/jon/nuclear_data/neutron/Ag110_m1.h5
+ Reading Ag111 from /home/jon/nuclear_data/neutron/Ag111.h5
+ Reading Ag112 from /home/jon/nuclear_data/neutron/Ag112.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ag113 from /home/jon/nuclear_data/neutron/Ag113.h5
+ Reading Ag114 from /home/jon/nuclear_data/neutron/Ag114.h5
+ Reading Ag115 from /home/jon/nuclear_data/neutron/Ag115.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ag116 from /home/jon/nuclear_data/neutron/Ag116.h5
+ Reading Ag117 from /home/jon/nuclear_data/neutron/Ag117.h5
+ Reading Ag118_m1 from /home/jon/nuclear_data/neutron/Ag118_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Ag118_m1 at
+          250K
+ WARNING: Negative value(s) found on probability table for nuclide Ag118_m1 at
+          294K
+ WARNING: Negative value(s) found on probability table for nuclide Ag118_m1 at
+          600K
+ WARNING: Negative value(s) found on probability table for nuclide Ag118_m1 at
+          900K
+ WARNING: Negative value(s) found on probability table for nuclide Ag118_m1 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Ag118_m1 at
+          2500K
+ Reading Cd106 from /home/jon/nuclear_data/neutron/Cd106.h5
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at
+          2500K
+ Reading Cd107 from /home/jon/nuclear_data/neutron/Cd107.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cd108 from /home/jon/nuclear_data/neutron/Cd108.h5
+ Reading Cd109 from /home/jon/nuclear_data/neutron/Cd109.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cd110 from /home/jon/nuclear_data/neutron/Cd110.h5
+ Reading Cd111 from /home/jon/nuclear_data/neutron/Cd111.h5
+ Reading Cd112 from /home/jon/nuclear_data/neutron/Cd112.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cd113 from /home/jon/nuclear_data/neutron/Cd113.h5
+ Reading Cd114 from /home/jon/nuclear_data/neutron/Cd114.h5
+ Reading Cd115_m1 from /home/jon/nuclear_data/neutron/Cd115_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cd116 from /home/jon/nuclear_data/neutron/Cd116.h5
+ Reading In113 from /home/jon/nuclear_data/neutron/In113.h5
+ Reading In114 from /home/jon/nuclear_data/neutron/In114.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading In115 from /home/jon/nuclear_data/neutron/In115.h5
+ Reading Sn112 from /home/jon/nuclear_data/neutron/Sn112.h5
+ Reading Sn113 from /home/jon/nuclear_data/neutron/Sn113.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sn114 from /home/jon/nuclear_data/neutron/Sn114.h5
+ Reading Sn115 from /home/jon/nuclear_data/neutron/Sn115.h5
+ Reading Sn116 from /home/jon/nuclear_data/neutron/Sn116.h5
+ Reading Sn117 from /home/jon/nuclear_data/neutron/Sn117.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sn118 from /home/jon/nuclear_data/neutron/Sn118.h5
+ Reading Sn119 from /home/jon/nuclear_data/neutron/Sn119.h5
+ Reading Sn120 from /home/jon/nuclear_data/neutron/Sn120.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sn121_m1 from /home/jon/nuclear_data/neutron/Sn121_m1.h5
+ Reading Sn122 from /home/jon/nuclear_data/neutron/Sn122.h5
+ Reading Sn123 from /home/jon/nuclear_data/neutron/Sn123.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Sn123 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Sn123 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Sn123 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Sn123 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Sn123 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Sn123 at
+          2500K
+ Reading Sn124 from /home/jon/nuclear_data/neutron/Sn124.h5
+ Reading Sn125 from /home/jon/nuclear_data/neutron/Sn125.h5
+ Reading Sn126 from /home/jon/nuclear_data/neutron/Sn126.h5
+ Reading Sb121 from /home/jon/nuclear_data/neutron/Sb121.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sb122 from /home/jon/nuclear_data/neutron/Sb122.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sb123 from /home/jon/nuclear_data/neutron/Sb123.h5
+ Reading Sb124 from /home/jon/nuclear_data/neutron/Sb124.h5
+ Reading Sb125 from /home/jon/nuclear_data/neutron/Sb125.h5
+ Reading Sb126 from /home/jon/nuclear_data/neutron/Sb126.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Te120 from /home/jon/nuclear_data/neutron/Te120.h5
+ WARNING: Negative value(s) found on probability table for nuclide Te120 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Te120 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Te120 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Te120 at
+          2500K
+ Reading Te121 from /home/jon/nuclear_data/neutron/Te121.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Te121_m1 from /home/jon/nuclear_data/neutron/Te121_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Te122 from /home/jon/nuclear_data/neutron/Te122.h5
+ Reading Te123 from /home/jon/nuclear_data/neutron/Te123.h5
+ Reading Te124 from /home/jon/nuclear_data/neutron/Te124.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Te125 from /home/jon/nuclear_data/neutron/Te125.h5
+ Reading Te126 from /home/jon/nuclear_data/neutron/Te126.h5
+ Reading Te127_m1 from /home/jon/nuclear_data/neutron/Te127_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Te128 from /home/jon/nuclear_data/neutron/Te128.h5
+ Reading Te129_m1 from /home/jon/nuclear_data/neutron/Te129_m1.h5
+ Reading Te130 from /home/jon/nuclear_data/neutron/Te130.h5
+ Reading Te131 from /home/jon/nuclear_data/neutron/Te131.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Te131_m1 from /home/jon/nuclear_data/neutron/Te131_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Te132 from /home/jon/nuclear_data/neutron/Te132.h5
+ Reading I127 from /home/jon/nuclear_data/neutron/I127.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading I128 from /home/jon/nuclear_data/neutron/I128.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading I129 from /home/jon/nuclear_data/neutron/I129.h5
+ Reading I130 from /home/jon/nuclear_data/neutron/I130.h5
+ Reading I131 from /home/jon/nuclear_data/neutron/I131.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide I131 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide I131 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide I131 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide I131 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide I131 at 1200K
+ WARNING: Negative value(s) found on probability table for nuclide I131 at 2500K
+ Reading I132 from /home/jon/nuclear_data/neutron/I132.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading I132_m1 from /home/jon/nuclear_data/neutron/I132_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading I133 from /home/jon/nuclear_data/neutron/I133.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading I134 from /home/jon/nuclear_data/neutron/I134.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading I135 from /home/jon/nuclear_data/neutron/I135.h5
+ Reading Xe123 from /home/jon/nuclear_data/neutron/Xe123.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Xe124 from /home/jon/nuclear_data/neutron/Xe124.h5
+ Reading Xe125 from /home/jon/nuclear_data/neutron/Xe125.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Xe126 from /home/jon/nuclear_data/neutron/Xe126.h5
+ Reading Xe127 from /home/jon/nuclear_data/neutron/Xe127.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Xe128 from /home/jon/nuclear_data/neutron/Xe128.h5
+ Reading Xe129 from /home/jon/nuclear_data/neutron/Xe129.h5
+ Reading Xe130 from /home/jon/nuclear_data/neutron/Xe130.h5
+ Reading Xe131 from /home/jon/nuclear_data/neutron/Xe131.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Xe132 from /home/jon/nuclear_data/neutron/Xe132.h5
+ Reading Xe133 from /home/jon/nuclear_data/neutron/Xe133.h5
+ WARNING: Negative value(s) found on probability table for nuclide Xe133 at
+          2500K
+ Reading Xe134 from /home/jon/nuclear_data/neutron/Xe134.h5
+ Reading Xe135 from /home/jon/nuclear_data/neutron/Xe135.h5
+ Reading Xe136 from /home/jon/nuclear_data/neutron/Xe136.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cs133 from /home/jon/nuclear_data/neutron/Cs133.h5
+ Reading Cs134 from /home/jon/nuclear_data/neutron/Cs134.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cs135 from /home/jon/nuclear_data/neutron/Cs135.h5
+ Reading Cs136 from /home/jon/nuclear_data/neutron/Cs136.h5
+ WARNING: Negative value(s) found on probability table for nuclide Cs136 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Cs136 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Cs136 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Cs136 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Cs136 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Cs136 at
+          2500K
+ Reading Cs137 from /home/jon/nuclear_data/neutron/Cs137.h5
+ Reading Ba130 from /home/jon/nuclear_data/neutron/Ba130.h5
+ Reading Ba131 from /home/jon/nuclear_data/neutron/Ba131.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ba132 from /home/jon/nuclear_data/neutron/Ba132.h5
+ Reading Ba133 from /home/jon/nuclear_data/neutron/Ba133.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ba134 from /home/jon/nuclear_data/neutron/Ba134.h5
+ Reading Ba135 from /home/jon/nuclear_data/neutron/Ba135.h5
+ Reading Ba136 from /home/jon/nuclear_data/neutron/Ba136.h5
+ Reading Ba137 from /home/jon/nuclear_data/neutron/Ba137.h5
+ Reading Ba138 from /home/jon/nuclear_data/neutron/Ba138.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ba139 from /home/jon/nuclear_data/neutron/Ba139.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ba140 from /home/jon/nuclear_data/neutron/Ba140.h5
+ Reading La138 from /home/jon/nuclear_data/neutron/La138.h5
+ Reading La139 from /home/jon/nuclear_data/neutron/La139.h5
+ Reading La140 from /home/jon/nuclear_data/neutron/La140.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ce136 from /home/jon/nuclear_data/neutron/Ce136.h5
+ Reading Ce137 from /home/jon/nuclear_data/neutron/Ce137.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ce137_m1 from /home/jon/nuclear_data/neutron/Ce137_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ce138 from /home/jon/nuclear_data/neutron/Ce138.h5
+ Reading Ce139 from /home/jon/nuclear_data/neutron/Ce139.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ce140 from /home/jon/nuclear_data/neutron/Ce140.h5
+ Reading Ce141 from /home/jon/nuclear_data/neutron/Ce141.h5
+ Reading Ce142 from /home/jon/nuclear_data/neutron/Ce142.h5
+ Reading Ce143 from /home/jon/nuclear_data/neutron/Ce143.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ce144 from /home/jon/nuclear_data/neutron/Ce144.h5
+ Reading Pr141 from /home/jon/nuclear_data/neutron/Pr141.h5
+ Reading Pr142 from /home/jon/nuclear_data/neutron/Pr142.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pr143 from /home/jon/nuclear_data/neutron/Pr143.h5
+ Reading Nd142 from /home/jon/nuclear_data/neutron/Nd142.h5
+ Reading Nd143 from /home/jon/nuclear_data/neutron/Nd143.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Nd144 from /home/jon/nuclear_data/neutron/Nd144.h5
+ Reading Nd145 from /home/jon/nuclear_data/neutron/Nd145.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Nd146 from /home/jon/nuclear_data/neutron/Nd146.h5
+ Reading Nd147 from /home/jon/nuclear_data/neutron/Nd147.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Nd148 from /home/jon/nuclear_data/neutron/Nd148.h5
+ Reading Nd149 from /home/jon/nuclear_data/neutron/Nd149.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Nd150 from /home/jon/nuclear_data/neutron/Nd150.h5
+ Reading Pm143 from /home/jon/nuclear_data/neutron/Pm143.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pm144 from /home/jon/nuclear_data/neutron/Pm144.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pm145 from /home/jon/nuclear_data/neutron/Pm145.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pm146 from /home/jon/nuclear_data/neutron/Pm146.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pm147 from /home/jon/nuclear_data/neutron/Pm147.h5
+ Reading Pm148 from /home/jon/nuclear_data/neutron/Pm148.h5
+ Reading Pm148_m1 from /home/jon/nuclear_data/neutron/Pm148_m1.h5
+ Reading Pm149 from /home/jon/nuclear_data/neutron/Pm149.h5
+ Reading Pm150 from /home/jon/nuclear_data/neutron/Pm150.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pm151 from /home/jon/nuclear_data/neutron/Pm151.h5
+ Reading Sm144 from /home/jon/nuclear_data/neutron/Sm144.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sm145 from /home/jon/nuclear_data/neutron/Sm145.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sm146 from /home/jon/nuclear_data/neutron/Sm146.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sm147 from /home/jon/nuclear_data/neutron/Sm147.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sm148 from /home/jon/nuclear_data/neutron/Sm148.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sm149 from /home/jon/nuclear_data/neutron/Sm149.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sm150 from /home/jon/nuclear_data/neutron/Sm150.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sm151 from /home/jon/nuclear_data/neutron/Sm151.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sm152 from /home/jon/nuclear_data/neutron/Sm152.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sm153 from /home/jon/nuclear_data/neutron/Sm153.h5
+ Reading Sm154 from /home/jon/nuclear_data/neutron/Sm154.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Eu151 from /home/jon/nuclear_data/neutron/Eu151.h5
+ Reading Eu152 from /home/jon/nuclear_data/neutron/Eu152.h5
+ Reading Eu153 from /home/jon/nuclear_data/neutron/Eu153.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Eu154 from /home/jon/nuclear_data/neutron/Eu154.h5
+ Reading Eu155 from /home/jon/nuclear_data/neutron/Eu155.h5
+ Reading Eu156 from /home/jon/nuclear_data/neutron/Eu156.h5
+ WARNING: Negative value(s) found on probability table for nuclide Eu156 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Eu156 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Eu156 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Eu156 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Eu156 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Eu156 at
+          2500K
+ Reading Eu157 from /home/jon/nuclear_data/neutron/Eu157.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Gd152 from /home/jon/nuclear_data/neutron/Gd152.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Gd153 from /home/jon/nuclear_data/neutron/Gd153.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Gd154 from /home/jon/nuclear_data/neutron/Gd154.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Gd155 from /home/jon/nuclear_data/neutron/Gd155.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Gd156 from /home/jon/nuclear_data/neutron/Gd156.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Gd157 from /home/jon/nuclear_data/neutron/Gd157.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Gd158 from /home/jon/nuclear_data/neutron/Gd158.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Gd159 from /home/jon/nuclear_data/neutron/Gd159.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Gd160 from /home/jon/nuclear_data/neutron/Gd160.h5
+ Reading Tb158 from /home/jon/nuclear_data/neutron/Tb158.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Tb159 from /home/jon/nuclear_data/neutron/Tb159.h5
+ Reading Tb160 from /home/jon/nuclear_data/neutron/Tb160.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Tb161 from /home/jon/nuclear_data/neutron/Tb161.h5
+ Reading Dy154 from /home/jon/nuclear_data/neutron/Dy154.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Dy155 from /home/jon/nuclear_data/neutron/Dy155.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Dy156 from /home/jon/nuclear_data/neutron/Dy156.h5
+ Reading Dy157 from /home/jon/nuclear_data/neutron/Dy157.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Dy158 from /home/jon/nuclear_data/neutron/Dy158.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Dy159 from /home/jon/nuclear_data/neutron/Dy159.h5
+ Reading Dy160 from /home/jon/nuclear_data/neutron/Dy160.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Dy161 from /home/jon/nuclear_data/neutron/Dy161.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Dy162 from /home/jon/nuclear_data/neutron/Dy162.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Dy163 from /home/jon/nuclear_data/neutron/Dy163.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Dy164 from /home/jon/nuclear_data/neutron/Dy164.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ho165 from /home/jon/nuclear_data/neutron/Ho165.h5
+ Reading Ho166_m1 from /home/jon/nuclear_data/neutron/Ho166_m1.h5
+ Reading Er162 from /home/jon/nuclear_data/neutron/Er162.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Er163 from /home/jon/nuclear_data/neutron/Er163.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Er164 from /home/jon/nuclear_data/neutron/Er164.h5
+ Reading Er165 from /home/jon/nuclear_data/neutron/Er165.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Er166 from /home/jon/nuclear_data/neutron/Er166.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Er167 from /home/jon/nuclear_data/neutron/Er167.h5
+ Reading Er168 from /home/jon/nuclear_data/neutron/Er168.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Er169 from /home/jon/nuclear_data/neutron/Er169.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Er170 from /home/jon/nuclear_data/neutron/Er170.h5
+ Reading Tm168 from /home/jon/nuclear_data/neutron/Tm168.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Tm169 from /home/jon/nuclear_data/neutron/Tm169.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Tm170 from /home/jon/nuclear_data/neutron/Tm170.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Tm171 from /home/jon/nuclear_data/neutron/Tm171.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Yb168 from /home/jon/nuclear_data/neutron/Yb168.h5
+ WARNING: Negative value(s) found on probability table for nuclide Yb168 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Yb168 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Yb168 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Yb168 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Yb168 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Yb168 at
+          2500K
+ Reading Yb169 from /home/jon/nuclear_data/neutron/Yb169.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Yb170 from /home/jon/nuclear_data/neutron/Yb170.h5
+ WARNING: Negative value(s) found on probability table for nuclide Yb170 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Yb170 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Yb170 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Yb170 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Yb170 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Yb170 at
+          2500K
+ Reading Yb171 from /home/jon/nuclear_data/neutron/Yb171.h5
+ WARNING: Negative value(s) found on probability table for nuclide Yb171 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Yb171 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Yb171 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Yb171 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Yb171 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Yb171 at
+          2500K
+ Reading Yb172 from /home/jon/nuclear_data/neutron/Yb172.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Yb172 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Yb172 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Yb172 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Yb172 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Yb172 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Yb172 at
+          2500K
+ Reading Yb173 from /home/jon/nuclear_data/neutron/Yb173.h5
+ WARNING: Negative value(s) found on probability table for nuclide Yb173 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Yb173 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Yb173 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Yb173 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Yb173 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Yb173 at
+          2500K
+ Reading Yb174 from /home/jon/nuclear_data/neutron/Yb174.h5
+ WARNING: Negative value(s) found on probability table for nuclide Yb174 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Yb174 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Yb174 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Yb174 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Yb174 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Yb174 at
+          2500K
+ Reading Yb175 from /home/jon/nuclear_data/neutron/Yb175.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Yb176 from /home/jon/nuclear_data/neutron/Yb176.h5
+ WARNING: Negative value(s) found on probability table for nuclide Yb176 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Yb176 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Yb176 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Yb176 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Yb176 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Yb176 at
+          2500K
+ Reading Lu175 from /home/jon/nuclear_data/neutron/Lu175.h5
+ Reading Lu176 from /home/jon/nuclear_data/neutron/Lu176.h5
+ Reading Hf174 from /home/jon/nuclear_data/neutron/Hf174.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hf175 from /home/jon/nuclear_data/neutron/Hf175.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hf176 from /home/jon/nuclear_data/neutron/Hf176.h5
+ Reading Hf177 from /home/jon/nuclear_data/neutron/Hf177.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hf178 from /home/jon/nuclear_data/neutron/Hf178.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hf179 from /home/jon/nuclear_data/neutron/Hf179.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hf180 from /home/jon/nuclear_data/neutron/Hf180.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hf181 from /home/jon/nuclear_data/neutron/Hf181.h5
+ WARNING: Negative value(s) found on probability table for nuclide Hf181 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Hf181 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Hf181 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Hf181 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Hf181 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Hf181 at
+          2500K
+ Reading Hf182 from /home/jon/nuclear_data/neutron/Hf182.h5
+ WARNING: Negative value(s) found on probability table for nuclide Hf182 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Hf182 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Hf182 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Hf182 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Hf182 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Hf182 at
+          2500K
+ Reading Ta180 from /home/jon/nuclear_data/neutron/Ta180.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ta181 from /home/jon/nuclear_data/neutron/Ta181.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ta182 from /home/jon/nuclear_data/neutron/Ta182.h5
+ Reading W180 from /home/jon/nuclear_data/neutron/W180.h5
+ Reading W181 from /home/jon/nuclear_data/neutron/W181.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading W182 from /home/jon/nuclear_data/neutron/W182.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading W183 from /home/jon/nuclear_data/neutron/W183.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading W184 from /home/jon/nuclear_data/neutron/W184.h5
+ Reading W185 from /home/jon/nuclear_data/neutron/W185.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading W186 from /home/jon/nuclear_data/neutron/W186.h5
+ Reading Re185 from /home/jon/nuclear_data/neutron/Re185.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Re186_m1 from /home/jon/nuclear_data/neutron/Re186_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Re187 from /home/jon/nuclear_data/neutron/Re187.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Os184 from /home/jon/nuclear_data/neutron/Os184.h5
+ Reading Os185 from /home/jon/nuclear_data/neutron/Os185.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Os186 from /home/jon/nuclear_data/neutron/Os186.h5
+ Reading Os187 from /home/jon/nuclear_data/neutron/Os187.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Os188 from /home/jon/nuclear_data/neutron/Os188.h5
+ Reading Os189 from /home/jon/nuclear_data/neutron/Os189.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Os190 from /home/jon/nuclear_data/neutron/Os190.h5
+ Reading Os191 from /home/jon/nuclear_data/neutron/Os191.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Os192 from /home/jon/nuclear_data/neutron/Os192.h5
+ Reading Ir191 from /home/jon/nuclear_data/neutron/Ir191.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ir192 from /home/jon/nuclear_data/neutron/Ir192.h5
+ Reading Ir193 from /home/jon/nuclear_data/neutron/Ir193.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ir194_m1 from /home/jon/nuclear_data/neutron/Ir194_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pt190 from /home/jon/nuclear_data/neutron/Pt190.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pt191 from /home/jon/nuclear_data/neutron/Pt191.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pt192 from /home/jon/nuclear_data/neutron/Pt192.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pt193 from /home/jon/nuclear_data/neutron/Pt193.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pt194 from /home/jon/nuclear_data/neutron/Pt194.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pt195 from /home/jon/nuclear_data/neutron/Pt195.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pt196 from /home/jon/nuclear_data/neutron/Pt196.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pt197 from /home/jon/nuclear_data/neutron/Pt197.h5
+ Reading Pt198 from /home/jon/nuclear_data/neutron/Pt198.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Au197 from /home/jon/nuclear_data/neutron/Au197.h5
+ Reading Hg196 from /home/jon/nuclear_data/neutron/Hg196.h5
+ Reading Hg197 from /home/jon/nuclear_data/neutron/Hg197.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hg197_m1 from /home/jon/nuclear_data/neutron/Hg197_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hg198 from /home/jon/nuclear_data/neutron/Hg198.h5
+ Reading Hg199 from /home/jon/nuclear_data/neutron/Hg199.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hg200 from /home/jon/nuclear_data/neutron/Hg200.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hg201 from /home/jon/nuclear_data/neutron/Hg201.h5
+ Reading Hg202 from /home/jon/nuclear_data/neutron/Hg202.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Hg203 from /home/jon/nuclear_data/neutron/Hg203.h5
+ Reading Hg204 from /home/jon/nuclear_data/neutron/Hg204.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Tl203 from /home/jon/nuclear_data/neutron/Tl203.h5
+ Reading Tl204 from /home/jon/nuclear_data/neutron/Tl204.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Tl205 from /home/jon/nuclear_data/neutron/Tl205.h5
+ Reading Pb204 from /home/jon/nuclear_data/neutron/Pb204.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pb205 from /home/jon/nuclear_data/neutron/Pb205.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pb206 from /home/jon/nuclear_data/neutron/Pb206.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pb207 from /home/jon/nuclear_data/neutron/Pb207.h5
+ Reading Pb208 from /home/jon/nuclear_data/neutron/Pb208.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Bi209 from /home/jon/nuclear_data/neutron/Bi209.h5
+ Reading Bi210_m1 from /home/jon/nuclear_data/neutron/Bi210_m1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Po208 from /home/jon/nuclear_data/neutron/Po208.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Po209 from /home/jon/nuclear_data/neutron/Po209.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Po210 from /home/jon/nuclear_data/neutron/Po210.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ra223 from /home/jon/nuclear_data/neutron/Ra223.h5
+ Reading Ra224 from /home/jon/nuclear_data/neutron/Ra224.h5
+ Reading Ra225 from /home/jon/nuclear_data/neutron/Ra225.h5
+ Reading Ra226 from /home/jon/nuclear_data/neutron/Ra226.h5
+ Reading Ac225 from /home/jon/nuclear_data/neutron/Ac225.h5
+ Reading Ac226 from /home/jon/nuclear_data/neutron/Ac226.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ac227 from /home/jon/nuclear_data/neutron/Ac227.h5
+ Reading Th227 from /home/jon/nuclear_data/neutron/Th227.h5
+ Reading Th228 from /home/jon/nuclear_data/neutron/Th228.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Th229 from /home/jon/nuclear_data/neutron/Th229.h5
+ Reading Th230 from /home/jon/nuclear_data/neutron/Th230.h5
+ Reading Th231 from /home/jon/nuclear_data/neutron/Th231.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Th232 from /home/jon/nuclear_data/neutron/Th232.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Th233 from /home/jon/nuclear_data/neutron/Th233.h5
+ Reading Th234 from /home/jon/nuclear_data/neutron/Th234.h5
+ Reading Pa229 from /home/jon/nuclear_data/neutron/Pa229.h5
+ Reading Pa230 from /home/jon/nuclear_data/neutron/Pa230.h5
+ Reading Pa231 from /home/jon/nuclear_data/neutron/Pa231.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pa232 from /home/jon/nuclear_data/neutron/Pa232.h5
+ Reading Pa233 from /home/jon/nuclear_data/neutron/Pa233.h5
+ Reading U230 from /home/jon/nuclear_data/neutron/U230.h5
+ Reading U231 from /home/jon/nuclear_data/neutron/U231.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading U232 from /home/jon/nuclear_data/neutron/U232.h5
+ Reading U233 from /home/jon/nuclear_data/neutron/U233.h5
+ Reading U234 from /home/jon/nuclear_data/neutron/U234.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading U235 from /home/jon/nuclear_data/neutron/U235.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading U236 from /home/jon/nuclear_data/neutron/U236.h5
+ Reading U237 from /home/jon/nuclear_data/neutron/U237.h5
+ Reading U238 from /home/jon/nuclear_data/neutron/U238.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading U239 from /home/jon/nuclear_data/neutron/U239.h5
+ Reading U240 from /home/jon/nuclear_data/neutron/U240.h5
+ Reading U241 from /home/jon/nuclear_data/neutron/U241.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Np234 from /home/jon/nuclear_data/neutron/Np234.h5
+ Reading Np235 from /home/jon/nuclear_data/neutron/Np235.h5
+ Reading Np236 from /home/jon/nuclear_data/neutron/Np236.h5
+ Reading Np236_m1 from /home/jon/nuclear_data/neutron/Np236_m1.h5
+ Reading Np237 from /home/jon/nuclear_data/neutron/Np237.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Np238 from /home/jon/nuclear_data/neutron/Np238.h5
+ Reading Np239 from /home/jon/nuclear_data/neutron/Np239.h5
+ Reading Pu236 from /home/jon/nuclear_data/neutron/Pu236.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pu237 from /home/jon/nuclear_data/neutron/Pu237.h5
+ Reading Pu238 from /home/jon/nuclear_data/neutron/Pu238.h5
+ Reading Pu239 from /home/jon/nuclear_data/neutron/Pu239.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pu240 from /home/jon/nuclear_data/neutron/Pu240.h5
+ Reading Pu241 from /home/jon/nuclear_data/neutron/Pu241.h5
+ Reading Pu242 from /home/jon/nuclear_data/neutron/Pu242.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pu243 from /home/jon/nuclear_data/neutron/Pu243.h5
+ Reading Pu244 from /home/jon/nuclear_data/neutron/Pu244.h5
+ Reading Pu245 from /home/jon/nuclear_data/neutron/Pu245.h5
+ Reading Pu246 from /home/jon/nuclear_data/neutron/Pu246.h5
+ Reading Am240 from /home/jon/nuclear_data/neutron/Am240.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Am241 from /home/jon/nuclear_data/neutron/Am241.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Am242 from /home/jon/nuclear_data/neutron/Am242.h5
+ Reading Am242_m1 from /home/jon/nuclear_data/neutron/Am242_m1.h5
+ Reading Am243 from /home/jon/nuclear_data/neutron/Am243.h5
+ Reading Am244 from /home/jon/nuclear_data/neutron/Am244.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Am244_m1 from /home/jon/nuclear_data/neutron/Am244_m1.h5
+ Reading Cm240 from /home/jon/nuclear_data/neutron/Cm240.h5
+ Reading Cm241 from /home/jon/nuclear_data/neutron/Cm241.h5
+ Reading Cm242 from /home/jon/nuclear_data/neutron/Cm242.h5
+ Reading Cm243 from /home/jon/nuclear_data/neutron/Cm243.h5
+ Reading Cm244 from /home/jon/nuclear_data/neutron/Cm244.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cm245 from /home/jon/nuclear_data/neutron/Cm245.h5
+ Reading Cm246 from /home/jon/nuclear_data/neutron/Cm246.h5
+ Reading Cm247 from /home/jon/nuclear_data/neutron/Cm247.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cm248 from /home/jon/nuclear_data/neutron/Cm248.h5
+ Reading Cm249 from /home/jon/nuclear_data/neutron/Cm249.h5
+ Reading Cm250 from /home/jon/nuclear_data/neutron/Cm250.h5
+ Reading Bk245 from /home/jon/nuclear_data/neutron/Bk245.h5
+ Reading Bk246 from /home/jon/nuclear_data/neutron/Bk246.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Bk247 from /home/jon/nuclear_data/neutron/Bk247.h5
+ Reading Bk248 from /home/jon/nuclear_data/neutron/Bk248.h5
+ Reading Bk249 from /home/jon/nuclear_data/neutron/Bk249.h5
+ Reading Bk250 from /home/jon/nuclear_data/neutron/Bk250.h5
+ Reading Cf246 from /home/jon/nuclear_data/neutron/Cf246.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cf247 from /home/jon/nuclear_data/neutron/Cf247.h5
+ Reading Cf248 from /home/jon/nuclear_data/neutron/Cf248.h5
+ Reading Cf249 from /home/jon/nuclear_data/neutron/Cf249.h5
+ Reading Cf250 from /home/jon/nuclear_data/neutron/Cf250.h5
+ WARNING: Negative value(s) found on probability table for nuclide Cf250 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Cf250 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Cf250 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Cf250 at
+          1200K
+ Reading Cf251 from /home/jon/nuclear_data/neutron/Cf251.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cf252 from /home/jon/nuclear_data/neutron/Cf252.h5
+ Reading Cf253 from /home/jon/nuclear_data/neutron/Cf253.h5
+ Reading Cf254 from /home/jon/nuclear_data/neutron/Cf254.h5
+ Reading Es251 from /home/jon/nuclear_data/neutron/Es251.h5
+ Reading Es252 from /home/jon/nuclear_data/neutron/Es252.h5
+ Reading Es253 from /home/jon/nuclear_data/neutron/Es253.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Es254 from /home/jon/nuclear_data/neutron/Es254.h5
+ Reading Es254_m1 from /home/jon/nuclear_data/neutron/Es254_m1.h5
+ Reading Es255 from /home/jon/nuclear_data/neutron/Es255.h5
+ Reading Fm255 from /home/jon/nuclear_data/neutron/Fm255.h5
+ Preparing distributed cell instances...
+ Writing summary.h5 file...
+ Maximum neutron transport energy: 20000000.0 eV for Ag107
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 1.0193e+02 seconds
+   Reading cross sections          = 1.9946e-01 seconds
+ Total time in simulation          = 9.7149e+01 seconds
+   Time in transport only          = 9.7113e+01 seconds
+   Time in active batches          = 9.7149e+01 seconds
+   Time accumulating tallies       = 1.6521e-02 seconds
+   Time writing statepoints        = 1.5643e-02 seconds
+ Total time for finalization       = 2.2814e-02 seconds
+ Total time elapsed                = 1.9979e+02 seconds
+ Calculation Rate (active)         = 102.935 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00010 +/- 0.00010
+</pre></div>
+</div>
+</div>
+</div>
+<p>constructing the operator, note we pass in the flux and micro xs calculated earlier</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">operator</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">deplete</span><span class="o">.</span><span class="n">IndependentOperator</span><span class="p">(</span>
+    <span class="n">materials</span><span class="o">=</span><span class="n">materials</span><span class="p">,</span>
+    <span class="n">fluxes</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flux_in_each_group</span><span class="p">],</span>
+    <span class="n">micros</span><span class="o">=</span><span class="n">micro_xs</span><span class="p">,</span>
+    <span class="n">reduce_chain_level</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">normalization_mode</span><span class="o">=</span><span class="s2">&quot;source-rate&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We define timesteps together with the source rate to make it clearer</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">timesteps_and_source_rates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>  <span class="c1"># should saturate Ag110 here as it has been irradiated for over 5 halflives</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="c1"># Uses list Python comprehension to get the timesteps and source_rates separately</span>
+<span class="n">timesteps</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">timesteps_and_source_rates</span><span class="p">]</span>
+<span class="n">source_rates</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">timesteps_and_source_rates</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>construct the integrator</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">deplete</span><span class="o">.</span><span class="n">PredictorIntegrator</span><span class="p">(</span>
+    <span class="n">operator</span><span class="o">=</span><span class="n">operator</span><span class="p">,</span>
+    <span class="n">timesteps</span><span class="o">=</span><span class="n">timesteps</span><span class="p">,</span>
+    <span class="n">source_rates</span><span class="o">=</span><span class="n">source_rates</span><span class="p">,</span>
+    <span class="n">timestep_units</span><span class="o">=</span><span class="s1">&#39;s&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>this runs the depltion calculations for the timesteps</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=0.0 s, dt=24 s, source=1e+20
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=24.0 s, dt=24 s, source=1e+20
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=48.0 s, dt=24 s, source=1e+20
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=72.0 s, dt=24 s, source=1e+20
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=96.0 s, dt=24 s, source=1e+20
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=120.0 s, dt=24 s, source=1e+20
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=144.0 s, dt=24 s, source=1e+20
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=168.0 s, dt=24 s, source=1e+20
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=192.0 s, dt=24 s, source=1e+20
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=216.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/uncertainties/core.py:1024: UserWarning: Using UFloat objects with std_dev==0 may give unexpected results.
+  warn(&quot;Using UFloat objects with std_dev==0 may give unexpected results.&quot;)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=240.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=264.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=288.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=312.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=336.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=360.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=384.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=408.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=432.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=456.0 s, dt=24 s, source=0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=480.0 (final operator evaluation)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Loads up the results</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">deplete</span><span class="o">.</span><span class="n">Results</span><span class="p">(</span><span class="s2">&quot;depletion_results.h5&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Gets the material from the 2nd timestep and shows the composition</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">second_time_step</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">second_time_step</span><span class="o">.</span><span class="n">get_material</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Material
+	ID             =	1
+	Name           =	
+	Temperature    =	None
+	Density        =	None [sum]
+	Volume         =	4188790.2047863905 [cm^3]
+	Depletable     =	False
+	S(a,b) Tables  
+	Nuclides       
+	H1             =	1.4173792678258947e-11 [ao]
+	H2             =	4.103343439602123e-21 [ao]
+	H3             =	2.080355767997663e-23 [ao]
+	He3            =	2.813547939791028e-27 [ao]
+	He4            =	3.05921386444375e-12 [ao]
+	Br81           =	1.8709289338567224e-89 [ao]
+	Br82           =	4.226823137774037e-83 [ao]
+	Br83           =	1.862268184017414e-74 [ao]
+	Br84           =	3.282299539203446e-71 [ao]
+	Kr83           =	3.480154278819653e-80 [ao]
+	Kr84           =	3.8543219527783744e-73 [ao]
+	Kr85           =	1.508850782053971e-69 [ao]
+	Kr86           =	4.278974676326129e-68 [ao]
+	Kr87           =	4.647973083143428e-68 [ao]
+	Rb83           =	0.0          [ao]
+	Rb84           =	4.799742760250951e-85 [ao]
+	Rb85           =	2.8158895205874295e-76 [ao]
+	Rb86           =	2.3213660393561137e-68 [ao]
+	Rb86_m1        =	4.8485373540300274e-86 [ao]
+	Rb87           =	6.352617945369233e-60 [ao]
+	Rb88           =	4.856714400185164e-59 [ao]
+	Rb89           =	1.804515623063054e-67 [ao]
+	Rb90           =	4.381692197626782e-67 [ao]
+	Rb91           =	0.0          [ao]
+	Sr85           =	2.129419059557804e-81 [ao]
+	Sr86           =	1.6376673996615408e-72 [ao]
+	Sr87           =	1.2926726678872229e-65 [ao]
+	Sr88           =	5.486746399103634e-58 [ao]
+	Sr89           =	6.580907248584164e-57 [ao]
+	Sr90           =	1.9518803349263588e-56 [ao]
+	Sr91           =	2.7026408097697427e-56 [ao]
+	Sr92           =	1.4409631550567253e-53 [ao]
+	Sr93           =	1.475890390948971e-52 [ao]
+	Y88            =	1.3723798519902526e-69 [ao]
+	Y89            =	7.682815590286261e-61 [ao]
+	Y89_m1         =	5.5524796937009156e-67 [ao]
+	Y90            =	2.0406976885606063e-55 [ao]
+	Y90_m1         =	1.8413066235982696e-72 [ao]
+	Y91            =	7.380356507803306e-48 [ao]
+	Y91_m1         =	2.2644382639928457e-60 [ao]
+	Y92            =	3.536222451251668e-47 [ao]
+	Y93            =	1.266626635954633e-54 [ao]
+	Y94            =	3.47834679698161e-56 [ao]
+	Y95            =	8.83238635900571e-56 [ao]
+	Y96            =	3.8079877263602277e-53 [ao]
+	Zr88           =	7.896903487696173e-77 [ao]
+	Zr89           =	9.63677590158323e-68 [ao]
+	Zr90           =	5.60934456097322e-59 [ao]
+	Zr90_m1        =	2.0758944808776973e-81 [ao]
+	Zr91           =	7.671129608251385e-53 [ao]
+	Zr92           =	1.03602688105652e-46 [ao]
+	Zr93           =	1.3191386743794344e-45 [ao]
+	Zr94           =	3.402320845766348e-45 [ao]
+	Zr95           =	4.4776088502990224e-45 [ao]
+	Zr96           =	1.0101706615910393e-40 [ao]
+	Zr97           =	2.432849066363618e-39 [ao]
+	Nb90           =	2.3200793705268616e-81 [ao]
+	Nb91           =	8.132880568887141e-70 [ao]
+	Nb92           =	3.969738857173994e-60 [ao]
+	Nb93           =	1.3149918399576088e-51 [ao]
+	Nb93_m1        =	1.531251097348057e-58 [ao]
+	Nb94           =	4.0294905465063555e-44 [ao]
+	Nb94_m1        =	1.6443318935017497e-60 [ao]
+	Nb95           =	3.0389956597525574e-36 [ao]
+	Nb95_m1        =	5.528137520046613e-53 [ao]
+	Nb96           =	1.7638562453847098e-35 [ao]
+	Nb97           =	4.387217423549028e-44 [ao]
+	Nb97_m1        =	2.400931615465706e-43 [ao]
+	Nb98           =	2.841757090229056e-42 [ao]
+	Nb99           =	8.50198788348951e-42 [ao]
+	Nb100          =	2.704370922780201e-40 [ao]
+	Mo91           =	8.566798409949859e-74 [ao]
+	Mo92           =	3.435650838224701e-64 [ao]
+	Mo93           =	2.0170361924532888e-56 [ao]
+	Mo94           =	2.798980281688803e-49 [ao]
+	Mo95           =	1.5786890407069685e-41 [ao]
+	Mo96           =	4.6131849289584787e-35 [ao]
+	Mo97           =	1.9026900016416076e-34 [ao]
+	Mo98           =	3.4135504646038535e-34 [ao]
+	Mo99           =	2.530268816126934e-34 [ao]
+	Mo100          =	3.894272366898337e-28 [ao]
+	Mo101          =	1.4583495823839968e-26 [ao]
+	Mo102          =	4.2001065880914696e-34 [ao]
+	Mo103          =	8.648823353881944e-35 [ao]
+	Tc94           =	3.130379085818459e-68 [ao]
+	Tc95           =	2.7208935212927572e-59 [ao]
+	Tc96           =	5.913591223342633e-53 [ao]
+	Tc97           =	1.956319451446197e-41 [ao]
+	Tc97_m1        =	8.053728293382141e-54 [ao]
+	Tc98           =	4.768181527070994e-33 [ao]
+	Tc99           =	9.089295525771019e-25 [ao]
+	Tc99_m1        =	7.45665787601458e-39 [ao]
+	Tc100          =	6.156193051456264e-24 [ao]
+	Tc101          =	6.546312611221286e-23 [ao]
+	Tc102          =	3.487925098453143e-25 [ao]
+	Tc103          =	3.3914190598541224e-28 [ao]
+	Tc104          =	3.993135556344622e-26 [ao]
+	Tc105          =	9.613175736173684e-34 [ao]
+	Tc106          =	4.017026335100669e-34 [ao]
+	Ru94           =	0.0          [ao]
+	Ru95           =	3.2649476552928206e-63 [ao]
+	Ru96           =	2.328334081656086e-54 [ao]
+	Ru97           =	8.250893294432751e-46 [ao]
+	Ru98           =	7.589553338154989e-39 [ao]
+	Ru99           =	1.0730429168374537e-30 [ao]
+	Ru100          =	6.932796876121783e-24 [ao]
+	Ru101          =	1.3080052440562364e-23 [ao]
+	Ru102          =	1.1289174668169416e-23 [ao]
+	Ru103          =	1.0143443764837601e-22 [ao]
+	Ru104          =	1.9858588085019915e-15 [ao]
+	Ru105          =	3.333810405135365e-23 [ao]
+	Ru106          =	4.924158767243209e-23 [ao]
+	Ru107          =	1.0437529972034603e-24 [ao]
+	Rh100          =	0.0          [ao]
+	Rh101          =	9.749864991039335e-38 [ao]
+	Rh101_m1       =	1.124864609679081e-40 [ao]
+	Rh102          =	1.5108912517287805e-21 [ao]
+	Rh103          =	2.0321101956524123e-13 [ao]
+	Rh103_m1       =	1.3435716152550272e-26 [ao]
+	Rh104          =	9.932382459531484e-13 [ao]
+	Rh104_m1       =	2.38405232336043e-22 [ao]
+	Rh105          =	8.601438005809118e-14 [ao]
+	Rh105_m1       =	4.782773356617457e-27 [ao]
+	Rh106          =	8.077773714970033e-13 [ao]
+	Rh106_m1       =	1.2955775962177664e-22 [ao]
+	Rh107          =	1.0044616126374111e-21 [ao]
+	Rh108          =	2.325215081119567e-22 [ao]
+	Rh109          =	8.940421869178608e-23 [ao]
+	Rh110          =	5.692775619411921e-24 [ao]
+	Pd100          =	0.0          [ao]
+	Pd101          =	5.196667231751164e-37 [ao]
+	Pd102          =	2.1497006770590115e-28 [ao]
+	Pd103          =	2.2448409315050935e-21 [ao]
+	Pd104          =	4.3931605178000335e-13 [ao]
+	Pd105          =	1.1297251944029422e-17 [ao]
+	Pd106          =	7.844553023788572e-12 [ao]
+	Pd107          =	5.2454555425320955e-12 [ao]
+	Pd107_m1       =	1.184771920113527e-21 [ao]
+	Pd108          =	6.846215262826279e-12 [ao]
+	Pd109          =	4.643178162867175e-12 [ao]
+	Pd109_m1       =	6.454627469630427e-22 [ao]
+	Pd110          =	1.2446992899428729e-12 [ao]
+	Pd111          =	2.9304917053066318e-21 [ao]
+	Pd111_m1       =	5.159033299073087e-22 [ao]
+	Pd112          =	3.384153162214316e-37 [ao]
+	Pd113          =	1.316242692109418e-45 [ao]
+	Ag104          =	1.9634471464064961e-41 [ao]
+	Ag105          =	9.281720480758918e-37 [ao]
+	Ag106          =	4.54662156729678e-10 [ao]
+	Ag107          =	0.03035916021628349 [ao]
+	Ag107_m1       =	1.7417647495887427e-22 [ao]
+	Ag108          =	1.3343277768984442e-09 [ao]
+	Ag108_m1       =	1.2192837434347798e-11 [ao]
+	Ag109          =	0.02820516437717281 [ao]
+	Ag109_m1       =	1.2055307377595074e-15 [ao]
+	Ag110          =	5.03383773799856e-10 [ao]
+	Ag110_m1       =	4.497944878425206e-11 [ao]
+	Ag111          =	3.903919219615535e-18 [ao]
+	Ag111_m1       =	1.6544500968826673e-23 [ao]
+	Ag112          =	1.7976600081975658e-26 [ao]
+	Ag113          =	2.5837107873249966e-34 [ao]
+	Ag114          =	4.811924824367731e-43 [ao]
+	Cd104          =	0.0          [ao]
+	Cd105          =	3.599605379300102e-36 [ao]
+	Cd106          =	1.9373132746792994e-27 [ao]
+	Cd107          =	5.59871632479563e-19 [ao]
+	Cd108          =	1.5673500166301064e-10 [ao]
+	Cd109          =	3.3193401068283783e-18 [ao]
+	Cd110          =	4.136550689272483e-10 [ao]
+	Cd111          =	2.0362149433766085e-18 [ao]
+	Cd111_m1       =	1.3099719376069726e-20 [ao]
+	Cd112          =	2.10147735561032e-26 [ao]
+	Cd113          =	5.10065661870466e-35 [ao]
+	Cd113_m1       =	7.697437645302593e-36 [ao]
+</pre></div>
+</div>
+</div>
+</div>
+<p>prints the atoms of Ag110 in a table for reach time step</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">times</span><span class="p">,</span> <span class="n">number_of_Ag110_atoms</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">(</span><span class="n">my_material</span><span class="p">,</span> <span class="s1">&#39;Ag110&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">time</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">number_of_Ag110_atoms</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Time </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2">s. Number of Ag110 atoms </span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Time 0.0s. Number of Ag110 atoms 0.0
+ Time 24.0s. Number of Ag110 atoms 1.397768836254115e+21
+ Time 48.0s. Number of Ag110 atoms 2.108569020941245e+21
+ Time 72.0s. Number of Ag110 atoms 2.470028559900701e+21
+ Time 96.0s. Number of Ag110 atoms 2.6538396916452913e+21
+ Time 120.0s. Number of Ag110 atoms 2.7473121898185265e+21
+ Time 144.0s. Number of Ag110 atoms 2.794845245902281e+21
+ Time 168.0s. Number of Ag110 atoms 2.819016953069636e+21
+ Time 192.0s. Number of Ag110 atoms 2.8313088332654345e+21
+ Time 216.0s. Number of Ag110 atoms 2.8375595259690725e+21
+ Time 240.0s. Number of Ag110 atoms 1.4429696018255118e+21
+ Time 264.0s. Number of Ag110 atoms 7.337859388485751e+20
+ Time 288.0s. Number of Ag110 atoms 3.731484072514256e+20
+ Time 312.0s. Number of Ag110 atoms 1.8975525257758995e+20
+ Time 336.0s. Number of Ag110 atoms 9.649527203071746e+19
+ Time 360.0s. Number of Ag110 atoms 4.9070252339705315e+19
+ Time 384.0s. Number of Ag110 atoms 2.495345026121144e+19
+ Time 408.0s. Number of Ag110 atoms 1.268945656584159e+19
+ Time 432.0s. Number of Ag110 atoms 6.45291073896954e+18
+ Time 456.0s. Number of Ag110 atoms 3.2814720692489585e+18
+ Time 480.0s. Number of Ag110 atoms 1.6687166249650038e+18
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plots the number of atoms as a function of time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">number_of_Ag110_atoms</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of Ag110 atoms&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/60f81f5780428e500732321f8645a0f78d6bfcb93864d851afd4bd434933bffc.png" src="../../_images/60f81f5780428e500732321f8645a0f78d6bfcb93864d851afd4bd434933bffc.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tasks/task_10_activation_transmutation_depletion"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2_example_tally_change_with_burnup.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tally Value Change During Depletion Simulation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../task_11_CSG_shut_down_dose_tallies/README.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Task Introduction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jon Shimwell
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

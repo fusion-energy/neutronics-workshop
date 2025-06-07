@@ -1,0 +1,1485 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Nuclide Build Up During Depletion Simulation &#8212; Fusion Energy Neutronics Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tasks/task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Tally Value Change During Depletion Simulation" href="2_example_tally_change_with_burnup.html" />
+    <link rel="prev" title="Task Introduction" href="README.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../docs/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Fusion Energy Neutronics Workshop - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Fusion Energy Neutronics Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../docs/index.html">
+                    Fusion Energy Neutronics Workshop
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Installation options</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_pip.html">Install with pip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_conda.html">Install with Conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_mamba.html">Install with Mamba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_docker.html">Install with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_extras.html">Install optional extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_binder.html">Install in the Cloud (binder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_codespaces.html">Install in the cloud</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cross Sections</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/1_isotope_xs_plot.html">Plotting isotope cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/2_element_xs_plot.html">Plotting element cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/3_material_xs_plot.html">Plotting material cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/4_Doppler_broadening.html">Plotting Doppler broadened cross sections</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/1_example_materials_from_isotopes.html">Making materials from isotopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/2_example_materials_from_elements.html">Making materials from elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/3_example_materials_from_material_maker.html">Making materials from a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/4_example_materials_parameter_study.html">Changing materials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/5_example_materials_mixed.html">Mixing materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CSG Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/1_simple_csg_geometry.html">Constructing simple CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/2_intermediate_csg_geometry.html">Constructing CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk.html">3D Geometry viewing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making source terms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/1_point_source_plots.html">Point source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/2_ring_source.html">Ring source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/3_plasma_source_plots.html">Plasma source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/4_neutron_tracks.html">Visualising Particle Tracks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/5_gamma_source_example.html">Gamma sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/6_unstructured_mesh_spatial_source.html">Unstructured mesh source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/7_structured_mesh_source.html">Structured mesh source</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell TBR tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/1_example_tritium_production.html">Performing Tritium Breeding Ratio (TBR) simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/2_example_tritium_production_study.html">Simulating TBR as a function of Lithium enrichment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell DPA tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/1_find_dpa.html">Simulating Displacements Per Atom (DPA)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell spectra tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/1_example_neutron_flux_and_units.html">Neutron flux and units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.html">Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.html">Plotting neutron lethargy energy spectra across a surface with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/4_example_photon_spectra.html">Plotting photon and neutron energy spectra in a cell with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/5_neutron_energy_loss_plot.html">Plotting energy loss per collision</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell mesh tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.html">2D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/2_example_3d_regular_mesh_tallies.html">3D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies.html">Cylinder mesh tallies</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell instantaneous dose tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source.html">Simulations of effective dose on a surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study.html">Simulations of effective dose as a function of distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons.html">Dose map from neutron pulse</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Activation Transmutation Depletion</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Task Introduction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Nuclide Build Up During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_example_tally_change_with_burnup.html">Tally Value Change During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_full_pulse_schedule.html">Full pulse schedule depletion simulation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate.html">Shutdown dose rate D1S method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.html">Shutdown dose rate D1S method different sources (DD+DT)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Volume Calculations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/1_find_volume_of_csg_cell.html">Finding Volume of a Cell by sampling simulation.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/2_find_volume_of_dagmc_cell.html">Finding Volume of DAGMC Cell</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variance Reduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/1_shielded_room_survival_biasing.html">Survival Biasing Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/2_shielded_room_single_ww.html">Variance Reduction - Weight Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/3_sphere_iterative_per_run_ww.html">Magic Method Iterative Weight Windows per run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/4_sphere_iterative_per_batch_ww.html">Magic Method Iterative Weight Windows per Batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/5_shielded_room_fw_cadis.html">FW CADIS Weight Windows</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CAD geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/1_making_cad_with_cadquery.html">Making CAD with CadQuery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/2_making_cad_with_paramak.html">Making CAD geometry with Paramak</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Converting CAD Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/1_converting_cad_files.html">Converting CAD geometry to neutronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.html">CAD conversion in memory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using DAGMC models in OpenMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/1_cad_model_simulation_minimal.html">Simple CAD model simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/2_cad_model_simulation_with_boundary_types.html">Adding boundary conditions to a CAD model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/3_cad_model_simulation_with_hybrid_csg.html">Making a hybrid CAD CSG model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD mesh fast flux simulation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad.html">Simulation of fast neutron flux</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/1_optimal_design.html">Design your own tokamak</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/main?urlpath=lab/tree/./tasks/task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop/issues/new?title=Issue%20on%20page%20%2Ftasks/task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tasks/task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Nuclide Build Up During Depletion Simulation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="nuclide-build-up-during-depletion-simulation">
+<h1>Nuclide Build Up During Depletion Simulation<a class="headerlink" href="#nuclide-build-up-during-depletion-simulation" title="Link to this heading">#</a></h1>
+<p>This example simulates the build up of activate products within a material under neutron irradiation. The subsequent decay of unstable isotopes is also simulated.</p>
+<p>This first cell imports the packages needed, note the extra import openmc.deplete import</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove any old files</span>
+<span class="o">!</span>rm<span class="w"> </span>settings.xm<span class="w"> </span>model.xml<span class="w"> </span>materials.xml<span class="w"> </span>geometry.xml<span class="w"> </span>settings.xml
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">openmc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">openmc.deplete</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="c1"># Setting the cross section path to the correct location in the docker image.</span>
+<span class="c1"># If you are running this outside the docker image you will have to change this path to your local cross section path.</span>
+<span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;cross_sections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;nuclear_data&#39;</span> <span class="o">/</span> <span class="s1">&#39;cross_sections.xml&#39;</span>
+<span class="c1"># the chain file was downloaded with</span>
+<span class="c1"># pip install openmc_data</span>
+<span class="c1"># download_endf_chain -r b8.0</span>
+<span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;chain_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;nuclear_data&#39;</span> <span class="o">/</span> <span class="s1">&#39;chain-endf-b8.0.xml&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rm: cannot remove &#39;settings.xm&#39;: No such file or directory
+rm: cannot remove &#39;model.xml&#39;: No such file or directory
+rm: cannot remove &#39;materials.xml&#39;: No such file or directory
+rm: cannot remove &#39;geometry.xml&#39;: No such file or directory
+rm: cannot remove &#39;settings.xml&#39;: No such file or directory
+</pre></div>
+</div>
+</div>
+</div>
+<p>This section creates the geometry and the cells.
+Note that it it necessary to set the volume of the material or cell.
+This is so that the depletion code can find the number of atoms within the cell given the material composition, material density and volume.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="c1"># MATERIALS</span>
+
+<span class="c1"># makes a simple material from Silver</span>
+<span class="n">my_material</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Material</span><span class="p">()</span> 
+<span class="n">my_material</span><span class="o">.</span><span class="n">add_element</span><span class="p">(</span><span class="s1">&#39;Ag&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">percent_type</span><span class="o">=</span><span class="s1">&#39;ao&#39;</span><span class="p">)</span>
+<span class="n">my_material</span><span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="s1">&#39;g/cm3&#39;</span><span class="p">,</span> <span class="mf">10.49</span><span class="p">)</span>
+
+
+<span class="n">sphere_radius</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">volume_of_sphere</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">sphere_radius</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">my_material</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="n">volume_of_sphere</span>  <span class="c1"># a volume is needed so openmc can find the number of atoms in the cell/material</span>
+<span class="n">my_material</span><span class="o">.</span><span class="n">depletable</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># depletable = True is needed to tell openmc to update the material with each time step</span>
+
+<span class="n">materials</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Materials</span><span class="p">([</span><span class="n">my_material</span><span class="p">])</span>
+<span class="n">materials</span><span class="o">.</span><span class="n">export_to_xml</span><span class="p">()</span>
+
+
+<span class="c1"># GEOMETRY</span>
+
+<span class="c1"># surfaces</span>
+<span class="n">sph1</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">sphere_radius</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s1">&#39;vacuum&#39;</span><span class="p">)</span>
+
+<span class="c1"># cells, makes a simple sphere cell</span>
+<span class="n">shield_cell</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">region</span><span class="o">=-</span><span class="n">sph1</span><span class="p">)</span>
+<span class="n">shield_cell</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="n">my_material</span>
+
+<span class="c1"># sets the geometry to the universe that contains just the one cell</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Geometry</span><span class="p">([</span><span class="n">shield_cell</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This section defines the neutron source term to use and the settings</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># creates a 14MeV neutron point source</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">IndependentSource</span><span class="p">()</span>
+<span class="n">source</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Point</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">source</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Isotropic</span><span class="p">()</span>
+<span class="n">source</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Discrete</span><span class="p">([</span><span class="mf">14e6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">source</span><span class="o">.</span><span class="n">particles</span> <span class="o">=</span> <span class="s1">&#39;neutron&#39;</span>
+
+<span class="c1"># SETTINGS</span>
+
+<span class="c1"># Instantiate a Settings object</span>
+<span class="n">settings</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Settings</span><span class="p">()</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">batches</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">inactive</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">particles</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">run_mode</span> <span class="o">=</span> <span class="s1">&#39;fixed source&#39;</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="n">materials</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is the depletion specific part of the model setup.</p>
+<p>This section specifies the chain file, this tells openmc the decay paths between isotopes including probabilities of different routes and half lives</p>
+<p>This next stage sets the time steps and corresponding source rates for the irradiation schedule.</p>
+<p>An output file will be produced with showing the material composition at every time step.</p>
+<p>We are irradiating the Silver for multiple half lives to show build up and saturation</p>
+<p>Saturation happens when decay is = to creation of the particular isotope</p>
+<p>Ag110 half life is 24 seconds so it will start to become saturated after 120 seconds</p>
+<p>Ag108 half life is 145 seconds so it will not be saturated</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We define timesteps together with the source rate to make it clearer</span>
+<span class="n">timesteps_and_source_rates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>  <span class="c1"># should saturate Ag110 here as it has been irradiated for over 5 halflives</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">1e20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="c1"># Uses list Python comprehension to get the timesteps and source_rates separately</span>
+<span class="n">timesteps</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">timesteps_and_source_rates</span><span class="p">]</span>
+<span class="n">source_rates</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">timesteps_and_source_rates</span><span class="p">]</span>
+
+
+<span class="c1"># PredictorIntegrator has been selected as the depletion operator for this example as it is a fast first order Integrator</span>
+<span class="c1"># OpenMC offers several time-integration algorithms https://docs.openmc.org/en/stable/pythonapi/deplete.html#primary-api\n&quot;,</span>
+<span class="c1"># CF4Integrator should normally be selected as it appears to be the most accurate https://dspace.mit.edu/handle/1721.1/113721\n&quot;,</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">deplete</span><span class="p">(</span>
+    <span class="n">timesteps</span><span class="p">,</span>
+    <span class="n">source_rates</span><span class="o">=</span><span class="n">source_rates</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;predictor&quot;</span><span class="p">,</span>  <span class="c1"># predictor is a simple but quick method</span>
+    <span class="n">operator_kwargs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;normalization_mode&quot;</span><span class="p">:</span> <span class="s2">&quot;source-rate&quot;</span><span class="p">,</span>  <span class="c1"># needed as this is a fixed source simulation</span>
+        <span class="s2">&quot;chain_file&quot;</span><span class="p">:</span> <span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;chain_file&#39;</span><span class="p">],</span>
+        <span class="s2">&quot;reduce_chain_level&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                %%%%%%%%%%%%%%%
+                           %%%%%%%%%%%%%%%%%%%%%%%%
+                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                    %%%%%%%%%%%%%%%%%%%%%%%%
+                                     %%%%%%%%%%%%%%%%%%%%%%%%
+                 ###############      %%%%%%%%%%%%%%%%%%%%%%%%
+                ##################     %%%%%%%%%%%%%%%%%%%%%%%
+                ###################     %%%%%%%%%%%%%%%%%%%%%%%
+                ####################     %%%%%%%%%%%%%%%%%%%%%%
+                #####################     %%%%%%%%%%%%%%%%%%%%%
+                ######################     %%%%%%%%%%%%%%%%%%%%
+                #######################     %%%%%%%%%%%%%%%%%%
+                 #######################     %%%%%%%%%%%%%%%%%
+                 ######################     %%%%%%%%%%%%%%%%%
+                  ####################     %%%%%%%%%%%%%%%%%
+                    #################     %%%%%%%%%%%%%%%%%
+                     ###############     %%%%%%%%%%%%%%%%
+                       ############     %%%%%%%%%%%%%%%
+                          ########     %%%%%%%%%%%%%%
+                                      %%%%%%%%%%%
+
+                 | The OpenMC Monte Carlo Code
+       Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
+         License | https://docs.openmc.org/en/latest/license.html
+         Version | 0.15.3-dev144
+     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
+       Date/Time | 2025-06-06 15:47:23
+  OpenMP Threads | 16
+
+ Reading settings XML file...
+ Reading cross sections XML file...
+ Reading chain file: /home/jon/nuclear_data/chain-endf-b8.0.xml...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading materials XML file...
+ Reading geometry XML file...
+ Reading Ag107 from /home/jon/nuclear_data/neutron/Ag107.h5
+ Reading Ag109 from /home/jon/nuclear_data/neutron/Ag109.h5
+ Minimum neutron data temperature: 294.0 K
+ Maximum neutron data temperature: 294.0 K
+ Reading tallies XML file...
+ Preparing distributed cell instances...
+ Reading plot XML file...
+ Writing summary.h5 file...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=0.0 s, dt=24 s, source=1e+20
+ Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
+ Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
+ Reading H3 from /home/jon/nuclear_data/neutron/H3.h5
+ Reading He3 from /home/jon/nuclear_data/neutron/He3.h5
+ Reading He4 from /home/jon/nuclear_data/neutron/He4.h5
+ Reading Br81 from /home/jon/nuclear_data/neutron/Br81.h5
+ Reading Kr83 from /home/jon/nuclear_data/neutron/Kr83.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Kr84 from /home/jon/nuclear_data/neutron/Kr84.h5
+ Reading Kr85 from /home/jon/nuclear_data/neutron/Kr85.h5
+ Reading Kr86 from /home/jon/nuclear_data/neutron/Kr86.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Rb85 from /home/jon/nuclear_data/neutron/Rb85.h5
+ Reading Rb86 from /home/jon/nuclear_data/neutron/Rb86.h5
+ Reading Rb87 from /home/jon/nuclear_data/neutron/Rb87.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sr85 from /home/jon/nuclear_data/neutron/Sr85.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sr86 from /home/jon/nuclear_data/neutron/Sr86.h5
+ Reading Sr87 from /home/jon/nuclear_data/neutron/Sr87.h5
+ Reading Sr88 from /home/jon/nuclear_data/neutron/Sr88.h5
+ Reading Sr89 from /home/jon/nuclear_data/neutron/Sr89.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Sr90 from /home/jon/nuclear_data/neutron/Sr90.h5
+ Reading Y89 from /home/jon/nuclear_data/neutron/Y89.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Y90 from /home/jon/nuclear_data/neutron/Y90.h5
+ Reading Y91 from /home/jon/nuclear_data/neutron/Y91.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr90 from /home/jon/nuclear_data/neutron/Zr90.h5
+ Reading Zr91 from /home/jon/nuclear_data/neutron/Zr91.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr92 from /home/jon/nuclear_data/neutron/Zr92.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr93 from /home/jon/nuclear_data/neutron/Zr93.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr94 from /home/jon/nuclear_data/neutron/Zr94.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr95 from /home/jon/nuclear_data/neutron/Zr95.h5
+ Reading Zr96 from /home/jon/nuclear_data/neutron/Zr96.h5
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Zr96 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Zr96 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Zr96 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Zr96 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Zr96 at 1200K
+ WARNING: Negative value(s) found on probability table for nuclide Zr96 at 2500K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 1200K
+ WARNING: Negative value(s) found on probability table for nuclide Nb94 at 2500K
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Nb93 from /home/jon/nuclear_data/neutron/Nb93.h5
+ Reading Nb94 from /home/jon/nuclear_data/neutron/Nb94.h5
+ Reading Nb95 from /home/jon/nuclear_data/neutron/Nb95.h5
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Nb95 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Nb95 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Nb95 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Nb95 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Nb95 at 1200K
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mo92 from /home/jon/nuclear_data/neutron/Mo92.h5
+ Reading Mo93 from /home/jon/nuclear_data/neutron/Mo93.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mo94 from /home/jon/nuclear_data/neutron/Mo94.h5
+ Reading Mo95 from /home/jon/nuclear_data/neutron/Mo95.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mo96 from /home/jon/nuclear_data/neutron/Mo96.h5
+ Reading Mo97 from /home/jon/nuclear_data/neutron/Mo97.h5
+ Reading Mo98 from /home/jon/nuclear_data/neutron/Mo98.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mo99 from /home/jon/nuclear_data/neutron/Mo99.h5
+ Reading Mo100 from /home/jon/nuclear_data/neutron/Mo100.h5
+ Reading Tc98 from /home/jon/nuclear_data/neutron/Tc98.h5
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Mo99 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Mo99 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Mo99 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Mo99 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Mo99 at 1200K
+ WARNING: Negative value(s) found on probability table for nuclide Mo99 at 2500K
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Tc99 from /home/jon/nuclear_data/neutron/Tc99.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ru96 from /home/jon/nuclear_data/neutron/Ru96.h5
+ Reading Ru97 from /home/jon/nuclear_data/neutron/Ru97.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ru98 from /home/jon/nuclear_data/neutron/Ru98.h5
+ Reading Ru99 from /home/jon/nuclear_data/neutron/Ru99.h5
+ Reading Ru100 from /home/jon/nuclear_data/neutron/Ru100.h5
+ Reading Ru101 from /home/jon/nuclear_data/neutron/Ru101.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ru102 from /home/jon/nuclear_data/neutron/Ru102.h5
+ Reading Ru103 from /home/jon/nuclear_data/neutron/Ru103.h5
+ Reading Ru104 from /home/jon/nuclear_data/neutron/Ru104.h5
+ Reading Ru105 from /home/jon/nuclear_data/neutron/Ru105.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ru106 from /home/jon/nuclear_data/neutron/Ru106.h5
+ Reading Rh103 from /home/jon/nuclear_data/neutron/Rh103.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Rh104 from /home/jon/nuclear_data/neutron/Rh104.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Rh105 from /home/jon/nuclear_data/neutron/Rh105.h5
+ Reading Pd102 from /home/jon/nuclear_data/neutron/Pd102.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd103 from /home/jon/nuclear_data/neutron/Pd103.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd104 from /home/jon/nuclear_data/neutron/Pd104.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd105 from /home/jon/nuclear_data/neutron/Pd105.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd106 from /home/jon/nuclear_data/neutron/Pd106.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd107 from /home/jon/nuclear_data/neutron/Pd107.h5
+ Reading Pd108 from /home/jon/nuclear_data/neutron/Pd108.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd109 from /home/jon/nuclear_data/neutron/Pd109.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Pd110 from /home/jon/nuclear_data/neutron/Pd110.h5
+ Reading Ag108 from /home/jon/nuclear_data/neutron/Ag108.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ag110_m1 from /home/jon/nuclear_data/neutron/Ag110_m1.h5
+ Reading Ag111 from /home/jon/nuclear_data/neutron/Ag111.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ag112 from /home/jon/nuclear_data/neutron/Ag112.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ag113 from /home/jon/nuclear_data/neutron/Ag113.h5
+ Reading Ag114 from /home/jon/nuclear_data/neutron/Ag114.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cd106 from /home/jon/nuclear_data/neutron/Cd106.h5
+ Reading Cd107 from /home/jon/nuclear_data/neutron/Cd107.h5
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Cd106 at 250K
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at 294K
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at 600K
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at 900K
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at
+          1200K
+ WARNING: Negative value(s) found on probability table for nuclide Cd106 at
+          2500K
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cd108 from /home/jon/nuclear_data/neutron/Cd108.h5
+ Reading Cd109 from /home/jon/nuclear_data/neutron/Cd109.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cd110 from /home/jon/nuclear_data/neutron/Cd110.h5
+ Reading Cd111 from /home/jon/nuclear_data/neutron/Cd111.h5
+ Reading Cd112 from /home/jon/nuclear_data/neutron/Cd112.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Cd113 from /home/jon/nuclear_data/neutron/Cd113.h5
+ Maximum neutron transport energy: 20000000.0 eV for Ag107
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.2.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 4.8589e-01 seconds
+   Reading cross sections          = 1.9578e-01 seconds
+ Total time in simulation          = 1.5247e+01 seconds
+   Time in transport only          = 1.5224e+01 seconds
+   Time in active batches          = 1.5247e+01 seconds
+   Time accumulating tallies       = 1.9656e-04 seconds
+   Time writing statepoints        = 2.2384e-02 seconds
+ Total time for finalization       = 4.5665e-04 seconds
+ Total time elapsed                = 1.5835e+01 seconds
+ Calculation Rate (active)         = 1311.76 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00010 +/- 0.00000
+
+ Creating state point openmc_simulation_n0.h5...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/uncertainties/core.py:1024: UserWarning: Using UFloat objects with std_dev==0 may give unexpected results.
+  warn(&quot;Using UFloat objects with std_dev==0 may give unexpected results.&quot;)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=24.0 s, dt=24 s, source=1e+20
+ Maximum neutron transport energy: 20000000.0 eV for Ag107
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.2.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 0.0000e+00 seconds
+   Reading cross sections          = 0.0000e+00 seconds
+ Total time in simulation          = 1.3900e+01 seconds
+   Time in transport only          = 1.3889e+01 seconds
+   Time in active batches          = 1.3900e+01 seconds
+   Time accumulating tallies       = 3.6775e-05 seconds
+   Time writing statepoints        = 1.0723e-02 seconds
+ Total time for finalization       = 2.4811e-04 seconds
+ Total time elapsed                = 1.4004e+01 seconds
+ Calculation Rate (active)         = 1438.82 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00025 +/- 0.00005
+
+ Creating state point openmc_simulation_n1.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=48.0 s, dt=24 s, source=1e+20
+ Maximum neutron transport energy: 20000000.0 eV for Ag107
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.2.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 0.0000e+00 seconds
+   Reading cross sections          = 0.0000e+00 seconds
+ Total time in simulation          = 1.4182e+01 seconds
+   Time in transport only          = 1.4156e+01 seconds
+   Time in active batches          = 1.4182e+01 seconds
+   Time accumulating tallies       = 2.5745e-04 seconds
+   Time writing statepoints        = 2.5613e-02 seconds
+ Total time for finalization       = 4.0939e-04 seconds
+ Total time elapsed                = 1.4282e+01 seconds
+ Calculation Rate (active)         = 1410.28 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00000 +/- 0.00000
+
+ Creating state point openmc_simulation_n2.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=72.0 s, dt=24 s, source=1e+20
+ Maximum neutron transport energy: 20000000.0 eV for Ag107
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.2.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 0.0000e+00 seconds
+   Reading cross sections          = 0.0000e+00 seconds
+ Total time in simulation          = 1.4253e+01 seconds
+   Time in transport only          = 1.4231e+01 seconds
+   Time in active batches          = 1.4253e+01 seconds
+   Time accumulating tallies       = 2.0363e-04 seconds
+   Time writing statepoints        = 2.1953e-02 seconds
+ Total time for finalization       = 4.0792e-04 seconds
+ Total time elapsed                = 1.4356e+01 seconds
+ Calculation Rate (active)         = 1403.24 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00025 +/- 0.00015
+
+ Creating state point openmc_simulation_n3.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=96.0 s, dt=24 s, source=1e+20
+ Maximum neutron transport energy: 20000000.0 eV for Ag107
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.2.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 0.0000e+00 seconds
+   Reading cross sections          = 0.0000e+00 seconds
+ Total time in simulation          = 1.4311e+01 seconds
+   Time in transport only          = 1.4295e+01 seconds
+   Time in active batches          = 1.4311e+01 seconds
+   Time accumulating tallies       = 3.7997e-05 seconds
+   Time writing statepoints        = 1.6104e-02 seconds
+ Total time for finalization       = 3.6890e-04 seconds
+ Total time elapsed                = 1.4416e+01 seconds
+ Calculation Rate (active)         = 1397.48 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00015 +/- 0.00005
+
+ Creating state point openmc_simulation_n4.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=120.0 s, dt=24 s, source=1e+20
+ Maximum neutron transport energy: 20000000.0 eV for Ag107
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.2.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 0.0000e+00 seconds
+   Reading cross sections          = 0.0000e+00 seconds
+ Total time in simulation          = 1.4193e+01 seconds
+   Time in transport only          = 1.4176e+01 seconds
+   Time in active batches          = 1.4193e+01 seconds
+   Time accumulating tallies       = 2.0567e-04 seconds
+   Time writing statepoints        = 1.6621e-02 seconds
+ Total time for finalization       = 2.8182e-04 seconds
+ Total time elapsed                = 1.4297e+01 seconds
+ Calculation Rate (active)         = 1409.16 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00000 +/- 0.00000
+
+ Creating state point openmc_simulation_n5.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=144.0 s, dt=24 s, source=1e+20
+ Maximum neutron transport energy: 20000000.0 eV for Ag107
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.2.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 0.0000e+00 seconds
+   Reading cross sections          = 0.0000e+00 seconds
+ Total time in simulation          = 1.4062e+01 seconds
+   Time in transport only          = 1.4029e+01 seconds
+   Time in active batches          = 1.4062e+01 seconds
+   Time accumulating tallies       = 9.1081e-05 seconds
+   Time writing statepoints        = 3.2859e-02 seconds
+ Total time for finalization       = 3.9327e-04 seconds
+ Total time elapsed                = 1.4167e+01 seconds
+ Calculation Rate (active)         = 1422.30 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00010 +/- 0.00010
+
+ Creating state point openmc_simulation_n6.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=168.0 s, dt=24 s, source=1e+20
+ Maximum neutron transport energy: 20000000.0 eV for Ag107
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.2.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 0.0000e+00 seconds
+   Reading cross sections          = 0.0000e+00 seconds
+ Total time in simulation          = 1.4185e+01 seconds
+   Time in transport only          = 1.4171e+01 seconds
+   Time in active batches          = 1.4185e+01 seconds
+   Time accumulating tallies       = 1.6276e-04 seconds
+   Time writing statepoints        = 1.3413e-02 seconds
+ Total time for finalization       = 2.7132e-04 seconds
+ Total time elapsed                = 1.4286e+01 seconds
+ Calculation Rate (active)         = 1409.94 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00005 +/- 0.00005
+
+ Creating state point openmc_simulation_n7.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=192.0 s, dt=24 s, source=1e+20
+ Maximum neutron transport energy: 20000000.0 eV for Ag107
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.2.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 0.0000e+00 seconds
+   Reading cross sections          = 0.0000e+00 seconds
+ Total time in simulation          = 1.4063e+01 seconds
+   Time in transport only          = 1.4047e+01 seconds
+   Time in active batches          = 1.4063e+01 seconds
+   Time accumulating tallies       = 7.1564e-05 seconds
+   Time writing statepoints        = 1.5478e-02 seconds
+ Total time for finalization       = 6.0721e-04 seconds
+ Total time elapsed                = 1.4165e+01 seconds
+ Calculation Rate (active)         = 1422.21 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00005 +/- 0.00005
+
+ Creating state point openmc_simulation_n8.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=216.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n9.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=240.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n10.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=264.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n11.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=288.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n12.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=312.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n13.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=336.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n14.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=360.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n15.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=384.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n16.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=408.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n17.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=432.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n18.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=456.0 s, dt=24 s, source=0.0
+ Creating state point openmc_simulation_n19.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[openmc.deplete] t=480.0 (final operator evaluation)
+ Creating state point openmc_simulation_n20.h5...
+</pre></div>
+</div>
+</div>
+</div>
+<p>This next section starts the depletion simulation and produces the output files</p>
+<p>This section extracts the results of the depletion simulation from the h5 file and gets the amount of Ag110 in the material at each of the time steps</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">deplete</span><span class="o">.</span><span class="n">ResultsList</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="s2">&quot;depletion_results.h5&quot;</span><span class="p">)</span>
+
+<span class="n">times</span><span class="p">,</span> <span class="n">number_of_Ag110_atoms</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">(</span><span class="n">my_material</span><span class="p">,</span> <span class="s1">&#39;Ag110&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">time</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">number_of_Ag110_atoms</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Time </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2">s. Number of Ag110 atoms </span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/deplete/results.py:94: FutureWarning: The ResultsList.from_hdf5(...) method is no longer necessary and will be removed in a future version of OpenMC. Use Results(...) instead.
+  warn(
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Time 0.0s. Number of Ag110 atoms 0.0
+ Time 24.0s. Number of Ag110 atoms 1.390899392955125e+21
+ Time 48.0s. Number of Ag110 atoms 2.0976170342669038e+21
+ Time 72.0s. Number of Ag110 atoms 2.4609439301756566e+21
+ Time 96.0s. Number of Ag110 atoms 2.6447562029332436e+21
+ Time 120.0s. Number of Ag110 atoms 2.7394373458056367e+21
+ Time 144.0s. Number of Ag110 atoms 2.793995316128349e+21
+ Time 168.0s. Number of Ag110 atoms 2.8018322869104447e+21
+ Time 192.0s. Number of Ag110 atoms 2.8076380625555617e+21
+ Time 216.0s. Number of Ag110 atoms 2.816110462829026e+21
+ Time 240.0s. Number of Ag110 atoms 1.4320622197003313e+21
+ Time 264.0s. Number of Ag110 atoms 7.282392637144813e+20
+ Time 288.0s. Number of Ag110 atoms 3.703277849549926e+20
+ Time 312.0s. Number of Ag110 atoms 1.883208959520983e+20
+ Time 336.0s. Number of Ag110 atoms 9.576586597840663e+19
+ Time 360.0s. Number of Ag110 atoms 4.869933118754419e+19
+ Time 384.0s. Number of Ag110 atoms 2.4764827597092327e+19
+ Time 408.0s. Number of Ag110 atoms 1.2593537217060315e+19
+ Time 432.0s. Number of Ag110 atoms 6.404133331775e+18
+ Time 456.0s. Number of Ag110 atoms 3.2566675118761334e+18
+ Time 480.0s. Number of Ag110 atoms 1.6561028579845814e+18
+</pre></div>
+</div>
+</div>
+</div>
+<p>In addition to Ag110 other atoms get created. This section plots the number of nuclides in the material excluding the original nuclides in the unirradiated material</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openmc_depletion_plotter</span>
+<span class="c1"># this package provides convenient plotting methods for depletion simulations like this one</span>
+<span class="c1"># more details here https://github.com/fusion-energy/openmc_depletion_plotter</span>
+
+<span class="n">results</span><span class="o">.</span><span class="n">plot_atoms_vs_time</span><span class="p">(</span><span class="n">excluded_material</span><span class="o">=</span><span class="n">my_material</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another Material instance already exists with id=1.
+  warn(msg, IDWarning)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Not all nuclide are unstable and the unstable ones have a different half life. This next plot shows the specific activity (activity per unit mass) as a function of time.</p>
+<p>This is useful for identifying a suitable waste repository for activated waste.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot_activity_vs_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning:
+
+Another Material instance already exists with id=1.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tasks/task_10_activation_transmutation_depletion"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="README.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Task Introduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2_example_tally_change_with_burnup.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tally Value Change During Depletion Simulation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jon Shimwell
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

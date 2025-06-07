@@ -1,0 +1,1404 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Magic Method Iterative Weight Windows per run &#8212; Fusion Energy Neutronics Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tasks/task_14_variance_reduction/3_sphere_iterative_per_run_ww';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Magic Method Iterative Weight Windows per Batch" href="4_sphere_iterative_per_batch_ww.html" />
+    <link rel="prev" title="Variance Reduction - Weight Windows" href="2_shielded_room_single_ww.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../docs/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Fusion Energy Neutronics Workshop - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Fusion Energy Neutronics Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../docs/index.html">
+                    Fusion Energy Neutronics Workshop
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Installation options</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_pip.html">Install with pip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_conda.html">Install with Conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_mamba.html">Install with Mamba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_docker.html">Install with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_extras.html">Install optional extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_binder.html">Install in the Cloud (binder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_codespaces.html">Install in the cloud</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cross Sections</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/1_isotope_xs_plot.html">Plotting isotope cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/2_element_xs_plot.html">Plotting element cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/3_material_xs_plot.html">Plotting material cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/4_Doppler_broadening.html">Plotting Doppler broadened cross sections</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/1_example_materials_from_isotopes.html">Making materials from isotopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/2_example_materials_from_elements.html">Making materials from elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/3_example_materials_from_material_maker.html">Making materials from a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/4_example_materials_parameter_study.html">Changing materials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/5_example_materials_mixed.html">Mixing materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CSG Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/1_simple_csg_geometry.html">Constructing simple CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/2_intermediate_csg_geometry.html">Constructing CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk.html">3D Geometry viewing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making source terms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/1_point_source_plots.html">Point source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/2_ring_source.html">Ring source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/3_plasma_source_plots.html">Plasma source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/4_neutron_tracks.html">Visualising Particle Tracks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/5_gamma_source_example.html">Gamma sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/6_unstructured_mesh_spatial_source.html">Unstructured mesh source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/7_structured_mesh_source.html">Structured mesh source</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell TBR tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/1_example_tritium_production.html">Performing Tritium Breeding Ratio (TBR) simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/2_example_tritium_production_study.html">Simulating TBR as a function of Lithium enrichment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell DPA tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/1_find_dpa.html">Simulating Displacements Per Atom (DPA)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell spectra tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/1_example_neutron_flux_and_units.html">Neutron flux and units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.html">Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.html">Plotting neutron lethargy energy spectra across a surface with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/4_example_photon_spectra.html">Plotting photon and neutron energy spectra in a cell with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/5_neutron_energy_loss_plot.html">Plotting energy loss per collision</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell mesh tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.html">2D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/2_example_3d_regular_mesh_tallies.html">3D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies.html">Cylinder mesh tallies</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell instantaneous dose tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source.html">Simulations of effective dose on a surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study.html">Simulations of effective dose as a function of distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons.html">Dose map from neutron pulse</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Activation Transmutation Depletion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.html">Nuclide Build Up During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/2_example_tally_change_with_burnup.html">Tally Value Change During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/3_full_pulse_schedule.html">Full pulse schedule depletion simulation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate.html">Shutdown dose rate D1S method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.html">Shutdown dose rate D1S method different sources (DD+DT)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Volume Calculations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/1_find_volume_of_csg_cell.html">Finding Volume of a Cell by sampling simulation.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/2_find_volume_of_dagmc_cell.html">Finding Volume of DAGMC Cell</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variance Reduction</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_shielded_room_survival_biasing.html">Survival Biasing Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_shielded_room_single_ww.html">Variance Reduction - Weight Windows</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Magic Method Iterative Weight Windows per run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_sphere_iterative_per_batch_ww.html">Magic Method Iterative Weight Windows per Batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_shielded_room_fw_cadis.html">FW CADIS Weight Windows</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CAD geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/1_making_cad_with_cadquery.html">Making CAD with CadQuery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/2_making_cad_with_paramak.html">Making CAD geometry with Paramak</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Converting CAD Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/1_converting_cad_files.html">Converting CAD geometry to neutronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.html">CAD conversion in memory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using DAGMC models in OpenMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/1_cad_model_simulation_minimal.html">Simple CAD model simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/2_cad_model_simulation_with_boundary_types.html">Adding boundary conditions to a CAD model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/3_cad_model_simulation_with_hybrid_csg.html">Making a hybrid CAD CSG model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD mesh fast flux simulation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad.html">Simulation of fast neutron flux</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/1_optimal_design.html">Design your own tokamak</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/main?urlpath=lab/tree/./tasks/task_14_variance_reduction/3_sphere_iterative_per_run_ww.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop/issues/new?title=Issue%20on%20page%20%2Ftasks/task_14_variance_reduction/3_sphere_iterative_per_run_ww.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tasks/task_14_variance_reduction/3_sphere_iterative_per_run_ww.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Magic Method Iterative Weight Windows per run</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="magic-method-iterative-weight-windows-per-run">
+<h1>Magic Method Iterative Weight Windows per run<a class="headerlink" href="#magic-method-iterative-weight-windows-per-run" title="Link to this heading">#</a></h1>
+<p>Iteratively creating and utilizing a weight window to accelerate deep shielding simulations</p>
+<p>This example simulates a sphere of material with a neutron source in the center.This example implements the MAGIC method of weight window generation on each simulation run.</p>
+<p>In this tutorial we shall focus on generating a weight window to accelerate the simulation of particles through a shield and improving the weight window with each iteration.</p>
+<p>Weight Windows are found using the MAGIC method and used to accelerate the simulation.</p>
+<p>The variance reduction method used for this simulation is well documented in the OpenMC documentation
+<a class="reference external" href="https://docs.openmc.org/en/stable/methods/neutron_physics.html">https://docs.openmc.org/en/stable/methods/neutron_physics.html</a></p>
+<p>The MAGIC method is well described in the original publication
+<a class="reference external" href="https://scientific-publications.ukaea.uk/wp-content/uploads/Published/INTERN1.pdf">https://scientific-publications.ukaea.uk/wp-content/uploads/Published/INTERN1.pdf</a></p>
+<p>First we import <code class="docutils literal notranslate"><span class="pre">openmc</span></code> including <code class="docutils literal notranslate"><span class="pre">openmc.lib</span></code> and other packages needed for the example. We also configure the nuclear data path.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogNorm</span>  <span class="c1"># used for plotting log scale graphs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.axes_grid1</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_axes_locatable</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">openmc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">openmc.lib</span>  <span class="c1"># this example makes use of openmc lib to run the simulations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="c1"># Setting the cross section path to the correct location in the docker image.</span>
+<span class="c1"># If you are running this outside the docker image you will have to change this path to your local cross section path.</span>
+<span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;cross_sections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;nuclear_data&#39;</span> <span class="o">/</span> <span class="s1">&#39;cross_sections.xml&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We create a couple of materials for the simulation</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat_water</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Material</span><span class="p">()</span>
+<span class="n">mat_water</span><span class="o">.</span><span class="n">add_element</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">mat_water</span><span class="o">.</span><span class="n">add_element</span><span class="p">(</span><span class="s2">&quot;O&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">mat_water</span><span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="s2">&quot;g/cm3&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">my_materials</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Materials</span><span class="p">([</span><span class="n">mat_water</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we define and plot the spherical geometry.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># outer surface at 500 cm</span>
+<span class="n">outer_surface</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">RectangularParallelepiped</span><span class="p">(</span><span class="o">-</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="o">-</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="o">-</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s2">&quot;vacuum&quot;</span><span class="p">)</span>
+
+<span class="c1"># A single region below the surface</span>
+<span class="n">region_1</span> <span class="o">=</span> <span class="o">-</span><span class="n">outer_surface</span>
+
+<span class="c1"># A single cell full of water</span>
+<span class="n">cell_1</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">region_1</span><span class="p">)</span>
+<span class="n">cell_1</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="n">mat_water</span>
+
+<span class="n">my_geometry</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Geometry</span><span class="p">([</span><span class="n">cell_1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we plot the geometry and color by materials.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span> <span class="o">=</span> <span class="n">my_geometry</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color_by</span><span class="o">=</span><span class="s1">&#39;material&#39;</span><span class="p">)</span> 
+<span class="n">plot</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;geometry_top_down_view.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/626d02767f368e3d01a73b2ee5a1fe3051f5e06917b8435f83c1efb29c138c2e.png" src="../../_images/626d02767f368e3d01a73b2ee5a1fe3051f5e06917b8435f83c1efb29c138c2e.png" />
+</div>
+</div>
+<p>Next we create a point source, this also uses the same geometry parameters to place in the center of the room regardless of the values of the parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># location of the point source</span>
+<span class="n">space</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Point</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">angle</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Isotropic</span><span class="p">()</span>
+
+<span class="c1"># all (100%) of source particles are 14MeV energy</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Discrete</span><span class="p">([</span><span class="mf">14e6</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">])</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">IndependentSource</span><span class="p">(</span><span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">energy</span><span class="p">)</span>
+<span class="n">source</span><span class="o">.</span><span class="n">particle</span> <span class="o">=</span> <span class="s2">&quot;neutron&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next we create a mesh that encompasses the entire geometry and scores neutron flux</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mesh</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">RegularMesh</span><span class="p">()</span><span class="o">.</span><span class="n">from_domain</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">my_geometry</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">])</span>
+
+<span class="n">mesh_filter</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">MeshFilter</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+
+<span class="n">flux_tally</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Tally</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;flux tally&quot;</span><span class="p">)</span>
+<span class="n">flux_tally</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="p">[</span><span class="n">mesh_filter</span><span class="p">]</span>
+<span class="n">flux_tally</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;flux&quot;</span><span class="p">]</span>
+<span class="n">flux_tally</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="mi">55</span>  <span class="c1"># we set the ID number here as we need to access it during the openmc lib run</span>
+
+<span class="c1"># adds the mesh tally to the model</span>
+<span class="n">my_tallies</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Tallies</span><span class="p">()</span>
+<span class="n">my_tallies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flux_tally</span><span class="p">)</span>
+
+<span class="n">tallies</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Tallies</span><span class="p">([</span><span class="n">flux_tally</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creates the simulation settings</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_settings</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Settings</span><span class="p">()</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">run_mode</span> <span class="o">=</span> <span class="s2">&quot;fixed source&quot;</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">particles</span> <span class="o">=</span> <span class="mi">250</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">batches</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">max_history_splits</span> <span class="o">=</span> <span class="mi">4000</span>  <span class="c1"># controls the total number of maximum splits a particle can do over the entire lifetime</span>
+
+<span class="c1"># no need to write the tallies.out file which saves space and time when large meshes are used</span>
+<span class="n">my_settings</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;tallies&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creates and exports the model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">my_geometry</span><span class="p">,</span> <span class="n">my_materials</span><span class="p">,</span> <span class="n">my_settings</span><span class="p">,</span> <span class="n">my_tallies</span><span class="p">)</span>
+
+<span class="c1"># deletes old input and output files</span>
+<span class="o">!</span>rm<span class="w"> </span>*.xml<span class="w"> </span><span class="o">||</span><span class="w"> </span>true
+<span class="o">!</span>rm<span class="w"> </span>*.h5<span class="w"> </span><span class="o">||</span><span class="w"> </span>true
+
+<span class="n">model</span><span class="o">.</span><span class="n">export_to_xml</span><span class="p">()</span>  <span class="c1"># this is necessary as openmc.lib loads up the model.xml file</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we want to plot the results of the simulation. We want to do this twice to compare the results so I’ve written this up as a function that we can call.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_mesh_tally_and_weight_window</span><span class="p">(</span><span class="n">statepoint_filename</span><span class="p">,</span> <span class="n">weight_window_filename</span><span class="p">,</span> <span class="n">image_filename</span><span class="p">):</span>
+    <span class="c1"># load flux tally from statepoint file</span>
+    <span class="k">with</span> <span class="n">openmc</span><span class="o">.</span><span class="n">StatePoint</span><span class="p">(</span><span class="n">statepoint_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">sp</span><span class="p">:</span>
+        <span class="n">flux_tally</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">get_tally</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;flux tally&quot;</span><span class="p">)</span>
+
+    <span class="n">tally_mesh</span> <span class="o">=</span> <span class="n">flux_tally</span><span class="o">.</span><span class="n">find_filter</span><span class="p">(</span><span class="n">openmc</span><span class="o">.</span><span class="n">MeshFilter</span><span class="p">)</span><span class="o">.</span><span class="n">mesh</span>
+    <span class="n">tally_mesh_extent</span> <span class="o">=</span> <span class="n">tally_mesh</span><span class="o">.</span><span class="n">bounding_box</span><span class="o">.</span><span class="n">extent</span><span class="p">[</span><span class="s1">&#39;xy&#39;</span><span class="p">]</span>
+
+    <span class="c1"># get slice of flux mean and std dev values on the xy basis mid z axis.</span>
+    <span class="n">flux_mean</span> <span class="o">=</span> <span class="n">flux_tally</span><span class="o">.</span><span class="n">get_reshaped_data</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">expand_dims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()[:,:,</span><span class="nb">int</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span>
+    <span class="n">flux_std_dev</span> <span class="o">=</span> <span class="n">flux_tally</span><span class="o">.</span><span class="n">get_reshaped_data</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;std_dev&#39;</span><span class="p">,</span> <span class="n">expand_dims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()[:,:,</span><span class="nb">int</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span>
+    
+    <span class="c1"># calculate values for a slice showing relative uncertainties</span>
+    <span class="n">flux_rel_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">flux_std_dev</span><span class="p">,</span> <span class="n">flux_mean</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">flux_std_dev</span><span class="p">),</span> <span class="n">where</span><span class="o">=</span><span class="n">flux_mean</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">flux_rel_err</span><span class="p">[</span><span class="n">flux_rel_err</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    
+    <span class="c1"># get slice of ww lower bounds</span>
+    <span class="n">wws</span><span class="o">=</span><span class="n">openmc</span><span class="o">.</span><span class="n">hdf5_to_wws</span><span class="p">(</span><span class="n">weight_window_filename</span><span class="p">)</span>
+    <span class="n">ww</span> <span class="o">=</span> <span class="n">wws</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># get the one and only mesh tally</span>
+    <span class="n">ww_mesh</span> <span class="o">=</span> <span class="n">ww</span><span class="o">.</span><span class="n">mesh</span>  <span class="c1"># get the mesh that the weight window is mapped on</span>
+    <span class="n">ww_mesh_extent</span> <span class="o">=</span> <span class="n">ww_mesh</span><span class="o">.</span><span class="n">bounding_box</span><span class="o">.</span><span class="n">extent</span><span class="p">[</span><span class="s1">&#39;xy&#39;</span><span class="p">]</span>
+    <span class="n">reshaped_ww_vals</span> <span class="o">=</span> <span class="n">ww</span><span class="o">.</span><span class="n">lower_ww_bounds</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">dimension</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;reshaped_ww_vals.shape&#39;</span><span class="p">,</span> <span class="n">reshaped_ww_vals</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="c1"># slice on XZ basis, midplane Y axis</span>
+    <span class="n">slice_of_ww</span> <span class="o">=</span> <span class="n">reshaped_ww_vals</span><span class="p">[:,:,</span><span class="nb">int</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span>
+    
+    <span class="c1"># set up 3 subplots for the flux, std dev and ww slices</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># function will set colour bar on a sub plot</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_colourbar</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">im</span><span class="p">):</span>
+        <span class="n">divider</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">cax</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">&quot;5%&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">)</span>
+
+    <span class="c1"># add slice of flux to subplots</span>
+    <span class="n">im_flux</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">flux_mean</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+        <span class="c1"># origin=&quot;lower&quot;,</span>
+        <span class="n">extent</span><span class="o">=</span><span class="n">tally_mesh_extent</span><span class="p">,</span>
+        <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Flux Mean&quot;</span><span class="p">)</span>
+    <span class="n">add_colourbar</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">im_flux</span><span class="p">)</span>
+
+    <span class="c1"># add slice of flux std dev to subplots</span>
+    <span class="n">im_std_dev</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">flux_rel_err</span><span class="p">,</span>
+        <span class="c1"># origin=&quot;lower&quot;,</span>
+        <span class="n">extent</span><span class="o">=</span><span class="n">tally_mesh_extent</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlGn_r&#39;</span>
+    <span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Flux Mean rel. error&quot;</span><span class="p">)</span>
+    <span class="n">add_colourbar</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">im_std_dev</span><span class="p">)</span>
+
+    <span class="c1"># add slice of ww to subplots</span>
+    <span class="n">im_ww_lower</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">slice_of_ww</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+        <span class="c1"># origin=&quot;lower&quot;,</span>
+        <span class="n">extent</span><span class="o">=</span><span class="n">ww_mesh_extent</span><span class="p">,</span>
+        <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mf">1e-14</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;WW lower bound&quot;</span><span class="p">)</span>
+    <span class="n">add_colourbar</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">im_ww_lower</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">image_filename</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we make use of openmc.lib to control the simulation. Documentation on openmc.lib is here
+<a class="reference external" href="https://docs.openmc.org/en/stable/pythonapi/capi.html">https://docs.openmc.org/en/stable/pythonapi/capi.html</a></p>
+<p>We run 5 iterations with each iteration improving the weight window.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">openmc</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">run_in_memory</span><span class="p">():</span>
+
+    <span class="c1"># loads up a live pointer to the tally with id=55, at this stage the tally is empty</span>
+    <span class="n">tally</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">tallies</span><span class="p">[</span><span class="mi">55</span><span class="p">]</span>
+
+    <span class="c1"># makes weight windows from the tally, at this stage the values are empty</span>
+    <span class="n">wws</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">WeightWindows</span><span class="o">.</span><span class="n">from_tally</span><span class="p">(</span><span class="n">tally</span><span class="p">,</span> <span class="n">particle</span><span class="o">=</span><span class="s1">&#39;neutron&#39;</span><span class="p">)</span>
+
+    <span class="c1"># You could customise the weight windows by changing this attributes from their defaults</span>
+    <span class="c1"># wws.survival_ratio</span>
+    <span class="c1"># wws.max_lower_bound_ratio</span>
+    <span class="c1"># wws.weight_cutoff</span>
+    <span class="c1"># wws.max_split  # controls the total number of maximum splits a particle can do per mesh voxel</span>
+
+    <span class="c1"># 5 iterations of weight window improvements</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+
+        <span class="c1"># run the simulation</span>
+        <span class="n">openmc</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+        <span class="c1"># improves the weight window with the latest tally results</span>
+        <span class="n">wws</span><span class="o">.</span><span class="n">update_magic</span><span class="p">(</span><span class="n">tally</span><span class="p">)</span>
+
+        <span class="c1"># we write out the weight window map for plotting later</span>
+        <span class="n">openmc</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">export_weight_windows</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;weight_windows</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.h5&#39;</span><span class="p">)</span>
+        <span class="c1"># we write out the statepoint so that the tally can be plotted later</span>
+        <span class="n">openmc</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">statepoint_write</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;statepoint_simulation_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.h5&#39;</span><span class="p">)</span>
+
+        <span class="c1"># turns on the weight windows to ensure they are used</span>
+        <span class="n">openmc</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">weight_windows_on</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># creates a plot of the flux, std_dev and weight window</span>
+        <span class="n">plot_mesh_tally_and_weight_window</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;statepoint_simulation_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.h5&#39;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s1">&#39;weight_windows</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.h5&#39;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s1">&#39;plot_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.png&#39;</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                %%%%%%%%%%%%%%%
+                           %%%%%%%%%%%%%%%%%%%%%%%%
+                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                    %%%%%%%%%%%%%%%%%%%%%%%%
+                                     %%%%%%%%%%%%%%%%%%%%%%%%
+                 ###############      %%%%%%%%%%%%%%%%%%%%%%%%
+                ##################     %%%%%%%%%%%%%%%%%%%%%%%
+                ###################     %%%%%%%%%%%%%%%%%%%%%%%
+                ####################     %%%%%%%%%%%%%%%%%%%%%%
+                #####################     %%%%%%%%%%%%%%%%%%%%%
+                ######################     %%%%%%%%%%%%%%%%%%%%
+                #######################     %%%%%%%%%%%%%%%%%%
+                 #######################     %%%%%%%%%%%%%%%%%
+                 ######################     %%%%%%%%%%%%%%%%%
+                  ####################     %%%%%%%%%%%%%%%%%
+                    #################     %%%%%%%%%%%%%%%%%
+                     ###############     %%%%%%%%%%%%%%%%
+                       ############     %%%%%%%%%%%%%%%
+                          ########     %%%%%%%%%%%%%%
+                                      %%%%%%%%%%%
+
+                 | The OpenMC Monte Carlo Code
+       Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
+         License | https://docs.openmc.org/en/latest/license.html
+         Version | 0.15.3-dev144
+     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
+       Date/Time | 2025-06-06 15:56:32
+  OpenMP Threads | 16
+
+ Reading settings XML file...
+ Reading cross sections XML file...
+ Reading materials XML file...
+ Reading geometry XML file...
+ Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
+ Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
+ Reading O16 from /home/jon/nuclear_data/neutron/O16.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading O17 from /home/jon/nuclear_data/neutron/O17.h5
+ Reading O18 from /home/jon/nuclear_data/neutron/O18.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Minimum neutron data temperature: 294.0 K
+ Maximum neutron data temperature: 294.0 K
+ Reading tallies XML file...
+ Preparing distributed cell instances...
+ Reading plot XML file...
+ Writing summary.h5 file...
+ Maximum neutron transport energy: 20000000.0 eV for H1
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+ Simulating batch 2
+ Simulating batch 3
+ Simulating batch 4
+ Simulating batch 5
+ Simulating batch 6
+ Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+ Simulating batch 10
+ Creating state point statepoint.10.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 2.3323e-01 seconds
+   Reading cross sections          = 2.0380e-01 seconds
+ Total time in simulation          = 2.9762e-01 seconds
+   Time in transport only          = 2.1836e-01 seconds
+   Time in active batches          = 2.9762e-01 seconds
+   Time accumulating tallies       = 5.5584e-02 seconds
+   Time writing statepoints        = 2.1342e-02 seconds
+ Total time for finalization       = 1.5330e-06 seconds
+ Total time elapsed                = 5.3232e-01 seconds
+ Calculation Rate (active)         = 8399.90 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00000 +/- 0.00000
+
+ Exporting weight windows to weight_windows0.h5...
+ Creating state point statepoint_simulation_0.h5...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HDF5-DIAG: Error detected in HDF5 (1.14.4-3) thread 0:
+  #000: /root/hdf5/src/H5D.c line 1371 in H5Dwrite(): can&#39;t synchronously write data
+    major: Dataset
+    minor: Write failed
+  #001: /root/hdf5/src/H5D.c line 1317 in H5D__write_api_common(): can&#39;t write data
+    major: Dataset
+    minor: Write failed
+  #002: /root/hdf5/src/H5VLcallback.c line 2282 in H5VL_dataset_write_direct(): dataset write failed
+    major: Virtual Object Layer
+    minor: Write failed
+  #003: /root/hdf5/src/H5VLcallback.c line 2237 in H5VL__dataset_write(): dataset write failed
+    major: Virtual Object Layer
+    minor: Write failed
+  #004: /root/hdf5/src/H5VLnative_dataset.c line 421 in H5VL__native_dataset_write(): can&#39;t write data
+    major: Dataset
+    minor: Write failed
+  #005: /root/hdf5/src/H5Dio.c line 620 in H5D__write(): no input buffer
+    major: Invalid arguments to routine
+    minor: Bad value
+/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
+  warn(msg, IDWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>reshaped_ww_vals.shape (20, 20, 20)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Maximum neutron transport energy: 20000000.0 eV for H1
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 2.3323e-01 seconds
+   Reading cross sections          = 2.0380e-01 seconds
+ Total time in simulation          = 5.0982e+00 seconds
+   Time in transport only          = 4.9920e+00 seconds
+   Time in active batches          = 5.0982e+00 seconds
+   Time accumulating tallies       = 5.5813e-02 seconds
+   Time writing statepoints        = 6.1157e-02 seconds
+ Total time for finalization       = 3.5020e-06 seconds
+ Total time elapsed                = 5.3337e+00 seconds
+ Calculation Rate (active)         = 490.366 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00000 +/- 0.00000
+
+ Exporting weight windows to weight_windows1.h5...
+ Creating state point statepoint_simulation_1.h5...
+reshaped_ww_vals.shape (20, 20, 20)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HDF5-DIAG: Error detected in HDF5 (1.14.4-3) thread 0:
+  #000: /root/hdf5/src/H5D.c line 1371 in H5Dwrite(): can&#39;t synchronously write data
+    major: Dataset
+    minor: Write failed
+  #001: /root/hdf5/src/H5D.c line 1317 in H5D__write_api_common(): can&#39;t write data
+    major: Dataset
+    minor: Write failed
+  #002: /root/hdf5/src/H5VLcallback.c line 2282 in H5VL_dataset_write_direct(): dataset write failed
+    major: Virtual Object Layer
+    minor: Write failed
+  #003: /root/hdf5/src/H5VLcallback.c line 2237 in H5VL__dataset_write(): dataset write failed
+    major: Virtual Object Layer
+    minor: Write failed
+  #004: /root/hdf5/src/H5VLnative_dataset.c line 421 in H5VL__native_dataset_write(): can&#39;t write data
+    major: Dataset
+    minor: Write failed
+  #005: /root/hdf5/src/H5Dio.c line 620 in H5D__write(): no input buffer
+    major: Invalid arguments to routine
+    minor: Bad value
+/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
+  warn(msg, IDWarning)
+/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
+  warn(msg, IDWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Maximum neutron transport energy: 20000000.0 eV for H1
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 2.3323e-01 seconds
+   Reading cross sections          = 2.0380e-01 seconds
+ Total time in simulation          = 1.4081e+01 seconds
+   Time in transport only          = 1.3962e+01 seconds
+   Time in active batches          = 1.4081e+01 seconds
+   Time accumulating tallies       = 5.6268e-02 seconds
+   Time writing statepoints        = 8.5138e-02 seconds
+ Total time for finalization       = 4.0580e-06 seconds
+ Total time elapsed                = 1.4317e+01 seconds
+ Calculation Rate (active)         = 177.546 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00000 +/- 0.00000
+
+ Exporting weight windows to weight_windows2.h5...
+ Creating state point statepoint_simulation_2.h5...
+reshaped_ww_vals.shape (20, 20, 20)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HDF5-DIAG: Error detected in HDF5 (1.14.4-3) thread 0:
+  #000: /root/hdf5/src/H5D.c line 1371 in H5Dwrite(): can&#39;t synchronously write data
+    major: Dataset
+    minor: Write failed
+  #001: /root/hdf5/src/H5D.c line 1317 in H5D__write_api_common(): can&#39;t write data
+    major: Dataset
+    minor: Write failed
+  #002: /root/hdf5/src/H5VLcallback.c line 2282 in H5VL_dataset_write_direct(): dataset write failed
+    major: Virtual Object Layer
+    minor: Write failed
+  #003: /root/hdf5/src/H5VLcallback.c line 2237 in H5VL__dataset_write(): dataset write failed
+    major: Virtual Object Layer
+    minor: Write failed
+  #004: /root/hdf5/src/H5VLnative_dataset.c line 421 in H5VL__native_dataset_write(): can&#39;t write data
+    major: Dataset
+    minor: Write failed
+  #005: /root/hdf5/src/H5Dio.c line 620 in H5D__write(): no input buffer
+    major: Invalid arguments to routine
+    minor: Bad value
+/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
+  warn(msg, IDWarning)
+/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
+  warn(msg, IDWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Maximum neutron transport energy: 20000000.0 eV for H1
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 2.3323e-01 seconds
+   Reading cross sections          = 2.0380e-01 seconds
+ Total time in simulation          = 2.2994e+01 seconds
+   Time in transport only          = 2.2814e+01 seconds
+   Time in active batches          = 2.2994e+01 seconds
+   Time accumulating tallies       = 5.7019e-02 seconds
+   Time writing statepoints        = 1.4400e-01 seconds
+ Total time for finalization       = 5.6460e-06 seconds
+ Total time elapsed                = 2.3232e+01 seconds
+ Calculation Rate (active)         = 108.722 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00000 +/- 0.00000
+
+ Exporting weight windows to weight_windows3.h5...
+ Creating state point statepoint_simulation_3.h5...
+reshaped_ww_vals.shape (20, 20, 20)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HDF5-DIAG: Error detected in HDF5 (1.14.4-3) thread 0:
+  #000: /root/hdf5/src/H5D.c line 1371 in H5Dwrite(): can&#39;t synchronously write data
+    major: Dataset
+    minor: Write failed
+  #001: /root/hdf5/src/H5D.c line 1317 in H5D__write_api_common(): can&#39;t write data
+    major: Dataset
+    minor: Write failed
+  #002: /root/hdf5/src/H5VLcallback.c line 2282 in H5VL_dataset_write_direct(): dataset write failed
+    major: Virtual Object Layer
+    minor: Write failed
+  #003: /root/hdf5/src/H5VLcallback.c line 2237 in H5VL__dataset_write(): dataset write failed
+    major: Virtual Object Layer
+    minor: Write failed
+  #004: /root/hdf5/src/H5VLnative_dataset.c line 421 in H5VL__native_dataset_write(): can&#39;t write data
+    major: Dataset
+    minor: Write failed
+  #005: /root/hdf5/src/H5Dio.c line 620 in H5D__write(): no input buffer
+    major: Invalid arguments to routine
+    minor: Bad value
+/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
+  warn(msg, IDWarning)
+/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
+  warn(msg, IDWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Maximum neutron transport energy: 20000000.0 eV for H1
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 2.3323e-01 seconds
+   Reading cross sections          = 2.0380e-01 seconds
+ Total time in simulation          = 3.2196e+01 seconds
+   Time in transport only          = 3.1999e+01 seconds
+   Time in active batches          = 3.2196e+01 seconds
+   Time accumulating tallies       = 6.3347e-02 seconds
+   Time writing statepoints        = 1.6423e-01 seconds
+ Total time for finalization       = 6.6000e-06 seconds
+ Total time elapsed                = 3.2434e+01 seconds
+ Calculation Rate (active)         = 77.6495 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 0.00000 +/- 0.00000
+
+ Exporting weight windows to weight_windows4.h5...
+ Creating state point statepoint_simulation_4.h5...
+reshaped_ww_vals.shape (20, 20, 20)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HDF5-DIAG: Error detected in HDF5 (1.14.4-3) thread 0:
+  #000: /root/hdf5/src/H5D.c line 1371 in H5Dwrite(): can&#39;t synchronously write data
+    major: Dataset
+    minor: Write failed
+  #001: /root/hdf5/src/H5D.c line 1317 in H5D__write_api_common(): can&#39;t write data
+    major: Dataset
+    minor: Write failed
+  #002: /root/hdf5/src/H5VLcallback.c line 2282 in H5VL_dataset_write_direct(): dataset write failed
+    major: Virtual Object Layer
+    minor: Write failed
+  #003: /root/hdf5/src/H5VLcallback.c line 2237 in H5VL__dataset_write(): dataset write failed
+    major: Virtual Object Layer
+    minor: Write failed
+  #004: /root/hdf5/src/H5VLnative_dataset.c line 421 in H5VL__native_dataset_write(): can&#39;t write data
+    major: Dataset
+    minor: Write failed
+  #005: /root/hdf5/src/H5Dio.c line 620 in H5D__write(): no input buffer
+    major: Invalid arguments to routine
+    minor: Bad value
+/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
+  warn(msg, IDWarning)
+/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
+  warn(msg, IDWarning)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The iterative improvement of the flux / standard deviation / weight windows with each simulation run can be seen when we plot all the simulation results one after each other.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="n">images</span> <span class="o">=</span> <span class="p">[</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;plot_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s1">.png&#39;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]]</span>
+<span class="n">widths</span><span class="p">,</span> <span class="n">heights</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">size</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">images</span><span class="p">))</span>
+
+<span class="n">total_height</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span>
+<span class="n">max_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">widths</span><span class="p">)</span>
+
+<span class="n">new_im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">max_width</span><span class="p">,</span> <span class="n">total_height</span><span class="p">))</span>
+<span class="n">y_offset</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">im</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
+  <span class="n">new_im</span><span class="o">.</span><span class="n">paste</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">y_offset</span><span class="p">))</span>
+  <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">im</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">new_im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;flux_std-dev_ww_for_all_simulations_reset.png&#39;</span><span class="p">)</span>
+<span class="n">new_im</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4270202bb944ef53024c01c106658b7cdc99024b770a4beccc231d3d044152ab.png" src="../../_images/4270202bb944ef53024c01c106658b7cdc99024b770a4beccc231d3d044152ab.png" />
+</div>
+</div>
+<p>Learning outcome</p>
+<p>Weight windows can be incrementally improved by running subsequent simulations.</p>
+<p>Running lots of small simulations where the weight window can incrementally improve the weight window can yield better results than a big single simulation to generate weight windows and a single big simulation to make use of the weight windows.</p>
+<p>Doing this iteration with openmc.lib means we don’t need to reload the nuclear data between simulations which saves time.</p>
+<p>Additionally we have access to openmc.lib methods which are necessary for updating the weight window with the MAGIC method and exporting the weight window to a h5 file.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tasks/task_14_variance_reduction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2_shielded_room_single_ww.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Variance Reduction - Weight Windows</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="4_sphere_iterative_per_batch_ww.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Magic Method Iterative Weight Windows per Batch</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jon Shimwell
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

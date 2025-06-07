@@ -1,0 +1,1350 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Shutdown dose rate D1S method different sources (DD+DT) &#8212; Fusion Energy Neutronics Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tasks/task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Task Introduction" href="../task_13_volume_calculations/README.html" />
+    <link rel="prev" title="Shutdown dose rate D1S method" href="4_D1S_regularmesh_shutdown_dose_rate.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../docs/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Fusion Energy Neutronics Workshop - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Fusion Energy Neutronics Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../docs/index.html">
+                    Fusion Energy Neutronics Workshop
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Installation options</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_pip.html">Install with pip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_conda.html">Install with Conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_mamba.html">Install with Mamba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_docker.html">Install with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_extras.html">Install optional extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_binder.html">Install in the Cloud (binder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_codespaces.html">Install in the cloud</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cross Sections</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/1_isotope_xs_plot.html">Plotting isotope cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/2_element_xs_plot.html">Plotting element cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/3_material_xs_plot.html">Plotting material cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/4_Doppler_broadening.html">Plotting Doppler broadened cross sections</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/1_example_materials_from_isotopes.html">Making materials from isotopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/2_example_materials_from_elements.html">Making materials from elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/3_example_materials_from_material_maker.html">Making materials from a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/4_example_materials_parameter_study.html">Changing materials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/5_example_materials_mixed.html">Mixing materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CSG Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/1_simple_csg_geometry.html">Constructing simple CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/2_intermediate_csg_geometry.html">Constructing CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk.html">3D Geometry viewing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making source terms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/1_point_source_plots.html">Point source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/2_ring_source.html">Ring source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/3_plasma_source_plots.html">Plasma source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/4_neutron_tracks.html">Visualising Particle Tracks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/5_gamma_source_example.html">Gamma sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/6_unstructured_mesh_spatial_source.html">Unstructured mesh source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/7_structured_mesh_source.html">Structured mesh source</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell TBR tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/1_example_tritium_production.html">Performing Tritium Breeding Ratio (TBR) simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/2_example_tritium_production_study.html">Simulating TBR as a function of Lithium enrichment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell DPA tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/1_find_dpa.html">Simulating Displacements Per Atom (DPA)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell spectra tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/1_example_neutron_flux_and_units.html">Neutron flux and units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.html">Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.html">Plotting neutron lethargy energy spectra across a surface with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/4_example_photon_spectra.html">Plotting photon and neutron energy spectra in a cell with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/5_neutron_energy_loss_plot.html">Plotting energy loss per collision</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell mesh tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.html">2D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/2_example_3d_regular_mesh_tallies.html">3D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies.html">Cylinder mesh tallies</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell instantaneous dose tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source.html">Simulations of effective dose on a surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study.html">Simulations of effective dose as a function of distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons.html">Dose map from neutron pulse</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Activation Transmutation Depletion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.html">Nuclide Build Up During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/2_example_tally_change_with_burnup.html">Tally Value Change During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/3_full_pulse_schedule.html">Full pulse schedule depletion simulation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG shutdown dose tallies</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_D1S_regularmesh_shutdown_dose_rate.html">Shutdown dose rate D1S method</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Shutdown dose rate D1S method different sources (DD+DT)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Volume Calculations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/1_find_volume_of_csg_cell.html">Finding Volume of a Cell by sampling simulation.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/2_find_volume_of_dagmc_cell.html">Finding Volume of DAGMC Cell</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variance Reduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/1_shielded_room_survival_biasing.html">Survival Biasing Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/2_shielded_room_single_ww.html">Variance Reduction - Weight Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/3_sphere_iterative_per_run_ww.html">Magic Method Iterative Weight Windows per run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/4_sphere_iterative_per_batch_ww.html">Magic Method Iterative Weight Windows per Batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/5_shielded_room_fw_cadis.html">FW CADIS Weight Windows</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CAD geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/1_making_cad_with_cadquery.html">Making CAD with CadQuery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/2_making_cad_with_paramak.html">Making CAD geometry with Paramak</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Converting CAD Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/1_converting_cad_files.html">Converting CAD geometry to neutronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.html">CAD conversion in memory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using DAGMC models in OpenMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/1_cad_model_simulation_minimal.html">Simple CAD model simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/2_cad_model_simulation_with_boundary_types.html">Adding boundary conditions to a CAD model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/3_cad_model_simulation_with_hybrid_csg.html">Making a hybrid CAD CSG model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD mesh fast flux simulation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad.html">Simulation of fast neutron flux</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/1_optimal_design.html">Design your own tokamak</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/main?urlpath=lab/tree/./tasks/task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop/issues/new?title=Issue%20on%20page%20%2Ftasks/task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tasks/task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Shutdown dose rate D1S method different sources (DD+DT)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="shutdown-dose-rate-d1s-method-different-sources-dd-dt">
+<h1>Shutdown dose rate D1S method different sources (DD+DT)<a class="headerlink" href="#shutdown-dose-rate-d1s-method-different-sources-dd-dt" title="Link to this heading">#</a></h1>
+<p>This script simulates D1S method of shut down dose rate on a simple CSG model with one aluminum sphere and one iron sphere.</p>
+<p>This adds the additional complexity of mixed neutron source terms. In this case we simulate two pulses of neutrons from DD fusion reactions which have energy of 2.5MeV and then a pulse of neutrons from a DT fusion reaction which have neutrons of 14MeV.</p>
+<p>This need to simulate the activation after different neutron source terms is a common need in fusion power plants which typically plan to start operations without using tritium and gradually work up to full DT operation.</p>
+<p>You should notice in this example that we have to perform two transport simulating (one for DD and on for DT) then accounting for the combined activation is done by synchronizing pulse schedule so that the decay can be combined from both roots.</p>
+<p>More details on D1S method in the OpenMC documentation
+<a class="reference external" href="https://docs.openmc.org/en/stable/usersguide/decay_sources.html#direct-1-step-d1s-calculations">https://docs.openmc.org/en/stable/usersguide/decay_sources.html#direct-1-step-d1s-calculations</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">openmc</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogNorm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openmc.deplete</span><span class="w"> </span><span class="kn">import</span> <span class="n">d1s</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openmc.data.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">half_life</span>
+
+<span class="c1"># Setting the cross section path to the correct location in the docker image.</span>
+<span class="c1"># If you are running this outside the docker image you will have to change this path to your local cross section path.</span>
+<span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;cross_sections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;nuclear_data&#39;</span> <span class="o">/</span> <span class="s1">&#39;cross_sections.xml&#39;</span>
+<span class="c1"># the chain file was downloaded with</span>
+<span class="c1"># pip install openmc_data</span>
+<span class="c1"># download_endf_chain -r b8.0</span>
+<span class="n">openmc</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;chain_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;nuclear_data&#39;</span> <span class="o">/</span> <span class="s1">&#39;chain-endf-b8.0.xml&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Make the materials.</p>
+<p>Note that they don’t need the volume setting and don’t need to be made depletable. The R2S shutdown dose rate workflow requires both of these to be set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We make a iron material which should produce a few activation products</span>
+<span class="n">mat_iron</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Material</span><span class="p">()</span>
+<span class="n">mat_iron</span><span class="o">.</span><span class="n">add_nuclide</span><span class="p">(</span><span class="s2">&quot;Al27&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">mat_iron</span><span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="s2">&quot;g/cm3&quot;</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">)</span>
+<span class="n">mat_iron</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span> <span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">3</span>
+
+<span class="c1"># We make a Al material which should produce a few different activation products</span>
+<span class="n">mat_aluminum</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Material</span><span class="p">()</span>
+<span class="n">mat_aluminum</span><span class="o">.</span><span class="n">add_nuclide</span><span class="p">(</span><span class="s2">&quot;Fe56&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">mat_aluminum</span><span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="s2">&quot;g/cm3&quot;</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">)</span>
+<span class="n">mat_aluminum</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span> <span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we make a simple geometry, a cube with two sphere inside.</p>
+<p>The sphere have different materials and the cube is the edge of the simulation space.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sphere_surf_1</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">x0</span><span class="o">=-</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">sphere_region_1</span> <span class="o">=</span> <span class="o">-</span><span class="n">sphere_surf_1</span>
+<span class="n">sphere_cell_1</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">sphere_region_1</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">mat_iron</span><span class="p">)</span>
+
+<span class="n">sphere_surf_2</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">y0</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">sphere_region_2</span> <span class="o">=</span> <span class="o">-</span><span class="n">sphere_surf_2</span>
+<span class="n">sphere_cell_2</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">sphere_region_2</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">mat_aluminum</span><span class="p">)</span>
+
+<span class="n">xplane_surf_1</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">XPlane</span><span class="p">(</span><span class="n">x0</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s1">&#39;vacuum&#39;</span><span class="p">)</span>
+<span class="n">xplane_surf_2</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">XPlane</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s1">&#39;vacuum&#39;</span><span class="p">)</span>
+<span class="n">yplane_surf_1</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">YPlane</span><span class="p">(</span><span class="n">y0</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s1">&#39;vacuum&#39;</span><span class="p">)</span>
+<span class="n">yplane_surf_2</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">YPlane</span><span class="p">(</span><span class="n">y0</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s1">&#39;vacuum&#39;</span><span class="p">)</span>
+<span class="n">zplane_surf_1</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">ZPlane</span><span class="p">(</span><span class="n">z0</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s1">&#39;vacuum&#39;</span><span class="p">)</span>
+<span class="n">zplane_surf_2</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">ZPlane</span><span class="p">(</span><span class="n">z0</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">boundary_type</span><span class="o">=</span><span class="s1">&#39;vacuum&#39;</span><span class="p">)</span>
+<span class="n">sphere_region_3</span> <span class="o">=</span> <span class="o">+</span><span class="n">xplane_surf_1</span> <span class="o">&amp;</span> <span class="o">-</span><span class="n">xplane_surf_2</span> <span class="o">&amp;</span> <span class="o">+</span><span class="n">yplane_surf_1</span> <span class="o">&amp;</span> <span class="o">-</span><span class="n">yplane_surf_2</span>  <span class="o">&amp;</span> <span class="o">+</span><span class="n">zplane_surf_1</span> <span class="o">&amp;</span> <span class="o">-</span><span class="n">zplane_surf_2</span> <span class="o">&amp;</span> <span class="o">+</span><span class="n">sphere_surf_1</span> <span class="o">&amp;</span> <span class="o">+</span><span class="n">sphere_surf_2</span>  <span class="c1"># void space</span>
+<span class="n">sphere_cell_3</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">sphere_region_3</span><span class="p">)</span>
+
+<span class="n">my_geometry</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Geometry</span><span class="p">([</span><span class="n">sphere_cell_1</span><span class="p">,</span> <span class="n">sphere_cell_2</span><span class="p">,</span> <span class="n">sphere_cell_3</span><span class="p">])</span>
+
+<span class="n">my_materials</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Materials</span><span class="p">([</span><span class="n">mat_iron</span><span class="p">,</span> <span class="n">mat_aluminum</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next we make a minimal source term.</p>
+<p>A 14MeV neutron source that activates material, located in the center of the geometry</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_source_dd</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">IndependentSource</span><span class="p">()</span>
+<span class="n">my_source_dd</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Point</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">my_source_dd</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Isotropic</span><span class="p">()</span>
+<span class="n">my_source_dd</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Discrete</span><span class="p">([</span><span class="mf">2.5e6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">my_source_dd</span><span class="o">.</span><span class="n">particle</span> <span class="o">=</span> <span class="s2">&quot;neutron&quot;</span>
+
+<span class="n">my_source_dt</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">IndependentSource</span><span class="p">()</span>
+<span class="n">my_source_dt</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Point</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">my_source_dt</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Isotropic</span><span class="p">()</span>
+<span class="n">my_source_dt</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Discrete</span><span class="p">([</span><span class="mf">14.06e6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">my_source_dt</span><span class="o">.</span><span class="n">particle</span> <span class="o">=</span> <span class="s2">&quot;neutron&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we make the simulation settings, note that photon_transport is enabled and a D1S specific setting <code class="docutils literal notranslate"><span class="pre">use_decay_photons</span></code> is used</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># settings for the DT neutron simulation with decay photons</span>
+<span class="n">settings_dd</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Settings</span><span class="p">()</span>
+<span class="n">settings_dd</span><span class="o">.</span><span class="n">run_mode</span> <span class="o">=</span> <span class="s2">&quot;fixed source&quot;</span>
+<span class="n">settings_dd</span><span class="o">.</span><span class="n">particles</span> <span class="o">=</span> <span class="mi">1000000</span>
+<span class="n">settings_dd</span><span class="o">.</span><span class="n">batches</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">settings_dd</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">my_source_dd</span>
+<span class="n">settings_dd</span><span class="o">.</span><span class="n">photon_transport</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># D1S specific setting</span>
+<span class="n">settings_dd</span><span class="o">.</span><span class="n">use_decay_photons</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># settings for the DD neutron simulation with decay photons</span>
+<span class="n">settings_dt</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Settings</span><span class="p">()</span>
+<span class="n">settings_dt</span><span class="o">.</span><span class="n">run_mode</span> <span class="o">=</span> <span class="s2">&quot;fixed source&quot;</span>
+<span class="n">settings_dt</span><span class="o">.</span><span class="n">particles</span> <span class="o">=</span> <span class="mi">1000000</span>
+<span class="n">settings_dt</span><span class="o">.</span><span class="n">batches</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">settings_dt</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">my_source_dt</span>
+<span class="n">settings_dt</span><span class="o">.</span><span class="n">photon_transport</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># D1S specific setting</span>
+<span class="n">settings_dt</span><span class="o">.</span><span class="n">use_decay_photons</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We now make the photon dose tally which uses a regular mesh so that we can make a dose map</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># creates a regular mesh that surrounds the geometry for the tally</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">RegularMesh</span><span class="p">()</span><span class="o">.</span><span class="n">from_domain</span><span class="p">(</span>
+    <span class="n">my_geometry</span><span class="p">,</span>
+    <span class="n">dimension</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="c1"># 100 voxels in x and y axis directions and 1 voxel in z as we want a xy plot</span>
+<span class="p">)</span>
+
+<span class="c1"># adding a dose tally on a regular mesh</span>
+<span class="c1"># AP, PA, LLAT, RLAT, ROT, ISO are ICRP incident dose field directions, AP is front facing</span>
+<span class="n">energies</span><span class="p">,</span> <span class="n">pSv_cm2</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dose_coefficients</span><span class="p">(</span><span class="n">particle</span><span class="o">=</span><span class="s2">&quot;photon&quot;</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="s2">&quot;AP&quot;</span><span class="p">)</span>
+<span class="n">dose_filter</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">EnergyFunctionFilter</span><span class="p">(</span>
+    <span class="n">energies</span><span class="p">,</span> <span class="n">pSv_cm2</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;cubic&quot;</span>  <span class="c1"># interpolation method recommended by ICRP</span>
+<span class="p">)</span>
+<span class="n">particle_filter</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">ParticleFilter</span><span class="p">([</span><span class="s2">&quot;photon&quot;</span><span class="p">])</span>
+<span class="n">mesh_filter</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">MeshFilter</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+<span class="n">dose_tally</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Tally</span><span class="p">()</span>
+<span class="n">dose_tally</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="p">[</span><span class="n">particle_filter</span><span class="p">,</span> <span class="n">mesh_filter</span><span class="p">,</span> <span class="n">dose_filter</span><span class="p">]</span>
+<span class="n">dose_tally</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;flux&quot;</span><span class="p">]</span>
+<span class="n">dose_tally</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;photon_dose_on_mesh&quot;</span>
+
+<span class="n">tallies</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Tallies</span><span class="p">([</span><span class="n">dose_tally</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we make the model and importantly for D1S we prepare the tallies</p>
+<p>this run runs the neutron and decay photon steps</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_dd</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">my_geometry</span><span class="p">,</span> <span class="n">my_materials</span><span class="p">,</span> <span class="n">settings_dd</span><span class="p">,</span> <span class="n">tallies</span><span class="p">)</span>
+<span class="n">model_dt</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">my_geometry</span><span class="p">,</span> <span class="n">my_materials</span><span class="p">,</span> <span class="n">settings_dt</span><span class="p">,</span> <span class="n">tallies</span><span class="p">)</span>
+
+<span class="c1"># this adds ParentNuclideFilter to each tally, which the D1S method requires</span>
+<span class="n">d1s</span><span class="o">.</span><span class="n">prepare_tallies</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model_dd</span><span class="p">)</span>
+<span class="n">d1s</span><span class="o">.</span><span class="n">prepare_tallies</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model_dt</span><span class="p">)</span>
+
+<span class="n">output_path_dd</span> <span class="o">=</span> <span class="n">model_dd</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="s1">&#39;dd_results&#39;</span><span class="p">)</span>
+<span class="n">output_path_dt</span> <span class="o">=</span> <span class="n">model_dt</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="s1">&#39;dt_results&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another Filter instance already exists with id=4.
+  warn(msg, IDWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                %%%%%%%%%%%%%%%
+                           %%%%%%%%%%%%%%%%%%%%%%%%
+                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                    %%%%%%%%%%%%%%%%%%%%%%%%
+                                     %%%%%%%%%%%%%%%%%%%%%%%%
+                 ###############      %%%%%%%%%%%%%%%%%%%%%%%%
+                ##################     %%%%%%%%%%%%%%%%%%%%%%%
+                ###################     %%%%%%%%%%%%%%%%%%%%%%%
+                ####################     %%%%%%%%%%%%%%%%%%%%%%
+                #####################     %%%%%%%%%%%%%%%%%%%%%
+                ######################     %%%%%%%%%%%%%%%%%%%%
+                #######################     %%%%%%%%%%%%%%%%%%
+                 #######################     %%%%%%%%%%%%%%%%%
+                 ######################     %%%%%%%%%%%%%%%%%
+                  ####################     %%%%%%%%%%%%%%%%%
+                    #################     %%%%%%%%%%%%%%%%%
+                     ###############     %%%%%%%%%%%%%%%%
+                       ############     %%%%%%%%%%%%%%%
+                          ########     %%%%%%%%%%%%%%
+                                      %%%%%%%%%%%
+
+                 | The OpenMC Monte Carlo Code
+       Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
+         License | https://docs.openmc.org/en/latest/license.html
+         Version | 0.15.3-dev144
+     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
+       Date/Time | 2025-06-06 15:54:41
+  OpenMP Threads | 16
+
+ Reading model XML file &#39;model.xml&#39; ...
+ Reading chain file: /home/jon/nuclear_data/chain-endf-b8.0.xml...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading cross sections XML file...
+ Reading Al27 from /home/jon/nuclear_data/neutron/Al27.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Al from /home/jon/nuclear_data/photon/Al.h5 
+ Reading Fe56 from /home/jon/nuclear_data/neutron/Fe56.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Fe from /home/jon/nuclear_data/photon/Fe.h5 
+ Minimum neutron data temperature: 294.0 K
+ Maximum neutron data temperature: 294.0 K
+ Preparing distributed cell instances...
+ Writing summary.h5 file...
+ Maximum neutron transport energy: 150000000.0 eV for Al27
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 9.9638e-01 seconds
+   Reading cross sections          = 7.0428e-01 seconds
+ Total time in simulation          = 4.8069e+00 seconds
+   Time in transport only          = 4.7322e+00 seconds
+   Time in active batches          = 4.8069e+00 seconds
+   Time accumulating tallies       = 8.8448e-03 seconds
+   Time writing statepoints        = 6.2074e-02 seconds
+ Total time for finalization       = 1.2847e-01 seconds
+ Total time elapsed                = 5.9364e+00 seconds
+ Calculation Rate (active)         = 2.08035e+06 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 1.00000 +/- 0.00000
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                %%%%%%%%%%%%%%%
+                           %%%%%%%%%%%%%%%%%%%%%%%%
+                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                    %%%%%%%%%%%%%%%%%%%%%%%%
+                                     %%%%%%%%%%%%%%%%%%%%%%%%
+                 ###############      %%%%%%%%%%%%%%%%%%%%%%%%
+                ##################     %%%%%%%%%%%%%%%%%%%%%%%
+                ###################     %%%%%%%%%%%%%%%%%%%%%%%
+                ####################     %%%%%%%%%%%%%%%%%%%%%%
+                #####################     %%%%%%%%%%%%%%%%%%%%%
+                ######################     %%%%%%%%%%%%%%%%%%%%
+                #######################     %%%%%%%%%%%%%%%%%%
+                 #######################     %%%%%%%%%%%%%%%%%
+                 ######################     %%%%%%%%%%%%%%%%%
+                  ####################     %%%%%%%%%%%%%%%%%
+                    #################     %%%%%%%%%%%%%%%%%
+                     ###############     %%%%%%%%%%%%%%%%
+                       ############     %%%%%%%%%%%%%%%
+                          ########     %%%%%%%%%%%%%%
+                                      %%%%%%%%%%%
+
+                 | The OpenMC Monte Carlo Code
+       Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
+         License | https://docs.openmc.org/en/latest/license.html
+         Version | 0.15.3-dev144
+     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
+       Date/Time | 2025-06-06 15:54:47
+  OpenMP Threads | 16
+
+ Reading model XML file &#39;model.xml&#39; ...
+ Reading chain file: /home/jon/nuclear_data/chain-endf-b8.0.xml...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading cross sections XML file...
+ Reading Al27 from /home/jon/nuclear_data/neutron/Al27.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Al from /home/jon/nuclear_data/photon/Al.h5 
+ Reading Fe56 from /home/jon/nuclear_data/neutron/Fe56.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Fe from /home/jon/nuclear_data/photon/Fe.h5 
+ Minimum neutron data temperature: 294.0 K
+ Maximum neutron data temperature: 294.0 K
+ Preparing distributed cell instances...
+ Writing summary.h5 file...
+ Maximum neutron transport energy: 150000000.0 eV for Al27
+
+ ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
+
+ Simulating batch 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+
+ =======================&gt;     TIMING STATISTICS     &lt;=======================
+
+ Total time for initialization     = 9.9739e-01 seconds
+   Reading cross sections          = 6.9763e-01 seconds
+ Total time in simulation          = 4.7117e+00 seconds
+   Time in transport only          = 4.6420e+00 seconds
+   Time in active batches          = 4.7117e+00 seconds
+   Time accumulating tallies       = 1.9850e-03 seconds
+   Time writing statepoints        = 6.1867e-02 seconds
+ Total time for finalization       = 1.3621e-01 seconds
+ Total time elapsed                = 5.8501e+00 seconds
+ Calculation Rate (active)         = 2.12237e+06 particles/second
+
+ ============================&gt;     RESULTS     &lt;============================
+
+ Leakage Fraction            = 1.00073 +/- 0.00001
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we read in the tally from the simulation output file</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get tally from DD simulation statepoint</span>
+<span class="k">with</span> <span class="n">openmc</span><span class="o">.</span><span class="n">StatePoint</span><span class="p">(</span><span class="n">output_path_dd</span><span class="p">)</span> <span class="k">as</span> <span class="n">sp</span><span class="p">:</span>
+    <span class="n">dose_tally_from_sp_dd</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">get_tally</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;photon_dose_on_mesh&#39;</span><span class="p">)</span>
+
+<span class="c1"># Get tally from DT simulation statepoint</span>
+<span class="k">with</span> <span class="n">openmc</span><span class="o">.</span><span class="n">StatePoint</span><span class="p">(</span><span class="n">output_path_dt</span><span class="p">)</span> <span class="k">as</span> <span class="n">sp</span><span class="p">:</span>
+    <span class="n">dose_tally_from_sp_dt</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">get_tally</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;photon_dose_on_mesh&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Making the time steps and source rates together ensures the time steps for the DD and DT pulses are aligned.</p>
+<p>This is important to do as, later we need to combine the decay dose from DD pulses and DT pulses for the same point in time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">timesteps_and_source_rates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1e18</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># pulse of DD neutrons</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 20 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 40 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 60 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 80 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 100 minutes</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1e18</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># pulse of DD neutrons</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 20 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 40 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 60 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 80 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 100 minutes</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1e19</span><span class="p">),</span>  <span class="c1"># larger pulse of DT neutrons</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 20 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 40 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 60 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 80 minutes</span>
+    <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 100 minutes</span>
+<span class="p">]</span>
+
+<span class="n">timesteps</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">timesteps_and_source_rates</span><span class="p">]</span>
+
+<span class="n">source_rates_dd</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">timesteps_and_source_rates</span><span class="p">]</span>
+<span class="n">source_rates_dt</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">timesteps_and_source_rates</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This section defines the neutron pulse schedule time steps to take dose tally measurements.</p>
+<p>Also some D1S specific steps to get the time correction factors that we use to modify the tally result later.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this gets all the unstable nuclides that can be produced during D1S</span>
+<span class="c1"># both models have the same materials so this function will return the same radionuclides regarless of which model (model_dt or model dd) is passed in.</span>
+<span class="n">radionuclides</span> <span class="o">=</span> <span class="n">d1s</span><span class="o">.</span><span class="n">get_radionuclides</span><span class="p">(</span><span class="n">model_dt</span><span class="p">)</span>
+
+<span class="c1"># Compute time correction factors based on irradiation schedule</span>
+<span class="n">time_factors_dd</span> <span class="o">=</span> <span class="n">d1s</span><span class="o">.</span><span class="n">time_correction_factors</span><span class="p">(</span>
+    <span class="n">nuclides</span><span class="o">=</span><span class="n">radionuclides</span><span class="p">,</span>
+    <span class="n">timesteps</span><span class="o">=</span><span class="n">timesteps</span><span class="p">,</span>
+    <span class="n">source_rates</span><span class="o">=</span><span class="n">source_rates_dd</span><span class="p">,</span>
+    <span class="n">timestep_units</span> <span class="o">=</span> <span class="s1">&#39;s&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Compute time correction factors based on irradiation schedule</span>
+<span class="n">time_factors_dt</span> <span class="o">=</span> <span class="n">d1s</span><span class="o">.</span><span class="n">time_correction_factors</span><span class="p">(</span>
+    <span class="n">nuclides</span><span class="o">=</span><span class="n">radionuclides</span><span class="p">,</span>
+    <span class="n">timesteps</span><span class="o">=</span><span class="n">timesteps</span><span class="p">,</span>
+    <span class="n">source_rates</span><span class="o">=</span><span class="n">source_rates_dt</span><span class="p">,</span>
+    <span class="n">timestep_units</span> <span class="o">=</span> <span class="s1">&#39;s&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note the use of <code class="docutils literal notranslate"><span class="pre">apply_time_correction</span></code> which is a D1S specific command</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># multiplication by pico_to_milli converts from (pico) pSv to (milli) mSv</span>
+<span class="n">pico_to_milli</span> <span class="o">=</span> <span class="mf">1e-9</span>
+
+<span class="c1"># divided by mesh element volume converts from mSv-cm3 to mSv</span>
+<span class="n">volume_normalization</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">scaled_max_tally_value_all_timesteps</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">corrected_tally_mean_for_each_timestep</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i_cool</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">timesteps</span><span class="p">)):</span>  <span class="c1"># missing the first timestep as it is the irradiation step</span>
+
+    <span class="c1"># Apply time correction factors</span>
+    <span class="c1"># this includes the source_rates which are in units of neutrons per second</span>
+    <span class="c1"># dose_tally_from_sp is in units of pSv-cm3/source neutron</span>
+    <span class="c1"># corrected tally is now in units of pSv-cm3/second</span>
+    <span class="n">corrected_tally_dd</span> <span class="o">=</span> <span class="n">d1s</span><span class="o">.</span><span class="n">apply_time_correction</span><span class="p">(</span>
+        <span class="n">tally</span><span class="o">=</span><span class="n">dose_tally_from_sp_dd</span><span class="p">,</span>
+        <span class="n">time_correction_factors</span><span class="o">=</span><span class="n">time_factors_dd</span><span class="p">,</span>
+        <span class="n">index</span><span class="o">=</span><span class="n">i_cool</span><span class="p">,</span>
+        <span class="n">sum_nuclides</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">corrected_tally_dt</span> <span class="o">=</span> <span class="n">d1s</span><span class="o">.</span><span class="n">apply_time_correction</span><span class="p">(</span>
+        <span class="n">tally</span><span class="o">=</span><span class="n">dose_tally_from_sp_dt</span><span class="p">,</span>
+        <span class="n">time_correction_factors</span><span class="o">=</span><span class="n">time_factors_dt</span><span class="p">,</span>
+        <span class="n">index</span><span class="o">=</span><span class="n">i_cool</span><span class="p">,</span>
+        <span class="n">sum_nuclides</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># get a slice of mean values on the xy basis mid z axis</span>
+    <span class="n">corrected_tally_mean_dd</span> <span class="o">=</span> <span class="n">corrected_tally_dd</span><span class="o">.</span><span class="n">get_reshaped_data</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">expand_dims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+    
+    <span class="c1"># get a slice of mean values on the xy basis mid z axis</span>
+    <span class="n">corrected_tally_mean_dt</span> <span class="o">=</span> <span class="n">corrected_tally_dt</span><span class="o">.</span><span class="n">get_reshaped_data</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">expand_dims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+    
+
+    <span class="n">corrected_tally_mean</span> <span class="o">=</span> <span class="n">corrected_tally_mean_dd</span> <span class="o">+</span> <span class="n">corrected_tally_mean_dt</span>
+
+    <span class="n">corrected_tally_mean_for_each_timestep</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">corrected_tally_mean</span><span class="p">)</span>
+
+    <span class="c1"># # this section simply gets the maximum value of the mean tally across all time steps</span>
+    <span class="c1"># # and uses this to set the max value of the color bar in the plots</span>
+    <span class="n">max_tally_value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">corrected_tally_mean</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+    <span class="n">scaled_max_tally_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_tally_value</span> <span class="o">*</span> <span class="n">pico_to_milli</span><span class="p">)</span> <span class="o">/</span> <span class="n">volume_normalization</span>
+
+    <span class="c1"># getting a max value to scale the color bar in the plots later</span>
+    <span class="k">if</span> <span class="n">scaled_max_tally_value</span> <span class="o">&gt;</span> <span class="n">scaled_max_tally_value_all_timesteps</span><span class="p">:</span>
+        <span class="n">scaled_max_tally_value_all_timesteps</span> <span class="o">=</span> <span class="n">scaled_max_tally_value</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We then plot the tally for each time in the time steps of interest</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i_cool</span><span class="p">,</span> <span class="n">corrected_tally_mean</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corrected_tally_mean_for_each_timestep</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+
+    <span class="n">scaled_corrected_tally_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">corrected_tally_mean</span> <span class="o">*</span> <span class="n">pico_to_milli</span><span class="p">)</span> <span class="o">/</span> <span class="n">volume_normalization</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># create a plot of the mean flux values</span>
+    <span class="n">plot_1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">scaled_corrected_tally_mean</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+        <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span>
+        <span class="n">extent</span><span class="o">=</span><span class="n">mesh</span><span class="o">.</span><span class="n">bounding_box</span><span class="o">.</span><span class="n">extent</span><span class="p">[</span><span class="s1">&#39;xy&#39;</span><span class="p">],</span>
+        <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="n">scaled_max_tally_value_all_timesteps</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># add the geometry outline to the plot</span>
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">my_geometry</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">outline</span><span class="o">=</span><span class="s1">&#39;only&#39;</span><span class="p">,</span>
+        <span class="n">extent</span><span class="o">=</span><span class="n">my_geometry</span><span class="o">.</span><span class="n">bounding_box</span><span class="o">.</span><span class="n">extent</span><span class="p">[</span><span class="s1">&#39;xy&#39;</span><span class="p">],</span>
+        <span class="n">axes</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span>  <span class="c1"># Use the same axis as ax1</span>
+        <span class="n">pixels</span><span class="o">=</span><span class="mi">10_000_00</span><span class="p">,</span>  <span class="c1">#avoids rounded corners on outline</span>
+    <span class="p">)</span>
+
+    <span class="n">time_in_mins</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">timesteps</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">i_cool</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mi">60</span><span class="p">),</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># not including the first timestep </span>
+
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">ax1</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">())</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ax1</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">())</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="n">ax1</span><span class="o">.</span><span class="n">get_aspect</span><span class="p">())</span>  <span class="c1"># Match aspect ratio</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;X (cm)&quot;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Y (cm)&quot;</span><span class="p">)</span>
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">plot_1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;Dose [milli Sv per second]&quot;</span><span class="p">)</span>  <span class="c1"># Label for the color bar</span>
+    
+    <span class="n">max_dose_in_timestep</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">scaled_corrected_tally_mean</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dose Rate at time </span><span class="si">{</span><span class="n">time_in_mins</span><span class="si">}</span><span class="s2"> minutes after first irradiation</span><span class="se">\n</span><span class="s2">Max dose rate: </span><span class="si">{</span><span class="n">max_dose_in_timestep</span><span class="si">:</span><span class="s2">e</span><span class="si">}</span><span class="s2"> mSv/s&quot;</span><span class="p">)</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">max_dose_in_timestep</span><span class="p">,</span> <span class="o">*</span><span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Max value&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5af2de3da1c81b13b7b0ad50c7953ec6a9328dc30255b8d5badd41d46afb4807.png" src="../../_images/5af2de3da1c81b13b7b0ad50c7953ec6a9328dc30255b8d5badd41d46afb4807.png" />
+<img alt="../../_images/f471b95857fe6c369dae571780ca4d8a86e6dcff5ba4dfd3d21dbd348608a89e.png" src="../../_images/f471b95857fe6c369dae571780ca4d8a86e6dcff5ba4dfd3d21dbd348608a89e.png" />
+<img alt="../../_images/372554efec858dc96398242f5e18722efc0cbb97df7737bc3a513d79447dbf71.png" src="../../_images/372554efec858dc96398242f5e18722efc0cbb97df7737bc3a513d79447dbf71.png" />
+<img alt="../../_images/c40822fc05ee2126a4ec509206f738f37c7943a7d7e41ebc55313d6b76678001.png" src="../../_images/c40822fc05ee2126a4ec509206f738f37c7943a7d7e41ebc55313d6b76678001.png" />
+<img alt="../../_images/c0566d5e37c46ed6ceaf05c21604c774f0840a364dde4fd404d1b0babd6a13c4.png" src="../../_images/c0566d5e37c46ed6ceaf05c21604c774f0840a364dde4fd404d1b0babd6a13c4.png" />
+<img alt="../../_images/92c9a7e6536d98c9f0c190eafcb419a93fb9003976ab54801c61f8c36e74afe7.png" src="../../_images/92c9a7e6536d98c9f0c190eafcb419a93fb9003976ab54801c61f8c36e74afe7.png" />
+<img alt="../../_images/8c4340464c6784f351dbe83e87eb73aa11192e0992d36874c30b3e4d32bbc720.png" src="../../_images/8c4340464c6784f351dbe83e87eb73aa11192e0992d36874c30b3e4d32bbc720.png" />
+<img alt="../../_images/5ca9d1c3e102bd9011dd01c6fab1a608e98080b586d4cbeb39b4d271fa1d113d.png" src="../../_images/5ca9d1c3e102bd9011dd01c6fab1a608e98080b586d4cbeb39b4d271fa1d113d.png" />
+<img alt="../../_images/0954bc6bff847c7ef7c165d75de32ec18cff170d77af451bbbf0e55c649611c1.png" src="../../_images/0954bc6bff847c7ef7c165d75de32ec18cff170d77af451bbbf0e55c649611c1.png" />
+<img alt="../../_images/ad600b2b4a3709987bb4406477ce8a8d36ba9fb62ccc0afd8e07b8247266dada.png" src="../../_images/ad600b2b4a3709987bb4406477ce8a8d36ba9fb62ccc0afd8e07b8247266dada.png" />
+<img alt="../../_images/e69ab0684240883f09830113c801b0fa2e8a889517fab86356b1e0978ed730cb.png" src="../../_images/e69ab0684240883f09830113c801b0fa2e8a889517fab86356b1e0978ed730cb.png" />
+<img alt="../../_images/63abb1f417188c41c10c2e5584ae0de13ca89260749e0824ae2c356ce0fdfca8.png" src="../../_images/63abb1f417188c41c10c2e5584ae0de13ca89260749e0824ae2c356ce0fdfca8.png" />
+<img alt="../../_images/0650e5e02f4d34dec4c39151bfe0ccc76886d23962c84240c553ea0e8188d889.png" src="../../_images/0650e5e02f4d34dec4c39151bfe0ccc76886d23962c84240c553ea0e8188d889.png" />
+<img alt="../../_images/69dd16e94270053e6deced08903e6429c9d2d15fa6806e43db5325683fa3785b.png" src="../../_images/69dd16e94270053e6deced08903e6429c9d2d15fa6806e43db5325683fa3785b.png" />
+<img alt="../../_images/e84e2a3af973117cf44e294962a62794457ea3132fea2a54538cfa340f600353.png" src="../../_images/e84e2a3af973117cf44e294962a62794457ea3132fea2a54538cfa340f600353.png" />
+<img alt="../../_images/10036ba63837dc83b36fe7cfdc950740edea16cb5e6b9c1e85fe7e49d96393be.png" src="../../_images/10036ba63837dc83b36fe7cfdc950740edea16cb5e6b9c1e85fe7e49d96393be.png" />
+<img alt="../../_images/ae8278361f0c36e338b3bd2eceea71299bac87ff1325d671fffbbfaf9bb21599.png" src="../../_images/ae8278361f0c36e338b3bd2eceea71299bac87ff1325d671fffbbfaf9bb21599.png" />
+</div>
+</div>
+<p>One of the really nice aspects of the D1S workflow is the dose values are computed as a post process.</p>
+<p>This means we don’t need to resimulate if we want to change the pulse scheduel</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_max_tally_values</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">corrected_tally_mean</span> <span class="ow">in</span> <span class="n">corrected_tally_mean_for_each_timestep</span><span class="p">:</span>
+
+    <span class="c1"># this section simply gets the maximum value of the mean tally across all time steps</span>
+    <span class="n">scaled_max_tally_values</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">max</span><span class="p">(</span><span class="n">corrected_tally_mean</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">*</span> <span class="n">pico_to_milli</span><span class="p">)</span> <span class="o">/</span> <span class="n">volume_normalization</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This plots the max dose rate at each time step for the 5 pulse decay irradiation.</p>
+<p>The plot has the shut down dose just after the irradiation and for a few times after each shot to show how the dose decreases.</p>
+<p>This plot shows shows a sharp drop in the dose rate after the shot, that is caused by some unstable isotopes decaying quickly are the irradiation stops</p>
+<p>After 5000 seconds the dose rate starts to level out, this is due to longer lived unstable isotopes that have now become the dominant contributor to the dose.</p>
+<p>We also notice that each shot causes the total dose rate to steadily climb. This is due to the build up of these longer lived unstable isotopes that have not had time to completely decay away before the next pulse of neutrons arrives.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">timesteps</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">scaled_max_tally_values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Max Dose Rate (mSv/s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Max Dose Rate Over Time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6d60668f78fb3e0c1308cf52c40a1dd87d6511a914e909ea40571b7b659ed88d.png" src="../../_images/6d60668f78fb3e0c1308cf52c40a1dd87d6511a914e909ea40571b7b659ed88d.png" />
+</div>
+</div>
+<p>This next code block loops through the tallies for each time step only this time we set <code class="docutils literal notranslate"><span class="pre">sum_nuclides=False</span></code>.</p>
+<p>This allows us to get the individual contributions to the dose tally per nuclide.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_max_tally_values_per_nuclide</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">nuclide</span><span class="p">):</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">nuclide</span> <span class="ow">in</span> <span class="n">radionuclides</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">i_cool</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">timesteps</span><span class="p">)):</span>  <span class="c1"># missing the first timestep as it is the irradiation step</span>
+
+    <span class="c1"># Apply time correction factors</span>
+    <span class="c1"># this includes the source_rates which are in units of neutrons per second</span>
+    <span class="c1"># dose_tally_from_sp is in units of pSv-cm3/source neutron</span>
+    <span class="c1"># corrected tally is now in units of pSv-cm3/second</span>
+    <span class="n">corrected_tally_dd</span> <span class="o">=</span> <span class="n">d1s</span><span class="o">.</span><span class="n">apply_time_correction</span><span class="p">(</span>
+        <span class="n">tally</span><span class="o">=</span><span class="n">dose_tally_from_sp_dd</span><span class="p">,</span>
+        <span class="n">time_correction_factors</span><span class="o">=</span><span class="n">time_factors_dd</span><span class="p">,</span>
+        <span class="n">index</span><span class="o">=</span><span class="n">i_cool</span><span class="p">,</span>
+        <span class="n">sum_nuclides</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">corrected_tally_dt</span> <span class="o">=</span> <span class="n">d1s</span><span class="o">.</span><span class="n">apply_time_correction</span><span class="p">(</span>
+        <span class="n">tally</span><span class="o">=</span><span class="n">dose_tally_from_sp_dt</span><span class="p">,</span>
+        <span class="n">time_correction_factors</span><span class="o">=</span><span class="n">time_factors_dt</span><span class="p">,</span>
+        <span class="n">index</span><span class="o">=</span><span class="n">i_cool</span><span class="p">,</span>
+        <span class="n">sum_nuclides</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+
+    <span class="n">mean_values_per_nuclide_dt</span> <span class="o">=</span> <span class="n">corrected_tally_dt</span><span class="o">.</span><span class="n">mean</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">radionuclides</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">mean_values_per_nuclide_dd</span> <span class="o">=</span> <span class="n">corrected_tally_dd</span><span class="o">.</span><span class="n">mean</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">radionuclides</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i_nuclide</span><span class="p">,</span> <span class="n">nuclide</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">radionuclides</span><span class="p">):</span>
+
+        <span class="c1"># this section simply gets the maximum value of the mean tally across all time steps</span>
+        <span class="n">max_value_for_nuclide_dd</span> <span class="o">=</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">mean_values_per_nuclide_dd</span><span class="p">[</span><span class="n">i_nuclide</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">*</span> <span class="n">pico_to_milli</span><span class="p">)</span> <span class="o">/</span> <span class="n">volume_normalization</span>
+        <span class="n">max_value_for_nuclide_dt</span> <span class="o">=</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">mean_values_per_nuclide_dt</span><span class="p">[</span><span class="n">i_nuclide</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">*</span> <span class="n">pico_to_milli</span><span class="p">)</span> <span class="o">/</span> <span class="n">volume_normalization</span>
+
+        <span class="n">combine_nuclide_number</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_value_for_nuclide_dd</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_value_for_nuclide_dt</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">scaled_max_tally_values_per_nuclide</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">nuclide</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">combine_nuclide_number</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plotting the dose contribution of the individual isotopes allows us to see that the build up of the longer lived isotopes and identify the main driver for the more long lived dose contribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">timesteps</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">scaled_max_tally_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;total&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nuclide</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">radionuclides</span><span class="p">):</span>
+    <span class="n">nuclide_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">nuclide</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">scaled_max_tally_values_per_nuclide</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">nuclide</span><span class="p">)])</span> <span class="o">&gt;</span> <span class="mf">2.0</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">timesteps</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span>
+            <span class="n">scaled_max_tally_values_per_nuclide</span><span class="p">[</span><span class="n">nuclide_str</span><span class="p">],</span>
+            <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">nuclide_str</span><span class="si">}</span><span class="s2"> half-life=</span><span class="si">{</span><span class="n">half_life</span><span class="p">(</span><span class="n">nuclide_str</span><span class="p">)</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">,</span>
+            <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="c1"># plt.xscale(&#39;log&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Max Dose Rate (mSv/s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Max Dose Rate Over Time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/46b72fb31cb97a5d74565b9a4e56fa7c5aa66f6b7895d5a19954a8ae18001281.png" src="../../_images/46b72fb31cb97a5d74565b9a4e56fa7c5aa66f6b7895d5a19954a8ae18001281.png" />
+</div>
+</div>
+<p>Task extension suggestion.</p>
+<p>You might have observed that the aluminum sphere doesn’t get activated during the DD pules.</p>
+<p>This is visible in the heatmap plots which show aluminum (the larger sphere) not contributing to the dose map in the initial stages.</p>
+<p>This is because aluminum is not emitting gammas at these time steps.</p>
+<p>However the iron sphere is emitting gammas at these time steps.</p>
+<p>Take a look at the cross sections of the two nuclides (Fe56 and Al27) and see if you can identify threshold reactions that require more than 2.5MeV to trigger.</p>
+<p>Then see if these threshold reactions result in an unstable nuclide that is contributing to the dose only after the DT pulse.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tasks/task_11_CSG_shut_down_dose_tallies"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="4_D1S_regularmesh_shutdown_dose_rate.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Shutdown dose rate D1S method</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../task_13_volume_calculations/README.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Task Introduction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jon Shimwell
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

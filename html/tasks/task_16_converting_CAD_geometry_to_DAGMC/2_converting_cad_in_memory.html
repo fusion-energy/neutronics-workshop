@@ -1,0 +1,3159 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CAD conversion in memory &#8212; Fusion Energy Neutronics Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tasks/task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Task Introduction" href="../task_17_using_DAGMC_models_in_openmc/README.html" />
+    <link rel="prev" title="Converting CAD geometry to neutronics" href="1_converting_cad_files.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../docs/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Fusion Energy Neutronics Workshop - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Fusion Energy Neutronics Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../docs/index.html">
+                    Fusion Energy Neutronics Workshop
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Installation options</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_pip.html">Install with pip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_conda.html">Install with Conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_mamba.html">Install with Mamba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_docker.html">Install with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_extras.html">Install optional extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_binder.html">Install in the Cloud (binder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/install_cloud_codespaces.html">Install in the cloud</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Cross Sections</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/1_isotope_xs_plot.html">Plotting isotope cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/2_element_xs_plot.html">Plotting element cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/3_material_xs_plot.html">Plotting material cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_01_cross_sections/4_Doppler_broadening.html">Plotting Doppler broadened cross sections</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/1_example_materials_from_isotopes.html">Making materials from isotopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/2_example_materials_from_elements.html">Making materials from elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/3_example_materials_from_material_maker.html">Making materials from a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/4_example_materials_parameter_study.html">Changing materials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_02_making_materials/5_example_materials_mixed.html">Mixing materials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CSG Geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/1_simple_csg_geometry.html">Constructing simple CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/2_intermediate_csg_geometry.html">Constructing CSG geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk.html">3D Geometry viewing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making source terms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/1_point_source_plots.html">Point source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/2_ring_source.html">Ring source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/3_plasma_source_plots.html">Plasma source plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/4_neutron_tracks.html">Visualising Particle Tracks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/5_gamma_source_example.html">Gamma sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/6_unstructured_mesh_spatial_source.html">Unstructured mesh source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_04_make_sources/7_structured_mesh_source.html">Structured mesh source</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell TBR tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/1_example_tritium_production.html">Performing Tritium Breeding Ratio (TBR) simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_05_CSG_cell_tally_TBR/2_example_tritium_production_study.html">Simulating TBR as a function of Lithium enrichment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell DPA tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_06_CSG_cell_tally_DPA/1_find_dpa.html">Simulating Displacements Per Atom (DPA)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell spectra tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/1_example_neutron_flux_and_units.html">Neutron flux and units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.html">Plotting neutron energy spectra in a cell with progressively improved plotting and tallying techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.html">Plotting neutron lethargy energy spectra across a surface with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/4_example_photon_spectra.html">Plotting photon and neutron energy spectra in a cell with a energy group structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_07_CSG_cell_tally_spectra/5_neutron_energy_loss_plot.html">Plotting energy loss per collision</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell mesh tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.html">2D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/2_example_3d_regular_mesh_tallies.html">3D mesh tallies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies.html">Cylinder mesh tallies</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG cell instantaneous dose tally</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source.html">Simulations of effective dose on a surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study.html">Simulations of effective dose as a function of distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons.html">Dose map from neutron pulse</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Activation Transmutation Depletion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.html">Nuclide Build Up During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/2_example_tally_change_with_burnup.html">Tally Value Change During Depletion Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_10_activation_transmutation_depletion/3_full_pulse_schedule.html">Full pulse schedule depletion simulation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CSG shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate.html">Shutdown dose rate D1S method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.html">Shutdown dose rate D1S method different sources (DD+DT)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Volume Calculations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/1_find_volume_of_csg_cell.html">Finding Volume of a Cell by sampling simulation.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_13_volume_calculations/2_find_volume_of_dagmc_cell.html">Finding Volume of DAGMC Cell</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variance Reduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/1_shielded_room_survival_biasing.html">Survival Biasing Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/2_shielded_room_single_ww.html">Variance Reduction - Weight Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/3_sphere_iterative_per_run_ww.html">Magic Method Iterative Weight Windows per run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/4_sphere_iterative_per_batch_ww.html">Magic Method Iterative Weight Windows per Batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_14_variance_reduction/5_shielded_room_fw_cadis.html">FW CADIS Weight Windows</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Making CAD geometry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/1_making_cad_with_cadquery.html">Making CAD with CadQuery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_15_making_CAD_geometry/2_making_cad_with_paramak.html">Making CAD geometry with Paramak</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Converting CAD Geometry</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_converting_cad_files.html">Converting CAD geometry to neutronics</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">CAD conversion in memory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using DAGMC models in OpenMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/1_cad_model_simulation_minimal.html">Simple CAD model simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/2_cad_model_simulation_with_boundary_types.html">Adding boundary conditions to a CAD model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_17_using_DAGMC_models_in_openmc/3_cad_model_simulation_with_hybrid_csg.html">Making a hybrid CAD CSG model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD mesh fast flux simulation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad.html">Simulation of fast neutron flux</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CAD shutdown dose tallies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/README.html">Task Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_21_design_task/1_optimal_design.html">Design your own tokamak</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/main?urlpath=lab/tree/./tasks/task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/fusion-energy/neutronics-workshop/issues/new?title=Issue%20on%20page%20%2Ftasks/task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tasks/task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>CAD conversion in memory</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cad-conversion-in-memory">
+<h1>CAD conversion in memory<a class="headerlink" href="#cad-conversion-in-memory" title="Link to this heading">#</a></h1>
+<p>It is possible to convert from a CadQuery object to a DAGMC surface or volume mesh.</p>
+<p>This is quicker and more concise than writing to file and reading it in again.</p>
+<p>First import the packages needed for the cad creation (<a class="reference external" href="https://cadquery.readthedocs.io">CadQuery</a>) and conversion (<a class="reference external" href="https://github.com/fusion-energy/cad_to_dagmc">cad_to_dagmc</a>)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cad_to_dagmc</span><span class="w"> </span><span class="kn">import</span> <span class="n">CadToDagmc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cadquery</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cq</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Make some CAD geometry, we have lots of options here but to keep the example concise I’ve made some text.</p>
+<p>The important thing to note here is that we have 10 separate solids in the CAD model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="n">cq</span><span class="o">.</span><span class="n">Workplane</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">txt</span><span class="o">=</span><span class="s2">&quot;cad to dagmc&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fontconfig error: Cannot load default config file: No such file: (null)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2025-06-06 16:02:10.930 (   1.180s) [    77C2C0857740]vtkDemandDrivenPipeline:675    ERR| vtkCompositeDataPipeline (0x5c402bf542a0): Input port 0 of algorithm vtkTriangleFilter (0x5c402be558f0) has 0 connections but is not optional.</span>
+</pre></div>
+</div>
+<script type="application/javascript">
+
+function render(data, parent_element, ratio){
+    
+    // Initial setup
+    const renderWindow = vtk.Rendering.Core.vtkRenderWindow.newInstance();
+    const renderer = vtk.Rendering.Core.vtkRenderer.newInstance({ background: [1, 1, 1 ] });
+    renderWindow.addRenderer(renderer);
+        
+    // iterate over all children children
+    for (var el of data){ 
+        var trans = el.position;
+        var rot = el.orientation;
+        var rgba = el.color;
+        var shape = el.shape;
+        
+        // load the inline data
+        var reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
+        const textEncoder = new TextEncoder();
+        reader.parseAsArrayBuffer(textEncoder.encode(shape));
+
+        // setup actor,mapper and add
+        const mapper = vtk.Rendering.Core.vtkMapper.newInstance();
+        mapper.setInputConnection(reader.getOutputPort());
+        mapper.setResolveCoincidentTopologyToPolygonOffset();
+        mapper.setResolveCoincidentTopologyPolygonOffsetParameters(0.9,20);
+
+        const actor = vtk.Rendering.Core.vtkActor.newInstance();
+        actor.setMapper(mapper);
+
+        // set color and position
+        actor.getProperty().setColor(rgba.slice(0,3));
+        actor.getProperty().setOpacity(rgba[3]);
+        
+        actor.rotateZ(rot[2]*180/Math.PI);
+        actor.rotateY(rot[1]*180/Math.PI);
+        actor.rotateX(rot[0]*180/Math.PI);
+        
+        actor.setPosition(trans);
+
+        renderer.addActor(actor);
+
+    };
+    
+    renderer.resetCamera();
+    
+    const openglRenderWindow = vtk.Rendering.OpenGL.vtkRenderWindow.newInstance();
+    renderWindow.addView(openglRenderWindow);
+
+    // Add output to the "parent element"
+    var container;
+    var dims;
+    
+    if(typeof(parent_element.appendChild) !== "undefined"){
+        container = document.createElement("div");
+        parent_element.appendChild(container);
+        dims = parent_element.getBoundingClientRect();
+    }else{
+        container = parent_element.append("<div/>").children("div:last-child").get(0);
+        dims = parent_element.get(0).getBoundingClientRect();
+    };
+
+    openglRenderWindow.setContainer(container);
+    
+    // handle size
+    if (ratio){
+        openglRenderWindow.setSize(dims.width, dims.width*ratio);
+    }else{
+        openglRenderWindow.setSize(dims.width, dims.height);
+    };
+    
+    // Interaction setup
+    const interact_style = vtk.Interaction.Style.vtkInteractorStyleManipulator.newInstance();
+
+    const manips = {
+        rot: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRotateManipulator.newInstance(),
+        pan: vtk.Interaction.Manipulators.vtkMouseCameraTrackballPanManipulator.newInstance(),
+        zoom1: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        zoom2: vtk.Interaction.Manipulators.vtkMouseCameraTrackballZoomManipulator.newInstance(),
+        roll: vtk.Interaction.Manipulators.vtkMouseCameraTrackballRollManipulator.newInstance(),
+    };
+
+    manips.zoom1.setControl(true);
+    manips.zoom2.setScrollEnabled(true);
+    manips.roll.setShift(true);
+    manips.pan.setButton(2);
+
+    for (var k in manips){
+        interact_style.addMouseManipulator(manips[k]);
+    };
+
+    const interactor = vtk.Rendering.Core.vtkRenderWindowInteractor.newInstance();
+    interactor.setView(openglRenderWindow);
+    interactor.initialize();
+    interactor.bindEvents(container);
+    interactor.setInteractorStyle(interact_style);
+
+    // Orientation marker
+
+    const axes = vtk.Rendering.Core.vtkAnnotatedCubeActor.newInstance();
+    axes.setXPlusFaceProperty({text: '+X'});
+    axes.setXMinusFaceProperty({text: '-X'});
+    axes.setYPlusFaceProperty({text: '+Y'});
+    axes.setYMinusFaceProperty({text: '-Y'});
+    axes.setZPlusFaceProperty({text: '+Z'});
+    axes.setZMinusFaceProperty({text: '-Z'});
+
+    const orientationWidget = vtk.Interaction.Widgets.vtkOrientationMarkerWidget.newInstance({
+        actor: axes,
+        interactor: interactor });
+    orientationWidget.setEnabled(true);
+    orientationWidget.setViewportCorner(vtk.Interaction.Widgets.vtkOrientationMarkerWidget.Corners.BOTTOM_LEFT);
+    orientationWidget.setViewportSize(0.2);
+
+};
+
+
+function load_and_render(parent_element)
+{
+new Promise(
+  function(resolve, reject)
+  {
+    if (typeof(require) !== "undefined" ){
+        require.config({
+         "paths": {"vtk": "https://unpkg.com/vtk"},
+        });
+        require(["vtk"], resolve, reject);
+    } else if ( typeof(vtk) === "undefined" ){
+        var script = document.createElement("script");
+    	script.onload = resolve;
+    	script.onerror = reject;
+    	script.src = "https://unpkg.com/vtk.js";
+    	document.head.appendChild(script);
+    } else { resolve() };
+ }
+).then(() => {
+    var data = [{"shape": "<?xml version=\"1.0\"?>\n<VTKFile type=\"PolyData\" version=\"0.1\" byte_order=\"LittleEndian\" header_type=\"UInt32\" compressor=\"vtkZLibDataCompressor\">\n  <PolyData>\n    <Piece NumberOfPoints=\"0\"                    NumberOfVerts=\"0\"                    NumberOfLines=\"0\"                    NumberOfStrips=\"0\"                    NumberOfPolys=\"0\"                   >\n      <PointData>\n      </PointData>\n      <CellData>\n      </CellData>\n      <Points>\n      </Points>\n      <Verts>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"0\"                   />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"16\"                  />\n      </Verts>\n      <Lines>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"32\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"48\"                  />\n      </Lines>\n      <Strips>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"64\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"80\"                  />\n      </Strips>\n      <Polys>\n        <DataArray type=\"Int64\" Name=\"connectivity\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"96\"                  />\n        <DataArray type=\"Int64\" Name=\"offsets\" format=\"appended\" RangeMin=\"\"                     RangeMax=\"\"                     offset=\"112\"                 />\n      </Polys>\n    </Piece>\n  </PolyData>\n  <AppendedData encoding=\"base64\">\n   _AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA\n  </AppendedData>\n</VTKFile>\n", "color": [1, 0.8, 0, 1], "position": [0, 0, 0], "orientation": [0, 0, 0]}];
+    render(data, parent_element, 0.5);
+});
+}
+
+load_and_render(element);
+</script></div>
+</div>
+<p>Next we make an instance of CadToDagmc with this geometry to prepare for conversion</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_model</span> <span class="o">=</span> <span class="n">CadToDagmc</span><span class="p">()</span>
+<span class="n">my_model</span><span class="o">.</span><span class="n">add_cadquery_object</span><span class="p">(</span>
+    <span class="n">cadquery_object</span><span class="o">=</span><span class="n">text</span><span class="p">,</span>
+    <span class="n">material_tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mat1&quot;</span><span class="p">]</span><span class="o">*</span> <span class="mi">10</span>  <span class="c1"># ten volumes each with with material tag &quot;mat1&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">export_dagmc_h5m_file()</span></code> function will make a surface mesh geometry of the CAD ready for use in neutronics simulations.</p>
+<p>With openmc this DAGMC h5m file can be loading in using the <code class="docutils literal notranslate"><span class="pre">openmc.DAGMCUniverse</span></code> class.</p>
+<p>This makes a 2D mesh / surface mesh / faceted geometry / triangles of the geometry faces.</p>
+<p>With this type of geometry you can do simulations and score material tallies, cell tallies directly on the mesh volumes.</p>
+<p>You can also overlay OpenMC meshes such as regular mesh or cylindrical mesh on top of the geometry.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">export_dagmc_h5m_file()</span></code> function supports different arguments to control the mesh parameters.</p>
+<p>For this example we will use simple settings for <code class="docutils literal notranslate"><span class="pre">max_mesh_size</span></code> and <code class="docutils literal notranslate"><span class="pre">min_mesh_size</span></code>.</p>
+<p>To see more options take a look at the <a class="reference external" href="https://github.com/fusion-energy/cad_to_dagmc">cad_to_dagmc package</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_model</span><span class="o">.</span><span class="n">export_dagmc_h5m_file</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;dagmc.h5m&quot;</span><span class="p">,</span>
+    <span class="n">max_mesh_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">min_mesh_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Info    : Meshing 1D...
+Info    : [  0%] Meshing curve 1 (Line)
+Info    : [  0%] Meshing curve 2 (Line)
+Info    : [  0%] Meshing curve 3 (Line)
+Info    : [  0%] Meshing curve 5 (Line)
+Info    : [  0%] Meshing curve 6 (Bezier)
+Info    : [  0%] Meshing curve 4 (Line)
+Info    : [  0%] Meshing curve 7 (Bezier)
+Info    : [  0%] Meshing curve 10 (Bezier)
+Info    : [  0%] Meshing curve 8 (Line)
+Info    : [  0%] Meshing curve 9 (Bezier)
+Info    : [  0%] Meshing curve 11 (Line)
+Info    : [  0%] Meshing curve 14 (Line)
+Info    : [  0%] Meshing curve 15 (Bezier)
+Info    : [  0%] Meshing curve 12 (Bezier)
+Info    : [  0%] Meshing curve 16 (Bezier)
+Info    : [  0%] Meshing curve 13 (Bezier)
+Info    : [  0%] Meshing curve 17 (Line)
+Info    : [  0%] Meshing curve 18 (Bezier)
+Info    : [  0%] Meshing curve 19 (Bezier)
+Info    : [  0%] Meshing curve 20 (Line)
+Info    : [  0%] Meshing curve 21 (Bezier)
+Info    : [  0%] Meshing curve 22 (Bezier)
+Info    : [  0%] Meshing curve 23 (Line)
+Info    : [  0%] Meshing curve 24 (Bezier)
+Info    : [  0%] Meshing curve 25 (Bezier)
+Info    : [  0%] Meshing curve 26 (Line)
+Info    : [  0%] Meshing curve 27 (Bezier)
+Info    : [  0%] Meshing curve 28 (Bezier)
+Info    : [  0%] Meshing curve 29 (Line)
+Info    : [  0%] Meshing curve 30 (Line)
+Info    : [  0%] Meshing curve 31 (Line)
+Info    : [ 10%] Meshing curve 32 (Line)
+Info    : [ 10%] Meshing curve 33 (Bezier)
+Info    : [ 10%] Meshing curve 34 (Bezier)
+Info    : [ 10%] Meshing curve 35 (Line)
+Info    : [ 10%] Meshing curve 36 (Bezier)
+Info    : [ 10%] Meshing curve 37 (Bezier)
+Info    : [ 10%] Meshing curve 38 (Line)
+Info    : [ 10%] Meshing curve 39 (Bezier)
+Info    : [ 10%] Meshing curve 40 (Bezier)
+Info    : [ 10%] Meshing curve 41 (Line)
+Info    : [ 10%] Meshing curve 42 (Bezier)
+Info    : [ 10%] Meshing curve 43 (Bezier)
+Info    : [ 10%] Meshing curve 44 (Line)
+Info    : [ 10%] Meshing curve 45 (Bezier)
+Info    : [ 10%] Meshing curve 46 (Bezier)
+Info    : [ 10%] Meshing curve 47 (Line)
+Info    : [ 10%] Meshing curve 48 (Bezier)
+Info    : [ 10%] Meshing curve 49 (Bezier)
+Info    : [ 10%] Meshing curve 50 (Line)
+Info    : [ 10%] Meshing curve 51 (Bezier)
+Info    : [ 10%] Meshing curve 52 (Bezier)
+Info    : [ 10%] Meshing curve 53 (Bezier)
+Info    : [ 10%] Meshing curve 54 (Bezier)
+Info    : [ 10%] Meshing curve 55 (Line)
+Info    : [ 10%] Meshing curve 56 (Line)
+Info    : [ 10%] Meshing curve 57 (Line)
+Info    : [ 10%] Meshing curve 58 (Line)
+Info    : [ 10%] Meshing curve 60 (Line)
+Info    : [ 10%] Meshing curve 59 (Line)
+Info    : [ 10%] Meshing curve 61 (Line)
+Info    : [ 10%] Meshing curve 62 (Line)
+Info    : [ 10%] Meshing curve 63 (Line)
+Info    : [ 10%] Meshing curve 64 (Line)
+Info    : [ 10%] Meshing curve 65 (Line)
+Info    : [ 10%] Meshing curve 66 (Bezier)
+Info    : [ 10%] Meshing curve 67 (Bezier)
+Info    : [ 10%] Meshing curve 68 (Line)
+Info    : [ 10%] Meshing curve 69 (Bezier)
+Info    : [ 10%] Meshing curve 70 (Bezier)
+Info    : [ 10%] Meshing curve 71 (Line)
+Info    : [ 10%] Meshing curve 72 (Bezier)
+Info    : [ 10%] Meshing curve 73 (Bezier)
+Info    : [ 10%] Meshing curve 74 (Line)
+Info    : [ 10%] Meshing curve 75 (Bezier)
+Info    : [ 10%] Meshing curve 76 (Bezier)
+Info    : [ 10%] Meshing curve 77 (Line)
+Info    : [ 10%] Meshing curve 78 (Bezier)
+Info    : [ 10%] Meshing curve 79 (Bezier)
+Info    : [ 10%] Meshing curve 80 (Line)
+Info    : [ 10%] Meshing curve 81 (Bezier)
+Info    : [ 10%] Meshing curve 82 (Bezier)
+Info    : [ 10%] Meshing curve 83 (Line)
+Info    : [ 10%] Meshing curve 84 (Line)
+Info    : [ 10%] Meshing curve 85 (Line)
+Info    : [ 10%] Meshing curve 86 (Line)
+Info    : [ 10%] Meshing curve 87 (Line)
+Info    : [ 10%] Meshing curve 88 (Line)
+Info    : [ 10%] Meshing curve 89 (Line)
+Info    : [ 10%] Meshing curve 90 (Bezier)
+Info    : [ 10%] Meshing curve 91 (Bezier)
+Info    : [ 10%] Meshing curve 92 (Line)
+Info    : [ 10%] Meshing curve 93 (Bezier)
+Info    : [ 10%] Meshing curve 94 (Bezier)
+Info    : [ 10%] Meshing curve 95 (Line)
+Info    : [ 10%] Meshing curve 96 (Bezier)
+Info    : [ 10%] Meshing curve 97 (Bezier)
+Info    : [ 10%] Meshing curve 98 (Line)
+Info    : [ 10%] Meshing curve 99 (Bezier)
+Info    : [ 10%] Meshing curve 100 (Bezier)
+Info    : [ 10%] Meshing curve 101 (Line)
+Info    : [ 10%] Meshing curve 102 (Line)
+Info    : [ 20%] Meshing curve 103 (Line)
+Info    : [ 20%] Meshing curve 104 (Line)
+Info    : [ 20%] Meshing curve 105 (Bezier)
+Info    : [ 20%] Meshing curve 106 (Bezier)
+Info    : [ 20%] Meshing curve 107 (Line)
+Info    : [ 20%] Meshing curve 108 (Bezier)
+Info    : [ 20%] Meshing curve 109 (Bezier)
+Info    : [ 20%] Meshing curve 111 (Bezier)
+Info    : [ 20%] Meshing curve 110 (Line)
+Info    : [ 20%] Meshing curve 112 (Bezier)
+Info    : [ 20%] Meshing curve 113 (Bezier)
+Info    : [ 20%] Meshing curve 114 (Bezier)
+Info    : [ 20%] Meshing curve 115 (Line)
+Info    : [ 20%] Meshing curve 116 (Line)
+Info    : [ 20%] Meshing curve 117 (Line)
+Info    : [ 20%] Meshing curve 118 (Line)
+Info    : [ 20%] Meshing curve 119 (Line)
+Info    : [ 20%] Meshing curve 122 (Line)
+Info    : [ 20%] Meshing curve 123 (Bezier)
+Info    : [ 20%] Meshing curve 121 (Bezier)
+Info    : [ 20%] Meshing curve 124 (Bezier)
+Info    : [ 20%] Meshing curve 125 (Line)
+Info    : [ 20%] Meshing curve 126 (Bezier)
+Info    : [ 20%] Meshing curve 127 (Bezier)
+Info    : [ 20%] Meshing curve 128 (Line)
+Info    : [ 20%] Meshing curve 129 (Bezier)
+Info    : [ 20%] Meshing curve 130 (Bezier)
+Info    : [ 20%] Meshing curve 131 (Line)
+Info    : [ 20%] Meshing curve 132 (Bezier)
+Info    : [ 20%] Meshing curve 133 (Bezier)
+Info    : [ 20%] Meshing curve 134 (Line)
+Info    : [ 20%] Meshing curve 135 (Bezier)
+Info    : [ 20%] Meshing curve 136 (Bezier)
+Info    : [ 20%] Meshing curve 137 (Line)
+Info    : [ 20%] Meshing curve 138 (Line)
+Info    : [ 20%] Meshing curve 139 (Line)
+Info    : [ 20%] Meshing curve 140 (Line)
+Info    : [ 20%] Meshing curve 141 (Line)
+Info    : [ 20%] Meshing curve 142 (Line)
+Info    : [ 20%] Meshing curve 143 (Line)
+Info    : [ 20%] Meshing curve 144 (Line)
+Info    : [ 20%] Meshing curve 145 (Line)
+Info    : [ 20%] Meshing curve 146 (Line)
+Info    : [ 20%] Meshing curve 147 (Line)
+Info    : [ 20%] Meshing curve 148 (Line)
+Info    : [ 20%] Meshing curve 149 (Line)
+Info    : [ 20%] Meshing curve 150 (Line)
+Info    : [ 20%] Meshing curve 151 (Line)
+Info    : [ 20%] Meshing curve 152 (Line)
+Info    : [ 20%] Meshing curve 153 (Line)
+Info    : [ 20%] Meshing curve 154 (Line)
+Info    : [ 20%] Meshing curve 155 (Line)
+Info    : [ 20%] Meshing curve 156 (Bezier)
+Info    : [ 30%] Meshing curve 157 (Bezier)
+Info    : [ 20%] Meshing curve 120 (Bezier)
+Info    : [ 30%] Meshing curve 158 (Line)
+Info    : [ 30%] Meshing curve 159 (Bezier)
+Info    : [ 30%] Meshing curve 160 (Bezier)
+Info    : [ 30%] Meshing curve 161 (Line)
+Info    : [ 30%] Meshing curve 162 (Bezier)
+Info    : [ 30%] Meshing curve 163 (Bezier)
+Info    : [ 30%] Meshing curve 164 (Line)
+Info    : [ 30%] Meshing curve 165 (Bezier)
+Info    : [ 30%] Meshing curve 166 (Bezier)
+Info    : [ 30%] Meshing curve 167 (Line)
+Info    : [ 30%] Meshing curve 168 (Bezier)
+Info    : [ 30%] Meshing curve 169 (Bezier)
+Info    : [ 30%] Meshing curve 170 (Line)
+Info    : [ 30%] Meshing curve 171 (Bezier)
+Info    : [ 30%] Meshing curve 172 (Bezier)
+Info    : [ 30%] Meshing curve 173 (Line)
+Info    : [ 30%] Meshing curve 174 (Bezier)
+Info    : [ 30%] Meshing curve 175 (Bezier)
+Info    : [ 30%] Meshing curve 176 (Bezier)
+Info    : [ 30%] Meshing curve 177 (Bezier)
+Info    : [ 30%] Meshing curve 178 (Line)
+Info    : [ 30%] Meshing curve 179 (Line)
+Info    : [ 30%] Meshing curve 180 (Bezier)
+Info    : [ 30%] Meshing curve 181 (Bezier)
+Info    : [ 30%] Meshing curve 182 (Line)
+Info    : [ 30%] Meshing curve 185 (Line)
+Info    : [ 30%] Meshing curve 186 (Bezier)
+Info    : [ 30%] Meshing curve 183 (Bezier)
+Info    : [ 30%] Meshing curve 184 (Bezier)
+Info    : [ 30%] Meshing curve 187 (Bezier)
+Info    : [ 30%] Meshing curve 188 (Line)
+Info    : [ 30%] Meshing curve 189 (Bezier)
+Info    : [ 30%] Meshing curve 190 (Bezier)
+Info    : [ 30%] Meshing curve 191 (Line)
+Info    : [ 30%] Meshing curve 192 (Bezier)
+Info    : [ 30%] Meshing curve 193 (Bezier)
+Info    : [ 30%] Meshing curve 194 (Line)
+Info    : [ 30%] Meshing curve 195 (Bezier)
+Info    : [ 30%] Meshing curve 196 (Bezier)
+Info    : [ 30%] Meshing curve 197 (Line)
+Info    : [ 30%] Meshing curve 198 (Bezier)
+Info    : [ 30%] Meshing curve 199 (Bezier)
+Info    : [ 30%] Meshing curve 200 (Bezier)
+Info    : [ 30%] Meshing curve 201 (Bezier)
+Info    : [ 30%] Meshing curve 202 (Line)
+Info    : [ 30%] Meshing curve 203 (Line)
+Info    : [ 30%] Meshing curve 204 (Line)
+Info    : [ 30%] Meshing curve 205 (Line)
+Info    : [ 30%] Meshing curve 206 (Line)
+Info    : [ 30%] Meshing curve 207 (Line)
+Info    : [ 30%] Meshing curve 208 (Line)
+Info    : [ 30%] Meshing curve 209 (Line)
+Info    : [ 30%] Meshing curve 210 (Line)
+Info    : [ 30%] Meshing curve 211 (Line)
+Info    : [ 30%] Meshing curve 212 (Line)
+Info    : [ 30%] Meshing curve 213 (Line)
+Info    : [ 30%] Meshing curve 214 (Line)
+Info    : [ 30%] Meshing curve 215 (Line)
+Info    : [ 30%] Meshing curve 216 (Line)
+Info    : [ 30%] Meshing curve 217 (Line)
+Info    : [ 30%] Meshing curve 218 (Line)
+Info    : [ 30%] Meshing curve 219 (Line)
+Info    : [ 30%] Meshing curve 220 (Line)
+Info    : [ 30%] Meshing curve 221 (Line)
+Info    : [ 30%] Meshing curve 222 (Bezier)
+Info    : [ 30%] Meshing curve 223 (Bezier)
+Info    : [ 30%] Meshing curve 224 (Line)
+Info    : [ 40%] Meshing curve 225 (Bezier)
+Info    : [ 40%] Meshing curve 226 (Bezier)
+Info    : [ 40%] Meshing curve 227 (Line)
+Info    : [ 40%] Meshing curve 228 (Line)
+Info    : [ 40%] Meshing curve 229 (Line)
+Info    : [ 40%] Meshing curve 230 (Line)
+Info    : [ 40%] Meshing curve 233 (Line)
+Info    : [ 40%] Meshing curve 231 (Line)
+Info    : [ 40%] Meshing curve 234 (Line)
+Info    : [ 40%] Meshing curve 235 (Line)
+Info    : [ 40%] Meshing curve 236 (Line)
+Info    : [ 40%] Meshing curve 237 (Bezier)
+Info    : [ 40%] Meshing curve 238 (Bezier)
+Info    : [ 40%] Meshing curve 239 (Line)
+Info    : [ 40%] Meshing curve 240 (Bezier)
+Info    : [ 40%] Meshing curve 241 (Bezier)
+Info    : [ 40%] Meshing curve 242 (Line)
+Info    : [ 40%] Meshing curve 243 (Line)
+Info    : [ 40%] Meshing curve 244 (Line)
+Info    : [ 40%] Meshing curve 245 (Line)
+Info    : [ 40%] Meshing curve 246 (Line)
+Info    : [ 40%] Meshing curve 247 (Line)
+Info    : [ 40%] Meshing curve 248 (Line)
+Info    : [ 40%] Meshing curve 249 (Line)
+Info    : [ 40%] Meshing curve 250 (Line)
+Info    : [ 40%] Meshing curve 251 (Line)
+Info    : [ 40%] Meshing curve 252 (Line)
+Info    : [ 40%] Meshing curve 253 (Line)
+Info    : [ 40%] Meshing curve 254 (Line)
+Info    : [ 40%] Meshing curve 255 (Line)
+Info    : [ 40%] Meshing curve 256 (Line)
+Info    : [ 40%] Meshing curve 257 (Line)
+Info    : [ 40%] Meshing curve 258 (Bezier)
+Info    : [ 40%] Meshing curve 259 (Bezier)
+Info    : [ 40%] Meshing curve 260 (Line)
+Info    : [ 40%] Meshing curve 261 (Bezier)
+Info    : [ 40%] Meshing curve 262 (Bezier)
+Info    : [ 40%] Meshing curve 263 (Line)
+Info    : [ 40%] Meshing curve 264 (Bezier)
+Info    : [ 40%] Meshing curve 265 (Bezier)
+Info    : [ 40%] Meshing curve 266 (Line)
+Info    : [ 40%] Meshing curve 267 (Bezier)
+Info    : [ 40%] Meshing curve 268 (Bezier)
+Info    : [ 40%] Meshing curve 269 (Line)
+Info    : [ 40%] Meshing curve 270 (Bezier)
+Info    : [ 40%] Meshing curve 232 (Line)
+Info    : [ 40%] Meshing curve 271 (Bezier)
+Info    : [ 40%] Meshing curve 272 (Line)
+Info    : [ 40%] Meshing curve 273 (Bezier)
+Info    : [ 40%] Meshing curve 274 (Bezier)
+Info    : [ 40%] Meshing curve 275 (Line)
+Info    : [ 40%] Meshing curve 276 (Bezier)
+Info    : [ 40%] Meshing curve 277 (Bezier)
+Info    : [ 40%] Meshing curve 278 (Bezier)
+Info    : [ 40%] Meshing curve 279 (Bezier)
+Info    : [ 40%] Meshing curve 280 (Line)
+Info    : [ 40%] Meshing curve 281 (Line)
+Info    : [ 40%] Meshing curve 282 (Bezier)
+Info    : [ 40%] Meshing curve 283 (Bezier)
+Info    : [ 40%] Meshing curve 284 (Line)
+Info    : [ 40%] Meshing curve 285 (Bezier)
+Info    : [ 40%] Meshing curve 286 (Bezier)
+Info    : [ 40%] Meshing curve 287 (Line)
+Info    : [ 40%] Meshing curve 288 (Bezier)
+Info    : [ 40%] Meshing curve 289 (Bezier)
+Info    : [ 40%] Meshing curve 290 (Line)
+Info    : [ 40%] Meshing curve 291 (Bezier)
+Info    : [ 40%] Meshing curve 292 (Bezier)
+Info    : [ 40%] Meshing curve 293 (Line)
+Info    : [ 40%] Meshing curve 294 (Bezier)
+Info    : [ 40%] Meshing curve 295 (Bezier)
+Info    : [ 40%] Meshing curve 296 (Line)
+Info    : [ 40%] Meshing curve 297 (Bezier)
+Info    : [ 40%] Meshing curve 298 (Bezier)
+Info    : [ 40%] Meshing curve 299 (Line)
+Info    : [ 40%] Meshing curve 300 (Bezier)
+Info    : [ 40%] Meshing curve 301 (Bezier)
+Info    : [ 40%] Meshing curve 302 (Bezier)
+Info    : [ 40%] Meshing curve 303 (Bezier)
+Info    : [ 50%] Meshing curve 304 (Line)
+Info    : [ 50%] Meshing curve 305 (Line)
+Info    : [ 50%] Meshing curve 306 (Line)
+Info    : [ 50%] Meshing curve 308 (Line)
+Info    : [ 50%] Meshing curve 309 (Line)
+Info    : [ 50%] Meshing curve 307 (Line)
+Info    : [ 50%] Meshing curve 310 (Line)
+Info    : [ 50%] Meshing curve 311 (Line)
+Info    : [ 50%] Meshing curve 312 (Line)
+Info    : [ 50%] Meshing curve 313 (Line)
+Info    : [ 50%] Meshing curve 314 (Line)
+Info    : [ 50%] Meshing curve 315 (Line)
+Info    : [ 50%] Meshing curve 316 (Line)
+Info    : [ 50%] Meshing curve 317 (Line)
+Info    : [ 50%] Meshing curve 318 (Line)
+Info    : [ 50%] Meshing curve 319 (Line)
+Info    : [ 50%] Meshing curve 320 (Line)
+Info    : [ 50%] Meshing curve 324 (Bezier)
+Info    : [ 50%] Meshing curve 325 (Bezier)
+Info    : [ 50%] Meshing curve 326 (Line)
+Info    : [ 50%] Meshing curve 327 (Bezier)
+Info    : [ 50%] Meshing curve 328 (Bezier)
+Info    : [ 50%] Meshing curve 329 (Line)
+Info    : [ 50%] Meshing curve 330 (Bezier)
+Info    : [ 50%] Meshing curve 331 (Bezier)
+Info    : [ 50%] Meshing curve 332 (Line)
+Info    : [ 50%] Meshing curve 333 (Bezier)
+Info    : [ 50%] Meshing curve 334 (Bezier)
+Info    : [ 50%] Meshing curve 336 (Bezier)
+Info    : [ 50%] Meshing curve 323 (Line)
+Info    : [ 50%] Meshing curve 322 (Bezier)
+Info    : [ 50%] Meshing curve 321 (Bezier)
+Info    : [ 50%] Meshing curve 335 (Line)
+Info    : [ 50%] Meshing curve 338 (Line)
+Info    : [ 50%] Meshing curve 339 (Bezier)
+Info    : [ 50%] Meshing curve 340 (Bezier)
+Info    : [ 50%] Meshing curve 341 (Bezier)
+Info    : [ 50%] Meshing curve 342 (Bezier)
+Info    : [ 50%] Meshing curve 343 (Line)
+Info    : [ 50%] Meshing curve 337 (Bezier)
+Info    : [ 50%] Meshing curve 344 (Line)
+Info    : [ 50%] Meshing curve 345 (Bezier)
+Info    : [ 50%] Meshing curve 346 (Bezier)
+Info    : [ 50%] Meshing curve 347 (Line)
+Info    : [ 50%] Meshing curve 348 (Bezier)
+Info    : [ 50%] Meshing curve 349 (Bezier)
+Info    : [ 50%] Meshing curve 350 (Line)
+Info    : [ 50%] Meshing curve 351 (Bezier)
+Info    : [ 50%] Meshing curve 352 (Bezier)
+Info    : [ 50%] Meshing curve 353 (Line)
+Info    : [ 60%] Meshing curve 354 (Bezier)
+Info    : [ 60%] Meshing curve 355 (Bezier)
+Info    : [ 60%] Meshing curve 356 (Line)
+Info    : [ 60%] Meshing curve 357 (Bezier)
+Info    : [ 60%] Meshing curve 358 (Bezier)
+Info    : [ 60%] Meshing curve 359 (Line)
+Info    : [ 60%] Meshing curve 360 (Bezier)
+Info    : [ 60%] Meshing curve 361 (Bezier)
+Info    : [ 60%] Meshing curve 362 (Line)
+Info    : [ 60%] Meshing curve 364 (Bezier)
+Info    : [ 60%] Meshing curve 363 (Bezier)
+Info    : [ 60%] Meshing curve 365 (Bezier)
+Info    : [ 60%] Meshing curve 366 (Bezier)
+Info    : [ 60%] Meshing curve 367 (Line)
+Info    : [ 60%] Meshing curve 368 (Line)
+Info    : [ 60%] Meshing curve 371 (Line)
+Info    : [ 60%] Meshing curve 372 (Line)
+Info    : [ 60%] Meshing curve 369 (Line)
+Info    : [ 60%] Meshing curve 370 (Line)
+Info    : [ 60%] Meshing curve 373 (Line)
+Info    : [ 60%] Meshing curve 374 (Line)
+Info    : [ 60%] Meshing curve 375 (Line)
+Info    : [ 60%] Meshing curve 376 (Line)
+Info    : [ 60%] Meshing curve 377 (Line)
+Info    : [ 60%] Meshing curve 378 (Bezier)
+Info    : [ 60%] Meshing curve 379 (Bezier)
+Info    : [ 60%] Meshing curve 380 (Line)
+Info    : [ 60%] Meshing curve 381 (Bezier)
+Info    : [ 60%] Meshing curve 382 (Bezier)
+Info    : [ 60%] Meshing curve 383 (Line)
+Info    : [ 60%] Meshing curve 384 (Bezier)
+Info    : [ 60%] Meshing curve 385 (Bezier)
+Info    : [ 60%] Meshing curve 386 (Line)
+Info    : [ 60%] Meshing curve 387 (Bezier)
+Info    : [ 60%] Meshing curve 388 (Bezier)
+Info    : [ 60%] Meshing curve 389 (Line)
+Info    : [ 60%] Meshing curve 390 (Bezier)
+Info    : [ 60%] Meshing curve 391 (Bezier)
+Info    : [ 60%] Meshing curve 392 (Line)
+Info    : [ 60%] Meshing curve 393 (Bezier)
+Info    : [ 60%] Meshing curve 394 (Bezier)
+Info    : [ 60%] Meshing curve 395 (Line)
+Info    : [ 60%] Meshing curve 396 (Line)
+Info    : [ 60%] Meshing curve 397 (Line)
+Info    : [ 60%] Meshing curve 398 (Line)
+Info    : [ 60%] Meshing curve 399 (Line)
+Info    : [ 60%] Meshing curve 400 (Line)
+Info    : [ 60%] Meshing curve 401 (Line)
+Info    : [ 60%] Meshing curve 402 (Bezier)
+Info    : [ 60%] Meshing curve 403 (Bezier)
+Info    : [ 60%] Meshing curve 404 (Line)
+Info    : [ 60%] Meshing curve 405 (Bezier)
+Info    : [ 60%] Meshing curve 406 (Bezier)
+Info    : [ 60%] Meshing curve 407 (Line)
+Info    : [ 60%] Meshing curve 408 (Bezier)
+Info    : [ 60%] Meshing curve 409 (Bezier)
+Info    : [ 60%] Meshing curve 410 (Line)
+Info    : [ 60%] Meshing curve 411 (Bezier)
+Info    : [ 60%] Meshing curve 412 (Bezier)
+Info    : [ 60%] Meshing curve 413 (Line)
+Info    : [ 60%] Meshing curve 414 (Line)
+Info    : [ 60%] Meshing curve 415 (Line)
+Info    : [ 60%] Meshing curve 416 (Line)
+Info    : [ 60%] Meshing curve 417 (Bezier)
+Info    : [ 60%] Meshing curve 418 (Bezier)
+Info    : [ 60%] Meshing curve 419 (Line)
+Info    : [ 60%] Meshing curve 420 (Bezier)
+Info    : [ 60%] Meshing curve 421 (Bezier)
+Info    : [ 70%] Meshing curve 422 (Line)
+Info    : [ 70%] Meshing curve 423 (Bezier)
+Info    : [ 70%] Meshing curve 424 (Bezier)
+Info    : [ 70%] Meshing curve 425 (Bezier)
+Info    : [ 70%] Meshing curve 426 (Bezier)
+Info    : [ 70%] Meshing curve 427 (Line)
+Info    : [ 70%] Meshing curve 428 (Line)
+Info    : [ 70%] Meshing curve 429 (Line)
+Info    : [ 70%] Meshing curve 430 (Line)
+Info    : [ 70%] Meshing curve 431 (Line)
+Info    : [ 70%] Meshing curve 432 (Bezier)
+Info    : [ 70%] Meshing curve 433 (Bezier)
+Info    : [ 70%] Meshing curve 434 (Line)
+Info    : [ 70%] Meshing curve 435 (Bezier)
+Info    : [ 70%] Meshing curve 436 (Bezier)
+Info    : [ 70%] Meshing curve 437 (Line)
+Info    : [ 70%] Meshing curve 438 (Bezier)
+Info    : [ 70%] Meshing curve 439 (Bezier)
+Info    : [ 70%] Meshing curve 440 (Line)
+Info    : [ 70%] Meshing curve 441 (Bezier)
+Info    : [ 70%] Meshing curve 442 (Bezier)
+Info    : [ 70%] Meshing curve 443 (Line)
+Info    : [ 70%] Meshing curve 444 (Bezier)
+Info    : [ 70%] Meshing curve 445 (Bezier)
+Info    : [ 70%] Meshing curve 446 (Line)
+Info    : [ 70%] Meshing curve 447 (Bezier)
+Info    : [ 70%] Meshing curve 448 (Bezier)
+Info    : [ 70%] Meshing curve 449 (Line)
+Info    : [ 70%] Meshing curve 451 (Line)
+Info    : [ 70%] Meshing curve 452 (Line)
+Info    : [ 70%] Meshing curve 453 (Line)
+Info    : [ 70%] Meshing curve 454 (Line)
+Info    : [ 70%] Meshing curve 455 (Line)
+Info    : [ 70%] Meshing curve 456 (Bezier)
+Info    : [ 70%] Meshing curve 457 (Bezier)
+Info    : [ 70%] Meshing curve 458 (Line)
+Info    : [ 70%] Meshing curve 459 (Bezier)
+Info    : [ 70%] Meshing curve 460 (Bezier)
+Info    : [ 70%] Meshing curve 461 (Line)
+Info    : [ 70%] Meshing curve 462 (Bezier)
+Info    : [ 70%] Meshing curve 463 (Bezier)
+Info    : [ 70%] Meshing curve 464 (Line)
+Info    : [ 70%] Meshing curve 465 (Bezier)
+Info    : [ 70%] Meshing curve 466 (Bezier)
+Info    : [ 70%] Meshing curve 467 (Line)
+Info    : [ 70%] Meshing curve 468 (Line)
+Info    : [ 70%] Meshing curve 469 (Line)
+Info    : [ 70%] Meshing curve 470 (Line)
+Info    : [ 70%] Meshing curve 471 (Bezier)
+Info    : [ 70%] Meshing curve 472 (Bezier)
+Info    : [ 70%] Meshing curve 473 (Line)
+Info    : [ 70%] Meshing curve 474 (Bezier)
+Info    : [ 70%] Meshing curve 475 (Bezier)
+Info    : [ 70%] Meshing curve 476 (Line)
+Info    : [ 70%] Meshing curve 477 (Bezier)
+Info    : [ 70%] Meshing curve 478 (Bezier)
+Info    : [ 70%] Meshing curve 479 (Line)
+Info    : [ 70%] Meshing curve 480 (Bezier)
+Info    : [ 70%] Meshing curve 481 (Bezier)
+Info    : [ 70%] Meshing curve 482 (Line)
+Info    : [ 70%] Meshing curve 483 (Line)
+Info    : [ 70%] Meshing curve 484 (Line)
+Info    : [ 70%] Meshing curve 485 (Line)
+Info    : [ 70%] Meshing curve 486 (Bezier)
+Info    : [ 70%] Meshing curve 487 (Bezier)
+Info    : [ 70%] Meshing curve 450 (Line)
+Info    : [ 70%] Meshing curve 488 (Line)
+Info    : [ 70%] Meshing curve 489 (Bezier)
+Info    : [ 70%] Meshing curve 490 (Bezier)
+Info    : [ 70%] Meshing curve 491 (Line)
+Info    : [ 70%] Meshing curve 492 (Bezier)
+Info    : [ 70%] Meshing curve 493 (Bezier)
+Info    : [ 70%] Meshing curve 494 (Line)
+Info    : [ 70%] Meshing curve 495 (Bezier)
+Info    : [ 70%] Meshing curve 496 (Bezier)
+Info    : [ 70%] Meshing curve 497 (Line)
+Info    : [ 70%] Meshing curve 498 (Bezier)
+Info    : [ 70%] Meshing curve 499 (Bezier)
+Info    : [ 70%] Meshing curve 500 (Line)
+Info    : [ 70%] Meshing curve 501 (Bezier)
+Info    : [ 70%] Meshing curve 502 (Bezier)
+Info    : [ 70%] Meshing curve 503 (Line)
+Info    : [ 70%] Meshing curve 504 (Bezier)
+Info    : [ 70%] Meshing curve 505 (Bezier)
+Info    : [ 70%] Meshing curve 506 (Line)
+Info    : [ 70%] Meshing curve 507 (Bezier)
+Info    : [ 70%] Meshing curve 508 (Bezier)
+Info    : [ 70%] Meshing curve 509 (Line)
+Info    : [ 70%] Meshing curve 510 (Line)
+Info    : [ 70%] Meshing curve 511 (Line)
+Info    : [ 70%] Meshing curve 512 (Line)
+Info    : [ 70%] Meshing curve 513 (Line)
+Info    : [ 70%] Meshing curve 514 (Line)
+Info    : [ 70%] Meshing curve 515 (Line)
+Info    : [ 70%] Meshing curve 516 (Bezier)
+Info    : [ 70%] Meshing curve 517 (Bezier)
+Info    : [ 70%] Meshing curve 518 (Line)
+Info    : [ 70%] Meshing curve 519 (Bezier)
+Info    : [ 70%] Meshing curve 520 (Bezier)
+Info    : [ 70%] Meshing curve 521 (Line)
+Info    : [ 70%] Meshing curve 522 (Bezier)
+Info    : [ 80%] Meshing curve 523 (Bezier)
+Info    : [ 80%] Meshing curve 524 (Line)
+Info    : [ 80%] Meshing curve 525 (Bezier)
+Info    : [ 80%] Meshing curve 526 (Bezier)
+Info    : [ 80%] Meshing curve 527 (Line)
+Info    : [ 80%] Meshing curve 528 (Bezier)
+Info    : [ 80%] Meshing curve 529 (Bezier)
+Info    : [ 80%] Meshing curve 530 (Line)
+Info    : [ 80%] Meshing curve 531 (Bezier)
+Info    : [ 80%] Meshing curve 532 (Bezier)
+Info    : [ 80%] Meshing curve 533 (Line)
+Info    : [ 80%] Meshing curve 534 (Bezier)
+Info    : [ 80%] Meshing curve 535 (Bezier)
+Info    : [ 80%] Meshing curve 536 (Bezier)
+Info    : [ 80%] Meshing curve 537 (Bezier)
+Info    : [ 80%] Meshing curve 538 (Line)
+Info    : [ 80%] Meshing curve 539 (Line)
+Info    : [ 80%] Meshing curve 540 (Bezier)
+Info    : [ 80%] Meshing curve 541 (Bezier)
+Info    : [ 80%] Meshing curve 542 (Line)
+Info    : [ 80%] Meshing curve 543 (Bezier)
+Info    : [ 80%] Meshing curve 544 (Bezier)
+Info    : [ 80%] Meshing curve 545 (Line)
+Info    : [ 80%] Meshing curve 546 (Bezier)
+Info    : [ 80%] Meshing curve 547 (Bezier)
+Info    : [ 80%] Meshing curve 548 (Line)
+Info    : [ 80%] Meshing curve 549 (Bezier)
+Info    : [ 80%] Meshing curve 550 (Bezier)
+Info    : [ 80%] Meshing curve 551 (Line)
+Info    : [ 80%] Meshing curve 552 (Line)
+Info    : [ 80%] Meshing curve 553 (Line)
+Info    : [ 80%] Meshing curve 554 (Line)
+Info    : [ 80%] Meshing curve 555 (Line)
+Info    : [ 90%] Meshing curve 556 (Line)
+Info    : [ 90%] Meshing curve 557 (Line)
+Info    : [ 90%] Meshing curve 558 (Line)
+Info    : [ 90%] Meshing curve 559 (Line)
+Info    : [ 90%] Meshing curve 560 (Line)
+Info    : [ 90%] Meshing curve 561 (Bezier)
+Info    : [ 90%] Meshing curve 562 (Bezier)
+Info    : [ 90%] Meshing curve 563 (Line)
+Info    : [ 90%] Meshing curve 564 (Bezier)
+Info    : [ 90%] Meshing curve 565 (Bezier)
+Info    : [ 90%] Meshing curve 566 (Line)
+Info    : [ 90%] Meshing curve 568 (Bezier)
+Info    : [ 90%] Meshing curve 567 (Bezier)
+Info    : [ 90%] Meshing curve 569 (Line)
+Info    : [ 90%] Meshing curve 570 (Bezier)
+Info    : [ 90%] Meshing curve 571 (Bezier)
+Info    : [ 90%] Meshing curve 572 (Line)
+Info    : [ 90%] Meshing curve 573 (Line)
+Info    : [ 90%] Meshing curve 574 (Line)
+Info    : [ 90%] Meshing curve 575 (Line)
+Info    : [ 90%] Meshing curve 576 (Line)
+Info    : [ 90%] Meshing curve 577 (Line)
+Info    : [ 90%] Meshing curve 578 (Line)
+Info    : [ 90%] Meshing curve 579 (Line)
+Info    : [ 90%] Meshing curve 580 (Line)
+Info    : [ 90%] Meshing curve 582 (Bezier)
+Info    : [ 90%] Meshing curve 583 (Bezier)
+Info    : [ 90%] Meshing curve 584 (Line)
+Info    : [ 90%] Meshing curve 585 (Bezier)
+Info    : [ 90%] Meshing curve 586 (Bezier)
+Info    : [ 90%] Meshing curve 587 (Line)
+Info    : [ 90%] Meshing curve 588 (Bezier)
+Info    : [ 90%] Meshing curve 589 (Bezier)
+Info    : [ 90%] Meshing curve 590 (Line)
+Info    : [ 90%] Meshing curve 591 (Bezier)
+Info    : [ 90%] Meshing curve 592 (Bezier)
+Info    : [ 90%] Meshing curve 593 (Line)
+Info    : [ 90%] Meshing curve 594 (Line)
+Info    : [ 90%] Meshing curve 595 (Line)
+Info    : [ 90%] Meshing curve 596 (Line)
+Info    : [ 90%] Meshing curve 597 (Line)
+Info    : [ 90%] Meshing curve 598 (Line)
+Info    : [ 90%] Meshing curve 599 (Line)
+Info    : [ 90%] Meshing curve 581 (Line)
+Info    : [ 90%] Meshing curve 600 (Line)
+Info    : [ 90%] Meshing curve 601 (Line)
+Info    : [ 90%] Meshing curve 602 (Line)
+Info    : [ 90%] Meshing curve 604 (Line)
+Info    : [ 90%] Meshing curve 603 (Line)
+Info    : [ 90%] Meshing curve 605 (Line)
+Info    : [ 90%] Meshing curve 606 (Line)
+Info    : [ 90%] Meshing curve 607 (Line)
+Info    : [ 90%] Meshing curve 608 (Line)
+Info    : [ 90%] Meshing curve 610 (Bezier)
+Info    : [ 90%] Meshing curve 611 (Line)
+Info    : [ 90%] Meshing curve 612 (Bezier)
+Info    : [ 90%] Meshing curve 613 (Bezier)
+Info    : [ 90%] Meshing curve 614 (Line)
+Info    : [ 90%] Meshing curve 615 (Bezier)
+Info    : [ 90%] Meshing curve 616 (Bezier)
+Info    : [ 90%] Meshing curve 617 (Bezier)
+Info    : [ 90%] Meshing curve 618 (Bezier)
+Info    : [ 90%] Meshing curve 619 (Line)
+Info    : [ 90%] Meshing curve 609 (Bezier)
+Info    : [ 90%] Meshing curve 620 (Line)
+Info    : [ 90%] Meshing curve 621 (Line)
+Info    : [ 90%] Meshing curve 622 (Line)
+Info    : [ 90%] Meshing curve 623 (Line)
+Info    : [ 90%] Meshing curve 624 (Bezier)
+Info    : [ 90%] Meshing curve 625 (Bezier)
+Info    : [ 90%] Meshing curve 626 (Line)
+Info    : [100%] Meshing curve 627 (Bezier)
+Info    : [100%] Meshing curve 628 (Bezier)
+Info    : [100%] Meshing curve 629 (Line)
+Info    : [100%] Meshing curve 630 (Bezier)
+Info    : [100%] Meshing curve 631 (Bezier)
+Info    : [100%] Meshing curve 632 (Line)
+Info    : [100%] Meshing curve 633 (Bezier)
+Info    : [100%] Meshing curve 634 (Bezier)
+Info    : [100%] Meshing curve 635 (Line)
+Info    : [100%] Meshing curve 636 (Bezier)
+Info    : [100%] Meshing curve 637 (Bezier)
+Info    : [100%] Meshing curve 638 (Line)
+Info    : [100%] Meshing curve 639 (Bezier)
+Info    : [100%] Meshing curve 640 (Bezier)
+Info    : [100%] Meshing curve 641 (Line)
+Info    : [100%] Meshing curve 642 (Bezier)
+Info    : [100%] Meshing curve 643 (Bezier)
+Info    : [100%] Meshing curve 644 (Line)
+Info    : [100%] Meshing curve 645 (Bezier)
+Info    : [100%] Meshing curve 646 (Bezier)
+Info    : [100%] Meshing curve 647 (Line)
+Info    : [100%] Meshing curve 648 (Line)
+Info    : [100%] Meshing curve 649 (Line)
+Info    : [100%] Meshing curve 650 (Line)
+Info    : [100%] Meshing curve 651 (Bezier)
+Info    : [100%] Meshing curve 652 (Bezier)
+Info    : [100%] Meshing curve 653 (Line)
+Info    : [100%] Meshing curve 654 (Bezier)
+Info    : [100%] Meshing curve 655 (Bezier)
+Info    : [100%] Meshing curve 656 (Line)
+Info    : [100%] Meshing curve 657 (Bezier)
+Info    : [100%] Meshing curve 658 (Bezier)
+Info    : [100%] Meshing curve 659 (Line)
+Info    : [100%] Meshing curve 660 (Bezier)
+Info    : [100%] Meshing curve 661 (Bezier)
+Info    : [100%] Meshing curve 662 (Line)
+Info    : [100%] Meshing curve 663 (Bezier)
+Info    : [100%] Meshing curve 664 (Bezier)
+Info    : [100%] Meshing curve 665 (Line)
+Info    : [100%] Meshing curve 666 (Bezier)
+Info    : [100%] Meshing curve 667 (Bezier)
+Info    : [100%] Meshing curve 668 (Line)
+Info    : [100%] Meshing curve 669 (Bezier)
+Info    : [100%] Meshing curve 670 (Bezier)
+Info    : [100%] Meshing curve 671 (Bezier)
+Info    : [100%] Meshing curve 672 (Bezier)
+Info    : Done meshing 1D (Wall 0.0736183s, CPU 1.0122s)
+Info    : Meshing 2D...
+Info    : [  0%] Meshing surface 2 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 3 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 4 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 5 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 8 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 10 (Plane, MeshAdapt)
+Info    : [  0%] Meshing surface 7 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 11 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 9 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 12 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 6 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 16 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 14 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 13 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 15 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 1 (Plane, MeshAdapt)
+Info    : [  0%] Meshing surface 17 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 18 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 19 (Plane, MeshAdapt)
+Info    : [  0%] Meshing surface 20 (Plane, MeshAdapt)
+Info    : [  0%] Meshing surface 21 (Plane, MeshAdapt)
+Info    : [  0%] Meshing surface 22 (Plane, MeshAdapt)
+Info    : [  0%] Meshing surface 24 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 25 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 23 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 26 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 27 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 28 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 29 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 30 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 31 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 32 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 33 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 34 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 35 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 36 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 37 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 38 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 39 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 40 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 41 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 42 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 43 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 44 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 45 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 46 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 47 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 48 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 49 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 50 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 51 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 52 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 53 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 54 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 55 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 57 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 63 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 56 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 65 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 66 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 59 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 61 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 68 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 69 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 64 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 70 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 71 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 72 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 73 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 74 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 75 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 67 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 60 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 58 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 76 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 77 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 78 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 79 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 80 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 81 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 82 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 83 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 84 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 85 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 86 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 87 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 89 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 88 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 90 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 91 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 92 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 93 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 94 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 95 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 96 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 97 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 99 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 98 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 100 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 101 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 62 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 102 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 103 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 104 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 105 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 106 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 107 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 108 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 109 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 111 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 110 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 112 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 113 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 114 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 115 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 116 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 117 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 118 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 119 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 126 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 121 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 122 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 120 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 123 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 124 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 125 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 128 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 129 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 130 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 131 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 132 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 133 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 134 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 135 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 127 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 136 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 137 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 138 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 139 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 140 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 141 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 142 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 143 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 144 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 145 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 146 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 147 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 148 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 149 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 150 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 151 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 152 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 153 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 154 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 155 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 156 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 157 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 158 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 159 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 160 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 161 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 162 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 163 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 164 (Plane, MeshAdapt)
+Info    : [ 70%] Meshing surface 165 (Plane, MeshAdapt)
+Info    : [ 70%] Meshing surface 166 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 167 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 170 (Plane, MeshAdapt)
+Info    : [ 70%] Meshing surface 172 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 168 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 169 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 171 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 174 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 173 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 175 (Plane, MeshAdapt)
+Info    : [ 70%] Meshing surface 176 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 177 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 178 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 179 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 180 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 181 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 182 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 183 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 184 (Plane, MeshAdapt)
+Info    : [ 70%] Meshing surface 185 (Plane, MeshAdapt)
+Info    : [ 70%] Meshing surface 186 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 187 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 188 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 189 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 190 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 191 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 192 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 193 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 194 (Plane, MeshAdapt)
+Info    : [ 70%] Meshing surface 195 (Plane, MeshAdapt)
+Info    : [ 70%] Meshing surface 196 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 197 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 198 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 199 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 200 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 201 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 202 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 203 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 204 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 205 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 206 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 207 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 208 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 209 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 210 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 211 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 212 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 213 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 215 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 214 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 216 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 219 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 220 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 221 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 222 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 223 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 224 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 225 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 226 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 227 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 228 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 229 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 230 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 232 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 233 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 234 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 235 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 236 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 237 (Unknown, MeshAdapt)
+Info    : [100%] Meshing surface 238 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 217 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 231 (Unknown, MeshAdapt)
+Info    : [100%] Meshing surface 239 (Unknown, MeshAdapt)
+Info    : [100%] Meshing surface 240 (Unknown, MeshAdapt)
+Info    : [100%] Meshing surface 241 (Unknown, MeshAdapt)
+Info    : [100%] Meshing surface 242 (Unknown, MeshAdapt)
+Info    : [100%] Meshing surface 243 (Plane, MeshAdapt)
+Info    : [100%] Meshing surface 244 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 218 (Plane, MeshAdapt)
+Info    : Done meshing 2D (Wall 0.0298231s, CPU 0.280752s)
+Info    : 1072 nodes 3580 elements
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>written DAGMC file dagmc.h5m
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;dagmc.h5m&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>DAGMC and OpenMC support another form of mesh often called an unstructured mesh.</p>
+<p>An unstructured mesh can be overlaid over the geometry much like a regular mesh or cylindrical mesh and used to score tallies spatially.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">openmc.UnstructuredMesh</span></code> class supports MOAB and LibMesh type unstructured meshes.</p>
+<p>In this example we are making a MOAB / DAGMC unstructured mesh which is entirely made of tetrahedrals.</p>
+<p>This is a volume mesh where the outer surface is also the same as the outer surface of the 2D mesh as we have used the same mesh parameters.</p>
+<p>This means we have a conformal volume mesh to score on which aligns to the material / cell boundaries in the DAGMC h5m 2D mesh.</p>
+<p>This conformal mesh is one of the advantages of UnstructuredMesh over regular meshes and cylindrical meshes</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">export_unstructured_mesh_file()</span></code> function will produce a vtk file than can be loaded into OpenMC using <code class="docutils literal notranslate"><span class="pre">openmc.UnstructuredMesh</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_model</span><span class="o">.</span><span class="n">export_unstructured_mesh_file</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;dagmc.vtk&quot;</span><span class="p">,</span>
+    <span class="n">max_mesh_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">min_mesh_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning : Gmsh has aleady been initialized
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Info    : Meshing 1D...
+Info    : [  0%] Meshing curve 1 (Line)
+Info    : [  0%] Meshing curve 2 (Line)
+Info    : [  0%] Meshing curve 3 (Line)
+Info    : [  0%] Meshing curve 8 (Line)
+Info    : [  0%] Meshing curve 5 (Line)
+Info    : [  0%] Meshing curve 4 (Line)
+Info    : [  0%] Meshing curve 6 (Bezier)
+Info    : [  0%] Meshing curve 7 (Bezier)
+Info    : [  0%] Meshing curve 10 (Bezier)
+Info    : [ 10%] Meshing curve 11 (Line)
+Info    : [ 10%] Meshing curve 13 (Bezier)
+Info    : [ 10%] Meshing curve 12 (Bezier)
+Info    : [ 10%] Meshing curve 17 (Line)
+Info    : [ 10%] Meshing curve 14 (Line)
+Info    : [ 10%] Meshing curve 15 (Bezier)
+Info    : [ 10%] Meshing curve 16 (Bezier)
+Info    : [ 10%] Meshing curve 18 (Bezier)
+Info    : [ 10%] Meshing curve 19 (Bezier)
+Info    : [ 10%] Meshing curve 20 (Line)
+Info    : [ 10%] Meshing curve 21 (Bezier)
+Info    : [ 10%] Meshing curve 22 (Bezier)
+Info    : [ 10%] Meshing curve 23 (Line)
+Info    : [ 10%] Meshing curve 24 (Bezier)
+Info    : [ 10%] Meshing curve 25 (Bezier)
+Info    : [ 10%] Meshing curve 26 (Line)
+Info    : [ 10%] Meshing curve 27 (Bezier)
+Info    : [ 10%] Meshing curve 28 (Bezier)
+Info    : [ 10%] Meshing curve 29 (Line)
+Info    : [ 10%] Meshing curve 30 (Line)
+Info    : [ 10%] Meshing curve 31 (Line)
+Info    : [ 10%] Meshing curve 32 (Line)
+Info    : [ 10%] Meshing curve 33 (Bezier)
+Info    : [ 10%] Meshing curve 34 (Bezier)
+Info    : [ 10%] Meshing curve 35 (Line)
+Info    : [ 10%] Meshing curve 36 (Bezier)
+Info    : [ 10%] Meshing curve 37 (Bezier)
+Info    : [ 10%] Meshing curve 38 (Line)
+Info    : [ 10%] Meshing curve 39 (Bezier)
+Info    : [ 10%] Meshing curve 40 (Bezier)
+Info    : [ 10%] Meshing curve 41 (Line)
+Info    : [ 10%] Meshing curve 42 (Bezier)
+Info    : [ 10%] Meshing curve 43 (Bezier)
+Info    : [ 10%] Meshing curve 44 (Line)
+Info    : [ 10%] Meshing curve 45 (Bezier)
+Info    : [ 10%] Meshing curve 46 (Bezier)
+Info    : [ 10%] Meshing curve 47 (Line)
+Info    : [ 10%] Meshing curve 48 (Bezier)
+Info    : [ 10%] Meshing curve 49 (Bezier)
+Info    : [ 10%] Meshing curve 50 (Line)
+Info    : [ 10%] Meshing curve 51 (Bezier)
+Info    : [ 10%] Meshing curve 52 (Bezier)
+Info    : [ 10%] Meshing curve 53 (Bezier)
+Info    : [ 10%] Meshing curve 54 (Bezier)
+Info    : [ 10%] Meshing curve 55 (Line)
+Info    : [ 10%] Meshing curve 56 (Line)
+Info    : [ 10%] Meshing curve 57 (Line)
+Info    : [ 10%] Meshing curve 58 (Line)
+Info    : [ 10%] Meshing curve 59 (Line)
+Info    : [ 10%] Meshing curve 60 (Line)
+Info    : [ 10%] Meshing curve 61 (Line)
+Info    : [ 10%] Meshing curve 62 (Line)
+Info    : [ 10%] Meshing curve 63 (Line)
+Info    : [  0%] Meshing curve 9 (Bezier)
+Info    : [ 10%] Meshing curve 65 (Line)
+Info    : [ 10%] Meshing curve 66 (Bezier)
+Info    : [ 10%] Meshing curve 67 (Bezier)
+Info    : [ 10%] Meshing curve 68 (Line)
+Info    : [ 10%] Meshing curve 69 (Bezier)
+Info    : [ 10%] Meshing curve 70 (Bezier)
+Info    : [ 10%] Meshing curve 71 (Line)
+Info    : [ 10%] Meshing curve 72 (Bezier)
+Info    : [ 10%] Meshing curve 73 (Bezier)
+Info    : [ 10%] Meshing curve 74 (Line)
+Info    : [ 10%] Meshing curve 75 (Bezier)
+Info    : [ 10%] Meshing curve 76 (Bezier)
+Info    : [ 10%] Meshing curve 77 (Line)
+Info    : [ 10%] Meshing curve 78 (Bezier)
+Info    : [ 10%] Meshing curve 79 (Bezier)
+Info    : [ 10%] Meshing curve 80 (Line)
+Info    : [ 10%] Meshing curve 81 (Bezier)
+Info    : [ 10%] Meshing curve 82 (Bezier)
+Info    : [ 10%] Meshing curve 83 (Line)
+Info    : [ 10%] Meshing curve 84 (Line)
+Info    : [ 10%] Meshing curve 85 (Line)
+Info    : [ 10%] Meshing curve 86 (Line)
+Info    : [ 10%] Meshing curve 87 (Line)
+Info    : [ 10%] Meshing curve 88 (Line)
+Info    : [ 10%] Meshing curve 89 (Line)
+Info    : [ 10%] Meshing curve 90 (Bezier)
+Info    : [ 10%] Meshing curve 91 (Bezier)
+Info    : [ 10%] Meshing curve 92 (Line)
+Info    : [ 10%] Meshing curve 93 (Bezier)
+Info    : [ 10%] Meshing curve 94 (Bezier)
+Info    : [ 10%] Meshing curve 95 (Line)
+Info    : [ 10%] Meshing curve 96 (Bezier)
+Info    : [ 10%] Meshing curve 97 (Bezier)
+Info    : [ 10%] Meshing curve 98 (Line)
+Info    : [ 10%] Meshing curve 99 (Bezier)
+Info    : [ 10%] Meshing curve 100 (Bezier)
+Info    : [ 10%] Meshing curve 101 (Line)
+Info    : [ 10%] Meshing curve 102 (Line)
+Info    : [ 10%] Meshing curve 103 (Line)
+Info    : [ 10%] Meshing curve 104 (Line)
+Info    : [ 20%] Meshing curve 105 (Bezier)
+Info    : [ 20%] Meshing curve 106 (Bezier)
+Info    : [ 20%] Meshing curve 107 (Line)
+Info    : [ 20%] Meshing curve 108 (Bezier)
+Info    : [ 20%] Meshing curve 109 (Bezier)
+Info    : [ 20%] Meshing curve 110 (Line)
+Info    : [ 20%] Meshing curve 111 (Bezier)
+Info    : [ 20%] Meshing curve 112 (Bezier)
+Info    : [ 10%] Meshing curve 64 (Line)
+Info    : [ 20%] Meshing curve 113 (Bezier)
+Info    : [ 20%] Meshing curve 114 (Bezier)
+Info    : [ 20%] Meshing curve 115 (Line)
+Info    : [ 20%] Meshing curve 116 (Line)
+Info    : [ 20%] Meshing curve 117 (Line)
+Info    : [ 20%] Meshing curve 118 (Line)
+Info    : [ 20%] Meshing curve 119 (Line)
+Info    : [ 20%] Meshing curve 120 (Bezier)
+Info    : [ 20%] Meshing curve 121 (Bezier)
+Info    : [ 20%] Meshing curve 122 (Line)
+Info    : [ 20%] Meshing curve 123 (Bezier)
+Info    : [ 20%] Meshing curve 124 (Bezier)
+Info    : [ 20%] Meshing curve 125 (Line)
+Info    : [ 20%] Meshing curve 126 (Bezier)
+Info    : [ 20%] Meshing curve 127 (Bezier)
+Info    : [ 20%] Meshing curve 128 (Line)
+Info    : [ 20%] Meshing curve 129 (Bezier)
+Info    : [ 20%] Meshing curve 130 (Bezier)
+Info    : [ 20%] Meshing curve 131 (Line)
+Info    : [ 20%] Meshing curve 132 (Bezier)
+Info    : [ 20%] Meshing curve 133 (Bezier)
+Info    : [ 20%] Meshing curve 134 (Line)
+Info    : [ 20%] Meshing curve 135 (Bezier)
+Info    : [ 20%] Meshing curve 136 (Bezier)
+Info    : [ 20%] Meshing curve 137 (Line)
+Info    : [ 20%] Meshing curve 138 (Line)
+Info    : [ 20%] Meshing curve 139 (Line)
+Info    : [ 20%] Meshing curve 140 (Line)
+Info    : [ 20%] Meshing curve 141 (Line)
+Info    : [ 20%] Meshing curve 142 (Line)
+Info    : [ 20%] Meshing curve 143 (Line)
+Info    : [ 20%] Meshing curve 144 (Line)
+Info    : [ 20%] Meshing curve 145 (Line)
+Info    : [ 20%] Meshing curve 146 (Line)
+Info    : [ 20%] Meshing curve 147 (Line)
+Info    : [ 20%] Meshing curve 148 (Line)
+Info    : [ 20%] Meshing curve 149 (Line)
+Info    : [ 20%] Meshing curve 150 (Line)
+Info    : [ 30%] Meshing curve 151 (Line)
+Info    : [ 30%] Meshing curve 152 (Line)
+Info    : [ 30%] Meshing curve 153 (Line)
+Info    : [ 30%] Meshing curve 154 (Line)
+Info    : [ 30%] Meshing curve 155 (Line)
+Info    : [ 30%] Meshing curve 156 (Bezier)
+Info    : [ 30%] Meshing curve 157 (Bezier)
+Info    : [ 30%] Meshing curve 158 (Line)
+Info    : [ 30%] Meshing curve 159 (Bezier)
+Info    : [ 30%] Meshing curve 160 (Bezier)
+Info    : [ 30%] Meshing curve 161 (Line)
+Info    : [ 30%] Meshing curve 162 (Bezier)
+Info    : [ 30%] Meshing curve 163 (Bezier)
+Info    : [ 30%] Meshing curve 164 (Line)
+Info    : [ 30%] Meshing curve 165 (Bezier)
+Info    : [ 30%] Meshing curve 166 (Bezier)
+Info    : [ 30%] Meshing curve 167 (Line)
+Info    : [ 30%] Meshing curve 168 (Bezier)
+Info    : [ 30%] Meshing curve 169 (Bezier)
+Info    : [ 30%] Meshing curve 170 (Line)
+Info    : [ 30%] Meshing curve 171 (Bezier)
+Info    : [ 30%] Meshing curve 172 (Bezier)
+Info    : [ 30%] Meshing curve 173 (Line)
+Info    : [ 30%] Meshing curve 174 (Bezier)
+Info    : [ 30%] Meshing curve 175 (Bezier)
+Info    : [ 30%] Meshing curve 176 (Bezier)
+Info    : [ 30%] Meshing curve 177 (Bezier)
+Info    : [ 30%] Meshing curve 178 (Line)
+Info    : [ 30%] Meshing curve 179 (Line)
+Info    : [ 30%] Meshing curve 180 (Bezier)
+Info    : [ 30%] Meshing curve 181 (Bezier)
+Info    : [ 30%] Meshing curve 182 (Line)
+Info    : [ 30%] Meshing curve 183 (Bezier)
+Info    : [ 30%] Meshing curve 184 (Bezier)
+Info    : [ 30%] Meshing curve 185 (Line)
+Info    : [ 30%] Meshing curve 186 (Bezier)
+Info    : [ 30%] Meshing curve 187 (Bezier)
+Info    : [ 30%] Meshing curve 188 (Line)
+Info    : [ 30%] Meshing curve 189 (Bezier)
+Info    : [ 30%] Meshing curve 190 (Bezier)
+Info    : [ 30%] Meshing curve 191 (Line)
+Info    : [ 30%] Meshing curve 192 (Bezier)
+Info    : [ 30%] Meshing curve 193 (Bezier)
+Info    : [ 30%] Meshing curve 194 (Line)
+Info    : [ 30%] Meshing curve 195 (Bezier)
+Info    : [ 30%] Meshing curve 196 (Bezier)
+Info    : [ 30%] Meshing curve 197 (Line)
+Info    : [ 30%] Meshing curve 198 (Bezier)
+Info    : [ 30%] Meshing curve 199 (Bezier)
+Info    : [ 30%] Meshing curve 200 (Bezier)
+Info    : [ 30%] Meshing curve 201 (Bezier)
+Info    : [ 30%] Meshing curve 202 (Line)
+Info    : [ 30%] Meshing curve 203 (Line)
+Info    : [ 30%] Meshing curve 204 (Line)
+Info    : [ 30%] Meshing curve 205 (Line)
+Info    : [ 30%] Meshing curve 206 (Line)
+Info    : [ 30%] Meshing curve 207 (Line)
+Info    : [ 30%] Meshing curve 208 (Line)
+Info    : [ 30%] Meshing curve 209 (Line)
+Info    : [ 30%] Meshing curve 210 (Line)
+Info    : [ 30%] Meshing curve 211 (Line)
+Info    : [ 30%] Meshing curve 212 (Line)
+Info    : [ 30%] Meshing curve 213 (Line)
+Info    : [ 30%] Meshing curve 214 (Line)
+Info    : [ 30%] Meshing curve 215 (Line)
+Info    : [ 30%] Meshing curve 216 (Line)
+Info    : [ 30%] Meshing curve 217 (Line)
+Info    : [ 30%] Meshing curve 218 (Line)
+Info    : [ 40%] Meshing curve 219 (Line)
+Info    : [ 40%] Meshing curve 220 (Line)
+Info    : [ 40%] Meshing curve 222 (Bezier)
+Info    : [ 40%] Meshing curve 221 (Line)
+Info    : [ 40%] Meshing curve 223 (Bezier)
+Info    : [ 40%] Meshing curve 224 (Line)
+Info    : [ 40%] Meshing curve 225 (Bezier)
+Info    : [ 40%] Meshing curve 226 (Bezier)
+Info    : [ 40%] Meshing curve 227 (Line)
+Info    : [ 40%] Meshing curve 228 (Line)
+Info    : [ 40%] Meshing curve 229 (Line)
+Info    : [ 40%] Meshing curve 230 (Line)
+Info    : [ 40%] Meshing curve 231 (Line)
+Info    : [ 40%] Meshing curve 232 (Line)
+Info    : [ 40%] Meshing curve 233 (Line)
+Info    : [ 40%] Meshing curve 234 (Line)
+Info    : [ 40%] Meshing curve 235 (Line)
+Info    : [ 40%] Meshing curve 236 (Line)
+Info    : [ 40%] Meshing curve 237 (Bezier)
+Info    : [ 40%] Meshing curve 238 (Bezier)
+Info    : [ 40%] Meshing curve 239 (Line)
+Info    : [ 40%] Meshing curve 240 (Bezier)
+Info    : [ 40%] Meshing curve 241 (Bezier)
+Info    : [ 40%] Meshing curve 242 (Line)
+Info    : [ 40%] Meshing curve 243 (Line)
+Info    : [ 40%] Meshing curve 244 (Line)
+Info    : [ 40%] Meshing curve 245 (Line)
+Info    : [ 40%] Meshing curve 246 (Line)
+Info    : [ 40%] Meshing curve 247 (Line)
+Info    : [ 40%] Meshing curve 248 (Line)
+Info    : [ 40%] Meshing curve 249 (Line)
+Info    : [ 40%] Meshing curve 250 (Line)
+Info    : [ 40%] Meshing curve 251 (Line)
+Info    : [ 40%] Meshing curve 252 (Line)
+Info    : [ 40%] Meshing curve 253 (Line)
+Info    : [ 40%] Meshing curve 254 (Line)
+Info    : [ 40%] Meshing curve 255 (Line)
+Info    : [ 40%] Meshing curve 256 (Line)
+Info    : [ 40%] Meshing curve 257 (Line)
+Info    : [ 40%] Meshing curve 258 (Bezier)
+Info    : [ 40%] Meshing curve 259 (Bezier)
+Info    : [ 40%] Meshing curve 260 (Line)
+Info    : [ 40%] Meshing curve 261 (Bezier)
+Info    : [ 40%] Meshing curve 262 (Bezier)
+Info    : [ 40%] Meshing curve 263 (Line)
+Info    : [ 40%] Meshing curve 264 (Bezier)
+Info    : [ 40%] Meshing curve 265 (Bezier)
+Info    : [ 40%] Meshing curve 266 (Line)
+Info    : [ 40%] Meshing curve 267 (Bezier)
+Info    : [ 40%] Meshing curve 268 (Bezier)
+Info    : [ 40%] Meshing curve 269 (Line)
+Info    : [ 40%] Meshing curve 270 (Bezier)
+Info    : [ 40%] Meshing curve 271 (Bezier)
+Info    : [ 40%] Meshing curve 272 (Line)
+Info    : [ 40%] Meshing curve 273 (Bezier)
+Info    : [ 40%] Meshing curve 274 (Bezier)
+Info    : [ 40%] Meshing curve 275 (Line)
+Info    : [ 40%] Meshing curve 276 (Bezier)
+Info    : [ 40%] Meshing curve 277 (Bezier)
+Info    : [ 40%] Meshing curve 278 (Bezier)
+Info    : [ 40%] Meshing curve 279 (Bezier)
+Info    : [ 40%] Meshing curve 280 (Line)
+Info    : [ 40%] Meshing curve 281 (Line)
+Info    : [ 40%] Meshing curve 282 (Bezier)
+Info    : [ 40%] Meshing curve 283 (Bezier)
+Info    : [ 40%] Meshing curve 284 (Line)
+Info    : [ 40%] Meshing curve 285 (Bezier)
+Info    : [ 40%] Meshing curve 286 (Bezier)
+Info    : [ 40%] Meshing curve 287 (Line)
+Info    : [ 40%] Meshing curve 288 (Bezier)
+Info    : [ 40%] Meshing curve 289 (Bezier)
+Info    : [ 40%] Meshing curve 290 (Line)
+Info    : [ 50%] Meshing curve 291 (Bezier)
+Info    : [ 50%] Meshing curve 292 (Bezier)
+Info    : [ 50%] Meshing curve 293 (Line)
+Info    : [ 50%] Meshing curve 294 (Bezier)
+Info    : [ 50%] Meshing curve 295 (Bezier)
+Info    : [ 50%] Meshing curve 296 (Line)
+Info    : [ 50%] Meshing curve 297 (Bezier)
+Info    : [ 50%] Meshing curve 298 (Bezier)
+Info    : [ 50%] Meshing curve 299 (Line)
+Info    : [ 50%] Meshing curve 300 (Bezier)
+Info    : [ 50%] Meshing curve 301 (Bezier)
+Info    : [ 50%] Meshing curve 302 (Bezier)
+Info    : [ 50%] Meshing curve 303 (Bezier)
+Info    : [ 50%] Meshing curve 304 (Line)
+Info    : [ 50%] Meshing curve 305 (Line)
+Info    : [ 50%] Meshing curve 306 (Line)
+Info    : [ 50%] Meshing curve 307 (Line)
+Info    : [ 50%] Meshing curve 308 (Line)
+Info    : [ 50%] Meshing curve 309 (Line)
+Info    : [ 50%] Meshing curve 310 (Line)
+Info    : [ 50%] Meshing curve 311 (Line)
+Info    : [ 50%] Meshing curve 312 (Line)
+Info    : [ 50%] Meshing curve 313 (Line)
+Info    : [ 50%] Meshing curve 314 (Line)
+Info    : [ 50%] Meshing curve 315 (Line)
+Info    : [ 50%] Meshing curve 316 (Line)
+Info    : [ 50%] Meshing curve 317 (Line)
+Info    : [ 50%] Meshing curve 318 (Line)
+Info    : [ 50%] Meshing curve 319 (Line)
+Info    : [ 50%] Meshing curve 320 (Line)
+Info    : [ 50%] Meshing curve 321 (Bezier)
+Info    : [ 50%] Meshing curve 322 (Bezier)
+Info    : [ 50%] Meshing curve 323 (Line)
+Info    : [ 50%] Meshing curve 324 (Bezier)
+Info    : [ 50%] Meshing curve 325 (Bezier)
+Info    : [ 50%] Meshing curve 326 (Line)
+Info    : [ 50%] Meshing curve 327 (Bezier)
+Info    : [ 50%] Meshing curve 328 (Bezier)
+Info    : [ 50%] Meshing curve 329 (Line)
+Info    : [ 50%] Meshing curve 330 (Bezier)
+Info    : [ 50%] Meshing curve 331 (Bezier)
+Info    : [ 50%] Meshing curve 332 (Line)
+Info    : [ 50%] Meshing curve 333 (Bezier)
+Info    : [ 50%] Meshing curve 334 (Bezier)
+Info    : [ 50%] Meshing curve 335 (Line)
+Info    : [ 50%] Meshing curve 336 (Bezier)
+Info    : [ 50%] Meshing curve 337 (Bezier)
+Info    : [ 50%] Meshing curve 338 (Line)
+Info    : [ 50%] Meshing curve 339 (Bezier)
+Info    : [ 50%] Meshing curve 340 (Bezier)
+Info    : [ 50%] Meshing curve 341 (Bezier)
+Info    : [ 50%] Meshing curve 342 (Bezier)
+Info    : [ 50%] Meshing curve 343 (Line)
+Info    : [ 50%] Meshing curve 344 (Line)
+Info    : [ 50%] Meshing curve 345 (Bezier)
+Info    : [ 50%] Meshing curve 346 (Bezier)
+Info    : [ 50%] Meshing curve 347 (Line)
+Info    : [ 50%] Meshing curve 348 (Bezier)
+Info    : [ 50%] Meshing curve 349 (Bezier)
+Info    : [ 50%] Meshing curve 350 (Line)
+Info    : [ 50%] Meshing curve 351 (Bezier)
+Info    : [ 50%] Meshing curve 352 (Bezier)
+Info    : [ 60%] Meshing curve 353 (Line)
+Info    : [ 60%] Meshing curve 354 (Bezier)
+Info    : [ 60%] Meshing curve 355 (Bezier)
+Info    : [ 60%] Meshing curve 356 (Line)
+Info    : [ 60%] Meshing curve 357 (Bezier)
+Info    : [ 60%] Meshing curve 358 (Bezier)
+Info    : [ 60%] Meshing curve 362 (Line)
+Info    : [ 60%] Meshing curve 361 (Bezier)
+Info    : [ 60%] Meshing curve 360 (Bezier)
+Info    : [ 60%] Meshing curve 363 (Bezier)
+Info    : [ 60%] Meshing curve 364 (Bezier)
+Info    : [ 60%] Meshing curve 365 (Bezier)
+Info    : [ 60%] Meshing curve 367 (Line)
+Info    : [ 60%] Meshing curve 366 (Bezier)
+Info    : [ 60%] Meshing curve 368 (Line)
+Info    : [ 60%] Meshing curve 369 (Line)
+Info    : [ 60%] Meshing curve 370 (Line)
+Info    : [ 60%] Meshing curve 371 (Line)
+Info    : [ 60%] Meshing curve 372 (Line)
+Info    : [ 60%] Meshing curve 373 (Line)
+Info    : [ 60%] Meshing curve 374 (Line)
+Info    : [ 60%] Meshing curve 377 (Line)
+Info    : [ 60%] Meshing curve 378 (Bezier)
+Info    : [ 60%] Meshing curve 379 (Bezier)
+Info    : [ 60%] Meshing curve 380 (Line)
+Info    : [ 60%] Meshing curve 381 (Bezier)
+Info    : [ 60%] Meshing curve 382 (Bezier)
+Info    : [ 60%] Meshing curve 383 (Line)
+Info    : [ 60%] Meshing curve 384 (Bezier)
+Info    : [ 60%] Meshing curve 385 (Bezier)
+Info    : [ 60%] Meshing curve 386 (Line)
+Info    : [ 60%] Meshing curve 387 (Bezier)
+Info    : [ 60%] Meshing curve 388 (Bezier)
+Info    : [ 60%] Meshing curve 389 (Line)
+Info    : [ 60%] Meshing curve 390 (Bezier)
+Info    : [ 60%] Meshing curve 391 (Bezier)
+Info    : [ 60%] Meshing curve 375 (Line)
+Info    : [ 60%] Meshing curve 359 (Line)
+Info    : [ 60%] Meshing curve 376 (Line)
+Info    : [ 60%] Meshing curve 392 (Line)
+Info    : [ 60%] Meshing curve 393 (Bezier)
+Info    : [ 60%] Meshing curve 394 (Bezier)
+Info    : [ 60%] Meshing curve 395 (Line)
+Info    : [ 60%] Meshing curve 396 (Line)
+Info    : [ 60%] Meshing curve 397 (Line)
+Info    : [ 60%] Meshing curve 398 (Line)
+Info    : [ 60%] Meshing curve 399 (Line)
+Info    : [ 60%] Meshing curve 400 (Line)
+Info    : [ 60%] Meshing curve 401 (Line)
+Info    : [ 60%] Meshing curve 402 (Bezier)
+Info    : [ 60%] Meshing curve 403 (Bezier)
+Info    : [ 60%] Meshing curve 404 (Line)
+Info    : [ 60%] Meshing curve 405 (Bezier)
+Info    : [ 60%] Meshing curve 406 (Bezier)
+Info    : [ 60%] Meshing curve 407 (Line)
+Info    : [ 60%] Meshing curve 408 (Bezier)
+Info    : [ 60%] Meshing curve 409 (Bezier)
+Info    : [ 60%] Meshing curve 410 (Line)
+Info    : [ 60%] Meshing curve 411 (Bezier)
+Info    : [ 60%] Meshing curve 412 (Bezier)
+Info    : [ 60%] Meshing curve 413 (Line)
+Info    : [ 60%] Meshing curve 414 (Line)
+Info    : [ 60%] Meshing curve 415 (Line)
+Info    : [ 60%] Meshing curve 416 (Line)
+Info    : [ 60%] Meshing curve 417 (Bezier)
+Info    : [ 60%] Meshing curve 418 (Bezier)
+Info    : [ 60%] Meshing curve 419 (Line)
+Info    : [ 60%] Meshing curve 420 (Bezier)
+Info    : [ 60%] Meshing curve 421 (Bezier)
+Info    : [ 60%] Meshing curve 422 (Line)
+Info    : [ 60%] Meshing curve 423 (Bezier)
+Info    : [ 60%] Meshing curve 424 (Bezier)
+Info    : [ 60%] Meshing curve 425 (Bezier)
+Info    : [ 70%] Meshing curve 426 (Bezier)
+Info    : [ 70%] Meshing curve 430 (Line)
+Info    : [ 70%] Meshing curve 431 (Line)
+Info    : [ 70%] Meshing curve 427 (Line)
+Info    : [ 70%] Meshing curve 429 (Line)
+Info    : [ 70%] Meshing curve 432 (Bezier)
+Info    : [ 70%] Meshing curve 433 (Bezier)
+Info    : [ 70%] Meshing curve 434 (Line)
+Info    : [ 70%] Meshing curve 435 (Bezier)
+Info    : [ 70%] Meshing curve 436 (Bezier)
+Info    : [ 70%] Meshing curve 437 (Line)
+Info    : [ 70%] Meshing curve 438 (Bezier)
+Info    : [ 70%] Meshing curve 439 (Bezier)
+Info    : [ 70%] Meshing curve 440 (Line)
+Info    : [ 70%] Meshing curve 441 (Bezier)
+Info    : [ 70%] Meshing curve 428 (Line)
+Info    : [ 70%] Meshing curve 442 (Bezier)
+Info    : [ 70%] Meshing curve 443 (Line)
+Info    : [ 70%] Meshing curve 444 (Bezier)
+Info    : [ 70%] Meshing curve 445 (Bezier)
+Info    : [ 70%] Meshing curve 446 (Line)
+Info    : [ 70%] Meshing curve 447 (Bezier)
+Info    : [ 70%] Meshing curve 448 (Bezier)
+Info    : [ 70%] Meshing curve 449 (Line)
+Info    : [ 70%] Meshing curve 450 (Line)
+Info    : [ 70%] Meshing curve 451 (Line)
+Info    : [ 70%] Meshing curve 452 (Line)
+Info    : [ 70%] Meshing curve 453 (Line)
+Info    : [ 70%] Meshing curve 454 (Line)
+Info    : [ 70%] Meshing curve 455 (Line)
+Info    : [ 70%] Meshing curve 456 (Bezier)
+Info    : [ 70%] Meshing curve 457 (Bezier)
+Info    : [ 70%] Meshing curve 462 (Bezier)
+Info    : [ 70%] Meshing curve 458 (Line)
+Info    : [ 70%] Meshing curve 459 (Bezier)
+Info    : [ 70%] Meshing curve 463 (Bezier)
+Info    : [ 70%] Meshing curve 460 (Bezier)
+Info    : [ 70%] Meshing curve 461 (Line)
+Info    : [ 70%] Meshing curve 465 (Bezier)
+Info    : [ 70%] Meshing curve 466 (Bezier)
+Info    : [ 70%] Meshing curve 467 (Line)
+Info    : [ 70%] Meshing curve 468 (Line)
+Info    : [ 70%] Meshing curve 469 (Line)
+Info    : [ 70%] Meshing curve 470 (Line)
+Info    : [ 70%] Meshing curve 471 (Bezier)
+Info    : [ 70%] Meshing curve 472 (Bezier)
+Info    : [ 70%] Meshing curve 473 (Line)
+Info    : [ 70%] Meshing curve 474 (Bezier)
+Info    : [ 70%] Meshing curve 475 (Bezier)
+Info    : [ 70%] Meshing curve 476 (Line)
+Info    : [ 70%] Meshing curve 477 (Bezier)
+Info    : [ 70%] Meshing curve 478 (Bezier)
+Info    : [ 70%] Meshing curve 479 (Line)
+Info    : [ 70%] Meshing curve 480 (Bezier)
+Info    : [ 70%] Meshing curve 481 (Bezier)
+Info    : [ 70%] Meshing curve 482 (Line)
+Info    : [ 70%] Meshing curve 483 (Line)
+Info    : [ 70%] Meshing curve 484 (Line)
+Info    : [ 70%] Meshing curve 485 (Line)
+Info    : [ 70%] Meshing curve 486 (Bezier)
+Info    : [ 70%] Meshing curve 487 (Bezier)
+Info    : [ 70%] Meshing curve 488 (Line)
+Info    : [ 70%] Meshing curve 489 (Bezier)
+Info    : [ 70%] Meshing curve 490 (Bezier)
+Info    : [ 70%] Meshing curve 491 (Line)
+Info    : [ 70%] Meshing curve 492 (Bezier)
+Info    : [ 70%] Meshing curve 493 (Bezier)
+Info    : [ 70%] Meshing curve 494 (Line)
+Info    : [ 70%] Meshing curve 495 (Bezier)
+Info    : [ 70%] Meshing curve 464 (Line)
+Info    : [ 80%] Meshing curve 496 (Bezier)
+Info    : [ 80%] Meshing curve 497 (Line)
+Info    : [ 80%] Meshing curve 498 (Bezier)
+Info    : [ 80%] Meshing curve 499 (Bezier)
+Info    : [ 80%] Meshing curve 500 (Line)
+Info    : [ 80%] Meshing curve 501 (Bezier)
+Info    : [ 80%] Meshing curve 502 (Bezier)
+Info    : [ 80%] Meshing curve 503 (Line)
+Info    : [ 80%] Meshing curve 504 (Bezier)
+Info    : [ 80%] Meshing curve 505 (Bezier)
+Info    : [ 80%] Meshing curve 506 (Line)
+Info    : [ 80%] Meshing curve 507 (Bezier)
+Info    : [ 80%] Meshing curve 508 (Bezier)
+Info    : [ 80%] Meshing curve 509 (Line)
+Info    : [ 80%] Meshing curve 510 (Line)
+Info    : [ 80%] Meshing curve 511 (Line)
+Info    : [ 80%] Meshing curve 512 (Line)
+Info    : [ 80%] Meshing curve 513 (Line)
+Info    : [ 80%] Meshing curve 514 (Line)
+Info    : [ 80%] Meshing curve 515 (Line)
+Info    : [ 80%] Meshing curve 516 (Bezier)
+Info    : [ 80%] Meshing curve 517 (Bezier)
+Info    : [ 80%] Meshing curve 518 (Line)
+Info    : [ 80%] Meshing curve 519 (Bezier)
+Info    : [ 80%] Meshing curve 520 (Bezier)
+Info    : [ 80%] Meshing curve 521 (Line)
+Info    : [ 80%] Meshing curve 522 (Bezier)
+Info    : [ 80%] Meshing curve 523 (Bezier)
+Info    : [ 80%] Meshing curve 524 (Line)
+Info    : [ 80%] Meshing curve 525 (Bezier)
+Info    : [ 80%] Meshing curve 526 (Bezier)
+Info    : [ 80%] Meshing curve 527 (Line)
+Info    : [ 80%] Meshing curve 528 (Bezier)
+Info    : [ 80%] Meshing curve 530 (Line)
+Info    : [ 80%] Meshing curve 529 (Bezier)
+Info    : [ 80%] Meshing curve 531 (Bezier)
+Info    : [ 80%] Meshing curve 532 (Bezier)
+Info    : [ 80%] Meshing curve 533 (Line)
+Info    : [ 80%] Meshing curve 534 (Bezier)
+Info    : [ 80%] Meshing curve 535 (Bezier)
+Info    : [ 80%] Meshing curve 536 (Bezier)
+Info    : [ 80%] Meshing curve 539 (Line)
+Info    : [ 80%] Meshing curve 538 (Line)
+Info    : [ 80%] Meshing curve 540 (Bezier)
+Info    : [ 80%] Meshing curve 541 (Bezier)
+Info    : [ 80%] Meshing curve 542 (Line)
+Info    : [ 80%] Meshing curve 543 (Bezier)
+Info    : [ 80%] Meshing curve 544 (Bezier)
+Info    : [ 80%] Meshing curve 545 (Line)
+Info    : [ 80%] Meshing curve 546 (Bezier)
+Info    : [ 80%] Meshing curve 547 (Bezier)
+Info    : [ 80%] Meshing curve 548 (Line)
+Info    : [ 80%] Meshing curve 549 (Bezier)
+Info    : [ 80%] Meshing curve 550 (Bezier)
+Info    : [ 80%] Meshing curve 551 (Line)
+Info    : [ 80%] Meshing curve 552 (Line)
+Info    : [ 80%] Meshing curve 553 (Line)
+Info    : [ 80%] Meshing curve 554 (Line)
+Info    : [ 90%] Meshing curve 555 (Line)
+Info    : [ 90%] Meshing curve 556 (Line)
+Info    : [ 90%] Meshing curve 557 (Line)
+Info    : [ 90%] Meshing curve 558 (Line)
+Info    : [ 90%] Meshing curve 559 (Line)
+Info    : [ 90%] Meshing curve 560 (Line)
+Info    : [ 90%] Meshing curve 561 (Bezier)
+Info    : [ 90%] Meshing curve 562 (Bezier)
+Info    : [ 90%] Meshing curve 563 (Line)
+Info    : [ 90%] Meshing curve 564 (Bezier)
+Info    : [ 90%] Meshing curve 565 (Bezier)
+Info    : [ 90%] Meshing curve 566 (Line)
+Info    : [ 90%] Meshing curve 567 (Bezier)
+Info    : [ 90%] Meshing curve 568 (Bezier)
+Info    : [ 80%] Meshing curve 537 (Bezier)
+Info    : [ 90%] Meshing curve 569 (Line)
+Info    : [ 90%] Meshing curve 570 (Bezier)
+Info    : [ 90%] Meshing curve 571 (Bezier)
+Info    : [ 90%] Meshing curve 572 (Line)
+Info    : [ 90%] Meshing curve 573 (Line)
+Info    : [ 90%] Meshing curve 574 (Line)
+Info    : [ 90%] Meshing curve 575 (Line)
+Info    : [ 90%] Meshing curve 576 (Line)
+Info    : [ 90%] Meshing curve 577 (Line)
+Info    : [ 90%] Meshing curve 578 (Line)
+Info    : [ 90%] Meshing curve 579 (Line)
+Info    : [ 90%] Meshing curve 580 (Line)
+Info    : [ 90%] Meshing curve 581 (Line)
+Info    : [ 90%] Meshing curve 582 (Bezier)
+Info    : [ 90%] Meshing curve 583 (Bezier)
+Info    : [ 90%] Meshing curve 584 (Line)
+Info    : [ 90%] Meshing curve 585 (Bezier)
+Info    : [ 90%] Meshing curve 586 (Bezier)
+Info    : [ 90%] Meshing curve 587 (Line)
+Info    : [ 90%] Meshing curve 588 (Bezier)
+Info    : [ 90%] Meshing curve 589 (Bezier)
+Info    : [ 90%] Meshing curve 590 (Line)
+Info    : [ 90%] Meshing curve 591 (Bezier)
+Info    : [ 90%] Meshing curve 592 (Bezier)
+Info    : [ 90%] Meshing curve 593 (Line)
+Info    : [ 90%] Meshing curve 594 (Line)
+Info    : [ 90%] Meshing curve 595 (Line)
+Info    : [ 90%] Meshing curve 596 (Line)
+Info    : [ 90%] Meshing curve 597 (Line)
+Info    : [ 90%] Meshing curve 598 (Line)
+Info    : [ 90%] Meshing curve 599 (Line)
+Info    : [ 90%] Meshing curve 600 (Line)
+Info    : [ 90%] Meshing curve 601 (Line)
+Info    : [ 90%] Meshing curve 602 (Line)
+Info    : [ 90%] Meshing curve 603 (Line)
+Info    : [ 90%] Meshing curve 604 (Line)
+Info    : [ 90%] Meshing curve 605 (Line)
+Info    : [ 90%] Meshing curve 606 (Line)
+Info    : [ 90%] Meshing curve 607 (Line)
+Info    : [ 90%] Meshing curve 608 (Line)
+Info    : [ 90%] Meshing curve 609 (Bezier)
+Info    : [ 90%] Meshing curve 610 (Bezier)
+Info    : [ 90%] Meshing curve 611 (Line)
+Info    : [ 90%] Meshing curve 612 (Bezier)
+Info    : [ 90%] Meshing curve 613 (Bezier)
+Info    : [ 90%] Meshing curve 614 (Line)
+Info    : [ 90%] Meshing curve 615 (Bezier)
+Info    : [ 90%] Meshing curve 616 (Bezier)
+Info    : [ 90%] Meshing curve 617 (Bezier)
+Info    : [ 90%] Meshing curve 618 (Bezier)
+Info    : [ 90%] Meshing curve 619 (Line)
+Info    : [ 90%] Meshing curve 620 (Line)
+Info    : [ 90%] Meshing curve 621 (Line)
+Info    : [ 90%] Meshing curve 622 (Line)
+Info    : [ 90%] Meshing curve 623 (Line)
+Info    : [ 90%] Meshing curve 624 (Bezier)
+Info    : [ 90%] Meshing curve 625 (Bezier)
+Info    : [ 90%] Meshing curve 626 (Line)
+Info    : [ 90%] Meshing curve 627 (Bezier)
+Info    : [ 90%] Meshing curve 628 (Bezier)
+Info    : [100%] Meshing curve 629 (Line)
+Info    : [100%] Meshing curve 630 (Bezier)
+Info    : [100%] Meshing curve 631 (Bezier)
+Info    : [100%] Meshing curve 632 (Line)
+Info    : [100%] Meshing curve 633 (Bezier)
+Info    : [100%] Meshing curve 634 (Bezier)
+Info    : [100%] Meshing curve 635 (Line)
+Info    : [100%] Meshing curve 636 (Bezier)
+Info    : [100%] Meshing curve 637 (Bezier)
+Info    : [100%] Meshing curve 638 (Line)
+Info    : [100%] Meshing curve 639 (Bezier)
+Info    : [100%] Meshing curve 640 (Bezier)
+Info    : [100%] Meshing curve 641 (Line)
+Info    : [100%] Meshing curve 642 (Bezier)
+Info    : [100%] Meshing curve 643 (Bezier)
+Info    : [100%] Meshing curve 644 (Line)
+Info    : [100%] Meshing curve 645 (Bezier)
+Info    : [100%] Meshing curve 646 (Bezier)
+Info    : [100%] Meshing curve 647 (Line)
+Info    : [100%] Meshing curve 648 (Line)
+Info    : [100%] Meshing curve 649 (Line)
+Info    : [100%] Meshing curve 650 (Line)
+Info    : [100%] Meshing curve 651 (Bezier)
+Info    : [100%] Meshing curve 652 (Bezier)
+Info    : [100%] Meshing curve 653 (Line)
+Info    : [100%] Meshing curve 654 (Bezier)
+Info    : [100%] Meshing curve 655 (Bezier)
+Info    : [100%] Meshing curve 656 (Line)
+Info    : [100%] Meshing curve 657 (Bezier)
+Info    : [100%] Meshing curve 658 (Bezier)
+Info    : [100%] Meshing curve 659 (Line)
+Info    : [100%] Meshing curve 660 (Bezier)
+Info    : [100%] Meshing curve 661 (Bezier)
+Info    : [100%] Meshing curve 662 (Line)
+Info    : [100%] Meshing curve 663 (Bezier)
+Info    : [100%] Meshing curve 664 (Bezier)
+Info    : [100%] Meshing curve 665 (Line)
+Info    : [100%] Meshing curve 666 (Bezier)
+Info    : [100%] Meshing curve 667 (Bezier)
+Info    : [100%] Meshing curve 668 (Line)
+Info    : [100%] Meshing curve 669 (Bezier)
+Info    : [100%] Meshing curve 670 (Bezier)
+Info    : [100%] Meshing curve 671 (Bezier)
+Info    : [100%] Meshing curve 672 (Bezier)
+Info    : Done meshing 1D (Wall 0.0698683s, CPU 0.994718s)
+Info    : Meshing 2D...
+Info    : [  0%] Meshing surface 1 (Plane, MeshAdapt)
+Info    : [  0%] Meshing surface 2 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 4 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 7 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 6 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 11 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 5 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 16 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 13 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 10 (Plane, MeshAdapt)
+Info    : [  0%] Meshing surface 15 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 12 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 9 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 3 (Unknown, MeshAdapt)
+Info    : [  0%] Meshing surface 8 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 17 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 18 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 19 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 20 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 21 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 23 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 22 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 24 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 25 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 26 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 27 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 28 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 29 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 30 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 31 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 32 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 33 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 34 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 35 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 36 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 37 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 38 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 39 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 40 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 41 (Plane, MeshAdapt)
+Info    : [ 10%] Meshing surface 42 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 43 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 45 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 44 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 46 (Unknown, MeshAdapt)
+Info    : [ 10%] Meshing surface 47 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 48 (Plane, MeshAdapt)
+Info    : [  0%] Meshing surface 14 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 49 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 50 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 51 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 52 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 53 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 54 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 55 (Plane, MeshAdapt)
+Info    : [ 20%] Meshing surface 56 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 57 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 58 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 59 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 60 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 62 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 61 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 63 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 64 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 65 (Unknown, MeshAdapt)
+Info    : [ 20%] Meshing surface 66 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 67 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 68 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 69 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 70 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 71 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 72 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 73 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 74 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 75 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 76 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 77 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 78 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 79 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 80 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 81 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 82 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 83 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 84 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 85 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 86 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 87 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 88 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 89 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 90 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 91 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 92 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 93 (Plane, MeshAdapt)
+Info    : [ 30%] Meshing surface 94 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 95 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 96 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 97 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 98 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 99 (Unknown, MeshAdapt)
+Info    : [ 30%] Meshing surface 100 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 101 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 102 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 103 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 104 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 105 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 107 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 108 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 109 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 110 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 111 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 112 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 113 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 114 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 115 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 116 (Plane, MeshAdapt)
+Info    : [ 40%] Meshing surface 117 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 118 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 119 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 120 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 121 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 122 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 123 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 124 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 125 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 126 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 127 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 129 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 128 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 130 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 131 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 132 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 133 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 134 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 135 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 136 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 137 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 138 (Unknown, MeshAdapt)
+Info    : [ 40%] Meshing surface 106 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 139 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 140 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 141 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 142 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 143 (Unknown, MeshAdapt)
+Info    : [ 50%] Meshing surface 144 (Plane, MeshAdapt)
+Info    : [ 50%] Meshing surface 145 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 146 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 147 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 148 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 149 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 150 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 151 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 152 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 153 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 154 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 155 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 156 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 157 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 159 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 158 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 160 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 161 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 162 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 163 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 164 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 165 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 166 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 167 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 168 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 169 (Unknown, MeshAdapt)
+Info    : [ 60%] Meshing surface 170 (Plane, MeshAdapt)
+Info    : [ 60%] Meshing surface 171 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 172 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 173 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 174 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 175 (Plane, MeshAdapt)
+Info    : [ 70%] Meshing surface 176 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 177 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 178 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 179 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 180 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 181 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 182 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 185 (Plane, MeshAdapt)
+Info    : [ 70%] Meshing surface 186 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 187 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 188 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 183 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 189 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 190 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 191 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 192 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 193 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 194 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 195 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 196 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 197 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 198 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 199 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 200 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 201 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 202 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 203 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 204 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 205 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 206 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 207 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 208 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 209 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 210 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 211 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 212 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 213 (Unknown, MeshAdapt)
+Info    : [ 80%] Meshing surface 214 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 215 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 216 (Plane, MeshAdapt)
+Info    : [ 80%] Meshing surface 217 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 218 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 219 (Unknown, MeshAdapt)
+Info    : [ 70%] Meshing surface 184 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 220 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 221 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 222 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 223 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 224 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 225 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 228 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 230 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 229 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 231 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 234 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 232 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 235 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 226 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 236 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 237 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 238 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 239 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 240 (Unknown, MeshAdapt)
+Info    : [100%] Meshing surface 241 (Unknown, MeshAdapt)
+Info    : [100%] Meshing surface 242 (Unknown, MeshAdapt)
+Info    : [100%] Meshing surface 243 (Plane, MeshAdapt)
+Info    : [100%] Meshing surface 244 (Plane, MeshAdapt)
+Info    : [ 90%] Meshing surface 227 (Unknown, MeshAdapt)
+Info    : [ 90%] Meshing surface 233 (Unknown, MeshAdapt)
+Info    : Done meshing 2D (Wall 0.0320014s, CPU 0.288009s)
+Info    : Meshing 3D...
+Info    : 3D Meshing 10 volumes with 10 connected components
+Info    : Tetrahedrizing 96 nodes...
+Info    : Done tetrahedrizing 104 nodes (Wall 0.00146876s, CPU 0.001514s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    : Done reconstructing mesh (Wall 0.00347344s, CPU 0.003919s)
+Info    : Found volume 1
+Info    : It. 0 - 0 nodes created - worst tet radius 1.99603 (nodes removed 0 0)
+Info    : 3D refinement terminated (1073 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 2 nodes could not be inserted
+Info    :  - 196 tetrahedra created in 0.000273425 sec. (716832 tets/s)
+Info    : 0 node relocations
+Info    : Tetrahedrizing 138 nodes...
+Info    : Done tetrahedrizing 146 nodes (Wall 0.00209639s, CPU 0.002117s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    : Done reconstructing mesh (Wall 0.00461169s, CPU 0.005138s)
+Info    : Found volume 2
+Info    : It. 0 - 0 nodes created - worst tet radius 2.26364 (nodes removed 0 0)
+Info    : 3D refinement terminated (1072 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 2 nodes could not be inserted
+Info    :  - 289 tetrahedra created in 1.8539e-05 sec. (15588763 tets/s)
+Info    : 0 node relocations
+Info    : Tetrahedrizing 100 nodes...
+Info    : Done tetrahedrizing 108 nodes (Wall 0.00146743s, CPU 0.001602s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    :  - Added 1 Steiner point
+Info    : Done reconstructing mesh (Wall 0.00436677s, CPU 0.004738s)
+Info    : Found volume 3
+Info    : It. 0 - 0 nodes created - worst tet radius 0.980179 (nodes removed 0 0)
+Info    : 3D refinement terminated (1073 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 0 nodes could not be inserted
+Info    :  - 208 tetrahedra created in 1.0168e-05 sec. (20456352 tets/s)
+Info    : 0 node relocations
+Info    : Tetrahedrizing 54 nodes...
+Info    : Done tetrahedrizing 62 nodes (Wall 0.000691404s, CPU 0.000787s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    :  - Added 1 Steiner point
+Info    : Done reconstructing mesh (Wall 0.00286409s, CPU 0.003227s)
+Info    : Found volume 4
+Info    : It. 0 - 0 nodes created - worst tet radius 1.34502 (nodes removed 0 0)
+Info    : 3D refinement terminated (1073 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 1 nodes could not be inserted
+Info    :  - 100 tetrahedra created in 1.0309e-05 sec. (9700263 tets/s)
+Info    : 0 node relocations
+Info    : Tetrahedrizing 84 nodes...
+Info    : Done tetrahedrizing 92 nodes (Wall 0.00128068s, CPU 0.001377s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    : Done reconstructing mesh (Wall 0.00268049s, CPU 0.003047s)
+Info    : Found volume 5
+Info    : It. 0 - 0 nodes created - worst tet radius 0.661201 (nodes removed 0 0)
+Info    : 3D refinement terminated (1072 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 0 nodes could not be inserted
+Info    :  - 176 tetrahedra created in 9.846e-06 sec. (17875278 tets/s)
+Info    : 0 node relocations
+Info    : Tetrahedrizing 100 nodes...
+Info    : Done tetrahedrizing 108 nodes (Wall 0.00150015s, CPU 0.0016s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    :  - Added 1 Steiner point
+Info    : Done reconstructing mesh (Wall 0.00492074s, CPU 0.004822s)
+Info    : Found volume 6
+Info    : It. 0 - 0 nodes created - worst tet radius 0.984546 (nodes removed 0 0)
+Info    : 3D refinement terminated (1073 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 0 nodes could not be inserted
+Info    :  - 208 tetrahedra created in 1.0598e-05 sec. (19626344 tets/s)
+Info    : 0 node relocations
+Info    : Tetrahedrizing 138 nodes...
+Info    : Done tetrahedrizing 146 nodes (Wall 0.00190544s, CPU 0.002013s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    :  - Added 1 Steiner point
+Info    : Done reconstructing mesh (Wall 0.00600627s, CPU 0.006379s)
+Info    : Found volume 7
+Info    : It. 0 - 0 nodes created - worst tet radius 2.26364 (nodes removed 0 0)
+Info    : 3D refinement terminated (1073 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 2 nodes could not be inserted
+Info    :  - 294 tetrahedra created in 1.8084e-05 sec. (16257465 tets/s)
+Info    : 0 node relocations
+Info    : Tetrahedrizing 142 nodes...
+Info    : Done tetrahedrizing 150 nodes (Wall 0.00215621s, CPU 0.002252s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    :  - Added 1 Steiner point
+Info    : Done reconstructing mesh (Wall 0.00555961s, CPU 0.005904s)
+Info    : Found volume 8
+Info    : It. 0 - 0 nodes created - worst tet radius 2.08224 (nodes removed 0 0)
+Info    : 3D refinement terminated (1073 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 8 nodes could not be inserted
+Info    :  - 294 tetrahedra created in 0.000220964 sec. (1330533 tets/s)
+Info    : 2 node relocations
+Info    : Tetrahedrizing 124 nodes...
+Info    : Done tetrahedrizing 132 nodes (Wall 0.00156857s, CPU 0.001658s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    :  - Added 1 Steiner point
+Info    : Done reconstructing mesh (Wall 0.00570731s, CPU 0.006121s)
+Info    : Found volume 9
+Info    : It. 0 - 0 nodes created - worst tet radius 1.73795 (nodes removed 0 0)
+Info    : 3D refinement terminated (1074 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 3 nodes could not be inserted
+Info    :  - 259 tetrahedra created in 0.000270005 sec. (959241 tets/s)
+Info    : 0 node relocations
+Info    : Tetrahedrizing 96 nodes...
+Info    : Done tetrahedrizing 104 nodes (Wall 0.0013058s, CPU 0.000494s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    : Done reconstructing mesh (Wall 0.00296278s, CPU 0.002534s)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Info    : Found volume 10
+Info    : It. 0 - 0 nodes created - worst tet radius 2.34779 (nodes removed 0 0)
+Info    : 3D refinement terminated (1073 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 2 nodes could not be inserted
+Info    :  - 194 tetrahedra created in 0.000247041 sec. (785294 tets/s)
+Info    : 0 node relocations
+Info    : Done meshing 3D (Wall 0.10842s, CPU 0.114531s)
+Info    : Optimizing mesh...
+Info    : Optimizing volume 1
+Info    : Optimization starts (volume = 8.90495) with worst = 0.0213607 / average = 0.638578:
+Info    : 0.00 &lt; quality &lt; 0.10 :         3 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         2 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         2 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         4 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        14 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        47 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        51 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        51 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        19 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         3 elements
+Info    : 6 edge swaps, 0 node relocations (volume = 8.90495): worst = 0.0273046 / average = 0.641407 (Wall 0.00020892s, CPU 0.000175s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 &lt; quality &lt; 0.10 :         1 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         0 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         0 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         7 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        17 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        46 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        53 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        50 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        19 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         0 elements
+Info    : Optimizing volume 2
+Info    : Optimization starts (volume = 13.5236) with worst = 0.028228 / average = 0.651389:
+Info    : 0.00 &lt; quality &lt; 0.10 :         9 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         8 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :        10 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         9 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        16 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        33 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        48 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        96 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        42 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :        18 elements
+Info    : 12 edge swaps, 0 node relocations (volume = 13.5236): worst = 0.028228 / average = 0.655051 (Wall 0.000393339s, CPU 0.000503s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 &lt; quality &lt; 0.10 :         4 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         6 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         9 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :        11 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        19 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        41 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        48 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        93 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        36 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :        17 elements
+Info    : Optimizing volume 3
+Info    : Optimization starts (volume = 15.7015) with worst = 0.0319512 / average = 0.618188:
+Info    : 0.00 &lt; quality &lt; 0.10 :         1 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :        16 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :        13 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :        10 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :         6 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        18 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        55 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        60 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        19 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :        10 elements
+Info    : 15 edge swaps, 0 node relocations (volume = 15.7015): worst = 0.157703 / average = 0.642319 (Wall 0.0003753s, CPU 0.000492s)
+Info    : 16 edge swaps, 0 node relocations (volume = 15.7015): worst = 0.157703 / average = 0.640561 (Wall 0.000600755s, CPU 0.000817s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 &lt; quality &lt; 0.10 :         0 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         5 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :        13 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :        10 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :         6 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        20 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        59 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        58 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        19 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         8 elements
+Info    : Optimizing volume 4
+Info    : Optimization starts (volume = 9.12874) with worst = 0.0773108 / average = 0.614301:
+Info    : 0.00 &lt; quality &lt; 0.10 :         1 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         2 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         5 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         5 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :         8 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        15 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        33 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        20 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        11 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         0 elements
+Info    : 2 edge swaps, 0 node relocations (volume = 9.12874): worst = 0.0773108 / average = 0.624382 (Wall 0.000106733s, CPU 0.000262s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 &lt; quality &lt; 0.10 :         1 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         0 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         3 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         7 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        10 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        14 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        33 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        20 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        11 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         0 elements
+Info    : Optimizing volume 5
+Info    : Optimization starts (volume = 12.6) with worst = 0.166257 / average = 0.688981:
+Info    : 0.00 &lt; quality &lt; 0.10 :         0 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         4 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         0 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         0 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :         0 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        40 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        50 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        46 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        24 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :        12 elements
+Info    : 4 edge swaps, 0 node relocations (volume = 12.6): worst = 0.500969 / average = 0.701787 (Wall 8.9717e-05s, CPU 0s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 &lt; quality &lt; 0.10 :         0 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         0 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         0 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         0 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :         0 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        40 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        50 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        46 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        24 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :        12 elements
+Info    : Optimizing volume 6
+Info    : Optimization starts (volume = 15.7015) with worst = 0.0319512 / average = 0.618945:
+Info    : 0.00 &lt; quality &lt; 0.10 :         1 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :        15 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :        15 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         6 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        10 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        18 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        58 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        55 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        20 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :        10 elements
+Info    : 13 edge swaps, 0 node relocations (volume = 15.7015): worst = 0.157703 / average = 0.643886 (Wall 0.000388648s, CPU 0.000425s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 &lt; quality &lt; 0.10 :         0 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         4 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :        13 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         8 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        10 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        21 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        62 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        53 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        19 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         8 elements
+Info    : Optimizing volume 7
+Info    : Optimization starts (volume = 13.5237) with worst = 0.028228 / average = 0.643425:
+Info    : 0.00 &lt; quality &lt; 0.10 :         9 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         8 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :        14 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :        11 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        17 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        31 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        50 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        93 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        43 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :        18 elements
+Info    : 14 edge swaps, 0 node relocations (volume = 13.5237): worst = 0.028228 / average = 0.654054 (Wall 0.000446887s, CPU 0.000385s)
+Info    : 16 edge swaps, 0 node relocations (volume = 13.5237): worst = 0.028228 / average = 0.649645 (Wall 0.000667841s, CPU 0.000726s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 &lt; quality &lt; 0.10 :         2 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         5 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         9 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         9 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        21 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        39 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        51 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        93 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        36 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :        17 elements
+Info    : Optimizing volume 8
+Info    : Optimization starts (volume = 17.3143) with worst = 0.0152633 / average = 0.621706:
+Info    : 0.00 &lt; quality &lt; 0.10 :         8 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :        21 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         9 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         2 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        23 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        33 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        59 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        86 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        43 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :        10 elements
+Info    : 20 edge swaps, 0 node relocations (volume = 17.3143): worst = 0.0577385 / average = 0.64892 (Wall 0.000489674s, CPU 0.000553s)
+Info    : 21 edge swaps, 0 node relocations (volume = 17.3143): worst = 0.0577385 / average = 0.648906 (Wall 0.000711962s, CPU 0.000553s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 &lt; quality &lt; 0.10 :         2 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         7 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         8 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         6 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        23 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        36 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        65 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        84 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        40 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         8 elements
+Info    : Optimizing volume 9
+Info    : Optimization starts (volume = 18.444) with worst = 0.0463229 / average = 0.651416:
+Info    : 0.00 &lt; quality &lt; 0.10 :         2 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :        10 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         8 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :        12 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        19 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        21 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        52 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        80 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        46 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         9 elements
+Info    : 7 edge swaps, 0 node relocations (volume = 18.444): worst = 0.0657071 / average = 0.647898 (Wall 0.0003209s, CPU 0.00028s)
+Info    : 8 edge swaps, 0 node relocations (volume = 18.444): worst = 0.141464 / average = 0.64983 (Wall 0.000524266s, CPU 0.00053s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 &lt; quality &lt; 0.10 :         0 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         8 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         7 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :        15 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        20 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        27 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        57 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        72 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        43 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         9 elements
+Info    : Optimizing volume 10
+Info    : Optimization starts (volume = 8.90497) with worst = 0.0172004 / average = 0.653053:
+Info    : 0.00 &lt; quality &lt; 0.10 :         3 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         2 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         2 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         0 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        13 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        41 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        53 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        53 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        24 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         3 elements
+Info    : 5 edge swaps, 1 node relocations (volume = 8.90497): worst = 0.0273046 / average = 0.677396 (Wall 0.000182739s, CPU 0.000284s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 &lt; quality &lt; 0.10 :         1 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         0 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         0 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :         0 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :        13 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :        36 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :        57 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :        49 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :        28 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :         5 elements
+Info    : Done optimizing mesh (Wall 0.0073091s, CPU 0.007257s)
+Info    : 1081 nodes 5741 elements
+Info    : Writing &#39;dagmc.vtk&#39;...
+Info    : Done writing &#39;dagmc.vtk&#39;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;dagmc.vtk&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now you have two mesh files that can be used for neutronics simulations in OpenMC or other DAGMC compatible codes.</p>
+<p>Learning objectives for this task</p>
+<ul class="simple">
+<li><p>Know how to produce DAGMC 2d surface mesh geometry</p></li>
+<li><p>Know how to produce DAGMC 3d volume mesh</p></li>
+<li><p>Understand the differences between the types of meshes produced by cad-to-dagmc</p></li>
+<li><p>know some of the arguments for customising the mesh</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tasks/task_16_converting_CAD_geometry_to_DAGMC"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1_converting_cad_files.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Converting CAD geometry to neutronics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../task_17_using_DAGMC_models_in_openmc/README.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Task Introduction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jon Shimwell
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

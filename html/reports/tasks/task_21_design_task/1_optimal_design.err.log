@@ -1,0 +1,78 @@
+Traceback (most recent call last):
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 154, in wrapped
+    asyncio.get_running_loop()
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 158, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# put in your chosen material option
+my_materials = openmc.Materials([mat_conductor, '# your code here'])
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mTypeError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[5][39m[32m, line 2[39m
+[32m      1[39m [38;5;66;03m# put in your chosen material option[39;00m
+[32m----> [39m[32m2[39m my_materials = [43mopenmc[49m[43m.[49m[43mMaterials[49m[43m([49m[43m[[49m[43mmat_conductor[49m[43m,[49m[43m [49m[33;43m'[39;49m[33;43m# your code here[39;49m[33;43m'[39;49m[43m][49m[43m)[49m
+
+[36mFile [39m[32m~/.neutronicsworkshop/lib/python3.11/site-packages/openmc/material.py:1749[39m, in [36mMaterials.__init__[39m[34m(self, materials)[39m
+[32m   1746[39m [38;5;28mself[39m._cross_sections = [38;5;28;01mNone[39;00m
+[32m   1748[39m [38;5;28;01mif[39;00m materials [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[32m-> [39m[32m1749[39m     [38;5;28;43mself[39;49m[43m [49m[43m+[49m[43m=[49m[43m [49m[43mmaterials[49m
+
+[36mFile [39m[32m~/.neutronicsworkshop/lib/python3.11/site-packages/openmc/checkvalue.py:337[39m, in [36mCheckedList.__iadd__[39m[34m(self, other)[39m
+[32m    336[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m__iadd__[39m([38;5;28mself[39m, other):
+[32m--> [39m[32m337[39m     [43mcheck_type[49m[43m([49m[33;43m'[39;49m[33;43mCheckedList add operand[39;49m[33;43m'[39;49m[43m,[49m[43m [49m[43mother[49m[43m,[49m[43m [49m[43mIterable[49m[43m,[49m
+[32m    338[39m [43m               [49m[38;5;28;43mself[39;49m[43m.[49m[43mexpected_type[49m[43m)[49m
+[32m    339[39m     [38;5;28;01mfor[39;00m item [38;5;129;01min[39;00m other:
+[32m    340[39m         [38;5;28mself[39m.append(item)
+
+[36mFile [39m[32m~/.neutronicsworkshop/lib/python3.11/site-packages/openmc/checkvalue.py:62[39m, in [36mcheck_type[39m[34m(name, value, expected_type, expected_iter_type, none_ok)[39m
+[32m     59[39m [38;5;28;01melse[39;00m:
+[32m     60[39m     msg = ([33mf[39m[33m'[39m[33mUnable to set [39m[33m"[39m[38;5;132;01m{[39;00mname[38;5;132;01m}[39;00m[33m"[39m[33m to [39m[33m"[39m[38;5;132;01m{[39;00mvalue[38;5;132;01m}[39;00m[33m"[39m[33m since each [39m[33m'[39m
+[32m     61[39m            [33mf[39m[33m'[39m[33mitem must be of type [39m[33m"[39m[38;5;132;01m{[39;00mexpected_iter_type.[34m__name__[39m[38;5;132;01m}[39;00m[33m"[39m[33m'[39m)
+[32m---> [39m[32m62[39m [38;5;28;01mraise[39;00m [38;5;167;01mTypeError[39;00m(msg)
+
+[31mTypeError[39m: Unable to set "CheckedList add operand" to "[Material
+	ID             =	15
+	Name           =	mat_conductor
+	Temperature    =	None
+	Density        =	8.96 [g/cm3]
+	Volume         =	None [cm^3]
+	Depletable     =	False
+	S(a,b) Tables  
+	Nuclides       
+	Nb93           =	1.0          [ao]
+	Sn112          =	0.0291       [ao]
+	Sn114          =	0.019799999999999998 [ao]
+	Sn115          =	0.010199999999999999 [ao]
+	Sn116          =	0.43620000000000003 [ao]
+	Sn117          =	0.2304       [ao]
+	Sn118          =	0.7266       [ao]
+	Sn119          =	0.25770000000000004 [ao]
+	Sn120          =	0.9773999999999999 [ao]
+	Sn122          =	0.1389       [ao]
+	Sn124          =	0.1737       [ao]
+, '# your code here']" since each item must be of type "Material"
+
