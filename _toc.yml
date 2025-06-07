@@ -136,6 +136,7 @@ parts:
     chapters:
     - file: tasks/task_20_CAD_shut_down_dose_rate/README
     - file: tasks/task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate
+    - file: tasks/task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials
   - caption: Design study
     chapters:
     - file: tasks/task_21_design_task/README
