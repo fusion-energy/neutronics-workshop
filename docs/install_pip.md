@@ -36,15 +36,15 @@ Then install the dependencies. The requirements are slightly different for each 
 
 Python 3.10
 ```bash
-python3 -m pip install -r https://raw.githubusercontent.com/fusion-energy/neutronics-workshop/refs/heads/main/equirements_3.10.txt
+python3 -m pip install -r requirements_3.10.txt
 ```
 Python 3.11
 ```
-python3 -m pip install -r https://raw.githubusercontent.com/fusion-energy/neutronics-workshop/refs/heads/main/equirements_3.11.txt
+python3 -m pip install -r requirements_3.11.txt
 ```
 Python 3.12
 ```
-python3 -m pip install -r https://raw.githubusercontent.com/fusion-energy/neutronics-workshop/refs/heads/main/equirements_3.12.txt
+python3 -m pip install -r requirements_3.12.txt
 ```
 
 The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations.
