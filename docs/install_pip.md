@@ -1,14 +1,8 @@
 # Install with pip
 
-To install with pip first create a python 3.11 environment, then activate the environment and install all the required packages.
-
 This installation option supports Linux and has been tested most on Ubuntu.
 
-Currently just python 3.11 is supported, in the future other versions will be supported.
-
-If you need a different version of Python then as a tempory solution there are some Python wheels [here](https://github.com/shimwell/wheels)
-
-You will need Python installed which comes pre installed on most Linux distributions.
+You will need Python 3.10, 3.11 or 3.12 installed which comes pre installed on most Linux distributions.
 
 In addition to install with pip you will need pip installed.
 ```
@@ -30,7 +24,7 @@ cd neutronics-workshop
 
 You should then be able to make a virtual environment.
 ```bash
-python3.11 -m venv .neutronicsworkshop
+python3 -m venv .neutronicsworkshop
 ```
 
 Activate the virtual environment
@@ -38,9 +32,19 @@ Activate the virtual environment
 source .neutronicsworkshop/bin/activate
 ```
 
-Then install the dependencies.
+Then install the dependencies. The requirements are slightly different for each version of Python, so pick your Python version
+
+Python 3.10
 ```bash
-python3.11 -m pip install -r https://raw.githubusercontent.com/fusion-energy/neutronics-workshop/refs/heads/main/requirements.txt
+python3 -m pip install -r https://raw.githubusercontent.com/fusion-energy/neutronics-workshop/refs/heads/main/equirements_3.10.txt
+```
+Python 3.11
+```
+python3 -m pip install -r https://raw.githubusercontent.com/fusion-energy/neutronics-workshop/refs/heads/main/equirements_3.10.txt
+```
+Python 3.12
+```
+python3 -m pip install -r https://raw.githubusercontent.com/fusion-energy/neutronics-workshop/refs/heads/main/equirements_3.10.txt
 ```
 
 The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations.
