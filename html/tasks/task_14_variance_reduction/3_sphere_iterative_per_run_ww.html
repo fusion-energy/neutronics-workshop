@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -320,6 +320,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
 <ul class="nav bd-sidenav">
@@ -843,7 +844,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:56:32
+       Date/Time | 2025-06-13 16:22:44
   OpenMP Threads | 16
 
  Reading settings XML file...
@@ -874,29 +875,29 @@ document.write(`
  Simulating batch 3
  Simulating batch 4
  Simulating batch 5
- Simulating batch 6
- Simulating batch 7
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+ Simulating batch 8
+ Simulating batch 9
  Simulating batch 10
  Creating state point statepoint.10.h5...
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 2.3323e-01 seconds
-   Reading cross sections          = 2.0380e-01 seconds
- Total time in simulation          = 2.9762e-01 seconds
-   Time in transport only          = 2.1836e-01 seconds
-   Time in active batches          = 2.9762e-01 seconds
-   Time accumulating tallies       = 5.5584e-02 seconds
-   Time writing statepoints        = 2.1342e-02 seconds
- Total time for finalization       = 1.5330e-06 seconds
- Total time elapsed                = 5.3232e-01 seconds
- Calculation Rate (active)         = 8399.90 particles/second
+ Total time for initialization     = 2.2986e-01 seconds
+   Reading cross sections          = 1.9871e-01 seconds
+ Total time in simulation          = 3.4432e-01 seconds
+   Time in transport only          = 2.5871e-01 seconds
+   Time in active batches          = 3.4432e-01 seconds
+   Time accumulating tallies       = 5.5974e-02 seconds
+   Time writing statepoints        = 2.7872e-02 seconds
+ Total time for finalization       = 1.4770e-06 seconds
+ Total time elapsed                = 5.7621e-01 seconds
+ Calculation Rate (active)         = 7260.60 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -970,16 +971,16 @@ document.write(`
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 2.3323e-01 seconds
-   Reading cross sections          = 2.0380e-01 seconds
- Total time in simulation          = 5.0982e+00 seconds
-   Time in transport only          = 4.9920e+00 seconds
-   Time in active batches          = 5.0982e+00 seconds
-   Time accumulating tallies       = 5.5813e-02 seconds
-   Time writing statepoints        = 6.1157e-02 seconds
- Total time for finalization       = 3.5020e-06 seconds
- Total time elapsed                = 5.3337e+00 seconds
- Calculation Rate (active)         = 490.366 particles/second
+ Total time for initialization     = 2.2986e-01 seconds
+   Reading cross sections          = 1.9871e-01 seconds
+ Total time in simulation          = 5.1995e+00 seconds
+   Time in transport only          = 5.0749e+00 seconds
+   Time in active batches          = 5.1995e+00 seconds
+   Time accumulating tallies       = 7.0140e-02 seconds
+   Time writing statepoints        = 5.7873e-02 seconds
+ Total time for finalization       = 2.5140e-06 seconds
+ Total time elapsed                = 5.4321e+00 seconds
+ Calculation Rate (active)         = 480.814 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1053,16 +1054,16 @@ reshaped_ww_vals.shape (20, 20, 20)
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 2.3323e-01 seconds
-   Reading cross sections          = 2.0380e-01 seconds
- Total time in simulation          = 1.4081e+01 seconds
-   Time in transport only          = 1.3962e+01 seconds
-   Time in active batches          = 1.4081e+01 seconds
-   Time accumulating tallies       = 5.6268e-02 seconds
-   Time writing statepoints        = 8.5138e-02 seconds
- Total time for finalization       = 4.0580e-06 seconds
- Total time elapsed                = 1.4317e+01 seconds
- Calculation Rate (active)         = 177.546 particles/second
+ Total time for initialization     = 2.2986e-01 seconds
+   Reading cross sections          = 1.9871e-01 seconds
+ Total time in simulation          = 1.5156e+01 seconds
+   Time in transport only          = 1.4966e+01 seconds
+   Time in active batches          = 1.5156e+01 seconds
+   Time accumulating tallies       = 1.1410e-01 seconds
+   Time writing statepoints        = 8.5993e-02 seconds
+ Total time for finalization       = 5.1400e-06 seconds
+ Total time elapsed                = 1.5389e+01 seconds
+ Calculation Rate (active)         = 164.951 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1136,16 +1137,16 @@ reshaped_ww_vals.shape (20, 20, 20)
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 2.3323e-01 seconds
-   Reading cross sections          = 2.0380e-01 seconds
- Total time in simulation          = 2.2994e+01 seconds
-   Time in transport only          = 2.2814e+01 seconds
-   Time in active batches          = 2.2994e+01 seconds
-   Time accumulating tallies       = 5.7019e-02 seconds
-   Time writing statepoints        = 1.4400e-01 seconds
- Total time for finalization       = 5.6460e-06 seconds
- Total time elapsed                = 2.3232e+01 seconds
- Calculation Rate (active)         = 108.722 particles/second
+ Total time for initialization     = 2.2986e-01 seconds
+   Reading cross sections          = 1.9871e-01 seconds
+ Total time in simulation          = 2.5457e+01 seconds
+   Time in transport only          = 2.5175e+01 seconds
+   Time in active batches          = 2.5457e+01 seconds
+   Time accumulating tallies       = 1.5829e-01 seconds
+   Time writing statepoints        = 1.4177e-01 seconds
+ Total time for finalization       = 6.1840e-06 seconds
+ Total time elapsed                = 2.5691e+01 seconds
+ Calculation Rate (active)         = 98.2056 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1219,16 +1220,16 @@ reshaped_ww_vals.shape (20, 20, 20)
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 2.3323e-01 seconds
-   Reading cross sections          = 2.0380e-01 seconds
- Total time in simulation          = 3.2196e+01 seconds
-   Time in transport only          = 3.1999e+01 seconds
-   Time in active batches          = 3.2196e+01 seconds
-   Time accumulating tallies       = 6.3347e-02 seconds
-   Time writing statepoints        = 1.6423e-01 seconds
- Total time for finalization       = 6.6000e-06 seconds
- Total time elapsed                = 3.2434e+01 seconds
- Calculation Rate (active)         = 77.6495 particles/second
+ Total time for initialization     = 2.2986e-01 seconds
+   Reading cross sections          = 1.9871e-01 seconds
+ Total time in simulation          = 3.5675e+01 seconds
+   Time in transport only          = 3.5346e+01 seconds
+   Time in active batches          = 3.5675e+01 seconds
+   Time accumulating tallies       = 1.6741e-01 seconds
+   Time writing statepoints        = 1.8536e-01 seconds
+ Total time for finalization       = 7.7330e-06 seconds
+ Total time elapsed                = 3.5909e+01 seconds
+ Calculation Rate (active)         = 70.0777 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1287,7 +1288,7 @@ reshaped_ww_vals.shape (20, 20, 20)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4270202bb944ef53024c01c106658b7cdc99024b770a4beccc231d3d044152ab.png" src="../../_images/4270202bb944ef53024c01c106658b7cdc99024b770a4beccc231d3d044152ab.png" />
+<img alt="../../_images/40cc10a2e8e27e1e87d9b6bdeb754facebee0fd67fb27d4abe857060c7b27d00.png" src="../../_images/40cc10a2e8e27e1e87d9b6bdeb754facebee0fd67fb27d4abe857060c7b27d00.png" />
 </div>
 </div>
 <p>Learning outcome</p>

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -320,6 +320,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
 <ul class="nav bd-sidenav">
@@ -834,7 +835,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:57:42
+       Date/Time | 2025-06-13 16:24:02
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -850,34 +851,40 @@ document.write(`
  WARNING: Negative value(s) found on probability table for nuclide Ar36 at 294K
  Reading Ar38 from /home/jon/nuclear_data/neutron/Ar38.h5
  Reading Ar40 from /home/jon/nuclear_data/neutron/Ar40.h5
- Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
- Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading C12 from /home/jon/nuclear_data/neutron/C12.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
+ Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
+ Reading C12 from /home/jon/nuclear_data/neutron/C12.h5
  Reading C13 from /home/jon/nuclear_data/neutron/C13.h5
  Reading Na23 from /home/jon/nuclear_data/neutron/Na23.h5
- Reading Mg24 from /home/jon/nuclear_data/neutron/Mg24.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mg25 from /home/jon/nuclear_data/neutron/Mg25.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mg24 from /home/jon/nuclear_data/neutron/Mg24.h5
+ Reading Mg25 from /home/jon/nuclear_data/neutron/Mg25.h5
  Reading Mg26 from /home/jon/nuclear_data/neutron/Mg26.h5
- Reading Al27 from /home/jon/nuclear_data/neutron/Al27.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Al27 from /home/jon/nuclear_data/neutron/Al27.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si28 from /home/jon/nuclear_data/neutron/Si28.h5
- Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si30 from /home/jon/nuclear_data/neutron/Si30.h5
  Reading K39 from /home/jon/nuclear_data/neutron/K39.h5
  Reading K40 from /home/jon/nuclear_data/neutron/K40.h5
  Reading K41 from /home/jon/nuclear_data/neutron/K41.h5
- Reading Ca40 from /home/jon/nuclear_data/neutron/Ca40.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca42 from /home/jon/nuclear_data/neutron/Ca42.h5
- Reading Ca43 from /home/jon/nuclear_data/neutron/Ca43.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca40 from /home/jon/nuclear_data/neutron/Ca40.h5
+ Reading Ca42 from /home/jon/nuclear_data/neutron/Ca42.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca43 from /home/jon/nuclear_data/neutron/Ca43.h5
  Reading Ca44 from /home/jon/nuclear_data/neutron/Ca44.h5
 </pre></div>
 </div>
@@ -907,15 +914,21 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
- Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
- Simulating batch 5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
- Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
@@ -933,61 +946,75 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 14
- Simulating batch 15
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 15
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 16
- Simulating batch 17
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 17
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 18
- Simulating batch 19
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 20
- Simulating batch 21
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 19
+ Simulating batch 20
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 21
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 22
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 23
- Simulating batch 24
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 25
- Simulating batch 26
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 24
+ Simulating batch 25
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 27
- Simulating batch 28
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 26
+ Simulating batch 27
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 28
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 29
- Simulating batch 30
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 31
- Simulating batch 32
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 30
+ Simulating batch 31
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 33
- Simulating batch 34
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 32
+ Simulating batch 33
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 34
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 35
- Simulating batch 36
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 36
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 37
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 38
- Simulating batch 39
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 40
- Simulating batch 41
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 39
+ Simulating batch 40
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 41
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 42
@@ -1006,23 +1033,33 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 49
- Simulating batch 50
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 50
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 51
- Simulating batch 52
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 52
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 53
- Simulating batch 54
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 54
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 55
- Simulating batch 56
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 56
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 57
- Simulating batch 58
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 58
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 59
@@ -1030,7 +1067,9 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 61
- Simulating batch 62
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 62
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 63
@@ -1041,15 +1080,19 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 66
- Simulating batch 67
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 68
- Simulating batch 69
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 67
+ Simulating batch 68
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 69
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 70
- Simulating batch 71
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 71
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 72
@@ -1057,46 +1100,62 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 74
- Simulating batch 75
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 75
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 76
- Simulating batch 77
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 77
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 78
- Simulating batch 79
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 79
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 80
- Simulating batch 81
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 81
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 82
- Simulating batch 83
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 83
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 84
- Simulating batch 85
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 86
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 85
+ Simulating batch 86
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 87
- Simulating batch 88
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 89
- Simulating batch 90
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 88
+ Simulating batch 89
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 90
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 91
- Simulating batch 92
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 92
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 93
- Simulating batch 94
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 94
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 95
@@ -1108,53 +1167,71 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 99
- Simulating batch 100
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 100
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 101
- Simulating batch 102
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 102
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 103
- Simulating batch 104
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 104
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 105
- Simulating batch 106
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 106
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 107
- Simulating batch 108
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 108
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 109
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 110
- Simulating batch 111
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 111
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 112
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 113
- Simulating batch 114
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 115
- Simulating batch 116
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 114
+ Simulating batch 115
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 117
- Simulating batch 118
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 116
+ Simulating batch 117
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 118
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 119
- Simulating batch 120
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 120
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 121
- Simulating batch 122
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 122
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 123
@@ -1162,30 +1239,38 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 125
- Simulating batch 126
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 126
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 127
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 128
- Simulating batch 129
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 130
- Simulating batch 131
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 129
+ Simulating batch 130
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 132
- Simulating batch 133
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 131
+ Simulating batch 132
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 133
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 134
- Simulating batch 135
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 135
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 136
- Simulating batch 137
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 137
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 138
@@ -1193,76 +1278,104 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 140
- Simulating batch 141
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 141
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 142
- Simulating batch 143
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 143
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 144
- Simulating batch 145
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 146
- Simulating batch 147
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 145
+ Simulating batch 146
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 147
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 148
- Simulating batch 149
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 149
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 150
- Simulating batch 151
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 151
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 152
- Simulating batch 153
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 153
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 154
- Simulating batch 155
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 155
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 156
- Simulating batch 157
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 157
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 158
- Simulating batch 159
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 159
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 160
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 161
- Simulating batch 162
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 162
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 163
- Simulating batch 164
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 164
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 165
- Simulating batch 166
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 166
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 167
- Simulating batch 168
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 168
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 169
- Simulating batch 170
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 170
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 171
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 172
+ Simulating batch 173
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 173
- Simulating batch 174
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 174
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 175
@@ -1270,11 +1383,15 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 177
- Simulating batch 178
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 178
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 179
- Simulating batch 180
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 180
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 181
@@ -1287,54 +1404,68 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 184
- Simulating batch 185
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 185
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 186
- Simulating batch 187
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 188
- Simulating batch 189
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 187
+ Simulating batch 188
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 189
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 190
- Simulating batch 191
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 191
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 192
- Simulating batch 193
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 193
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 194
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 195
- Simulating batch 196
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 196
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 197
- Simulating batch 198
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 198
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 199
- Simulating batch 200
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 200
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.200.h5...
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 3.4772e+00 seconds
-   Reading cross sections          = 3.4550e+00 seconds
- Total time in simulation          = 3.6314e+01 seconds
-   Time in transport only          = 3.2733e+01 seconds
-   Time in active batches          = 3.6314e+01 seconds
-   Time accumulating tallies       = 3.4835e+00 seconds
-   Time writing statepoints        = 3.2756e-02 seconds
- Total time for finalization       = 1.0650e-06 seconds
- Total time elapsed                = 3.9812e+01 seconds
- Calculation Rate (active)         = 11015.0 particles/second
+ Total time for initialization     = 4.5565e+00 seconds
+   Reading cross sections          = 4.5280e+00 seconds
+ Total time in simulation          = 4.7060e+01 seconds
+   Time in transport only          = 4.0052e+01 seconds
+   Time in active batches          = 4.7060e+01 seconds
+   Time accumulating tallies       = 6.8070e+00 seconds
+   Time writing statepoints        = 1.0667e-01 seconds
+ Total time for finalization       = 1.6930e-06 seconds
+ Total time elapsed                = 5.1637e+01 seconds
+ Calculation Rate (active)         = 8499.84 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1444,7 +1575,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:58:22
+       Date/Time | 2025-06-13 16:24:55
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -1468,203 +1599,303 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2    (inactive)
- Simulating batch 3    (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3    (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4    (inactive)
- Simulating batch 5    (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5    (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6    (inactive)
- Simulating batch 7    (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7    (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8    (inactive)
- Simulating batch 9    (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9    (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10   (inactive)
- Simulating batch 11   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 11   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 12   (inactive)
- Simulating batch 13   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 13   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 14   (inactive)
- Simulating batch 15   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 15   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 16   (inactive)
- Simulating batch 17   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 17   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 18   (inactive)
- Simulating batch 19   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 19   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 20   (inactive)
- Simulating batch 21   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 21   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 22   (inactive)
- Simulating batch 23   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 23   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 24   (inactive)
- Simulating batch 25   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 25   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 26   (inactive)
- Simulating batch 27   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 27   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 28   (inactive)
- Simulating batch 29   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 29   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 30   (inactive)
- Simulating batch 31   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 31   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 32   (inactive)
- Simulating batch 33   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 33   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 34   (inactive)
- Simulating batch 35   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 35   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 36   (inactive)
- Simulating batch 37   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 37   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 38   (inactive)
- Simulating batch 39   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 39   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 40   (inactive)
- Simulating batch 41   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 41   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 42   (inactive)
- Simulating batch 43   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 43   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 44   (inactive)
- Simulating batch 45   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 45   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 46   (inactive)
- Simulating batch 47   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 47   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 48   (inactive)
- Simulating batch 49   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 49   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 50   (inactive)
- Simulating batch 51
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 51
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 52
- Simulating batch 53
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 53
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 54
- Simulating batch 55
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 55
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 56
- Simulating batch 57
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 57
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 58
- Simulating batch 59
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 59
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 60
- Simulating batch 61
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 61
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 62
- Simulating batch 63
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 63
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 64
- Simulating batch 65
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 65
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 66
- Simulating batch 67
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 67
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 68
- Simulating batch 69
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 69
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 70
- Simulating batch 71
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 71
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 72
- Simulating batch 73
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 73
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 74
- Simulating batch 75
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 75
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 76
- Simulating batch 77
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 77
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 78
- Simulating batch 79
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 79
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 80
- Simulating batch 81
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 81
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 82
- Simulating batch 83
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 83
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 84
- Simulating batch 85
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 85
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 86
- Simulating batch 87
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 87
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 88
- Simulating batch 89
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 89
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 90
- Simulating batch 91
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 91
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 92
- Simulating batch 93
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 93
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 94
- Simulating batch 95
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 95
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 96
- Simulating batch 97
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 97
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 98
- Simulating batch 99
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 99
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 100
- Creating state point statepoint.100.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.100.h5...
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Exporting weight windows to weight_windows.h5...
@@ -1692,18 +1923,18 @@ document.write(`
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 5.5520e-02 seconds
-   Reading cross sections          = 3.5889e-03 seconds
- Total simulation time             = 1.2727e+01 seconds
-   Transport sweep only            = 1.2148e+01 seconds
-   Source update only              = 5.0022e-02 seconds
-   Tally conversion only           = 1.6581e-02 seconds
+ Total time for initialization     = 1.1883e-01 seconds
+   Reading cross sections          = 1.1870e-02 seconds
+ Total simulation time             = 5.6581e+01 seconds
+   Transport sweep only            = 3.9038e+01 seconds
+   Source update only              = 4.5554e+00 seconds
+   Tally conversion only           = 2.4804e+00 seconds
    MPI source reductions only      = 0.0000e+00 seconds
-   Other iteration routines        = 5.1195e-01 seconds
- Time in active batches            = 6.1882e+00 seconds
- Time writing statepoints          = 1.8515e-02 seconds
- Total time for finalization       = 5.0967e-02 seconds
- Time per integration              = 1.3879e-08 seconds
+   Other iteration routines        = 1.0507e+01 seconds
+ Time in active batches            = 2.7696e+01 seconds
+ Time writing statepoints          = 5.5952e-02 seconds
+ Total time for finalization       = 1.0991e-01 seconds
+ Time per integration              = 4.4602e-08 seconds
 
  ======================&gt;     ADJOINT FLUX SOLVE     &lt;=======================
 
@@ -1711,203 +1942,303 @@ document.write(`
  =====&gt;     FIXED SOURCE TRANSPORT SIMULATION (RANDOM RAY SOLVER)     &lt;=====
 
  Simulating batch 1    (inactive)
- Simulating batch 2    (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2    (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3    (inactive)
- Simulating batch 4    (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4    (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5    (inactive)
- Simulating batch 6    (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6    (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7    (inactive)
- Simulating batch 8    (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8    (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9    (inactive)
- Simulating batch 10   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 11   (inactive)
- Simulating batch 12   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 12   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 13   (inactive)
- Simulating batch 14   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 14   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 15   (inactive)
- Simulating batch 16   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 16   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 17   (inactive)
- Simulating batch 18   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 18   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 19   (inactive)
- Simulating batch 20   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 20   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 21   (inactive)
- Simulating batch 22   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 22   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 23   (inactive)
- Simulating batch 24   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 24   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 25   (inactive)
- Simulating batch 26   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 26   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 27   (inactive)
- Simulating batch 28   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 28   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 29   (inactive)
- Simulating batch 30   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 30   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 31   (inactive)
- Simulating batch 32   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 32   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 33   (inactive)
- Simulating batch 34   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 34   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 35   (inactive)
- Simulating batch 36   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 36   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 37   (inactive)
- Simulating batch 38   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 38   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 39   (inactive)
- Simulating batch 40   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 40   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 41   (inactive)
- Simulating batch 42   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 42   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 43   (inactive)
- Simulating batch 44   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 44   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 45   (inactive)
- Simulating batch 46   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 46   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 47   (inactive)
- Simulating batch 48   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 48   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 49   (inactive)
- Simulating batch 50   (inactive)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 50   (inactive)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 51
- Simulating batch 52
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 52
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 53
- Simulating batch 54
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 54
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 55
- Simulating batch 56
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 56
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 57
- Simulating batch 58
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 58
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 59
- Simulating batch 60
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 60
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 61
- Simulating batch 62
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 62
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 63
- Simulating batch 64
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 64
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 65
- Simulating batch 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 67
- Simulating batch 68
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 68
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 69
- Simulating batch 70
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 70
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 71
- Simulating batch 72
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 72
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 73
- Simulating batch 74
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 74
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 75
- Simulating batch 76
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 76
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 77
- Simulating batch 78
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 78
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 79
- Simulating batch 80
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 80
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 81
- Simulating batch 82
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 82
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 83
- Simulating batch 84
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 84
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 85
- Simulating batch 86
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 86
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 87
- Simulating batch 88
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 88
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 89
- Simulating batch 90
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 90
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 91
- Simulating batch 92
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 92
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 93
- Simulating batch 94
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 94
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 95
- Simulating batch 96
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 96
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 97
- Simulating batch 98
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 98
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 99
- Simulating batch 100
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 100
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.100.h5...
@@ -1935,19 +2266,20 @@ document.write(`
  Transport XS Stabilization Used   = NO
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
-
- Total time for initialization     = 0.0000e+00 seconds
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total simulation time             = 1.2047e+01 seconds
-   Transport sweep only            = 1.1681e+01 seconds
-   Source update only              = 1.3580e-02 seconds
-   Tally conversion only           = 1.3052e-02 seconds
+ Total simulation time             = 5.1240e+01 seconds
+   Transport sweep only            = 3.5610e+01 seconds
+   Source update only              = 4.4138e+00 seconds
+   Tally conversion only           = 1.6119e+00 seconds
    MPI source reductions only      = 0.0000e+00 seconds
-   Other iteration routines        = 3.3881e-01 seconds
- Time in active batches            = 5.9853e+00 seconds
- Time writing statepoints          = 1.7062e-02 seconds
- Total time for finalization       = 6.1438e-02 seconds
- Time per integration              = 1.3346e-08 seconds
+   Other iteration routines        = 9.6045e+00 seconds
+ Time in active batches            = 2.6173e+01 seconds
+ Time writing statepoints          = 5.8984e-02 seconds
+ Total time for finalization       = 1.1274e-01 seconds
+ Time per integration              = 4.0685e-08 seconds
 </pre></div>
 </div>
 </div>
@@ -1961,7 +2293,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-rw-r-- 1 jon jon 169K Jun  6 15:58 weight_windows.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-rw-r-- 1 jon jon 169K Jun 13 16:26 weight_windows.h5
 </pre></div>
 </div>
 </div>
@@ -1985,7 +2317,7 @@ document.write(`
   warn(msg, IDWarning)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7e4d4659b0d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7d26b57c1450&gt;
 </pre></div>
 </div>
 <img alt="../../_images/56c029861af3d764e984d7154290fe0791881294614478880c071154277cb81f.png" src="../../_images/56c029861af3d764e984d7154290fe0791881294614478880c071154277cb81f.png" />
@@ -2051,7 +2383,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:58:48
+       Date/Time | 2025-06-13 16:26:46
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -2059,44 +2391,54 @@ document.write(`
           favor of the model.xml file.
  Reading cross sections XML file...
  Reading N14 from /home/jon/nuclear_data/neutron/N14.h5
- Reading N15 from /home/jon/nuclear_data/neutron/N15.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading N15 from /home/jon/nuclear_data/neutron/N15.h5
  Reading O16 from /home/jon/nuclear_data/neutron/O16.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading O17 from /home/jon/nuclear_data/neutron/O17.h5
  Reading O18 from /home/jon/nuclear_data/neutron/O18.h5
  Reading Ar36 from /home/jon/nuclear_data/neutron/Ar36.h5
- WARNING: Negative value(s) found on probability table for nuclide Ar36 at 294K
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Ar36 at 294K
  Reading Ar38 from /home/jon/nuclear_data/neutron/Ar38.h5
  Reading Ar40 from /home/jon/nuclear_data/neutron/Ar40.h5
- Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
- Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading C12 from /home/jon/nuclear_data/neutron/C12.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
+ Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
+ Reading C12 from /home/jon/nuclear_data/neutron/C12.h5
  Reading C13 from /home/jon/nuclear_data/neutron/C13.h5
  Reading Na23 from /home/jon/nuclear_data/neutron/Na23.h5
- Reading Mg24 from /home/jon/nuclear_data/neutron/Mg24.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mg25 from /home/jon/nuclear_data/neutron/Mg25.h5
- Reading Mg26 from /home/jon/nuclear_data/neutron/Mg26.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mg24 from /home/jon/nuclear_data/neutron/Mg24.h5
+ Reading Mg25 from /home/jon/nuclear_data/neutron/Mg25.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mg26 from /home/jon/nuclear_data/neutron/Mg26.h5
  Reading Al27 from /home/jon/nuclear_data/neutron/Al27.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si28 from /home/jon/nuclear_data/neutron/Si28.h5
- Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si30 from /home/jon/nuclear_data/neutron/Si30.h5
  Reading K39 from /home/jon/nuclear_data/neutron/K39.h5
  Reading K40 from /home/jon/nuclear_data/neutron/K40.h5
- Reading K41 from /home/jon/nuclear_data/neutron/K41.h5
- Reading Ca40 from /home/jon/nuclear_data/neutron/Ca40.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca42 from /home/jon/nuclear_data/neutron/Ca42.h5
- Reading Ca43 from /home/jon/nuclear_data/neutron/Ca43.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading K41 from /home/jon/nuclear_data/neutron/K41.h5
+ Reading Ca40 from /home/jon/nuclear_data/neutron/Ca40.h5
+ Reading Ca42 from /home/jon/nuclear_data/neutron/Ca42.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca43 from /home/jon/nuclear_data/neutron/Ca43.h5
  Reading Ca44 from /home/jon/nuclear_data/neutron/Ca44.h5
 </pre></div>
 </div>
@@ -2162,16 +2504,16 @@ document.write(`
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 3.5267e+00 seconds
-   Reading cross sections          = 3.4589e+00 seconds
- Total time in simulation          = 2.3695e+01 seconds
-   Time in transport only          = 2.3668e+01 seconds
-   Time in active batches          = 2.3695e+01 seconds
-   Time accumulating tallies       = 9.3706e-04 seconds
-   Time writing statepoints        = 2.0654e-02 seconds
- Total time for finalization       = 6.6796e-02 seconds
- Total time elapsed                = 2.7305e+01 seconds
- Calculation Rate (active)         = 20257.1 particles/second
+ Total time for initialization     = 8.4933e+00 seconds
+   Reading cross sections          = 8.3421e+00 seconds
+ Total time in simulation          = 2.6760e+01 seconds
+   Time in transport only          = 2.6636e+01 seconds
+   Time in active batches          = 2.6760e+01 seconds
+   Time accumulating tallies       = 8.9096e-02 seconds
+   Time writing statepoints        = 3.0494e-02 seconds
+ Total time for finalization       = 3.2214e-02 seconds
+ Total time elapsed                = 3.5300e+01 seconds
+ Calculation Rate (active)         = 17937.1 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -2279,7 +2621,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:59:17
+       Date/Time | 2025-06-13 16:27:24
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -2297,34 +2639,40 @@ document.write(`
  WARNING: Negative value(s) found on probability table for nuclide Ar36 at 294K
  Reading Ar38 from /home/jon/nuclear_data/neutron/Ar38.h5
  Reading Ar40 from /home/jon/nuclear_data/neutron/Ar40.h5
- Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
  Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
  Reading C12 from /home/jon/nuclear_data/neutron/C12.h5
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading C13 from /home/jon/nuclear_data/neutron/C13.h5
+ Reading C13 from /home/jon/nuclear_data/neutron/C13.h5
  Reading Na23 from /home/jon/nuclear_data/neutron/Na23.h5
- Reading Mg24 from /home/jon/nuclear_data/neutron/Mg24.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mg25 from /home/jon/nuclear_data/neutron/Mg25.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mg24 from /home/jon/nuclear_data/neutron/Mg24.h5
+ Reading Mg25 from /home/jon/nuclear_data/neutron/Mg25.h5
  Reading Mg26 from /home/jon/nuclear_data/neutron/Mg26.h5
- Reading Al27 from /home/jon/nuclear_data/neutron/Al27.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Al27 from /home/jon/nuclear_data/neutron/Al27.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si28 from /home/jon/nuclear_data/neutron/Si28.h5
- Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si30 from /home/jon/nuclear_data/neutron/Si30.h5
  Reading K39 from /home/jon/nuclear_data/neutron/K39.h5
  Reading K40 from /home/jon/nuclear_data/neutron/K40.h5
  Reading K41 from /home/jon/nuclear_data/neutron/K41.h5
- Reading Ca40 from /home/jon/nuclear_data/neutron/Ca40.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca42 from /home/jon/nuclear_data/neutron/Ca42.h5
- Reading Ca43 from /home/jon/nuclear_data/neutron/Ca43.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca40 from /home/jon/nuclear_data/neutron/Ca40.h5
+ Reading Ca42 from /home/jon/nuclear_data/neutron/Ca42.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ca43 from /home/jon/nuclear_data/neutron/Ca43.h5
  Reading Ca44 from /home/jon/nuclear_data/neutron/Ca44.h5
 </pre></div>
 </div>
@@ -2360,16 +2708,16 @@ document.write(`
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 3.5097e+00 seconds
-   Reading cross sections          = 3.4615e+00 seconds
- Total time in simulation          = 1.5868e+01 seconds
-   Time in transport only          = 1.5860e+01 seconds
-   Time in active batches          = 1.5868e+01 seconds
-   Time accumulating tallies       = 2.5656e-04 seconds
-   Time writing statepoints        = 7.0547e-03 seconds
- Total time for finalization       = 2.3316e-02 seconds
- Total time elapsed                = 1.9416e+01 seconds
- Calculation Rate (active)         = 5041.72 particles/second
+ Total time for initialization     = 4.4665e+00 seconds
+   Reading cross sections          = 4.3852e+00 seconds
+ Total time in simulation          = 1.6750e+01 seconds
+   Time in transport only          = 1.6715e+01 seconds
+   Time in active batches          = 1.6750e+01 seconds
+   Time accumulating tallies       = 1.0319e-02 seconds
+   Time writing statepoints        = 2.5039e-02 seconds
+ Total time for finalization       = 5.5997e-02 seconds
+ Total time elapsed                = 2.1290e+01 seconds
+ Calculation Rate (active)         = 4776.11 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 

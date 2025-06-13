@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -320,6 +320,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
 <ul class="nav bd-sidenav">
@@ -683,6 +684,9 @@ set the time steps and corresponding source rates
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loading chain in TransportOperator
+</pre></div>
+</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                %%%%%%%%%%%%%%%
                            %%%%%%%%%%%%%%%%%%%%%%%%
                         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -712,7 +716,7 @@ set the time steps and corresponding source rates
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:50:12
+       Date/Time | 2025-06-13 16:15:45
   OpenMP Threads | 16
 
  Reading settings XML file...
@@ -730,9 +734,7 @@ set the time steps and corresponding source rates
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading O18 from /home/jon/nuclear_data/neutron/O18.h5
  Reading Si28 from /home/jon/nuclear_data/neutron/Si28.h5
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
+ Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si30 from /home/jon/nuclear_data/neutron/Si30.h5
@@ -745,10 +747,10 @@ set the time steps and corresponding source rates
 [openmc.deplete] t=0.0 s, dt=31536000 s, source=1000000000.0
  Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
  Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
- Reading H3 from /home/jon/nuclear_data/neutron/H3.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading He3 from /home/jon/nuclear_data/neutron/He3.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading H3 from /home/jon/nuclear_data/neutron/H3.h5
+ Reading He3 from /home/jon/nuclear_data/neutron/He3.h5
  Reading He4 from /home/jon/nuclear_data/neutron/He4.h5
  Reading Be9 from /home/jon/nuclear_data/neutron/Be9.h5
  Reading B10 from /home/jon/nuclear_data/neutron/B10.h5
@@ -792,13 +794,15 @@ set the time steps and corresponding source rates
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si31 from /home/jon/nuclear_data/neutron/Si31.h5
- Reading Si32 from /home/jon/nuclear_data/neutron/Si32.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading P31 from /home/jon/nuclear_data/neutron/P31.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si32 from /home/jon/nuclear_data/neutron/Si32.h5
+ Reading P31 from /home/jon/nuclear_data/neutron/P31.h5
  Reading S32 from /home/jon/nuclear_data/neutron/S32.h5
  Reading S33 from /home/jon/nuclear_data/neutron/S33.h5
- Maximum neutron transport energy: 20000000.0 eV for Li6
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Maximum neutron transport energy: 20000000.0 eV for Li6
 
  ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
 
@@ -812,16 +816,16 @@ set the time steps and corresponding source rates
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 1.0361e+00 seconds
-   Reading cross sections          = 7.4845e-01 seconds
- Total time in simulation          = 2.6201e+00 seconds
-   Time in transport only          = 2.6065e+00 seconds
-   Time in active batches          = 2.6201e+00 seconds
-   Time accumulating tallies       = 4.2757e-04 seconds
-   Time writing statepoints        = 1.3144e-02 seconds
- Total time for finalization       = 2.8998e-04 seconds
- Total time elapsed                = 3.6823e+00 seconds
- Calculation Rate (active)         = 3816.60 particles/second
+ Total time for initialization     = 1.0387e+00 seconds
+   Reading cross sections          = 7.3610e-01 seconds
+ Total time in simulation          = 2.6397e+00 seconds
+   Time in transport only          = 2.6266e+00 seconds
+   Time in active batches          = 2.6397e+00 seconds
+   Time accumulating tallies       = 2.5548e-04 seconds
+   Time writing statepoints        = 1.2719e-02 seconds
+ Total time for finalization       = 3.2334e-04 seconds
+ Total time elapsed                = 3.7030e+00 seconds
+ Calculation Rate (active)         = 3788.30 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -851,14 +855,14 @@ set the time steps and corresponding source rates
 
  Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total time in simulation          = 2.6323e+00 seconds
-   Time in transport only          = 2.5919e+00 seconds
-   Time in active batches          = 2.6323e+00 seconds
-   Time accumulating tallies       = 2.9379e-04 seconds
-   Time writing statepoints        = 4.0033e-02 seconds
- Total time for finalization       = 4.2639e-04 seconds
- Total time elapsed                = 2.6588e+00 seconds
- Calculation Rate (active)         = 3799.01 particles/second
+ Total time in simulation          = 2.5955e+00 seconds
+   Time in transport only          = 2.5619e+00 seconds
+   Time in active batches          = 2.5955e+00 seconds
+   Time accumulating tallies       = 2.3359e-04 seconds
+   Time writing statepoints        = 3.2860e-02 seconds
+ Total time for finalization       = 3.8861e-04 seconds
+ Total time elapsed                = 2.6210e+00 seconds
+ Calculation Rate (active)         = 3852.80 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -884,14 +888,14 @@ set the time steps and corresponding source rates
 
  Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total time in simulation          = 2.5917e+00 seconds
-   Time in transport only          = 2.5528e+00 seconds
-   Time in active batches          = 2.5917e+00 seconds
-   Time accumulating tallies       = 1.1918e-04 seconds
-   Time writing statepoints        = 3.8651e-02 seconds
- Total time for finalization       = 4.5422e-04 seconds
- Total time elapsed                = 2.6200e+00 seconds
- Calculation Rate (active)         = 3858.52 particles/second
+ Total time in simulation          = 2.6133e+00 seconds
+   Time in transport only          = 2.5902e+00 seconds
+   Time in active batches          = 2.6133e+00 seconds
+   Time accumulating tallies       = 5.0623e-05 seconds
+   Time writing statepoints        = 2.3036e-02 seconds
+ Total time for finalization       = 3.5479e-04 seconds
+ Total time elapsed                = 2.6418e+00 seconds
+ Calculation Rate (active)         = 3826.51 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -917,14 +921,14 @@ set the time steps and corresponding source rates
 
  Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total time in simulation          = 2.6323e+00 seconds
-   Time in transport only          = 2.5813e+00 seconds
-   Time in active batches          = 2.6323e+00 seconds
-   Time accumulating tallies       = 1.5201e-02 seconds
-   Time writing statepoints        = 3.5639e-02 seconds
- Total time for finalization       = 3.6970e-04 seconds
- Total time elapsed                = 2.6597e+00 seconds
- Calculation Rate (active)         = 3799.02 particles/second
+ Total time in simulation          = 2.5701e+00 seconds
+   Time in transport only          = 2.5320e+00 seconds
+   Time in active batches          = 2.5701e+00 seconds
+   Time accumulating tallies       = 4.9059e-03 seconds
+   Time writing statepoints        = 3.3125e-02 seconds
+ Total time for finalization       = 3.6957e-04 seconds
+ Total time elapsed                = 2.5990e+00 seconds
+ Calculation Rate (active)         = 3890.84 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -950,14 +954,14 @@ set the time steps and corresponding source rates
 
  Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total time in simulation          = 2.5519e+00 seconds
-   Time in transport only          = 2.5171e+00 seconds
-   Time in active batches          = 2.5519e+00 seconds
-   Time accumulating tallies       = 1.4792e-02 seconds
-   Time writing statepoints        = 1.9872e-02 seconds
- Total time for finalization       = 3.8021e-04 seconds
- Total time elapsed                = 2.5801e+00 seconds
- Calculation Rate (active)         = 3918.72 particles/second
+ Total time in simulation          = 2.6079e+00 seconds
+   Time in transport only          = 2.5601e+00 seconds
+   Time in active batches          = 2.6079e+00 seconds
+   Time accumulating tallies       = 4.5969e-05 seconds
+   Time writing statepoints        = 4.7731e-02 seconds
+ Total time for finalization       = 3.6140e-04 seconds
+ Total time elapsed                = 2.6410e+00 seconds
+ Calculation Rate (active)         = 3834.44 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -983,14 +987,14 @@ set the time steps and corresponding source rates
 
  Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total time in simulation          = 2.5518e+00 seconds
-   Time in transport only          = 2.5132e+00 seconds
-   Time in active batches          = 2.5518e+00 seconds
-   Time accumulating tallies       = 2.3809e-04 seconds
-   Time writing statepoints        = 3.8351e-02 seconds
- Total time for finalization       = 4.2964e-04 seconds
- Total time elapsed                = 2.5828e+00 seconds
- Calculation Rate (active)         = 3918.75 particles/second
+ Total time in simulation          = 2.5885e+00 seconds
+   Time in transport only          = 2.5555e+00 seconds
+   Time in active batches          = 2.5885e+00 seconds
+   Time accumulating tallies       = 1.4808e-02 seconds
+   Time writing statepoints        = 1.8160e-02 seconds
+ Total time for finalization       = 3.3015e-04 seconds
+ Total time elapsed                = 2.6181e+00 seconds
+ Calculation Rate (active)         = 3863.22 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1012,12 +1016,12 @@ set the time steps and corresponding source rates
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>depletion step 0 TBR=1.017648677915861
-depletion step 1 TBR=1.0599517005046606
-depletion step 2 TBR=1.0413439227976102
-depletion step 3 TBR=1.026900582980184
-depletion step 4 TBR=1.0257668396398398
-depletion step 5 TBR=1.0316594159536596
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>depletion step 0 TBR=1.0176486779158547
+depletion step 1 TBR=1.0599517005046608
+depletion step 2 TBR=1.0413439227976107
+depletion step 3 TBR=1.0269005829801914
+depletion step 4 TBR=1.025766839639844
+depletion step 5 TBR=1.0316594159536643
 </pre></div>
 </div>
 </div>

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -320,6 +320,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
 <ul class="nav bd-sidenav">
@@ -758,7 +759,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:54:41
+       Date/Time | 2025-06-13 16:20:49
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -813,26 +814,26 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- =======================&gt;     TIMING STATISTICS     &lt;=======================
-
- Total time for initialization     = 9.9638e-01 seconds
-   Reading cross sections          = 7.0428e-01 seconds
- Total time in simulation          = 4.8069e+00 seconds
-   Time in transport only          = 4.7322e+00 seconds
-   Time in active batches          = 4.8069e+00 seconds
-   Time accumulating tallies       = 8.8448e-03 seconds
-   Time writing statepoints        = 6.2074e-02 seconds
- Total time for finalization       = 1.2847e-01 seconds
- Total time elapsed                = 5.9364e+00 seconds
- Calculation Rate (active)         = 2.08035e+06 particles/second
+ Total time for initialization     = 1.0234e+00 seconds
+   Reading cross sections          = 7.0136e-01 seconds
+ Total time in simulation          = 4.6076e+00 seconds
+   Time in transport only          = 4.4984e+00 seconds
+   Time in active batches          = 4.6076e+00 seconds
+   Time accumulating tallies       = 4.4669e-02 seconds
+   Time writing statepoints        = 5.9667e-02 seconds
+ Total time for finalization       = 1.6083e-01 seconds
+ Total time elapsed                = 5.7970e+00 seconds
+ Calculation Rate (active)         = 2.17034e+06 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
  Leakage Fraction            = 1.00000 +/- 0.00000
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                %%%%%%%%%%%%%%%
+
+                                %%%%%%%%%%%%%%%
                            %%%%%%%%%%%%%%%%%%%%%%%%
                         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -861,7 +862,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:54:47
+       Date/Time | 2025-06-13 16:20:54
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -916,19 +917,20 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- =======================&gt;     TIMING STATISTICS     &lt;=======================
-
- Total time for initialization     = 9.9739e-01 seconds
-   Reading cross sections          = 6.9763e-01 seconds
- Total time in simulation          = 4.7117e+00 seconds
-   Time in transport only          = 4.6420e+00 seconds
-   Time in active batches          = 4.7117e+00 seconds
-   Time accumulating tallies       = 1.9850e-03 seconds
-   Time writing statepoints        = 6.1867e-02 seconds
- Total time for finalization       = 1.3621e-01 seconds
- Total time elapsed                = 5.8501e+00 seconds
- Calculation Rate (active)         = 2.12237e+06 particles/second
+ Total time for initialization     = 1.0064e+00 seconds
+   Reading cross sections          = 7.1490e-01 seconds
+ Total time in simulation          = 4.5775e+00 seconds
+   Time in transport only          = 4.4792e+00 seconds
+   Time in active batches          = 4.5775e+00 seconds
+   Time accumulating tallies       = 3.5286e-02 seconds
+   Time writing statepoints        = 5.9310e-02 seconds
+ Total time for finalization       = 1.5354e-01 seconds
+ Total time elapsed                = 5.7416e+00 seconds
+ Calculation Rate (active)         = 2.18459e+06 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1231,7 +1233,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/46b72fb31cb97a5d74565b9a4e56fa7c5aa66f6b7895d5a19954a8ae18001281.png" src="../../_images/46b72fb31cb97a5d74565b9a4e56fa7c5aa66f6b7895d5a19954a8ae18001281.png" />
+<img alt="../../_images/9b35df42f97321a4722680bdb9072025f1315fcf1871fdf01723e0ac0b32fe90.png" src="../../_images/9b35df42f97321a4722680bdb9072025f1315fcf1871fdf01723e0ac0b32fe90.png" />
 </div>
 </div>
 <p>Task extension suggestion.</p>

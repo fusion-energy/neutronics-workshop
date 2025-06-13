@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -320,6 +320,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
 <ul class="nav bd-sidenav">
@@ -784,7 +785,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:46:49
+       Date/Time | 2025-06-13 16:12:16
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -815,28 +816,34 @@ document.write(`
 
  Simulating batch 1
  Simulating batch 2
- Simulating batch 3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
  Simulating batch 4
  Simulating batch 5
  Simulating batch 6
- Simulating batch 7
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
  Simulating batch 8
  Simulating batch 9
  Simulating batch 10
- Creating state point statepoint.10.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 1.3927e+00 seconds
-   Reading cross sections          = 1.3503e+00 seconds
- Total time in simulation          = 5.1813e-02 seconds
-   Time in transport only          = 1.9309e-02 seconds
-   Time in active batches          = 5.1813e-02 seconds
-   Time accumulating tallies       = 7.0110e-04 seconds
-   Time writing statepoints        = 3.1120e-02 seconds
- Total time for finalization       = 7.1026e-04 seconds
- Total time elapsed                = 1.4509e+00 seconds
- Calculation Rate (active)         = 96500.4 particles/second
+ Total time for initialization     = 1.3632e+00 seconds
+   Reading cross sections          = 1.3169e+00 seconds
+ Total time in simulation          = 6.7263e-01 seconds
+   Time in transport only          = 9.0685e-02 seconds
+   Time in active batches          = 6.7263e-01 seconds
+   Time accumulating tallies       = 4.9894e-01 seconds
+   Time writing statepoints        = 8.0331e-02 seconds
+ Total time for finalization       = 8.9453e-04 seconds
+ Total time elapsed                = 2.0424e+00 seconds
+ Calculation Rate (active)         = 7433.48 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 

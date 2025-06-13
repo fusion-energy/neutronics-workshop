@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -320,6 +320,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
 <ul class="nav bd-sidenav">
@@ -818,7 +819,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;x [cm]&#39;, ylabel=&#39;y [cm]&#39;&gt;
 </pre></div>
 </div>
-<img alt="../../_images/2ed62330e1cac1b4ef9152f542aff14b0a8ee7a513eb4478f2969198aa22d169.png" src="../../_images/2ed62330e1cac1b4ef9152f542aff14b0a8ee7a513eb4478f2969198aa22d169.png" />
+<img alt="../../_images/d9d9ca066f0feb05109618026d2f163b4ca412f83d5a3a99e8ea1df9d7a59e2a.png" src="../../_images/d9d9ca066f0feb05109618026d2f163b4ca412f83d5a3a99e8ea1df9d7a59e2a.png" />
 </div>
 </div>
 <p>Now we run the simulation</p>
@@ -858,7 +859,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:46:56
+       Date/Time | 2025-06-13 16:12:23
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -961,16 +962,16 @@ document.write(`
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 3.4655e+00 seconds
-   Reading cross sections          = 3.3987e+00 seconds
- Total time in simulation          = 1.7638e+01 seconds
-   Time in transport only          = 1.7573e+01 seconds
-   Time in active batches          = 1.7638e+01 seconds
-   Time accumulating tallies       = 3.8954e-03 seconds
-   Time writing statepoints        = 5.4369e-02 seconds
- Total time for finalization       = 1.1680e-06 seconds
- Total time elapsed                = 2.1122e+01 seconds
- Calculation Rate (active)         = 28347.7 particles/second
+ Total time for initialization     = 3.4959e+00 seconds
+   Reading cross sections          = 3.4268e+00 seconds
+ Total time in simulation          = 1.7600e+01 seconds
+   Time in transport only          = 1.7517e+01 seconds
+   Time in active batches          = 1.7600e+01 seconds
+   Time accumulating tallies       = 1.8003e-02 seconds
+   Time writing statepoints        = 6.0205e-02 seconds
+ Total time for finalization       = 1.0620e-06 seconds
+ Total time elapsed                = 2.1111e+01 seconds
+ Calculation Rate (active)         = 28408.4 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 

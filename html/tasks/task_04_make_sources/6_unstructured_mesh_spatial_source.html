@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -320,6 +320,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
 <ul class="nav bd-sidenav">
@@ -620,33 +621,33 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Info    : Meshing 1D...
 Info    : [  0%] Meshing curve 1 (Circle)
-Info    : [  0%] Meshing curve 3 (BSpline)
 Info    : [  0%] Meshing curve 2 (BSpline)
-Info    : Done meshing 1D (Wall 0.0327619s, CPU 0.063553s)
+Info    : [  0%] Meshing curve 3 (BSpline)
+Info    : Done meshing 1D (Wall 0.0405287s, CPU 0.070269s)
 Info    : Meshing 2D...
 Info    : [  0%] Meshing surface 1 (Surface of Revolution, MeshAdapt)
 Info    : [  0%] Meshing surface 3 (Plane, MeshAdapt)
 Info    : [  0%] Meshing surface 2 (Plane, MeshAdapt)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Info    : Done meshing 2D (Wall 0.827776s, CPU 0.830014s)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Info    : Done meshing 2D (Wall 0.863793s, CPU 0.865273s)
 Info    : Meshing 3D...
 Info    : 3D Meshing 1 volume with 1 connected component
 Info    : Tetrahedrizing 308 nodes...
-Info    : Done tetrahedrizing 316 nodes (Wall 0.00452665s, CPU 0.004831s)
+Info    : Done tetrahedrizing 316 nodes (Wall 0.00480688s, CPU 0.003896s)
 Info    : Reconstructing mesh...
 Info    :  - Creating surface mesh
 Info    :  - Identifying boundary edges
 Info    :  - Recovering boundary
-Info    : Done reconstructing mesh (Wall 0.0104261s, CPU 0.011061s)
+Info    : Done reconstructing mesh (Wall 0.0111502s, CPU 0.010496s)
 Info    : Found volume 1
 Info    : It. 0 - 0 nodes created - worst tet radius 1.62031 (nodes removed 0 0)
 Info    : 3D refinement terminated (356 nodes total):
 Info    :  - 0 Delaunay cavities modified for star shapeness
 Info    :  - 0 nodes could not be inserted
-Info    :  - 1132 tetrahedra created in 0.00416659 sec. (271684 tets/s)
+Info    :  - 1132 tetrahedra created in 0.00364167 sec. (310846 tets/s)
 Info    : 0 node relocations
-Info    : Done meshing 3D (Wall 0.0260254s, CPU 0.027096s)
+Info    : Done meshing 3D (Wall 0.0276553s, CPU 0.025666s)
 Info    : Optimizing mesh...
 Info    : Optimizing volume 1
 Info    : Optimization starts (volume = 1.78813e+08) with worst = 0.0368935 / average = 0.73221:
@@ -660,7 +661,7 @@ Info    : 0.60 &lt; quality &lt; 0.70 :       187 elements
 Info    : 0.70 &lt; quality &lt; 0.80 :       380 elements
 Info    : 0.80 &lt; quality &lt; 0.90 :       301 elements
 Info    : 0.90 &lt; quality &lt; 1.00 :        98 elements
-Info    : 30 edge swaps, 0 node relocations (volume = 1.78813e+08): worst = 0.231078 / average = 0.748829 (Wall 0.000667519s, CPU 0.000818s)
+Info    : 30 edge swaps, 0 node relocations (volume = 1.78813e+08): worst = 0.231078 / average = 0.748829 (Wall 0.00061263s, CPU 0.000699s)
 Info    : No ill-shaped tets in the mesh :-)
 Info    : 0.00 &lt; quality &lt; 0.10 :         0 elements
 Info    : 0.10 &lt; quality &lt; 0.20 :         0 elements
@@ -672,7 +673,7 @@ Info    : 0.60 &lt; quality &lt; 0.70 :       194 elements
 Info    : 0.70 &lt; quality &lt; 0.80 :       377 elements
 Info    : 0.80 &lt; quality &lt; 0.90 :       303 elements
 Info    : 0.90 &lt; quality &lt; 1.00 :        98 elements
-Info    : Done optimizing mesh (Wall 0.00230712s, CPU 0.001547s)
+Info    : Done optimizing mesh (Wall 0.00200895s, CPU 0.002333s)
 Info    : 356 nodes 1767 elements
 Info    : Writing &#39;umesh.vtk&#39;...
 Info    : Done writing &#39;umesh.vtk&#39;
@@ -705,7 +706,7 @@ Info    : Done writing &#39;umesh.vtk&#39;
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:45:05
+       Date/Time | 2025-06-13 16:10:31
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -731,16 +732,16 @@ Info    : Done writing &#39;umesh.vtk&#39;
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 1.3054e-02 seconds
-   Reading cross sections          = 1.6641e-05 seconds
- Total time in simulation          = 8.9572e-02 seconds
-   Time in transport only          = 6.0396e-02 seconds
-   Time in active batches          = 8.9572e-02 seconds
-   Time accumulating tallies       = 8.8590e-06 seconds
-   Time writing statepoints        = 2.8299e-02 seconds
- Total time for finalization       = 5.4530e-06 seconds
- Total time elapsed                = 1.0268e-01 seconds
- Calculation Rate (active)         = 111642.0 particles/second
+ Total time for initialization     = 1.4438e-02 seconds
+   Reading cross sections          = 1.5812e-05 seconds
+ Total time in simulation          = 3.3386e-02 seconds
+   Time in transport only          = 6.0764e-03 seconds
+   Time in active batches          = 3.3386e-02 seconds
+   Time accumulating tallies       = 5.9250e-06 seconds
+   Time writing statepoints        = 2.6874e-02 seconds
+ Total time for finalization       = 4.4050e-06 seconds
+ Total time elapsed                = 4.7890e-02 seconds
+ Calculation Rate (active)         = 299526.0 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 

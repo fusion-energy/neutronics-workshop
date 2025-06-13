@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -320,6 +320,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
 <ul class="nav bd-sidenav">
@@ -666,7 +667,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:44:53
+       Date/Time | 2025-06-13 16:10:18
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -680,7 +681,9 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr91 from /home/jon/nuclear_data/neutron/Zr91.h5
- Reading Zr92 from /home/jon/nuclear_data/neutron/Zr92.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr92 from /home/jon/nuclear_data/neutron/Zr92.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Zr94 from /home/jon/nuclear_data/neutron/Zr94.h5
@@ -701,16 +704,16 @@ document.write(`
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 9.2024e-01 seconds
-   Reading cross sections          = 9.0421e-01 seconds
- Total time in simulation          = 2.2347e-02 seconds
-   Time in transport only          = 1.2665e-02 seconds
-   Time in active batches          = 2.2347e-02 seconds
-   Time accumulating tallies       = 3.8020e-06 seconds
-   Time writing statepoints        = 9.6229e-03 seconds
- Total time for finalization       = 1.2644e-03 seconds
- Total time elapsed                = 9.5078e-01 seconds
- Calculation Rate (active)         = 447.479 particles/second
+ Total time for initialization     = 1.1030e+00 seconds
+   Reading cross sections          = 1.0837e+00 seconds
+ Total time in simulation          = 2.5373e-02 seconds
+   Time in transport only          = 1.0390e-02 seconds
+   Time in active batches          = 2.5373e-02 seconds
+   Time accumulating tallies       = 4.7350e-06 seconds
+   Time writing statepoints        = 1.4907e-02 seconds
+ Total time for finalization       = 5.2772e-03 seconds
+ Total time elapsed                = 1.1412e+00 seconds
+ Calculation Rate (active)         = 394.123 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -753,7 +756,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;PolyData(0x557194413c90) at 0x75b9ddc57fa0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;PolyData(0x561deeb106c0) at 0x74f7669582e0&gt;
 </pre></div>
 </div>
 </div>
@@ -1353,7 +1356,7 @@ document.write(`
          License | https://docs.openmc.org/en/latest/license.html
          Version | 0.15.3-dev144
      Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-06 15:44:56
+       Date/Time | 2025-06-13 16:10:20
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...

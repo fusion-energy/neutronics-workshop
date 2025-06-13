@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -320,6 +320,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../tasks/task_20_CAD_shut_down_dose_rate/README.html">Task Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tasks/task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.html">Unstructured mesh R2S shutdown dose rate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks/task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.html">Unstructured mesh R2S shutdown dose rate with different materials</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Design study</span></p>
 <ul class="nav bd-sidenav">
@@ -524,11 +525,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="install-with-pip">
 <h1>Install with pip<a class="headerlink" href="#install-with-pip" title="Link to this heading">#</a></h1>
-<p>To install with pip first create a python 3.11 environment, then activate the environment and install all the required packages.</p>
 <p>This installation option supports Linux and has been tested most on Ubuntu.</p>
-<p>Currently just python 3.11 is supported, in the future other versions will be supported.</p>
-<p>If you need a different version of Python then as a tempory solution there are some Python wheels <a class="reference external" href="https://github.com/shimwell/wheels">here</a></p>
-<p>You will need Python installed which comes pre installed on most Linux distributions.</p>
+<p>You will need Python 3.10, 3.11 or 3.12 installed which comes pre installed on most Linux distributions.</p>
 <p>In addition to install with pip you will need pip installed.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">--</span><span class="n">yes</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
 </pre></div>
@@ -544,15 +542,24 @@ git<span class="w"> </span>clone<span class="w"> </span>https://github.com/fusio
 </pre></div>
 </div>
 <p>You should then be able to make a virtual environment.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.11<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.neutronicsworkshop
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.neutronicsworkshop
 </pre></div>
 </div>
 <p>Activate the virtual environment</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.neutronicsworkshop/bin/activate
 </pre></div>
 </div>
-<p>Then install the dependencies.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.11<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>https://raw.githubusercontent.com/fusion-energy/neutronics-workshop/refs/heads/main/requirements.txt
+<p>Then install the dependencies. The requirements are slightly different for each version of Python, so pick your Python version</p>
+<p>Python 3.10</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements_3.10.txt
+</pre></div>
+</div>
+<p>Python 3.11</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements_3</span><span class="mf">.11</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>Python 3.12</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements_3</span><span class="mf">.12</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>The download the nuclear data. This will create a <code class="docutils literal notranslate"><span class="pre">nuclear_data</span></code> folder in your home directory and download several Gb of data needed for the simulations.</p>
