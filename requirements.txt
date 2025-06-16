@@ -1,7 +1,8 @@
+--extra-index-url https://shimwell.github.io/wheels
+moab
+openmc
 cadquery
 jupyterlab
-https://github.com/shimwell/wheels/raw/refs/heads/main/moab/moab-wheels-ubuntu-latest/moab-5.5.1-cp311-cp311-manylinux_2_28_x86_64.whl
-https://github.com/shimwell/wheels/raw/refs/heads/main/openmc/openmc-0.15.3-cp311-cp311-manylinux_2_28_x86_64.whl
 paramak
 remove_dagmc_tags
 pyvista
