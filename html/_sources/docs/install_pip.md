@@ -32,19 +32,10 @@ Activate the virtual environment
 source .neutronicsworkshop/bin/activate
 ```
 
-Then install the dependencies. The requirements are slightly different for each version of Python, so pick your Python version
+Then install the Python dependencies.
 
-Python 3.10
 ```bash
-python3 -m pip install -r requirements_3.10.txt
-```
-Python 3.11
-```
-python3 -m pip install -r requirements_3.11.txt
-```
-Python 3.12
-```
-python3 -m pip install -r requirements_3.12.txt
+python3 -m pip install -r requirements.txt
 ```
 
 The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations.

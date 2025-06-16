@@ -699,19 +699,19 @@ document.write(`
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># put in your chosen material option</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">my_materials</span> <span class="o">=</span> <span class="n">openmc</span><span class="o">.</span><span class="n">Materials</span><span class="p">([</span><span class="n">mat_conductor</span><span class="p">,</span> <span class="s1">&#39;# your code here&#39;</span><span class="p">])</span>
 
-<span class="nn">File ~/.neutronicsworkshop/lib/python3.11/site-packages/openmc/material.py:1749,</span> in <span class="ni">Materials.__init__</span><span class="nt">(self, materials)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1746</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cross_sections</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">   </span><span class="mi">1748</span> <span class="k">if</span> <span class="n">materials</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1749</span>     <span class="bp">self</span> <span class="o">+=</span> <span class="n">materials</span>
+<span class="nn">File ~/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/material.py:1757,</span> in <span class="ni">Materials.__init__</span><span class="nt">(self, materials)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1754</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cross_sections</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1756</span> <span class="k">if</span> <span class="n">materials</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1757</span>     <span class="bp">self</span> <span class="o">+=</span> <span class="n">materials</span>
 
-<span class="nn">File ~/.neutronicsworkshop/lib/python3.11/site-packages/openmc/checkvalue.py:337,</span> in <span class="ni">CheckedList.__iadd__</span><span class="nt">(self, other)</span>
+<span class="nn">File ~/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/checkvalue.py:337,</span> in <span class="ni">CheckedList.__iadd__</span><span class="nt">(self, other)</span>
 <span class="g g-Whitespace">    </span><span class="mi">336</span> <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="ne">--&gt; </span><span class="mi">337</span>     <span class="n">check_type</span><span class="p">(</span><span class="s1">&#39;CheckedList add operand&#39;</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span>
 <span class="g g-Whitespace">    </span><span class="mi">338</span>                <span class="bp">self</span><span class="o">.</span><span class="n">expected_type</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">339</span>     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">other</span><span class="p">:</span>
 <span class="g g-Whitespace">    </span><span class="mi">340</span>         <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
-<span class="nn">File ~/.neutronicsworkshop/lib/python3.11/site-packages/openmc/checkvalue.py:62,</span> in <span class="ni">check_type</span><span class="nt">(name, value, expected_type, expected_iter_type, none_ok)</span>
+<span class="nn">File ~/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/checkvalue.py:62,</span> in <span class="ni">check_type</span><span class="nt">(name, value, expected_type, expected_iter_type, none_ok)</span>
 <span class="g g-Whitespace">     </span><span class="mi">59</span> <span class="k">else</span><span class="p">:</span>
 <span class="g g-Whitespace">     </span><span class="mi">60</span>     <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unable to set &quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot; to &quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&quot; since each &#39;</span>
 <span class="g g-Whitespace">     </span><span class="mi">61</span>            <span class="sa">f</span><span class="s1">&#39;item must be of type &quot;</span><span class="si">{</span><span class="n">expected_iter_type</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>

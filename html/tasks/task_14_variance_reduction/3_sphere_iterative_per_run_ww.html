@@ -842,9 +842,9 @@ document.write(`
                  | The OpenMC Monte Carlo Code
        Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
          License | https://docs.openmc.org/en/latest/license.html
-         Version | 0.15.3-dev144
-     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-13 16:22:44
+         Version | 0.15.3-dev183
+     Commit Hash | 08fd19daaaaee3a874eae765939c39e58cd459e1
+       Date/Time | 2025-06-16 11:06:33
   OpenMP Threads | 16
 
  Reading settings XML file...
@@ -857,10 +857,10 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading O17 from /home/jon/nuclear_data/neutron/O17.h5
- Reading O18 from /home/jon/nuclear_data/neutron/O18.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Minimum neutron data temperature: 294.0 K
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading O18 from /home/jon/nuclear_data/neutron/O18.h5
+ Minimum neutron data temperature: 294.0 K
  Maximum neutron data temperature: 294.0 K
  Reading tallies XML file...
  Preparing distributed cell instances...
@@ -874,10 +874,10 @@ document.write(`
  Simulating batch 2
  Simulating batch 3
  Simulating batch 4
- Simulating batch 5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
+ Simulating batch 6
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
@@ -887,17 +887,18 @@ document.write(`
  Creating state point statepoint.10.h5...
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
-
- Total time for initialization     = 2.2986e-01 seconds
-   Reading cross sections          = 1.9871e-01 seconds
- Total time in simulation          = 3.4432e-01 seconds
-   Time in transport only          = 2.5871e-01 seconds
-   Time in active batches          = 3.4432e-01 seconds
-   Time accumulating tallies       = 5.5974e-02 seconds
-   Time writing statepoints        = 2.7872e-02 seconds
- Total time for finalization       = 1.4770e-06 seconds
- Total time elapsed                = 5.7621e-01 seconds
- Calculation Rate (active)         = 7260.60 particles/second
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Total time for initialization     = 2.8643e-01 seconds
+   Reading cross sections          = 2.4813e-01 seconds
+ Total time in simulation          = 3.0891e-01 seconds
+   Time in transport only          = 2.2426e-01 seconds
+   Time in active batches          = 3.0891e-01 seconds
+   Time accumulating tallies       = 4.6664e-02 seconds
+   Time writing statepoints        = 3.6067e-02 seconds
+ Total time for finalization       = 2.2270e-06 seconds
+ Total time elapsed                = 5.9798e-01 seconds
+ Calculation Rate (active)         = 8093.05 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -926,7 +927,9 @@ document.write(`
   #005: /root/hdf5/src/H5Dio.c line 620 in H5D__write(): no input buffer
     major: Invalid arguments to routine
     minor: Bad value
-/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
   warn(msg, IDWarning)
 </pre></div>
 </div>
@@ -971,16 +974,16 @@ document.write(`
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 2.2986e-01 seconds
-   Reading cross sections          = 1.9871e-01 seconds
- Total time in simulation          = 5.1995e+00 seconds
-   Time in transport only          = 5.0749e+00 seconds
-   Time in active batches          = 5.1995e+00 seconds
-   Time accumulating tallies       = 7.0140e-02 seconds
-   Time writing statepoints        = 5.7873e-02 seconds
- Total time for finalization       = 2.5140e-06 seconds
- Total time elapsed                = 5.4321e+00 seconds
- Calculation Rate (active)         = 480.814 particles/second
+ Total time for initialization     = 2.8643e-01 seconds
+   Reading cross sections          = 2.4813e-01 seconds
+ Total time in simulation          = 5.5264e+00 seconds
+   Time in transport only          = 5.4080e+00 seconds
+   Time in active batches          = 5.5264e+00 seconds
+   Time accumulating tallies       = 5.8689e-02 seconds
+   Time writing statepoints        = 8.9259e-02 seconds
+ Total time for finalization       = 3.8800e-06 seconds
+ Total time elapsed                = 5.8163e+00 seconds
+ Calculation Rate (active)         = 452.376 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1010,9 +1013,9 @@ reshaped_ww_vals.shape (20, 20, 20)
   #005: /root/hdf5/src/H5Dio.c line 620 in H5D__write(): no input buffer
     major: Invalid arguments to routine
     minor: Bad value
-/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
+/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
   warn(msg, IDWarning)
-/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
+/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
   warn(msg, IDWarning)
 </pre></div>
 </div>
@@ -1054,16 +1057,16 @@ reshaped_ww_vals.shape (20, 20, 20)
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 2.2986e-01 seconds
-   Reading cross sections          = 1.9871e-01 seconds
- Total time in simulation          = 1.5156e+01 seconds
-   Time in transport only          = 1.4966e+01 seconds
-   Time in active batches          = 1.5156e+01 seconds
-   Time accumulating tallies       = 1.1410e-01 seconds
-   Time writing statepoints        = 8.5993e-02 seconds
- Total time for finalization       = 5.1400e-06 seconds
- Total time elapsed                = 1.5389e+01 seconds
- Calculation Rate (active)         = 164.951 particles/second
+ Total time for initialization     = 2.8643e-01 seconds
+   Reading cross sections          = 2.4813e-01 seconds
+ Total time in simulation          = 1.5095e+01 seconds
+   Time in transport only          = 1.4947e+01 seconds
+   Time in active batches          = 1.5095e+01 seconds
+   Time accumulating tallies       = 6.5249e-02 seconds
+   Time writing statepoints        = 1.2711e-01 seconds
+ Total time for finalization       = 5.0350e-06 seconds
+ Total time elapsed                = 1.5386e+01 seconds
+ Calculation Rate (active)         = 165.613 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1093,9 +1096,9 @@ reshaped_ww_vals.shape (20, 20, 20)
   #005: /root/hdf5/src/H5Dio.c line 620 in H5D__write(): no input buffer
     major: Invalid arguments to routine
     minor: Bad value
-/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
+/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
   warn(msg, IDWarning)
-/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
+/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
   warn(msg, IDWarning)
 </pre></div>
 </div>
@@ -1137,16 +1140,16 @@ reshaped_ww_vals.shape (20, 20, 20)
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 2.2986e-01 seconds
-   Reading cross sections          = 1.9871e-01 seconds
- Total time in simulation          = 2.5457e+01 seconds
-   Time in transport only          = 2.5175e+01 seconds
-   Time in active batches          = 2.5457e+01 seconds
-   Time accumulating tallies       = 1.5829e-01 seconds
-   Time writing statepoints        = 1.4177e-01 seconds
- Total time for finalization       = 6.1840e-06 seconds
- Total time elapsed                = 2.5691e+01 seconds
- Calculation Rate (active)         = 98.2056 particles/second
+ Total time for initialization     = 2.8643e-01 seconds
+   Reading cross sections          = 2.4813e-01 seconds
+ Total time in simulation          = 2.4500e+01 seconds
+   Time in transport only          = 2.4301e+01 seconds
+   Time in active batches          = 2.4500e+01 seconds
+   Time accumulating tallies       = 8.2036e-02 seconds
+   Time writing statepoints        = 1.7982e-01 seconds
+ Total time for finalization       = 7.1640e-06 seconds
+ Total time elapsed                = 2.4792e+01 seconds
+ Calculation Rate (active)         = 102.040 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1154,7 +1157,6 @@ reshaped_ww_vals.shape (20, 20, 20)
 
  Exporting weight windows to weight_windows3.h5...
  Creating state point statepoint_simulation_3.h5...
-reshaped_ww_vals.shape (20, 20, 20)
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HDF5-DIAG: Error detected in HDF5 (1.14.4-3) thread 0:
@@ -1176,10 +1178,15 @@ reshaped_ww_vals.shape (20, 20, 20)
   #005: /root/hdf5/src/H5Dio.c line 620 in H5D__write(): no input buffer
     major: Invalid arguments to routine
     minor: Bad value
-/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
   warn(msg, IDWarning)
-/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
+/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
   warn(msg, IDWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>reshaped_ww_vals.shape (20, 20, 20)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Maximum neutron transport energy: 20000000.0 eV for H1
@@ -1220,16 +1227,16 @@ reshaped_ww_vals.shape (20, 20, 20)
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 2.2986e-01 seconds
-   Reading cross sections          = 1.9871e-01 seconds
- Total time in simulation          = 3.5675e+01 seconds
-   Time in transport only          = 3.5346e+01 seconds
-   Time in active batches          = 3.5675e+01 seconds
-   Time accumulating tallies       = 1.6741e-01 seconds
-   Time writing statepoints        = 1.8536e-01 seconds
- Total time for finalization       = 7.7330e-06 seconds
- Total time elapsed                = 3.5909e+01 seconds
- Calculation Rate (active)         = 70.0777 particles/second
+ Total time for initialization     = 2.8643e-01 seconds
+   Reading cross sections          = 2.4813e-01 seconds
+ Total time in simulation          = 3.6520e+01 seconds
+   Time in transport only          = 3.6237e+01 seconds
+   Time in active batches          = 3.6520e+01 seconds
+   Time accumulating tallies       = 1.3753e-01 seconds
+   Time writing statepoints        = 2.2293e-01 seconds
+ Total time for finalization       = 8.9590e-06 seconds
+ Total time elapsed                = 3.6812e+01 seconds
+ Calculation Rate (active)         = 68.4550 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1259,9 +1266,9 @@ reshaped_ww_vals.shape (20, 20, 20)
   #005: /root/hdf5/src/H5Dio.c line 620 in H5D__write(): no input buffer
     major: Invalid arguments to routine
     minor: Bad value
-/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
+/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/mixin.py:70: IDWarning: Another MeshBase instance already exists with id=2.
   warn(msg, IDWarning)
-/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
+/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/mixin.py:70: IDWarning: Another WeightWindows instance already exists with id=1.
   warn(msg, IDWarning)
 </pre></div>
 </div>
@@ -1288,7 +1295,7 @@ reshaped_ww_vals.shape (20, 20, 20)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/40cc10a2e8e27e1e87d9b6bdeb754facebee0fd67fb27d4abe857060c7b27d00.png" src="../../_images/40cc10a2e8e27e1e87d9b6bdeb754facebee0fd67fb27d4abe857060c7b27d00.png" />
+<img alt="../../_images/a47c4e1047e1d2edd1150a19482fc2e7f6bd5cfc70344218f00b4eab62436690.png" src="../../_images/a47c4e1047e1d2edd1150a19482fc2e7f6bd5cfc70344218f00b4eab62436690.png" />
 </div>
 </div>
 <p>Learning outcome</p>

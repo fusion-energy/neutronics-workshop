@@ -582,6 +582,8 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rm: cannot remove &#39;settings.xm&#39;: No such file or directory
 rm: cannot remove &#39;model.xml&#39;: No such file or directory
+rm: cannot remove &#39;geometry.xml&#39;: No such file or directory
+rm: cannot remove &#39;settings.xml&#39;: No such file or directory
 </pre></div>
 </div>
 </div>
@@ -684,9 +686,6 @@ set the time steps and corresponding source rates
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loading chain in TransportOperator
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                %%%%%%%%%%%%%%%
                            %%%%%%%%%%%%%%%%%%%%%%%%
                         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -714,9 +713,9 @@ set the time steps and corresponding source rates
                  | The OpenMC Monte Carlo Code
        Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
          License | https://docs.openmc.org/en/latest/license.html
-         Version | 0.15.3-dev144
-     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-13 16:15:45
+         Version | 0.15.3-dev183
+     Commit Hash | 08fd19daaaaee3a874eae765939c39e58cd459e1
+       Date/Time | 2025-06-16 10:59:54
   OpenMP Threads | 16
 
  Reading settings XML file...
@@ -729,12 +728,14 @@ set the time steps and corresponding source rates
  Reading Li6 from /home/jon/nuclear_data/neutron/Li6.h5
  Reading Li7 from /home/jon/nuclear_data/neutron/Li7.h5
  Reading O16 from /home/jon/nuclear_data/neutron/O16.h5
- Reading O17 from /home/jon/nuclear_data/neutron/O17.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading O18 from /home/jon/nuclear_data/neutron/O18.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading O17 from /home/jon/nuclear_data/neutron/O17.h5
+ Reading O18 from /home/jon/nuclear_data/neutron/O18.h5
  Reading Si28 from /home/jon/nuclear_data/neutron/Si28.h5
- Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si29 from /home/jon/nuclear_data/neutron/Si29.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si30 from /home/jon/nuclear_data/neutron/Si30.h5
@@ -747,11 +748,11 @@ set the time steps and corresponding source rates
 [openmc.deplete] t=0.0 s, dt=31536000 s, source=1000000000.0
  Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
  Reading H2 from /home/jon/nuclear_data/neutron/H2.h5
+ Reading H3 from /home/jon/nuclear_data/neutron/H3.h5
+ Reading He3 from /home/jon/nuclear_data/neutron/He3.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading H3 from /home/jon/nuclear_data/neutron/H3.h5
- Reading He3 from /home/jon/nuclear_data/neutron/He3.h5
- Reading He4 from /home/jon/nuclear_data/neutron/He4.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading He4 from /home/jon/nuclear_data/neutron/He4.h5
  Reading Be9 from /home/jon/nuclear_data/neutron/Be9.h5
  Reading B10 from /home/jon/nuclear_data/neutron/B10.h5
  Reading B11 from /home/jon/nuclear_data/neutron/B11.h5
@@ -771,7 +772,10 @@ set the time steps and corresponding source rates
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Ne22 from /home/jon/nuclear_data/neutron/Ne22.h5
- Reading Na22 from /home/jon/nuclear_data/neutron/Na22.h5
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Na22 from /home/jon/nuclear_data/neutron/Na22.h5
+ Reading Na23 from /home/jon/nuclear_data/neutron/Na23.h5
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Negative value(s) found on probability table for nuclide Na22 at 250K
@@ -782,15 +786,12 @@ set the time steps and corresponding source rates
  WARNING: Negative value(s) found on probability table for nuclide Na22 at 2500K
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Na23 from /home/jon/nuclear_data/neutron/Na23.h5
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mg24 from /home/jon/nuclear_data/neutron/Mg24.h5
  Reading Mg25 from /home/jon/nuclear_data/neutron/Mg25.h5
- Reading Mg26 from /home/jon/nuclear_data/neutron/Mg26.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Al27 from /home/jon/nuclear_data/neutron/Al27.h5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Mg26 from /home/jon/nuclear_data/neutron/Mg26.h5
+ Reading Al27 from /home/jon/nuclear_data/neutron/Al27.h5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si31 from /home/jon/nuclear_data/neutron/Si31.h5
@@ -799,10 +800,10 @@ set the time steps and corresponding source rates
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading Si32 from /home/jon/nuclear_data/neutron/Si32.h5
  Reading P31 from /home/jon/nuclear_data/neutron/P31.h5
  Reading S32 from /home/jon/nuclear_data/neutron/S32.h5
- Reading S33 from /home/jon/nuclear_data/neutron/S33.h5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Maximum neutron transport energy: 20000000.0 eV for Li6
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Reading S33 from /home/jon/nuclear_data/neutron/S33.h5
+ Maximum neutron transport energy: 20000000.0 eV for Li6
 
  ===============&gt;     FIXED SOURCE TRANSPORT SIMULATION     &lt;===============
 
@@ -816,16 +817,16 @@ set the time steps and corresponding source rates
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 1.0387e+00 seconds
-   Reading cross sections          = 7.3610e-01 seconds
- Total time in simulation          = 2.6397e+00 seconds
-   Time in transport only          = 2.6266e+00 seconds
-   Time in active batches          = 2.6397e+00 seconds
-   Time accumulating tallies       = 2.5548e-04 seconds
-   Time writing statepoints        = 1.2719e-02 seconds
- Total time for finalization       = 3.2334e-04 seconds
- Total time elapsed                = 3.7030e+00 seconds
- Calculation Rate (active)         = 3788.30 particles/second
+ Total time for initialization     = 1.1779e+00 seconds
+   Reading cross sections          = 8.7066e-01 seconds
+ Total time in simulation          = 2.7461e+00 seconds
+   Time in transport only          = 2.7328e+00 seconds
+   Time in active batches          = 2.7461e+00 seconds
+   Time accumulating tallies       = 3.6352e-04 seconds
+   Time writing statepoints        = 1.2858e-02 seconds
+ Total time for finalization       = 2.8755e-04 seconds
+ Total time elapsed                = 3.9531e+00 seconds
+ Calculation Rate (active)         = 3641.56 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -834,7 +835,7 @@ set the time steps and corresponding source rates
  Creating state point openmc_simulation_n0.h5...
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/uncertainties/core.py:1024: UserWarning: Using UFloat objects with std_dev==0 may give unexpected results.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/uncertainties/core.py:1024: UserWarning: Using UFloat objects with std_dev==0 may give unexpected results.
   warn(&quot;Using UFloat objects with std_dev==0 may give unexpected results.&quot;)
 </pre></div>
 </div>
@@ -855,14 +856,14 @@ set the time steps and corresponding source rates
 
  Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total time in simulation          = 2.5955e+00 seconds
-   Time in transport only          = 2.5619e+00 seconds
-   Time in active batches          = 2.5955e+00 seconds
-   Time accumulating tallies       = 2.3359e-04 seconds
-   Time writing statepoints        = 3.2860e-02 seconds
- Total time for finalization       = 3.8861e-04 seconds
- Total time elapsed                = 2.6210e+00 seconds
- Calculation Rate (active)         = 3852.80 particles/second
+ Total time in simulation          = 2.6447e+00 seconds
+   Time in transport only          = 2.6091e+00 seconds
+   Time in active batches          = 2.6447e+00 seconds
+   Time accumulating tallies       = 2.4386e-04 seconds
+   Time writing statepoints        = 3.5311e-02 seconds
+ Total time for finalization       = 3.6227e-04 seconds
+ Total time elapsed                = 2.6711e+00 seconds
+ Calculation Rate (active)         = 3781.08 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -888,14 +889,14 @@ set the time steps and corresponding source rates
 
  Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total time in simulation          = 2.6133e+00 seconds
-   Time in transport only          = 2.5902e+00 seconds
-   Time in active batches          = 2.6133e+00 seconds
-   Time accumulating tallies       = 5.0623e-05 seconds
-   Time writing statepoints        = 2.3036e-02 seconds
- Total time for finalization       = 3.5479e-04 seconds
- Total time elapsed                = 2.6418e+00 seconds
- Calculation Rate (active)         = 3826.51 particles/second
+ Total time in simulation          = 2.6394e+00 seconds
+   Time in transport only          = 2.6077e+00 seconds
+   Time in active batches          = 2.6394e+00 seconds
+   Time accumulating tallies       = 1.9346e-04 seconds
+   Time writing statepoints        = 3.1431e-02 seconds
+ Total time for finalization       = 4.1898e-04 seconds
+ Total time elapsed                = 2.6727e+00 seconds
+ Calculation Rate (active)         = 3788.79 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -921,14 +922,14 @@ set the time steps and corresponding source rates
 
  Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total time in simulation          = 2.5701e+00 seconds
-   Time in transport only          = 2.5320e+00 seconds
-   Time in active batches          = 2.5701e+00 seconds
-   Time accumulating tallies       = 4.9059e-03 seconds
-   Time writing statepoints        = 3.3125e-02 seconds
- Total time for finalization       = 3.6957e-04 seconds
- Total time elapsed                = 2.5990e+00 seconds
- Calculation Rate (active)         = 3890.84 particles/second
+ Total time in simulation          = 2.6354e+00 seconds
+   Time in transport only          = 2.5454e+00 seconds
+   Time in active batches          = 2.6354e+00 seconds
+   Time accumulating tallies       = 2.9731e-02 seconds
+   Time writing statepoints        = 6.0232e-02 seconds
+ Total time for finalization       = 5.9436e-04 seconds
+ Total time elapsed                = 2.6666e+00 seconds
+ Calculation Rate (active)         = 3794.45 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -954,14 +955,14 @@ set the time steps and corresponding source rates
 
  Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total time in simulation          = 2.6079e+00 seconds
-   Time in transport only          = 2.5601e+00 seconds
-   Time in active batches          = 2.6079e+00 seconds
-   Time accumulating tallies       = 4.5969e-05 seconds
-   Time writing statepoints        = 4.7731e-02 seconds
- Total time for finalization       = 3.6140e-04 seconds
- Total time elapsed                = 2.6410e+00 seconds
- Calculation Rate (active)         = 3834.44 particles/second
+ Total time in simulation          = 2.6599e+00 seconds
+   Time in transport only          = 2.6073e+00 seconds
+   Time in active batches          = 2.6599e+00 seconds
+   Time accumulating tallies       = 1.2384e-02 seconds
+   Time writing statepoints        = 4.0100e-02 seconds
+ Total time for finalization       = 4.4635e-04 seconds
+ Total time elapsed                = 2.6910e+00 seconds
+ Calculation Rate (active)         = 3759.57 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -987,14 +988,14 @@ set the time steps and corresponding source rates
 
  Total time for initialization     = 0.0000e+00 seconds
    Reading cross sections          = 0.0000e+00 seconds
- Total time in simulation          = 2.5885e+00 seconds
-   Time in transport only          = 2.5555e+00 seconds
-   Time in active batches          = 2.5885e+00 seconds
-   Time accumulating tallies       = 1.4808e-02 seconds
-   Time writing statepoints        = 1.8160e-02 seconds
- Total time for finalization       = 3.3015e-04 seconds
- Total time elapsed                = 2.6181e+00 seconds
- Calculation Rate (active)         = 3863.22 particles/second
+ Total time in simulation          = 2.5314e+00 seconds
+   Time in transport only          = 2.5137e+00 seconds
+   Time in active batches          = 2.5314e+00 seconds
+   Time accumulating tallies       = 4.3289e-04 seconds
+   Time writing statepoints        = 1.7192e-02 seconds
+ Total time for finalization       = 3.0800e-04 seconds
+ Total time elapsed                = 2.5626e+00 seconds
+ Calculation Rate (active)         = 3950.41 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
@@ -1016,12 +1017,14 @@ set the time steps and corresponding source rates
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>depletion step 0 TBR=1.0176486779158547
-depletion step 1 TBR=1.0599517005046608
-depletion step 2 TBR=1.0413439227976107
-depletion step 3 TBR=1.0269005829801914
-depletion step 4 TBR=1.025766839639844
-depletion step 5 TBR=1.0316594159536643
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>depletion step 0 TBR=1.0176486779158558
+depletion step 1 TBR=1.0599517005046601
+depletion step 2 TBR=1.0413439227976085
+depletion step 3 TBR=1.0269005829801905
+depletion step 4 TBR=1.0257668396398385
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>depletion step 5 TBR=1.0316594159536616
 </pre></div>
 </div>
 </div>
@@ -1037,7 +1040,7 @@ depletion step 5 TBR=1.0316594159536643
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop/lib/python3.11/site-packages/openmc/deplete/results.py:94: FutureWarning: The ResultsList.from_hdf5(...) method is no longer necessary and will be removed in a future version of OpenMC. Use Results(...) instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc/deplete/results.py:94: FutureWarning: The ResultsList.from_hdf5(...) method is no longer necessary and will be removed in a future version of OpenMC. Use Results(...) instead.
   warn(
 </pre></div>
 </div>

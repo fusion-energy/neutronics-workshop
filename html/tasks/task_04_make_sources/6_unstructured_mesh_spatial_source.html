@@ -619,35 +619,39 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jon/.neutronicsworkshop_3.12/lib/python3.12/site-packages/openmc_source_plotter/core.py:12: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+  import pkg_resources
+</pre></div>
+</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Info    : Meshing 1D...
 Info    : [  0%] Meshing curve 1 (Circle)
 Info    : [  0%] Meshing curve 2 (BSpline)
 Info    : [  0%] Meshing curve 3 (BSpline)
-Info    : Done meshing 1D (Wall 0.0405287s, CPU 0.070269s)
+Info    : Done meshing 1D (Wall 0.0406651s, CPU 0.075045s)
 Info    : Meshing 2D...
-Info    : [  0%] Meshing surface 1 (Surface of Revolution, MeshAdapt)
 Info    : [  0%] Meshing surface 3 (Plane, MeshAdapt)
 Info    : [  0%] Meshing surface 2 (Plane, MeshAdapt)
+Info    : [  0%] Meshing surface 1 (Surface of Revolution, MeshAdapt)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Info    : Done meshing 2D (Wall 0.863793s, CPU 0.865273s)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Info    : Done meshing 2D (Wall 0.873499s, CPU 0.877097s)
 Info    : Meshing 3D...
 Info    : 3D Meshing 1 volume with 1 connected component
 Info    : Tetrahedrizing 308 nodes...
-Info    : Done tetrahedrizing 316 nodes (Wall 0.00480688s, CPU 0.003896s)
+Info    : Done tetrahedrizing 316 nodes (Wall 0.00582352s, CPU 0.005226s)
 Info    : Reconstructing mesh...
 Info    :  - Creating surface mesh
 Info    :  - Identifying boundary edges
 Info    :  - Recovering boundary
-Info    : Done reconstructing mesh (Wall 0.0111502s, CPU 0.010496s)
+Info    : Done reconstructing mesh (Wall 0.0124025s, CPU 0.011722s)
 Info    : Found volume 1
 Info    : It. 0 - 0 nodes created - worst tet radius 1.62031 (nodes removed 0 0)
 Info    : 3D refinement terminated (356 nodes total):
 Info    :  - 0 Delaunay cavities modified for star shapeness
 Info    :  - 0 nodes could not be inserted
-Info    :  - 1132 tetrahedra created in 0.00364167 sec. (310846 tets/s)
+Info    :  - 1132 tetrahedra created in 0.00666945 sec. (169729 tets/s)
 Info    : 0 node relocations
-Info    : Done meshing 3D (Wall 0.0276553s, CPU 0.025666s)
+Info    : Done meshing 3D (Wall 0.0356273s, CPU 0.03545s)
 Info    : Optimizing mesh...
 Info    : Optimizing volume 1
 Info    : Optimization starts (volume = 1.78813e+08) with worst = 0.0368935 / average = 0.73221:
@@ -661,7 +665,7 @@ Info    : 0.60 &lt; quality &lt; 0.70 :       187 elements
 Info    : 0.70 &lt; quality &lt; 0.80 :       380 elements
 Info    : 0.80 &lt; quality &lt; 0.90 :       301 elements
 Info    : 0.90 &lt; quality &lt; 1.00 :        98 elements
-Info    : 30 edge swaps, 0 node relocations (volume = 1.78813e+08): worst = 0.231078 / average = 0.748829 (Wall 0.00061263s, CPU 0.000699s)
+Info    : 30 edge swaps, 0 node relocations (volume = 1.78813e+08): worst = 0.231078 / average = 0.748829 (Wall 0.000928081s, CPU 0.001094s)
 Info    : No ill-shaped tets in the mesh :-)
 Info    : 0.00 &lt; quality &lt; 0.10 :         0 elements
 Info    : 0.10 &lt; quality &lt; 0.20 :         0 elements
@@ -673,7 +677,7 @@ Info    : 0.60 &lt; quality &lt; 0.70 :       194 elements
 Info    : 0.70 &lt; quality &lt; 0.80 :       377 elements
 Info    : 0.80 &lt; quality &lt; 0.90 :       303 elements
 Info    : 0.90 &lt; quality &lt; 1.00 :        98 elements
-Info    : Done optimizing mesh (Wall 0.00200895s, CPU 0.002333s)
+Info    : Done optimizing mesh (Wall 0.00336504s, CPU 0.003638s)
 Info    : 356 nodes 1767 elements
 Info    : Writing &#39;umesh.vtk&#39;...
 Info    : Done writing &#39;umesh.vtk&#39;
@@ -704,9 +708,9 @@ Info    : Done writing &#39;umesh.vtk&#39;
                  | The OpenMC Monte Carlo Code
        Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
          License | https://docs.openmc.org/en/latest/license.html
-         Version | 0.15.3-dev144
-     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-13 16:10:31
+         Version | 0.15.3-dev183
+     Commit Hash | 08fd19daaaaee3a874eae765939c39e58cd459e1
+       Date/Time | 2025-06-16 10:57:29
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -729,19 +733,20 @@ Info    : Done writing &#39;umesh.vtk&#39;
  Simulating batch 9
  Simulating batch 10
  Creating state point statepoint.10.h5...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- =======================&gt;     TIMING STATISTICS     &lt;=======================
-
- Total time for initialization     = 1.4438e-02 seconds
-   Reading cross sections          = 1.5812e-05 seconds
- Total time in simulation          = 3.3386e-02 seconds
-   Time in transport only          = 6.0764e-03 seconds
-   Time in active batches          = 3.3386e-02 seconds
-   Time accumulating tallies       = 5.9250e-06 seconds
-   Time writing statepoints        = 2.6874e-02 seconds
- Total time for finalization       = 4.4050e-06 seconds
- Total time elapsed                = 4.7890e-02 seconds
- Calculation Rate (active)         = 299526.0 particles/second
+ Total time for initialization     = 3.2868e-02 seconds
+   Reading cross sections          = 1.8175e-05 seconds
+ Total time in simulation          = 2.8056e-02 seconds
+   Time in transport only          = 1.1007e-02 seconds
+   Time in active batches          = 2.8056e-02 seconds
+   Time accumulating tallies       = 6.1380e-06 seconds
+   Time writing statepoints        = 1.6443e-02 seconds
+ Total time for finalization       = 3.2470e-06 seconds
+ Total time elapsed                = 6.1056e-02 seconds
+ Calculation Rate (active)         = 356427.0 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 

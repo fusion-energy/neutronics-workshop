@@ -648,9 +648,9 @@ document.write(`
                  | The OpenMC Monte Carlo Code
        Copyright | 2011-2025 MIT, UChicago Argonne LLC, and contributors
          License | https://docs.openmc.org/en/latest/license.html
-         Version | 0.15.3-dev144
-     Commit Hash | 14ab4d3b6f3d77b73e8bb480782bbe1bdd56483d
-       Date/Time | 2025-06-13 16:30:42
+         Version | 0.15.3-dev183
+     Commit Hash | 08fd19daaaaee3a874eae765939c39e58cd459e1
+       Date/Time | 2025-06-16 11:12:58
   OpenMP Threads | 16
 
  Reading model XML file &#39;model.xml&#39; ...
@@ -658,15 +658,13 @@ document.write(`
 Using the DOUBLE-DOWN interface to Embree.
 Loading file /home/jon/neutronics-workshop/tasks/task_18_CAD_mesh_fast_flux/dagmc.h5m
 Initializing the GeomQueryTool...
-Using faceting tolerance: 5.10836e-315
+Using faceting tolerance: 1.88937e-315
 Building acceleration data structures...
  Reading H1 from /home/jon/nuclear_data/neutron/H1.h5
  Minimum neutron data temperature: 294.0 K
  Maximum neutron data temperature: 294.0 K
  Getting tet adjacencies...
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Building adaptive k-d tree for tet mesh with ID 1...
+ Building adaptive k-d tree for tet mesh with ID 1...
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Preparing distributed cell instances...
@@ -679,49 +677,41 @@ Building acceleration data structures...
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 2
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 3
+ Simulating batch 3
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 4
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 5
+ Simulating batch 5
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 6
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 7
+ Simulating batch 7
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 8
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 9
+ Simulating batch 9
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Simulating batch 10
+ Creating state point statepoint.10.h5...
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Creating state point statepoint.10.h5...
- WARNING: Output for a MOAB mesh (mesh 1) was requested but will not be written.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> WARNING: Output for a MOAB mesh (mesh 1) was requested but will not be written.
           Please use the Python API to generated the desired VTK tetrahedral
           mesh.
 
  =======================&gt;     TIMING STATISTICS     &lt;=======================
 
- Total time for initialization     = 2.0450e+00 seconds
-   Reading cross sections          = 2.0184e-02 seconds
- Total time in simulation          = 5.0239e+00 seconds
-   Time in transport only          = 4.6967e+00 seconds
-   Time in active batches          = 5.0239e+00 seconds
-   Time accumulating tallies       = 2.5208e-01 seconds
-   Time writing statepoints        = 6.3141e-02 seconds
- Total time for finalization       = 7.8947e-03 seconds
- Total time elapsed                = 7.0773e+00 seconds
- Calculation Rate (active)         = 9952.36 particles/second
+ Total time for initialization     = 7.2176e-01 seconds
+   Reading cross sections          = 8.9765e-03 seconds
+ Total time in simulation          = 1.9540e+00 seconds
+   Time in transport only          = 1.9161e+00 seconds
+   Time in active batches          = 1.9540e+00 seconds
+   Time accumulating tallies       = 8.4683e-03 seconds
+   Time writing statepoints        = 2.6032e-02 seconds
+ Total time for finalization       = 3.1841e-03 seconds
+ Total time elapsed                = 2.6794e+00 seconds
+ Calculation Rate (active)         = 25588.4 particles/second
 
  ============================&gt;     RESULTS     &lt;============================
 
