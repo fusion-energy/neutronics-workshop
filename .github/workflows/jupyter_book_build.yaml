@@ -69,7 +69,9 @@ jobs:
     #     path: _build/.jupyter_cache
     #     key: jupyter-book-cache-${{ hashFiles('requirements.txt') }}
 
-    # Build the book
+    # Build the 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: Build the book
         run: |
           pip install jupyter-book
