@@ -3,7 +3,7 @@ source activate neutronicsworkshop
 mkdir -p ~/nuclear_data
 
 # Download and extract ENDF/b 8.0 chain file
-download_endf_chain -r b8.0 -d ~/nuclear_data -f chain-endf-b8.0.xml
+download_chain -l endf -r b8.0 -d ~/nuclear_data -f chain-endf-b8.0.xml
 
 # Download and extract ENDF/b 8.0 cross section files
 wget -q -O - https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz | tar -C ~/nuclear_data -xJ
