@@ -71,10 +71,11 @@ jobs:
     #     key: jupyter-book-cache-${{ hashFiles('requirements.txt') }}
 
     # Build the 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
       - name: Build the book
         run: |
+          jupyter nbconvert --to notebook --execute --inplace tasks/*/*.ipynb
           pip install jupyter-book
           jupyter-book build .
 
