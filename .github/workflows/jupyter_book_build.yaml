@@ -2,15 +2,15 @@ name: deploy-book
 
 # Run this when the master or main branch changes
 on:
+  workflow_dispatch:
+  release:
+    types: [created]
+  pull_request:
+    branches:
+      - main
   push:
     branches:
-    - main
-    # If your git repository has the Jupyter Book within some-subfolder next to
-    # unrelated files, you can make this run only if a file within that specific
-    # folder has been modified.
-    #
-    # paths:
-    # - some-subfolder/**
+      - main
 
 permissions:
   contents: write
@@ -31,14 +31,14 @@ jobs:
     - uses: actions/checkout@v4
 
     # Install dependencies
-    # - name: Set up Python 3.11
-    #   uses: actions/setup-python@v5
-    #   with:
-    #     python-version: '3.11'
-    #     cache: pip # Implicitly uses requirements.txt for cache key
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: pip # Implicitly uses requirements.txt for cache key
 
-    # - name: Install dependencies
-    #   run: pip install -r requirements.txt
+    - name: Install dependencies
+      run: pip install -r requirements.txt
     
       # TODO cache this step
 #    - name: Cache nuclear data
@@ -48,9 +48,9 @@ jobs:
 #        path: nuclear_data
 #        key: nuclear-data-${{ hashFiles('postBuild') }}
 
-    # - name: Download nuclear data
+    - name: Download nuclear data
     #   if: steps.cache-nuclear-data.outputs.cache-hit != 'true'
-    #   run: bash postBuild
+      run: bash postBuild
 
     # (optional) Cache your executed notebooks between runs
     # if you have config:
@@ -82,11 +82,14 @@ jobs:
 
     # Upload the book's HTML as an artifact
     - name: Upload artifact
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: actions/upload-pages-artifact@v3
       with:
         path: "_build/html"
+        name: github-pages
 
     # Deploy the book's HTML to GitHub Pages
     - name: Deploy to GitHub Pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       id: deployment
       uses: actions/deploy-pages@v4
