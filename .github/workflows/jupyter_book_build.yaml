@@ -82,7 +82,6 @@ jobs:
 
     # Upload the book's HTML as an artifact
     - name: Upload artifact
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: actions/upload-pages-artifact@v3
       with:
         path: "_build/html"
