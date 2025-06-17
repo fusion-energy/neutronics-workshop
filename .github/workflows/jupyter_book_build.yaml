@@ -45,8 +45,20 @@ jobs:
 
       - name: Download nuclear data
       #   if: steps.cache-nuclear-data.outputs.cache-hit != 'true'
-        run: sudo bash postBuild
-    
+        run: |
+          download_chain -l endf -r b8.0 -b SFR -d "/home/runner/ -f chain-endf-b8.0.xml
+          wget -q -O - https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz | tar -C /home/runner -xJ
+          mv /home/runner/endfb-viii.0-hdf5/* /home/runner
+          wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz -O /home/runner/WMP_Library_v1.1.tar.gz"
+          tar -xzf /home/runner/WMP_Library_v1.1.tar.gz" -C /home/runner
+
+        # Download and extract ENDF/b 8.0 chain file with the SFR branching ratios to ~/nuclear_data/chain-endf-b8.0.xml
+            # TODO replaced with TENDL FNS chain or add FNS branching ratios as to ENDF/b 8.0 chain option
+
+            # Download and extract ENDF/b 8.0 cross section files
+
+            # Download and extract WMP Library
+                
     # (optional) Cache your executed notebooks between runs
     # if you have config:
     # execute:
