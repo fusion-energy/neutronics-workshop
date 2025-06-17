@@ -8,13 +8,16 @@ NUCLEAR_DATA_DIR="${NUCLEAR_DATA_DIR:-$HOME/nuclear_data}"
 
 mkdir -p "$NUCLEAR_DATA_DIR"
 
-# Download and extract ENDF/b 8.0 chain file with the SFR branching ratios
+# Download and extract ENDF/b 8.0 chain file with the SFR branching ratios to ~/nuclear_data/chain-endf-b8.0.xml
+# TODO replaced with TENDL FNS chain or add FNS branching ratios as to ENDF/b 8.0 chain option
 download_chain -l endf -r b8.0 -b SFR -d "$NUCLEAR_DATA_DIR" -f chain-endf-b8.0.xml
+
 
 # Download and extract ENDF/b 8.0 cross section files
 wget -q -O - https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz | tar -C "$NUCLEAR_DATA_DIR" -xJ
 mv "$NUCLEAR_DATA_DIR"/endfb-viii.0-hdf5/* "$NUCLEAR_DATA_DIR"
 
 # Download and extract WMP Library
+
 wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz -O "$NUCLEAR_DATA_DIR/WMP_Library_v1.1.tar.gz"
 tar -xzf "$NUCLEAR_DATA_DIR/WMP_Library_v1.1.tar.gz" -C "$NUCLEAR_DATA_DIR"
