@@ -28,18 +28,15 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}  
     steps:
-    - uses: actions/checkout@v4
-
-    # Install dependencies
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-        cache: pip # Implicitly uses requirements.txt for cache key
-
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-    
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          # cache: pip # Implicitly uses requirements.txt for cache key
+      - name: setup environment
+        run: python -m pip install -r requirements.txt
+        
       # TODO cache this step
 #    - name: Cache nuclear data
 #      id: cache-nuclear-data
@@ -48,9 +45,9 @@ jobs:
 #        path: nuclear_data
 #        key: nuclear-data-${{ hashFiles('postBuild') }}
 
-    - name: Download nuclear data
-    #   if: steps.cache-nuclear-data.outputs.cache-hit != 'true'
-      run: bash postBuild
+      - name: Download nuclear data
+      #   if: steps.cache-nuclear-data.outputs.cache-hit != 'true'
+        run: bash postBuild
 
     # (optional) Cache your executed notebooks between runs
     # if you have config:
@@ -63,32 +60,32 @@ jobs:
     #     key: jupyter-book-cache-${{ hashFiles('requirements.txt') }}
 
     # Build the book
-    - name: Build the book
-      run: |
-        pip install jupyter-book
-        jupyter-book build .
+      - name: Build the book
+        run: |
+          pip install jupyter-book
+          jupyter-book build .
 
-    # - name: Deploy docs to GitHub Pages
-    #   uses: peaceiris/actions-gh-pages@v4
-    #   with:
-    #     publish_branch: gh-pages
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     publish_dir: _build/html
-    #     # with next release of actions-gh-pages
-    #     # issue to allow force_orphan will be fixed
-    #     # https://github.com/peaceiris/actions-gh-pages/issues/455
-    #     # force_orphan: true
-    #     keep_files: false
+      # - name: Deploy docs to GitHub Pages
+      #   uses: peaceiris/actions-gh-pages@v4
+      #   with:
+      #     publish_branch: gh-pages
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: _build/html
+      #     # with next release of actions-gh-pages
+      #     # issue to allow force_orphan will be fixed
+      #     # https://github.com/peaceiris/actions-gh-pages/issues/455
+      #     # force_orphan: true
+      #     keep_files: false
 
-    # Upload the book's HTML as an artifact
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: "_build/html"
-        name: github-pages
+      # Upload the book's HTML as an artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_build/html"
+          name: github-pages
 
-    # Deploy the book's HTML to GitHub Pages
-    - name: Deploy to GitHub Pages
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      id: deployment
-      uses: actions/deploy-pages@v4
+      # Deploy the book's HTML to GitHub Pages
+      - name: Deploy to GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        id: deployment
+        uses: actions/deploy-pages@v4
