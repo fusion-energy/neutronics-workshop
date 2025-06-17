@@ -20,7 +20,7 @@ jobs:
   deploy-book:
     runs-on: ubuntu-24.04
     container:
-      image: ubuntu-24.04
+      image: ubuntu:24.04
     permissions:
       pages: write
       id-token: write
