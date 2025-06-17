@@ -50,7 +50,7 @@ jobs:
         env:
           NUCLEAR_DATA_DIR: /github/home/nuclear_data
         run: |
-          mkdir -p /github/home/nuclear_data
+          sudo mkdir -p /github/home/nuclear_data
           bash postBuild
 
     # (optional) Cache your executed notebooks between runs
