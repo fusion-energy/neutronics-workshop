@@ -47,6 +47,8 @@ jobs:
 
       - name: Download nuclear data
       #   if: steps.cache-nuclear-data.outputs.cache-hit != 'true'
+        env:
+          NUCLEAR_DATA_DIR: /github/home/nuclear_data
         run: bash postBuild
 
     # (optional) Cache your executed notebooks between runs
