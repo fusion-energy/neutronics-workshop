@@ -19,8 +19,8 @@ permissions:
 jobs:
   deploy-book:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/fusion-energy/neutronics-workshop:base
+    # container:
+    #   image: ghcr.io/fusion-energy/neutronics-workshop:base
     permissions:
       pages: write
       id-token: write
