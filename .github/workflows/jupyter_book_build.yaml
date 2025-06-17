@@ -18,7 +18,7 @@ permissions:
 # This job installs dependencies, builds the book, and pushes it to `gh-pages`
 jobs:
   deploy-book:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # container:
     #   image: ghcr.io/fusion-energy/neutronics-workshop:base
     permissions:
