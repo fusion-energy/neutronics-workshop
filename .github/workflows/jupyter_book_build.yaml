@@ -2,15 +2,15 @@ name: deploy-book
 
 # Run this when the master or main branch changes
 on:
+  workflow_dispatch:
+  release:
+    types: [created]
+  pull_request:
+    branches:
+      - main
   push:
     branches:
-    - main
-    # If your git repository has the Jupyter Book within some-subfolder next to
-    # unrelated files, you can make this run only if a file within that specific
-    # folder has been modified.
-    #
-    # paths:
-    # - some-subfolder/**
+      - main
 
 permissions:
   contents: write
@@ -18,9 +18,7 @@ permissions:
 # This job installs dependencies, builds the book, and pushes it to `gh-pages`
 jobs:
   deploy-book:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/fusion-energy/neutronics-workshop:base
+    runs-on: ubuntu-24.04
     permissions:
       pages: write
       id-token: write
@@ -28,18 +26,19 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}  
     steps:
-    - uses: actions/checkout@v4
-
-    # Install dependencies
-    # - name: Set up Python 3.11
-    #   uses: actions/setup-python@v5
-    #   with:
-    #     python-version: '3.11'
-    #     cache: pip # Implicitly uses requirements.txt for cache key
-
-    # - name: Install dependencies
-    #   run: pip install -r requirements.txt
-    
+      - uses: actions/checkout@v4
+      - name: Install system packages
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y libgl1 libglx-mesa0 libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev libosmesa6 libosmesa6-dev libgles2-mesa-dev libarchive-dev libpangocairo-1.0-0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          # cache: pip # Implicitly uses requirements.txt for cache key
+      - name: setup environment
+        run: python -m pip install -r requirements.txt
+        
       # TODO cache this step
 #    - name: Cache nuclear data
 #      id: cache-nuclear-data
@@ -48,10 +47,23 @@ jobs:
 #        path: nuclear_data
 #        key: nuclear-data-${{ hashFiles('postBuild') }}
 
-    # - name: Download nuclear data
-    #   if: steps.cache-nuclear-data.outputs.cache-hit != 'true'
-    #   run: bash postBuild
+      - name: Download nuclear data
+      #   if: steps.cache-nuclear-data.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p /home/runner/nuclear_data
+          download_chain -l endf -r b8.0 -b SFR -d /home/runner/nuclear_data/ -f chain-endf-b8.0.xml
+          wget -q -O - https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz | tar -C /home/runner/nuclear_data -xJ
+          mv /home/runner/nuclear_data/endfb-viii.0-hdf5/* /home/runner/nuclear_data/
+          wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz -O /home/runner/nuclear_data/WMP_Library_v1.1.tar.gz
+          tar -xzf /home/runner/nuclear_data/WMP_Library_v1.1.tar.gz -C /home/runner/nuclear_data
 
+        # Download and extract ENDF/b 8.0 chain file with the SFR branching ratios to ~/nuclear_data/chain-endf-b8.0.xml
+            # TODO replaced with TENDL FNS chain or add FNS branching ratios as to ENDF/b 8.0 chain option
+
+            # Download and extract ENDF/b 8.0 cross section files
+
+            # Download and extract WMP Library
+                
     # (optional) Cache your executed notebooks between runs
     # if you have config:
     # execute:
@@ -62,31 +74,36 @@ jobs:
     #     path: _build/.jupyter_cache
     #     key: jupyter-book-cache-${{ hashFiles('requirements.txt') }}
 
-    # Build the book
-    - name: Build the book
-      run: |
-        pip install jupyter-book
-        jupyter-book build .
+    # Build the 
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+      - name: Build the book
+        run: |
+          jupyter nbconvert --to notebook --execute --inplace tasks/*/*.ipynb
+          pip install jupyter-book
+          jupyter-book build .
 
-    # - name: Deploy docs to GitHub Pages
-    #   uses: peaceiris/actions-gh-pages@v4
-    #   with:
-    #     publish_branch: gh-pages
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     publish_dir: _build/html
-    #     # with next release of actions-gh-pages
-    #     # issue to allow force_orphan will be fixed
-    #     # https://github.com/peaceiris/actions-gh-pages/issues/455
-    #     # force_orphan: true
-    #     keep_files: false
+      # - name: Deploy docs to GitHub Pages
+      #   uses: peaceiris/actions-gh-pages@v4
+      #   with:
+      #     publish_branch: gh-pages
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: _build/html
+      #     # with next release of actions-gh-pages
+      #     # issue to allow force_orphan will be fixed
+      #     # https://github.com/peaceiris/actions-gh-pages/issues/455
+      #     # force_orphan: true
+      #     keep_files: false
 
-    # Upload the book's HTML as an artifact
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: "_build/html"
+      # Upload the book's HTML as an artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_build/html"
+          name: github-pages
 
-    # Deploy the book's HTML to GitHub Pages
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      # Deploy the book's HTML to GitHub Pages
+      - name: Deploy to GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        id: deployment
+        uses: actions/deploy-pages@v4
