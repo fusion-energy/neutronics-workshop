@@ -18,6 +18,11 @@ from pathlib import Path
 # If you are running this outside the docker image you will have to change this path to your local cross section path.
 openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections.xml'
 
+import plotly.graph_objects as go
+# allows notebook rendering of plotly plots in the HTML made by jupyter-book
+import plotly.offline as pyo
+pyo.init_notebook_mode(connected=True)
+
 # make some python materials
 breeder_material = openmc.Material(material_id = 12)  # Pb84.2Li15.8
 breeder_material.add_element('Pb', 84.2)
@@ -134,7 +139,6 @@ for enrichment in enrichments:  # percentage enrichment from 0% Li6 to 100% Li6
 openmc.lib.finalize()
 
 # plotting results
-import plotly.graph_objects as go
 
 fig = go.Figure()
 
