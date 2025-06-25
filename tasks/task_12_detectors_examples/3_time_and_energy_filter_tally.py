@@ -4,7 +4,7 @@
 # The example shows the neutron absorption as a function of time and energy at the
 # detector.
 # The simulation results show the arrival time of the neutrons at the detector
-# grouped by the energy of the neutron. There are 16 energy bins 
+# grouped by the energy of the neutron. There are 16 energy bins
 
 import openmc
 import numpy as np
@@ -88,7 +88,7 @@ time_steps = np.linspace(start=1e-9, stop=150e-9, num=1500)
 
 time_tally = openmc.Tally(name="time_tally_in_cell")
 time_filter = openmc.TimeFilter(time_steps)
-energy_filter = openmc.EnergyFilter(np.linspace(0,14e6,16))
+energy_filter = openmc.EnergyFilter(np.linspace(0, 14e6, 16))
 cell_filter = openmc.CellFilter(detector_cell)
 time_tally.scores = ["absorption"]
 time_tally.filters = [time_filter, cell_filter, energy_filter]
@@ -107,22 +107,24 @@ tally = sp.get_tally(name="time_tally_in_cell")
 df = tally.get_pandas_dataframe()
 print(df)
 
-energy_bins_high_edge = sorted(df['energy high [eV]'].unique())
-energy_bins_low_edge = sorted(df['energy low [eV]'].unique())
+energy_bins_high_edge = sorted(df["energy high [eV]"].unique())
+energy_bins_low_edge = sorted(df["energy low [eV]"].unique())
 
 import matplotlib.pyplot as plt
 
-for high_energy_edge, low_energy_edge in zip(energy_bins_high_edge, energy_bins_low_edge):
-    filtered_df =  df[df['energy high [eV]']==high_energy_edge]
+for high_energy_edge, low_energy_edge in zip(
+    energy_bins_high_edge, energy_bins_low_edge
+):
+    filtered_df = df[df["energy high [eV]"] == high_energy_edge]
     plt.plot(
         filtered_df["time low [s]"],
         filtered_df["mean"],
-        label=f'{low_energy_edge:.1e}eV to {high_energy_edge:.1e}eV'
+        label=f"{low_energy_edge:.1e}eV to {high_energy_edge:.1e}eV",
     )
 
-plt.legend(loc='upper right')
+plt.legend(loc="upper right")
 plt.tight_layout()
-plt.xlabel('Time [s]')
-plt.ylabel('Neutron absorption')
+plt.xlabel("Time [s]")
+plt.ylabel("Neutron absorption")
 # plt.show()
-plt.savefig('energy_filtering_on_time_tally_with_reflective_object.png', dpi=400)
+plt.savefig("energy_filtering_on_time_tally_with_reflective_object.png", dpi=400)

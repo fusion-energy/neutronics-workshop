@@ -11,7 +11,7 @@ from pathlib import Path
 
 # Setting the cross section path to the correct location in the docker image.
 # If you are running this outside the docker image you will have to change this path to your local cross section path.
-openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections.xml'
+openmc.config["cross_sections"] = Path.home() / "nuclear_data" / "cross_sections.xml"
 
 import math
 import matplotlib.pyplot as plt
@@ -79,7 +79,9 @@ for distance_from_source in distances_to_simulate:
         particle="neutron", geometry="AP"
     )
     energy_function_filter_n = openmc.EnergyFunctionFilter(energy_bins_n, dose_coeffs_n)
-    energy_function_filter_n.interpolation = "cubic"  # cubic interpolation is recommended by ICRP
+    energy_function_filter_n.interpolation = (
+        "cubic"  # cubic interpolation is recommended by ICRP
+    )
 
     neutron_particle_filter = openmc.ParticleFilter("neutron")
     cell_filter = openmc.CellFilter(phantom_cell)

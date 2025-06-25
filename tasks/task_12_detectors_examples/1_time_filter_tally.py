@@ -82,7 +82,6 @@ my_settings.source = source
 # TALLIES
 
 
-
 # 1 nano second to 100 nano seconds with 500 bins
 time_steps = np.linspace(start=1e-9, stop=100e-9, num=500)
 
