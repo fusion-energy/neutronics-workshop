@@ -16,6 +16,7 @@ parts:
     - file: tasks/task_01_cross_sections/1_isotope_xs_plot
     - file: tasks/task_01_cross_sections/2_element_xs_plot
     - file: tasks/task_01_cross_sections/3_material_xs_plot
+    - file: tasks/task_01_cross_sections/4_material_mean_free_path
     - file: tasks/task_01_cross_sections/4_Doppler_broadening
   - caption: Materials
     chapters:
