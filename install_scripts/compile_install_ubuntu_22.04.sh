@@ -33,6 +33,7 @@ sudo apt-get install -y libeigen3-dev
 sudo apt-get install -y libnetcdf-dev
 sudo apt-get install -y libtbb-dev
 sudo apt-get install -y libgles2-mesa-dev
+sudo apt-get install -y libeigen3-dev
 
 # install conda, creates new python enviroment and activates it
 cd ~
@@ -49,7 +50,7 @@ mamba install -y -c conda-forge numpy cython
 
 # installs embree
 cd ~
-git clone --shallow-submodules --single-branch --branch v3.12.2 --depth 1 https://github.com/embree/embree.git
+git clone --shallow-submodules --single-branch --branch v3.13.5 --depth 1 https://github.com/embree/embree.git
 cd embree
 mkdir build
 cd build
@@ -64,7 +65,6 @@ cd MOAB
 git clone --single-branch -b 5.5.1 --depth 1 https://bitbucket.org/fathomteam/moab/
 mkdir build
 cd build
-apt-get install -y libeigen3-dev
 cmake ../moab -DENABLE_PYMOAB=ON -DENABLE_HDF5=ON -DENABLE_BLASLAPACK=OFF -DENABLE_FORTRAN=OFF
 make -j2
 sudo make install
