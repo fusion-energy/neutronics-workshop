@@ -89,10 +89,8 @@ my_neutron_settings.source = my_source
 my_neutron_settings.photon_transport = False
 
 # Create mesh which will be used for material segmentation and activation and gamma sources
-regular_mesh = openmc.RegularMesh().from_domain(
-    my_geometry, # the corners of the mesh are being set automatically to surround the geometry
-    dimension=[10,10,10] # 10
-)
+# the corners of the mesh are being set automatically to surround the geometry
+regular_mesh = openmc.RegularMesh().from_domain(my_geometry, dimension=1000)
 
 model_neutron = openmc.Model(my_geometry, my_materials, my_neutron_settings)
 
@@ -176,10 +174,7 @@ my_gamma_settings.particles = p_particles
 # First we add make dose tally on a regular mesh
 
 # # creates a regular mesh that surrounds the geometry
-mesh_photon = openmc.RegularMesh().from_domain(
-    my_geometry,
-    dimension=[20, 20, 20],  # 20 voxels in each axis direction (x, y, z)
-)
+mesh_photon = openmc.RegularMesh().from_domain(my_geometry, dimension=8000)
 
 # adding a dose tally on a regular mesh
 # AP, PA, LLAT, RLAT, ROT, ISO are ICRP incident dose field directions, AP is front facing
