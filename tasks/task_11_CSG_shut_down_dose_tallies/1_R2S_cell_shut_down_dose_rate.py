@@ -133,10 +133,7 @@ my_gamma_settings.particles = p_particles
 
 
 # creates a regular mesh that surrounds the geometry
-mesh = openmc.RegularMesh().from_domain(
-    my_geometry,
-    dimension=[10, 10, 10],  # 10 voxels in each axis direction (x, y, z)
-)
+mesh = openmc.RegularMesh().from_domain(my_geometry, dimension=1000)
 
 # adding a dose tally on a regular mesh
 # AP, PA, LLAT, RLAT, ROT, ISO are ICRP incident dose field directions, AP is front facing
