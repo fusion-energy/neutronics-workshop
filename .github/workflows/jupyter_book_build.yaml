@@ -24,7 +24,9 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}  
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      DISPLAY: :99  
     steps:
       - uses: actions/checkout@v4
       - name: Install system packages
@@ -83,7 +85,12 @@ jobs:
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3
       - name: Build the book
+        env:
+          DISPLAY: :99
+          CI: true
         run: |
+          export DISPLAY=:99
+          export CI=true
           jupyter nbconvert --to notebook --execute --inplace tasks/*/*.ipynb
           pip install jupyter-book
           jupyter-book build .
