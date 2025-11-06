@@ -24,13 +24,19 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}  
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      DISPLAY: :99  
     steps:
       - uses: actions/checkout@v4
       - name: Install system packages
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y libgl1 libglx-mesa0 libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev libosmesa6 libosmesa6-dev libgles2-mesa-dev libarchive-dev libpangocairo-1.0-0
+          sudo apt-get install -y libgl1 libglx-mesa0 libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev libosmesa6 libosmesa6-dev libgles2-mesa-dev libarchive-dev libpangocairo-1.0-0 xvfb
+      - name: Setup virtual display
+        run: |
+          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+          sleep 3
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -80,7 +86,7 @@ jobs:
       - name: Build the book
         run: |
           jupyter nbconvert --to notebook --execute --inplace tasks/*/*.ipynb
-          pip install jupyter-book
+          pip install jupyter-book==1.0.4
           jupyter-book build .
 
       # - name: Deploy docs to GitHub Pages
