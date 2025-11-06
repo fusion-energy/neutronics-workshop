@@ -5,7 +5,7 @@ cadquery
 jupyterlab
 paramak
 remove_dagmc_tags
-pyvista[jupyter]
+pyvista[all]
 pytest
 nbformat
 nbconvert
