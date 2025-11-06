@@ -1,12 +1,11 @@
 --extra-index-url https://shimwell.github.io/wheels
 moab
 openmc
-vtk
 cadquery
 jupyterlab
 paramak
 remove_dagmc_tags
-pyvista[all]
+pyvista[jupyter]
 pytest
 nbformat
 nbconvert
