@@ -16,7 +16,7 @@ openmc_depletion_plotter
 openmc_data_downloader
 openmc_data
 dagmc_geometry_slice_plotter
-cad_to_dagmc
+cad_to_dagmc>=0.9.5
 openmc-plasma-source
 openmc_regular_mesh_plotter
 neutronics_material_maker[density]
