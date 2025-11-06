@@ -2,7 +2,7 @@
 
 This installation option supports Linux and has been tested most on Ubuntu.
 
-You will need Python 3.10, 3.11 or 3.12 installed which comes pre installed on most Linux distributions.
+You will need Python installed which comes pre installed on most Linux distributions.
 
 In addition to install with pip you will need pip installed.
 ```
