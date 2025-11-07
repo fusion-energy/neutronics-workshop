@@ -1,0 +1,182 @@
+version: 1
+project:
+  title: Fusion Energy Neutronics Workshop
+  authors:
+    - name: Jon Shimwell
+  exclude:
+    - README
+    - CODE_OF_CONDUCT
+    - CONTRIBUTING
+    - install_scripts/README.md
+    - tasks/task_21_design_task/1_optimal_design_with_hints
+  github: fusion-energy/neutronics-workshop/
+  thebe:
+    binder:
+      repo: fusion-energy/neutronics-workshop/
+      provider: github
+      url: https://mybinder.org
+      ref: main
+  bibliography:
+    - docs/references.bib
+  exports:
+    - format: pdf
+      template: plain_latex_book
+      output: exports/book.pdf
+  toc:
+    - file: docs/index.md
+    - title: Installation options
+      children:
+        - file: docs/install_pip.md
+        - file: docs/install_conda.md
+        - file: docs/install_mamba.md
+        - file: docs/install_docker.md
+        - file: docs/install_extras.md
+        - file: docs/install_cloud_binder.md
+        - file: docs/install_cloud_codespaces.md
+    - title: Cross Sections
+      children:
+        - file: tasks/task_01_cross_sections/README.md
+        - file: tasks/task_01_cross_sections/1_isotope_xs_plot.ipynb
+        - file: tasks/task_01_cross_sections/2_element_xs_plot.ipynb
+        - file: tasks/task_01_cross_sections/3_material_xs_plot.ipynb
+        - file: tasks/task_01_cross_sections/4_material_mean_free_path.ipynb
+        - file: tasks/task_01_cross_sections/4_Doppler_broadening.ipynb
+    - title: Materials
+      children:
+        - file: tasks/task_02_making_materials/README.md
+        - file: >-
+            tasks/task_02_making_materials/1_example_materials_from_isotopes.ipynb
+        - file: >-
+            tasks/task_02_making_materials/2_example_materials_from_elements.ipynb
+        - file: >-
+            tasks/task_02_making_materials/3_example_materials_from_material_maker.ipynb
+        - file: >-
+            tasks/task_02_making_materials/4_example_materials_parameter_study.ipynb
+        - file: tasks/task_02_making_materials/5_example_materials_mixed.ipynb
+    - title: Making CSG Geometry
+      children:
+        - file: tasks/task_03_making_CSG_geometry/README.md
+        - file: tasks/task_03_making_CSG_geometry/1_simple_csg_geometry.ipynb
+        - file: tasks/task_03_making_CSG_geometry/2_intermediate_csg_geometry.ipynb
+        - file: >-
+            tasks/task_03_making_CSG_geometry/3_viewing_the_geometry_as_vtk.ipynb
+    - title: Making source terms
+      children:
+        - file: tasks/task_04_make_sources/README.md
+        - file: tasks/task_04_make_sources/1_point_source_plots.ipynb
+        - file: tasks/task_04_make_sources/2_ring_source.ipynb
+        - file: tasks/task_04_make_sources/3_plasma_source_plots.ipynb
+        - file: tasks/task_04_make_sources/4_neutron_tracks.ipynb
+        - file: tasks/task_04_make_sources/5_gamma_source_example.ipynb
+        - file: tasks/task_04_make_sources/6_unstructured_mesh_spatial_source.ipynb
+        - file: tasks/task_04_make_sources/7_structured_mesh_source.ipynb
+    - title: CSG cell TBR tally
+      children:
+        - file: tasks/task_05_CSG_cell_tally_TBR/README.md
+        - file: tasks/task_05_CSG_cell_tally_TBR/1_example_tritium_production.ipynb
+        - file: >-
+            tasks/task_05_CSG_cell_tally_TBR/2_example_tritium_production_study.ipynb
+    - title: CSG cell DPA tally
+      children:
+        - file: tasks/task_06_CSG_cell_tally_DPA/README.md
+        - file: tasks/task_06_CSG_cell_tally_DPA/1_find_dpa.ipynb
+    - title: CSG cell spectra tally
+      children:
+        - file: tasks/task_07_CSG_cell_tally_spectra/README.md
+        - file: >-
+            tasks/task_07_CSG_cell_tally_spectra/1_example_neutron_flux_and_units.ipynb
+        - file: >-
+            tasks/task_07_CSG_cell_tally_spectra/2_example_neutron_spectra_on_cell.ipynb
+        - file: >-
+            tasks/task_07_CSG_cell_tally_spectra/3_example_neutron_spectra_on_surface.ipynb
+        - file: tasks/task_07_CSG_cell_tally_spectra/4_example_photon_spectra.ipynb
+        - file: >-
+            tasks/task_07_CSG_cell_tally_spectra/5_neutron_energy_loss_plot.ipynb
+    - title: CSG cell mesh tally
+      children:
+        - file: tasks/task_08_CSG_mesh_tally/README.md
+        - file: tasks/task_08_CSG_mesh_tally/1_example_2d_regular_mesh_tallies.ipynb
+        - file: tasks/task_08_CSG_mesh_tally/2_example_3d_regular_mesh_tallies.ipynb
+        - file: tasks/task_08_CSG_mesh_tally/3_example_cylinder_mesh_tallies.ipynb
+    - title: CSG cell instantaneous dose tally
+      children:
+        - file: tasks/task_09_CSG_instantaneous_dose_tallies/README.md
+        - file: >-
+            tasks/task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source.ipynb
+        - file: >-
+            tasks/task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study.ipynb
+        - file: >-
+            tasks/task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons.ipynb
+    - title: Activation Transmutation Depletion
+      children:
+        - file: tasks/task_10_activation_transmutation_depletion/README.md
+        - file: >-
+            tasks/task_10_activation_transmutation_depletion/1_example_transmutation_isotope_build_up.ipynb
+        - file: >-
+            tasks/task_10_activation_transmutation_depletion/2_example_tally_change_with_burnup.ipynb
+        - file: >-
+            tasks/task_10_activation_transmutation_depletion/3_full_pulse_schedule.ipynb
+    - title: CSG shutdown dose tallies
+      children:
+        - file: tasks/task_11_CSG_shut_down_dose_tallies/README.md
+        - file: >-
+            tasks/task_11_CSG_shut_down_dose_tallies/4_D1S_regularmesh_shutdown_dose_rate.ipynb
+        - file: >-
+            tasks/task_11_CSG_shut_down_dose_tallies/5_D1S_regularmesh_shutdown_dose_rate_different_source_terms.ipynb
+    - title: Volume Calculations
+      children:
+        - file: tasks/task_13_volume_calculations/README.md
+        - file: tasks/task_13_volume_calculations/1_find_volume_of_csg_cell.ipynb
+        - file: tasks/task_13_volume_calculations/2_find_volume_of_dagmc_cell.ipynb
+    - title: Variance Reduction
+      children:
+        - file: tasks/task_14_variance_reduction/README.md
+        - file: >-
+            tasks/task_14_variance_reduction/1_shielded_room_survival_biasing.ipynb
+        - file: tasks/task_14_variance_reduction/2_shielded_room_single_ww.ipynb
+        - file: tasks/task_14_variance_reduction/3_sphere_iterative_per_run_ww.ipynb
+        - file: >-
+            tasks/task_14_variance_reduction/4_sphere_iterative_per_batch_ww.ipynb
+        - file: tasks/task_14_variance_reduction/5_shielded_room_fw_cadis.ipynb
+    - title: Making CAD geometry
+      children:
+        - file: tasks/task_15_making_CAD_geometry/README.md
+        - file: tasks/task_15_making_CAD_geometry/1_making_cad_with_cadquery.ipynb
+        - file: tasks/task_15_making_CAD_geometry/2_making_cad_with_paramak.ipynb
+    - title: Converting CAD Geometry
+      children:
+        - file: tasks/task_16_converting_CAD_geometry_to_DAGMC/README.md
+        - file: >-
+            tasks/task_16_converting_CAD_geometry_to_DAGMC/1_converting_cad_files.ipynb
+        - file: >-
+            tasks/task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory.ipynb
+    - title: Using DAGMC models in OpenMC
+      children:
+        - file: tasks/task_17_using_DAGMC_models_in_openmc/README.md
+        - file: >-
+            tasks/task_17_using_DAGMC_models_in_openmc/1_cad_model_simulation_minimal.ipynb
+        - file: >-
+            tasks/task_17_using_DAGMC_models_in_openmc/2_cad_model_simulation_with_boundary_types.ipynb
+        - file: >-
+            tasks/task_17_using_DAGMC_models_in_openmc/3_cad_model_simulation_with_hybrid_csg.ipynb
+    - title: CAD mesh fast flux simulation
+      children:
+        - file: tasks/task_18_CAD_mesh_fast_flux/README.md
+        - file: >-
+            tasks/task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad.ipynb
+    - title: CAD shutdown dose tallies
+      children:
+        - file: tasks/task_20_CAD_shut_down_dose_rate/README.md
+        - file: >-
+            tasks/task_20_CAD_shut_down_dose_rate/1_unstructured_mesh_R2S_shutdown_dose_rate.ipynb
+        - file: >-
+            tasks/task_20_CAD_shut_down_dose_rate/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.ipynb
+    - title: Design study
+      children:
+        - file: tasks/task_21_design_task/README.md
+        - file: tasks/task_21_design_task/1_optimal_design.ipynb
+site:
+  options:
+    logo: docs/logo.png
+    folders: true
+  template: book-theme

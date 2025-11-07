@@ -86,7 +86,7 @@ jobs:
       - name: Build the book
         run: |
           jupyter nbconvert --to notebook --execute --inplace tasks/*/*.ipynb
-          pip install jupyter-book==1.0.4
+          pip install jupyter-book
           jupyter-book build .
 
       # - name: Deploy docs to GitHub Pages
