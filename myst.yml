@@ -9,10 +9,10 @@ project:
     - CONTRIBUTING
     - install_scripts/README.md
     - tasks/task_21_design_task/1_optimal_design_with_hints
-  github: fusion-energy/neutronics-workshop/
+  github: https://github.com/fusion-energy/neutronics-workshop
   thebe:
     binder:
-      repo: fusion-energy/neutronics-workshop/
+      repo: https://github.com/fusion-energy/neutronics-workshop
       provider: github
       url: https://mybinder.org
       ref: main
