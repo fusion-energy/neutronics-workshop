@@ -86,8 +86,8 @@ jobs:
       - name: Build the book
         run: |
           jupyter nbconvert --to notebook --execute --inplace tasks/*/*.ipynb
-          pip install jupyter-book==1.0.4
-          jupyter-book build .
+          pip install jupyter-book
+          jupyter-book build --html
 
       # - name: Deploy docs to GitHub Pages
       #   uses: peaceiris/actions-gh-pages@v4
