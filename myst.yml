@@ -3,6 +3,9 @@ project:
   title: Fusion Energy Neutronics Workshop
   authors:
     - name: Jon Shimwell
+  settings:
+    site:
+      baseUrl: /neutronics-workshop
   exclude:
     - README
     - CODE_OF_CONDUCT
