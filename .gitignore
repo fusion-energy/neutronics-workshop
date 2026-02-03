@@ -46,3 +46,4 @@ __pycache__/
 
 # plot files
 *.pkl
+*.vtkhdf
