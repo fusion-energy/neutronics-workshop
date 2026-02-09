@@ -20,4 +20,4 @@ cad_to_dagmc>=0.9.5
 openmc-plasma-source
 openmc_regular_mesh_plotter
 neutronics_material_maker[density]
-git+https://github.com/svalinn/pydagmc
+dagmc_h5m_file_inspector
