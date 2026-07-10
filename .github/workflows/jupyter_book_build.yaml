@@ -84,7 +84,7 @@ jobs:
       #   uses: mxschmitt/action-tmate@v3
       - name: Build the book
         run: |
-          jupyter nbconvert --to notebook --execute --inplace tasks/*/*.ipynb
+          jupyter nbconvert --to notebook --execute --inplace tasks/task_*/*.ipynb
           pip install jupyter-book==1.0.4
           jupyter-book build .
 
