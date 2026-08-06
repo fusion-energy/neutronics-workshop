@@ -120,19 +120,6 @@ Then navigate to the task that you want to run in the tasks folder.
 
 This installation option supports 64-bit Windows.
 
-````{admonition} CAD / DAGMC tasks are not supported on native Windows
-:class: warning
-
-The Windows ```openmc``` wheel is built **without DAGMC or MOAB support**. Everything
-based on Constructive Solid Geometry (CSG) works, as does making CAD models and
-converting them to DAGMC ```h5m``` files. However any notebook that asks OpenMC to
-transport particles through a ```openmc.DAGMCUniverse```, or that uses an
-```openmc.UnstructuredMesh```, will fail with a
-```DAGMC Universes are present but OpenMC was not configured with DAGMC``` error.
-
-If you want to run these, use the [Docker install](install_docker.md).
-````
-
 You will need **Python 3.12 or newer** installed, as the Windows ```openmc``` wheels are
 only built for Python 3.12, 3.13 and 3.14. The easiest way to get it is from the
 [python.org downloads page](https://www.python.org/downloads/windows/) or the Microsoft
