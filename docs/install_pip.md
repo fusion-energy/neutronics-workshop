@@ -114,3 +114,108 @@ jupyter lab
 ```
 
 Then navigate to the task that you want to run in the tasks folder.
+
+
+## Install with pip on Windows
+
+This installation option supports 64-bit Windows.
+
+````{admonition} CAD / DAGMC tasks are not supported on native Windows
+:class: warning
+
+The Windows ```openmc``` wheel is built **without DAGMC or MOAB support**. Everything
+based on Constructive Solid Geometry (CSG) works, as does making CAD models and
+converting them to DAGMC ```h5m``` files. However any notebook that asks OpenMC to
+transport particles through a ```openmc.DAGMCUniverse```, or that uses an
+```openmc.UnstructuredMesh```, will fail with a
+```DAGMC Universes are present but OpenMC was not configured with DAGMC``` error.
+
+The affected notebooks are:
+
+- ```task_04_make_sources/6_unstructured_mesh_spatial_source```
+- ```task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory```
+- all of ```task_17_using_DAGMC_models_in_openmc```
+- ```task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad```
+- ```task_19_CAD_neutron_wall_loading/1_neutron_wall_loading_on_elliptical_torus```
+- both notebooks in ```task_20_CAD_shut_down_dose_rate```
+- ```full-day-workshop``` tasks 19, 20, 21 and ```half-day-conference-workshop``` tasks 11, 12, 13
+
+If you want to run these, use
+[WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) and follow the
+*Install with pip on Linux* instructions above, or use the
+[Docker install](install_docker.md).
+````
+
+You will need **Python 3.12 or newer** installed, as the Windows ```openmc``` wheels are
+only built for Python 3.12, 3.13 and 3.14. The easiest way to get it is from the
+[python.org downloads page](https://www.python.org/downloads/windows/) or the Microsoft
+Store. Make sure you tick *Add Python to PATH* in the installer.
+
+pip and venv come bundled with Python 3 on Windows, so no additional packages are needed.
+
+Then proceed with cloning or [download](https://github.com/fusion-energy/neutronics-workshop/archive/refs/heads/main.zip) the repository. Git for Windows can be installed from [git-scm.com](https://git-scm.com/download/win).
+
+```powershell
+git clone --depth 1 --branch main https://github.com/fusion-energy/neutronics-workshop.git
+cd neutronics-workshop
+```
+
+You should then be able to make a virtual environment.
+```powershell
+py -3 -m venv .neutronicsworkshop
+```
+
+Activate the virtual environment. The remaining commands assume PowerShell.
+```powershell
+.neutronicsworkshop\Scripts\Activate.ps1
+```
+
+````{note}
+If PowerShell blocks the activation script with an execution policy error, allow signed
+local scripts for the current user with
+```Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser``` and try again.
+From the classic Command Prompt use ```.neutronicsworkshop\Scripts\activate.bat``` instead.
+````
+
+Then install the Python dependencies.
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+Then download the nuclear data. The ```postBuild``` script is written for bash, so run the
+PowerShell equivalent below instead. This will create a ```nuclear_data``` folder in your
+home directory and download several Gb of data needed for the simulations.
+
+```powershell
+$data = "$env:USERPROFILE\nuclear_data"
+New-Item -ItemType Directory -Force -Path $data | Out-Null
+
+# hiding the progress bar makes the large downloads much faster in Windows PowerShell
+$ProgressPreference = 'SilentlyContinue'
+
+# Download and extract the ENDF/b 8.0 chain file with the SFR branching ratios
+download_chain -l endf -r b8.0 -b SFR -d $data -f chain-endf-b8.0.xml
+
+# Download and extract the ENDF/b 8.0 cross section files
+Invoke-WebRequest -Uri "https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz" -OutFile "$data\endfb-viii.0-hdf5.tar.xz"
+tar -C $data -xJf "$data\endfb-viii.0-hdf5.tar.xz"
+Move-Item -Path "$data\endfb-viii.0-hdf5\*" -Destination $data -Force
+
+# Download and extract the WMP Library
+Invoke-WebRequest -Uri "https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz" -OutFile "$data\WMP_Library_v1.1.tar.gz"
+tar -xzf "$data\WMP_Library_v1.1.tar.gz" -C $data
+```
+
+````{note}
+```tar``` is included with Windows 10 (build 17063) and newer, so no extra download is
+needed. The cross section archive is several Gb so the extraction step can take a while.
+````
+
+Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
+
+```powershell
+jupyter lab
+```
+
+Then navigate to the task that you want to run in the tasks folder.
