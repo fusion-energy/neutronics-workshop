@@ -6,10 +6,10 @@ This installation option supports Linux.
 
 You will need Python installed which comes pre installed on most Linux distributions.
 
-````{admonition} WSL2 / minimal Linux users — extra system dependencies
+````{admonition} Minimal Linux installs — extra system dependencies
 :class: tip, dropdown
 
-Most desktop Linux distributions already include the system libraries needed to run the simulations and graphics. However minimal environments such as WSL2 images may be missing some of them. If you hit missing library errors, install them with:
+Most desktop Linux distributions already include the system libraries needed to run the simulations and graphics. However minimal environments such as container or server images may be missing some of them. If you hit missing library errors, install them with:
 
 ```bash
 sudo apt-get install --yes git wget mpich libmpich12 libhdf5-310 libhdf5-mpich-310 hdf5-tools libnetcdf22 libtbb12 libglfw3 libglx0 libgl1 libglut3.12 libosmesa6 libgles2 libxft2 libxcursor1 libxinerama1 xvfb
@@ -116,16 +116,17 @@ jupyter lab
 Then navigate to the task that you want to run in the tasks folder.
 
 
-## Install with pip on Windows
+## Install with pip on Windows (native)
 
-This installation option supports 64-bit Windows.
+This installation option supports 64-bit Windows and runs everything directly in Windows,
+with no Linux layer involved. If you would rather run the Linux version of the workshop
+inside Windows then see *Install with pip on Windows (WSL2)* below.
 
-You will need **Python 3.12 or newer** installed, as the Windows ```openmc``` wheels are
-only built for Python 3.12, 3.13 and 3.14. The easiest way to get it is from the
+You will need Python 3 installed. The easiest way to get an up to date version is from the
 [python.org downloads page](https://www.python.org/downloads/windows/) or the Microsoft
 Store. Make sure you tick *Add Python to PATH* in the installer.
 
-pip and venv come bundled with Python 3 on Windows, so no additional packages are needed.
+Unlike Linux, pip and venv come bundled with Python 3 on Windows, so no additional packages are needed.
 
 Then proceed with cloning or [download](https://github.com/fusion-energy/neutronics-workshop/archive/refs/heads/main.zip) the repository. Git for Windows can be installed from [git-scm.com](https://git-scm.com/download/win).
 
@@ -181,11 +182,6 @@ Invoke-WebRequest -Uri "https://github.com/mit-crpg/WMP_Library/releases/downloa
 tar -xzf "$data\WMP_Library_v1.1.tar.gz" -C $data
 ```
 
-````{note}
-```tar``` is included with Windows 10 (build 17063) and newer, so no extra download is
-needed. The cross section archive is several Gb so the extraction step can take a while.
-````
-
 Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
 
 ```powershell
@@ -193,3 +189,41 @@ jupyter lab
 ```
 
 Then navigate to the task that you want to run in the tasks folder.
+
+
+## Install with pip on Windows (WSL2)
+
+This installation option also supports 64-bit Windows, but runs the Linux version of the
+workshop inside Windows using the Windows Subsystem for Linux.
+
+First install WSL2 by opening PowerShell **as Administrator** and running the following,
+then reboot when prompted. This installs Ubuntu by default.
+
+```powershell
+wsl --install
+```
+
+Once rebooted, open the *Ubuntu* app from the Start menu and set your Linux username and
+password when prompted. Everything from here on is typed into that Ubuntu terminal rather
+than into PowerShell.
+
+WSL2 images are minimal, so unlike a desktop Linux install they are missing several of the
+system libraries needed to run the simulations and graphics. Install them with:
+
+```bash
+sudo apt-get update
+sudo apt-get install --yes git wget mpich libmpich12 libhdf5-310 libhdf5-mpich-310 hdf5-tools libnetcdf22 libtbb12 libglfw3 libglx0 libgl1 libglut3.12 libosmesa6 libgles2 libxft2 libxcursor1 libxinerama1 xvfb
+```
+
+Then follow the *Install with pip on Linux* instructions above, starting from the
+```python3-pip``` step.
+
+````{note}
+Keep the repository inside the Linux file system, for example under ```~/```, rather than
+under ```/mnt/c/```. Working across the Windows file system boundary makes the simulations
+noticeably slower.
+````
+
+When you run ```jupyter lab``` in the Ubuntu terminal it will print a
+```http://localhost:8888/...``` URL with a token. Open that URL in your normal Windows web
+browser.
