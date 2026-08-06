@@ -130,20 +130,7 @@ transport particles through a ```openmc.DAGMCUniverse```, or that uses an
 ```openmc.UnstructuredMesh```, will fail with a
 ```DAGMC Universes are present but OpenMC was not configured with DAGMC``` error.
 
-The affected notebooks are:
-
-- ```task_04_make_sources/6_unstructured_mesh_spatial_source```
-- ```task_16_converting_CAD_geometry_to_DAGMC/2_converting_cad_in_memory```
-- all of ```task_17_using_DAGMC_models_in_openmc```
-- ```task_18_CAD_mesh_fast_flux/1_simulate_fast_neutron_flux_on_cad```
-- ```task_19_CAD_neutron_wall_loading/1_neutron_wall_loading_on_elliptical_torus```
-- both notebooks in ```task_20_CAD_shut_down_dose_rate```
-- ```full-day-workshop``` tasks 19, 20, 21 and ```half-day-conference-workshop``` tasks 11, 12, 13
-
-If you want to run these, use
-[WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) and follow the
-*Install with pip on Linux* instructions above, or use the
-[Docker install](install_docker.md).
+If you want to run these, use the [Docker install](install_docker.md).
 ````
 
 You will need **Python 3.12 or newer** installed, as the Windows ```openmc``` wheels are
