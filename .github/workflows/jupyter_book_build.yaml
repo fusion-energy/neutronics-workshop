@@ -113,8 +113,10 @@ jobs:
           path: "_build/html"
           name: github-pages
 
-      # Deploy the book's HTML to GitHub Pages
+      # Deploy the book's HTML to GitHub Pages.
+      # Releases deploy as well as pushes to main, otherwise a release spends
+      # hours executing every notebook and then skips the deployment.
       - name: Deploy to GitHub Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'release' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
         id: deployment
         uses: actions/deploy-pages@v4
