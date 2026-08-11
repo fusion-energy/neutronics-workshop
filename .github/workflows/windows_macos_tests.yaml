@@ -1,0 +1,64 @@
+name: windows and macos tests
+
+# The workshop is developed on Linux where the OpenMC wheel includes DAGMC and
+# all of the tasks can be run. The Windows and Mac OS wheels don't include
+# DAGMC so this workflow checks the parts that do work on those platforms,
+# which is the pip install and the CSG based parts of OpenMC.
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    # bash is available on the Windows runners and keeps the steps the same on
+    # every operating system
+    shell: bash
+
+jobs:
+  test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the Python dependencies
+        run: python -m pip install -r requirements.txt
+
+      # this is the same script that the install instructions tell users to run
+      - name: Download the nuclear data
+        run: python postBuild
+
+      - name: Report the size of the nuclear data
+        run: du -sh "$HOME/nuclear_data"
+
+      # Also prints the commit hash of the OpenMC build, which identifies which
+      # wheel was installed
+      - name: Report the OpenMC version
+        run: openmc --version
+
+      - name: Install the Jupyter kernel used by the notebook tests
+        run: python -m ipykernel install --user --name python3
+
+      - name: Run the install tests
+        run: pytest tests/test_install.py -v
+
+      # These tasks use CSG geometry and matplotlib so they don't need DAGMC or
+      # a display. The remaining tasks either need DAGMC, which is not in the
+      # Windows and Mac OS wheels, or pyvista which needs a display.
+      - name: Run the task notebooks that don't need DAGMC
+        run: pytest tests/test_task_1.py tests/test_task_2.py tests/test_task_5.py tests/test_task_6.py tests/test_task_7.py tests/test_task_9.py tests/test_task_12.py -v

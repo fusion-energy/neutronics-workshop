@@ -17,7 +17,11 @@ def _notebook_run(path):
     with open(path) as f:
         nb = nbformat.read(f, as_version=4)
         nb.metadata.get('kernelspec', {})['name'] = kernel_name
-        ep = ExecutePreprocessor(kernel_name=kernel_name, timeout=300) #, allow_errors=True
+        # 1000s to match the timeout used for the book build in _config.yml.
+        # The Windows and Mac OS OpenMC wheels are built without OpenMP so
+        # their simulations are single threaded, and several of the notebooks
+        # take longer than the previous 300s on those platforms.
+        ep = ExecutePreprocessor(kernel_name=kernel_name, timeout=1000) #, allow_errors=True
 
         try:
             ep.preprocess(nb, {'metadata': {'path': path.parent}})

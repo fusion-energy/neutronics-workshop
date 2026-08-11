@@ -1,15 +1,117 @@
-#!/bin/bash
+#!/usr/bin/env python3
+"""Downloads the nuclear data needed by the workshop tasks.
 
-mkdir -p "$HOME/nuclear_data"
+This creates a ``nuclear_data`` folder in the home directory containing the
+ENDF/B-VIII.0 cross section files, the ENDF/B-VIII.0 depletion chain file and
+the WMP library.
 
-# Download and extract ENDF/b 8.0 chain file with the SFR branching ratios to ~/nuclear_data/chain-endf-b8.0.xml
-# TODO replaced with TENDL FNS chain or add FNS branching ratios as to ENDF/b 8.0 chain option
-download_chain -l endf -r b8.0 -b SFR -d "$HOME/nuclear_data" -f chain-endf-b8.0.xml
+The script is pure Python with no wget or tar dependency so that the same
+script can be used on Linux, Mac OS and Windows.
+
+    python postBuild [destination]
+
+If no destination is given then ~/nuclear_data is used.
+"""
+
+import shutil
+import subprocess
+import sys
+import tarfile
+import urllib.request
+from pathlib import Path
 
 # Download and extract ENDF/b 8.0 cross section files
-wget -q -O - https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz | tar -C "$HOME/nuclear_data" -xJ
-mv "$HOME/nuclear_data"/endfb-viii.0-hdf5/* "$HOME/nuclear_data"
-
+CROSS_SECTIONS_URL = (
+    "https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz"
+)
 # Download and extract WMP Library
-wget https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz -O "$HOME/nuclear_data/WMP_Library_v1.1.tar.gz"
-tar -xzf "$HOME/nuclear_data/WMP_Library_v1.1.tar.gz" -C "$HOME/nuclear_data"
+WMP_URL = (
+    "https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/"
+    "WMP_Library_v1.1.tar.gz"
+)
+
+
+class ProgressReader:
+    """Wraps a response so that the download progress is printed as it is read"""
+
+    def __init__(self, response):
+        self.response = response
+        self.total = int(response.headers.get("Content-Length", 0))
+        self.read_so_far = 0
+        self.next_percentage = 0
+
+    def read(self, size):
+        chunk = self.response.read(size)
+        self.read_so_far += len(chunk)
+        if self.total:
+            percentage = int(100 * self.read_so_far / self.total)
+            # Only every 5%, and on its own line. The tar file is read in small
+            # pieces, so a percentage printed on every read is millions of
+            # lines in a log file that has nowhere to put a carriage return.
+            if percentage >= self.next_percentage:
+                print(f"  downloaded {percentage}%", flush=True)
+                self.next_percentage = percentage + 5
+        return chunk
+
+
+def download_and_extract(url: str, destination: Path):
+    """Downloads a tar archive and extracts it to the destination.
+
+    The archive is extracted as it downloads rather than being saved to disk
+    first as the extracted data is already several Gb and machines with a small
+    disk don't have room for both."""
+
+    print(f"Downloading {url} and extracting to {destination}")
+    with urllib.request.urlopen(url) as response:
+        # filter="data" is the safe default from Python 3.14 onwards
+        with tarfile.open(fileobj=ProgressReader(response), mode="r|*") as tar:
+            tar.extractall(destination, filter="data")
+
+
+def download_chain(destination: Path):
+    """Downloads the ENDF/b 8.0 chain file with the SFR branching ratios"""
+
+    # TODO replaced with TENDL FNS chain or add FNS branching ratios as to ENDF/b 8.0 chain option
+    executable = shutil.which("download_chain")
+    if executable is None:
+        raise SystemExit(
+            "download_chain command not found, install it with "
+            "'pip install openmc_data'"
+        )
+
+    subprocess.run(
+        [
+            executable,
+            "-l", "endf",
+            "-r", "b8.0",
+            "-b", "SFR",
+            "-d", str(destination),
+            "-f", "chain-endf-b8.0.xml",
+        ],
+        check=True,
+    )
+
+
+def main():
+    if len(sys.argv) > 1:
+        destination = Path(sys.argv[1])
+    else:
+        destination = Path.home() / "nuclear_data"
+    destination.mkdir(parents=True, exist_ok=True)
+
+    download_chain(destination)
+
+    download_and_extract(CROSS_SECTIONS_URL, destination)
+    # the cross sections are within a folder so their contents are moved up a level
+    extracted_dir = destination / "endfb-viii.0-hdf5"
+    for entry in extracted_dir.iterdir():
+        shutil.move(str(entry), str(destination / entry.name))
+    extracted_dir.rmdir()
+
+    download_and_extract(WMP_URL, destination)
+
+    print(f"Nuclear data downloaded to {destination}")
+
+
+if __name__ == "__main__":
+    main()
