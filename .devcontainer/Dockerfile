@@ -113,7 +113,7 @@ RUN mkdir -p ${HOME}/tasks && \
 
 
 COPY postBuild postBuild
-RUN bash postBuild
+RUN python postBuild
 
 WORKDIR ${HOME}/tasks
 

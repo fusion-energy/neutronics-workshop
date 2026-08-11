@@ -33,7 +33,7 @@ conda activate neutronicsworkshop
 
 The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations
 ```bash
-bash postBuild
+python postBuild
 ```
 
 

@@ -53,7 +53,7 @@ python3 -m pip install -r requirements.txt
 The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations.
 
 ```bash
-bash postBuild
+python3 postBuild
 ```
 
 Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
@@ -104,7 +104,7 @@ python3 -m pip install -r requirements.txt
 The download the nuclear data. This will create a ```nuclear_data``` folder in your home directory and download several Gb of data needed for the simulations.
 
 ```bash
-zsh postBuild
+python3 postBuild
 ```
 
 Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
@@ -158,28 +158,11 @@ Then install the Python dependencies.
 python -m pip install -r requirements.txt
 ```
 
-Then download the nuclear data. The ```postBuild``` script is written for bash, so run the
-PowerShell equivalent below instead. This will create a ```nuclear_data``` folder in your
+Then download the nuclear data. This will create a ```nuclear_data``` folder in your
 home directory and download several Gb of data needed for the simulations.
 
 ```powershell
-$data = "$env:USERPROFILE\nuclear_data"
-New-Item -ItemType Directory -Force -Path $data | Out-Null
-
-# hiding the progress bar makes the large downloads much faster in Windows PowerShell
-$ProgressPreference = 'SilentlyContinue'
-
-# Download and extract the ENDF/b 8.0 chain file with the SFR branching ratios
-download_chain -l endf -r b8.0 -b SFR -d $data -f chain-endf-b8.0.xml
-
-# Download and extract the ENDF/b 8.0 cross section files
-Invoke-WebRequest -Uri "https://anl.box.com/shared/static/uhbxlrx7hvxqw27psymfbhi7bx7s6u6a.xz" -OutFile "$data\endfb-viii.0-hdf5.tar.xz"
-tar -C $data -xJf "$data\endfb-viii.0-hdf5.tar.xz"
-Move-Item -Path "$data\endfb-viii.0-hdf5\*" -Destination $data -Force
-
-# Download and extract the WMP Library
-Invoke-WebRequest -Uri "https://github.com/mit-crpg/WMP_Library/releases/download/v1.1/WMP_Library_v1.1.tar.gz" -OutFile "$data\WMP_Library_v1.1.tar.gz"
-tar -xzf "$data\WMP_Library_v1.1.tar.gz" -C $data
+python postBuild
 ```
 
 Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
