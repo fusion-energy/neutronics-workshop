@@ -17,7 +17,6 @@ import shutil
 import subprocess
 import sys
 import tarfile
-import tempfile
 import urllib.request
 from pathlib import Path
 
@@ -32,26 +31,36 @@ WMP_URL = (
 )
 
 
+class ProgressReader:
+    """Wraps a response so that the download progress is printed as it is read"""
+
+    def __init__(self, response):
+        self.response = response
+        self.total = int(response.headers.get("Content-Length", 0))
+        self.read_so_far = 0
+
+    def read(self, size):
+        chunk = self.response.read(size)
+        self.read_so_far += len(chunk)
+        if self.total:
+            percentage = 100 * self.read_so_far / self.total
+            print(f"  {percentage:.1f}%", end="\r", flush=True)
+        return chunk
+
+
 def download_and_extract(url: str, destination: Path):
-    """Streams a tar archive to a temporary file and extracts it to destination"""
+    """Downloads a tar archive and extracts it to the destination.
 
-    print(f"Downloading {url}")
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        archive = Path(tmp_dir) / "archive"
-        with urllib.request.urlopen(url) as response, open(archive, "wb") as file:
-            total = int(response.headers.get("Content-Length", 0))
-            downloaded = 0
-            while chunk := response.read(1024 * 1024):
-                file.write(chunk)
-                downloaded += len(chunk)
-                if total:
-                    print(f"  {100 * downloaded / total:.1f}%", end="\r", flush=True)
-            print()
+    The archive is extracted as it downloads rather than being saved to disk
+    first as the extracted data is already several Gb and machines with a small
+    disk don't have room for both."""
 
-        print(f"Extracting to {destination}")
-        with tarfile.open(archive, "r:*") as tar:
-            # filter="data" is the safe default from Python 3.14 onwards
+    print(f"Downloading {url} and extracting to {destination}")
+    with urllib.request.urlopen(url) as response:
+        # filter="data" is the safe default from Python 3.14 onwards
+        with tarfile.open(fileobj=ProgressReader(response), mode="r|*") as tar:
             tar.extractall(destination, filter="data")
+    print()
 
 
 def download_chain(destination: Path):
