@@ -38,13 +38,19 @@ class ProgressReader:
         self.response = response
         self.total = int(response.headers.get("Content-Length", 0))
         self.read_so_far = 0
+        self.next_percentage = 0
 
     def read(self, size):
         chunk = self.response.read(size)
         self.read_so_far += len(chunk)
         if self.total:
-            percentage = 100 * self.read_so_far / self.total
-            print(f"  {percentage:.1f}%", end="\r", flush=True)
+            percentage = int(100 * self.read_so_far / self.total)
+            # Only every 5%, and on its own line. The tar file is read in small
+            # pieces, so a percentage printed on every read is millions of
+            # lines in a log file that has nowhere to put a carriage return.
+            if percentage >= self.next_percentage:
+                print(f"  downloaded {percentage}%", flush=True)
+                self.next_percentage = percentage + 5
         return chunk
 
 
@@ -60,7 +66,6 @@ def download_and_extract(url: str, destination: Path):
         # filter="data" is the safe default from Python 3.14 onwards
         with tarfile.open(fileobj=ProgressReader(response), mode="r|*") as tar:
             tar.extractall(destination, filter="data")
-    print()
 
 
 def download_chain(destination: Path):
