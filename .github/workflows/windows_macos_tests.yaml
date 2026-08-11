@@ -1,0 +1,62 @@
+name: windows and macos tests
+
+# The workshop is developed on Linux where the OpenMC wheel includes DAGMC and
+# all of the tasks can be run. The Windows and Mac OS wheels don't include
+# DAGMC so this workflow checks the parts that do work on those platforms,
+# which is the pip install and the CSG based parts of OpenMC.
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    # bash is available on the Windows runners and keeps the steps the same on
+    # every operating system
+    shell: bash
+
+jobs:
+  test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the Python dependencies
+        run: python -m pip install -r requirements.txt
+
+      # The postBuild script downloads the whole ENDF/B-VIII.0 library, which is
+      # a 3.4Gb download and several Gb more once extracted. The Windows and Mac
+      # OS runners only have 14Gb of disk so a few nuclides are downloaded
+      # instead. This is enough for the simulation in the install tests and for
+      # the task 2 notebooks, which make materials rather than run simulations.
+      - name: Download a small amount of nuclear data
+        run: |
+          mkdir -p "$HOME/nuclear_data"
+          openmc_data_downloader -l ENDFB-8.0-NNDC -p neutron -i Li6 Li7 H1 H2 H3 O16 Fe56 -d "$HOME/nuclear_data"
+
+      - name: Install the Jupyter kernel used by the notebook tests
+        run: python -m ipykernel install --user --name python3
+
+      - name: Run the install tests
+        run: pytest tests/test_install.py -v
+
+      # Task 2 makes materials without running simulations so it only needs the
+      # small amount of nuclear data downloaded above. The remaining tasks
+      # either need the full nuclear data or DAGMC.
+      - name: Run the task 2 notebooks
+        run: pytest tests/test_task_2.py -v
