@@ -60,5 +60,11 @@ jobs:
       # These tasks use CSG geometry and matplotlib so they don't need DAGMC or
       # a display. The remaining tasks either need DAGMC, which is not in the
       # Windows and Mac OS wheels, or pyvista which needs a display.
+      #
+      # Task 12 is left out for now. Its third notebook simulates 100 batches of
+      # 50000 particles, ten times the other two, and the Windows and Mac OS
+      # wheels are built without OpenMP so their simulations are single
+      # threaded. It takes over 1000s there while finishing comfortably on
+      # Linux. Worth adding back once those wheels are built with OpenMP.
       - name: Run the task notebooks that don't need DAGMC
-        run: pytest tests/test_task_1.py tests/test_task_2.py tests/test_task_5.py tests/test_task_6.py tests/test_task_7.py tests/test_task_9.py tests/test_task_12.py -v
+        run: pytest tests/test_task_1.py tests/test_task_2.py tests/test_task_5.py tests/test_task_6.py tests/test_task_7.py tests/test_task_9.py -v
