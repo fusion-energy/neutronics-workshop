@@ -80,6 +80,7 @@ parts:
     - file: tasks/task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons
     - file: tasks/task_09_CSG_instantaneous_dose_tallies/6_silicon_dose_on_mesh
     - file: tasks/task_09_CSG_instantaneous_dose_tallies/7_compare_dose_simulation_with_analytical_calculation
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/8_photon_dose_in_a_virtual_material
   - caption: Activation Transmutation Depletion
     chapters:
     - file: tasks/task_10_activation_transmutation_depletion/README
