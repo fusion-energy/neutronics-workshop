@@ -73,13 +73,14 @@ parts:
   - caption: CSG cell instantaneous dose tally
     chapters:
     - file: tasks/task_09_CSG_instantaneous_dose_tallies/README
-    - file: tasks/task_09_CSG_instantaneous_dose_tallies/1_surface_dose_from_gamma_source
-    - file: tasks/task_09_CSG_instantaneous_dose_tallies/2_surface_dose_from_gamma_source_study
-    - file: tasks/task_09_CSG_instantaneous_dose_tallies/3_cell_dose_from_neutron
-    - file: tasks/task_09_CSG_instantaneous_dose_tallies/4_cell_dose_from_photon
-    - file: tasks/task_09_CSG_instantaneous_dose_tallies/5_mesh_dose_from_neutrons
-    - file: tasks/task_09_CSG_instantaneous_dose_tallies/6_silicon_dose_on_mesh
-    - file: tasks/task_09_CSG_instantaneous_dose_tallies/7_compare_dose_simulation_with_analytical_calculation
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/1_biological_surface_dose_from_gamma_source
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/2_biological_surface_dose_from_gamma_source_study
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/3_biological_cell_dose_from_neutrons
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/4_biological_cell_dose_from_gammas
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/5_biological_mesh_dose_from_neutrons
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/6_silicon_mesh_dose_from_neutrons
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/7_silicon_cell_dose_from_gammas
+    - file: tasks/task_09_CSG_instantaneous_dose_tallies/8_compare_biological_dose_with_analytical_calculation
   - caption: Activation Transmutation Depletion
     chapters:
     - file: tasks/task_10_activation_transmutation_depletion/README
