@@ -8,7 +8,6 @@ on:
     paths:
       - 'tasks/**'
       - 'sync_workshops.py'
-      - 'requirements.txt'
       - '.github/workflows/check-workshop-sync.yml'
   pull_request:
     branches:
@@ -17,7 +16,6 @@ on:
     paths:
       - 'tasks/**'
       - 'sync_workshops.py'
-      - 'requirements.txt'
       - '.github/workflows/check-workshop-sync.yml'
   workflow_dispatch: {}
 
@@ -32,9 +30,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
-
-      - name: Install dependencies
-        run: python -m pip install -r requirements.txt
 
       - name: Validate workshop folders
         run: python sync_workshops.py --check

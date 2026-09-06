@@ -104,6 +104,6 @@ This is the pattern used by `task_05` (TBR), `task_06` (DPA), `task_07` (spectra
 
 You can put a `DAGMCUniverse` inside a CSG cell (e.g. to add reflective boundaries around a CAD model, or embed a CAD blanket inside a simple CSG vessel). See [`cad-geometry.md`](cad-geometry.md) for the pattern.
 
-## Canonical notebooks
+## Canonical tasks
 
 `tasks/task_03_making_CSG_geometry/`, `tasks/task_05_CSG_cell_tally_TBR/`, `tasks/task_17_using_DAGMC_models_in_openmc/` (hybrid CSG+DAGMC).

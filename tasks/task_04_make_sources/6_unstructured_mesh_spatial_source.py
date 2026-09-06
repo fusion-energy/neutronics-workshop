@@ -1,0 +1,71 @@
+# %% [markdown]
+# ---
+# title: Unstructured mesh source
+# ---
+
+# %% [markdown]
+# This example makes use of a DAGMC unstructured tet mesh to produce a source with a MeshSpatial distribution.
+
+# %%
+import openmc
+from pathlib import Path
+from cad_to_dagmc import CadToDagmc
+from openmc_source_plotter import plot_source_position
+# Setting the cross section path to the correct location in the docker image.
+# If you are running this outside the docker image you will have to change this path to your local cross section path.
+openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections.xml'
+
+# %% [markdown]
+# This section loads a CAD step file and creates an unstructured DAGMC tet mesh
+#
+# The resulting mesh file (umesh.mesh) is already included in the repo
+#
+# So this creation from step file is included for completeness but can be skipped
+
+# %%
+cad = CadToDagmc()
+cad.add_stp_file('plasma_simplified_180.step')   
+cad.export_unstructured_mesh_file(filename="umesh.vtk", max_mesh_size=100, min_mesh_size=10)
+
+# Setting the cross section path to the correct location in the docker image.
+# If you are running this outside the docker image you will have to change this path to your local cross section path.
+openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections.xml'
+
+umesh = openmc.UnstructuredMesh(filename="umesh.vtk",library='moab')
+
+surf1 = openmc.Sphere(r=50000, boundary_type="vacuum")
+region1 = -surf1
+
+cell1 = openmc.Cell(region=region1)
+
+my_geometry = openmc.Geometry([cell1])
+
+# link to docs for MeshSpatial
+# https://docs.openmc.org/en/latest/pythonapi/generated/openmc.stats.MeshSpatial.html
+# allows us to apply the same source to each element in the mesh. The source can be varied in terms of strength
+my_source = openmc.IndependentSource(
+    space=openmc.stats.MeshSpatial(
+        mesh=umesh,
+        #we set the strengths to sum to 1 to make post processing easier.
+        # in a more accurate plasma source the strength could be adjusted based on the source position.
+        strengths=[1/1104]*1104,
+        volume_normalized=False
+    ),
+    angle=openmc.stats.Isotropic(),
+    energy=openmc.stats.Discrete([14e6], [1])
+)
+
+my_settings = openmc.Settings()
+my_settings.batches = 10
+my_settings.particles = 1000
+my_settings.run_mode = "fixed source"
+my_settings.source = my_source
+
+model = openmc.Model(my_geometry, None, my_settings )
+
+model.run()
+
+
+# plotting the mesh source
+plot = plot_source_position([my_source], n_samples=10000)
+plot.show()

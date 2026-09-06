@@ -15,4 +15,4 @@ Focused reference files for coding agents working on fusion neutronics with this
 | [shutdown-dose-rate.md](shutdown-dose-rate.md) | R2S workflow: depletion → decay photon source → photon transport → dose map |
 | [variance-reduction.md](variance-reduction.md) | Survival biasing, weight windows, FW-CADIS with the random-ray adjoint |
 
-Each file ends with pointers to the canonical `tasks/task_XX_*` notebook(s) where the patterns are worked through at full length.
+Each file ends with pointers to the canonical `tasks/task_XX_*` task(s) where the patterns are worked through at full length.

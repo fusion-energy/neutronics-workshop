@@ -1,0 +1,7 @@
+# The tasks are stored as percent format .py files so that Quarto can render
+# them and so that they diff nicely. Opening one in Jupyter Lab with
+# "Open With -> Notebook" pairs it with a kernel through Jupytext, and these
+# settings stop the save writing kernel metadata into the file. Quarto needs
+# the YAML front matter to be the first cell of the file.
+notebook_metadata_filter = "-all"
+cell_metadata_filter = "-all"

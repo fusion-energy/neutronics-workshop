@@ -211,11 +211,11 @@ Depletion gives you the material composition after cooldown. To compute **dose r
 - **Chain file too ambitious** → `reduce_chain_level=3` or `5` trims to what's reachable from your starting materials and makes CRAM solves 10–100× faster.
 - **Wrong chain for your library** — ENDF/B-VIII.0 chain goes with ENDF/B-VIII.0 cross sections. TENDL chains go with TENDL. Mixing can produce warnings about missing nuclide yields.
 
-## Canonical notebooks
+## Canonical tasks
 
 `tasks/task_10_activation_transmutation_depletion/`:
-- `1_depletion_with_flux_spectra.ipynb` — `Material.deplete()` with pre-computed spectrum
-- `2_simple_transmutation_reaction_rate_simulation.ipynb` — reaction rate tallies
-- `3_example_transmutation_isotope_build_up.ipynb` — `CoupledOperator`, results extraction
-- `4_example_tally_change_with_burnup.ipynb` — coupled case with tally evolution
-- `5_full_pulse_schedule.ipynb` — the IndependentOperator pulse-schedule canon
+- `1_depletion_with_flux_spectra.py` — `Material.deplete()` with pre-computed spectrum
+- `2_simple_transmutation_reaction_rate_simulation.py` — reaction rate tallies
+- `3_example_transmutation_isotope_build_up.py` — `CoupledOperator`, results extraction
+- `4_example_tally_change_with_burnup.py` — coupled case with tally evolution
+- `5_full_pulse_schedule.py` — the IndependentOperator pulse-schedule canon

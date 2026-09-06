@@ -2,12 +2,12 @@ from pathlib import Path
 
 import pytest
 
-from .utils import _notebook_run
+from .utils import _run_task
 
 
-@pytest.mark.parametrize("filename", Path().rglob("tasks/task_17_*/*.ipynb"))
+@pytest.mark.parametrize("filename", list(Path().rglob("tasks/task_17_*/[0-9]*.py")))
 def test_task(filename):
 
     print(f"Attempting to run {filename}")
-    _, errors = _notebook_run(filename)
+    _, errors = _run_task(filename)
     assert errors == []
