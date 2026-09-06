@@ -49,3 +49,8 @@ venv
 # plot files
 *.pkl
 *.vtkhdf
+
+# Quarto
+/.quarto/
+**/*.quarto_ipynb
+_freeze/

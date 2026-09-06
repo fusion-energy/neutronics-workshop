@@ -1,6 +1,6 @@
 # Fusion Energy Neutronics Workshop
 
-The book contains a set of example neutronics analysis needed for fusion reactor design.
+This folder contains a set of example neutronics analysis needed for fusion reactor design.
 
 The goal is to provided minimal examples for all the main types of neutronics analysis that are carried out for fusion reactor design and analysis.
 
@@ -11,6 +11,8 @@ There is an accompanying [slide](https://fusion-energy.github.io/neutronics-work
 There is also a [Gather Town](https://gather.town/app/QnHxhg6bPf8KQdii/openmc-workshop) space which is great for working through the workshop with colleagues.
 
 
-```{tableofcontents}
-```
+Each task is a Python file with `# %%` cell markers. They can be opened as
+notebooks in Jupyter Lab, run cell by cell in VS Code, or run straight through
+with `python`. The rendered version of every task is published in the
+[online documentation](https://fusion-energy.github.io/neutronics-workshop/).
 

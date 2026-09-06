@@ -147,7 +147,7 @@ absolute = tally.mean * source_rate
 - `dagmc_geometry_slice_plotter` — plot slices through a DAGMC model alongside mesh results
 - DPA: tally `'damage-energy'` (eV), divide by 2·E_d with E_d = threshold displacement energy (40 eV for Fe) and the atom density in the cell
 
-## Canonical notebooks
+## Canonical tasks
 
 - Cell tally / TBR: `tasks/task_05_CSG_cell_tally_TBR/`
 - DPA: `tasks/task_06_CSG_cell_tally_DPA/`

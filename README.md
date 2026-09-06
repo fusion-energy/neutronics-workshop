@@ -1,4 +1,4 @@
-[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://fusion-energy.github.io/neutronics-workshop/)
+[![Documentation](https://img.shields.io/badge/docs-online-blue)](https://fusion-energy.github.io/neutronics-workshop/)
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fusion-energy/neutronics-workshop/HEAD)
 
@@ -8,7 +8,7 @@ A selection of resources for learning fusion neutronics simulations with a
 particular focus on [OpenMC](https://openmc.org/), [DAGMC](https://svalinn.github.io/DAGMC/)
 and [Paramak](https://fusion-energy.github.io/paramak/stable/index.html)
 
-## See the :point_right: [online documentation](https://fusion-energy.github.io/neutronics-workshop/) :point_left: for installation options, usage recommendations and rendered notebooks.
+## See the :point_right: [online documentation](https://fusion-energy.github.io/neutronics-workshop/) :point_left: for installation options, usage recommendations and rendered tasks.
 
 There are accompanying workshop [slide decks](https://fusion-energy.github.io/neutronics-workshop-slides/index.html) that are designed to help deliver selected tasks in this workshop for different training events.
 

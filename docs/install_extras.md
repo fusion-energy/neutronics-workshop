@@ -14,8 +14,8 @@ Parview can be downloaded from [here](https://www.paraview.org/download/).
 2. Some tasks require the use of CAD software to view the 3D geometry produced.
 FreeCAD is one option for this and can be downloaded [here](https://www.freecadweb.org/downloads.php).
     <details>
-        <summary><b>Expand</b> - Ubuntu terminal commands for FreeCAD install</summary>
-            <pre><code class="language-html">
-            sudo apt update && sudo apt-get install freecad
-            </code></pre>
+      <summary><b>Expand</b> - Ubuntu terminal commands for FreeCAD install</summary>
+        <pre><code class="language-html">
+        sudo apt update && sudo apt-get install freecad
+        </code></pre>
     </details>

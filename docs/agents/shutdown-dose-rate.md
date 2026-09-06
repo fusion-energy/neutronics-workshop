@@ -163,7 +163,7 @@ with openmc.StatePoint(gamma_sp) as sp:
 
 ## Running R2S at each cooling timestep
 
-The loop above uses the last timestep. For a decay-curve dose map, wrap steps 5–7 in a loop over `results[i]` for each post-irradiation step. This is how `task_20/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.ipynb` works.
+The loop above uses the last timestep. For a decay-curve dose map, wrap steps 5–7 in a loop over `results[i]` for each post-irradiation step. This is how `task_20/2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.py` works.
 
 ## D1S shortcut (when you can afford the approximation)
 
@@ -173,10 +173,10 @@ If the activation is dominated by a single isotope with a single dominant decay 
 
 R2S photon transport through shielded structures often needs FW-CADIS — see [`variance-reduction.md`](variance-reduction.md). Run the photon pass with weight windows generated against the dose mesh.
 
-## Canonical notebooks
+## Canonical tasks
 
 `tasks/task_20_CAD_shut_down_dose_rate/`:
-- `1_unstructured_mesh_R2S_shutdown_dose_rate.ipynb` — single material, single timestep
-- `2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.ipynb` — multi-material, multiple cooling times
+- `1_unstructured_mesh_R2S_shutdown_dose_rate.py` — single material, single timestep
+- `2_unstructured_mesh_R2S_shutdown_dose_rate_several_materials.py` — multi-material, multiple cooling times
 
 `tasks/task_11_CSG_shut_down_dose_tallies/` — CSG versions including D1S.

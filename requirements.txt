@@ -8,7 +8,7 @@ pytest
 nbformat
 nbconvert
 ipykernel
-jupyter-book
+jupytext
 openmc_source_plotter
 openmc_depletion_plotter
 openmc_data_downloader
