@@ -25,10 +25,59 @@
 # %%
 import cadquery as cq
 
+# %% [markdown]
+# CadQuery has a built in viewer for Jupyter but it writes JavaScript that
+# needs a live notebook, so it shows nothing in this rendered book.
+#
+# This small function converts the CAD into a surface mesh and shows it with
+# PyVista, the same viewer used for the vtk files later in the workshop, which
+# works both in Jupyter and in the book.
+
+# %%
+import pyvista as pv
+from cadquery.occ_impl.exporters.vtk import extractEdgesFaces
+from IPython.display import HTML
+
+
+def show_cad(cad_object, tolerance=1e-3, angular_tolerance=0.1):
+    """Shows a CadQuery Workplane, Shape or Assembly with PyVista.
+
+    The tolerance is the relative deviation of the surface mesh from the CAD
+    surface, smaller values give a smoother shape and a larger web page.
+    """
+
+    if isinstance(cad_object, cq.Assembly):
+        parts = [(shape.moved(location), color) for shape, _, location, color in cad_object]
+    elif isinstance(cad_object, cq.Workplane):
+        parts = [(cad_object.val(), None)]
+    else:
+        parts = [(cad_object, None)]
+
+    plotter = pv.Plotter(off_screen=True)
+    for shape, color in parts:
+        polydata = shape.toVtkPolyData(tolerance, angular_tolerance)
+        # the cell arrays CadQuery attaches do not match the number of cells,
+        # dropping them keeps VTK quiet when the scene is rendered
+        polydata.GetCellData().Initialize()
+        edges, faces = extractEdgesFaces(polydata)
+        # the default is the same gold color that the CadQuery viewer uses
+        red, green, blue, alpha = color.toTuple() if color else (1.0, 0.8, 0.0, 1.0)
+        plotter.add_mesh(pv.wrap(faces), color=(red, green, blue), opacity=alpha)
+        plotter.add_mesh(pv.wrap(edges), color='black', line_width=2)
+
+    # PyVista would return an ipywidget here, an iframe holding the same scene
+    # is used instead because it keeps the web page about half the size
+    scene = plotter.trame.export_html(filename=None).getvalue()
+    source = scene.replace('&', '&amp;').replace('"', '&quot;')
+    return HTML(
+        f'<div><iframe srcdoc="{source}" style="width:100%; height:600px; '
+        'border:1px solid rgb(221,221,221);"></iframe></div>'
+    )
+
 # %%
 circle_solid = cq.Workplane("XY").circle(1.0).extrude(3.0)
 
-circle_solid
+show_cad(circle_solid)
 
 # %% [markdown]
 # More complex shapes can be made that include splines. These types of curves are not available with traditional CSG geometry 
@@ -41,14 +90,14 @@ xyz_coordinates = [
     (2.0, 2.0),
 ]
 spine_solid = cq.Workplane("XY").spline(listOfXYTuple=xyz_coordinates, periodic=True).close().extrude(0.5)
-spine_solid
+show_cad(spine_solid)
 
 # %% [markdown]
 # Boolean operations are also supported
 
 # %%
 cut_spline = spine_solid.cut(circle_solid)
-cut_spline
+show_cad(cut_spline)
 
 # %% [markdown]
 # Assemblies can also be built up to contain several shapes
@@ -57,7 +106,7 @@ cut_spline
 assembly = cq.Assembly()
 assembly.add(circle_solid, color=cq.Color("red"))
 assembly.add(cut_spline, color=cq.Color("blue"))
-assembly
+show_cad(assembly)
 
 # %% [markdown]
 # CAD geometry can also be save to STEP files which are a well supported open standard CAD file format 
@@ -73,7 +122,7 @@ print(sorted(path.name for path in Path('.').glob('*.step')))
 
 # %%
 loaded_shape = cq.importers.importStep('my-cad-geometry.step')
-loaded_shape
+show_cad(loaded_shape)
 
 # %% [markdown]
 # The benefits of CAD geometry over CSG are:
@@ -92,3 +141,4 @@ loaded_shape
 # %%
 text = cq.Workplane().text(txt="GitHub stars are appreciated ", fontsize=10, distance=1)
 text.export('cad_geometry.step')
+show_cad(text)
