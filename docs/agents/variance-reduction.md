@@ -109,7 +109,7 @@ plt.imshow(lower, origin='lower', extent=mesh.bounding_box.extent['xy'], norm=Lo
 
 A well-formed set of windows shows smooth gradients from source toward the tally. Sharp edges or zeros mean the underlying adjoint didn't converge in that region — increase `nparticles` on the random-ray pass.
 
-## Canonical notebooks
+## Canonical tasks
 
 `tasks/task_14_variance_reduction/`:
 1. Survival biasing baseline

@@ -1,6 +1,6 @@
 # Sources
 
-Fusion neutronics is almost always **fixed-source** with a 14 MeV DT neutron source. The basic building block is `openmc.IndependentSource`, which combines independent `space`, `angle`, and `energy` distributions. (Older notebooks may use `openmc.Source` — that alias still works but `IndependentSource` is the current name.)
+Fusion neutronics is almost always **fixed-source** with a 14 MeV DT neutron source. The basic building block is `openmc.IndependentSource`, which combines independent `space`, `angle`, and `energy` distributions. (Older examples may use `openmc.Source` — that alias still works but `IndependentSource` is the current name.)
 
 ## The minimum 14 MeV DT point source
 
@@ -81,7 +81,7 @@ For realistic tokamak / spherical-tokamak plasma emission (Shafranov shift, temp
 from openmc_plasma_source import tokamak_source
 
 # Units for major/minor/pedestal radius depend on the openmc_plasma_source version
-# — check the workshop task_04/3 notebook for the convention your installed version uses.
+# — check the workshop task_04/3 task for the convention your installed version uses.
 # The values below are from task_04/3 and represent an ITER-like plasma.
 my_sources = tokamak_source(
     elongation=1.557,
@@ -134,6 +134,6 @@ settings.source = [neutron_src, photon_src]        # equal strength by default
 neutron_src.strength = 0.7; photon_src.strength = 0.3   # explicit
 ```
 
-## Canonical notebooks
+## Canonical tasks
 
 `tasks/task_04_make_sources/` — point, ring, plasma, gamma, mesh-based, and structured mesh sources, each with source-plotter visualisation.

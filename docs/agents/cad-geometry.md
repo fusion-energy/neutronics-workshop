@@ -166,10 +166,10 @@ Or the built-in `model.plot(...)` works once materials + a minimal source + sett
 - **Geometry not watertight** — comes from imported STEP files with small gaps; `cad_to_dagmc` warns but still exports. Inspect with `pydagmc` or `dagmc_h5m_file_inspector`.
 - **No vacuum boundary** — if you use route A (`bounded_universe()`), OpenMC adds one; if route B, you must ensure the outer CSG boundary is `boundary_type='vacuum'` or particles leak infinitely.
 
-## Canonical notebooks
+## Canonical tasks
 
-- Scripted CAD: `tasks/task_15_making_CAD_geometry/1_making_cad_with_cadquery.ipynb`
-- Paramak: `tasks/task_15_making_CAD_geometry/2_making_cad_with_paramak.ipynb`
+- Scripted CAD: `tasks/task_15_making_CAD_geometry/1_making_cad_with_cadquery.py`
+- Paramak: `tasks/task_15_making_CAD_geometry/2_making_cad_with_paramak.py`
 - CAD → DAGMC: `tasks/task_16_converting_CAD_geometry_to_DAGMC/`
 - DAGMC in OpenMC: `tasks/task_17_using_DAGMC_models_in_openmc/` (minimal, boundary types, hybrid CSG)
 - Mesh fast flux on CAD: `tasks/task_18_CAD_mesh_fast_flux/`

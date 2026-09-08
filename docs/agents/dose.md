@@ -116,6 +116,6 @@ absolute_dose_rate_pSv_s = dose_tally.mean * src_rate
 
 Dose tallies converge slowly because they're weighted by an energy function that peaks in minor parts of the spectrum. Expect to need either many particles (10⁷–10⁸) or **variance reduction** — see [`variance-reduction.md`](variance-reduction.md). FW-CADIS is designed precisely for dose maps behind thick shields.
 
-## Canonical notebooks
+## Canonical tasks
 
 `tasks/task_09_CSG_instantaneous_dose_tallies/` — surface and cell dose from a Co-60 source, gamma dose coefficient plots, parameter study over shield thickness.

@@ -49,4 +49,4 @@ internet browser of your choice. Select and open the URL at the end of the termi
 
 <p align="center"><img src="https://user-images.githubusercontent.com/8583900/144759522-5306e61e-e30d-45e0-bb1a-ea8360e8c6da.png" width="70%" /></p>
 
-To check the tasks run try opening the first task in the half day workshop folder and running the Jupyter Lab code (either click on the triangular run button or click on the first code cell and press shift and enter to execute that cell).
+To check the tasks run try opening the first task in the half day workshop folder. Right click the `.py` file and choose **Open With** and then **Notebook**, then run the code (either click on the triangular run button or click on the first code cell and press shift and enter to execute that cell). See [Running the tasks](running_the_tasks.md) for the other ways to run them.

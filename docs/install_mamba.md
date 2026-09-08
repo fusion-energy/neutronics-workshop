@@ -47,7 +47,7 @@ git clone --depth 1 --branch main https://github.com/fusion-energy/neutronics-wo
 cd neutronics-workshop
 ```
 
-Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
+Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ```.py``` tasks found in the ```tasks``` folders. Right click a task and choose **Open With** and then **Notebook** to run it cell by cell, see [Running the tasks](running_the_tasks.md) for the other ways to run them.
 
 ```bash
 jupyter lab

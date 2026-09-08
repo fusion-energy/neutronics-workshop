@@ -13,7 +13,7 @@ dependencies:
   - nbformat  # used for testing with pytest
   - nbconvert  # used for testing with pytest
   - ipykernel  # used for testing with pytest
-  - jupyter-book
+  - jupytext
   - pip
   - pip:
     - openmc_source_plotter

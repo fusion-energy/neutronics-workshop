@@ -1,6 +1,6 @@
 # AGENTS.md — Fusion Neutronics with OpenMC
 
-Agent-oriented guide for writing **fusion neutronics** simulations with OpenMC and the surrounding CAD/DAGMC/paramak ecosystem. This repo is a living catalogue of patterns for fixed-source DT simulations, activation/depletion, dose, and shutdown dose rate — see `tasks/task_XX_*` for worked notebooks.
+Agent-oriented guide for writing **fusion neutronics** simulations with OpenMC and the surrounding CAD/DAGMC/paramak ecosystem. This repo is a living catalogue of patterns for fixed-source DT simulations, activation/depletion, dose, and shutdown dose rate — see `tasks/task_XX_*` for worked examples.
 
 **Fusion-first defaults, not fission-first.** Simulations here are almost always `run_mode='fixed source'` with a 14 MeV DT source (or a plasma-shaped source), not eigenvalue. Depletion is driven by `source_rates` (n/s), not reactor power. When in doubt, prefer `openmc.deplete.IndependentOperator` (transport once, then pure Bateman) over `CoupledOperator` (re-transports every step) — fusion spectra vary slowly with burnup so the independent operator is usually accurate enough and much faster.
 
@@ -51,7 +51,7 @@ All live under `docs/agents/`. Read the ones relevant to the task at hand; do no
 | [`shutdown-dose-rate.md`](docs/agents/shutdown-dose-rate.md) | R2S and D1S workflows combining depletion + photon transport |
 | [`variance-reduction.md`](docs/agents/variance-reduction.md) | `WeightWindowGenerator`, iterative WW, FW-CADIS |
 
-Each reference file ends with pointers to the canonical `tasks/task_XX_*` notebook(s) for deeper worked examples.
+Each reference file ends with pointers to the canonical `tasks/task_XX_*` task(s) for deeper worked examples.
 
 ## Sanity rules that trip agents up
 
@@ -69,14 +69,16 @@ Each reference file ends with pointers to the canonical `tasks/task_XX_*` notebo
 
 ## Testing a change
 
-If the user is modifying a notebook under `tasks/`, re-run the notebook to confirm. For a new script:
+The tasks under `tasks/` are percent format `.py` files, so they can be run
+straight through with `python` or opened as notebooks with jupytext. If the user
+is modifying a task, re-run it to confirm. For a new script:
 
 ```bash
 python my_script.py            # should complete without raising
 ls statepoint.*.h5 summary.h5  # confirm outputs exist
 ```
 
-For the workshop itself, the pytest suite in `tests/` executes all notebooks headlessly — long but authoritative.
+For the workshop itself, the pytest suite in `tests/` executes every task headlessly, which is long but authoritative.
 
 ## Canonical references
 

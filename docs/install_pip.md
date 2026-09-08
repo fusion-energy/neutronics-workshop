@@ -6,15 +6,15 @@ This installation option supports Linux.
 
 You will need Python installed which comes pre installed on most Linux distributions.
 
-````{admonition} Minimal Linux installs — extra system dependencies
-:class: tip, dropdown
+::: {.callout-tip collapse="true"}
+## Minimal Linux installs, extra system dependencies
 
 Most desktop Linux distributions already include the system libraries needed to run the simulations and graphics. However minimal environments such as container or server images may be missing some of them. If you hit missing library errors, install them with:
 
 ```bash
 sudo apt-get install --yes git wget mpich libmpich12 libhdf5-310 libhdf5-mpich-310 hdf5-tools libnetcdf22 libtbb12 libglfw3 libglx0 libgl1 libglut3.12 libosmesa6 libgles2 libxft2 libxcursor1 libxinerama1 xvfb
 ```
-````
+:::
 
 In addition to install with pip you will need pip installed.
 ```
@@ -56,7 +56,7 @@ The download the nuclear data. This will create a ```nuclear_data``` folder in y
 python3 postBuild
 ```
 
-Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
+Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ```.py``` tasks found in the ```tasks``` folders. Right click a task and choose **Open With** and then **Notebook** to run it cell by cell, see [Running the tasks](running_the_tasks.md) for the other ways to run them.
 
 ```bash
 jupyter lab
@@ -107,7 +107,7 @@ The download the nuclear data. This will create a ```nuclear_data``` folder in y
 python3 postBuild
 ```
 
-Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
+Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ```.py``` tasks found in the ```tasks``` folders. Right click a task and choose **Open With** and then **Notebook** to run it cell by cell, see [Running the tasks](running_the_tasks.md) for the other ways to run them.
 
 ```bash
 jupyter lab
@@ -145,12 +145,12 @@ Activate the virtual environment. The remaining commands assume PowerShell.
 .neutronicsworkshop\Scripts\Activate.ps1
 ```
 
-````{note}
+::: {.callout-note}
 If PowerShell blocks the activation script with an execution policy error, allow signed
 local scripts for the current user with
 ```Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser``` and try again.
 From the classic Command Prompt use ```.neutronicsworkshop\Scripts\activate.bat``` instead.
-````
+:::
 
 Then install the Python dependencies.
 
@@ -165,7 +165,7 @@ home directory and download several Gb of data needed for the simulations.
 python postBuild
 ```
 
-Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ipynb tasks found in the ```tasks``` folders.
+Then you should be able to run the ```jupyter lab``` command and within Jupyter Lab you can load up the ```.py``` tasks found in the ```tasks``` folders. Right click a task and choose **Open With** and then **Notebook** to run it cell by cell, see [Running the tasks](running_the_tasks.md) for the other ways to run them.
 
 ```powershell
 jupyter lab
@@ -201,11 +201,11 @@ sudo apt-get install --yes git wget mpich libmpich12 libhdf5-310 libhdf5-mpich-3
 Then follow the *Install with pip on Linux* instructions above, starting from the
 ```python3-pip``` step.
 
-````{note}
+::: {.callout-note}
 Keep the repository inside the Linux file system, for example under ```~/```, rather than
 under ```/mnt/c/```. Working across the Windows file system boundary makes the simulations
 noticeably slower.
-````
+:::
 
 When you run ```jupyter lab``` in the Ubuntu terminal it will print a
 ```http://localhost:8888/...``` URL with a token. Open that URL in your normal Windows web

@@ -95,6 +95,6 @@ For DAGMC workflows, the material `name` **must match** the DAGMC material tag i
 - Mixing weight and atom fractions without setting `percent_type` consistently within a material.
 - Not all nuclides are in every data library. If `Pb208` fails, your library may only have `Pb` as element-level data, or missing that isotope — use `openmc_data_downloader` to fetch it.
 
-## Canonical notebook
+## Canonical task
 
-`tasks/task_02_making_materials/` — six notebooks covering isotopes, elements, enrichment sweeps, mixing, and `neutronics_material_maker`.
+`tasks/task_02_making_materials/` — six tasks covering isotopes, elements, enrichment sweeps, mixing, and `neutronics_material_maker`.

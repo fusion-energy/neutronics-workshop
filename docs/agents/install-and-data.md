@@ -75,7 +75,7 @@ download_chain -l endf -r b8.0 -b SFR -d ~/nuclear_data -f chain-endf-b8.0.xml
 download_nndc -d ~/nuclear_data -r b8.0
 ```
 
-Available helpers vary by `openmc_data` version; `download_chain` and `download_endf_chain` are the two used by this workshop (see `postBuild` and the depletion notebooks). For the current full list, run `pip show -f openmc_data | grep bin/` or check the upstream repo.
+Available helpers vary by `openmc_data` version; `download_chain` and `download_endf_chain` are the two used by this workshop (see `postBuild` and the depletion tasks). For the current full list, run `pip show -f openmc_data | grep bin/` or check the upstream repo.
 
 ### Option C — `openmc_data_downloader` (incremental / selective)
 

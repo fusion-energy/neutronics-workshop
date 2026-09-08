@@ -1,0 +1,254 @@
+# %% [markdown]
+# ---
+# title: Compare biological dose with an analytical calculation
+# ---
+
+# %% [markdown]
+# This example compares the dose obtained from an OpenMC simulation against a back-of-the-envelope analytical calculation.
+#
+# A 30 cm diameter spherical phantom made of tissue-equivalent material (as defined in ICRP 116, page 39) is placed at various distances from a point source. The simulation tallies dose on the phantom, while the analytical method estimates dose from the fluence at that distance using ICRP dose coefficients.
+#
+# This comparison helps validate that the simulation is producing physically reasonable results and builds intuition for when simple analytical estimates are sufficient.
+#
+# First import packages and configure the nuclear data path.
+
+# %%
+import openmc
+import math
+import matplotlib.pyplot as plt
+import numpy as np
+from pathlib import Path
+
+# Setting the cross section path to the correct location in the docker image.
+# If you are running this outside the docker image you will have to change this path to your local cross section path.
+openmc.config['cross_sections'] = Path.home() / 'nuclear_data' / 'cross_sections.xml'
+
+
+# %% [markdown]
+# ## Analytical dose calculation
+#
+# This function computes dose analytically by:
+# 1. Spreading the source particles uniformly over the surface of a sphere at the given distance (inverse-square law).
+# 2. Looking up the appropriate ICRP dose coefficient for the particle energy.
+# 3. Multiplying fluence by the dose coefficient to get dose in Sv.
+#
+# This assumes no shielding between source and phantom, a worst-case free-in-air estimate.
+
+# %%
+def manual_dose_calc(
+    particles_per_shot: int,
+    distance_from_source: float,
+    particle: str,
+    particle_energy: float,
+):
+    """Finds the dose in Sv a given distance from a point source.
+
+    Args:
+        particles_per_shot: the number of particles emitted by the source
+        distance_from_source: the distance between the person and source in cm
+        particle: the particle type "photon" or "neutron"
+        particle_energy: the particle energy in eV
+
+    Returns:
+        the dose in Sv
+    """
+    sphere_surface_area = 4 * math.pi * math.pow(distance_from_source, 2)
+
+    particles_per_unit_area = particles_per_shot / sphere_surface_area
+
+    # dose coefficients for the particle, AP is front facing (worst case)
+    energy, dose_coeffs = openmc.data.dose_coefficients(particle, geometry='AP')
+
+    # find the index of the closest energy to the particle energy
+    closest_index = np.argmin(np.abs(np.array(energy) - particle_energy))
+
+    # dose coefficient from ICRP
+    # e.g. conversion factor from fluence to dose at 14.1MeV = 495 pSv cm2 per neutron (AP)
+    dose_coeff = dose_coeffs[closest_index]
+
+    return particles_per_unit_area * dose_coeff * 1e-12
+
+
+# %% [markdown]
+# ## Define phantom material
+#
+# The phantom is made of a simplified tissue-equivalent material with the four major elements of soft tissue.
+
+# %%
+mat_tissue = openmc.Material()
+mat_tissue.add_element("O", 76.2, percent_type="wo")
+mat_tissue.add_element("C", 11.1, percent_type="wo")
+mat_tissue.add_element("H", 10.1, percent_type="wo")
+mat_tissue.add_element("N", 2.6, percent_type="wo")
+mat_tissue.set_density("g/cm3", 1.0)
+
+my_materials = openmc.Materials([mat_tissue])
+
+
+# %% [markdown]
+# ## Simulation function
+#
+# This function builds and runs an OpenMC model for a given distance, particle type, source strength, and energy. It returns both the simulated dose and the analytical dose for comparison.
+#
+# The geometry consists of a 30 cm diameter tissue sphere (the phantom) placed just inside the vacuum boundary sphere at the specified distance from a point source at the origin.
+
+# %%
+def simulate_dose(distance_from_source, particle, particles_per_shot, energy):
+    phantom_surface = openmc.Sphere(r=15, x0=distance_from_source - 15.1)  # offset by r + 0.1 cm so phantom fits inside the outer vacuum sphere
+
+    outer_surface = openmc.Sphere(r=distance_from_source, boundary_type="vacuum")
+
+    phantom_region = -phantom_surface
+
+    # void region is inside the outer surface and outside the phantom region
+    void_region = -outer_surface & +phantom_surface
+
+    void_cell = openmc.Cell(region=void_region)
+    phantom_cell = openmc.Cell(region=phantom_region)
+    phantom_cell.fill = mat_tissue
+
+    my_geometry = openmc.Geometry([phantom_cell, void_cell])
+
+    # Instantiate a Settings object
+    my_settings = openmc.Settings()
+    my_settings.output = {"tallies": False}
+    my_settings.batches = 30
+    my_settings.inactive = 0
+    my_settings.particles = 6000000
+    my_settings.run_mode = "fixed source"
+
+    source = openmc.IndependentSource()
+    source.particle = particle
+    source.angle = openmc.stats.Isotropic()
+    source.energy = openmc.stats.Discrete([energy], [1])
+    source.space = openmc.stats.Point((0.0, 0.0, 0.0))
+
+    my_settings.source = source
+
+    # volume of sphere V=(4/3)\u03c0r\u00b3
+    phantom_volume = (4 / 3) * math.pi * math.pow(phantom_surface.r, 3)
+
+    energy_bins, dose_coeffs = openmc.data.dose_coefficients(
+        particle=particle, geometry="AP"
+    )
+    energy_function_filter = openmc.EnergyFunctionFilter(energy_bins, dose_coeffs)
+    energy_function_filter.interpolation = "cubic"
+
+    particle_filter = openmc.ParticleFilter(particle)
+    cell_filter = openmc.CellFilter(phantom_cell)
+    surface_filter = openmc.SurfaceFilter(phantom_surface)
+
+    # Create tally to score dose
+    dose_cell_tally = openmc.Tally(name="dose_on_cell")
+    dose_cell_tally.filters = [
+        cell_filter,
+        energy_function_filter,
+        particle_filter,
+    ]
+    dose_cell_tally.scores = ["flux"]
+
+    surface_flux = openmc.Tally(name="surface_current")
+    surface_flux.filters = [cell_filter, surface_filter]
+    surface_flux.scores = ["current"]
+    my_tallies = openmc.Tallies([dose_cell_tally, surface_flux])
+
+    model = openmc.Model(my_geometry, my_materials, my_settings, my_tallies)
+
+    statepoint_filename = model.run()
+
+    with openmc.StatePoint(statepoint_filename) as statepoint:
+
+        tally_result = statepoint.get_tally(
+            name="dose_on_cell"
+        ).mean.flatten()[0]
+
+    # tally.mean is in units of pSv-cm3/source particle
+    # multiply to get pSv-cm3/shot
+    total_dose = tally_result * particles_per_shot
+
+    # converts from pSv-cm3/shot to pSv/shot
+    total_dose = total_dose / phantom_volume
+
+    # converts from pSv/shot to Sv/shot
+    total_dose = total_dose * 1e-12
+
+    print(f"Simulated dose on phantom: {total_dose} Sv per shot")
+
+    calculated_dose = manual_dose_calc(
+        particles_per_shot=particles_per_shot,
+        distance_from_source=distance_from_source,
+        particle=particle,
+        particle_energy=energy,
+    )
+
+    print(f"Analytical dose on phantom: {calculated_dose} Sv per shot")
+
+    return total_dose, calculated_dose
+
+
+# %% [markdown]
+# ## Plotting function
+#
+# This function runs the simulation at several distances and plots both the simulated and analytical dose on the same graph for comparison.
+
+# %%
+def plot_dose_vs_distance(particle, energy, particles_per_shot):
+    dose_for_each_shot_simulation = []
+    dose_for_each_shot_calc = []
+    distances_to_simulate = [1000, 2000, 3000]
+    for distance_from_source in distances_to_simulate:  # units of cm
+        total_dose, calculated_dose = simulate_dose(
+            distance_from_source, particle, particles_per_shot, energy
+        )
+        dose_for_each_shot_simulation.append(total_dose)
+        dose_for_each_shot_calc.append(calculated_dose)
+
+    plt.cla()
+    plt.clf()
+    fig = plt.figure()
+
+    plt.plot(
+        distances_to_simulate,
+        dose_for_each_shot_simulation,
+        label="dose on phantom (simulation)",
+    )
+    plt.plot(
+        distances_to_simulate,
+        dose_for_each_shot_calc,
+        label="dose on phantom (analytical)",
+    )
+    plt.xlabel(f"Distance between {particle} source and phantom [cm]")
+    plt.ylabel("Dose [Sv per shot]")
+    plt.title(
+        f"Dose for different distances between {energy: .2e}eV {particle} source and phantom,\n"
+        f"{particles_per_shot: .2e} {particle}s per shot "
+    )
+    plt.legend()
+    plt.grid(True, which="both")
+    plt.yscale("log")
+    plt.tight_layout()
+    plt.savefig(f"{energy}eV_{particle}_dose_as_function_of_distance.png", dpi=400)
+
+
+# %% [markdown]
+# ## Run for 14 MeV neutrons
+#
+# First we compare simulation vs analytical dose for a 14 MeV neutron source with 10^18 neutrons per shot.
+
+# %%
+plot_dose_vs_distance(particle="neutron", energy=14e6, particles_per_shot=1e18)
+
+# %% [markdown]
+# ## Run for 16.75 MeV photons
+#
+# Now we compare simulation vs analytical dose for a 16.75 MeV photon source with 10^14 photons per shot.
+
+# %%
+plot_dose_vs_distance(particle="photon", energy=16.75e6, particles_per_shot=1e14)
+
+# %% [markdown]
+# **Learning Outcomes:**
+#
+# - Understanding how to validate Monte Carlo dose results against analytical estimates.
+# - Appreciating the inverse-square law for dose from a point source.
+# - Recognising when a simple analytical calculation is a good approximation (unshielded, point source, no scattering).

@@ -123,6 +123,11 @@ RUN echo ${HOME}
 # Copy over the local repository files
 COPY tasks ${HOME}/tasks/
 
+# Keeps the task files in the percent format when they are saved from Jupyter
+# Lab. This has to sit in the folder the Jupyter server is rooted at, which is
+# the tasks folder, because Jupytext only looks as far up as the server root.
+COPY jupytext.toml ${HOME}/tasks/jupytext.toml
+
 RUN chown -R ${NB_UID}:${NB_UID} /root
 RUN chown -R ${NB_UID}:${NB_UID} ${HOME}/tasks
 
