@@ -18,4 +18,4 @@ cad_to_dagmc>=0.11.1
 openmc-plasma-source
 openmc_regular_mesh_plotter
 neutronics_material_maker[density]
-dagmc_h5m_file_inspector
+dagmc_h5m_file_inspector>=0.8.0
