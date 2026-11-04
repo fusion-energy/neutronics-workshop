@@ -89,6 +89,7 @@ parts:
     - file: tasks/task_10_activation_transmutation_depletion/3_example_transmutation_isotope_build_up
     - file: tasks/task_10_activation_transmutation_depletion/4_example_tally_change_with_burnup
     - file: tasks/task_10_activation_transmutation_depletion/5_full_pulse_schedule
+    - file: tasks/task_10_activation_transmutation_depletion/6_flowing_liquid_activation
   - caption: CSG shutdown dose tallies
     chapters:
     - file: tasks/task_11_CSG_shut_down_dose_tallies/README
