@@ -66,6 +66,17 @@ ce_model.settings.survival_biasing = False
 ce_model.run()
 ```
 
+By default the windows are **global** (uniform statistics everywhere). For **local** variance reduction that optimises specific tallies, add those tallies to the random-ray model and set `targets` on the generator. See `tasks/task_14_variance_reduction/6_`.
+
+```python
+rr_model.tallies = openmc.Tallies([detector_tally])
+rr_model.settings.weight_window_generators = openmc.WeightWindowGenerator(
+    method='fw_cadis',
+    mesh=mesh,
+    targets=openmc.Tallies([detector_tally]),
+)
+```
+
 The random-ray adjoint pass is typically 10–100× cheaper than a single CE batch, so the overhead is tiny versus the huge convergence speedup on the actual tally.
 
 ## Survival biasing — the quick-and-dirty baseline
