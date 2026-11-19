@@ -80,29 +80,28 @@ For realistic tokamak / spherical-tokamak plasma emission (Shafranov shift, temp
 ```python
 from openmc_plasma_source import tokamak_source
 
-# Units for major/minor/pedestal radius depend on the openmc_plasma_source version
-# — check the workshop task_04/3 notebook for the convention your installed version uses.
+# Lengths (major/minor/pedestal radius, shafranov factor) are in cm, ion temperatures in eV, densities in m-3.
 # The values below are from task_04/3 and represent an ITER-like plasma.
 my_sources = tokamak_source(
     elongation=1.557,
     triangularity=0.270,
-    major_radius=9.06,
-    minor_radius=2.92258,
-    pedestal_radius=0.8 * 2.92258,
+    major_radius=906,
+    minor_radius=292.258,
+    pedestal_radius=0.8 * 292.258,
     ion_density_centre=1.09e20, ion_density_pedestal=1.09e20, ion_density_separatrix=3e19,
     ion_density_peaking_factor=1,
-    ion_temperature_centre=45.9, ion_temperature_pedestal=6.09, ion_temperature_separatrix=0.1,
+    ion_temperature_centre=45.9e3, ion_temperature_pedestal=6.09e3, ion_temperature_separatrix=0.1e3,
     ion_temperature_peaking_factor=8.06, ion_temperature_beta=6,
-    shafranov_factor=0.44789,
+    shafranov_factor=44.789,
     mode='H',
     mesh_resolution=(100, 100),         # mesh bins in (r, z)
     start_angle=0, rotation_angle=2*3.14159,  # toroidal start angle and extent in radians
 )
 
-settings.source = my_sources            # an openmc.MeshSource — OpenMC handles this natively
+settings.source = my_sources.source     # an openmc.MeshSource — OpenMC handles this natively
 ```
 
-Returns an `openmc.MeshSource` backed by a `CylindricalMesh`; assign it directly to `settings.source` (a single source or a list both work). Each mesh voxel carries a strength proportional to the local neutron emission.
+Returns a `TokamakSource` dataclass with `.source` (an `openmc.MeshSource` backed by a `CylindricalMesh`), `.plasma_volume` (m³) and `.fusion_power` (MW); assign `.source` to `settings.source`, passing the `TokamakSource` itself raises a `TypeError`. Each mesh voxel carries a strength proportional to the local neutron emission.
 
 Other useful helpers in the same package: `tokamak_source`, `spherical_tokamak_source`, `fusion_ring_source`, `fusion_point_source`.
 
